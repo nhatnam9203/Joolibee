@@ -4,7 +4,7 @@ import { TopBar } from '@components';
 import { images, AppStyles } from '@theme';
 
 const TopBarScreenLayout = ({ children }) => {
-  const TopBarRender = React.memo(
+  const TopBarComponent = React.memo(
     () => (
       <TopBar.Bar
         style={AppStyles.styles.topBar}
@@ -30,7 +30,7 @@ const TopBarScreenLayout = ({ children }) => {
 
   return (
     <View style={AppStyles.styles.container}>
-      <TopBarRender />
+      <TopBarComponent />
       {children && (
         <SafeAreaView style={styles.container}>{children}</SafeAreaView>
       )}
