@@ -1,8 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TopBarScreenLayout } from '@layouts';
 
-const StoreScreen = () => (
-  <View style={{ flex: 1, backgroundColor: 'green' }}></View>
-);
+const StoreScreen = () => <TopBarScreenLayout />;
 
 export default StoreScreen;

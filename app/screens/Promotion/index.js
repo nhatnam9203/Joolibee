@@ -1,8 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TopBarScreenLayout } from '@layouts';
 
-const PromotionScreen = () => (
-  <View style={{ flex: 1, backgroundColor: 'green' }}></View>
-);
+const PromotionScreen = () => <TopBarScreenLayout />;
 
 export default PromotionScreen;

@@ -1,6 +1,7 @@
 import { HttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+
 const makeApolloClient = (token) => {
   // create an apollo link instance, a network interface for apollo client
   const link = new HttpLink({

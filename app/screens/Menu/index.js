@@ -1,8 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TopBarScreenLayout } from '@layouts';
 
-const MenuScreen = () => (
-  <View style={{ flex: 1, backgroundColor: 'blue' }}></View>
-);
+const MenuScreen = () => <TopBarScreenLayout />;
 
 export default MenuScreen;
