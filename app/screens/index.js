@@ -1,15 +1,11 @@
-import WelcomeScreen from './Welcome';
-import HomeScreen from './Home';
+import AccountStackScreen from './Account';
+import MainTabScreen from './Main';
 import ScreenName from './ScreenName';
-import StoreScreen from './Store';
-import PromotionScreen from './Promotion';
-import MenuScreen from './Menu';
+import WelcomeScreen from './Welcome';
 
 module.exports = {
   ScreenName,
   WelcomeScreen,
-  HomeScreen,
-  StoreScreen,
-  PromotionScreen,
-  MenuScreen,
+  MainTabScreen,
+  AccountStackScreen,
 };

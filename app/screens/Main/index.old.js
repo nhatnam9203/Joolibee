@@ -1,36 +1,31 @@
 import React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import {
-  ScreenName,
-  HomeScreen,
-  MenuScreen,
-  PromotionScreen,
-  StoreScreen,
-} from '../screens';
+import { HomePage, MenuPage, PromotionPage, StorePage } from './pages';
 import { Image, StyleSheet } from 'react-native';
 import { images, AppStyles } from '@theme';
 import { translate } from '@localize';
+import * as constants from './Constants';
 
-function HomeStack() {
+function MainScreen() {
   const [index, setTabIndex] = React.useState(0);
   const routes = [
     {
-      key: ScreenName.Home,
+      key: constants.HomePage,
       title: translate('tabHome'),
       icon: images.icons.tab_home,
     },
     {
-      key: ScreenName.Menu,
+      key: constants.MenuPage,
       title: translate('tabMenu'),
       icon: images.icons.tab_menu,
     },
     {
-      key: ScreenName.Store,
+      key: constants.StorePage,
       title: translate('tabStore'),
       icon: images.icons.tab_store,
     },
     {
-      key: ScreenName.Promotion,
+      key: constants.PromotionPage,
       title: translate('tabPromotion'),
       icon: images.icons.tab_promotion,
     },
@@ -57,10 +52,10 @@ function HomeStack() {
   };
 
   const renderScene = BottomNavigation.SceneMap({
-    Home: HomeScreen,
-    Store: StoreScreen,
-    Menu: MenuScreen,
-    Promotion: PromotionScreen,
+    Home: HomePage,
+    Store: StorePage,
+    Menu: MenuPage,
+    Promotion: PromotionPage,
   });
 
   return (
@@ -101,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeStack;
+export default MainScreen;

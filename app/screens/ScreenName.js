@@ -1,8 +1,7 @@
 const ScreenName = {
-  Home: 'Home',
-  Store: 'Store',
-  Menu: 'Menu',
-  Promotion: 'Promotion',
+  Main: 'Main',
+  Welcome: 'Welcome',
+  Account: 'Account',
 };
 
 export default ScreenName;

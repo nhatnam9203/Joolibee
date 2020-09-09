@@ -13,7 +13,7 @@ const WelcomeScreen = () => {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      loginCall();
+      // loginCall();
     }, 1000);
 
     return () => clearInterval(interval);

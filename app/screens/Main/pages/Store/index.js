@@ -1,6 +1,6 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
 
-const MenuScreen = () => <TopBarScreenLayout />;
+const StorePage = () => <TopBarScreenLayout />;
 
-export default MenuScreen;
+export default StorePage;
