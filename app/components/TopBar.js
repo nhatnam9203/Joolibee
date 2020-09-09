@@ -19,15 +19,15 @@ export const Logo = ({ source }) => (
   <Image style={styles.navLogo} source={source} />
 );
 
-export const Action = ({ source }) =>
+export const Action = ({ source, onPress }) =>
   source ? (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.action}>
         <Image source={source} style={styles.navIcon} />
       </View>
     </TouchableOpacity>
   ) : (
-    <Appbar.Action style={styles.action} />
+    <Appbar.Action style={styles.action} onPress={onPress} />
   );
 
 export const Space = ({}) => <View style={styles.space} />;
