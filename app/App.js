@@ -15,7 +15,7 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import { enableScreens } from 'react-native-screens';
-import { Provider } from 'react-redux';
+import { Provider as StoreProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { client } from './graphql';
 
@@ -54,11 +54,14 @@ const theme = {
 };
 
 enableScreens();
-setI18nConfig('vi'); // set initial config
+// set initial config
+setI18nConfig('vi');
 
 export default function App() {
+  // React.useEffect(() => {}, []);
+
   return (
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
         <ApolloProvider client={apolloClient}>
           <PaperProvider theme={theme}>
@@ -66,6 +69,6 @@ export default function App() {
           </PaperProvider>
         </ApolloProvider>
       </PersistGate>
-    </Provider>
+    </StoreProvider>
   );
 }

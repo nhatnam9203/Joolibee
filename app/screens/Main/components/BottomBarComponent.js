@@ -5,26 +5,26 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import * as constants from '../Constants';
 
-const routes = {
-  [constants.HomePage]: {
-    title: translate('tabHome'),
-    icon: images.icons.tab_home,
-  },
-  [constants.MenuPage]: {
-    title: translate('tabMenu'),
-    icon: images.icons.tab_menu,
-  },
-  [constants.StorePage]: {
-    title: translate('tabStore'),
-    icon: images.icons.tab_store,
-  },
-  [constants.PromotionPage]: {
-    title: translate('tabPromotion'),
-    icon: images.icons.tab_promotion,
-  },
-};
-
 function BottomBarComponent({ state, descriptors, navigation }) {
+  const routes = {
+    [constants.HomePage]: {
+      title: translate('tabHome'),
+      icon: images.icons.tab_home,
+    },
+    [constants.MenuPage]: {
+      title: translate('tabMenu'),
+      icon: images.icons.tab_menu,
+    },
+    [constants.StorePage]: {
+      title: translate('tabStore'),
+      icon: images.icons.tab_store,
+    },
+    [constants.PromotionPage]: {
+      title: translate('tabPromotion'),
+      icon: images.icons.tab_promotion,
+    },
+  };
+
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
   if (focusedOptions.tabBarVisible === false) {
@@ -55,22 +55,27 @@ function BottomBarComponent({ state, descriptors, navigation }) {
           });
         };
 
+        const color = isFocused
+          ? AppStyles.colors.accent
+          : AppStyles.colors.text;
+
+        const fontWeight = isFocused ? 'bold' : 'normal';
+
         return (
           <TouchableOpacity
+            activeOpacity={1}
             accessibilityRole="button"
             accessibilityStates={isFocused ? ['selected'] : []}
             onPress={onPress}
             onLongPress={onLongPress}
             key={route.key}
-            style={styles.buttonTab}>
+            style={styles.buttonStyle}>
             {routes[route.name]?.icon && (
               <Image
                 style={[
-                  styles.imgBottomTab,
+                  styles.iconStyle,
                   {
-                    tintColor: isFocused
-                      ? AppStyles.colors.accent
-                      : AppStyles.colors.text,
+                    tintColor: color,
                   },
                 ]}
                 source={routes[route.name]?.icon}
@@ -78,11 +83,10 @@ function BottomBarComponent({ state, descriptors, navigation }) {
             )}
             <Text
               style={[
-                styles.txtBottomTab,
+                styles.labelStyle,
                 {
-                  color: isFocused
-                    ? AppStyles.colors.accent
-                    : AppStyles.colors.text,
+                  color: color,
+                  fontWeight: fontWeight,
                 },
               ]}>
               {routes[route.name]?.title}
@@ -102,22 +106,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  txtBottomTab: {
-    fontSize: 12,
-    color: 'red',
+  labelStyle: {
+    fontSize: 14,
     textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
     margin: 5,
     height: 20,
     paddingBottom: 5,
+    lineHeight: 21,
+    textAlignVertical: 'center',
   },
 
-  imgBottomTab: {
+  iconStyle: {
     height: 28,
     width: 35,
     resizeMode: 'center',
   },
 
-  buttonTab: {
+  buttonStyle: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
