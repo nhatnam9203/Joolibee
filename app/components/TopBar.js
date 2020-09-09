@@ -1,7 +1,6 @@
 import React from 'react';
 import { Appbar } from 'react-native-paper';
-import { Image, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 export const Bar = ({ leftComponents, rightComponents, children, style }) => {
   return (
@@ -16,26 +15,24 @@ export const Bar = ({ leftComponents, rightComponents, children, style }) => {
 };
 
 export const Logo = ({ source }) => (
-  <Image style={styles.navLogo} source={source} />
+  <Image style={styles.logoStyle} source={source} />
 );
 
 export const Action = ({ source, onPress }) =>
   source ? (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.action}>
-        <Image source={source} style={styles.navIcon} />
-      </View>
+    <TouchableOpacity onPress={onPress} style={styles.actionStyle}>
+      <Image source={source} style={styles.iconStyle} />
     </TouchableOpacity>
   ) : (
-    <Appbar.Action style={styles.action} onPress={onPress} />
+    <Appbar.actionStyle style={styles.actionStyle} onPress={onPress} />
   );
 
 export const Space = ({}) => <View style={styles.space} />;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: { justifyContent: 'center', alignItems: 'center' },
 
-  navLogo: { width: 50, height: '100%' },
+  logoStyle: { width: 50, height: '100%' },
 
   leftPanel: {
     position: 'absolute',
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
   },
   rightPanel: {
     position: 'absolute',
-    right: 0,
+    right: 10,
     top: 0,
     bottom: 0,
     flex: 0,
@@ -60,11 +57,16 @@ const styles = StyleSheet.create({
   midPanel: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    flex: 0,
   },
 
-  action: { height: '100%', width: 50 },
-  navIcon: { flex: 1, resizeMode: 'center' },
+  actionStyle: {
+    height: '100%',
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconStyle: { flex: 1, resizeMode: 'center' },
 
   space: {
     width: 8,

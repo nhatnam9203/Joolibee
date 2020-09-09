@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+
 import { MyAccountPage } from './pages';
 
-const AccountStack = createStackNavigator();
+const AccountStack = createNativeStackNavigator();
 
 function AccountStackScreen() {
   return (

@@ -8,6 +8,9 @@ const metrics = {
   screenWidth: width < height ? width : height,
   screenHeight: width < height ? height : width,
   navBarHeight: Platform.OS === 'ios' ? 54 : 66,
+  tabBarHeight: 70,
+  padding: 10,
+  margin: 10,
 };
 
 export default metrics;

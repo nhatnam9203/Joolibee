@@ -1,5 +1,5 @@
 import { translate } from '@localize';
-import { AppStyles, images } from '@theme';
+import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
@@ -100,8 +100,8 @@ function BottomBarComponent({ state, descriptors, navigation }) {
 
 const styles = StyleSheet.create({
   barStyle: {
-    height: 77,
-    padding: 0,
+    height: metrics.tabBarHeight,
+    padding: metrics.padding,
     backgroundColor: AppStyles.colors.primary,
     flexDirection: 'row',
   },
