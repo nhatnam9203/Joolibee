@@ -11,7 +11,11 @@ const accountSlice = createSlice({
     },
     loginSuccess(state, action) {},
     loginFail(state, action) {},
-    logout(state, action) {},
+    logout(state, action) {
+      state.isLogin = false;
+      state.username = null;
+      state.password = null;
+    },
   },
 });
 

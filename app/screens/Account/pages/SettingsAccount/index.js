@@ -1,15 +1,23 @@
+import { CustomButton } from '@components';
 import { translate } from '@localize';
-import { useNavigation } from '@react-navigation/native';
-import { AppStyles, images, metrics } from '@theme';
+import { AppStyles } from '@theme';
 import React from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { SettingItem } from '../../components';
-import { CustomButton } from '@components';
+import { useDispatch } from 'react-redux';
+import { logout } from '@slices/account';
 
 const SettingAccountPage = () => {
+  const dispatch = useDispatch();
   const [settingList, setSettingList] = React.useState([]);
 
+  /**functions */
+  const btnLogoutPressed = React.useCallback(() => {
+    const action = logout();
+    dispatch(action);
+  }, [dispatch]);
+
+  // LOGOUT BUTTON
   const renderLogoutButton = () => (
     <View style={styles.logoutContent}>
       <CustomButton
@@ -18,6 +26,7 @@ const SettingAccountPage = () => {
         label={translate('txtLogout')}
         borderColor={AppStyles.colors.accent}
         textColor={AppStyles.colors.accent}
+        onPress={btnLogoutPressed}
       />
     </View>
   );
@@ -57,7 +66,7 @@ const SettingAccountPage = () => {
               <SettingItem item={item} key={item.key} />
             )}
             ItemSeparatorComponent={() => (
-              <View style={AppStyles.styles.horizontalSeparator} />
+              <View style={AppStyles.styles.rowSeparator} />
             )}
             contentContainerStyle={styles.contentContainer}
             ListFooterComponent={renderLogoutButton}

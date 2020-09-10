@@ -110,7 +110,7 @@ const MyAccountPage = () => {
               <SettingItem item={item} key={item.key} onPress={item?.onPress} />
             )}
             ItemSeparatorComponent={() => (
-              <View style={AppStyles.styles.horizontalSeparator} />
+              <View style={AppStyles.styles.rowSeparator} />
             )}
             contentContainerStyle={styles.contentContainer}
           />

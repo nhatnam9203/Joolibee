@@ -30,11 +30,17 @@ const AppStyles = {
       backgroundColor: secondaryColor,
     },
 
-    horizontalSeparator: {
+    rowSeparator: {
       height: 1,
       backgroundColor: '#1B1B1B',
       width: '100%',
       opacity: 0.25,
+    },
+
+    headerTitleStyle: {
+      fontFamily: 'SVN-Merge',
+      fontSize: 18,
+      color: primaryColor,
     },
   },
 };

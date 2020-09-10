@@ -3,10 +3,10 @@ import { Animated } from 'react-native';
 // import { createNativeStackNavigator } from 'react-native-screens/native-stack'; // use api native
 import { createStackNavigator } from '@react-navigation/stack';
 import { MainTabScreen, AccountStackScreen, ScreenName } from '../screens';
-import { TransitionSpecs } from '@react-navigation/stack';
-import { CardStyleInterpolators } from '@react-navigation/stack';
-import { HeaderStyleInterpolators } from '@react-navigation/stack';
-import { TransitionPresets } from '@react-navigation/stack';
+// import { TransitionSpecs } from '@react-navigation/stack';
+// import { CardStyleInterpolators } from '@react-navigation/stack';
+// import { HeaderStyleInterpolators } from '@react-navigation/stack';
+// import { TransitionPresets } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 const config = {
