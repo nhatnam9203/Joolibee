@@ -14,6 +14,7 @@ import { CustomButton } from '@components';
 import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
 import { SettingItem } from '../../components';
+import DeviceInfo from 'react-native-device-info';
 
 const MyAccountPage = () => {
   const dispatch = useDispatch();
@@ -111,7 +112,9 @@ const MyAccountPage = () => {
           />
         </View>
         {/**Version */}
-        <Text style={styles.versionTextStyle}>{'Version 1.0.0'}</Text>
+        <Text style={styles.versionTextStyle}>
+          {'Version ' + DeviceInfo.getVersion()}
+        </Text>
       </View>
     </SafeAreaView>
   );
