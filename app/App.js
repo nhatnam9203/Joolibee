@@ -40,6 +40,10 @@ const fontConfig = {
       fontFamily: 'Roboto-Thin',
       fontWeight: 'normal',
     },
+    merge: {
+      fontFamily: 'Merge',
+      fontWeight: 'bold',
+    },
   },
 };
 

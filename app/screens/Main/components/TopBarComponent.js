@@ -15,7 +15,6 @@ const TopBarComponent = React.memo(() => {
           <TopBar.Action
             source={images.icons.nav_account}
             onPress={() => {
-              //   console.log('====> onPress');
               navigation.navigate(ScreenName.Account);
             }}
           />

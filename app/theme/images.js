@@ -14,6 +14,7 @@ const images = {
     tab_menu: require('../assets/icons/tab-menu.png'),
     tab_promotion: require('../assets/icons/tab-promotion.png'),
     tab_store: require('../assets/icons/tab-store.png'),
+    popup_close: require('../assets/icons/popup-close.png'),
   },
 };
 
