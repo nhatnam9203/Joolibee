@@ -1,11 +1,13 @@
 import { HttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import Config from 'react-native-config';
 
 const makeApolloClient = (token) => {
+  console.log(Config);
   // create an apollo link instance, a network interface for apollo client
   const link = new HttpLink({
-    uri: `https://hasura.io/learn/graphql`,
+    uri: Config.GRAPHQL_ENDPOINT,
     headers: {
       Authorization: `Bearer ${token}`,
     },
