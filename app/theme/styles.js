@@ -29,6 +29,13 @@ const AppStyles = {
     topBar: {
       backgroundColor: secondaryColor,
     },
+
+    horizontalSeparator: {
+      height: 1,
+      backgroundColor: '#1B1B1B',
+      width: '100%',
+      opacity: 0.25,
+    },
   },
 };
 export default AppStyles;

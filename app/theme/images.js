@@ -15,6 +15,14 @@ const images = {
     tab_promotion: require('../assets/icons/tab-promotion.png'),
     tab_store: require('../assets/icons/tab-store.png'),
     popup_close: require('../assets/icons/popup-close.png'),
+    ic_jollibee: require('../assets/icons/ic-jollibee.png'),
+    ic_promotion: require('../assets/icons/ic-promotion.png'),
+    ic_address: require('../assets/icons/ic-address.png'),
+    ic_arrow: require('../assets/icons/ic-arrow.png'),
+    ic_notify: require('../assets/icons/ic-notify.png'),
+    ic_order_list: require('../assets/icons/ic-orderlist.png'),
+    ic_setting: require('../assets/icons/ic-setting.png'),
+    ic_support: require('../assets/icons/ic-support.png'),
   },
 };
 

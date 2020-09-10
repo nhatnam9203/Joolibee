@@ -3,5 +3,12 @@
   "tabStore": "Cửa Hàng",
   "tabPromotion": "Khuyến Mãi",
   "tabMenu": "Thực Đơn",
-  "txtEditAccount": "Chỉnh Sửa Tài Khoản"
+  "txtEditAccount": "Chỉnh Sửa Tài Khoản",
+  "txtSettingPoint": "Điểm tích luỹ",
+  "txtSettingPromotion": "Ưu đãi",
+  "txtSettingOrderList": "Danh sách đơn hàng",
+  "txtSettingNotify": "Thông báo",
+  "txtSettingAddress": "Địa chỉ giao hàng",
+  "txtSettingSupport": "Hỗ trợ",
+  "txtSetting": "Cài đặt"
 }
