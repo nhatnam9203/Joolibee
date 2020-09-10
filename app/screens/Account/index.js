@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { MyAccountPage } from './pages';
+import { MyAccountPage, SettingAccountPage } from './pages';
+import * as constants from './constants';
 
 const AccountStack = createStackNavigator();
 
@@ -10,8 +11,14 @@ function AccountStackScreen() {
     <AccountStack.Navigator>
       <AccountStack.Screen
         component={MyAccountPage}
-        name={'MyAccount'}
+        name={constants.Account}
         options={{ headerShown: false }}
+      />
+
+      <AccountStack.Screen
+        component={SettingAccountPage}
+        name={constants.SettingAccount}
+        options={{ headerShown: true }}
       />
     </AccountStack.Navigator>
   );

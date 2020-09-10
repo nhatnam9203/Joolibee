@@ -1,21 +1,23 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
-import { images } from '@theme';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { images, metrics } from '@theme';
 
-const SettingItem = ({ item }) => {
+const SettingItem = ({ item, onPress = () => {} }) => {
   const { icon, title, isArrow } = item;
   return (
-    <View style={styles.container}>
-      <View style={styles.icon}>
-        <Image source={icon} resizeMode="contain" />
-      </View>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      {icon && (
+        <View style={styles.icon}>
+          <Image source={icon} resizeMode="contain" />
+        </View>
+      )}
       <View style={styles.content}>
         {!!title && <Text style={styles.nameStyle}>{title}</Text>}
       </View>
       {isArrow && (
         <Image style={styles.arrowStyle} source={images.icons.ic_arrow} />
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -27,8 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    padding: metrics.padding,
   },
 
   icon: {
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: metrics.margin,
   },
 
   content: {
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20,
+    marginHorizontal: metrics.margin,
   },
 
   nameStyle: {
@@ -54,10 +56,9 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     textAlignVertical: 'center',
     color: '#1B1B1B',
-    fontWeight: 'bold',
   },
 
-  arrowStyle: { height: 15, width: 10 },
+  arrowStyle: { height: 15, width: 10, margin: metrics.margin },
 });
 
 export default SettingItem;

@@ -1,3 +1,4 @@
 import MyAccountPage from './MyAccount';
+import SettingAccountPage from './SettingsAccount';
 
-module.exports = { MyAccountPage };
+module.exports = { MyAccountPage, SettingAccountPage };

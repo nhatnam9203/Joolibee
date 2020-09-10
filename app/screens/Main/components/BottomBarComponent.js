@@ -3,7 +3,7 @@ import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import * as constants from '../Constants';
+import * as constants from '../constants';
 
 function BottomBarComponent({ state, descriptors, navigation }) {
   const routes = {
@@ -104,6 +104,8 @@ const styles = StyleSheet.create({
     padding: metrics.padding,
     backgroundColor: AppStyles.colors.primary,
     flexDirection: 'row',
+    borderTopColor: AppStyles.colors.accent,
+    borderTopWidth: 1,
   },
 
   labelStyle: {

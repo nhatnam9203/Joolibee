@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import { BottomBarComponent } from './components';
-import * as constants from './Constants';
+import * as constants from './constants';
 import { HomePage, MenuPage, PromotionPage, StorePage } from './pages';
 
 const MainTab = createBottomTabNavigator();

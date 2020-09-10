@@ -1,20 +1,21 @@
+import { CustomButton } from '@components';
+import { translate } from '@localize';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-  Text,
   FlatList,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { AppStyles, metrics, images } from '@theme';
-import { Avatar } from 'react-native-paper';
-import { CustomButton } from '@components';
-import { useNavigation } from '@react-navigation/native';
-import { translate } from '@localize';
-import { SettingItem } from '../../components';
 import DeviceInfo from 'react-native-device-info';
+import { Avatar } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { SettingItem } from '../../components';
+import * as constants from '../../constants';
 
 const MyAccountPage = () => {
   const dispatch = useDispatch();
@@ -64,9 +65,12 @@ const MyAccountPage = () => {
         icon: images.icons.ic_setting,
         title: translate('txtSetting'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(constants.SettingAccount);
+        },
       },
     ]);
-  }, []);
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -103,7 +107,7 @@ const MyAccountPage = () => {
             bounces={false}
             data={settingList}
             renderItem={({ item }) => (
-              <SettingItem item={item} key={item.key} />
+              <SettingItem item={item} key={item.key} onPress={item?.onPress} />
             )}
             ItemSeparatorComponent={() => (
               <View style={AppStyles.styles.horizontalSeparator} />
@@ -111,6 +115,7 @@ const MyAccountPage = () => {
             contentContainerStyle={styles.contentContainer}
           />
         </View>
+
         {/**Version */}
         <Text style={styles.versionTextStyle}>
           {'Version ' + DeviceInfo.getVersion()}

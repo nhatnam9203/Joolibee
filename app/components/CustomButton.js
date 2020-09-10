@@ -6,10 +6,11 @@ const CustomButton = ({
   width = 36,
   height = 36,
   bgColor,
-  txtColor,
+  textColor,
   label,
   children,
   absolute = false,
+  borderColor,
 }) => (
   <TouchableOpacity
     style={[
@@ -19,21 +20,24 @@ const CustomButton = ({
         height: height,
         borderRadius: height / 2,
         backgroundColor: bgColor,
+        ...(borderColor && { borderWidth: 2, borderColor: borderColor }),
       },
       absolute && styles.btnAbsoluteStyle,
     ]}
     onPress={onPress}>
     {children && children}
     {!!label && (
-      <Text style={[styles.txtStyle, { color: txtColor }]}>{label}</Text>
+      <Text style={[styles.txtStyle, { color: textColor }]}>
+        {label?.toUpperCase()}
+      </Text>
     )}
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
-  btnStyle: {},
+  btnStyle: { justifyContent: 'center', alignItems: 'center' },
   btnAbsoluteStyle: { position: 'absolute', top: 10, left: 10 },
-  txtStyle: {},
+  txtStyle: { fontFamily: 'SVN-Merge', fontSize: 16 },
 });
 
 export default CustomButton;
