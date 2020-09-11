@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import images from './images';
+
 /*
  * Provides universal color configs used in the app.
  * Provides universal fonts used in the app.
@@ -36,11 +38,16 @@ const AppStyles = {
       width: '100%',
       opacity: 0.25,
     },
-
-    headerTitleStyle: {
-      fontFamily: 'SVN-Merge',
-      fontSize: 18,
-      color: primaryColor,
+  },
+  navigation: {
+    default: {
+      headerBackTitleVisible: false,
+      headerStyle: { backgroundColor: secondaryColor },
+      headerTitleStyle: {
+        fontFamily: 'SVN-Merge',
+        fontSize: 18,
+        color: primaryColor,
+      },
     },
   },
 };

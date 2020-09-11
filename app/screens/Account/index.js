@@ -1,8 +1,9 @@
+import { HeaderImage } from '@components';
 import { translate } from '@localize';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppStyles, images, metrics } from '@theme';
 import * as React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import * as constants from './constants';
 import { MyAccountPage, SettingAccountPage } from './pages';
 
@@ -12,15 +13,8 @@ function AccountStackScreen() {
   return (
     <AccountStack.Navigator
       screenOptions={{
-        headerBackTitleVisible: false,
-        headerStyle: { backgroundColor: AppStyles.colors.accent },
-        headerTitleStyle: AppStyles.styles.headerTitleStyle,
-        headerBackImage: () => (
-          <Image
-            source={images.icons.nav_back}
-            style={styles.headerBackImageStyle}
-          />
-        ),
+        ...AppStyles.navigation.default,
+        headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
       }}>
       <AccountStack.Screen
         component={MyAccountPage}
@@ -40,14 +34,6 @@ function AccountStackScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  headerBackImageStyle: {
-    tintColor: '#fff',
-    width: 45,
-    height: 45,
-    margin: metrics.margin,
-    resizeMode: 'center',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default AccountStackScreen;

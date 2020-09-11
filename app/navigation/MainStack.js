@@ -42,6 +42,7 @@ function MainStack() {
         name={ScreenName.Main}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         component={AccountStackScreen}
         name={ScreenName.Account}
