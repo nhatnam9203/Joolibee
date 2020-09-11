@@ -15,9 +15,15 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import { enableScreens } from 'react-native-screens';
-import { Provider as StoreProvider } from 'react-redux';
+import {
+  Provider as StoreProvider,
+  useSelector,
+  useDispatch,
+} from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { client } from './graphql';
+import { Loading } from '@components';
+import { hideLoading } from '@slices/app';
 
 const { persistor, store } = configureAppStore();
 const apolloClient = client();
@@ -70,9 +76,23 @@ export default function App() {
         <ApolloProvider client={apolloClient}>
           <PaperProvider theme={theme}>
             <Navigator />
+            <LoadingProvider />
           </PaperProvider>
         </ApolloProvider>
       </PersistGate>
     </StoreProvider>
   );
 }
+
+const LoadingProvider = () => {
+  const dispatch = useDispatch();
+
+  const isLoading = useSelector((state) => state.app.loading);
+
+  const onCancelLoading = React.useCallback(() => {
+    const action = hideLoading();
+    dispatch(action);
+  }, [dispatch]);
+
+  return <Loading isLoading={isLoading} onCancelLoading={onCancelLoading} />;
+};

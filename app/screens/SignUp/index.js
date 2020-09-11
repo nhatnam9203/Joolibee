@@ -1,23 +1,31 @@
-import React from 'react';
-import { Formik } from 'formik';
-import {
-  Button,
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
-import { CustomInput, CustomButton } from '@components';
-import { AppStyles, metrics } from '@theme';
+import { CustomButton, CustomInput } from '@components';
 import { translate } from '@localize';
 import CheckBox from '@react-native-community/checkbox';
+import { AppStyles, metrics } from '@theme';
+import { Formik } from 'formik';
+import React from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { showLoading } from '@slices/app';
 
 const BUTTON_HEIGHT = 60;
 const BUTTON_WIDTH = '98%';
 
 const SignUpScreen = () => {
+  const dispatch = useDispatch();
+
+  const signUpButtonPressed = React.useCallback(() => {
+    const action = showLoading();
+    dispatch(action);
+  }, [dispatch]);
+
   return (
     <KeyboardAvoidingView
       style={styles.avoidContainer}
@@ -117,7 +125,7 @@ const SignUpScreen = () => {
               <View style={styles.btnContent}>
                 <CustomButton
                   style={styles.btnStyle}
-                  onPress={handleSubmit}
+                  onPress={signUpButtonPressed}
                   width={BUTTON_WIDTH}
                   height={BUTTON_HEIGHT}
                   label={translate('txtSignUp')}
