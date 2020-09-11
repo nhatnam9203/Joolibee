@@ -23,6 +23,12 @@ const images = {
     ic_order_list: require('../assets/icons/ic-orderlist.png'),
     ic_setting: require('../assets/icons/ic-setting.png'),
     ic_support: require('../assets/icons/ic-support.png'),
+
+    ic_check_success: require('../assets/icons/ic-check-success.png'),
+    ic_facebook: require('../assets/icons/ic-facebook.png'),
+    ic_google: require('../assets/icons/ic-google.png'),
+    ic_hide_password: require('../assets/icons/ic-hide-password.png'),
+    ic_calendar: require('../assets/icons/ic-calendar.png'),
   },
 };
 

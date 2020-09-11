@@ -48,13 +48,5 @@ const styles = StyleSheet.create({
   spinner: {
     marginBottom: 50,
   },
-
-  btn: {
-    marginTop: 20,
-  },
-
-  text: {
-    color: 'white',
-  },
 });
 export default Loading;

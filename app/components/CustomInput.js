@@ -7,6 +7,7 @@ const CustomInput = ({
   value,
   placeholder = '...',
   inputProps = {},
+  children,
 }) => {
   return (
     <View style={styles.container}>
@@ -21,6 +22,7 @@ const CustomInput = ({
         autoCapitalize="none"
         underlineColorAndroid="transparent"
       />
+      {children && children}
     </View>
   );
 };
@@ -35,7 +37,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 10,
     paddingHorizontal: 10,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   inputStyle: {
     fontFamily: 'Roboto-Regular',
@@ -44,7 +48,8 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 48,
     paddingLeft: 6,
-    width: '100%',
+    color: '#484848',
+    flex: 1,
   },
 });
 

@@ -1,22 +1,39 @@
 import { CustomButton, CustomInput } from '@components';
 import { translate } from '@localize';
 import CheckBox from '@react-native-community/checkbox';
-import { AppStyles, metrics } from '@theme';
+import { showLoading } from '@slices/app';
+import { AppStyles, metrics, images } from '@theme';
 import { Formik } from 'formik';
 import React from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { showLoading } from '@slices/app';
+import { isIphoneX } from '../../lib/isIphoneX';
+import * as Yup from 'yup';
 
 const BUTTON_HEIGHT = 60;
 const BUTTON_WIDTH = '98%';
+
+const SignupSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+});
 
 const SignUpScreen = () => {
   const dispatch = useDispatch();
@@ -29,137 +46,177 @@ const SignUpScreen = () => {
   return (
     <KeyboardAvoidingView
       style={styles.avoidContainer}
-      keyboardVerticalOffset={54}
+      keyboardVerticalOffset={isIphoneX() ? 88 : 64}
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
-      <Formik
-        initialValues={{ email: '' }}
-        onSubmit={(values) => console.log(values)}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View style={styles.content}>
-            <ScrollView
-              keyboardShouldPersistTaps="handled"
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-              bounces={false}
-              contentContainerStyle={styles.scrollContentContainer}>
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtInputName')}
-              />
+      <SafeAreaView style={styles.container}>
+        <Formik
+          initialValues={{
+            email: '',
+            name: '',
+            phone: '',
+            password: '',
+            confirmPassword: '',
+            birthday: '',
+            gender: '',
+          }}
+          onSubmit={(values) => console.log(values)}
+          validationSchema={SignupSchema}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View style={styles.content}>
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                bounces={false}
+                contentContainerStyle={styles.scrollContentContainer}>
+                <CustomInput
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
+                  placeholder={translate('txtInputName')}>
+                  {errors.name && touched.name ? (
+                    <Image source={images.icons.ic_check_success} />
+                  ) : null}
+                </CustomInput>
 
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtInputPhone')}
-              />
-
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtInputEmail')}
-              />
-
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtInputPassword')}
-              />
-
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtInputConfirmPassword')}
-              />
-
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtPickerDate')}
-              />
-
-              <CustomInput
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                placeholder={translate('txtPickerGender')}
-              />
-
-              <View style={styles.privacyContent}>
-                <CheckBox
-                  style={styles.checkBoxStyle}
-                  boxType="square"
-                  tintColors={{ true: '#989898', false: '#989898' }}
-                  tintColor="#989898"
-                  onCheckColor="#3FB4C3"
-                  onTintColor="#3FB4C3"
-                  animationDuration={0.25}
-                />
-                <Text style={styles.txtPrivacy}>{translate('txtPrivacy')}</Text>
-                <Text style={styles.txtPrivacyLink} onPress={() => {}}>
-                  {translate('txtPrivacyLink')}
-                </Text>
-              </View>
-
-              <View style={styles.privacyContent}>
-                <CheckBox
-                  style={styles.checkBoxStyle}
-                  boxType="square"
-                  tintColors={{ true: '#989898', false: '#989898' }}
-                  tintColor="#989898"
-                  onCheckColor="#3FB4C3"
-                  onTintColor="#3FB4C3"
-                  animationDuration={0.25}
-                />
-                <Text style={styles.txtPrivacy}>
-                  {translate('txtPrivacyMail')}
-                </Text>
-              </View>
-
-              <View style={styles.btnContent}>
-                <CustomButton
-                  style={styles.btnStyle}
-                  onPress={signUpButtonPressed}
-                  width={BUTTON_WIDTH}
-                  height={BUTTON_HEIGHT}
-                  label={translate('txtSignUp')}
-                  borderColor={AppStyles.colors.accent}
-                  textColor="#fff"
-                  bgColor={AppStyles.colors.accent}
+                <CustomInput
+                  onChangeText={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  value={values.phone}
+                  placeholder={translate('txtInputPhone')}
                 />
 
-                <CustomButton
-                  style={styles.btnStyle}
-                  onPress={handleSubmit}
-                  width={BUTTON_WIDTH}
-                  height={BUTTON_HEIGHT}
-                  label={translate('txtSignUpFacebook')}
-                  borderColor="#1976D2"
-                  textColor="#fff"
-                  bgColor="#1976D2"
+                <CustomInput
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  placeholder={translate('txtInputEmail')}
                 />
 
-                <CustomButton
-                  style={styles.btnStyle}
-                  onPress={handleSubmit}
-                  width={BUTTON_WIDTH}
-                  height={BUTTON_HEIGHT}
-                  label={translate('txtSignUpGoogle')}
-                  borderColor="#fff"
-                  textColor="#1B1B1B"
-                  bgColor="#fff"
+                <CustomInput
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  placeholder={translate('txtInputPassword')}>
+                  <TouchableOpacity style={styles.btnIcon} onPress={() => {}}>
+                    <Image
+                      source={images.icons.ic_hide_password}
+                      style={styles.imgIconStyle}
+                    />
+                  </TouchableOpacity>
+                </CustomInput>
+
+                <CustomInput
+                  onChangeText={handleChange('confirmPassword')}
+                  onBlur={handleBlur('confirmPassword')}
+                  value={values.confirmPassword}
+                  placeholder={translate('txtInputConfirmPassword')}>
+                  <Image
+                    source={images.icons.ic_hide_password}
+                    style={styles.imgIconStyle}
+                  />
+                </CustomInput>
+
+                <CustomInput
+                  onChangeText={handleChange('birthday')}
+                  onBlur={handleBlur('birthday')}
+                  value={values.email}
+                  placeholder={translate('txtPickerDate')}
                 />
-              </View>
-            </ScrollView>
-          </View>
-        )}
-      </Formik>
+
+                <CustomInput
+                  onChangeText={handleChange('gender')}
+                  onBlur={handleBlur('gender')}
+                  value={values.email}
+                  placeholder={translate('txtPickerGender')}
+                />
+
+                <View style={styles.textContent}>
+                  <CheckBox
+                    style={styles.checkBoxStyle}
+                    boxType="square"
+                    tintColors={{ true: '#989898', false: '#989898' }}
+                    tintColor="#989898"
+                    onCheckColor="#3FB4C3"
+                    onTintColor="#3FB4C3"
+                    animationDuration={0.25}
+                  />
+                  <Text style={styles.txtStyle}>{translate('txtPrivacy')}</Text>
+                  <Text style={styles.txtStyleLink} onPress={() => {}}>
+                    {translate('txtPrivacyLink')}
+                  </Text>
+                </View>
+
+                <View style={styles.textContent}>
+                  <CheckBox
+                    style={styles.checkBoxStyle}
+                    boxType="square"
+                    tintColors={{ true: '#989898', false: '#989898' }}
+                    tintColor="#989898"
+                    onCheckColor="#3FB4C3"
+                    onTintColor="#3FB4C3"
+                    animationDuration={0.25}
+                  />
+                  <Text style={styles.txtStyle}>
+                    {translate('txtPrivacyMail')}
+                  </Text>
+                </View>
+
+                <View style={styles.btnContent}>
+                  <CustomButton
+                    style={styles.btnStyle}
+                    onPress={signUpButtonPressed}
+                    width={BUTTON_WIDTH}
+                    height={BUTTON_HEIGHT}
+                    label={translate('txtSignUp')}
+                    borderColor={AppStyles.colors.accent}
+                    textColor="#fff"
+                    bgColor={AppStyles.colors.accent}
+                  />
+
+                  <CustomButton
+                    style={styles.btnStyle}
+                    onPress={handleSubmit}
+                    width={BUTTON_WIDTH}
+                    height={BUTTON_HEIGHT}
+                    label={translate('txtSignUpFacebook')}
+                    borderColor="#1976D2"
+                    textColor="#fff"
+                    bgColor="#1976D2"
+                  />
+
+                  <CustomButton
+                    style={styles.btnStyle}
+                    onPress={handleSubmit}
+                    width={BUTTON_WIDTH}
+                    height={BUTTON_HEIGHT}
+                    label={translate('txtSignUpGoogle')}
+                    borderColor="#fff"
+                    textColor="#1B1B1B"
+                    bgColor="#fff"
+                  />
+
+                  <View style={styles.textContent}>
+                    <Text style={styles.txtStyle}>
+                      {translate('txtHaveAccount')}
+                    </Text>
+                    <Text style={styles.txtBoldStyleLink} onPress={() => {}}>
+                      {translate('txtSignIn')}
+                    </Text>
+                  </View>
+                </View>
+              </ScrollView>
+            </View>
+          )}
+        </Formik>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
@@ -181,10 +238,10 @@ const styles = StyleSheet.create({
   },
 
   // privacy
-  privacyContent: {
+  textContent: {
     flexDirection: 'row',
     height: 23,
-    width: '100%',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
     margin: 10,
@@ -197,13 +254,21 @@ const styles = StyleSheet.create({
     height: 23,
   },
 
-  txtPrivacy: {
+  txtStyle: {
     ...AppStyles.fonts.text,
     marginLeft: 5,
   },
 
-  txtPrivacyLink: {
+  txtStyleLink: {
     ...AppStyles.fonts.text,
+    textDecorationLine: 'underline',
+    color: '#0696F8',
+    marginLeft: 5,
+  },
+
+  txtBoldStyleLink: {
+    ...AppStyles.fonts.text,
+    fontFamily: 'Roboto-Bold',
     textDecorationLine: 'underline',
     color: '#0696F8',
     marginLeft: 5,
@@ -218,6 +283,15 @@ const styles = StyleSheet.create({
   btnStyle: {
     marginVertical: 10,
     ...AppStyles.styles.shadow,
+  },
+
+  imgIconStyle: { resizeMode: 'center' },
+
+  btnIconStyle: {
+    width: 22,
+    height: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
