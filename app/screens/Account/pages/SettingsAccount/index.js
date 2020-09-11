@@ -23,7 +23,7 @@ const SettingAccountPage = () => {
       <CustomButton
         width={350}
         height={60}
-        label={translate('txtLogout')}
+        label={translate('txtSignOut')}
         borderColor={AppStyles.colors.accent}
         textColor={AppStyles.colors.accent}
         onPress={btnLogoutPressed}

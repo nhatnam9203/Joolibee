@@ -33,8 +33,6 @@ function MainStack() {
       initialRouteName={ScreenName.Main}
       headerMode="screen"
       screenOptions={{
-        // headerTintColor: 'white',
-        // headerStyle: { backgroundColor: 'tomato' },
         gestureEnabled: false,
       }}>
       <Stack.Screen

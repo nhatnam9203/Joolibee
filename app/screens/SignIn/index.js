@@ -1,7 +1,7 @@
-import React from 'react';
-import { Formik } from 'formik';
-import { Button, View, TextInput } from 'react-native';
 import { CustomInput } from '@components';
+import { Formik } from 'formik';
+import React from 'react';
+import { Button, View } from 'react-native';
 
 const SignInScreen = () => {
   return (

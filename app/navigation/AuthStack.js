@@ -8,6 +8,8 @@ import {
   SignUpScreen,
   WelcomeScreen,
 } from '../screens';
+import { translate } from '@localize';
+import { View } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -18,10 +20,29 @@ function AuthStack() {
       screenOptions={{
         ...AppStyles.navigation.default,
         headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
+        gestureEnabled: false,
       }}>
-      <Stack.Screen component={WelcomeScreen} name={ScreenName.Welcome} />
-      <Stack.Screen component={SignUpScreen} name={ScreenName.SignUp} />
-      <Stack.Screen component={SignInScreen} name={ScreenName.SignIn} />
+      <Stack.Screen
+        component={WelcomeScreen}
+        name={ScreenName.Welcome}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        component={SignUpScreen}
+        name={ScreenName.SignUp}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSignUp'),
+          headerBackImage: () => <View />,
+        }}
+      />
+
+      <Stack.Screen
+        component={SignInScreen}
+        name={ScreenName.SignIn}
+        options={{ headerShown: true, headerTitle: translate('txtSignIn') }}
+      />
     </Stack.Navigator>
   );
 }

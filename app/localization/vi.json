@@ -11,5 +11,19 @@
   "txtSettingAddress": "Địa chỉ giao hàng",
   "txtSettingSupport": "Hỗ trợ",
   "txtSetting": "Cài đặt",
-  "txtLogout": "Đăng Xuất"
+  "txtSignOut": "Đăng Xuất",
+  "txtSignUp": "Đăng kí tài khoản",
+  "txtSignUpFacebook": "Đăng kí bằng Facebook",
+  "txtSignUpGoogle": "Đăng kí bằng Google",
+  "txtSignIn": "Đăng nhập",
+  "txtInputName": "Họ & Tên *",
+  "txtInputPhone": "Số điện thoại *",
+  "txtInputEmail": "Email",
+  "txtInputPassword": "Mật khẩu *",
+  "txtInputConfirmPassword": "Xác nhận mật khẩu *",
+  "txtPickerDate": "Ngày sinh",
+  "txtPickerGender": "Giới tính ",
+  "txtPrivacy": "Đồng ý với",
+  "txtPrivacyLink": "Chính sách & Quy định chung",
+  "txtPrivacyMail": "Nhận chương trình khuyến mãi qua email"
 }
