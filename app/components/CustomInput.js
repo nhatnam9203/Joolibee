@@ -6,8 +6,8 @@ const CustomInput = ({
   handleBlur,
   value,
   placeholder = '...',
-  inputProps = {},
   children,
+  ...inputProps
 }) => {
   return (
     <View style={styles.container}>

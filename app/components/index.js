@@ -3,6 +3,10 @@ import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import HeaderImage from './HeaderImage';
 import Loading from './Loading';
+import CustomCheckBox from './CustomCheckBox';
+import CustomPickerSelect from './CustomPickerSelect';
+import CustomCalendarPicker from './CustomCalendarPicker';
+import CustomBirthdayPicker from './CustomBirthdayPicker';
 
 module.exports = {
   TopBar,
@@ -10,4 +14,8 @@ module.exports = {
   CustomInput,
   HeaderImage,
   Loading,
+  CustomCheckBox,
+  CustomPickerSelect,
+  CustomCalendarPicker,
+  CustomBirthdayPicker,
 };

@@ -1,6 +1,11 @@
-import { CustomButton, CustomInput } from '@components';
+import {
+  CustomButton,
+  CustomInput,
+  CustomCheckBox,
+  CustomPickerSelect,
+  CustomBirthdayPicker,
+} from '@components';
 import { translate } from '@localize';
-import CheckBox from '@react-native-community/checkbox';
 import { showLoading } from '@slices/app';
 import { AppStyles, metrics, images } from '@theme';
 import { Formik } from 'formik';
@@ -68,6 +73,7 @@ const SignUpScreen = () => {
             values,
             errors,
             touched,
+            setFieldValue,
           }) => (
             <View style={styles.content}>
               <ScrollView
@@ -90,8 +96,14 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
-                  placeholder={translate('txtInputPhone')}
-                />
+                  placeholder={translate('txtInputPhone')}>
+                  <View style={styles.btnIcon}>
+                    <Image
+                      source={images.icons.ic_check_success}
+                      style={styles.imgIconStyle}
+                    />
+                  </View>
+                </CustomInput>
 
                 <CustomInput
                   onChangeText={handleChange('email')}
@@ -124,30 +136,36 @@ const SignUpScreen = () => {
                   />
                 </CustomInput>
 
-                <CustomInput
-                  onChangeText={handleChange('birthday')}
-                  onBlur={handleBlur('birthday')}
-                  value={values.email}
-                  placeholder={translate('txtPickerDate')}
+                <CustomBirthdayPicker
+                  onChangeDate={handleChange('birthday')}
+                  renderBase={() => (
+                    <CustomInput
+                      onBlur={handleBlur('birthday')}
+                      value={values.birthday}
+                      placeholder={translate('txtPickerDate')}
+                      pointerEvents="none">
+                      <View style={styles.btnIcon}>
+                        <Image
+                          source={images.icons.ic_calendar}
+                          style={styles.imgIconStyle}
+                        />
+                      </View>
+                    </CustomInput>
+                  )}
                 />
 
-                <CustomInput
-                  onChangeText={handleChange('gender')}
-                  onBlur={handleBlur('gender')}
-                  value={values.email}
+                <CustomPickerSelect
+                  items={[
+                    { label: translate('txtMale'), value: 1 },
+                    { label: translate('txtFemale'), value: 0 },
+                  ]}
                   placeholder={translate('txtPickerGender')}
+                  defaultValue={values.gender}
+                  onChangeItem={(item) => setFieldValue('gender', item.value)}
                 />
 
                 <View style={styles.textContent}>
-                  <CheckBox
-                    style={styles.checkBoxStyle}
-                    boxType="square"
-                    tintColors={{ true: '#989898', false: '#989898' }}
-                    tintColor="#989898"
-                    onCheckColor="#3FB4C3"
-                    onTintColor="#3FB4C3"
-                    animationDuration={0.25}
-                  />
+                  <CustomCheckBox />
                   <Text style={styles.txtStyle}>{translate('txtPrivacy')}</Text>
                   <Text style={styles.txtStyleLink} onPress={() => {}}>
                     {translate('txtPrivacyLink')}
@@ -155,15 +173,7 @@ const SignUpScreen = () => {
                 </View>
 
                 <View style={styles.textContent}>
-                  <CheckBox
-                    style={styles.checkBoxStyle}
-                    boxType="square"
-                    tintColors={{ true: '#989898', false: '#989898' }}
-                    tintColor="#989898"
-                    onCheckColor="#3FB4C3"
-                    onTintColor="#3FB4C3"
-                    animationDuration={0.25}
-                  />
+                  <CustomCheckBox />
                   <Text style={styles.txtStyle}>
                     {translate('txtPrivacyMail')}
                   </Text>
@@ -246,12 +256,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     margin: 10,
     marginTop: 30,
-  },
-
-  checkBoxStyle: {
-    marginRight: 5,
-    width: 23,
-    height: 23,
   },
 
   txtStyle: {
