@@ -5,7 +5,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
 
-const CustomBirthdayPicker = ({ renderBase, onChangeDate }) => {
+const CustomBirthdayPicker = ({ renderBase, onChangeDate, defaultValue }) => {
   const [visible, setVisible] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
 
@@ -38,6 +38,9 @@ const CustomBirthdayPicker = ({ renderBase, onChangeDate }) => {
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hidePicker}
+        maximumDate={new Date()}
+        minimumDate={new Date(1900, 0, 1)}
+        value={defaultValue ?? date}
       />
     </View>
   );

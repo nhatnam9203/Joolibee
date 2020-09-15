@@ -28,20 +28,18 @@ import * as Yup from 'yup';
 const BUTTON_HEIGHT = 60;
 const BUTTON_WIDTH = '98%';
 
-const SignupSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-  lastName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
-});
-
 const SignUpScreen = () => {
   const dispatch = useDispatch();
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(2, translate('txtTooShort'))
+      .max(50, translate('txtTooShort'))
+      .required(translate('txtRequired')),
+    email: Yup.string()
+      .email(translate('txtInvalidEmail'))
+      .required('Required'),
+  });
+  const [hidePassword, setHidePassword] = React.useState(true);
 
   const signUpButtonPressed = React.useCallback(() => {
     const action = showLoading();
@@ -64,8 +62,10 @@ const SignUpScreen = () => {
             birthday: '',
             gender: '',
           }}
-          onSubmit={(values) => console.log(values)}
-          validationSchema={SignupSchema}>
+          onSubmit={(values) => console.log('submit ---------', values)}
+          validationSchema={SignupSchema}
+          isValidating={true}
+          isSubmitting={true}>
           {({
             handleChange,
             handleBlur,
@@ -86,17 +86,21 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
                   value={values.name}
-                  placeholder={translate('txtInputName')}>
-                  {errors.name && touched.name ? (
-                    <Image source={images.icons.ic_check_success} />
-                  ) : null}
-                </CustomInput>
+                  placeholder={translate('txtInputName')}
+                />
+                {/**Input name error */}
+                {errors.name && touched.name && (
+                  <View style={styles.errorContent}>
+                    {!!errors?.name && <TextError message={errors?.name} />}
+                  </View>
+                )}
 
                 <CustomInput
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
-                  placeholder={translate('txtInputPhone')}>
+                  placeholder={translate('txtInputPhone')}
+                  editable={false}>
                   <View style={styles.btnIcon}>
                     <Image
                       source={images.icons.ic_check_success}
@@ -116,7 +120,8 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
-                  placeholder={translate('txtInputPassword')}>
+                  placeholder={translate('txtInputPassword')}
+                  secureTextEntry={hidePassword}>
                   <TouchableOpacity style={styles.btnIcon} onPress={() => {}}>
                     <Image
                       source={images.icons.ic_hide_password}
@@ -129,7 +134,8 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
-                  placeholder={translate('txtInputConfirmPassword')}>
+                  placeholder={translate('txtInputConfirmPassword')}
+                  secureTextEntry={hidePassword}>
                   <Image
                     source={images.icons.ic_hide_password}
                     style={styles.imgIconStyle}
@@ -138,6 +144,7 @@ const SignUpScreen = () => {
 
                 <CustomBirthdayPicker
                   onChangeDate={handleChange('birthday')}
+                  defaultValue={values.birthday}
                   renderBase={() => (
                     <CustomInput
                       onBlur={handleBlur('birthday')}
@@ -231,6 +238,10 @@ const SignUpScreen = () => {
   );
 };
 
+const TextError = ({ message }) => (
+  <Text style={styles.txtErrorMessage}>{'· ' + message}</Text>
+);
+
 const styles = StyleSheet.create({
   avoidContainer: { flex: 1, backgroundColor: AppStyles.colors.background },
 
@@ -296,6 +307,17 @@ const styles = StyleSheet.create({
     height: 22,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  errorContent: {
+    flex: 0,
+    marginHorizontal: 15,
+    marginBottom: 10,
+  },
+
+  txtErrorMessage: {
+    color: AppStyles.colors.accent,
+    ...AppStyles.fonts.mini,
   },
 });
 

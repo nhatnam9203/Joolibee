@@ -30,6 +30,11 @@ const AppStyles = {
       fontSize: 16,
       color: '#2B2B2B',
     },
+
+    mini: {
+      fontFamily: 'Roboto-Regular',
+      fontSize: 12,
+    },
   },
   styles: {
     container: { flex: 1 },

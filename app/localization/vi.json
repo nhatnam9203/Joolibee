@@ -28,5 +28,9 @@
   "txtPrivacyMail": "Nhận chương trình khuyến mãi qua email",
   "txtHaveAccount": "Đã có tài khoản ?",
   "txtMale": "Nam",
-  "txtFemale": "Nữ"
+  "txtFemale": "Nữ",
+  "txtTooShort": "Nội dung nhập quá ngắn ...",
+  "txtTooLong": "Nội dung nhập quá dài ...",
+  "txtRequired": "Không được để trống ",
+  "txtInvalidEmail": "Email không đúng!"
 }
