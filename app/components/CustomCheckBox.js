@@ -5,6 +5,7 @@ import CheckBox from '@react-native-community/checkbox';
 const CustomCheckBox = ({
   normalColor = '#989898',
   selectedColor = '#3FB4C3',
+  ...props
 }) => {
   return (
     <CheckBox
@@ -15,6 +16,7 @@ const CustomCheckBox = ({
       onCheckColor={selectedColor}
       onTintColor={selectedColor}
       animationDuration={0.25}
+      {...props}
     />
   );
 };

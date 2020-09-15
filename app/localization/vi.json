@@ -32,5 +32,6 @@
   "txtTooShort": "Nội dung nhập quá ngắn ...",
   "txtTooLong": "Nội dung nhập quá dài ...",
   "txtRequired": "Không được để trống ",
-  "txtInvalidEmail": "Email không đúng!"
+  "txtInvalidEmail": "Email không đúng!",
+  "txtPasswordMatch": "Mật khẩu không trùng khớp!"
 }

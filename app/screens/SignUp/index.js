@@ -37,14 +37,29 @@ const SignUpScreen = () => {
       .required(translate('txtRequired')),
     email: Yup.string()
       .email(translate('txtInvalidEmail'))
-      .required('Required'),
+      .required(translate('txtRequired')),
+    password: Yup.string().required(translate('txtRequired')),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
+      .required(translate('txtRequired')),
   });
   const [hidePassword, setHidePassword] = React.useState(true);
+  const [privacyChecked, setPrivacyChecked] = React.useState(false);
+  const [publicMailChecked, setPublicMailChecked] = React.useState(false);
 
-  const signUpButtonPressed = React.useCallback(() => {
-    const action = showLoading();
-    dispatch(action);
-  }, [dispatch]);
+  const signUpButtonPressed = React.useCallback(
+    (values) => {
+      const action = showLoading();
+      dispatch(action);
+
+      console.log('submit values ', values);
+    },
+    [dispatch],
+  );
+
+  const visiblePasswordButtonPressed = React.useCallback(() => {
+    setHidePassword(!hidePassword);
+  }, [hidePassword]);
 
   return (
     <KeyboardAvoidingView
@@ -62,10 +77,9 @@ const SignUpScreen = () => {
             birthday: '',
             gender: '',
           }}
-          onSubmit={(values) => console.log('submit ---------', values)}
+          onSubmit={(values) => signUpButtonPressed(values)}
           validationSchema={SignupSchema}
-          isValidating={true}
-          isSubmitting={true}>
+          isValidating={true}>
           {({
             handleChange,
             handleBlur,
@@ -87,8 +101,9 @@ const SignUpScreen = () => {
                   onBlur={handleBlur('name')}
                   value={values.name}
                   placeholder={translate('txtInputName')}
+                  textContentType="name"
                 />
-                {/**Input name error */}
+                {/**Name input error */}
                 {errors.name && touched.name && (
                   <View style={styles.errorContent}>
                     {!!errors?.name && <TextError message={errors?.name} />}
@@ -100,7 +115,8 @@ const SignUpScreen = () => {
                   onBlur={handleBlur('phone')}
                   value={values.phone}
                   placeholder={translate('txtInputPhone')}
-                  editable={false}>
+                  editable={false}
+                  textContentType="telephoneNumber">
                   <View style={styles.btnIcon}>
                     <Image
                       source={images.icons.ic_check_success}
@@ -114,33 +130,56 @@ const SignUpScreen = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   placeholder={translate('txtInputEmail')}
+                  textContentType="emailAddress"
                 />
+                {/**Email input error */}
+                {errors.email && (
+                  <View style={styles.errorContent}>
+                    {!!errors?.email && <TextError message={errors?.email} />}
+                  </View>
+                )}
 
                 <CustomInput
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
                   placeholder={translate('txtInputPassword')}
-                  secureTextEntry={hidePassword}>
-                  <TouchableOpacity style={styles.btnIcon} onPress={() => {}}>
-                    <Image
-                      source={images.icons.ic_hide_password}
-                      style={styles.imgIconStyle}
-                    />
-                  </TouchableOpacity>
+                  secureTextEntry={hidePassword}
+                  textContentType="password">
+                  <ButtonVisiblePassword
+                    onPress={visiblePasswordButtonPressed}
+                    visible={hidePassword}
+                  />
                 </CustomInput>
+                {/**Passwrod input error */}
+                {errors.password && (
+                  <View style={styles.errorContent}>
+                    {!!errors?.password && (
+                      <TextError message={errors?.password} />
+                    )}
+                  </View>
+                )}
 
                 <CustomInput
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
                   placeholder={translate('txtInputConfirmPassword')}
-                  secureTextEntry={hidePassword}>
-                  <Image
-                    source={images.icons.ic_hide_password}
-                    style={styles.imgIconStyle}
+                  secureTextEntry={hidePassword}
+                  textContentType="password">
+                  <ButtonVisiblePassword
+                    onPress={visiblePasswordButtonPressed}
+                    visible={hidePassword}
                   />
                 </CustomInput>
+                {/**Confirm password input error */}
+                {errors.confirmPassword && (
+                  <View style={styles.errorContent}>
+                    {!!errors?.confirmPassword && (
+                      <TextError message={errors?.confirmPassword} />
+                    )}
+                  </View>
+                )}
 
                 <CustomBirthdayPicker
                   onChangeDate={handleChange('birthday')}
@@ -172,7 +211,10 @@ const SignUpScreen = () => {
                 />
 
                 <View style={styles.textContent}>
-                  <CustomCheckBox />
+                  <CustomCheckBox
+                    value={privacyChecked}
+                    onValueChange={() => setPrivacyChecked(!privacyChecked)}
+                  />
                   <Text style={styles.txtStyle}>{translate('txtPrivacy')}</Text>
                   <Text style={styles.txtStyleLink} onPress={() => {}}>
                     {translate('txtPrivacyLink')}
@@ -180,7 +222,12 @@ const SignUpScreen = () => {
                 </View>
 
                 <View style={styles.textContent}>
-                  <CustomCheckBox />
+                  <CustomCheckBox
+                    value={publicMailChecked}
+                    onValueChange={() =>
+                      setPublicMailChecked(!publicMailChecked)
+                    }
+                  />
                   <Text style={styles.txtStyle}>
                     {translate('txtPrivacyMail')}
                   </Text>
@@ -189,13 +236,14 @@ const SignUpScreen = () => {
                 <View style={styles.btnContent}>
                   <CustomButton
                     style={styles.btnStyle}
-                    onPress={signUpButtonPressed}
+                    onPress={handleSubmit}
                     width={BUTTON_WIDTH}
                     height={BUTTON_HEIGHT}
                     label={translate('txtSignUp')}
                     borderColor={AppStyles.colors.accent}
                     textColor="#fff"
                     bgColor={AppStyles.colors.accent}
+                    disabled={true}
                   />
 
                   <CustomButton
@@ -206,8 +254,12 @@ const SignUpScreen = () => {
                     label={translate('txtSignUpFacebook')}
                     borderColor="#1976D2"
                     textColor="#fff"
-                    bgColor="#1976D2"
-                  />
+                    bgColor="#1976D2">
+                    <Image
+                      source={images.icons.ic_facebook}
+                      style={styles.imgIconStyle}
+                    />
+                  </CustomButton>
 
                   <CustomButton
                     style={styles.btnStyle}
@@ -217,8 +269,12 @@ const SignUpScreen = () => {
                     label={translate('txtSignUpGoogle')}
                     borderColor="#fff"
                     textColor="#1B1B1B"
-                    bgColor="#fff"
-                  />
+                    bgColor="#fff">
+                    <Image
+                      source={images.icons.ic_google}
+                      style={styles.imgIconStyle}
+                    />
+                  </CustomButton>
 
                   <View style={styles.textContent}>
                     <Text style={styles.txtStyle}>
@@ -238,8 +294,23 @@ const SignUpScreen = () => {
   );
 };
 
+// Layout message error
 const TextError = ({ message }) => (
   <Text style={styles.txtErrorMessage}>{'· ' + message}</Text>
+);
+
+// Layout button eye -> hide/show secureTextEntry password
+const ButtonVisiblePassword = ({ onPress, visible }) => (
+  <TouchableOpacity style={styles.btnIcon} onPress={onPress} activeOpacity={1}>
+    <Image
+      source={images.icons.ic_hide_password}
+      style={[
+        styles.imgIconStyle,
+        // eslint-disable-next-line react-native/no-inline-styles
+        { tintColor: visible ? '#9E9E9E' : '#9E9E9E80' },
+      ]}
+    />
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
@@ -251,7 +322,7 @@ const styles = StyleSheet.create({
 
   content: {
     flex: 0,
-    margin: metrics.padding,
+    marginHorizontal: metrics.padding,
   },
 
   scrollContentContainer: {

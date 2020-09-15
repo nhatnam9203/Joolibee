@@ -13,6 +13,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
+import Config from 'react-native-config';
 
 import rootReducers from '../slices'; // where reducers is a object of reducers
 import sagas from '../sagas';
@@ -21,7 +22,7 @@ const config = {
   key: 'root',
   storage: AsyncStorage,
   blacklist: [],
-  debug: process.env.NODE_ENV !== 'production', //to get useful logging
+  debug: Config.NODE_ENV !== 'production', //to get useful logging
 };
 const initialState = {};
 const middleware = [];
@@ -55,7 +56,7 @@ const store = configureStore({
     ...middleware,
   ],
   preloadedState: initialState,
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: Config.NODE_ENV !== 'production',
   enhancers: enhancers,
 });
 

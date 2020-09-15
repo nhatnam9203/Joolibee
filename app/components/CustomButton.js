@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableHighlight, Text, View } from 'react-native';
 
 const CustomButton = ({
   onPress,
@@ -13,33 +13,48 @@ const CustomButton = ({
   borderColor,
   style,
 }) => (
-  <TouchableOpacity
+  <TouchableHighlight
     style={[
-      styles.btnStyle,
       {
         width: width,
         height: height,
         borderRadius: height / 2,
-        backgroundColor: bgColor,
         ...(borderColor && { borderWidth: 2, borderColor: borderColor }),
       },
       absolute && styles.btnAbsoluteStyle,
       style,
     ]}
+    activeOpacity={0.2}
+    underlayColor={bgColor}
     onPress={onPress}>
-    {children && children}
-    {!!label && (
-      <Text style={[styles.txtStyle, { color: textColor }]}>
-        {label?.toUpperCase()}
-      </Text>
-    )}
-  </TouchableOpacity>
+    <View
+      style={[
+        styles.content,
+        {
+          backgroundColor: bgColor,
+          borderRadius: height / 2,
+          ...(borderColor && { borderWidth: 2, borderColor: borderColor }),
+        },
+      ]}>
+      {children && children}
+      {!!label && (
+        <Text style={[styles.txtStyle, { color: textColor }]}>
+          {label?.toUpperCase()}
+        </Text>
+      )}
+    </View>
+  </TouchableHighlight>
 );
 
 const styles = StyleSheet.create({
-  btnStyle: { justifyContent: 'center', alignItems: 'center' },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   btnAbsoluteStyle: { position: 'absolute', top: 10, left: 10 },
-  txtStyle: { fontFamily: 'SVN-Merge', fontSize: 16 },
+  txtStyle: { fontFamily: 'SVN-Merge', fontSize: 16, marginLeft: 5 },
 });
 
 export default CustomButton;

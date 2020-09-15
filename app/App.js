@@ -21,12 +21,11 @@ import {
   useDispatch,
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { client } from './graphql';
+import { graphQlClient } from './graphql';
 import { Loading } from '@components';
 import { hideLoading } from '@slices/app';
 
 const { persistor, store } = configureAppStore();
-const apolloClient = client();
 
 const fontConfig = {
   default: {
@@ -73,7 +72,7 @@ export default function App() {
   return (
     <StoreProvider store={store}>
       <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-        <ApolloProvider client={apolloClient}>
+        <ApolloProvider client={graphQlClient}>
           <PaperProvider theme={theme}>
             <Navigator />
             <LoadingProvider />
