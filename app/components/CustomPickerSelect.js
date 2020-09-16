@@ -16,6 +16,7 @@ const CustomPickerSelect = (props) => {
       dropDownMaxHeight={DROP_DOWN_MAX_HEIGHT}
       labelStyle={styles.labelStyle}
       selectedLabelStyle={styles.selectedLabelStyle}
+      activeLabelStyle={styles.activeLabelStyle}
       placeholderStyle={styles.placeholderStyle}
       {...props}
     />
@@ -61,6 +62,16 @@ const styles = StyleSheet.create({
   },
 
   selectedLabelStyle: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 16,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    padding: 0,
+    color: '#484848',
+    flex: 1,
+  },
+
+  activeLabelStyle: {
     fontFamily: 'Roboto-Regular',
     fontSize: 16,
     textAlign: 'left',

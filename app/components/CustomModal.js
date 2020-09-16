@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-const CustomModal = ({ children, showModal }) => {
+export const CustomModal = ({ children, showModal }) => {
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
@@ -11,7 +11,7 @@ const CustomModal = ({ children, showModal }) => {
   }, [showModal]);
 
   return (
-    <Modal animationType="slide" visible={visible} transparent={true}>
+    <Modal animationType="slide" visible={showModal} transparent={true}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={1}
@@ -21,6 +21,10 @@ const CustomModal = ({ children, showModal }) => {
     </Modal>
   );
 };
+
+export const CustomModalTitle = ({ children }) => (
+  <Text style={styles.txtTitleStyle}>{children?.toUpperCase()}</Text>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +40,17 @@ const styles = StyleSheet.create({
     minWidth: '80%',
     minHeight: '40%',
     padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  txtTitleStyle: {
+    fontFamily: 'SVN-Merge',
+    fontSize: 24,
+    color: '#E31837',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 
-export default CustomModal;
+// export default CustomModal;

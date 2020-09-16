@@ -14,7 +14,7 @@ const Loading = ({ isLoading, onCancelLoading }) => {
         }
 
         clearTimeout(timer);
-      }, 10000);
+      }, 30000);
     }
 
     setShowLoading(isLoading);

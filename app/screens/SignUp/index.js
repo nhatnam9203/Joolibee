@@ -76,11 +76,11 @@ const SignUpScreen = () => {
     setHidePassword(!hidePassword);
   }, [hidePassword]);
 
-  React.useEffect(() => {
-    if (signUpSuccess) {
-      // PopupSignUpSuccess();
-    }
-  }, [signUpSuccess, navigation]);
+  const goSignInPage = () => {
+    const action = clearSignupState();
+    dispatch(action);
+    navigation.goBack();
+  };
 
   React.useEffect(() => {
     const resetSignupState = () => {
@@ -345,7 +345,7 @@ const SignUpScreen = () => {
           )}
         </Formik>
 
-        <PopupSignUpSuccess showModal={signUpSuccess} />
+        <PopupSignUpSuccess showModal={signUpSuccess} onPress={goSignInPage} />
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -370,7 +370,25 @@ const ButtonVisiblePassword = ({ onPress, visible }) => (
   </TouchableOpacity>
 );
 
-const PopupSignUpSuccess = () => <CustomModal />;
+const POPUP_BUTTON_WIDTH = 200;
+const PopupSignUpSuccess = ({ onPress, showModal }) => (
+  <CustomModal.CustomModal showModal={showModal}>
+    <Image source={images.icons.ic_succeeded} />
+    <CustomModal.CustomModalTitle>
+      {translate('txtSignupSuccess')}
+    </CustomModal.CustomModalTitle>
+    <CustomButton
+      style={styles.btnStyle}
+      onPress={onPress}
+      width={POPUP_BUTTON_WIDTH}
+      height={BUTTON_HEIGHT}
+      label={translate('txtSignIn')}
+      borderColor={AppStyles.colors.button}
+      textColor={AppStyles.colors.text}
+      bgColor={AppStyles.colors.button}
+    />
+  </CustomModal.CustomModal>
+);
 
 const styles = StyleSheet.create({
   avoidContainer: { flex: 1, backgroundColor: AppStyles.colors.background },

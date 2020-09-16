@@ -29,6 +29,7 @@ const images = {
     ic_google: require('../assets/icons/ic-google.png'),
     ic_hide_password: require('../assets/icons/ic-hide-password.png'),
     ic_calendar: require('../assets/icons/ic-calendar.png'),
+    ic_succeeded: require('../assets/icons/ic_succeeded.png'),
   },
 };
 

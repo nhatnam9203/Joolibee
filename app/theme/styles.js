@@ -8,6 +8,7 @@ import images from './images';
 
 const primaryColor = '#FFFFFF';
 const secondaryColor = '#E31837';
+const buttonColor = '#FFC522';
 
 const AppStyles = {
   colors: {
@@ -23,6 +24,7 @@ const AppStyles = {
     placeholder: '', // color for placeholder text, such as input placeholder.
     backdrop: '', // color for backdrops of various components such as modals.
     surface: '', // background color for elements containing content, such as cards.
+    button: buttonColor,
   },
   fonts: {
     text: {
