@@ -5,6 +5,7 @@ import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { createHttpLink } from 'apollo-link-http';
 import Config from 'react-native-config';
+import _ from 'lodash';
 
 const httpLink = createHttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
@@ -17,44 +18,56 @@ const authLink = setContext(async (req, { headers }) => {
     myHeaders = {
       'Content-Type': 'application/json',
       credentials: 'same-origin',
+      Accept: 'application/json',
     };
   }
   return {
-    ...myHeaders,
     headers: {
-      authorization: jwt ? `Bearer ${jwt.token}` : '',
+      ...myHeaders,
+      // authorization: jwt ? `Bearer ${jwt.token}` : '',
+      Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
     },
   };
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    // logger.debug(graphQLErrors, '*************graphQLErrors*************')
-    if (graphQLErrors[0] && graphQLErrors[0].message) {
-      let m = graphQLErrors[0].message;
-      Logger.debug(m, '*************graphQLErrors*************');
-      let index = m.search('E_JWT_TOKEN_EXPIRED');
-      if (index >= 0) {
-        // accountTokenExpired();
+const errorLink = onError(
+  ({ graphQLErrors, networkError, operation, response, forward }) => {
+    if (graphQLErrors?.length > 0) {
+      Logger.debug(graphQLErrors, '*************graphQLErrors*************');
+
+      let queryErrors = [];
+      let arrErrors = {};
+      graphQLErrors.map(({ message, locations, path, extensions }, index) => {
+        if (extensions.category === 'graphql') {
+          // error call graphql wrong
+          queryErrors.push(message);
+        } else {
+          switch (extensions.code) {
+            default:
+              arrErrors[index] = message;
+              break;
+          }
+        }
+      });
+
+      if (queryErrors.length > 0) {
+        Logger.error(queryErrors, 'Graphql query wrong');
       }
 
-      // let rs = await localStorage.getActiveUser(); if(rs) { }
+      if (!_.isEmpty(arrErrors)) {
+        response.error = arrErrors;
+      }
     }
-    // console.log(graphQLErrors) graphQLErrors.map(({message, path}) => {
-    // logger.debug(`Message: ${message}, Path: ${path}`, 'Graphql Errors')
-    // return '' });
-  }
 
-  if (networkError) Logger.debug('[Network error]:', networkError);
-});
+    if (networkError) {
+      Logger.debug('[Network error]:', networkError);
+    }
+  },
+);
 
-// const link = ApolloLink.concat(httpLink, errorLink, authLink); const link =
-// errorLink.concat(httpLink);
 const link = ApolloLink.from([authLink, errorLink, httpLink]);
 
 const cache = new InMemoryCache();
-// const graphQlClient = new ApolloClient({uri:
-// 'http://192.168.0.117:3000/api/v1/graphql'})
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'no-cache',

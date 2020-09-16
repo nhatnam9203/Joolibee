@@ -5,7 +5,6 @@ const CustomInput = ({ children, ...inputProps }) => {
   return (
     <View style={styles.container}>
       <TextInput
-        enablesReturnKeyAutomatically={true}
         style={styles.inputStyle}
         placeholderTextColor="#9E9E9E"
         autoCapitalize="none"

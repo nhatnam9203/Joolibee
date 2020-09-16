@@ -33,5 +33,6 @@
   "txtTooLong": "Nội dung nhập quá dài ...",
   "txtRequired": "Không được để trống ",
   "txtInvalidEmail": "Email không đúng!",
-  "txtPasswordMatch": "Mật khẩu không trùng khớp!"
+  "txtPasswordMatch": "Mật khẩu không trùng khớp!",
+  "txtPrivacyRequired": "Bạn có đồng ý với các chính sách và quy định của chúng tôi"
 }

@@ -1,58 +1,73 @@
 import {
-  CustomButton,
-  CustomInput,
-  CustomCheckBox,
-  CustomPickerSelect,
   CustomBirthdayPicker,
+  CustomButton,
+  CustomCheckBox,
+  CustomInput,
+  CustomPickerSelect,
+  CustomModal,
 } from '@components';
 import { translate } from '@localize';
-import { showLoading } from '@slices/app';
-import { AppStyles, metrics, images } from '@theme';
+import { signUp, clearSignupState } from '@slices/account';
+import { AppStyles, images, metrics } from '@theme';
 import { Formik } from 'formik';
+import _ from 'lodash';
 import React from 'react';
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  View,
-  Image,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { isIphoneX } from '../../lib/isIphoneX';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { isIphoneX } from '../../lib/isIphoneX';
+import { useNavigation } from '@react-navigation/native';
 
 const BUTTON_HEIGHT = 60;
 const BUTTON_WIDTH = '98%';
 
 const SignUpScreen = () => {
+  const navigation = useNavigation();
+
+  // redux
   const dispatch = useDispatch();
+
+  // validate form
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(50, translate('txtTooShort'))
       .required(translate('txtRequired')),
-    email: Yup.string()
-      .email(translate('txtInvalidEmail'))
-      .required(translate('txtRequired')),
+    email: Yup.string().email(translate('txtInvalidEmail')),
     password: Yup.string().required(translate('txtRequired')),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
       .required(translate('txtRequired')),
+    privacyChecked: Yup.bool()
+      .oneOf([true], translate('txtPrivacyRequired'))
+      .required(translate('txtPrivacyRequired')),
+    publicMailChecked: Yup.bool(),
   });
+
+  // state
   const [hidePassword, setHidePassword] = React.useState(true);
-  const [privacyChecked, setPrivacyChecked] = React.useState(false);
-  const [publicMailChecked, setPublicMailChecked] = React.useState(false);
 
-  const signUpButtonPressed = React.useCallback(
+  const signUpError = useSelector((state) => state.account.signUpError);
+  const signUpSuccess = useSelector((state) => state.account.signUpSuccess);
+
+  // function
+
+  const signUpDataSubmit = React.useCallback(
     (values) => {
-      const action = showLoading();
-      dispatch(action);
+      Logger.info(values, 'submit values ');
 
-      console.log('submit values ', values);
+      const action = signUp(values, { dispatch });
+      dispatch(action);
     },
     [dispatch],
   );
@@ -61,6 +76,22 @@ const SignUpScreen = () => {
     setHidePassword(!hidePassword);
   }, [hidePassword]);
 
+  React.useEffect(() => {
+    if (signUpSuccess) {
+      // PopupSignUpSuccess();
+    }
+  }, [signUpSuccess, navigation]);
+
+  React.useEffect(() => {
+    const resetSignupState = () => {
+      const action = clearSignupState();
+      dispatch(action);
+    };
+
+    return resetSignupState();
+  }, [dispatch]);
+
+  // render
   return (
     <KeyboardAvoidingView
       style={styles.avoidContainer}
@@ -77,7 +108,7 @@ const SignUpScreen = () => {
             birthday: '',
             gender: '',
           }}
-          onSubmit={(values) => signUpButtonPressed(values)}
+          onSubmit={(values) => signUpDataSubmit(values)}
           validationSchema={SignupSchema}
           isValidating={true}>
           {({
@@ -133,7 +164,7 @@ const SignUpScreen = () => {
                   textContentType="emailAddress"
                 />
                 {/**Email input error */}
-                {errors.email && (
+                {errors.email && touched.email && (
                   <View style={styles.errorContent}>
                     {!!errors?.email && <TextError message={errors?.email} />}
                   </View>
@@ -145,14 +176,15 @@ const SignUpScreen = () => {
                   value={values.password}
                   placeholder={translate('txtInputPassword')}
                   secureTextEntry={hidePassword}
-                  textContentType="password">
+                  textContentType="password"
+                  blurOnSubmit={false}>
                   <ButtonVisiblePassword
                     onPress={visiblePasswordButtonPressed}
                     visible={hidePassword}
                   />
                 </CustomInput>
-                {/**Passwrod input error */}
-                {errors.password && (
+                {/**Password input error */}
+                {errors.password && touched.password && (
                   <View style={styles.errorContent}>
                     {!!errors?.password && (
                       <TextError message={errors?.password} />
@@ -166,7 +198,8 @@ const SignUpScreen = () => {
                   value={values.confirmPassword}
                   placeholder={translate('txtInputConfirmPassword')}
                   secureTextEntry={hidePassword}
-                  textContentType="password">
+                  textContentType="password"
+                  blurOnSubmit={false}>
                   <ButtonVisiblePassword
                     onPress={visiblePasswordButtonPressed}
                     visible={hidePassword}
@@ -210,10 +243,21 @@ const SignUpScreen = () => {
                   onChangeItem={(item) => setFieldValue('gender', item.value)}
                 />
 
+                {/**Server response error */}
+                {!_.isEmpty(signUpError) && (
+                  <View style={styles.errorContent}>
+                    {Object.values(signUpError).map((msg, index) => (
+                      <TextError message={msg} key={index} />
+                    ))}
+                  </View>
+                )}
+
                 <View style={styles.textContent}>
                   <CustomCheckBox
-                    value={privacyChecked}
-                    onValueChange={() => setPrivacyChecked(!privacyChecked)}
+                    value={values.privacyChecked}
+                    onValueChange={() =>
+                      setFieldValue('privacyChecked', !values.privacyChecked)
+                    }
                   />
                   <Text style={styles.txtStyle}>{translate('txtPrivacy')}</Text>
                   <Text style={styles.txtStyleLink} onPress={() => {}}>
@@ -221,11 +265,23 @@ const SignUpScreen = () => {
                   </Text>
                 </View>
 
+                {/**policy input error */}
+                {errors.privacyChecked && (
+                  <View style={styles.errorContent}>
+                    {!!errors?.privacyChecked && (
+                      <TextError message={errors?.privacyChecked} />
+                    )}
+                  </View>
+                )}
+
                 <View style={styles.textContent}>
                   <CustomCheckBox
-                    value={publicMailChecked}
+                    value={values.publicMailChecked}
                     onValueChange={() =>
-                      setPublicMailChecked(!publicMailChecked)
+                      setFieldValue(
+                        'publicMailChecked',
+                        !values.publicMailChecked,
+                      )
                     }
                   />
                   <Text style={styles.txtStyle}>
@@ -243,7 +299,6 @@ const SignUpScreen = () => {
                     borderColor={AppStyles.colors.accent}
                     textColor="#fff"
                     bgColor={AppStyles.colors.accent}
-                    disabled={true}
                   />
 
                   <CustomButton
@@ -289,6 +344,8 @@ const SignUpScreen = () => {
             </View>
           )}
         </Formik>
+
+        <PopupSignUpSuccess showModal={signUpSuccess} />
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -296,7 +353,7 @@ const SignUpScreen = () => {
 
 // Layout message error
 const TextError = ({ message }) => (
-  <Text style={styles.txtErrorMessage}>{'· ' + message}</Text>
+  <Text style={styles.txtErrorMessage}>{'* ' + message}</Text>
 );
 
 // Layout button eye -> hide/show secureTextEntry password
@@ -312,6 +369,8 @@ const ButtonVisiblePassword = ({ onPress, visible }) => (
     />
   </TouchableOpacity>
 );
+
+const PopupSignUpSuccess = () => <CustomModal />;
 
 const styles = StyleSheet.create({
   avoidContainer: { flex: 1, backgroundColor: AppStyles.colors.background },

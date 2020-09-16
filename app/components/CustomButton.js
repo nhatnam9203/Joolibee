@@ -12,6 +12,7 @@ const CustomButton = ({
   absolute = false,
   borderColor,
   style,
+  ...props
 }) => (
   <TouchableHighlight
     style={[
@@ -26,7 +27,8 @@ const CustomButton = ({
     ]}
     activeOpacity={0.2}
     underlayColor={bgColor}
-    onPress={onPress}>
+    onPress={onPress}
+    {...props}>
     <View
       style={[
         styles.content,

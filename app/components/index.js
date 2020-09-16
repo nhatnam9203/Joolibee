@@ -7,6 +7,7 @@ import CustomCheckBox from './CustomCheckBox';
 import CustomPickerSelect from './CustomPickerSelect';
 import CustomCalendarPicker from './CustomCalendarPicker';
 import CustomBirthdayPicker from './CustomBirthdayPicker';
+import CustomModal from './CustomModal';
 
 module.exports = {
   TopBar,
@@ -18,4 +19,5 @@ module.exports = {
   CustomPickerSelect,
   CustomCalendarPicker,
   CustomBirthdayPicker,
+  CustomModal,
 };
