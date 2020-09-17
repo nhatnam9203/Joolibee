@@ -37,6 +37,12 @@ const AppStyles = {
       fontFamily: 'Roboto-Regular',
       fontSize: 12,
     },
+
+    title: {
+      fontFamily: 'SVN-Merge',
+      fontSize: 28,
+      color: '#FFFFFF',
+    },
   },
   styles: {
     container: { flex: 1 },
@@ -62,6 +68,10 @@ const AppStyles = {
       shadowRadius: 2.22,
 
       elevation: 3,
+    },
+
+    absolute: {
+      position: 'absolute',
     },
   },
   navigation: {

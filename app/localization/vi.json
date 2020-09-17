@@ -16,6 +16,8 @@
   "txtSignUpFacebook": "Đăng kí bằng Facebook",
   "txtSignUpGoogle": "Đăng kí bằng Google",
   "txtSignIn": "Đăng nhập",
+  "txtSignInFacebook": "Đăng nhập bằng Facebook",
+  "txtSignInGoogle": "Đăng nhập bằng Google",
   "txtInputName": "Họ & Tên *",
   "txtInputPhone": "Số điện thoại *",
   "txtInputEmail": "Email",
@@ -36,4 +38,7 @@
   "txtPasswordMatch": "Mật khẩu không trùng khớp!",
   "txtPrivacyRequired": "Bạn có đồng ý với các chính sách và quy định của chúng tôi",
   "txtSignupSuccess": "Đăng ký tài khoản thành công!",
+  "txtPleaseSignIn": "Vui lòng đăng nhập",
+  "txtRemember": "Ghi nhớ đăng nhập",
+  "txtForgetPassWord": "Quên  mật khẩu"
 }

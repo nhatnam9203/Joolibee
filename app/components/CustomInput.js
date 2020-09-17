@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
-const CustomInput = ({ children, ...inputProps }) => {
+const CustomInput = ({ children, style, ...inputProps }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TextInput
         style={styles.inputStyle}
         placeholderTextColor="#9E9E9E"
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+
   inputStyle: {
     fontFamily: 'Roboto-Regular',
     fontSize: 16,

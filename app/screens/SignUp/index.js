@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { isIphoneX } from '../../lib/isIphoneX';
 import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../ScreenName';
 
 const BUTTON_HEIGHT = 60;
 const BUTTON_WIDTH = '98%';
@@ -64,8 +65,6 @@ const SignUpScreen = () => {
 
   const signUpDataSubmit = React.useCallback(
     (values) => {
-      Logger.info(values, 'submit values ');
-
       const action = signUp(values, { dispatch });
       dispatch(action);
     },
@@ -79,17 +78,17 @@ const SignUpScreen = () => {
   const goSignInPage = () => {
     const action = clearSignupState();
     dispatch(action);
-    navigation.goBack();
+    navigation.navigate(ScreenName.SignIn);
   };
 
-  React.useEffect(() => {
-    const resetSignupState = () => {
-      const action = clearSignupState();
-      dispatch(action);
-    };
+  // React.useEffect(() => {
+  //   const resetSignupState = () => {
+  //     const action = clearSignupState();
+  //     dispatch(action);
+  //   };
 
-    return resetSignupState();
-  }, [dispatch]);
+  //   return resetSignupState();
+  // }, [dispatch]);
 
   // render
   return (
@@ -335,7 +334,9 @@ const SignUpScreen = () => {
                     <Text style={styles.txtStyle}>
                       {translate('txtHaveAccount')}
                     </Text>
-                    <Text style={styles.txtBoldStyleLink} onPress={() => {}}>
+                    <Text
+                      style={styles.txtBoldStyleLink}
+                      onPress={goSignInPage}>
                       {translate('txtSignIn')}
                     </Text>
                   </View>

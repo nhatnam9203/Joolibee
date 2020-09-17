@@ -17,7 +17,7 @@ const WelcomeScreen = () => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       // loginCall();
-      navigation.navigate(ScreenName.SignUp);
+      navigation.navigate(ScreenName.SignIn);
     }, 1000);
 
     return () => clearInterval(interval);

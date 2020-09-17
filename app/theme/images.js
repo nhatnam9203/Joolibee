@@ -31,6 +31,7 @@ const images = {
     ic_calendar: require('../assets/icons/ic-calendar.png'),
     ic_succeeded: require('../assets/icons/ic_succeeded.png'),
   },
+  login_polygon: require('../assets/images/login-polygon.png'),
 };
 
 export default images;
