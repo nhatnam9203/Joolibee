@@ -8,6 +8,7 @@ import CustomPickerSelect from './CustomPickerSelect';
 import CustomCalendarPicker from './CustomCalendarPicker';
 import CustomBirthdayPicker from './CustomBirthdayPicker';
 import * as CustomModal from './CustomModal';
+import CustomTextLink from './CustomTextLink';
 
 module.exports = {
   TopBar,
@@ -20,4 +21,5 @@ module.exports = {
   CustomCalendarPicker,
   CustomBirthdayPicker,
   CustomModal,
+  CustomTextLink,
 };

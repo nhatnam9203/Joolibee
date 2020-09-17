@@ -73,6 +73,8 @@ const AppStyles = {
     absolute: {
       position: 'absolute',
     },
+
+    iconStyle: { resizeMode: 'center' },
   },
   navigation: {
     default: {

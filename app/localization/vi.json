@@ -12,9 +12,9 @@
   "txtSettingSupport": "Hỗ trợ",
   "txtSetting": "Cài đặt",
   "txtSignOut": "Đăng Xuất",
-  "txtSignUp": "Đăng kí tài khoản",
-  "txtSignUpFacebook": "Đăng kí bằng Facebook",
-  "txtSignUpGoogle": "Đăng kí bằng Google",
+  "txtSignUp": "Đăng ký tài khoản",
+  "txtSignUpFacebook": "Đăng ký bằng Facebook",
+  "txtSignUpGoogle": "Đăng ký bằng Google",
   "txtSignIn": "Đăng nhập",
   "txtSignInFacebook": "Đăng nhập bằng Facebook",
   "txtSignInGoogle": "Đăng nhập bằng Google",
@@ -28,7 +28,7 @@
   "txtPrivacy": "Đồng ý với",
   "txtPrivacyLink": "Chính sách & Quy định chung",
   "txtPrivacyMail": "Nhận chương trình khuyến mãi qua email",
-  "txtHaveAccount": "Đã có tài khoản ?",
+  "txtNotHaveAccount": "Đã chưa có tài khoản ?",
   "txtMale": "Nam",
   "txtFemale": "Nữ",
   "txtTooShort": "Nội dung nhập quá ngắn ...",
@@ -40,5 +40,6 @@
   "txtSignupSuccess": "Đăng ký tài khoản thành công!",
   "txtPleaseSignIn": "Vui lòng đăng nhập",
   "txtRemember": "Ghi nhớ đăng nhập",
-  "txtForgetPassWord": "Quên  mật khẩu"
+  "txtForgetPassWord": "Quên mật khẩu",
+  "txtSignUpNow": "Đăng ký ngay"
 }
