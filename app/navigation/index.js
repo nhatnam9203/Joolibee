@@ -5,12 +5,33 @@ import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
 
+import { createStackNavigator } from '@react-navigation/stack';
+import { SplashScreen, ScreenName } from '../screens';
+const Stack = createStackNavigator();
+
+function SplashStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName={ScreenName.Main}
+      headerMode="none">
+      <Stack.Screen
+        component={SplashScreen}
+        name={ScreenName.Splash}
+      />
+    </Stack.Navigator>
+  );
+}
 function App() {
   const isLogIn = useSelector((state) => state.account.isLogin);
-
+  const loading = useSelector((state) => state.app.loading_app);
   return (
     <NavigationContainer ref={navigationRef}>
-      {isLogIn ? <MainStack /> : <AuthStack />}
+      {loading
+        ? <SplashStack />
+        : isLogIn
+          ? <MainStack />
+          : <AuthStack />}
+
     </NavigationContainer>
   );
 }

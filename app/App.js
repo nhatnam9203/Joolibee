@@ -18,7 +18,6 @@ import { enableScreens } from 'react-native-screens';
 import { Provider as StoreProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { client } from './graphql';
-
 const { persistor, store } = configureAppStore();
 const apolloClient = client();
 
@@ -66,7 +65,7 @@ export default function App() {
 
   return (
     <StoreProvider store={store}>
-      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+      <PersistGate loading={<ActivityIndicator animating/>} persistor={persistor}>
         <ApolloProvider client={apolloClient}>
           <PaperProvider theme={theme}>
             <Navigator />

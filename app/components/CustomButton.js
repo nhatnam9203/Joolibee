@@ -10,6 +10,7 @@ const CustomButton = ({
   label,
   children,
   absolute = false,
+  style
 }) => (
   <TouchableOpacity
     style={[
@@ -21,6 +22,7 @@ const CustomButton = ({
         backgroundColor: bgColor,
       },
       absolute && styles.btnAbsoluteStyle,
+      style,
     ]}
     onPress={onPress}>
     {children && children}
