@@ -12,6 +12,8 @@ import {
   Text
 } from 'react-native-paper';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../ScreenName';
 
 import { CustomButton } from '@components';
 import { AppStyles, images } from "@theme";
@@ -44,6 +46,7 @@ const slides = [
   },
 ]
 const WelcomeScreen = () => {
+  const navigation = useNavigation();
 
   const refAppIntro = React.useRef(null);
   const [page, setPage] = React.useState(-1);
@@ -60,7 +63,7 @@ const WelcomeScreen = () => {
   }
 
   const onSkip = () => {
-    alert('skip');
+    ScreenName()
     setPage(0)
   }
 
@@ -117,9 +120,6 @@ const WelcomeScreen = () => {
               {item.content}
             </Text>
           </View>}
-
-
-
           <CustomButton
             onPress={nextPage(index)}
             label={label}

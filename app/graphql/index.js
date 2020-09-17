@@ -1,5 +1,9 @@
-import client from './client';
+import graphQlClient from './client';
+import * as mutation from './mutations';
+import * as query from './queries';
 
 module.exports = {
-  client,
+  graphQlClient,
+  mutation,
+  query,
 };

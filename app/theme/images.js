@@ -22,8 +22,24 @@ const images = {
     Walkthough3: require('../assets/icons/Walktrough3.png'),
     Walkthough4: require('../assets/icons/Walktrough4.png'),
     arrow_skip: require('../assets/icons/arrow-skip.png'),
-    
+
+    ic_jollibee: require('../assets/icons/ic-jollibee.png'),
+    ic_promotion: require('../assets/icons/ic-promotion.png'),
+    ic_address: require('../assets/icons/ic-address.png'),
+    ic_arrow: require('../assets/icons/ic-arrow.png'),
+    ic_notify: require('../assets/icons/ic-notify.png'),
+    ic_order_list: require('../assets/icons/ic-orderlist.png'),
+    ic_setting: require('../assets/icons/ic-setting.png'),
+    ic_support: require('../assets/icons/ic-support.png'),
+
+    ic_check_success: require('../assets/icons/ic-check-success.png'),
+    ic_facebook: require('../assets/icons/ic-facebook.png'),
+    ic_google: require('../assets/icons/ic-google.png'),
+    ic_hide_password: require('../assets/icons/ic-hide-password.png'),
+    ic_calendar: require('../assets/icons/ic-calendar.png'),
+    ic_succeeded: require('../assets/icons/ic_succeeded.png'),
   },
+  login_polygon: require('../assets/images/login-polygon.png'),
 };
 
 export default images;

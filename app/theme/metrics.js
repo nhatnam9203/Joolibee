@@ -11,6 +11,7 @@ const metrics = {
   tabBarHeight: 70,
   padding: 10,
   margin: 10,
+  safeAreaPadding: 44,
 };
 
 export default metrics;

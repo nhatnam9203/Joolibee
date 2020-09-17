@@ -18,8 +18,43 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* loyaltyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* loyaltyTests.m */; };
+		362280FC250A989B0013AF4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		362280FD250A989B0013AF4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		36228101250A989B0013AF4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		36228102250A989B0013AF4C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		36228103250A989B0013AF4C /* MergeBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00B5EA903425488085BA59EF /* MergeBlack.ttf */; };
+		36228104250A989B0013AF4C /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A51CAE7213A4C07B49BAFE6 /* Roboto-Black.ttf */; };
+		36228105250A989B0013AF4C /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87134E4D647E4E4BB539555A /* Roboto-BlackItalic.ttf */; };
+		36228106250A989B0013AF4C /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B2CEBC054CE4CE98628217D /* Roboto-Bold.ttf */; };
+		36228107250A989B0013AF4C /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */; };
+		36228108250A989B0013AF4C /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */; };
+		36228109250A989B0013AF4C /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
+		3622810A250A989B0013AF4C /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46871193418F477B93CA949B /* Roboto-LightItalic.ttf */; };
+		3622810B250A989B0013AF4C /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD2391B279A949C09A00B739 /* Roboto-Medium.ttf */; };
+		3622810C250A989B0013AF4C /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C613C548F16D49B597BAD0AE /* Roboto-MediumItalic.ttf */; };
+		3622810D250A989B0013AF4C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
+		3622810E250A989B0013AF4C /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
+		3622810F250A989B0013AF4C /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
+		3622811B250A98AB0013AF4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		3622811C250A98AB0013AF4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		36228120250A98AB0013AF4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		36228121250A98AB0013AF4C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		36228122250A98AB0013AF4C /* MergeBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00B5EA903425488085BA59EF /* MergeBlack.ttf */; };
+		36228123250A98AB0013AF4C /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A51CAE7213A4C07B49BAFE6 /* Roboto-Black.ttf */; };
+		36228124250A98AB0013AF4C /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87134E4D647E4E4BB539555A /* Roboto-BlackItalic.ttf */; };
+		36228125250A98AB0013AF4C /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B2CEBC054CE4CE98628217D /* Roboto-Bold.ttf */; };
+		36228126250A98AB0013AF4C /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */; };
+		36228127250A98AB0013AF4C /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */; };
+		36228128250A98AB0013AF4C /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
+		36228129250A98AB0013AF4C /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46871193418F477B93CA949B /* Roboto-LightItalic.ttf */; };
+		3622812A250A98AB0013AF4C /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD2391B279A949C09A00B739 /* Roboto-Medium.ttf */; };
+		3622812B250A98AB0013AF4C /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C613C548F16D49B597BAD0AE /* Roboto-MediumItalic.ttf */; };
+		3622812C250A98AB0013AF4C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
+		3622812D250A98AB0013AF4C /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
+		3622812E250A98AB0013AF4C /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
 		4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
 		61721FA2FBBE4795A3C3E80B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
+		625FAE5D27CAB4AA47DF648C /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50EF31FBB0FE7C8F9702E316 /* libPods-loyalty.a */; };
 		68C286FD8F5D4177B6C4FD1E /* MergeBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00B5EA903425488085BA59EF /* MergeBlack.ttf */; };
 		79DEE0C382A247D483C6D939 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */; };
 		9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */; };
@@ -71,11 +106,13 @@
 		1FD98607EB3F47D5890A6D66 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* loyalty-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* loyalty-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "loyalty-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3197F1497A53C7DB7632F4A5 /* Pods-loyalty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.debug.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.debug.xcconfig"; sourceTree = "<group>"; };
 		31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../app/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		31E34C1685964FB39CDC829D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		36228115250A989B0013AF4C /* loyaltyProduction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyaltyProduction.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36228116250A989B0013AF4C /* loyalty copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "loyalty copy-Info.plist"; path = "/Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyalty copy-Info.plist"; sourceTree = "<absolute>"; };
+		36228134250A98AB0013AF4C /* loyaltyStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyaltyStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36228135250A98AB0013AF4C /* loyaltyProduction copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "loyaltyProduction copy-Info.plist"; path = "/Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyaltyProduction copy-Info.plist"; sourceTree = "<absolute>"; };
 		365B4DAA0751458495036028 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../app/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
-		45F76A21DFE68E7620F098B7 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
 		4610D41D79134DD1A4799EC9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		46871193418F477B93CA949B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../app/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../app/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -83,6 +120,7 @@
 		5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../app/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		5B2CEBC054CE4CE98628217D /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../app/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		8219FE22F1CA416E81C71D12 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		86149305933A9267D86682D7 /* Pods-loyalty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.debug.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.debug.xcconfig"; sourceTree = "<group>"; };
 		87134E4D647E4E4BB539555A /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../app/assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		8CD94D5A50D04CBA9B86FFCA /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		93B7236A4FB84259A343EA15 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -90,6 +128,7 @@
 		9C5F06AF7A79A8F26FE3D064 /* libPods-loyalty-loyaltyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyaltyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83C2E8615074E32B0E2813C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		A8FAE8CD4759418D80D9AC9C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		AA180137CAB3E4EC3C8A6A15 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
 		AD2391B279A949C09A00B739 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../app/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		B0E77814DBBD401588AE3D27 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		C613C548F16D49B597BAD0AE /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../app/assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -117,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBFD5835DB98727CA2409D9D /* libPods-loyalty.a in Frameworks */,
+				625FAE5D27CAB4AA47DF648C /* libPods-loyalty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +168,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48D1E0B4A5D006451C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		362280FE250A989B0013AF4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3622811D250A98AB0013AF4C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -182,10 +236,10 @@
 		63DDA987CAAE35C17BDD3235 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3197F1497A53C7DB7632F4A5 /* Pods-loyalty.debug.xcconfig */,
-				45F76A21DFE68E7620F098B7 /* Pods-loyalty.release.xcconfig */,
 				0E83440654447D5C0AA89C12 /* Pods-loyalty-loyaltyTests.debug.xcconfig */,
 				FAAB37E9A2595365D928AAEF /* Pods-loyalty-loyaltyTests.release.xcconfig */,
+				86149305933A9267D86682D7 /* Pods-loyalty.debug.xcconfig */,
+				AA180137CAB3E4EC3C8A6A15 /* Pods-loyalty.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -243,6 +297,8 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				63DDA987CAAE35C17BDD3235 /* Pods */,
 				7E0E8C9B25724BB4A182EF70 /* Resources */,
+				36228116250A989B0013AF4C /* loyalty copy-Info.plist */,
+				36228135250A98AB0013AF4C /* loyaltyProduction copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -256,6 +312,8 @@
 				00E356EE1AD99517003FC87E /* loyaltyTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* loyalty-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* loyalty-tvOSTests.xctest */,
+				36228115250A989B0013AF4C /* loyaltyProduction.app */,
+				36228134250A98AB0013AF4C /* loyaltyStaging.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -341,6 +399,44 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* loyalty-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		362280F8250A989B0013AF4C /* loyaltyProduction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36228112250A989B0013AF4C /* Build configuration list for PBXNativeTarget "loyaltyProduction" */;
+			buildPhases = (
+				362280FA250A989B0013AF4C /* Start Packager */,
+				362280FB250A989B0013AF4C /* Sources */,
+				362280FE250A989B0013AF4C /* Frameworks */,
+				36228100250A989B0013AF4C /* Resources */,
+				36228110250A989B0013AF4C /* Bundle React Native code and images */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = loyaltyProduction;
+			productName = loyalty;
+			productReference = 36228115250A989B0013AF4C /* loyaltyProduction.app */;
+			productType = "com.apple.product-type.application";
+		};
+		36228117250A98AB0013AF4C /* loyaltyStaging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36228131250A98AB0013AF4C /* Build configuration list for PBXNativeTarget "loyaltyStaging" */;
+			buildPhases = (
+				36228119250A98AB0013AF4C /* Start Packager */,
+				3622811A250A98AB0013AF4C /* Sources */,
+				3622811D250A98AB0013AF4C /* Frameworks */,
+				3622811F250A98AB0013AF4C /* Resources */,
+				3622812F250A98AB0013AF4C /* Bundle React Native code and images */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = loyaltyStaging;
+			productName = loyalty;
+			productReference = 36228134250A98AB0013AF4C /* loyaltyStaging.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -381,6 +477,8 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* loyalty */,
+				362280F8250A989B0013AF4C /* loyaltyProduction */,
+				36228117250A98AB0013AF4C /* loyaltyStaging */,
 				00E356ED1AD99517003FC87E /* loyaltyTests */,
 				2D02E47A1E0B4A5D006451C7 /* loyalty-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* loyalty-tvOSTests */,
@@ -433,6 +531,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		36228100250A989B0013AF4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36228101250A989B0013AF4C /* Images.xcassets in Resources */,
+				36228102250A989B0013AF4C /* LaunchScreen.xib in Resources */,
+				36228103250A989B0013AF4C /* MergeBlack.ttf in Resources */,
+				36228104250A989B0013AF4C /* Roboto-Black.ttf in Resources */,
+				36228105250A989B0013AF4C /* Roboto-BlackItalic.ttf in Resources */,
+				36228106250A989B0013AF4C /* Roboto-Bold.ttf in Resources */,
+				36228107250A989B0013AF4C /* Roboto-BoldItalic.ttf in Resources */,
+				36228108250A989B0013AF4C /* Roboto-Italic.ttf in Resources */,
+				36228109250A989B0013AF4C /* Roboto-Light.ttf in Resources */,
+				3622810A250A989B0013AF4C /* Roboto-LightItalic.ttf in Resources */,
+				3622810B250A989B0013AF4C /* Roboto-Medium.ttf in Resources */,
+				3622810C250A989B0013AF4C /* Roboto-MediumItalic.ttf in Resources */,
+				3622810D250A989B0013AF4C /* Roboto-Regular.ttf in Resources */,
+				3622810E250A989B0013AF4C /* Roboto-Thin.ttf in Resources */,
+				3622810F250A989B0013AF4C /* Roboto-ThinItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3622811F250A98AB0013AF4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36228120250A98AB0013AF4C /* Images.xcassets in Resources */,
+				36228121250A98AB0013AF4C /* LaunchScreen.xib in Resources */,
+				36228122250A98AB0013AF4C /* MergeBlack.ttf in Resources */,
+				36228123250A98AB0013AF4C /* Roboto-Black.ttf in Resources */,
+				36228124250A98AB0013AF4C /* Roboto-BlackItalic.ttf in Resources */,
+				36228125250A98AB0013AF4C /* Roboto-Bold.ttf in Resources */,
+				36228126250A98AB0013AF4C /* Roboto-BoldItalic.ttf in Resources */,
+				36228127250A98AB0013AF4C /* Roboto-Italic.ttf in Resources */,
+				36228128250A98AB0013AF4C /* Roboto-Light.ttf in Resources */,
+				36228129250A98AB0013AF4C /* Roboto-LightItalic.ttf in Resources */,
+				3622812A250A98AB0013AF4C /* Roboto-Medium.ttf in Resources */,
+				3622812B250A98AB0013AF4C /* Roboto-MediumItalic.ttf in Resources */,
+				3622812C250A98AB0013AF4C /* Roboto-Regular.ttf in Resources */,
+				3622812D250A98AB0013AF4C /* Roboto-Thin.ttf in Resources */,
+				3622812E250A98AB0013AF4C /* Roboto-ThinItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -463,6 +605,72 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		362280FA250A989B0013AF4C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		36228110250A989B0013AF4C /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		36228119250A98AB0013AF4C /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3622812F250A98AB0013AF4C /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		5415A4DF4065AD1EC9446A18 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -683,6 +891,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		362280FB250A989B0013AF4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				362280FC250A989B0013AF4C /* AppDelegate.m in Sources */,
+				362280FD250A989B0013AF4C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3622811A250A98AB0013AF4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3622811B250A98AB0013AF4C /* AppDelegate.m in Sources */,
+				3622811C250A98AB0013AF4C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -756,7 +982,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3197F1497A53C7DB7632F4A5 /* Pods-loyalty.debug.xcconfig */;
+			baseConfigurationReference = 86149305933A9267D86682D7 /* Pods-loyalty.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -773,7 +999,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.develop;
 				PRODUCT_NAME = loyalty;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -784,7 +1010,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 45F76A21DFE68E7620F098B7 /* Pods-loyalty.release.xcconfig */;
+			baseConfigurationReference = AA180137CAB3E4EC3C8A6A15 /* Pods-loyalty.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -796,7 +1022,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.develop;
 				PRODUCT_NAME = loyalty;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -907,6 +1133,102 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/loyalty-tvOS.app/loyalty-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Release;
+		};
+		36228113250A989B0013AF4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
+				INFOPLIST_FILE = "loyalty copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		36228114250A989B0013AF4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = "loyalty copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		36228132250A98AB0013AF4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_BITCODE = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
+				INFOPLIST_FILE = "loyaltyProduction copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.staging;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		36228133250A98AB0013AF4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = "loyaltyProduction copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.staging;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -1058,6 +1380,24 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36228112250A989B0013AF4C /* Build configuration list for PBXNativeTarget "loyaltyProduction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36228113250A989B0013AF4C /* Debug */,
+				36228114250A989B0013AF4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36228131250A98AB0013AF4C /* Build configuration list for PBXNativeTarget "loyaltyStaging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36228132250A98AB0013AF4C /* Debug */,
+				36228133250A98AB0013AF4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

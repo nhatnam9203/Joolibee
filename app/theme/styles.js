@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import images from './images';
+
 /*
  * Provides universal color configs used in the app.
  * Provides universal fonts used in the app.
@@ -6,6 +8,7 @@ import { StyleSheet } from 'react-native';
 
 const primaryColor = '#FFFFFF';
 const secondaryColor = '#E31837';
+const buttonColor = '#FFC522';
 
 const AppStyles = {
   colors: {
@@ -21,15 +24,69 @@ const AppStyles = {
     placeholder: '', // color for placeholder text, such as input placeholder.
     backdrop: '', // color for backdrops of various components such as modals.
     surface: '', // background color for elements containing content, such as cards.
-    button:'#FFC522',
-    white:'#FFFF'
+    white:'#FFFF',
+    button: buttonColor,
   },
-  fonts: {},
+  fonts: {
+    text: {
+      fontFamily: 'Roboto-Regular',
+      fontSize: 16,
+      color: '#2B2B2B',
+    },
+
+    mini: {
+      fontFamily: 'Roboto-Regular',
+      fontSize: 12,
+    },
+
+    title: {
+      fontFamily: 'SVN-Merge',
+      fontSize: 28,
+      color: '#FFFFFF',
+    },
+  },
   styles: {
     container: { flex: 1 },
 
     topBar: {
       backgroundColor: secondaryColor,
+    },
+
+    rowSeparator: {
+      height: 1,
+      backgroundColor: '#1B1B1B',
+      width: '100%',
+      opacity: 0.25,
+    },
+
+    shadow: {
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.22,
+      shadowRadius: 2.22,
+
+      elevation: 3,
+    },
+
+    absolute: {
+      position: 'absolute',
+    },
+
+    iconStyle: { resizeMode: 'center' },
+  },
+  navigation: {
+    default: {
+      headerBackTitleVisible: false,
+      headerTitleAlign: 'center',
+      headerStyle: { backgroundColor: secondaryColor },
+      headerTitleStyle: {
+        fontFamily: 'SVN-Merge',
+        fontSize: 18,
+        color: primaryColor,
+      },
     },
   },
 };
