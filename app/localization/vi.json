@@ -32,6 +32,7 @@
   "txtPrivacyLink": "Chính sách & Quy định chung",
   "txtPrivacyMail": "Nhận chương trình khuyến mãi qua email",
   "txtNotHaveAccount": "Đã chưa có tài khoản ?",
+  "txtHaveAccount": "Đã có tài khoản ?",
   "txtMale": "Nam",
   "txtFemale": "Nữ",
   "txtTooShort": "Nội dung nhập quá ngắn ...",
@@ -44,5 +45,6 @@
   "txtPleaseSignIn": "Vui lòng đăng nhập",
   "txtRemember": "Ghi nhớ đăng nhập",
   "txtForgetPassWord": "Quên mật khẩu",
-  "txtSignUpNow": "Đăng ký ngay"
+  "txtSignUpNow": "Đăng ký ngay",
+  "txtWrongPhoneNumber": "Số điện thoại không đúng"
 }

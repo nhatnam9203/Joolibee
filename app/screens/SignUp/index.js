@@ -34,7 +34,6 @@ const BUTTON_WIDTH = '98%';
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
-
   // redux
   const dispatch = useDispatch();
 
@@ -62,7 +61,6 @@ const SignUpScreen = () => {
   const signUpSuccess = useSelector((state) => state.account.signUpSuccess);
 
   // function
-
   const signUpDataSubmit = React.useCallback(
     (values) => {
       const action = signUp(values, { dispatch });
@@ -107,7 +105,7 @@ const SignUpScreen = () => {
             birthday: '',
             gender: '',
           }}
-          onSubmit={(values) => signUpDataSubmit(values)}
+          onSubmit={signUpDataSubmit}
           validationSchema={SignupSchema}
           isValidating={true}>
           {({

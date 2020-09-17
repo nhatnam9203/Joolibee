@@ -1,27 +1,72 @@
-import { CustomButton, CustomInput, CustomTextLink } from '@components';
+import { CustomInput, CustomTextLink } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
+import { useNavigation } from '@react-navigation/native';
+import { signIn } from '@slices/account';
 import { AppStyles, images } from '@theme';
 import { Formik } from 'formik';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
 import {
-  PasswordInput,
+  ButtonCC,
   JollibeeLogo,
   LabelTitle,
+  PasswordInput,
   TextCheckBox,
-  ButtonCC,
+  TextInputErrorMessage,
 } from '../components';
+import ScreenName from '../ScreenName';
 
 const LAYOUT_WIDTH = '90%';
+const phoneRegExp = RegExp(
+  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+);
 
 const SignInScreen = () => {
+  const navigation = useNavigation();
+  // redux
+  const dispatch = useDispatch();
+
+  const SignInSchema = Yup.object().shape({
+    phone: Yup.string()
+      .required(translate('txtRequired'))
+      .matches(phoneRegExp, translate('txtWrongPhoneNumber'))
+      .min(10, translate('txtTooShort'))
+      .max(15, translate('txtTooLong')),
+    password: Yup.string().required(translate('txtRequired')),
+    remember: Yup.bool(),
+  });
+
+  const signInSubmit = React.useCallback(
+    (values) => {
+      const action = signIn(values, { dispatch });
+      dispatch(action);
+    },
+    [dispatch],
+  );
+
+  const goSignUpPage = () => {
+    navigation.navigate(ScreenName.SignUp);
+  };
+
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.button}>
       <Formik
-        initialValues={{ email: '' }}
-        onSubmit={(values) => console.log(values)}>
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
+        initialValues={{ phone: '', password: '' }}
+        onSubmit={signInSubmit}
+        validationSchema={SignInSchema}
+        isValidating={true}>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+          setFieldValue,
+        }) => (
           <View style={styles.container}>
             {/**Red*/}
             <View style={styles.topContent}>
@@ -34,12 +79,22 @@ const SignInScreen = () => {
               {/**PHONE*/}
               <CustomInput
                 style={{ width: LAYOUT_WIDTH }}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.phone}
                 placeholder={translate('txtInputPhone')}
                 textContentType="telephoneNumber"
+                keyboardType="phone-pad"
               />
+
+              {/**Phone input error */}
+              {errors.phone && touched.phone && (
+                <TextInputErrorMessage
+                  style={{ width: LAYOUT_WIDTH }}
+                  message={errors.phone}
+                  color={AppStyles.colors.button}
+                />
+              )}
 
               {/**PASSWORD*/}
               <PasswordInput
@@ -50,13 +105,23 @@ const SignInScreen = () => {
                 placeholder={translate('txtInputPassword')}
                 textContentType="password"
               />
+              {/**Password input error */}
+              {errors.password && touched.password && (
+                <TextInputErrorMessage
+                  style={{ width: LAYOUT_WIDTH }}
+                  message={errors.password}
+                  color={AppStyles.colors.button}
+                />
+              )}
 
               {/**REMEMBER*/}
               <View style={styles.rememberStyle}>
                 <TextCheckBox
                   label={translate('txtRemember')}
-                  value={values.publicMailChecked}
-                  onValueChange={() => {}}
+                  value={values.remember}
+                  onValueChange={() =>
+                    setFieldValue('remember', !values.remember)
+                  }
                   normalColor="#fff"
                 />
 
@@ -94,6 +159,7 @@ const SignInScreen = () => {
                 <CustomTextLink
                   label={translate('txtSignUpNow')}
                   style={styles.txtSignIn}
+                  onPress={goSignUpPage}
                 />
               </View>
             </View>

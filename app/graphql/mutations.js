@@ -17,3 +17,11 @@ export const SIGNUP = gql`
     }
   }
 `;
+
+export const SIGN_IN = gql`
+  mutation($email: String!, $password: String!) {
+    generateCustomerToken(input: { email: $email, password: $password }) {
+      token
+    }
+  }
+`;
