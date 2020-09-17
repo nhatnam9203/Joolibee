@@ -63,7 +63,7 @@ const WelcomeScreen = () => {
   }
 
   const onSkip = () => {
-    ScreenName()
+    navigation.navigate(ScreenName.SignIn)
     setPage(0)
   }
 
@@ -158,8 +158,7 @@ const WelcomeScreen = () => {
 
 const styles = StyleSheet.create({
   btn: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  
     position: 'absolute',
     bottom: scaleHeight(80)
   },
