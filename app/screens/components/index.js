@@ -4,3 +4,4 @@ export * from './TextCheckBox';
 export * from './PasswordInput';
 import * as ButtonCC from './ButtonCC';
 export { ButtonCC };
+export * from './TextInputErrorMessage';

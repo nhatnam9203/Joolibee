@@ -19,6 +19,20 @@ export const signUp = createAsyncThunk(
   },
 );
 
+export const signIn = createAsyncThunk(
+  `${KEY_CONSTANT}/signIn`,
+  async (input, { dispatch }) => {
+    dispatch(showLoading());
+    const response = await graphQlClient.mutate({
+      mutation: mutation.SIGN_IN,
+      variables: { email: 'nha@gmail.com', ...input },
+    });
+    dispatch(hideLoading());
+
+    return response;
+  },
+);
+
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: {
@@ -48,12 +62,12 @@ const accountSlice = createSlice({
   },
   extraReducers: {
     [signUp.pending]: (state, action) => {
-      Logger.info(action, 'accountSlice pending');
+      Logger.info(action, 'signUp pending');
       state.signUpError = null;
       state.signUpSuccess = false;
     },
     [signUp.fulfilled]: (state, action) => {
-      Logger.info(action, 'accountSlice fulfilled');
+      Logger.info(action, 'signUp fulfilled');
       const { error, data } = action.payload;
       if (data?.createCustomer?.customer) {
         state.signUpSuccess = true;
@@ -64,6 +78,16 @@ const accountSlice = createSlice({
       }
     },
     // [signUp.rejected]: (state, action) => {
+    //   Logger.info(action, 'accountSlice rejected');
+    // },
+    [signIn.pending]: (state, action) => {
+      Logger.info(action, 'signIn pending');
+    },
+    [signIn.fulfilled]: (state, action) => {
+      Logger.info(action, 'signIn fulfilled');
+      const { error, data } = action.payload;
+    },
+    // [signIn.rejected]: (state, action) => {
     //   Logger.info(action, 'accountSlice rejected');
     // },
   },

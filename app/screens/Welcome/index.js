@@ -15,12 +15,14 @@ const WelcomeScreen = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = setTimeout(() => {
       // loginCall();
       navigation.navigate(ScreenName.SignIn);
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(interval);
+    };
   }, [navigation]);
 
   return <View style={{ flex: 1, backgroundColor: 'blue' }}></View>;

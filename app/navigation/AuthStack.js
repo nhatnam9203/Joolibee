@@ -34,7 +34,7 @@ function AuthStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSignUp'),
-          headerBackImage: () => <View />,
+          // headerBackImage: () => <View />,
         }}
       />
 
