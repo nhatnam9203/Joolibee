@@ -36,7 +36,7 @@ export const signIn = createAsyncThunk(
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: {
-    isLogin: false,
+    isLogin: true,
     username: null,
     password: null,
     signUpError: null,

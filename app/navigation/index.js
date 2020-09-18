@@ -28,7 +28,7 @@ function App() {
     <NavigationContainer ref={navigationRef}>
       {loading
         ? <SplashStack />
-        : isLogIn
+        : true
           ? <MainStack />
           : <AuthStack />}
 

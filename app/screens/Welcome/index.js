@@ -74,7 +74,7 @@ const WelcomeScreen = () => {
     return (
       <ImageBackground
         source={item.url}
-        // resizeMode='stretch'
+         resizeMode='stretch'
         style={{
           width,
           height,
@@ -123,7 +123,7 @@ const WelcomeScreen = () => {
           <CustomButton
             onPress={nextPage(index)}
             label={label}
-            width={234}
+            width={width * 0.8}
             height={58}
             bgColor={btnBackgroundColor}
             style={styles.btn}

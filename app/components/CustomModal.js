@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 0,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     borderRadius: 8,
     minWidth: '80%',
     minHeight: '40%',
