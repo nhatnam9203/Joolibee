@@ -22,10 +22,11 @@ export const signUp = createAsyncThunk(
 export const signIn = createAsyncThunk(
   `${KEY_CONSTANT}/signIn`,
   async (input, { dispatch }) => {
+    Logger.log(input, 'signIn');
     dispatch(showLoading());
     const response = await graphQlClient.mutate({
-      mutation: mutation.SIGN_IN,
-      variables: { email: 'nha@gmail.com', ...input },
+      mutation: mutation.SIGNIN,
+      variables: input,
     });
     dispatch(hideLoading());
 
@@ -41,6 +42,7 @@ const accountSlice = createSlice({
     password: null,
     signUpError: null,
     signUpSuccess: false,
+    signInError: null,
   },
   reducers: {
     login(state, action) {
@@ -58,6 +60,9 @@ const accountSlice = createSlice({
     clearSignupState(state, action) {
       state.signUpError = null;
       state.signUpSuccess = false;
+    },
+    clearSignInState(state, action) {
+      state.signInError = null;
     },
   },
   extraReducers: {
@@ -82,10 +87,16 @@ const accountSlice = createSlice({
     // },
     [signIn.pending]: (state, action) => {
       Logger.info(action, 'signIn pending');
+      state.signInError = null;
     },
     [signIn.fulfilled]: (state, action) => {
       Logger.info(action, 'signIn fulfilled');
       const { error, data } = action.payload;
+      if (data?.generateCustomerToken?.token) {
+        state.signInError = null;
+      } else {
+        state.signInError = error;
+      }
     },
     // [signIn.rejected]: (state, action) => {
     //   Logger.info(action, 'accountSlice rejected');
@@ -100,5 +111,6 @@ export const {
   loginFail,
   logout,
   clearSignupState,
+  clearSignInState,
 } = actions;
 export default reducer;

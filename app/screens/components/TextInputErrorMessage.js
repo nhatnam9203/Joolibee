@@ -8,7 +8,7 @@ export const TextInputErrorMessage = ({
   style,
 }) => (
   <View style={[styles.content, style]}>
-    {!!message && (
+    {message && (
       <Text style={[styles.txtStyle, { color: color }]}>{'* ' + message}</Text>
     )}
   </View>

@@ -35,6 +35,15 @@ function AuthStack() {
           headerShown: true,
           headerTitle: translate('txtSignUp'),
           // headerBackImage: () => <View />,
+          // headerStyle: { backgroundColor: 'transparent' },
+          headerBackground: () => (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: AppStyles.colors.accent,
+              }}
+            />
+          ),
         }}
       />
 

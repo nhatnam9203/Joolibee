@@ -5,9 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { signIn } from '@slices/account';
 import { AppStyles, images } from '@theme';
 import { Formik } from 'formik';
+import _ from 'lodash';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import {
   ButtonCC,
@@ -39,6 +40,8 @@ const SignInScreen = () => {
     remember: Yup.bool(),
   });
 
+  const signInError = useSelector((state) => state.account.signInError);
+
   const signInSubmit = React.useCallback(
     (values) => {
       const action = signIn(values, { dispatch });
@@ -54,7 +57,7 @@ const SignInScreen = () => {
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.button}>
       <Formik
-        initialValues={{ phone: '', password: '' }}
+        initialValues={{ phone: '', password: '', email: 'nha@gmail.com' }}
         onSubmit={signInSubmit}
         validationSchema={SignInSchema}
         isValidating={true}>
@@ -109,10 +112,21 @@ const SignInScreen = () => {
               {errors.password && touched.password && (
                 <TextInputErrorMessage
                   style={{ width: LAYOUT_WIDTH }}
-                  message={errors.password}
+                  messages={errors.password}
                   color={AppStyles.colors.button}
                 />
               )}
+
+              {/**Server response error */}
+              {!_.isEmpty(signInError) &&
+                Object.values(signInError).map((item, index) => (
+                  <TextInputErrorMessage
+                    style={{ width: LAYOUT_WIDTH }}
+                    message={item}
+                    color={AppStyles.colors.button}
+                    key={index}
+                  />
+                ))}
 
               {/**REMEMBER*/}
               <View style={styles.rememberStyle}>

@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { AppStyles, images, metrics } from '@theme';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import * as constants from './constants';
+import * as constants from './Constants';
 import { MyAccountPage, SettingAccountPage } from './pages';
 
 const AccountStack = createStackNavigator();

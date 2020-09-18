@@ -4,9 +4,9 @@
   "tabPromotion": "Khuyến Mãi",
   "tabMenu": "Thực Đơn",
   "txtEditAccount": "Chỉnh Sửa Tài Khoản",
-  "txtWelcome" :"Chào Mừng",
-  "btnConttinue" :"TIẾP TỤC",
-  "btnExperience" :"BẮT ĐẦU TRẢI NGHIỆM",
+  "txtWelcome": "Chào Mừng",
+  "btnConttinue": "TIẾP TỤC",
+  "btnExperience": "BẮT ĐẦU TRẢI NGHIỆM",
   "txtSettingPoint": "Điểm tích luỹ",
   "txtSettingPromotion": "Ưu đãi",
   "txtSettingOrderList": "Danh sách đơn hàng",
@@ -46,5 +46,14 @@
   "txtRemember": "Ghi nhớ đăng nhập",
   "txtForgetPassWord": "Quên mật khẩu",
   "txtSignUpNow": "Đăng ký ngay",
-  "txtWrongPhoneNumber": "Số điện thoại không đúng"
+  "txtWrongPhoneNumber": "Số điện thoại không đúng",
+  "txtContinue": "Tiếp tục",
+  "txtInputPhoneNumber": "Nhập số điện thoại",
+  "txtPhoneCode": "Nhập mã xác thực",
+  "txtForgetPassword": "Quên mật khẩu",
+  "txtNewPassword": "Đặt lại mật khẩu",
+  "txtInputPhoneDesc1": "Chúng tôi đã gửi mã xác thực đến số điện thoại  ",
+  "txtInputPhoneDesc2": " . Nhập mã xác nhận để tiếp tục",
+  "txtNotReceivedCode": "Bạn chưa nhận được mã ?",
+  "txtResend": "Gửi lại"
 }

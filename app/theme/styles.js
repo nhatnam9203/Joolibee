@@ -24,7 +24,7 @@ const AppStyles = {
     placeholder: '', // color for placeholder text, such as input placeholder.
     backdrop: '', // color for backdrops of various components such as modals.
     surface: '', // background color for elements containing content, such as cards.
-    white:'#FFFF',
+    white: '#FFFF',
     button: buttonColor,
   },
   fonts: {
@@ -76,6 +76,12 @@ const AppStyles = {
     },
 
     iconStyle: { resizeMode: 'center' },
+
+    redContainer: {
+      flex: 1,
+      backgroundColor: secondaryColor,
+      alignItems: 'center',
+    },
   },
   navigation: {
     default: {

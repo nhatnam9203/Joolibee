@@ -15,7 +15,7 @@ import DeviceInfo from 'react-native-device-info';
 import { Avatar } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { SettingItem } from '../../components';
-import * as constants from '../../constants';
+import * as constants from '../../Constants';
 
 const MyAccountPage = () => {
   const dispatch = useDispatch();
