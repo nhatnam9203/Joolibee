@@ -38,12 +38,17 @@ export const SignUpForm = () => {
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .min(2, translate('txtTooShort'))
-      .max(50, translate('txtTooShort'))
+      .max(50, translate('txtTooLong'))
       .required(translate('txtRequired')),
     email: Yup.string().email(translate('txtInvalidEmail')),
-    password: Yup.string().required(translate('txtRequired')),
+    password: Yup.string()
+      .min(6, translate('txtTooShort'))
+      .max(30, translate('txtTooLong'))
+      .required(translate('txtRequired')),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
+      .min(6, translate('txtTooShort'))
+      .max(30, translate('txtTooLong'))
       .required(translate('txtRequired')),
     privacyChecked: Yup.bool()
       .oneOf([true], translate('txtPrivacyRequired'))

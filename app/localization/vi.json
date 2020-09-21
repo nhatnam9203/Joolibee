@@ -55,5 +55,9 @@
   "txtInputPhoneDesc1": "Chúng tôi đã gửi mã xác thực đến số điện thoại  ",
   "txtInputPhoneDesc2": " . Nhập mã xác nhận để tiếp tục",
   "txtNotReceivedCode": "Bạn chưa nhận được mã ?",
-  "txtResend": "Gửi lại"
+  "txtResend": "Gửi lại",
+  "txtForgotPasswordDescription": "Vui lòng nhập số điện thoại hoặc địa chỉ email vào ô bên dưới để tiến hành lấy lại mật khẩu.",
+  "txtForgotPassword": "Quên mật khẩu",
+  "txtInputPhoneNumberOrMail": "Nhập số điện thoại hoặc email *",
+  "txtSave": "Lưu"
 }

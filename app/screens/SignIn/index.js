@@ -54,6 +54,10 @@ const SignInScreen = () => {
     navigation.navigate(ScreenName.SignUp);
   };
 
+  const goForgotPasswordScreen = () => {
+    navigation.navigate(ScreenName.ForgotPassword);
+  };
+
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.button}>
       <Formik
@@ -142,6 +146,7 @@ const SignInScreen = () => {
                 <CustomTextLink
                   label={translate('txtForgetPassWord')}
                   style={styles.txtForgotPass}
+                  onPress={goForgotPasswordScreen}
                 />
               </View>
 
@@ -209,7 +214,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginVertical: 10,
   },
-
 
   txtStyle: {
     ...AppStyles.fonts.text,

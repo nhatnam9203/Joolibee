@@ -1,15 +1,16 @@
 import { HeaderImage } from '@components';
+import { translate } from '@localize';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AppStyles, images, metrics } from '@theme';
+import { AppStyles, images } from '@theme';
 import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
   ScreenName,
   SignInScreen,
   SignUpScreen,
   WelcomeScreen,
+  ForgotPasswordScreen,
 } from '../screens';
-import { translate } from '@localize';
-import { View } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -36,14 +37,7 @@ function AuthStack() {
           headerTitle: translate('txtSignUp'),
           // headerBackImage: () => <View />,
           // headerStyle: { backgroundColor: 'transparent' },
-          headerBackground: () => (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: AppStyles.colors.accent,
-              }}
-            />
-          ),
+          headerBackground: () => <View style={styles.container} />,
         }}
       />
 
@@ -54,8 +48,27 @@ function AuthStack() {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        component={ForgotPasswordScreen}
+        name={ScreenName.ForgotPassword}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtForgotPassword'),
+          // headerBackImage: () => <View />,
+          // headerStyle: { backgroundColor: 'transparent' },
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: AppStyles.colors.accent,
+  },
+});
 
 export default AuthStack;

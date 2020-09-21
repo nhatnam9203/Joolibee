@@ -6,7 +6,11 @@ import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ButtonCC, LabelTitle } from '../../components';
 
-export const VerifyPhoneCode = ({ phone = '0975783565', next }) => {
+export const VerifyPhoneCode = ({
+  phone = '0975783565',
+  next,
+  email = 'theddifest@gmail.com',
+}) => {
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Animated.View style={styles.container}>

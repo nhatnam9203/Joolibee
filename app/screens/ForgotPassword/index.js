@@ -1,13 +1,13 @@
 import React from 'react';
-import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
+import { InputPhoneNumber, InputNewPassword, VerifyPhoneCode } from './pages';
 
 const PAGES = {
   InputPhone: 0,
   InputCode: 1,
-  SignUp: 2,
+  InputNewPassWord: 2,
 };
 
-const SignUpScreen = () => {
+const ForgotPasswordScreen = () => {
   // redux
 
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
@@ -17,10 +17,10 @@ const SignUpScreen = () => {
     default:
       return <InputPhoneNumber next={() => setPage(PAGES.InputCode)} />;
     case 1:
-      return <VerifyPhoneCode next={() => setPage(PAGES.SignUp)} />;
+      return <VerifyPhoneCode next={() => setPage(PAGES.InputNewPassWord)} />;
     case 2:
-      return <SignUpForm />;
+      return <InputNewPassword />;
   }
 };
 
-export default SignUpScreen;
+export default ForgotPasswordScreen;

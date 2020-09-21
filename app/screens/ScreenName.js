@@ -5,6 +5,7 @@ const ScreenName = {
   Splash: 'Splash',
   SignIn: 'SignIn',
   SignUp: 'SignUp',
+  ForgotPassword: 'ForgotPassword',
 };
 
 export default ScreenName;
