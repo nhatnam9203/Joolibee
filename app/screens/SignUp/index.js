@@ -28,14 +28,30 @@ import * as Yup from 'yup';
 import { isIphoneX } from '../../lib/isIphoneX';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../ScreenName';
-import { InputPhoneNumber, VerifyPhoneCode } from './pages';
+import { InputPhoneNumber, VerifyPhoneCode, SignUpForm } from './pages';
+
+const PAGES = {
+  InputPhone: 0,
+  InputCode: 1,
+  SignUp: 2,
+};
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
 
-  return <VerifyPhoneCode />;
+  const [showPage, setPage] = React.useState(PAGES.InputPhone);
+
+  switch (showPage) {
+    case 0:
+    default:
+      return <InputPhoneNumber next={() => setPage(PAGES.InputCode)} />;
+    case 1:
+      return <VerifyPhoneCode next={() => setPage(PAGES.SignUp)} />;
+    case 2:
+      return <SignUpForm />;
+  }
 };
 
 const styles = StyleSheet.create({});

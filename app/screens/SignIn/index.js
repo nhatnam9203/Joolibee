@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 
+
   txtStyle: {
     ...AppStyles.fonts.text,
     marginLeft: 5,

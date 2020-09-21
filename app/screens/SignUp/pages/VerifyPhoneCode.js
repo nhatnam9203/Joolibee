@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 import { AppStyles } from '@theme';
 import { LabelTitle, ButtonCC } from '../../components';
 import { CustomInput, CustomTextLink } from '@components';
 import { translate } from '@localize';
 import { SinglePageLayout } from '@layouts';
 
-export const VerifyPhoneCode = ({ phone = '0975783565' }) => {
+export const VerifyPhoneCode = ({ phone = '0975783565', next }) => {
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
-      <View style={styles.container}>
+      <Animated.View style={styles.container}>
         <LabelTitle label={translate('txtPhoneCode')} />
         <Text style={styles.textStyle}>
           {translate('txtInputPhoneDesc1') +
@@ -25,6 +25,7 @@ export const VerifyPhoneCode = ({ phone = '0975783565' }) => {
         <ButtonCC.ButtonYellow
           label={translate('txtContinue')}
           style={styles.btnStyle}
+          onPress={next}
         />
         <View style={styles.resendCodeStyle}>
           <Text style={styles.textStyle}>
@@ -34,10 +35,10 @@ export const VerifyPhoneCode = ({ phone = '0975783565' }) => {
           <CustomTextLink
             label={translate('txtResend')}
             style={styles.textBoldStyle}
-            onPress={() => {}}
+            onPress={next}
           />
         </View>
-      </View>
+      </Animated.View>
     </SinglePageLayout>
   );
 };

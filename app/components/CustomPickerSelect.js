@@ -4,10 +4,10 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 const DROP_DOWN_MAX_HEIGHT = 300;
 
-const CustomPickerSelect = (props) => {
+const CustomPickerSelect = ({ style, ...props }) => {
   return (
     <DropDownPicker
-      containerStyle={styles.containerStyle}
+      containerStyle={[styles.containerStyle, style]}
       style={styles.container}
       itemStyle={styles.itemStyle}
       dropDownStyle={styles.dropDownStyle}

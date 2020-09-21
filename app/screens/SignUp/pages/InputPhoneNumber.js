@@ -5,7 +5,7 @@ import { LabelTitle, ButtonCC } from '../../components';
 import { CustomInput } from '@components';
 import { translate } from '@localize';
 
-export const InputPhoneNumber = () => {
+export const InputPhoneNumber = ({ next }) => {
   return (
     <View style={[AppStyles.styles.redContainer, styles.container]}>
       <LabelTitle label={translate('txtInputPhoneNumber')} />
@@ -16,6 +16,7 @@ export const InputPhoneNumber = () => {
         autoFocus={true}
       />
       <ButtonCC.ButtonYellow
+        onPress={next}
         label={translate('txtContinue')}
         style={styles.btnStyle}
       />
