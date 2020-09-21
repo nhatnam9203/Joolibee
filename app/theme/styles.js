@@ -24,7 +24,7 @@ const AppStyles = {
     placeholder: '', // color for placeholder text, such as input placeholder.
     backdrop: '', // color for backdrops of various components such as modals.
     surface: '', // background color for elements containing content, such as cards.
-    white: '#FFFF',
+    white:'#FFF',
     button: buttonColor,
   },
   fonts: {
@@ -48,6 +48,8 @@ const AppStyles = {
       fontSize: 28,
       color: '#FFFFFF',
     },
+
+    
   },
   styles: {
     container: { flex: 1 },

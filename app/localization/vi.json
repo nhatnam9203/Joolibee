@@ -60,4 +60,9 @@
   "txtForgotPassword": "Quên mật khẩu",
   "txtInputPhoneNumberOrMail": "Nhập số điện thoại hoặc email *",
   "txtSave": "Lưu"
+  "txtButtonConfirm": "XÁC NHẬN",
+  "txtMiniMumOrder": "Đơn hàng tối thiểu:",
+  "txtSelectCity":"VUI LÒNG CHON TỈNH THÀNH",
+  "txtSelectDistrict":"Tỉnh/Thành",
+  "txtSelectWard":"Quận/Huyện"
 }
