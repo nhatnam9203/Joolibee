@@ -51,6 +51,10 @@ const MenuDetailScreen = ({}) => {
 
   const renderItem = ({ item }) => <MenuItem item={item} />;
 
+  const goToBack = React.useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
   React.useEffect(() => {
     setData(defaultData);
   }, []);
@@ -73,13 +77,12 @@ const MenuDetailScreen = ({}) => {
         />
       </View>
       <View style={styles.headerStyle}>
+        <Text style={styles.txtHeaderStyle}>Header</Text>
         <CustomButtonImage
           image={images.icons.ic_header_back}
-          onPress={() => {
-            navigation.goBack();
-          }}
+          onPress={goToBack}
+          style={styles.btnHeaderStyle}
         />
-        <Text style={styles.txtHeaderStyle}>Header</Text>
       </View>
       <View style={styles.container}>
         <CustomFlatList
@@ -140,6 +143,15 @@ const styles = StyleSheet.create({
     color: AppStyles.colors.accent,
     flex: 1,
     textAlign: 'center',
+  },
+
+  btnHeaderStyle: {
+    height: 60,
+    width: 60,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    position: 'absolute',
+    left: 10,
   },
 });
 
