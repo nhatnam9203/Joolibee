@@ -6,6 +6,7 @@ const ScreenName = {
   SignIn: 'SignIn',
   SignUp: 'SignUp',
   ForgotPassword: 'ForgotPassword',
+  MenuDetail: 'MenuDetail',
 };
 
 export default ScreenName;

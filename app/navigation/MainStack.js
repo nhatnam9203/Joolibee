@@ -2,7 +2,12 @@ import * as React from 'react';
 import { Animated } from 'react-native';
 // import { createNativeStackNavigator } from 'react-native-screens/native-stack'; // use api native
 import { createStackNavigator } from '@react-navigation/stack';
-import { MainTabScreen, AccountStackScreen, ScreenName } from '../screens';
+import {
+  MainTabScreen,
+  AccountStackScreen,
+  ScreenName,
+  MenuDetailScreen,
+} from '../screens';
 // import { TransitionSpecs } from '@react-navigation/stack';
 // import { CardStyleInterpolators } from '@react-navigation/stack';
 // import { HeaderStyleInterpolators } from '@react-navigation/stack';
@@ -48,6 +53,12 @@ function MainStack() {
           headerShown: false,
           cardStyleInterpolator: forFade,
         }}
+      />
+
+      <Stack.Screen
+        component={MenuDetailScreen}
+        name={ScreenName.MenuDetail}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

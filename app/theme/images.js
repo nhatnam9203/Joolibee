@@ -38,8 +38,17 @@ const images = {
     ic_hide_password: require('../assets/icons/ic-hide-password.png'),
     ic_calendar: require('../assets/icons/ic-calendar.png'),
     ic_succeeded: require('../assets/icons/ic_succeeded.png'),
+    ic_edit: require('../assets/icons/ic-edit.png'),
+    ic_header_back: require('../assets/icons/ic-header-back.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
+  menu_1: require('../assets/images/menu-gasot-chuacay.png'),
+  menu_2: require('../assets/images/menu-ga-gion-vv.png'),
+  menu_3: require('../assets/images/menu-mon-ngon.png'),
+  menu_4: require('../assets/images/menu-mi.png'),
+  menu_5: require('../assets/images/menu-mon-trang-mieng.png'),
+  menu_6: require('../assets/images/menu-phan-an-phu.png'),
+  menu_7: require('../assets/images/menu-burger-sandwich.png'),
 };
 
 export default images;

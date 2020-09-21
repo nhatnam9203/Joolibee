@@ -64,5 +64,6 @@
   "txtMiniMumOrder": "Đơn hàng tối thiểu:",
   "txtSelectCity": "VUI LÒNG CHON TỈNH THÀNH",
   "txtSelectDistrict": "Tỉnh/Thành",
-  "txtSelectWard": "Quận/Huyện"
+  "txtSelectWard": "Quận/Huyện",
+  "txtAddressTo": "Giao đến:"
 }
