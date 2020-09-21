@@ -248,12 +248,12 @@ export const SignUpForm = () => {
                     onValueChange={() =>
                       setFieldValue('privacyChecked', !values.privacyChecked)
                     }
-                    normalColor="#989898"
+                    normalColor={AppStyles.colors.text}
                   />
 
                   <CustomTextLink
                     label={translate('txtPrivacyLink')}
-                    style={styles.txtForgotPass}
+                    style={styles.txtStyleLink}
                   />
                 </View>
 
@@ -276,7 +276,7 @@ export const SignUpForm = () => {
                         !values.publicMailChecked,
                       )
                     }
-                    normalColor="#989898"
+                    normalColor={AppStyles.colors.text}
                   />
                 </View>
               </View>
@@ -302,7 +302,8 @@ export const SignUpForm = () => {
 
                   <CustomTextLink
                     label={translate('txtSignIn')}
-                    style={styles.txtSignIn}
+                    style={styles.txtBoldStyleLink}
+                    onPress={goSignInPage}
                   />
                 </View>
               </View>
@@ -378,15 +379,12 @@ const styles = StyleSheet.create({
 
   txtStyleLink: {
     ...AppStyles.fonts.text,
-    textDecorationLine: 'underline',
     color: '#0696F8',
     marginLeft: 5,
   },
 
   txtBoldStyleLink: {
-    ...AppStyles.fonts.text,
-    fontFamily: 'Roboto-Bold',
-    textDecorationLine: 'underline',
+    ...AppStyles.fonts.textBold,
     color: '#0696F8',
     marginLeft: 5,
   },

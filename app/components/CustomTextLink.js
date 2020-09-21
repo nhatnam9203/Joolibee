@@ -12,7 +12,6 @@ const CustomTextLink = ({ label, style, onPress }) => {
 const styles = StyleSheet.create({
   txtLinkStyle: {
     fontSize: 16,
-    fontFamily: 'Roboto-Bold',
     textDecorationLine: 'underline',
     marginLeft: 5,
   },

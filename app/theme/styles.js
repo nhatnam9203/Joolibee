@@ -31,12 +31,16 @@ const AppStyles = {
     text: {
       fontFamily: 'Roboto-Regular',
       fontSize: 16,
-      color: '#2B2B2B',
     },
 
     mini: {
       fontFamily: 'Roboto-Regular',
       fontSize: 12,
+    },
+
+    textBold: {
+      fontFamily: 'Roboto-Bold',
+      fontSize: 16,
     },
 
     title: {
