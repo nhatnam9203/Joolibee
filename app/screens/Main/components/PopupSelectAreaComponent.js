@@ -3,17 +3,20 @@ import { StyleSheet, Image, View, Dimensions } from 'react-native'
 import { Text } from 'react-native-paper'
 import { CustomModal, CustomPickerSelect, CustomButton } from "@components";
 import { AppStyles, images } from "@theme";
+import { scale } from "@utils";
 import { translate } from "@localize";
 import { JollibeeLogo, LabelTitle } from "../../components";
 
-const { width, height } = Dimensions.get('window');
+const { scaleWidth, scaleHeight } = scale
 export default function PopupSelectAreaComponent({ visible, onToggle }) {
     return (
         <CustomModal.CustomModal showModal={visible}>
             <View style={styles.container}>
                 <View style={styles.content_top}>
-                    <JollibeeLogo />
-                    <LabelTitle label={translate('txtSelectCity')} />
+                    <JollibeeLogo style={styles.icon_jollibee} />
+
+                    <Text style={[AppStyles.fonts.title,styles.txtTitle]}>{translate('txtSelectCity')}</Text>
+
                     <CustomPickerSelect
                         items={[
                             { label: 'Tp. Hồ Chí Minh', value: 1 },
@@ -58,12 +61,12 @@ export default function PopupSelectAreaComponent({ visible, onToggle }) {
                         bgColor={AppStyles.colors.accent}
                         textColor={AppStyles.colors.background}
                         style={{
-                            marginVertical: 20
+                            marginVertical: scaleHeight(10)
                         }}
                     />
 
                     <Text numberOfLines={3} style={[AppStyles.fonts.text, styles.txtNote]}>
-                        {'*Chúng tôi chưa phục vụ giao hàng tận nơi\n\ tại những khu vực nằm ngoài danh sách trên,\n\ mong quý khách thông cảm'}
+                        {'*Chúng tôi chưa phục vụ giao hàng tận nơi tại những khu vực nằm ngoài danh sách trên, mong quý khách thông cảm'}
                     </Text>
 
                 </View>
@@ -75,8 +78,8 @@ export default function PopupSelectAreaComponent({ visible, onToggle }) {
 
 const styles = StyleSheet.create({
     container: {
-        width: width * 0.9,
-        height: height * 0.7,
+        width: scaleWidth(388),
+        height: scaleHeight(606),
         backgroundColor: AppStyles.colors.button,
         borderRadius: 8,
         overflow: 'hidden'
@@ -86,13 +89,14 @@ const styles = StyleSheet.create({
         height: '60%',
         backgroundColor: AppStyles.colors.accent,
         alignItems: 'center',
-        paddingHorizontal: 22,
-        paddingTop: 25
+        paddingHorizontal: scaleWidth(22),
+        paddingTop: scaleHeight(25)
     },
     content_bottom: {
         lineHeight: 21,
-        padding: width * 0.05,
-        alignItems: 'center'
+        paddingHorizontal: scaleWidth(22),
+        paddingTop: scaleHeight(25),
+        alignItems: 'center',
     },
     polygonStyle: {
         position: 'absolute',
@@ -105,10 +109,19 @@ const styles = StyleSheet.create({
     content_price: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     txtNote: {
         textAlign: 'center',
         lineHeight: 21
+    },
+    txtTitle: {
+        fontSize: scaleWidth(24),
+        marginTop: scaleHeight(15),
+    },
+    icon_jollibee: {
+        resizeMode: 'contain',
+        width: scaleWidth(126),
+        height: scaleHeight(126)
     }
 })

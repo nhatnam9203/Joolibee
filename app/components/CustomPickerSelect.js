@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
 
   containerStyle: {
-    height: 58,
+    height: 52,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#BCBCBC',

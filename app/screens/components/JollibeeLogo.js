@@ -2,4 +2,4 @@ import React from 'react';
 import { Image } from 'react-native';
 import { images } from '@theme';
 
-export const JollibeeLogo = () => <Image source={images.icons.logo} />;
+export const JollibeeLogo = ({ style }) => <Image source={images.icons.logo} style={style} />;

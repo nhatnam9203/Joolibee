@@ -40,6 +40,8 @@ const images = {
     ic_succeeded: require('../assets/icons/ic_succeeded.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
+  jollibee_home: require('../assets/images/jollibee-home.png'),
+  layout_white_home: require('../assets/images/layout-white-home.png'),
 };
 
 export default images;
