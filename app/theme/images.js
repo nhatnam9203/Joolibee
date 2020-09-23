@@ -49,6 +49,8 @@ const images = {
   menu_5: require('../assets/images/menu-mon-trang-mieng.png'),
   menu_6: require('../assets/images/menu-phan-an-phu.png'),
   menu_7: require('../assets/images/menu-burger-sandwich.png'),
+  promotion_thumb: require('../assets/images/jollibee-promotion-thumb.png'),
+  promotion_list_thumb: require('../assets/images/promotion-list-thumb.png'),
 };
 
 export default images;

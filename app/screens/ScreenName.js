@@ -7,6 +7,7 @@ const ScreenName = {
   SignUp: 'SignUp',
   ForgotPassword: 'ForgotPassword',
   MenuDetail: 'MenuDetail',
+  PromotionList: 'PromotionList',
 };
 
 export default ScreenName;

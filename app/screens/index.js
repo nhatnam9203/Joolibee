@@ -7,6 +7,7 @@ import SignUpScreen from './SignUp';
 import SignInScreen from './SignIn';
 import ForgotPasswordScreen from './ForgotPassword';
 import MenuDetailScreen from './MenuDetail';
+import PromotionListScreen from './PromotionList';
 
 module.exports = {
   ScreenName,
@@ -18,4 +19,5 @@ module.exports = {
   SignInScreen,
   ForgotPasswordScreen,
   MenuDetailScreen,
+  PromotionListScreen,
 };

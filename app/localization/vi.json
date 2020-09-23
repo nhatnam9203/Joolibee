@@ -65,5 +65,7 @@
   "txtSelectCity": "VUI LÒNG CHON TỈNH THÀNH",
   "txtSelectDistrict": "Tỉnh/Thành",
   "txtSelectWard": "Quận/Huyện",
-  "txtAddressTo": "Giao đến:"
+  "txtAddressTo": "Giao đến:",
+  "txtBuyNow": "Mua Ngay",
+  "txtPoint": "điểm"
 }
