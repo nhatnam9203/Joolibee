@@ -10,6 +10,11 @@ import {
   SettingAccountScreen,
   EditAccountScreen,
 } from '../screens';
+import { StyleSheet, View } from 'react-native';
+import { AppStyles, images } from '@theme';
+import { translate } from '@localize';
+import { HeaderImage } from '@components';
+
 // import { TransitionSpecs } from '@react-navigation/stack';
 // import { CardStyleInterpolators } from '@react-navigation/stack';
 // import { HeaderStyleInterpolators } from '@react-navigation/stack';
@@ -40,6 +45,8 @@ function MainStack() {
       initialRouteName={ScreenName.Main}
       headerMode="screen"
       screenOptions={{
+        ...AppStyles.navigation.default,
+        headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
       }}>
       <Stack.Screen
@@ -68,18 +75,35 @@ function MainStack() {
         name={ScreenName.PromotionList}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         component={SettingAccountScreen}
         name={ScreenName.SettingAccount}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSetting'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
       />
+
       <Stack.Screen
         component={EditAccountScreen}
         name={ScreenName.EditAccount}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtEditAccount'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
       />
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: AppStyles.colors.accent,
+  },
+});
 
 export default MainStack;
