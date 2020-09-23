@@ -11,6 +11,7 @@ import MyAccountScreen from './MyAccount';
 import SettingAccountScreen from './SettingAccount';
 import EditAccountScreen from './EditAccount';
 import RewardScreen from './Reward';
+import NotificationScreen from './Notification';
 
 module.exports = {
   ScreenName,
@@ -26,4 +27,5 @@ module.exports = {
   SettingAccountScreen,
   EditAccountScreen,
   RewardScreen,
+  NotificationScreen,
 };

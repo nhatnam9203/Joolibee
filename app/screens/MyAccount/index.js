@@ -50,6 +50,9 @@ const MyAccountScreen = () => {
         icon: images.icons.ic_notify,
         title: translate('txtSettingNotify'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.HistorySavedPoint);
+        },
       },
       {
         key: 'key_address',

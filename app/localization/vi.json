@@ -71,5 +71,8 @@
   "txtUpdate": "Cập nhật",
   "txtReward": "Ưu đãi",
   "txtNewReward": "Các ưu đãi",
-  "txtMyReward": "Ưu đãi của tôi"
+  "txtMyReward": "Ưu đãi của tôi",
+  "txtSavedPointHistory": "Lịch sử tích điểm",
+  "txtReceivedPoint": "Điểm đã nhận",
+  "txtUsedPoint": "Điểm đã dùng"
 }
