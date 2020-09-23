@@ -11,6 +11,7 @@ import * as CustomModal from './CustomModal';
 import CustomTextLink from './CustomTextLink';
 import CustomFlatList from './CustomFlatList';
 import CustomButtonImage from './CustomButtonImage';
+import CustomScrollTabView from './CustomScrollTabView';
 
 module.exports = {
   TopBar,
@@ -26,4 +27,5 @@ module.exports = {
   CustomTextLink,
   CustomFlatList,
   CustomButtonImage,
+  CustomScrollTabView,
 };

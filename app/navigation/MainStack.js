@@ -9,6 +9,7 @@ import {
   PromotionListScreen,
   SettingAccountScreen,
   EditAccountScreen,
+  RewardScreen,
 } from '../screens';
 import { StyleSheet, View } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -92,6 +93,16 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtEditAccount'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={RewardScreen}
+        name={ScreenName.Reward}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtReward'),
           headerBackground: () => <View style={styles.container} />,
         }}
       />

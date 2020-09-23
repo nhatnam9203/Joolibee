@@ -10,6 +10,7 @@ import PromotionListScreen from './PromotionList';
 import MyAccountScreen from './MyAccount';
 import SettingAccountScreen from './SettingAccount';
 import EditAccountScreen from './EditAccount';
+import RewardScreen from './Reward';
 
 module.exports = {
   ScreenName,
@@ -24,4 +25,5 @@ module.exports = {
   PromotionListScreen,
   SettingAccountScreen,
   EditAccountScreen,
+  RewardScreen,
 };

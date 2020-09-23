@@ -35,6 +35,9 @@ const MyAccountScreen = () => {
         icon: images.icons.ic_promotion,
         title: translate('txtSettingPromotion'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.Reward);
+        },
       },
       {
         key: 'key_order_list',

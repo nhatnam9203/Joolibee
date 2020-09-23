@@ -10,6 +10,7 @@ const ScreenName = {
   PromotionList: 'PromotionList',
   SettingAccount: 'SettingAccount',
   EditAccount: 'EditAccount',
+  Reward: 'Reward',
 };
 
 export default ScreenName;
