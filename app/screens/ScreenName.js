@@ -8,6 +8,8 @@ const ScreenName = {
   ForgotPassword: 'ForgotPassword',
   MenuDetail: 'MenuDetail',
   PromotionList: 'PromotionList',
+  SettingAccount: 'SettingAccount',
+  EditAccount: 'EditAccount',
 };
 
 export default ScreenName;

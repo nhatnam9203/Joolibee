@@ -2,9 +2,9 @@ import React from 'react';
 import { TopBar } from '@components';
 import { images, AppStyles } from '@theme';
 import { useNavigation } from '@react-navigation/native';
-import ScreenName from '../../ScreenName';
+import ScreenName from '../ScreenName';
 
-const TopBarComponent = React.memo(() => {
+export const TopBarComponent = React.memo(() => {
   const navigation = useNavigation();
 
   return (
@@ -33,5 +33,3 @@ const TopBarComponent = React.memo(() => {
     </TopBar.Bar>
   );
 });
-
-export default TopBarComponent;

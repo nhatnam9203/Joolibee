@@ -14,10 +14,10 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import { Avatar } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import { SettingItem } from '../../components';
-import * as constants from '../../Constants';
+import { SettingItem } from '../components';
+import ScreenName from '../ScreenName';
 
-const MyAccountPage = () => {
+const MyAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
@@ -66,7 +66,7 @@ const MyAccountPage = () => {
         title: translate('txtSetting'),
         isArrow: true,
         onPress: () => {
-          navigation.navigate(constants.SettingAccount);
+          navigation.navigate(ScreenName.SettingAccount);
         },
       },
     ]);
@@ -89,7 +89,7 @@ const MyAccountPage = () => {
             <Text
               style={styles.editTextStyle}
               onPress={() => {
-                navigation.goBack();
+                navigation.navigate(ScreenName.EditAccount);
               }}>
               {translate('txtEditAccount')}
             </Text>
@@ -182,4 +182,4 @@ const styles = StyleSheet.create({
     padding: metrics.padding,
   },
 });
-export default MyAccountPage;
+export default MyAccountScreen;

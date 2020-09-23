@@ -1,4 +1,3 @@
-import AccountStackScreen from './Account';
 import MainTabScreen from './Main';
 import ScreenName from './ScreenName';
 import WelcomeScreen from './Welcome';
@@ -8,16 +7,21 @@ import SignInScreen from './SignIn';
 import ForgotPasswordScreen from './ForgotPassword';
 import MenuDetailScreen from './MenuDetail';
 import PromotionListScreen from './PromotionList';
+import MyAccountScreen from './MyAccount';
+import SettingAccountScreen from './SettingAccount';
+import EditAccountScreen from './EditAccount';
 
 module.exports = {
   ScreenName,
   WelcomeScreen,
   MainTabScreen,
-  AccountStackScreen,
+  MyAccountScreen,
   SplashScreen,
   SignUpScreen,
   SignInScreen,
   ForgotPasswordScreen,
   MenuDetailScreen,
   PromotionListScreen,
+  SettingAccountScreen,
+  EditAccountScreen,
 };

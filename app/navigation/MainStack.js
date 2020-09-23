@@ -3,10 +3,12 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   MainTabScreen,
-  AccountStackScreen,
+  MyAccountScreen,
   ScreenName,
   MenuDetailScreen,
   PromotionListScreen,
+  SettingAccountScreen,
+  EditAccountScreen,
 } from '../screens';
 // import { TransitionSpecs } from '@react-navigation/stack';
 // import { CardStyleInterpolators } from '@react-navigation/stack';
@@ -47,7 +49,7 @@ function MainStack() {
       />
 
       <Stack.Screen
-        component={AccountStackScreen}
+        component={MyAccountScreen}
         name={ScreenName.Account}
         options={{
           headerShown: false,
@@ -64,6 +66,16 @@ function MainStack() {
       <Stack.Screen
         component={PromotionListScreen}
         name={ScreenName.PromotionList}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={SettingAccountScreen}
+        name={ScreenName.SettingAccount}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={EditAccountScreen}
+        name={ScreenName.EditAccount}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

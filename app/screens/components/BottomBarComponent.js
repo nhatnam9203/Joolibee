@@ -3,23 +3,27 @@ import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import * as constants from '../Constants';
 
-function BottomBarComponent({ state, descriptors, navigation }) {
+export const HomePageName = 'Home';
+export const PromotionPageName = 'Promotion';
+export const MenuPageName = 'Menu';
+export const StorePageName = 'Store';
+
+export const BottomBarComponent = ({ state, descriptors, navigation }) => {
   const routes = {
-    [constants.HomePage]: {
+    Home: {
       title: translate('tabHome'),
       icon: images.icons.tab_home,
     },
-    [constants.MenuPage]: {
+    Promotion: {
       title: translate('tabMenu'),
       icon: images.icons.tab_menu,
     },
-    [constants.StorePage]: {
+    Menu: {
       title: translate('tabStore'),
       icon: images.icons.tab_store,
     },
-    [constants.PromotionPage]: {
+    Store: {
       title: translate('tabPromotion'),
       icon: images.icons.tab_promotion,
     },
@@ -96,7 +100,7 @@ function BottomBarComponent({ state, descriptors, navigation }) {
       })}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   barStyle: {
@@ -131,5 +135,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default BottomBarComponent;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import AppStyles from '../../../theme/styles';
+import { AppStyles } from '@theme';
 
-const MenuItem = ({ item, onPress }) => (
+export const MenuItem = ({ item, onPress }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
     <Image style={styles.imageStyle} source={item.image} />
     <View style={styles.textContentStyle}>
@@ -35,5 +35,3 @@ const styles = StyleSheet.create({
     ...AppStyles.fonts.textBold,
   },
 });
-
-export default MenuItem;

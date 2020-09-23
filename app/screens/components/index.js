@@ -6,3 +6,8 @@ import * as ButtonCC from './ButtonCC';
 export { ButtonCC };
 export * from './TextInputErrorMessage';
 export * from './ItemImageRight';
+export * from './BottomBarComponent';
+export * from './MenuItem';
+export * from './PopupSelectAreaComponent';
+export * from './SettingItem';
+export * from './TopBarComponent';

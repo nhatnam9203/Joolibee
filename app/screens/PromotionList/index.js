@@ -1,12 +1,11 @@
-import React from 'react';
+import { CustomFlatList, TopBar } from '@components';
 import { TopBarScreenLayout } from '@layouts';
-import { TopBarComponent, MenuItem } from '../Main/components';
-import { CustomFlatList, CustomButtonImage, TopBar } from '@components';
-import { images, AppStyles } from '@theme';
-import { View, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
-import { ItemImageRight, ButtonCC } from '../components';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images } from '@theme';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { ItemImageRight } from '../components';
 
 const defaultData = [
   {

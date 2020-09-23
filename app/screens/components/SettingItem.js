@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { images, metrics } from '@theme';
 
-const SettingItem = ({ item, onPress = () => {} }) => {
+export const SettingItem = ({ item, onPress = () => {} }) => {
   const { icon, title, isArrow } = item;
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -60,5 +60,3 @@ const styles = StyleSheet.create({
 
   arrowStyle: { height: 15, width: 10, margin: metrics.margin },
 });
-
-export default SettingItem;

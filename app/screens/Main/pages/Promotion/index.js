@@ -1,7 +1,6 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
-import { TopBarComponent } from '../../components';
-import { ItemImageRight, ButtonCC } from '../../../components';
+import { ItemImageRight, ButtonCC, TopBarComponent } from '../../../components';
 import { CustomFlatList } from '@components';
 import { images, AppStyles } from '@theme';
 import { StyleSheet, View, Text } from 'react-native';

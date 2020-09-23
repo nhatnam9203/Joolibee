@@ -3,11 +3,11 @@ import { translate } from '@localize';
 import { AppStyles } from '@theme';
 import React from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import { SettingItem } from '../../components';
+import { SettingItem } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
 
-const SettingAccountPage = () => {
+const SettingAccountScreen = () => {
   const dispatch = useDispatch();
   const [settingList, setSettingList] = React.useState([]);
 
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default SettingAccountPage;
+export default SettingAccountScreen;

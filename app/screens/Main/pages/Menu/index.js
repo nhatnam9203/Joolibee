@@ -1,6 +1,6 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
-import { TopBarComponent, MenuItem } from '../../components';
+import { TopBarComponent, MenuItem } from '../../../components';
 import { CustomFlatList } from '@components';
 import { images } from '@theme';
 import { View, StyleSheet } from 'react-native';
