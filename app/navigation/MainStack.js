@@ -11,6 +11,7 @@ import {
   EditAccountScreen,
   RewardScreen,
   NotificationScreen,
+  MySavedPointScreen,
 } from '../screens';
 import { StyleSheet, View } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -114,6 +115,16 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSavedPointHistory'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={MySavedPointScreen}
+        name={ScreenName.MySavedPoint}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyRewardPoint'),
           headerBackground: () => <View style={styles.container} />,
         }}
       />

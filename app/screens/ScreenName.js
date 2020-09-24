@@ -12,6 +12,7 @@ const ScreenName = {
   EditAccount: 'EditAccount',
   Reward: 'Reward',
   HistorySavedPoint: 'HistorySavedPoint',
+  MySavedPoint: 'MySavedPoint',
 };
 
 export default ScreenName;

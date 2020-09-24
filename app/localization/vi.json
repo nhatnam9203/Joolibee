@@ -70,9 +70,13 @@
   "txtPoint": "điểm",
   "txtUpdate": "Cập nhật",
   "txtReward": "Ưu đãi",
-  "txtNewReward": "Các ưu đãi",
+  "txtRewards": "Các ưu đãi",
+  "txtNewReward": "Ưu đãi mới",
   "txtMyReward": "Ưu đãi của tôi",
   "txtSavedPointHistory": "Lịch sử tích điểm",
   "txtReceivedPoint": "Điểm đã nhận",
-  "txtUsedPoint": "Điểm đã dùng"
+  "txtUsedPoint": "Điểm đã dùng",
+  "txtMySavedPoint": "Điểm tích luỹ đang có",
+  "txtMyRewardPoint": "Điểm thưởng",
+  "txtViewAll": "Xem tất cả"
 }

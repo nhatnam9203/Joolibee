@@ -29,6 +29,9 @@ const MyAccountScreen = () => {
         icon: images.icons.ic_jollibee,
         title: translate('txtSettingPoint'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.MySavedPoint);
+        },
       },
       {
         key: 'key_promotion',

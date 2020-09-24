@@ -6,6 +6,9 @@ const CustomFlatList = ({ ...props }) => {
 };
 
 const styles = StyleSheet.create({
-  containerStyle: { borderTopWidth: 0, borderBottomWidth: 0 },
+  containerStyle: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  },
 });
 export default CustomFlatList;
