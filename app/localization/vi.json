@@ -87,5 +87,9 @@
   "txtChangeLanguage": "Thay đổi ngôn ngữ",
   "txtConfirm": "Xác nhận",
   "txtVietnam": "Tiếng Việt",
-  "txtEnglish": "English"
+  "txtEnglish": "English",
+  "txtInputOldPassword": "Mật khẩu cũ *",
+  "txtInputNewPassword": "Mật khẩu mới *",
+  "txtInputConfirmNewPassword": "Xác nhận mật khẩu mới *",
+  "txtSavePassword": "Lưu mật khẩu"
 }

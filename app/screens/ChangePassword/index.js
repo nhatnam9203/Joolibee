@@ -8,7 +8,7 @@ import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
-import { ButtonCC } from '../components';
+import { ButtonCC, PasswordInput } from '../components';
 
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
@@ -18,62 +18,32 @@ const ChangePasswordScreen = () => {
     <SinglePageLayout backgroundColor={AppStyles.colors.background}>
       <SafeAreaView>
         <View style={styles.container}>
-          <CustomInput
+          <PasswordInput
             style={{ width: LAYOUT_WIDTH }}
-            placeholder={translate('txtInputName')}
-            textContentType="name"
+            // onChangeText={handleChange('password')}
+            // onBlur={handleBlur('password')}
+            // value={values.password}
+            placeholder={translate('txtInputOldPassword')}
+            textContentType="password"
+          />
+          <PasswordInput
+            style={{ width: LAYOUT_WIDTH }}
+            // onChangeText={handleChange('password')}
+            // onBlur={handleBlur('password')}
+            // value={values.password}
+            placeholder={translate('txtInputNewPassword')}
+            textContentType="password"
+          />
+          <PasswordInput
+            style={{ width: LAYOUT_WIDTH }}
+            // onChangeText={handleChange('password')}
+            // onBlur={handleBlur('password')}
+            // value={values.password}
+            placeholder={translate('txtInputConfirmNewPassword')}
+            textContentType="password"
           />
 
-          <CustomInput
-            style={{ width: LAYOUT_WIDTH }}
-            placeholder={translate('txtInputPhone')}
-            editable={false}
-            textContentType="telephoneNumber"
-          />
-
-          <CustomInput
-            style={{ width: LAYOUT_WIDTH }}
-            // onChangeText={handleChange('email')}
-            // onBlur={handleBlur('email')}
-            // value={values.email}
-            placeholder={translate('txtInputEmail')}
-            textContentType="emailAddress"
-          />
-
-          <View style={styles.pickerContentStyle}>
-            <CustomBirthdayPicker
-              //   onChangeDate={handleChange('birthday')}
-              //   defaultValue={values.birthday}
-              renderBase={() => (
-                <CustomInput
-                  style={{ width: FULL_WIDTH }}
-                  //   onBlur={handleBlur('birthday')}
-                  //   value={values.birthday}
-                  placeholder={translate('txtPickerDate')}
-                  pointerEvents="none">
-                  <View style={styles.btnIcon}>
-                    <Image
-                      source={images.icons.ic_calendar}
-                      style={styles.imgIconStyle}
-                    />
-                  </View>
-                </CustomInput>
-              )}
-            />
-
-            <CustomPickerSelect
-              style={{ width: FULL_WIDTH }}
-              items={[
-                { label: translate('txtMale'), value: 1 },
-                { label: translate('txtFemale'), value: 0 },
-              ]}
-              placeholder={translate('txtPickerGender')}
-              //   defaultValue={values.gender}
-              //   onChangeItem={(item) => setFieldValue('gender', item.value)}
-            />
-          </View>
-
-          <ButtonCC.ButtonYellow label={translate('txtUpdate')} />
+          <ButtonCC.ButtonYellow label={translate('txtSavePassword')} />
         </View>
       </SafeAreaView>
     </SinglePageLayout>
