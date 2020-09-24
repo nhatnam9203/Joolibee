@@ -1,8 +1,8 @@
-import { CustomButton } from '@components';
+import { CustomButton, CustomFlatList } from '@components';
 import { translate } from '@localize';
 import { AppStyles } from '@theme';
 import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { SettingItem } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
@@ -58,6 +58,9 @@ const SettingAccountScreen = () => {
           navigation.navigate(ScreenName.ChangeLanguage);
         },
       },
+      {
+        key: 'key_logout',
+      },
     ]);
   }, [navigation]);
 
@@ -66,7 +69,7 @@ const SettingAccountScreen = () => {
       <View style={styles.container}>
         {/**List Item Setting */}
         <View style={styles.content}>
-          <FlatList
+          <CustomFlatList
             bounces={false}
             data={settingList}
             renderItem={({ item }) => (

@@ -84,5 +84,8 @@
   "txtSupport": "Hỗ trợ",
   "txtReceiveNotify": "Nhận thông báo",
   "txtChangePassword": "Thay đổi mật khẩu",
-  "txtChangeLanguage": "Thay đổi ngôn ngữ"
+  "txtChangeLanguage": "Thay đổi ngôn ngữ",
+  "txtConfirm": "Xác nhận",
+  "txtVietnam": "Tiếng Việt",
+  "txtEnglish": "English"
 }
