@@ -13,6 +13,8 @@ import {
   NotificationScreen,
   MySavedPointScreen,
   SupportScreen,
+  ChangeLanguageScreen,
+  ChangePasswordScreen,
 } from '../screens';
 import { StyleSheet, View } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -136,6 +138,26 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSupport'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={ChangePasswordScreen}
+        name={ScreenName.ChangePassword}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtChangePassword'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={ChangeLanguageScreen}
+        name={ScreenName.ChangeLanguage}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtChangeLanguage'),
           headerBackground: () => <View style={styles.container} />,
         }}
       />

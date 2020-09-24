@@ -6,9 +6,13 @@ import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import { SettingItem } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
+import ScreenName from '../ScreenName';
+import { useNavigation } from '@react-navigation/native';
 
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [settingList, setSettingList] = React.useState([]);
 
   /**functions */
@@ -34,25 +38,28 @@ const SettingAccountScreen = () => {
   React.useEffect(() => {
     setSettingList([
       {
-        key: 'key_point',
-        // icon: images.icons.ic_jollibee,
-        title: translate('txtSettingPoint'),
+        key: 'key_notify',
+        title: translate('txtReceiveNotify'),
         isArrow: false,
       },
       {
-        key: 'key_promotion',
-        // icon: images.icons.ic_promotion,
-        title: translate('txtSettingPromotion'),
+        key: 'key_change_password',
+        title: translate('txtChangePassword'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.ChangePassword);
+        },
       },
       {
-        key: 'key_order_list',
-        // icon: images.icons.ic_order_list,
-        title: translate('txtSettingOrderList'),
+        key: 'key_change_language',
+        title: translate('txtChangeLanguage'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.ChangeLanguage);
+        },
       },
     ]);
-  }, []);
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,7 +70,7 @@ const SettingAccountScreen = () => {
             bounces={false}
             data={settingList}
             renderItem={({ item }) => (
-              <SettingItem item={item} key={item.key} />
+              <SettingItem item={item} key={item.key} onPress={item?.onPress} />
             )}
             ItemSeparatorComponent={() => (
               <View style={AppStyles.styles.rowSeparator} />

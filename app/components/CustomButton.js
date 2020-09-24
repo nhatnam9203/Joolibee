@@ -20,7 +20,7 @@ const CustomButton = ({
         width: width,
         height: height,
         borderRadius: height / 2,
-        ...(borderColor && { borderWidth: 2, borderColor: borderColor }),
+        ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
       },
       absolute && styles.btnAbsoluteStyle,
       style,
@@ -35,7 +35,7 @@ const CustomButton = ({
         {
           backgroundColor: bgColor,
           borderRadius: height / 2,
-          ...(borderColor && { borderWidth: 2, borderColor: borderColor }),
+          ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
         },
       ]}>
       {children && children}

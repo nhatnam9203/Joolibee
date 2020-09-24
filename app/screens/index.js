@@ -14,6 +14,8 @@ import RewardScreen from './Reward';
 import NotificationScreen from './Notification';
 import MySavedPointScreen from './MySavedPoint';
 import SupportScreen from './Support';
+import ChangePasswordScreen from './ChangePassword';
+import ChangeLanguageScreen from './ChangeLanguage';
 
 module.exports = {
   ScreenName,
@@ -32,4 +34,6 @@ module.exports = {
   NotificationScreen,
   MySavedPointScreen,
   SupportScreen,
+  ChangePasswordScreen,
+  ChangeLanguageScreen,
 };

@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 
-const ExampleScreen = () => {
+const ChangeLanguageScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -22,4 +22,4 @@ const ExampleScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: AppStyles.colors.background },
 });
-export default ExampleScreen;
+export default ChangeLanguageScreen;

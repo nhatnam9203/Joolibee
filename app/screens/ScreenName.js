@@ -14,6 +14,8 @@ const ScreenName = {
   HistorySavedPoint: 'HistorySavedPoint',
   MySavedPoint: 'MySavedPoint',
   Support: 'Support',
+  ChangeLanguage: 'ChangeLanguage',
+  ChangePassword: 'ChangePassword',
 };
 
 export default ScreenName;
