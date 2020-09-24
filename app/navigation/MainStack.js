@@ -10,7 +10,7 @@ import {
   SettingAccountScreen,
   EditAccountScreen,
   RewardScreen,
-  NotificationScreen,
+  PointHistoryScreen,
   MySavedPointScreen,
   SupportScreen,
   ChangeLanguageScreen,
@@ -113,7 +113,7 @@ function MainStack() {
       />
 
       <Stack.Screen
-        component={NotificationScreen}
+        component={PointHistoryScreen}
         name={ScreenName.HistorySavedPoint}
         options={{
           headerShown: true,

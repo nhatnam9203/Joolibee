@@ -3,7 +3,7 @@ import { CustomScrollTabView } from '@components';
 import { ReceivedPointPage, UsedPointPage } from './pages';
 import { translate } from '@localize';
 
-const NotificationScreen = () => {
+const PointHistoryScreen = () => {
   return (
     <CustomScrollTabView>
       <ReceivedPointPage
@@ -15,4 +15,4 @@ const NotificationScreen = () => {
   );
 };
 
-export default NotificationScreen;
+export default PointHistoryScreen;

@@ -11,7 +11,7 @@ import MyAccountScreen from './MyAccount';
 import SettingAccountScreen from './SettingAccount';
 import EditAccountScreen from './EditAccount';
 import RewardScreen from './Reward';
-import NotificationScreen from './Notification';
+import PointHistoryScreen from './PointHistory';
 import MySavedPointScreen from './MySavedPoint';
 import SupportScreen from './Support';
 import ChangePasswordScreen from './ChangePassword';
@@ -31,7 +31,7 @@ module.exports = {
   SettingAccountScreen,
   EditAccountScreen,
   RewardScreen,
-  NotificationScreen,
+  PointHistoryScreen,
   MySavedPointScreen,
   SupportScreen,
   ChangePasswordScreen,
