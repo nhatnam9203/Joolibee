@@ -15,8 +15,8 @@ function MainTabScreen() {
   return (
     <MainTab.Navigator tabBar={(props) => <BottomBarComponent {...props} />}>
       <MainTab.Screen name={HomePageName} component={HomePage} />
-      <MainTab.Screen name={MenuPageName} component={MenuPage} />
       <MainTab.Screen name={PromotionPageName} component={PromotionPage} />
+      <MainTab.Screen name={MenuPageName} component={MenuPage} />
       <MainTab.Screen name={StorePageName} component={StorePage} />
     </MainTab.Navigator>
   );

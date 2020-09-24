@@ -13,6 +13,7 @@ const ScreenName = {
   Reward: 'Reward',
   HistorySavedPoint: 'HistorySavedPoint',
   MySavedPoint: 'MySavedPoint',
+  Support: 'Support',
 };
 
 export default ScreenName;

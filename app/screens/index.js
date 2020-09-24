@@ -13,6 +13,7 @@ import EditAccountScreen from './EditAccount';
 import RewardScreen from './Reward';
 import NotificationScreen from './Notification';
 import MySavedPointScreen from './MySavedPoint';
+import SupportScreen from './Support';
 
 module.exports = {
   ScreenName,
@@ -30,4 +31,5 @@ module.exports = {
   RewardScreen,
   NotificationScreen,
   MySavedPointScreen,
+  SupportScreen,
 };

@@ -68,6 +68,9 @@ const MyAccountScreen = () => {
         icon: images.icons.ic_support,
         title: translate('txtSettingSupport'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.Support);
+        },
       },
       {
         key: 'key_setting',

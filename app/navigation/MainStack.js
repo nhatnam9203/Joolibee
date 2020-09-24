@@ -12,6 +12,7 @@ import {
   RewardScreen,
   NotificationScreen,
   MySavedPointScreen,
+  SupportScreen,
 } from '../screens';
 import { StyleSheet, View } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -125,6 +126,16 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtMyRewardPoint'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={SupportScreen}
+        name={ScreenName.Support}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSupport'),
           headerBackground: () => <View style={styles.container} />,
         }}
       />

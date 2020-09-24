@@ -16,16 +16,16 @@ export const BottomBarComponent = ({ state, descriptors, navigation }) => {
       icon: images.icons.tab_home,
     },
     Promotion: {
+      title: translate('tabPromotion'),
+      icon: images.icons.tab_promotion,
+    },
+    Menu: {
       title: translate('tabMenu'),
       icon: images.icons.tab_menu,
     },
-    Menu: {
+    Store: {
       title: translate('tabStore'),
       icon: images.icons.tab_store,
-    },
-    Store: {
-      title: translate('tabPromotion'),
-      icon: images.icons.tab_promotion,
     },
   };
 
