@@ -44,6 +44,7 @@ const images = {
     ic_flag_english: require('../assets/icons/ic-flag-english.png'),
     ic_radio_active: require('../assets/icons/ic-radio-active.png'),
     ic_radio_inactive: require('../assets/icons/ic-radio-inactive.png'),
+    ic_delete: require('../assets/icons/ic-delete.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

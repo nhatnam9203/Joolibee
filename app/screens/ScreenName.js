@@ -16,6 +16,7 @@ const ScreenName = {
   Support: 'Support',
   ChangeLanguage: 'ChangeLanguage',
   ChangePassword: 'ChangePassword',
+  Notification: 'Notification',
 };
 
 export default ScreenName;

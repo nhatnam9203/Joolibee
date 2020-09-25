@@ -24,7 +24,12 @@ export const TopBarComponent = React.memo(() => {
       }
       rightComponents={
         <>
-          <TopBar.Action source={images.icons.nav_notify} onPress={() => {}} />
+          <TopBar.Action
+            source={images.icons.nav_notify}
+            onPress={() => {
+              navigation.navigate(ScreenName.Notification);
+            }}
+          />
           <TopBar.Space />
           <TopBar.Action source={images.icons.nav_order} onPress={() => {}} />
         </>

@@ -15,8 +15,9 @@ import {
   SupportScreen,
   ChangeLanguageScreen,
   ChangePasswordScreen,
+  NotificationScreen,
 } from '../screens';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { translate } from '@localize';
 import { HeaderImage } from '@components';
@@ -161,6 +162,21 @@ function MainStack() {
           headerBackground: () => <View style={styles.container} />,
         }}
       />
+
+      <Stack.Screen
+        component={NotificationScreen}
+        name={ScreenName.Notification}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtNotification'),
+          headerBackground: () => <View style={styles.container} />,
+          headerRight: (props) => (
+            <View style={styles.icon}>
+              <Image source={images.icons.ic_delete} resizeMode="contain" />
+            </View>
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -169,6 +185,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyles.colors.accent,
+  },
+  icon: {
+    backgroundColor: '#FFC522',
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
   },
 });
 
