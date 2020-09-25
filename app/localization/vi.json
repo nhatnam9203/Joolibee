@@ -92,5 +92,7 @@
   "txtInputNewPassword": "Mật khẩu mới *",
   "txtInputConfirmNewPassword": "Xác nhận mật khẩu mới *",
   "txtSavePassword": "Lưu mật khẩu",
-  "txtNotification": "Thông báo"
+  "txtNotification": "Thông báo",
+  "txtInputPhoneNumberPlaceholder": "Vui lòng nhập số điện thoại",
+  "txtOther": "Khác"
 }

@@ -1,16 +1,18 @@
+import { useScrollToTop } from '@react-navigation/native';
 import { AppStyles } from '@theme';
 import React from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
+  ScrollView,
   StyleSheet,
   View,
-  ScrollView,
 } from 'react-native';
-import { isIphoneX } from '../lib/isIphoneX';
 
 const SinglePageLayout = ({ children, backgroundColor }) => {
+  const ref = React.useRef(null);
+  useScrollToTop(ref);
+
   return (
     <KeyboardAvoidingView
       style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
@@ -18,6 +20,7 @@ const SinglePageLayout = ({ children, backgroundColor }) => {
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
       <View style={styles.content}>
         <ScrollView
+          ref={ref}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

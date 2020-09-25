@@ -11,13 +11,8 @@ const Stack = createStackNavigator();
 
 function SplashStack() {
   return (
-    <Stack.Navigator
-      initialRouteName={ScreenName.Main}
-      headerMode="none">
-      <Stack.Screen
-        component={SplashScreen}
-        name={ScreenName.Splash}
-      />
+    <Stack.Navigator initialRouteName={ScreenName.Main} headerMode="none">
+      <Stack.Screen component={SplashScreen} name={ScreenName.Splash} />
     </Stack.Navigator>
   );
 }
@@ -26,12 +21,7 @@ function App() {
   const loading = useSelector((state) => state.app.loading_app);
   return (
     <NavigationContainer ref={navigationRef}>
-      {loading
-        ? <SplashStack />
-        : true
-          ? <MainStack />
-          : <AuthStack />}
-
+      {loading ? <SplashStack /> : isLogIn ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

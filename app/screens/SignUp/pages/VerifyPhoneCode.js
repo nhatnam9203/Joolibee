@@ -6,7 +6,8 @@ import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ButtonCC, LabelTitle } from '../../components';
 
-export const VerifyPhoneCode = ({ phone = '0975783565', next }) => {
+export const VerifyPhoneCode = ({ values, next }) => {
+  const { phone = 'undefine' } = values;
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Animated.View style={styles.container}>
@@ -20,7 +21,7 @@ export const VerifyPhoneCode = ({ phone = '0975783565', next }) => {
           placeholder={translate('txtPhoneCode')}
           autoFocus={true}
           textContentType="telephoneNumber"
-          keyboardType="phone-pad"
+          keyboardType="numeric"
         />
         <ButtonCC.ButtonYellow
           label={translate('txtContinue')}

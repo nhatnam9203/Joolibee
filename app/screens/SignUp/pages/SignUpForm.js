@@ -96,7 +96,7 @@ export const SignUpForm = () => {
           password: '',
           confirmPassword: '',
           birthday: '',
-          gender: '',
+          gender: null,
         }}
         onSubmit={signUpDataSubmit}
         validationSchema={SignupSchema}
@@ -126,7 +126,7 @@ export const SignUpForm = () => {
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={errors.name}
-                    color={AppStyles.colors.button}
+                    color={AppStyles.colors.inputError}
                   />
                 )}
 
@@ -159,7 +159,7 @@ export const SignUpForm = () => {
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={errors.email}
-                    color={AppStyles.colors.button}
+                    color={AppStyles.colors.inputError}
                   />
                 )}
 
@@ -176,7 +176,7 @@ export const SignUpForm = () => {
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={errors.password}
-                    color={AppStyles.colors.button}
+                    color={AppStyles.colors.inputError}
                   />
                 )}
 
@@ -193,7 +193,7 @@ export const SignUpForm = () => {
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={errors.confirmPassword}
-                    color={AppStyles.colors.button}
+                    color={AppStyles.colors.inputError}
                   />
                 )}
 
@@ -221,12 +221,20 @@ export const SignUpForm = () => {
                   <CustomPickerSelect
                     style={{ width: FULL_WIDTH }}
                     items={[
-                      { label: translate('txtMale'), value: 1 },
-                      { label: translate('txtFemale'), value: 0 },
+                      { label: translate('txtMale'), value: 1, key: 'male' },
+                      {
+                        label: translate('txtFemale'),
+                        value: 0,
+                        key: 'female',
+                      },
+                      { label: translate('txtOther'), value: -1, key: 'other' },
                     ]}
                     placeholder={translate('txtPickerGender')}
                     defaultValue={values.gender}
-                    onChangeItem={(item) => setFieldValue('gender', item.value)}
+                    useNativeAndroidPickerStyle={false}
+                    onChangeItem={(item) =>
+                      setFieldValue('gender', item?.value)
+                    }
                   />
                 </View>
 
@@ -236,7 +244,7 @@ export const SignUpForm = () => {
                     <TextInputErrorMessage
                       style={{ width: LAYOUT_WIDTH }}
                       message={item}
-                      color={AppStyles.colors.button}
+                      color={AppStyles.colors.inputError}
                       key={index}
                     />
                   ))}
@@ -262,7 +270,7 @@ export const SignUpForm = () => {
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={errors.privacyChecked}
-                    color={AppStyles.colors.button}
+                    color={AppStyles.colors.inputError}
                   />
                 )}
 
@@ -289,10 +297,10 @@ export const SignUpForm = () => {
                 />
 
                 {/**FACEBOOK*/}
-                <ButtonCC.ButtonFacebook onPress={handleSubmit} />
+                {/* <ButtonCC.ButtonFacebook onPress={handleSubmit} /> */}
 
                 {/**GOOGLE*/}
-                <ButtonCC.ButtonGoogle onPress={handleSubmit} />
+                {/* <ButtonCC.ButtonGoogle onPress={handleSubmit} /> */}
 
                 {/**SIGN UP*/}
                 <View style={styles.textContent}>
@@ -370,6 +378,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 10,
     width: LAYOUT_WIDTH,
+    zIndex: 1,
   },
 
   txtStyle: {

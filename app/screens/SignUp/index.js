@@ -11,15 +11,31 @@ const SignUpScreen = () => {
   // redux
 
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
+  const [values, setValues] = React.useState(PAGES.InputPhone);
 
   switch (showPage) {
     case 0:
     default:
-      return <InputPhoneNumber next={() => setPage(PAGES.InputCode)} />;
+      return (
+        <InputPhoneNumber
+          next={(obj) => {
+            setValues(obj);
+            setPage(PAGES.InputCode);
+          }}
+        />
+      );
     case 1:
-      return <VerifyPhoneCode next={() => setPage(PAGES.SignUp)} />;
+      return (
+        <VerifyPhoneCode
+          next={(obj) => {
+            setValues(obj);
+            setPage(PAGES.SignUp);
+          }}
+          values={values}
+        />
+      );
     case 2:
-      return <SignUpForm />;
+      return <SignUpForm values={values} />;
   }
 };
 

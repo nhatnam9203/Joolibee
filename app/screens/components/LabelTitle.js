@@ -10,5 +10,6 @@ const styles = StyleSheet.create({
     ...AppStyles.fonts.title,
     fontWeight: 'bold',
     marginVertical: 20,
+    color: 'white',
   },
 });

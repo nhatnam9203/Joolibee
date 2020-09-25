@@ -62,7 +62,7 @@ export const InputNewPassword = ({ next }) => {
               <TextInputErrorMessage
                 style={{ width: LAYOUT_WIDTH }}
                 message={errors.password}
-                color={AppStyles.colors.button}
+                color={AppStyles.colors.inputError}
               />
             )}
 
@@ -79,7 +79,7 @@ export const InputNewPassword = ({ next }) => {
               <TextInputErrorMessage
                 style={{ width: LAYOUT_WIDTH }}
                 message={errors.confirmPassword}
-                color={AppStyles.colors.button}
+                color={AppStyles.colors.inputError}
               />
             )}
             <ButtonCC.ButtonYellow

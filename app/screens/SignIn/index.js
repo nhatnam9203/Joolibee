@@ -19,11 +19,9 @@ import {
   TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
+import { regex } from '@utils';
 
 const LAYOUT_WIDTH = '90%';
-const phoneRegExp = RegExp(
-  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-);
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -33,7 +31,7 @@ const SignInScreen = () => {
   const SignInSchema = Yup.object().shape({
     phone: Yup.string()
       .required(translate('txtRequired'))
-      .matches(phoneRegExp, translate('txtWrongPhoneNumber'))
+      .matches(regex.phone, translate('txtWrongPhoneNumber'))
       .min(10, translate('txtTooShort'))
       .max(15, translate('txtTooLong')),
     password: Yup.string().required(translate('txtRequired')),
@@ -99,7 +97,7 @@ const SignInScreen = () => {
                 <TextInputErrorMessage
                   style={{ width: LAYOUT_WIDTH }}
                   message={errors.phone}
-                  color={AppStyles.colors.button}
+                  color={AppStyles.colors.inputError}
                 />
               )}
 
@@ -117,7 +115,7 @@ const SignInScreen = () => {
                 <TextInputErrorMessage
                   style={{ width: LAYOUT_WIDTH }}
                   messages={errors.password}
-                  color={AppStyles.colors.button}
+                  color={AppStyles.colors.inputError}
                 />
               )}
 
@@ -127,7 +125,7 @@ const SignInScreen = () => {
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={item}
-                    color={AppStyles.colors.button}
+                    color={AppStyles.colors.inputError}
                     key={index}
                   />
                 ))}

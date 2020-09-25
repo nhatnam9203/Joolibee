@@ -23,6 +23,7 @@ const AppStyles = {
     surface: '', // background color for elements containing content, such as cards.
     white: '#FFF',
     button: buttonColor,
+    inputError: buttonColor,
   },
   fonts: {
     text: {
