@@ -29,7 +29,8 @@ const BUTTON_HEIGHT = 60;
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ infos }) => {
+  const { phone } = infos;
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
@@ -63,8 +64,8 @@ export const SignUpForm = () => {
 
   // function
   const signUpDataSubmit = React.useCallback(
-    (values) => {
-      const action = signUp(values, { dispatch });
+    (formValues) => {
+      const action = signUp(formValues, { dispatch });
       dispatch(action);
     },
     [dispatch],
@@ -92,7 +93,7 @@ export const SignUpForm = () => {
         initialValues={{
           email: '',
           name: '',
-          phone: '',
+          phone: phone,
           password: '',
           confirmPassword: '',
           birthday: '',
@@ -132,9 +133,7 @@ export const SignUpForm = () => {
 
                 <CustomInput
                   style={{ width: LAYOUT_WIDTH }}
-                  onChangeText={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  value={values.phone}
+                  value={phone}
                   placeholder={translate('txtInputPhone')}
                   editable={false}
                   textContentType="telephoneNumber">

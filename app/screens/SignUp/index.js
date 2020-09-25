@@ -31,11 +31,11 @@ const SignUpScreen = () => {
             setValues(obj);
             setPage(PAGES.SignUp);
           }}
-          values={values}
+          infos={values}
         />
       );
     case 2:
-      return <SignUpForm values={values} />;
+      return <SignUpForm infos={values} />;
   }
 };
 

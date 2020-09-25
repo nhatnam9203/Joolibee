@@ -6,8 +6,15 @@ import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ButtonCC, LabelTitle } from '../../components';
 
-export const VerifyPhoneCode = ({ values, next }) => {
-  const { phone = 'undefine' } = values;
+export const VerifyPhoneCode = ({ infos, next }) => {
+  const { phone = 'undefine' } = infos;
+
+  const verifyCode = () => {
+    next(infos);
+  };
+
+  const resendCode = () => {};
+
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Animated.View style={styles.container}>
@@ -26,7 +33,7 @@ export const VerifyPhoneCode = ({ values, next }) => {
         <ButtonCC.ButtonYellow
           label={translate('txtContinue')}
           style={styles.btnStyle}
-          onPress={next}
+          onPress={verifyCode}
         />
         <View style={styles.resendCodeStyle}>
           <Text style={styles.textStyle}>
@@ -36,7 +43,7 @@ export const VerifyPhoneCode = ({ values, next }) => {
           <CustomTextLink
             label={translate('txtResend')}
             style={styles.textBoldStyle}
-            onPress={next}
+            onPress={resendCode}
           />
         </View>
       </Animated.View>
