@@ -15,7 +15,7 @@ const index = () => {
     const renderItem = (item, index) => {
         return (
             <View style={styles.wrapperItem}>
-                <ImageBackground style={styles.price} source={images['jollibee_price']} >
+                <ImageBackground style={styles.price} source={images['jollibee_price']} resizeMode='stretch' >
                     <Text style={AppStyles.fonts.medium}>50.000 đ</Text>
                 </ImageBackground>
 
@@ -67,10 +67,9 @@ const index = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: scaleHeight(200),
+        height: scaleHeight(180),
         justifyContent: 'center',
         backgroundColor: AppStyles.colors.white,
-        top: scaleHeight(-40),
         alignItems: 'center',
     },
 

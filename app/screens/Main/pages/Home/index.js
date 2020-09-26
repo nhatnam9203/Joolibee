@@ -5,7 +5,8 @@ import { TopBarScreenLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from "@components";
 import { scale } from '@utils';
-import { TopBarComponent, PopupSelectAreaComponent, ProductPromotionList, BestSellerList } from '../../components';
+import { TopBarComponent, PopupSelectAreaComponent } from '../../components';
+import { ProductPromotionList, BestSellerList, NewsList } from './widget';
 const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const [isVisible, setVisiblePopup] = React.useState(true);
@@ -31,7 +32,7 @@ const HomePage = () => {
             bgColor={AppStyles.colors.button}
             styleText={{ fontSize: scaleWidth(14) }}
             style={{
-              marginVertical: scaleHeight(10)
+               marginVertical: scaleHeight(10)
             }}
           />
 
@@ -67,11 +68,10 @@ const HomePage = () => {
         </ImageBackground>
 
         <ProductPromotionList />
-        
+
         <BestSellerList />
 
-
-
+        <NewsList />
       </ScrollView>
       <PopupSelectAreaComponent
         visible={isVisible}
@@ -82,7 +82,7 @@ const HomePage = () => {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: AppStyles.colors.accent },
+  container: {  backgroundColor: AppStyles.colors.accent },
   containerTop: {
     paddingHorizontal: metrics.padding,
     paddingTop: metrics.padding,
@@ -100,16 +100,18 @@ const styles = StyleSheet.create({
   },
   layoutPromotion: {
     width: '100%',
-    height: scaleHeight(273),
+    height: scaleHeight(200),
     justifyContent: 'center',
+    marginTop:scaleHeight(25),
   },
 
   jollibeeHome: {
     position: 'absolute',
-    bottom: -scaleHeight(60),
+    bottom: -scaleHeight(80),
     right: -scaleWidth(50),
     width: scaleWidth(256),
-    height: scaleHeight(228)
+    height: scaleHeight(228),
+    resizeMode: 'stretch'
   }
 });
 

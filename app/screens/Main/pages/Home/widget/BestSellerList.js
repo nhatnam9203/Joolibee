@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Image, ImageBackground, Dimensions } from 'react-native';
+import { ScrollView, StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Text } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 
@@ -73,11 +73,12 @@ const index = () => {
 
 const renderItem = (item, index) => {
     return (
-        <View
+        <TouchableOpacity
+            activeOpacity={0.7}
             onPress={() => alert('ads')}
             key={index + ''}
             style={[styles.containerItem, AppStyles.styles.shadow]}>
-            <Image source={images['jollibee_combo']}
+            <Image source={images['jollibee_combo1']}
                 style={styles.imgProduct}
             />
             <Text style={[AppStyles.fonts.medium, { color: AppStyles.colors.text }]}>
@@ -97,7 +98,7 @@ const renderItem = (item, index) => {
             </View>
 
 
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: scaleHeight(381),
         backgroundColor: AppStyles.colors.orange,
-        top: scaleHeight(-40),
+            // top: scaleHeight(-40),
         alignItems: 'center',
         paddingHorizontal: scaleWidth(10)
     },
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
     imgProduct: {
         width: scaleWidth(124),
         height: scaleHeight(124),
+        resizeMode:'contain'
     }
 
 });
