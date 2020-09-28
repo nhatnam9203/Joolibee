@@ -1,4 +1,4 @@
 import * as Logger from './Logger';
-export * from './AsyncStoreExt';
+import * as AsyncStoreExt from './AsyncStorageExt';
 
-module.exports = { Logger };
+module.exports = { Logger, AsyncStoreExt };
