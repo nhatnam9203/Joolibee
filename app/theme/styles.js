@@ -23,6 +23,8 @@ const AppStyles = {
     surface: '', // background color for elements containing content, such as cards.
     white: '#FFF',
     button: buttonColor,
+    orange: "#F0810D",
+    cyan:'#2AC8CC'
     inputError: buttonColor,
   },
   fonts: {

@@ -12,6 +12,7 @@ const CustomButton = ({
   absolute = false,
   borderColor,
   style,
+  styleText,
   ...props
 }) => (
   <TouchableHighlight
@@ -40,7 +41,7 @@ const CustomButton = ({
       ]}>
       {children && children}
       {!!label && (
-        <Text style={[styles.txtStyle, { color: textColor }]}>
+        <Text style={[styles.txtStyle, { color: textColor },styleText]}>
           {label?.toUpperCase()}
         </Text>
       )}

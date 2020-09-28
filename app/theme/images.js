@@ -56,6 +56,12 @@ const images = {
   menu_7: require('../assets/images/menu-burger-sandwich.png'),
   promotion_thumb: require('../assets/images/jollibee-promotion-thumb.png'),
   promotion_list_thumb: require('../assets/images/promotion-list-thumb.png'),
+  jollibee_home: require('../assets/images/jollibee-home.png'),
+  layout_white_home: require('../assets/images/layout-white-home.png'),
+  jollibee_combo: require('../assets/images/jollibee-combo.png'),
+  jollibee_combo1: require('../assets/images/jollibee-combo1.png'),
+  jollibee_price: require('../assets/images/jollibee-price.png'),
+  jollibee_news: require('../assets/images/jollibee-news.png'),
 };
 
 export default images;
