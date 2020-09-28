@@ -5,7 +5,7 @@ import { TopBarScreenLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from "@components";
 import { scale } from '@utils';
-import { TopBarComponent, PopupSelectAreaComponent } from '../../components';
+import { TopBarComponent, PopupSelectAreaComponent } from '../../../components';
 import { ProductPromotionList, BestSellerList, NewsList } from './widget';
 const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
