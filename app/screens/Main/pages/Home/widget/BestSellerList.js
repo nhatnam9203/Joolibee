@@ -81,13 +81,15 @@ const renderItem = (item, index) => {
             <Image source={images['jollibee_combo1']}
                 style={styles.imgProduct}
             />
-            <Text style={[AppStyles.fonts.medium, { color: AppStyles.colors.text }]}>
+            <Text
+            numberOfLines={2}
+            style={[AppStyles.fonts.medium_SVN, { color: AppStyles.colors.text,fontSize:scaleWidth(13) }]}>
                 CƠM GÀ GIÒN + SÚP BÍ
                 ĐỎ + NƯỚC NGỌT
             </Text>
 
             <View style={styles.price}>
-                <Text style={[AppStyles.fonts.medium, styles.txtPrice]}>
+                <Text style={[AppStyles.fonts.medium_SVN, styles.txtPrice]}>
                     70.000 đ
                 </Text>
 

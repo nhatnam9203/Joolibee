@@ -21,7 +21,7 @@ function App() {
   const loading = useSelector((state) => state.app.loading_app);
   return (
     <NavigationContainer ref={navigationRef}>
-      {loading ? <SplashStack /> : isLogIn ? <MainStack /> : <AuthStack />}
+    {loading ? <SplashStack /> : !isLogIn ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

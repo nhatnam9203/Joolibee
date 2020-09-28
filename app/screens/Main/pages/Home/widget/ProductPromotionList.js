@@ -16,7 +16,7 @@ const index = () => {
         return (
             <View style={styles.wrapperItem}>
                 <ImageBackground style={styles.price} source={images['jollibee_price']} resizeMode='stretch' >
-                    <Text style={AppStyles.fonts.medium}>50.000 đ</Text>
+                    <Text style={[AppStyles.fonts.medium_SVN,{color:AppStyles.colors.white}]}>50.000 đ</Text>
                 </ImageBackground>
 
                 <CustomButton

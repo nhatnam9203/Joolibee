@@ -50,7 +50,7 @@ const renderItem = (item, index) => {
                 />
 
                 <View style={styles.content}>
-                    <Text style={[AppStyles.fonts.medium, styles.txttitle]}>
+                    <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
                         KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000:
                         2018 CỦA JOLLIBEE
             </Text>
@@ -64,8 +64,8 @@ const renderItem = (item, index) => {
                 <CustomButton
                     onPress={() => alert('ads')}
                     label={'XEM THÊM'}
-                    width={150}
-                    height={58}
+                    width={134}
+                    height={43}
                     bgColor={AppStyles.colors.button}
                     style={styles.btn}
                 />
