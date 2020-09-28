@@ -9,6 +9,9 @@ import CustomCalendarPicker from './CustomCalendarPicker';
 import CustomBirthdayPicker from './CustomBirthdayPicker';
 import * as CustomModal from './CustomModal';
 import CustomTextLink from './CustomTextLink';
+import CustomFlatList from './CustomFlatList';
+import CustomButtonImage from './CustomButtonImage';
+import CustomScrollTabView from './CustomScrollTabView';
 
 module.exports = {
   TopBar,
@@ -22,4 +25,7 @@ module.exports = {
   CustomBirthdayPicker,
   CustomModal,
   CustomTextLink,
+  CustomFlatList,
+  CustomButtonImage,
+  CustomScrollTabView,
 };

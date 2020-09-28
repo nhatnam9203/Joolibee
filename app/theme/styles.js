@@ -1,6 +1,3 @@
-import { StyleSheet, Image } from 'react-native';
-import images from './images';
-
 /*
  * Provides universal color configs used in the app.
  * Provides universal fonts used in the app.
@@ -33,7 +30,6 @@ const AppStyles = {
     text: {
       fontFamily: 'Roboto-Regular',
       fontSize: 16,
-      color: '#2B2B2B',
     },
 
     mini: {
@@ -42,18 +38,24 @@ const AppStyles = {
     },
 
     medium: {
-      fontFamily: 'SVN-Merge',
-      fontSize: 14,
-      color: '#FFFFFF',
+      fontFamily: 'Roboto-Medium',
+      fontSize: 16,
+    },
+
+    textBold: {
+      fontFamily: 'Roboto-Bold',
+      fontSize: 16,
     },
 
     title: {
       fontFamily: 'SVN-Merge',
       fontSize: 28,
-      color: '#FFFFFF',
     },
 
-
+    header: {
+      fontFamily: 'SVN-Merge',
+      fontSize: 18,
+    },
   },
   styles: {
     container: { flex: 1 },
@@ -86,6 +88,12 @@ const AppStyles = {
     },
 
     iconStyle: { resizeMode: 'center' },
+
+    redContainer: {
+      flex: 1,
+      backgroundColor: secondaryColor,
+      alignItems: 'center',
+    },
   },
   navigation: {
     default: {

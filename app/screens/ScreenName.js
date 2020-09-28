@@ -5,6 +5,18 @@ const ScreenName = {
   Splash: 'Splash',
   SignIn: 'SignIn',
   SignUp: 'SignUp',
+  ForgotPassword: 'ForgotPassword',
+  MenuDetail: 'MenuDetail',
+  PromotionList: 'PromotionList',
+  SettingAccount: 'SettingAccount',
+  EditAccount: 'EditAccount',
+  Reward: 'Reward',
+  HistorySavedPoint: 'HistorySavedPoint',
+  MySavedPoint: 'MySavedPoint',
+  Support: 'Support',
+  ChangeLanguage: 'ChangeLanguage',
+  ChangePassword: 'ChangePassword',
+  Notification: 'Notification',
 };
 
 export default ScreenName;

@@ -11,7 +11,7 @@ export const CustomModal = ({ children, showModal }) => {
   }, [showModal]);
 
   return (
-    <Modal animationType="slide" visible={showModal} transparent={true}>
+    <Modal animationType="slide" visible={visible} transparent={true}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={1}

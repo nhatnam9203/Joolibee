@@ -18,9 +18,9 @@ export const SIGNUP = gql`
   }
 `;
 
-export const SIGN_IN = gql`
+export const SIGNIN = gql`
   mutation($email: String!, $password: String!) {
-    generateCustomerToken(input: { email: $email, password: $password }) {
+    generateCustomerToken(email: $email, password: $password) {
       token
     }
   }

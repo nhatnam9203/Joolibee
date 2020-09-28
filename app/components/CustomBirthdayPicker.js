@@ -4,8 +4,14 @@ import { TouchableWithoutFeedback, View, Keyboard } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const DATE_FORMAT = 'DD/MM/YYYY';
+const LAYOUT_WIDTH = '100%';
 
-const CustomBirthdayPicker = ({ renderBase, onChangeDate, defaultValue }) => {
+const CustomBirthdayPicker = ({
+  renderBase,
+  onChangeDate,
+  defaultValue,
+  style,
+}) => {
   const [visible, setVisible] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
 
@@ -31,7 +37,9 @@ const CustomBirthdayPicker = ({ renderBase, onChangeDate, defaultValue }) => {
   return (
     <View>
       <TouchableWithoutFeedback onPress={showPicker} accessible={false}>
-        <View pointerEvents="box-only">{RenderBase(renderBase)}</View>
+        <View pointerEvents="box-only" style={{ width: LAYOUT_WIDTH }}>
+          {RenderBase(renderBase)}
+        </View>
       </TouchableWithoutFeedback>
 
       <DateTimePickerModal

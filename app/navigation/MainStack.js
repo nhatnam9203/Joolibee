@@ -1,8 +1,27 @@
 import * as React from 'react';
-import { Animated } from 'react-native';
 // import { createNativeStackNavigator } from 'react-native-screens/native-stack'; // use api native
 import { createStackNavigator } from '@react-navigation/stack';
-import { MainTabScreen, AccountStackScreen, ScreenName } from '../screens';
+import {
+  MainTabScreen,
+  MyAccountScreen,
+  ScreenName,
+  MenuDetailScreen,
+  PromotionListScreen,
+  SettingAccountScreen,
+  EditAccountScreen,
+  RewardScreen,
+  PointHistoryScreen,
+  MySavedPointScreen,
+  SupportScreen,
+  ChangeLanguageScreen,
+  ChangePasswordScreen,
+  NotificationScreen,
+} from '../screens';
+import { StyleSheet, View, Image } from 'react-native';
+import { AppStyles, images } from '@theme';
+import { translate } from '@localize';
+import { HeaderImage } from '@components';
+
 // import { TransitionSpecs } from '@react-navigation/stack';
 // import { CardStyleInterpolators } from '@react-navigation/stack';
 // import { HeaderStyleInterpolators } from '@react-navigation/stack';
@@ -33,6 +52,8 @@ function MainStack() {
       initialRouteName={ScreenName.Main}
       headerMode="screen"
       screenOptions={{
+        ...AppStyles.navigation.default,
+        headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
       }}>
       <Stack.Screen
@@ -42,15 +63,138 @@ function MainStack() {
       />
 
       <Stack.Screen
-        component={AccountStackScreen}
+        component={MyAccountScreen}
         name={ScreenName.Account}
         options={{
           headerShown: false,
           cardStyleInterpolator: forFade,
         }}
       />
+
+      <Stack.Screen
+        component={MenuDetailScreen}
+        name={ScreenName.MenuDetail}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        component={PromotionListScreen}
+        name={ScreenName.PromotionList}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        component={SettingAccountScreen}
+        name={ScreenName.SettingAccount}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSetting'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={EditAccountScreen}
+        name={ScreenName.EditAccount}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtEditAccount'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={RewardScreen}
+        name={ScreenName.Reward}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtReward'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={PointHistoryScreen}
+        name={ScreenName.HistorySavedPoint}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSavedPointHistory'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={MySavedPointScreen}
+        name={ScreenName.MySavedPoint}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyRewardPoint'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={SupportScreen}
+        name={ScreenName.Support}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSupport'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={ChangePasswordScreen}
+        name={ScreenName.ChangePassword}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtChangePassword'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={ChangeLanguageScreen}
+        name={ScreenName.ChangeLanguage}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtChangeLanguage'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={NotificationScreen}
+        name={ScreenName.Notification}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtNotification'),
+          headerBackground: () => <View style={styles.container} />,
+          headerRight: (props) => (
+            <View style={styles.icon}>
+              <Image source={images.icons.ic_delete} resizeMode="contain" />
+            </View>
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: AppStyles.colors.accent,
+  },
+  icon: {
+    backgroundColor: '#FFC522',
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+  },
+});
 
 export default MainStack;

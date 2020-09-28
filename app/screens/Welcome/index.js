@@ -158,7 +158,7 @@ const WelcomeScreen = () => {
 
 const styles = StyleSheet.create({
   btn: {
-  
+
     position: 'absolute',
     bottom: scaleHeight(80)
   },
