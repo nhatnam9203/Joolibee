@@ -62,6 +62,9 @@ const MyAccountScreen = () => {
         icon: images.icons.ic_address,
         title: translate('txtSettingAddress'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.MyAddress);
+        },
       },
       {
         key: 'key_support',

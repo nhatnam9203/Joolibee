@@ -16,6 +16,8 @@ import {
   ChangeLanguageScreen,
   ChangePasswordScreen,
   NotificationScreen,
+  MyAddressScreen,
+  DetailMyAddressScreen
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -175,6 +177,26 @@ function MainStack() {
               <Image source={images.icons.ic_delete} resizeMode="contain" />
             </View>
           ),
+        }}
+      />
+
+      <Stack.Screen
+        component={MyAddressScreen}
+        name={ScreenName.MyAddress}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyAddress'),
+
+        }}
+      />
+
+      <Stack.Screen
+        component={DetailMyAddressScreen}
+        name={ScreenName.DetailMyAddress}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyAddressDetail'),
+          headerBackImage: () => <HeaderImage src={images.icons.ic_close_blur} />,
         }}
       />
     </Stack.Navigator>

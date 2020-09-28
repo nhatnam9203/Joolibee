@@ -9,6 +9,7 @@ const CustomInput = ({ children, style, ...inputProps }) => {
         placeholderTextColor="#9E9E9E"
         autoCapitalize="none"
         underlineColorAndroid="transparent"
+        
         {...inputProps}
       />
       {children && children}

@@ -94,5 +94,7 @@
   "txtSavePassword": "Lưu mật khẩu",
   "txtNotification": "Thông báo",
   "txtInputPhoneNumberPlaceholder": "Vui lòng nhập số điện thoại",
-  "txtOther": "Khác"
+  "txtOther": "Khác",
+  "txtMyAddress": "Địa chỉ giao hàng",
+  "txtMyAddressDetail": "Thêm địa chỉ giao hàng"
 }
