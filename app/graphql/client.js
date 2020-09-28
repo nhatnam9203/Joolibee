@@ -6,13 +6,13 @@ import { onError } from 'apollo-link-error';
 import { createHttpLink } from 'apollo-link-http';
 import Config from 'react-native-config';
 import _ from 'lodash';
+import { getJwtToken } from '@services/AsyncStoreExt';
 
 const httpLink = createHttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
 const authLink = setContext(async (req, { headers }) => {
   // get auth token
-  // const jwt = await localStorage.getJwtToken();
-  const jwt = '';
+  const jwt = await getJwtToken();
   let myHeaders = headers;
   if (!headers) {
     myHeaders = {
@@ -24,8 +24,8 @@ const authLink = setContext(async (req, { headers }) => {
   return {
     headers: {
       ...myHeaders,
-      // authorization: jwt ? `Bearer ${jwt.token}` : '',
-      Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
+      Authorization: jwt ? `Bearer ${jwt}` : '',
+      // Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
     },
   };
 });

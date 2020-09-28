@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 // create customer account mutation
-export const SIGNUP = gql`
+export const SIGN_UP = gql`
   mutation($name: String!, $email: String!, $password: String!) {
     createCustomer(
       input: {
@@ -18,10 +18,10 @@ export const SIGNUP = gql`
   }
 `;
 
-export const SIGNIN = gql`
-  mutation($email: String!, $password: String!) {
-    generateCustomerToken(email: $email, password: $password) {
-      token
+export const SIGN_OUT = gql`
+  mutation {
+    revokeStaffToken {
+      result
     }
   }
 `;

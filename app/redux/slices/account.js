@@ -10,7 +10,7 @@ export const signUp = createAsyncThunk(
   async (input, { dispatch }) => {
     dispatch(showLoading());
     const response = await graphQlClient.mutate({
-      mutation: mutation.SIGNUP,
+      mutation: mutation.SIGN_UP,
       variables: input,
     });
     dispatch(hideLoading());
@@ -25,7 +25,7 @@ export const signIn = createAsyncThunk(
     Logger.log(input, 'signIn');
     dispatch(showLoading());
     const response = await graphQlClient.mutate({
-      mutation: mutation.SIGNIN,
+      mutation: mutation.SIGN_IN,
       variables: input,
     });
     dispatch(hideLoading());
