@@ -17,6 +17,8 @@ import {
   ChangePasswordScreen,
   NotificationScreen,
   MenuItemDetailScreen,
+  MyAddressScreen,
+  DetailMyAddressScreen
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';

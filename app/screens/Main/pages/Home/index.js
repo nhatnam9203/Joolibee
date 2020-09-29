@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontSize: scaleWidth(24),
     width: scaleWidth(200),
+    color:AppStyles.colors.white
   },
   txtPromotion: {
     fontSize: scaleWidth(24),
@@ -100,17 +101,16 @@ const styles = StyleSheet.create({
   },
   layoutPromotion: {
     width: '100%',
-    height: scaleHeight(200),
+    height: scaleHeight(250),
     justifyContent: 'center',
-    marginTop:scaleHeight(25),
   },
 
   jollibeeHome: {
     position: 'absolute',
-    bottom: -scaleHeight(80),
+    top: scaleHeight(5),
     right: -scaleWidth(50),
     width: scaleWidth(256),
-    height: scaleHeight(228),
+    height: scaleHeight(238),
     resizeMode: 'stretch'
   }
 });

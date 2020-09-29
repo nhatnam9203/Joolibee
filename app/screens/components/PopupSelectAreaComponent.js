@@ -79,7 +79,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     width: scaleWidth(388),
-    height: scaleHeight(606),
+    height:'95%',
     backgroundColor: AppStyles.colors.button,
     borderRadius: 8,
     overflow: 'hidden'
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontSize: scaleWidth(24),
     marginTop: scaleHeight(15),
+    color:AppStyles.colors.white
   },
   icon_jollibee: {
     resizeMode: 'contain',
