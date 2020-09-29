@@ -16,6 +16,7 @@ import {
   ChangeLanguageScreen,
   ChangePasswordScreen,
   NotificationScreen,
+  MenuItemDetailScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -175,6 +176,15 @@ function MainStack() {
               <Image source={images.icons.ic_delete} resizeMode="contain" />
             </View>
           ),
+        }}
+      />
+
+      <Stack.Screen
+        component={MenuItemDetailScreen}
+        name={ScreenName.MenuItemDetail}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: forFade,
         }}
       />
     </Stack.Navigator>

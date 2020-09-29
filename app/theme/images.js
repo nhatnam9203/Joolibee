@@ -62,6 +62,7 @@ const images = {
   jollibee_combo1: require('../assets/images/jollibee-combo1.png'),
   jollibee_price: require('../assets/images/jollibee-price.png'),
   jollibee_news: require('../assets/images/jollibee-news.png'),
+  item_detail_thumb: require('../assets/images/menu-item-detail-thumb.png'),
 };
 
 export default images;

@@ -12,6 +12,7 @@ import CustomTextLink from './CustomTextLink';
 import CustomFlatList from './CustomFlatList';
 import CustomButtonImage from './CustomButtonImage';
 import CustomScrollTabView from './CustomScrollTabView';
+import CustomAccordionList from './CustomAccordionList';
 
 module.exports = {
   TopBar,
@@ -28,4 +29,5 @@ module.exports = {
   CustomFlatList,
   CustomButtonImage,
   CustomScrollTabView,
+  CustomAccordionList,
 };

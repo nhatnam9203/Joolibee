@@ -23,8 +23,8 @@ const AppStyles = {
     surface: '', // background color for elements containing content, such as cards.
     white: '#FFF',
     button: buttonColor,
-    orange: "#F0810D",
-    cyan:'#2AC8CC',
+    orange: '#F0810D',
+    cyan: '#2AC8CC',
     inputError: buttonColor,
   },
   fonts: {
@@ -94,6 +94,16 @@ const AppStyles = {
       flex: 1,
       backgroundColor: secondaryColor,
       alignItems: 'center',
+    },
+
+    horizontalLayout: { flexDirection: 'row' },
+
+    itemTitle: {
+      fontFamily: 'SVN-Merge',
+      fontSize: 20,
+      color: '#1B1B1B',
+      marginBottom: 10,
+      flex: 1,
     },
   },
   navigation: {

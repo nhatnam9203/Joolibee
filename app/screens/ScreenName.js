@@ -17,6 +17,7 @@ const ScreenName = {
   ChangeLanguage: 'ChangeLanguage',
   ChangePassword: 'ChangePassword',
   Notification: 'Notification',
+  MenuItemDetail: 'MenuItemDetail',
 };
 
 export default ScreenName;

@@ -17,6 +17,7 @@ import SupportScreen from './Support';
 import ChangePasswordScreen from './ChangePassword';
 import ChangeLanguageScreen from './ChangeLanguage';
 import NotificationScreen from './Notification';
+import MenuItemDetailScreen from './MenuItemDetail';
 
 module.exports = {
   ScreenName,
@@ -38,4 +39,5 @@ module.exports = {
   ChangePasswordScreen,
   ChangeLanguageScreen,
   NotificationScreen,
+  MenuItemDetailScreen,
 };

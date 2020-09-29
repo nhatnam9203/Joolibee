@@ -52,20 +52,19 @@
 		3622812C250A98AB0013AF4C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
 		3622812D250A98AB0013AF4C /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		3622812E250A98AB0013AF4C /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
+		420F8CE3F84C228FBB6FEB2A /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACFB27421ABE5C2FE698242 /* libPods-loyalty.a */; };
 		4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
+		5CA1F5B1135A152EF30C7B67 /* libPods-loyalty-loyaltyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */; };
 		61721FA2FBBE4795A3C3E80B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
-		625FAE5D27CAB4AA47DF648C /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50EF31FBB0FE7C8F9702E316 /* libPods-loyalty.a */; };
 		68C286FD8F5D4177B6C4FD1E /* MergeBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00B5EA903425488085BA59EF /* MergeBlack.ttf */; };
 		79DEE0C382A247D483C6D939 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */; };
 		9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */; };
-		9E74F30763175AD16F224CFD /* libPods-loyalty-loyaltyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C5F06AF7A79A8F26FE3D064 /* libPods-loyalty-loyaltyTests.a */; };
 		C449417E934641FC869A269C /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C613C548F16D49B597BAD0AE /* Roboto-MediumItalic.ttf */; };
 		C530E202D46741A6B994FE16 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		CAE1D5A1C610461F886F0681 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A51CAE7213A4C07B49BAFE6 /* Roboto-Black.ttf */; };
 		CD75C150CA134903A999892D /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87134E4D647E4E4BB539555A /* Roboto-BlackItalic.ttf */; };
 		D9522399D81C43709F7FE841 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B2CEBC054CE4CE98628217D /* Roboto-Bold.ttf */; };
 		E8CB9C12D5B040C7BC22BCBF /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
-		FBFD5835DB98727CA2409D9D /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50EF31FBB0FE7C8F9702E316 /* libPods-loyalty.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,7 +91,6 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* loyaltyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = loyaltyTests.m; sourceTree = "<group>"; };
 		09449CDED1AC411688CF054E /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		0E83440654447D5C0AA89C12 /* Pods-loyalty-loyaltyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyTests.debug.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* loyalty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyalty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = loyalty/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = loyalty/AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +106,7 @@
 		2D02E4901E0B4A5D006451C7 /* loyalty-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "loyalty-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../app/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		31E34C1685964FB39CDC829D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
 		36228115250A989B0013AF4C /* loyaltyProduction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyaltyProduction.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36228116250A989B0013AF4C /* loyalty copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "loyalty copy-Info.plist"; path = "/Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyalty copy-Info.plist"; sourceTree = "<absolute>"; };
 		36228134250A98AB0013AF4C /* loyaltyStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyaltyStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,22 +115,23 @@
 		4610D41D79134DD1A4799EC9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		46871193418F477B93CA949B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../app/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../app/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
-		50EF31FBB0FE7C8F9702E316 /* libPods-loyalty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../app/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		5B2CEBC054CE4CE98628217D /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../app/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyaltyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79D276853EA6FF0530878953 /* Pods-loyalty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.debug.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.debug.xcconfig"; sourceTree = "<group>"; };
 		8219FE22F1CA416E81C71D12 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		86149305933A9267D86682D7 /* Pods-loyalty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.debug.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.debug.xcconfig"; sourceTree = "<group>"; };
 		87134E4D647E4E4BB539555A /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../app/assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		8CD94D5A50D04CBA9B86FFCA /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		92A745CE1E709FE80EB3B780 /* Pods-loyalty-loyaltyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyTests.release.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests.release.xcconfig"; sourceTree = "<group>"; };
 		93B7236A4FB84259A343EA15 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		96A37AAE03034580B0A7EEFA /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		9C5F06AF7A79A8F26FE3D064 /* libPods-loyalty-loyaltyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyaltyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A83C2E8615074E32B0E2813C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		A8FAE8CD4759418D80D9AC9C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		AA180137CAB3E4EC3C8A6A15 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
+		AAFC97C8B9ED4459B9E90E7E /* Pods-loyalty-loyaltyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyTests.debug.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD2391B279A949C09A00B739 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../app/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		B0E77814DBBD401588AE3D27 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		C613C548F16D49B597BAD0AE /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../app/assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		CACFB27421ABE5C2FE698242 /* libPods-loyalty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF28ED93469B4E5CAACFD8C9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		E00AF169B1774831890436BE /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../app/assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -139,7 +139,6 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F58C5CA68DC74C64AC5500D8 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		F90FBB0CF6EE4F94AC0DCA85 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		FAAB37E9A2595365D928AAEF /* Pods-loyalty-loyaltyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyTests.release.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E74F30763175AD16F224CFD /* libPods-loyalty-loyaltyTests.a in Frameworks */,
+				5CA1F5B1135A152EF30C7B67 /* libPods-loyalty-loyaltyTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,8 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBFD5835DB98727CA2409D9D /* libPods-loyalty.a in Frameworks */,
-				625FAE5D27CAB4AA47DF648C /* libPods-loyalty.a in Frameworks */,
+				420F8CE3F84C228FBB6FEB2A /* libPods-loyalty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,8 +225,8 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				50EF31FBB0FE7C8F9702E316 /* libPods-loyalty.a */,
-				9C5F06AF7A79A8F26FE3D064 /* libPods-loyalty-loyaltyTests.a */,
+				CACFB27421ABE5C2FE698242 /* libPods-loyalty.a */,
+				6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -236,10 +234,10 @@
 		63DDA987CAAE35C17BDD3235 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0E83440654447D5C0AA89C12 /* Pods-loyalty-loyaltyTests.debug.xcconfig */,
-				FAAB37E9A2595365D928AAEF /* Pods-loyalty-loyaltyTests.release.xcconfig */,
-				86149305933A9267D86682D7 /* Pods-loyalty.debug.xcconfig */,
-				AA180137CAB3E4EC3C8A6A15 /* Pods-loyalty.release.xcconfig */,
+				79D276853EA6FF0530878953 /* Pods-loyalty.debug.xcconfig */,
+				327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */,
+				AAFC97C8B9ED4459B9E90E7E /* Pods-loyalty-loyaltyTests.debug.xcconfig */,
+				92A745CE1E709FE80EB3B780 /* Pods-loyalty-loyaltyTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -325,11 +323,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "loyaltyTests" */;
 			buildPhases = (
-				B17B155EAAA2DFBF00F78F37 /* [CP] Check Pods Manifest.lock */,
+				D1CEBC2D6398D03FFCB6E31F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				F71F51FA362D68277302E26F /* [CP] Copy Pods Resources */,
+				87448D48602B9A5634C54F04 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -345,13 +343,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "loyalty" */;
 			buildPhases = (
-				5415A4DF4065AD1EC9446A18 /* [CP] Check Pods Manifest.lock */,
+				230C0350B5C59EB3074BF54E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				817F8AF459F4058D1A9F6E91 /* [CP] Copy Pods Resources */,
+				643AB12C46CC98DC78C3C574 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -592,6 +590,28 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		230C0350B5C59EB3074BF54E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-loyalty-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -672,29 +692,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		5415A4DF4065AD1EC9446A18 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-loyalty-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		817F8AF459F4058D1A9F6E91 /* [CP] Copy Pods Resources */ = {
+		643AB12C46CC98DC78C3C574 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -744,29 +742,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-loyalty/Pods-loyalty-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B17B155EAAA2DFBF00F78F37 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-loyalty-loyaltyTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F71F51FA362D68277302E26F /* [CP] Copy Pods Resources */ = {
+		87448D48602B9A5634C54F04 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -814,6 +790,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1CEBC2D6398D03FFCB6E31F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-loyalty-loyaltyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -939,7 +937,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E83440654447D5C0AA89C12 /* Pods-loyalty-loyaltyTests.debug.xcconfig */;
+			baseConfigurationReference = AAFC97C8B9ED4459B9E90E7E /* Pods-loyalty-loyaltyTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -962,7 +960,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAAB37E9A2595365D928AAEF /* Pods-loyalty-loyaltyTests.release.xcconfig */;
+			baseConfigurationReference = 92A745CE1E709FE80EB3B780 /* Pods-loyalty-loyaltyTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -982,7 +980,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 86149305933A9267D86682D7 /* Pods-loyalty.debug.xcconfig */;
+			baseConfigurationReference = 79D276853EA6FF0530878953 /* Pods-loyalty.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1010,7 +1008,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA180137CAB3E4EC3C8A6A15 /* Pods-loyalty.release.xcconfig */;
+			baseConfigurationReference = 327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

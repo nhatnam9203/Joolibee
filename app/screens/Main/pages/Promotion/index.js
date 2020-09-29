@@ -63,11 +63,15 @@ const PromotionPage = () => {
   };
 
   const renderItem = ({ item }) => (
-    <ItemImageRight image={item.image} item={item} onPress={goToPromotionList}>
-      <Text style={styles.itemTitle} multiline={2} ellipsizeMode="tail">
+    <ItemImageRight
+      image={item.image}
+      item={item}
+      onPress={goToPromotionList}
+      contentStyle={styles.itemContentStyle}>
+      <Text style={styles.itemTitle} numberOfLines={2} ellipsizeMode="tail">
         {item.title}
       </Text>
-      <Text style={styles.itemDesc} multiline={2} ellipsizeMode="tail">
+      <Text style={styles.itemDesc} numberOfLines={2} ellipsizeMode="tail">
         {item.description}
       </Text>
       <ButtonCC.ButtonYellow
@@ -99,14 +103,18 @@ const PromotionPage = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 5 },
-  contentContainerStyle: { paddingVertical: 15 },
+  container: { flex: 1 },
+  contentContainerStyle: { paddingVertical: 15, paddingHorizontal: 5 },
   itemTitle: {
     ...AppStyles.fonts.header,
     color: AppStyles.colors.accent,
     marginBottom: 5,
+    fontSize: 18,
   },
-  itemDesc: { ...AppStyles.fonts.text },
+  itemDesc: { ...AppStyles.fonts.text, fontSize: 14 },
+  itemContentStyle: {
+    padding: 10,
+  },
 });
 
 export default PromotionPage;

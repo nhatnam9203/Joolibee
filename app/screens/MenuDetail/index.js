@@ -6,6 +6,7 @@ import { images, AppStyles } from '@theme';
 import { View, StyleSheet, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
+import ScreenName from '../ScreenName';
 
 const defaultData = [
   {
@@ -49,7 +50,14 @@ const MenuDetailScreen = ({}) => {
   const navigation = useNavigation();
   const [data, setData] = React.useState([]);
 
-  const renderItem = ({ item }) => <MenuItem item={item} />;
+  const renderItem = ({ item }) => (
+    <MenuItem
+      item={item}
+      onPress={() => {
+        navigation.navigate(ScreenName.MenuItemDetail);
+      }}
+    />
+  );
 
   const goToBack = React.useCallback(() => {
     navigation.goBack();
