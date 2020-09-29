@@ -18,7 +18,8 @@ const ScreenName = {
   ChangePassword: 'ChangePassword',
   Notification: 'Notification',
   MyAddress: 'MyAddress',
-  DetailMyAddress: "DetailMyAddress"
+  DetailMyAddress: "DetailMyAddress",
+  SearchAddress: "SearchAddress"
 };
 
 export default ScreenName;

@@ -19,6 +19,7 @@ import ChangeLanguageScreen from './ChangeLanguage';
 import NotificationScreen from './Notification';
 import MyAddressScreen from './MyAddress';
 import DetailMyAddressScreen from './MyAddress/DetailMyAddress';
+import SearchAddressScreen from './MyAddress/SearchAddress';
 module.exports = {
   ScreenName,
   WelcomeScreen,
@@ -40,5 +41,6 @@ module.exports = {
   ChangeLanguageScreen,
   NotificationScreen,
   MyAddressScreen,
-  DetailMyAddressScreen
+  DetailMyAddressScreen,
+  SearchAddressScreen
 };

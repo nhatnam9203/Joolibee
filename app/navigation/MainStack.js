@@ -17,7 +17,8 @@ import {
   ChangePasswordScreen,
   NotificationScreen,
   MyAddressScreen,
-  DetailMyAddressScreen
+  DetailMyAddressScreen,
+  SearchAddressScreen
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -51,7 +52,7 @@ const forFade = ({ current }) => ({
 function MainStack() {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenName.Main}
+      initialRouteName={ScreenName.SearchAddress}
       headerMode="screen"
       screenOptions={{
         ...AppStyles.navigation.default,
@@ -197,6 +198,16 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtMyAddressDetail'),
           headerBackImage: () => <HeaderImage src={images.icons.ic_close_blur} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={SearchAddressScreen}
+        name={ScreenName.SearchAddress}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSearchAddress'),
+
         }}
       />
     </Stack.Navigator>
