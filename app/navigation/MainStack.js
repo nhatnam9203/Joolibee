@@ -52,7 +52,7 @@ const forFade = ({ current }) => ({
 function MainStack() {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenName.SearchAddress}
+      initialRouteName={ScreenName.Main}
       headerMode="screen"
       screenOptions={{
         ...AppStyles.navigation.default,
