@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomCheckBox, CustomInput } from '@components';
 
-export const SelectType = {
+export const MenuDetailItemSelectType = {
   Radio: 'radio',
   Multiline: 'multiline',
   None: 'none',
@@ -12,39 +12,50 @@ export const SelectType = {
 export const MenuDetailItem = ({
   item,
   onPress,
-  type = SelectType.Multiline,
+  type = MenuDetailItemSelectType.Multiline,
+  selected,
 }) => {
-  const [selected, setSelected] = React.useState(false);
+  const [radioChecked, setRadioChecked] = React.useState(false);
+
+  React.useEffect(() => {
+    setRadioChecked(selected);
+  }, [selected]);
 
   const itemPress = () => {
     if (typeof onPress === 'function') {
       onPress(item);
     } else {
-      setSelected((prev) => !prev);
+      setRadioChecked((prev) => !prev);
     }
   };
 
   const renderSelectType = () => {
     switch (type) {
-      case SelectType.Radio:
+      case MenuDetailItemSelectType.Radio:
       default:
         return (
           <Image
             style={styles.arrowStyle}
             source={
-              selected
+              radioChecked
                 ? images.icons.ic_radio_active
                 : images.icons.ic_radio_inactive
             }
           />
         );
-      case SelectType.Multiline:
+      case MenuDetailItemSelectType.Multiline:
         return (
           <View style={styles.multilineSelectContent}>
             <CustomInput
               style={styles.mulInputStyle}
-              textAlign="center"
+              inputStyle={styles.inputStyle}
               keyboardType="numeric"
+              allowFontScaling={true}
+              numberOfLines={1}
+              defaultValue="0"
+              multiline={false}
+              clearTextOnFocus={true}
+              maxLength={3}
             />
             <CustomCheckBox
               normalColor={AppStyles.colors.accent}
@@ -52,7 +63,7 @@ export const MenuDetailItem = ({
             />
           </View>
         );
-      case SelectType.None:
+      case MenuDetailItemSelectType.None:
         return null;
     }
   };
@@ -61,12 +72,14 @@ export const MenuDetailItem = ({
     <TouchableOpacity style={styles.container} onPress={itemPress}>
       <Image style={styles.imageStyle} source={item.image} />
       <View style={styles.textContentStyle}>
-        <Text style={styles.textStyle} numberOfLines={2}>
+        <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
           {item.title}
         </Text>
-        <Text style={styles.itemPriceStyle}>+ 5.000 đ</Text>
+        {!!item?.price && (
+          <Text style={styles.itemPriceStyle}>{item.price}</Text>
+        )}
       </View>
-      {renderSelectType()}
+      {renderSelectType(item)}
     </TouchableOpacity>
   );
 };
@@ -95,15 +108,18 @@ const styles = StyleSheet.create({
 
   textStyle: {
     ...AppStyles.fonts.medium,
-    textAlign: 'center',
-    textAlignVertical: 'center',
     color: AppStyles.colors.text,
     fontSize: 16,
+    flex: 1,
+    textAlign: 'left',
+    textAlignVertical: 'center',
   },
 
   itemPriceStyle: {
     ...AppStyles.fonts.textBold,
     color: AppStyles.colors.accent,
+    flex: 0,
+    marginLeft: 5,
   },
 
   arrowStyle: { height: '100%', width: 30, resizeMode: 'center' },
@@ -115,8 +131,19 @@ const styles = StyleSheet.create({
   },
 
   mulInputStyle: {
-    height: 35,
-    width: 65,
+    height: 30,
+    width: 55,
     borderColor: AppStyles.colors.accent,
+    justifyContent: 'center',
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+  },
+
+  inputStyle: {
+    paddingLeft: 0,
+    margin: 0,
+    fontSize: 14,
+    height: '100%',
+    textAlign: 'center',
   },
 });

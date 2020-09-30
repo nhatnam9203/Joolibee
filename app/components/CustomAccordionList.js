@@ -29,12 +29,14 @@ const ChevronIcon = ({ isOpen }) => {
 const CustomAccordionList = ({
   title,
   data = [],
+  type,
   headerTextStyle,
   headerStyle,
   renderItem,
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(null);
   const ref = React.useRef();
 
   return (
@@ -60,7 +62,15 @@ const CustomAccordionList = ({
           <Animated.View style={styles.subListStyle}>
             {data.map((item, index) =>
               renderItem ? (
-                renderItem(item, index)
+                renderItem(
+                  item,
+                  index,
+                  type,
+                  () => {
+                    setSelectedIndex(index);
+                  },
+                  selectedIndex === index,
+                )
               ) : (
                 <View style={styles.itemContent}>
                   <Text style={styles.itemTextStyle}>{item.title}</Text>
