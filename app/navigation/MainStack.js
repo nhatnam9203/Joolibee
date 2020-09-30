@@ -16,9 +16,10 @@ import {
   ChangeLanguageScreen,
   ChangePasswordScreen,
   NotificationScreen,
+  MenuItemDetailScreen,
   MyAddressScreen,
   DetailMyAddressScreen,
-  SearchAddressScreen
+  SearchAddressScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -182,12 +183,20 @@ function MainStack() {
       />
 
       <Stack.Screen
+        component={MenuItemDetailScreen}
+        name={ScreenName.MenuItemDetail}
+        options={{
+          headerShown: false,
+          cardStyleInterpolator: forFade,
+        }}
+      />
+
+      <Stack.Screen
         component={MyAddressScreen}
         name={ScreenName.MyAddress}
         options={{
           headerShown: true,
           headerTitle: translate('txtMyAddress'),
-
         }}
       />
 
@@ -197,7 +206,9 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtMyAddressDetail'),
-          headerBackImage: () => <HeaderImage src={images.icons.ic_close_blur} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
 
@@ -207,7 +218,6 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSearchAddress'),
-
         }}
       />
     </Stack.Navigator>

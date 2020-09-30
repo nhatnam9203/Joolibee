@@ -8,7 +8,7 @@ import { ButtonCC, LabelTitle } from '../../components';
 export const InputPhoneNumber = ({ next }) => {
   return (
     <View style={[AppStyles.styles.redContainer, styles.container]}>
-      <LabelTitle label={translate('txtInputPhoneNumber')} />
+      <LabelTitle label={translate('txtInputPhoneNumber')} color="#fff" />
       <Text style={styles.textStyle}>
         {translate('txtForgotPasswordDescription')}
       </Text>

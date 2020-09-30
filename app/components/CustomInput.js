@@ -1,15 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
-const CustomInput = ({ children, style, ...inputProps }) => {
+const CustomInput = ({ children, style, inputStyle = {}, ...inputProps }) => {
   return (
     <View style={[styles.container, style]}>
       <TextInput
-        style={styles.inputStyle}
+        style={[styles.inputStyle, inputStyle]}
         placeholderTextColor="#9E9E9E"
         autoCapitalize="none"
         underlineColorAndroid="transparent"
-        
         {...inputProps}
       />
       {children && children}

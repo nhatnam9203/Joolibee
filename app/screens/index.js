@@ -17,6 +17,8 @@ import SupportScreen from './Support';
 import ChangePasswordScreen from './ChangePassword';
 import ChangeLanguageScreen from './ChangeLanguage';
 import NotificationScreen from './Notification';
+import MenuItemDetailScreen from './MenuItemDetail';
+
 import MyAddressScreen from './MyAddress';
 import DetailMyAddressScreen from './MyAddress/DetailMyAddress';
 import SearchAddressScreen from './MyAddress/SearchAddress';
@@ -40,6 +42,7 @@ module.exports = {
   ChangePasswordScreen,
   ChangeLanguageScreen,
   NotificationScreen,
+  MenuItemDetailScreen,
   MyAddressScreen,
   DetailMyAddressScreen,
   SearchAddressScreen

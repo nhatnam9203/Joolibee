@@ -79,7 +79,7 @@ const SignInScreen = () => {
               <JollibeeLogo />
 
               {/**TITLE */}
-              <LabelTitle label={translate('txtPleaseSignIn')} />
+              <LabelTitle label={translate('txtPleaseSignIn')} color="#fff" />
 
               {/**PHONE*/}
               <CustomInput

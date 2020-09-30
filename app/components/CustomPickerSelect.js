@@ -2,7 +2,12 @@ import * as React from 'react';
 import { StyleSheet, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-const CustomPickerSelect = ({ style, onChangeItem, placeholder, ...props }) => {
+const CustomPickerSelect = ({
+  style,
+  onChangeItem = () => {},
+  placeholder,
+  ...props
+}) => {
   return (
     <RNPickerSelect
       style={pickerSelectStyles}

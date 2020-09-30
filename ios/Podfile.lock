@@ -267,8 +267,8 @@ PODS:
     - React
   - react-native-maps (0.27.1):
     - React
-  - react-native-safe-area-context (3.1.7):
-    - React
+  - react-native-safe-area-context (3.1.8):
+    - React-Core
   - react-native-spinkit (1.4.1):
     - React
   - React-RCTActionSheet (0.63.2):
@@ -337,21 +337,21 @@ PODS:
     - React
   - RNCMaskedView (0.1.10):
     - React
-  - RNCPicker (1.7.1):
-    - React
+  - RNCPicker (1.8.0):
+    - React-Core
   - RNDateTimePicker (3.0.2):
     - React
-  - RNDeviceInfo (6.0.2):
-    - React
+  - RNDeviceInfo (6.0.4):
+    - React-Core
   - RNGestureHandler (1.8.0):
     - React
   - RNLocalize (1.4.1):
     - React
-  - RNReanimated (1.13.0):
+  - RNReanimated (1.13.1):
     - React
-  - RNScreens (2.10.1):
+  - RNScreens (2.11.0):
     - React
-  - RNVectorIcons (7.0.0):
+  - RNVectorIcons (7.1.0):
     - React
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -559,7 +559,7 @@ SPEC CHECKSUMS:
   react-native-config: 9a061347e0136fdb32d43a34d60999297d672361
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
-  react-native-safe-area-context: fcece23844742b6f7f0627c3715b806a7deff946
+  react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
@@ -571,20 +571,20 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
-  RNCAsyncStorage: 3eea36d9460c5159b592f9ecbe5a77f8aca98006
-  RNCCheckbox: aac2c42466ceeac86f7016e3f659f819501d8859
-  RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
-  RNCPicker: a2bf7bad059f23de52add203c3c5a3bc5b5239d8
-  RNDateTimePicker: 3a1783e63fcb6e2b162b08a4321db030d23accff
-  RNDeviceInfo: 273208fc409c58acecd7f5bd726eb5c7edd8265d
+  RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
+  RNCCheckbox: 47d045535fbb16796df628022a7cd631c78a4d9b
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNCPicker: a724b3aa22b182697c190a8fd7b060b66119e136
+  RNDateTimePicker: a84d2b439666c9243d42a8396c588d4d1d36e3f3
+  RNDeviceInfo: 5eb11f4aef9395cca403c0c92dff458252fc0b2c
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
-  RNLocalize: c388679af021ddd6069c215f7fdd2acf4e77ede5
-  RNReanimated: 89f5e0a04d1dd52fbf27e7e7030d8f80a646a3fc
-  RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
-  RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
+  RNLocalize: 49634a6a605dcdeb319e9c42a5c2f1aec508694b
+  RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
+  RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
+  RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 05316ba1a90745fcabe75cb838b6ca15efa3d040
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0.rc.1

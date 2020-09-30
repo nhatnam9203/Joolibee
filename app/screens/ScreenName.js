@@ -17,6 +17,7 @@ const ScreenName = {
   ChangeLanguage: 'ChangeLanguage',
   ChangePassword: 'ChangePassword',
   Notification: 'Notification',
+  MenuItemDetail: 'MenuItemDetail',
   MyAddress: 'MyAddress',
   DetailMyAddress: "DetailMyAddress",
   SearchAddress: "SearchAddress"
