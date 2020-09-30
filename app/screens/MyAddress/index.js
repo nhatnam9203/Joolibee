@@ -14,18 +14,27 @@ const defaultData = [
         title: 'Nhà',
         address: '16 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
         id: 1,
+        phone: '123456789',
+        fullName: 'ABC',
+        note: 'a',
     },
     {
 
         title: 'Nơi làm việc',
         address: '17 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
         id: 2,
+        phone: '987654321',
+        fullName: 'XYZ',
+        note: 'b',
     },
     {
 
         title: 'Nơi làm việc',
         address: '18 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
         id: 3,
+        phone: '113114115116',
+        fullName: 'ABC',
+        note: 'c',
     },
 ];
 
@@ -33,14 +42,21 @@ const index = () => {
     const navigation = useNavigation();
     const [data, setData] = React.useState([]);
 
-    const renderItem = ({ item }) => <ItemAddress item={item} />;
+    const renderItem = ({ item }) => <ItemAddress item={item} onPress={goToDetail} />;
 
-    const goToBack = React.useCallback(() => {
-        navigation.goBack();
-    }, [navigation]);
 
-    const goToDetail = () => {
-        navigation.navigate(ScreenName.DetailMyAddress)
+    const goToDetail = (item) => {
+        console.log(item)
+        const values = item ?
+            {
+                phone: item.phone,
+                place: item.title,
+                fullName: item.fullName,
+                note: item.note,
+                address: item.address
+
+            } : null
+        navigation.navigate(ScreenName.DetailMyAddress, { values })
     }
 
     React.useEffect(() => {
@@ -59,9 +75,11 @@ const index = () => {
                 ListHeaderComponent={() => <Text style={[AppStyles.fonts.title, styles.txtTitle]}>Địa chỉ mặc định</Text>}
                 ListFooterComponent={() => (
                     <>
-                        <AddressAdditionalList />
+                        <AddressAdditionalList
+                            goToDetail={goToDetail}
+                        />
                         <CustomButton
-                            onPress={goToDetail}
+                            onPress={()=>goToDetail(null)}
                             label={'THÊM ĐỊA CHỈ MỚI'}
                             width={246}
                             height={58}

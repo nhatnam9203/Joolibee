@@ -11,18 +11,16 @@ import { regex } from '@utils';
 import { CustomInput, CustomButton } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { TextInputErrorMessage, } from '../../components';
+import ScreenName from '../../ScreenName';
 
 
 const LAYOUT_WIDTH = '95%';
 const { width } = Dimensions.get('window')
-const index = () => {
+const index = (props) => {
     const navigation = useNavigation();
+    const { values } = props.route.params;
 
-
-    const goToBack = React.useCallback(() => {
-        navigation.goBack();
-    }, [navigation]);
-
+    const goToCreateAddress = () => navigation.navigate(ScreenName.SearchAddress)
     const onHandleSubmit = React.useCallback(
         (values) => {
             console.log(values)
@@ -31,6 +29,17 @@ const index = () => {
         },
         [],
     );
+
+    const isCheckValue = values ? true : false;
+    console.log('isCheckValue',isCheckValue)
+
+    const initialValues = isCheckValue ? values : {
+        phone: '',
+        place: '',
+        fullName: '',
+        note: '',
+        address: ''
+    }
 
     const AddressSchema = Yup.object().shape({
         phone: Yup.string()
@@ -46,14 +55,7 @@ const index = () => {
     return (
         <SinglePageLayout>
             <Formik
-                initialValues={{
-                    phone: '',
-                    place: '',
-                    fullName: '',
-                    note: '',
-                    address: ''
-
-                }}
+                initialValues={initialValues}
                 onSubmit={onHandleSubmit}
                 validationSchema={AddressSchema}
                 isValidating={true}>
@@ -125,7 +127,9 @@ const index = () => {
                                 )}
 
                                 {/**Address*/}
-                                <TouchableOpacity style={{ width: '100%' }} onPress={() => alert('asdasd')}>
+                                <TouchableOpacity
+                                    style={{ width: '100%' }}
+                                    onPress={goToCreateAddress}>
                                     <CustomInput
                                         style={{ width: LAYOUT_WIDTH }}
                                         onChangeText={handleChange('address')}
@@ -189,7 +193,7 @@ const index = () => {
 
                             </View>
 
-                            <CustomButton
+                            {isCheckValue && <CustomButton
                                 onPress={handleSubmit}
                                 label='XÓA ĐỊA CHỈ'
                                 width={width * 0.9}
@@ -197,12 +201,12 @@ const index = () => {
                                 bgColor='transparent'
                                 textColor={AppStyles.colors.accent}
                                 style={{
-                                    borderWidth:2,
-                                    borderColor:AppStyles.colors.accent,
-                                    alignSelf:'center',
-                                    marginVertical:30
+                                    borderWidth: 2,
+                                    borderColor: AppStyles.colors.accent,
+                                    alignSelf: 'center',
+                                    marginVertical: 30
                                 }}
-                            />
+                            />}
 
                             <View style={styles.btnContainer}>
                                 <CustomButton
@@ -229,7 +233,7 @@ const styles = StyleSheet.create({
     topContent: {
         alignItems: 'center',
         paddingTop: 20,
-        
+
     },
     btnContainer: {
         width: '100%',
@@ -237,6 +241,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: AppStyles.colors.white,
+        marginTop:40
     }
 });
 export default index

@@ -96,5 +96,6 @@
   "txtInputPhoneNumberPlaceholder": "Vui lòng nhập số điện thoại",
   "txtOther": "Khác",
   "txtMyAddress": "Địa chỉ giao hàng",
-  "txtMyAddressDetail": "Thêm địa chỉ giao hàng"
+  "txtMyAddressDetail": "Thêm địa chỉ giao hàng",
+  "txtSearchAddress": "Nhập địa chỉ"
 }

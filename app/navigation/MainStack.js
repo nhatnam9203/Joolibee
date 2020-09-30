@@ -19,6 +19,7 @@ import {
   MenuItemDetailScreen,
   MyAddressScreen,
   DetailMyAddressScreen,
+  SearchAddressScreen
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -208,6 +209,16 @@ function MainStack() {
           headerBackImage: () => (
             <HeaderImage src={images.icons.ic_close_blur} />
           ),
+        }}
+      />
+
+      <Stack.Screen
+        component={SearchAddressScreen}
+        name={ScreenName.SearchAddress}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSearchAddress'),
+
         }}
       />
     </Stack.Navigator>

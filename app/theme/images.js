@@ -48,6 +48,8 @@ const images = {
     ic_close_blur: require('../assets/icons/ic_close_blur.png'),
     ic_sub: require('../assets/icons/ic-sub.png'),
     ic_plus: require('../assets/icons/ic-plus.png'),
+    ic_location: require('../assets/icons/ic-location.png'),
+    ic_dropdown: require('../assets/icons/dropdown.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

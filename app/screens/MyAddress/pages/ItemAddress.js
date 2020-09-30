@@ -7,34 +7,37 @@ import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 
 
 
-const index = ({item}) => {
-
+const index = ({ item, onPress }) => {
+    const onHandlePress = () => {
+        onPress(item)
+    }
     return (
         <TouchableOpacity
-        style={styles.itemContainer}>
-        <View style={styles.addressImage}>
+            onPress={onHandlePress}
+            style={styles.itemContainer}>
+            <View style={styles.addressImage}>
+                <Image
+                    source={images.icons.ic_address}
+                />
+            </View>
+
+            <View style={styles.content}>
+                <Text style={AppStyles.fonts.medium}>
+                    {item.title}
+                </Text>
+
+                <Text
+                    numberOfLines={1}
+                    style={[AppStyles.fonts.mini, { fontSize: 14 }]}>
+                    {item.address}
+                </Text>
+
+            </View>
+
             <Image
-                source={images.icons.ic_address}
+                source={images.icons.ic_arrow}
             />
-        </View>
-
-        <View style={styles.content}>
-            <Text style={AppStyles.fonts.medium}>
-                {item.title}
-            </Text>
-
-            <Text
-                numberOfLines={1}
-                style={[AppStyles.fonts.mini, { fontSize: 14 }]}>
-                {item.address}
-            </Text>
-
-        </View>
-
-        <Image
-            source={images.icons.ic_arrow}
-        />
-    </TouchableOpacity>
+        </TouchableOpacity>
     );
 };
 

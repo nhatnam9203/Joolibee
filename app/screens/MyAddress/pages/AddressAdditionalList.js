@@ -15,15 +15,10 @@ const defaultData = [
     },
 ];
 
-const index = () => {
-    const navigation = useNavigation();
+const index = ({ goToDetail }) => {
     const [data, setData] = React.useState([]);
 
-    const renderItem = ({ item }) => <ItemAddress item={item} />;
-
-    const goToBack = React.useCallback(() => {
-        navigation.goBack();
-    }, [navigation]);
+    const renderItem = ({ item }) => <ItemAddress item={item} onPress={goToDetail} />;
 
     React.useEffect(() => {
         setData(defaultData);
@@ -48,7 +43,7 @@ const index = () => {
 
 
 const styles = StyleSheet.create({
-    container: { flex: 1,  backgroundColor: AppStyles.colors.background ,marginTop:20},
+    container: { flex: 1, backgroundColor: AppStyles.colors.background, marginTop: 20 },
     contentContainerStyle: { paddingVertical: 15 },
     //
     addressImage: {
@@ -69,7 +64,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         padding: metrics.padding,
-         marginHorizontal: 15,
+        marginHorizontal: 15,
         marginVertical: 10,
         borderRadius: 6,
         ...AppStyles.styles.shadow,
