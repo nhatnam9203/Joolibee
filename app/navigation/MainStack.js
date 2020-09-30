@@ -19,7 +19,7 @@ import {
   MenuItemDetailScreen,
   MyAddressScreen,
   DetailMyAddressScreen,
-  SearchAddressScreen
+  SearchAddressScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -218,7 +218,6 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSearchAddress'),
-
         }}
       />
     </Stack.Navigator>

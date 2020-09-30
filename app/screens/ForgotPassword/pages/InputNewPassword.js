@@ -47,7 +47,7 @@ export const InputNewPassword = ({ next }) => {
           setFieldValue,
         }) => (
           <View style={styles.container}>
-            <LabelTitle label={translate('txtNewPassword')} />
+            <LabelTitle label={translate('txtNewPassword')} color="#fff" />
 
             <PasswordInput
               style={{ width: LAYOUT_WIDTH }}

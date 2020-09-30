@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyles.colors.background,
-    paddingBottom: 50,
+    paddingBottom: 80,
   },
 
   listStyle: { backgroundColor: AppStyles.colors.background },
@@ -316,6 +316,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
+    marginTop: 15,
   },
 
   buttonOrderStyle: {

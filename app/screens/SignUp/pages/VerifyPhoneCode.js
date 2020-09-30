@@ -18,7 +18,7 @@ export const VerifyPhoneCode = ({ infos, next }) => {
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Animated.View style={styles.container}>
-        <LabelTitle label={translate('txtPhoneCode')} />
+        <LabelTitle label={translate('txtPhoneCode')} color="#fff" />
         <Text style={styles.textStyle}>
           {translate('txtInputPhoneDesc1') +
             phone +

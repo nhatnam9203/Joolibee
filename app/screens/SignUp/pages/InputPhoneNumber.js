@@ -55,7 +55,10 @@ export const InputPhoneNumber = ({ next }) => {
         }) => (
           <SafeAreaView>
             <View style={styles.container}>
-              <LabelTitle label={translate('txtInputPhoneNumber')} />
+              <LabelTitle
+                label={translate('txtInputPhoneNumber')}
+                color="#fff"
+              />
 
               {/**PHONE*/}
               <CustomInput
