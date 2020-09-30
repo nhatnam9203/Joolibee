@@ -15,7 +15,8 @@ export const CustomModal = ({ children, showModal }) => {
       <TouchableOpacity
         style={styles.container}
         activeOpacity={1}
-        onPress={() => setVisible(false)}>
+        onPress={() => setVisible(false)}
+        >
         <View style={styles.content}>{children}</View>
       </TouchableOpacity>
     </Modal>

@@ -18,7 +18,7 @@ const AppStyles = {
     background: '#F5F1E6', // background color for pages, such as lists.
     text: '#1B1B1B',
     disabled: '#787D84', // color for disabled elements.
-    placeholder: '', // color for placeholder text, such as input placeholder.
+    placeholder: '#9E9E9E', // color for placeholder text, such as input placeholder.
     backdrop: '', // color for backdrops of various components such as modals.
     surface: '', // background color for elements containing content, such as cards.
     white: '#FFF',

@@ -1,16 +1,72 @@
 import React from 'react';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { TopBarScreenLayout } from '@layouts';
-import { CustomPickerSelect } from '@components';
+import { CustomPopupMenu } from '@components';
 import { TopBarComponent } from '../../../components';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { AppStyles, images, metrics } from "@theme";
+
+//define menu
+const citys = [
+    {
+        id: 1,
+        label: 'Hồ chí minh',
+        value: 1
+    },
+    {
+        id: 2,
+        label: 'Hà Nội',
+        value: 2
+    }
+];
+
+const districs = [
+    {
+        id: 1,
+        label: 'Quận 11',
+        value: 1
+    },
+    {
+        id: 2,
+        label: 'Quận 12',
+        value: 2
+    }
+];
+
 const StorePage = () => {
 
-    const [city, setCity] = React.useState(1)
+    const [city, setCity] = React.useState(null);
+    const [districts, setDistricts] = React.useState(null);
+    const [visible, showModal] = React.useState([false, false]);
+
+    const openModal = (i) => () => {
+        let _visible = [...visible]
+        _visible[i] = !_visible[i]
+        showModal(_visible)
+    }
+
+    const closeModal = () => {
+        showModal([false, false])
+    }
+
+    const onChangeItem = (item) => () => {
+        visible[0] ? setCity(item) : setDistricts(item)
+        closeModal();
+    }
+
+    const renderItem = (item, index) => (
+        <TouchableOpacity
+            onPress={onChangeItem(item.label)}
+            key={index + ''}
+            style={styles.itemContainer}>
+            <Text style={AppStyles.fonts.text}>
+                {item.label}
+            </Text>
+        </TouchableOpacity>
+
+    );
     return (
         <TopBarScreenLayout topBar={<TopBarComponent />}>
-
-
 
             <View style={styles.container}>
                 <MapView
@@ -25,73 +81,61 @@ const StorePage = () => {
                 >
                 </MapView>
 
-                <View style={styles.pickerContainer}>
-                    <CustomPickerSelect
-                        style={{width:'50%'}}
-                        items={[
-                            { label: 'Hồ chí minh', value: 1 },
-                            {
-                                label: 'Hà Nội',
-                                value: 2,
-
-                            },
-
-                        ]}
-                        placeholder='Chọn tỉnh thành'
-                        defaultValue={city}
-                        useNativeAndroidPickerStyle={false}
-                        onChangeItem={(item) =>
-                            setCity(item?.value)
-                        }
+                {/* ------------ Select city and districts --------------------- */}
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <CustomPopupMenu
+                        placeHolders='Chọn tỉnh thành'
+                        visible={visible[0]}
+                        menus={citys}
+                        itemMenu={renderItem}
+                        selected={city}
+                        openMenu={openModal(0)}
                     />
 
-                    <CustomPickerSelect
-                     style={{width:'50%'}}
-                        items={[
-                            { label: 'Quận 1', value: 1 },
-                            {
-                                label: 'Quận 2',
-                                value: 2,
-
-                            },
-
-                        ]}
-                        placeholder='Chọn quận huyện'
-                        defaultValue={city}
-                        useNativeAndroidPickerStyle={false}
-                        onChangeItem={(item) =>
-                            setCity(item?.value)
-                        }
+                    <CustomPopupMenu
+                        placeHolders='Chọn quận huyện'
+                        visible={visible[1]}
+                        menus={districs}
+                        selected={districts}
+                        itemMenu={renderItem}
+                        openMenu={openModal(1)}
                     />
                 </View>
+                {/* ------------ Select city and districts --------------------- */}
+
+
             </View>
 
         </TopBarScreenLayout>
     )
-}
-    ;
+};
+
 
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-       
+
         height: 400,
         width: '100%',
         alignItems: 'center',
     },
     map: {
         ...StyleSheet.absoluteFillObject,
-        top:0,
+        top: 0,
     },
 
     pickerContainer: {
-       position:'absolute',
-       top:0,
+        position: 'absolute',
+        margin: 0,
+        width: '50%',
+    },
+    itemContainer: {
         width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        // justifyContent: 'space-between'
-
+        justifyContent: 'center',
+        height: 35,
+        paddingLeft: 5,
+        marginVertical: 5,
+        borderBottomColor: AppStyles.colors.disabled
     }
 });
 export default StorePage;

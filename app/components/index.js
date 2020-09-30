@@ -12,7 +12,7 @@ import CustomTextLink from './CustomTextLink';
 import CustomFlatList from './CustomFlatList';
 import CustomButtonImage from './CustomButtonImage';
 import CustomScrollTabView from './CustomScrollTabView';
-
+import CustomPopupMenu from './CustomPopupMenu';
 module.exports = {
   TopBar,
   CustomButton,
@@ -28,4 +28,5 @@ module.exports = {
   CustomFlatList,
   CustomButtonImage,
   CustomScrollTabView,
+  CustomPopupMenu
 };
