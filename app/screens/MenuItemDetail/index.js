@@ -1,4 +1,4 @@
-import { CustomButton, CustomAccordionList } from '@components';
+import { CustomButton, CustomAccordionList, CustomInput } from '@components';
 import { translate } from '@localize';
 import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
@@ -9,11 +9,13 @@ import {
   Image,
   Text,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {
   SettingItem,
   MenuDetailItem,
   MenuDetailItemSelectType,
+  ButtonCC,
 } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
@@ -172,7 +174,7 @@ const MenuItemDetailScreen = () => {
   return (
     <>
       <SinglePageLayout>
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
           <View style={styles.header}>
             <Image
               style={styles.imageHeaderStyle}
@@ -206,16 +208,48 @@ const MenuItemDetailScreen = () => {
                 headerStyle={styles.listHeaderStyle}
                 renderItem={renderItem}
                 isRadio={index !== 2}
+                style={styles.listStyle}
               />
             ))}
+
+            <View style={styles.orderContentStyle}>
+              <TouchableOpacity style={styles.buttonOrderStyle}>
+                <Image source={images.icons.ic_sub} />
+              </TouchableOpacity>
+              <CustomInput
+                style={styles.mulInputStyle}
+                inputStyle={styles.inputStyle}
+                keyboardType="numeric"
+                allowFontScaling={true}
+                numberOfLines={1}
+                defaultValue="0"
+                multiline={false}
+                clearTextOnFocus={true}
+                maxLength={3}
+              />
+              <TouchableOpacity style={styles.buttonOrderStyle}>
+                <Image source={images.icons.ic_plus} />
+              </TouchableOpacity>
+            </View>
           </View>
-        </SafeAreaView>
+        </View>
       </SinglePageLayout>
 
       {/**Close Button */}
-      <CustomButton onPress={() => navigation.goBack()} absolute={true}>
+      <CustomButton
+        onPress={() => navigation.goBack()}
+        absolute={true}
+        style={styles.closeButtonStyle}>
         <Image source={images.icons.popup_close} />
       </CustomButton>
+
+      <View style={styles.confirmStyle}>
+        <View style={styles.orderSumContent}>
+          <Text style={styles.txtStyle}>Tổng cộng : </Text>
+          <Text style={styles.txtPriceStyle}>0.00 đ</Text>
+        </View>
+        <ButtonCC.ButtonRed label={translate('txtConfirm')} />
+      </View>
     </>
   );
 };
@@ -223,10 +257,13 @@ const MenuItemDetailScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: AppStyles.colors.background,
+    paddingBottom: 50,
   },
 
-  header: { backgroundColor: '#FFF', marginTop: 10 },
+  listStyle: { backgroundColor: AppStyles.colors.background },
+
+  header: { backgroundColor: '#FFF', marginTop: 0, paddingTop: 20 },
   headerContent: {
     paddingHorizontal: 15,
     flexDirection: 'row',
@@ -268,5 +305,65 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC522',
     height: 46,
   },
+
+  closeButtonStyle: {
+    top: 30,
+  },
+
+  orderContentStyle: {
+    flexDirection: 'row',
+    height: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+
+  buttonOrderStyle: {
+    width: 30,
+    height: 30,
+    backgroundColor: AppStyles.colors.accent,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  mulInputStyle: {
+    height: 35,
+    width: 60,
+    borderColor: '#707070',
+    justifyContent: 'center',
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+  },
+
+  inputStyle: {
+    paddingLeft: 0,
+    margin: 0,
+    fontSize: 16,
+    height: '100%',
+    textAlign: 'center',
+  },
+
+  confirmStyle: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderColor: AppStyles.colors.accent,
+  },
+
+  orderSumContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+
+  txtStyle: { ...AppStyles.fonts.text },
 });
 export default MenuItemDetailScreen;

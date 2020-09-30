@@ -33,9 +33,10 @@ const CustomAccordionList = ({
   headerTextStyle,
   headerStyle,
   renderItem,
+  style,
   ...props
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
   const ref = React.useRef();
 
@@ -43,7 +44,7 @@ const CustomAccordionList = ({
     <Transitioning.View
       ref={ref}
       transition={transition}
-      style={styles.container}>
+      style={[styles.container, style]}>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  header: { backgroundColor: '#fff' },
+  header: {},
 
   subListStyle: {},
 
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+
   itemContent: { height: 72, justifyContent: 'center', paddingHorizontal: 10 },
   itemTextStyle: { fontSize: 16, fontFamily: 'Roboto-medium' },
 

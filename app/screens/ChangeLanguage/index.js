@@ -148,6 +148,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  arrowStyle: { height: '100%', width: 50 },
+  arrowStyle: { height: '100%', width: 50, resizeMode: 'center' },
 });
 export default ChangeLanguageScreen;

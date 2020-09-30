@@ -69,7 +69,10 @@ export const MenuDetailItem = ({
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={itemPress}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={itemPress}
+      activeOpacity={0.7}>
       <Image style={styles.imageStyle} source={item.image} />
       <View style={styles.textContentStyle}>
         <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
