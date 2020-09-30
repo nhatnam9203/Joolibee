@@ -64,6 +64,8 @@ const images = {
   jollibee_price: require('../assets/images/jollibee-price.png'),
   jollibee_news: require('../assets/images/jollibee-news.png'),
   item_detail_thumb: require('../assets/images/menu-item-detail-thumb.png'),
+  menu_detail_item_pepsi: require('../assets/images/menu-detail-item-pepsi.png'),
+  menu_detail_item_nuocsuoi: require('../assets/images/menu-detail-item-nuocsuoi.png'),
 };
 
 export default images;

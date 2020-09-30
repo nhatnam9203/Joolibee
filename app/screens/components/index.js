@@ -11,3 +11,4 @@ export * from './MenuItem';
 export * from './PopupSelectAreaComponent';
 export * from './SettingItem';
 export * from './TopBarComponent';
+export * from './MenuDetailItem';

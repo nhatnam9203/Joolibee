@@ -147,5 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  arrowStyle: { height: '100%', width: 50 },
 });
 export default ChangeLanguageScreen;

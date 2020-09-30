@@ -1,68 +1,109 @@
 import React from 'react';
-import { TouchableWithoutFeedback, StyleSheet, View, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 
-import Animated, { Easing } from 'react-native-reanimated';
-import { bInterpolate, bin, useTimingTransition } from 'react-native-redash';
+import Animated, { Transition, Transitioning } from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/Feather';
 
-const { not, interpolate } = Animated;
+const Icon_Size = 30;
 
-const LIST_ITEM_HEIGHT = 200;
+const transition = (
+  <Transition.Together>
+    <Transition.In type="fade" durationMs={200} />
+    <Transition.Change />
+    <Transition.Out type="fade" durationMs={200} />
+  </Transition.Together>
+);
 
-const CustomAccordionList = ({ list = [], ...props }) => {
-  const [open, setOpen] = React.useState(false);
-  const transition = useTimingTransition(open, { duration: 400 });
-
-  // const transition = useTransition(
-  //   open,
-  //   not(bin(open)),
-  //   bin(open),
-  //   400,
-  //   Easing.inOut(Easing.ease),
-  // );
-
-  const height = bInterpolate(
-    transition,
-    0,
-    LIST_ITEM_HEIGHT * list.items.length,
+const ChevronIcon = ({ isOpen }) => {
+  return (
+    <Animated.View
+      style={[
+        styles.iconContainer,
+        { transform: [{ rotate: isOpen ? '180deg' : '0deg' }] },
+      ]}>
+      <Icon name="chevron-down" color="#1B1B1B" size={32} />
+    </Animated.View>
   );
+};
 
-  const bottomRadius = interpolate(transition, {
-    inputRange: [0, 16 / 400],
-    outputRange: [8, 0],
-  });
+const CustomAccordionList = ({
+  title,
+  data = [],
+  headerTextStyle,
+  headerStyle,
+  renderItem,
+  ...props
+}) => {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef();
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={() => setOpen((prev) => !prev)}>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              borderBottomLeftRadius: bottomRadius,
-              borderBottomRightRadius: bottomRadius,
-            },
-          ]}>
-          <Text style={styles.txtStyle}>jjjj</Text>
-        </Animated.View>
-      </TouchableWithoutFeedback>
+    <Transitioning.View
+      ref={ref}
+      transition={transition}
+      style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => {
+            ref.current.animateNextTransition();
+            setOpen((prev) => !prev);
+          }}
+          activeOpacity={1}
+          style={[headerStyle, styles.headerContent]}>
+          {!!title && (
+            <Text style={headerTextStyle}>{`${title}`.toUpperCase()}</Text>
+          )}
 
-      <Animated.View style={[styles.items, { height }]}>
-        {list.items.map((item, key) => (
-          <View {...{ item, key }} isLast={key === list.items.length - 1} />
-        ))}
-      </Animated.View>
-    </>
+          <ChevronIcon isOpen={open} />
+        </TouchableOpacity>
+        {open && (
+          <Animated.View style={styles.subListStyle}>
+            {data.map((item, index) =>
+              renderItem ? (
+                renderItem(item, index)
+              ) : (
+                <View style={styles.itemContent}>
+                  <Text style={styles.itemTextStyle}>{item.title}</Text>
+                </View>
+              ),
+            )}
+          </Animated.View>
+        )}
+      </View>
+    </Transitioning.View>
   );
 };
 
 const styles = StyleSheet.create({
-  containerStyle: {
+  container: {
     borderTopWidth: 0,
     borderBottomWidth: 0,
+    marginVertical: 10,
   },
   txtStyle: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+
+  header: { backgroundColor: '#fff' },
+
+  subListStyle: {},
+
+  headerContent: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  itemContent: { height: 72, justifyContent: 'center', paddingHorizontal: 10 },
+  itemTextStyle: { fontSize: 16, fontFamily: 'Roboto-medium' },
+
+  iconContainer: {
+    height: Icon_Size,
+    width: Icon_Size,
+    borderRadius: Icon_Size / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
