@@ -20,7 +20,8 @@ const ScreenName = {
   MenuItemDetail: 'MenuItemDetail',
   MyAddress: 'MyAddress',
   DetailMyAddress: "DetailMyAddress",
-  SearchAddress: "SearchAddress"
+  SearchAddress: "SearchAddress",
+  MyOrders: "MyOrders"
 };
 
 export default ScreenName;

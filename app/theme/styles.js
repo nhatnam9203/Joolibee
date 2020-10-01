@@ -26,6 +26,8 @@ const AppStyles = {
     orange: '#F0810D',
     cyan: '#2AC8CC',
     inputError: buttonColor,
+    confirmed: '#3FB4C3',
+    complete: '#BCBCBC'
   },
   fonts: {
     text: {

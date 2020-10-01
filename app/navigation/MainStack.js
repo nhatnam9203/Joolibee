@@ -20,6 +20,7 @@ import {
   MyAddressScreen,
   DetailMyAddressScreen,
   SearchAddressScreen,
+  MyOrdersScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -53,7 +54,7 @@ const forFade = ({ current }) => ({
 function MainStack() {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenName.Main}
+      initialRouteName={ScreenName.MyOrders}
       headerMode="screen"
       screenOptions={{
         ...AppStyles.navigation.default,
@@ -218,6 +219,15 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSearchAddress'),
+        }}
+      />
+
+      <Stack.Screen
+        component={MyOrdersScreen}
+        name={ScreenName.MyOrders}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyOrders'),
         }}
       />
     </Stack.Navigator>

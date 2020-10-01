@@ -54,6 +54,7 @@ const images = {
     ic_store_phone: require('../assets/icons/ic-store-phone.png'),
     ic_store_clock: require('../assets/icons/ic-store-clock.png'),
     ic_pin_restaurant: require('../assets/icons/ic-pin-restaurant.png'),
+    ic_order: require('../assets/icons/ic-order.png'),
 
   },
   login_polygon: require('../assets/images/login-polygon.png'),
