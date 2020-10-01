@@ -15,7 +15,7 @@ const images = {
     tab_promotion: require('../assets/icons/tab-promotion.png'),
     tab_store: require('../assets/icons/tab-store.png'),
     popup_close: require('../assets/icons/popup-close.png'),
-    bee_man: require('../assets/icons/bee-man.png'),
+ 
     ic_text_jollibee: require('../assets/icons/ic-text-jollibee.png'),
     Walkthough1: require('../assets/icons/Walktrough1.png'),
     Walkthough2: require('../assets/icons/Walktrough2.png'),
@@ -75,6 +75,7 @@ const images = {
   item_detail_thumb: require('../assets/images/menu-item-detail-thumb.png'),
   menu_detail_item_pepsi: require('../assets/images/menu-detail-item-pepsi.png'),
   menu_detail_item_nuocsuoi: require('../assets/images/menu-detail-item-nuocsuoi.png'),
+  bee_man: require('../assets/images/jollibee-wellcome.gif'),
 };
 
 export default images;

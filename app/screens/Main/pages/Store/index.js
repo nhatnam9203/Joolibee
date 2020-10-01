@@ -147,13 +147,15 @@ const StorePage = () => {
                 ListHeaderComponent={() => (
                     <View style={styles.container}>
                         <MapView
+                            // provider='google'
                             ref={refMap}
                             style={styles.map}
-                            initialRegion={INITIAL_REGION}
+                             initialRegion={INITIAL_REGION}
                             onMapReady={fitAllMarkers}
+                            showsUserLocation={true}
+                           
                         >
-
-                            <Markers data={STORES} />
+                            <Markers data={STORES} mapView={refMap} />
 
                         </MapView>
                     </View>

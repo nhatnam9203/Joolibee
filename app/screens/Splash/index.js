@@ -23,7 +23,7 @@ const SplashScreen = () => {
     return (
         <View style={styles.container}>
             <Image
-                source={images.icons['bee_man']}
+                source={images['bee_man']}
                 style={styles.ic_bee_man}
             />
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     ic_bee_man: {
         width: scaleWidth(240),
         height: scaleHeight(447),
-        resizeMode: 'contain',
+        // resizeMode: 'contain',
         marginBottom: scaleHeight(100)
     },
     ic_text: {
