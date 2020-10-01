@@ -7,10 +7,12 @@ import {
   PromotionPageName,
   StorePageName,
   PopupOrderList,
+  PopupQRCode,
 } from '../components';
 import { HomePage, MenuPage, PromotionPage, StorePage } from './pages';
 import { useSelector, useDispatch } from 'react-redux';
 import { dismissOrderList } from '@slices/order';
+import { dismissQRCode } from '@slices/account';
 import { StyleSheet, View } from 'react-native';
 
 const MainTab = createBottomTabNavigator();
@@ -18,6 +20,7 @@ const MainTab = createBottomTabNavigator();
 function MainTabScreen() {
   const dispatch = useDispatch();
   const showOrderList = useSelector((state) => state.order.isShowOrderList);
+  const showQRCode = useSelector((state) => state.account.isShowQRCode);
 
   return (
     <View style={styles.container}>
@@ -30,6 +33,10 @@ function MainTabScreen() {
       <PopupOrderList
         visible={showOrderList}
         onToggle={() => dispatch(dismissOrderList())}
+      />
+      <PopupQRCode
+        visible={showQRCode}
+        onToggle={() => dispatch(dismissQRCode())}
       />
     </View>
   );

@@ -16,3 +16,4 @@ export * from './PopupOrderList';
 export * from './OrderItem';
 export * from './PriceAndPoint';
 export * from './OrderCount';
+export * from './PopupQRCode';

@@ -43,6 +43,7 @@ const accountSlice = createSlice({
     signUpError: null,
     signUpSuccess: false,
     signInError: null,
+    isShowQRCode: false,
   },
   reducers: {
     login(state, action) {
@@ -63,6 +64,14 @@ const accountSlice = createSlice({
     },
     clearSignInState(state, action) {
       state.signInError = null;
+    },
+
+    showQRCode(state, action) {
+      state.isShowQRCode = true;
+    },
+
+    dismissQRCode(state, action) {
+      state.isShowQRCode = false;
     },
   },
   extraReducers: {
@@ -112,5 +121,7 @@ export const {
   logout,
   clearSignupState,
   clearSignInState,
+  showQRCode,
+  dismissQRCode,
 } = actions;
 export default reducer;

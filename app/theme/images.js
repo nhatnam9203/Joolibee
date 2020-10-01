@@ -55,7 +55,7 @@ const images = {
     ic_store_phone: require('../assets/icons/ic-store-phone.png'),
     ic_store_clock: require('../assets/icons/ic-store-clock.png'),
     ic_pin_restaurant: require('../assets/icons/ic-pin-restaurant.png'),
-
+    ic_qr_logo: require('../assets/icons/ic-qr-logo.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../ScreenName';
 import { useDispatch } from 'react-redux';
 import { showOrderList } from '@slices/order';
+import { showQRCode } from '@slices/account';
 
 export const TopBarComponent = React.memo(() => {
   const navigation = useNavigation();
@@ -22,7 +23,12 @@ export const TopBarComponent = React.memo(() => {
             }}
           />
           <TopBar.Space />
-          <TopBar.Action source={images.icons.nav_qrcode} onPress={() => {}} />
+          <TopBar.Action
+            source={images.icons.nav_qrcode}
+            onPress={() => {
+              dispatch(showQRCode());
+            }}
+          />
         </>
       }
       rightComponents={

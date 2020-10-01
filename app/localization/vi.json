@@ -101,5 +101,8 @@
   "txtOrder": "Thông tin đơn hàng",
   "txtOrderMore": "Thêm Món",
   "txtPayment": "Thanh Toán",
-  "txtSummary": "Tổng Cộng"
+  "txtSummary": "Tổng Cộng",
+  "txtQRCode": "Mã Thành Viên",
+  "txtQrCodeDescription": "Đưa mã này cho nhân viên khi thanh toán và tích điểm tại quầy",
+  "txtClose": "Đóng"
 }
