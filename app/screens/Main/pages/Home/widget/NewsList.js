@@ -31,7 +31,7 @@ const index = () => {
                 inactiveSlideOpacity={1}
                 firstItem={0}
                 autoplay
-                autoplayInterval={2000}
+                autoplayInterval={5000}
                 loop
             />
         </View>

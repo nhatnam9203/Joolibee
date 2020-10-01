@@ -51,6 +51,11 @@ const images = {
     ic_location: require('../assets/icons/ic-location.png'),
     ic_dropdown: require('../assets/icons/dropdown.png'),
     ic_order_edit: require('../assets/icons/ic-order-edit.png'),
+    ic_store_address: require('../assets/icons/ic-store-home.png'),
+    ic_store_phone: require('../assets/icons/ic-store-phone.png'),
+    ic_store_clock: require('../assets/icons/ic-store-clock.png'),
+    ic_pin_restaurant: require('../assets/icons/ic-pin-restaurant.png'),
+
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

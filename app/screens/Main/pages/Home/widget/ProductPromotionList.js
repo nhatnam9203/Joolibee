@@ -50,7 +50,7 @@ const index = () => {
                     inactiveSlideScale={0.9}
                     inactiveSlideOpacity={1}
                     autoplay
-                    autoplayInterval={2000}
+                    autoplayInterval={5000}
                     enableSnap={true}
                     loop={true}
                     loopClonesPerSide={data.length}
