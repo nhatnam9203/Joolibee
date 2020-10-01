@@ -22,16 +22,14 @@ export const OrderItem = ({ item, onPress, index }) => (
     <View style={[AppStyles.styles.horizontalLayout, styles.content]}>
       <View style={styles.txtContent}>
         <LabelTitle
-          label="aaa sdsds sd sfdsg dfg dfg df"
+          label={item.title}
           numberOfLines={2}
           fontSize={15}
           style={styles.titleStyle}
         />
-        <Text style={styles.txtDescStyle}>
-          Pepsi (Lớn) +20.000đ Khoai tây lắc vị BBQ (Lớn) +10.000đ
-        </Text>
+        <Text style={styles.txtDescStyle}>{item.description}</Text>
       </View>
-      <PriceAndPoint style={styles.priceStyle} />
+      <PriceAndPoint style={styles.priceStyle} {...item} />
     </View>
     <View style={styles.bottomStyle}>
       <OrderCount />

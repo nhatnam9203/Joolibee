@@ -3,10 +3,10 @@ import { AppStyles } from '@theme';
 import { translate } from '@localize';
 import { View, Text, StyleSheet } from 'react-native';
 
-export const PriceAndPoint = () => (
+export const PriceAndPoint = ({ price, point }) => (
   <View style={styles.priceContent}>
-    <Text style={styles.priceStyle}>270.000</Text>
-    <Text style={styles.pointStyle}>(+ 13 điểm)</Text>
+    <Text style={styles.priceStyle}>{price}</Text>
+    <Text style={styles.pointStyle}>+ {`${point}`} điểm</Text>
   </View>
 );
 

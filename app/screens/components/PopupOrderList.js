@@ -14,7 +14,7 @@ const defaultData = [
     title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
     description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
     price: '60.000 đ',
-    point: '(+5 điểm)',
+    point: 5,
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const defaultData = [
     title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
     description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
     price: '30.000 đ',
-    point: '(+5 điểm)',
+    point: 5,
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const defaultData = [
     title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
     description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
     price: '90.000 đ',
-    point: '(+5 điểm)',
+    point: 5,
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const defaultData = [
     title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
     description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
     price: '90.000 đ',
-    point: '(+5 điểm)',
+    point: 5,
   },
 ];
 
