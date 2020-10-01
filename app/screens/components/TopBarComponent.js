@@ -3,9 +3,12 @@ import { TopBar } from '@components';
 import { images, AppStyles } from '@theme';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../ScreenName';
+import { useDispatch } from 'react-redux';
+import { showOrderList } from '@slices/order';
 
 export const TopBarComponent = React.memo(() => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <TopBar.Bar
@@ -31,7 +34,12 @@ export const TopBarComponent = React.memo(() => {
             }}
           />
           <TopBar.Space />
-          <TopBar.Action source={images.icons.nav_order} onPress={() => {}} />
+          <TopBar.Action
+            source={images.icons.nav_order}
+            onPress={() => {
+              dispatch(showOrderList());
+            }}
+          />
         </>
       }>
       <TopBar.Logo source={images.icons.nav_logo} />

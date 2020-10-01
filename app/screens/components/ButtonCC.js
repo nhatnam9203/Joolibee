@@ -12,9 +12,10 @@ export const ButtonRed = ({
   height = BUTTON_HEIGHT,
   label,
   onPress,
+  style,
 }) => (
   <CustomButton
-    style={styles.btnStyle}
+    style={[styles.btnStyle, style]}
     onPress={onPress}
     width={width}
     height={height}

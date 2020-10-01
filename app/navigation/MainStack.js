@@ -20,6 +20,7 @@ import {
   MyAddressScreen,
   DetailMyAddressScreen,
   SearchAddressScreen,
+  OrderScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -218,6 +219,15 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSearchAddress'),
+        }}
+      />
+
+      <Stack.Screen
+        component={OrderScreen}
+        name={ScreenName.Order}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtOrder'),
         }}
       />
     </Stack.Navigator>

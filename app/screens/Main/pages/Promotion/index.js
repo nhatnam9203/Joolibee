@@ -1,6 +1,10 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
-import { ItemImageRight, ButtonCC, TopBarComponent } from '../../../components';
+import {
+  FlatListItemWithImgHorizontal,
+  ButtonCC,
+  TopBarComponent,
+} from '../../../components';
 import { CustomFlatList } from '@components';
 import { images, AppStyles } from '@theme';
 import { StyleSheet, View, Text } from 'react-native';
@@ -63,11 +67,12 @@ const PromotionPage = () => {
   };
 
   const renderItem = ({ item }) => (
-    <ItemImageRight
+    <FlatListItemWithImgHorizontal
       image={item.image}
       item={item}
       onPress={goToPromotionList}
-      contentStyle={styles.itemContentStyle}>
+      contentStyle={styles.itemContentStyle}
+      imgHeight="100%">
       <Text style={styles.itemTitle} numberOfLines={2} ellipsizeMode="tail">
         {item.title}
       </Text>
@@ -79,7 +84,7 @@ const PromotionPage = () => {
         width={110}
         height={33}
       />
-    </ItemImageRight>
+    </FlatListItemWithImgHorizontal>
   );
 
   React.useEffect(() => {

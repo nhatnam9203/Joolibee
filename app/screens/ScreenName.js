@@ -19,8 +19,9 @@ const ScreenName = {
   Notification: 'Notification',
   MenuItemDetail: 'MenuItemDetail',
   MyAddress: 'MyAddress',
-  DetailMyAddress: "DetailMyAddress",
-  SearchAddress: "SearchAddress"
+  DetailMyAddress: 'DetailMyAddress',
+  SearchAddress: 'SearchAddress',
+  Order: 'Order',
 };
 
 export default ScreenName;

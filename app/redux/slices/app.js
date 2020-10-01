@@ -12,7 +12,7 @@ const appSlice = createSlice({
     },
     loadingSuccess(state, action) {
       state.loading_app = false;
-    }
+    },
   },
 });
 

@@ -50,6 +50,7 @@ const images = {
     ic_plus: require('../assets/icons/ic-plus.png'),
     ic_location: require('../assets/icons/ic-location.png'),
     ic_dropdown: require('../assets/icons/dropdown.png'),
+    ic_order_edit: require('../assets/icons/ic-order-edit.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

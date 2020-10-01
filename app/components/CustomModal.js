@@ -1,13 +1,11 @@
 import React from 'react';
 import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-export const CustomModal = ({ children, showModal }) => {
+export const CustomModal = ({ children, showModal, onDismiss = () => {} }) => {
   const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
-    if (showModal) {
-      setVisible(true);
-    }
+    setVisible(showModal);
   }, [showModal]);
 
   return (
@@ -15,9 +13,11 @@ export const CustomModal = ({ children, showModal }) => {
       <TouchableOpacity
         style={styles.container}
         activeOpacity={1}
-        onPress={() => setVisible(false)}
-        >
-        <View style={styles.content}>{children}</View>
+        onPress={() => {
+          setVisible(false);
+          onDismiss();
+        }}>
+        {children}
       </TouchableOpacity>
     </Modal>
   );
@@ -31,16 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00000080',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    flex: 0,
-    // backgroundColor: '#fff',
-    borderRadius: 8,
-    minWidth: '80%',
-    minHeight: '40%',
-    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

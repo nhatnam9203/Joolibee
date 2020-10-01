@@ -9,7 +9,7 @@ import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { SinglePageLayout } from '@layouts';
 
-const ExampleScreen = () => {
+const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -25,4 +25,5 @@ const ExampleScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: AppStyles.colors.background },
 });
-export default ExampleScreen;
+
+export default OrderScreen;

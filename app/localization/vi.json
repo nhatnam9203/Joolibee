@@ -97,5 +97,9 @@
   "txtOther": "Khác",
   "txtMyAddress": "Địa chỉ giao hàng",
   "txtMyAddressDetail": "Thêm địa chỉ giao hàng",
-  "txtSearchAddress": "Nhập địa chỉ"
+  "txtSearchAddress": "Nhập địa chỉ",
+  "txtOrder": "Thông tin đơn hàng",
+  "txtOrderMore": "Thêm Món",
+  "txtPayment": "Thanh Toán",
+  "txtSummary": "Tổng Cộng"
 }

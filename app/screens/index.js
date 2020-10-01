@@ -22,6 +22,7 @@ import MenuItemDetailScreen from './MenuItemDetail';
 import MyAddressScreen from './MyAddress';
 import DetailMyAddressScreen from './MyAddress/DetailMyAddress';
 import SearchAddressScreen from './MyAddress/SearchAddress';
+import OrderScreen from './Order';
 module.exports = {
   ScreenName,
   WelcomeScreen,
@@ -45,5 +46,6 @@ module.exports = {
   MenuItemDetailScreen,
   MyAddressScreen,
   DetailMyAddressScreen,
-  SearchAddressScreen
+  SearchAddressScreen,
+  OrderScreen,
 };
