@@ -9,8 +9,13 @@ import { JollibeeLogo } from '../components';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
+  const modalRef = React.createRef(null);
+
   return (
-    <CustomModal.CustomModal showModal={visible} onDismiss={onToggle}>
+    <CustomModal.CustomModal
+      showModal={visible}
+      onDismiss={onToggle}
+      ref={modalRef}>
       <View style={styles.container}>
         <View style={styles.content_top}>
           <JollibeeLogo style={styles.icon_jollibee} />
@@ -59,7 +64,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
           </View>
 
           <CustomButton
-            onPress={onToggle}
+            onPress={() => modalRef.current.dismiss()}
             label={translate('txtButtonConfirm')}
             width={181}
             height={58}

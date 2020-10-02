@@ -1,27 +1,36 @@
 import React from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import Modal from 'react-native-modal';
 
-export const CustomModal = ({ children, showModal, onDismiss = () => {} }) => {
-  const [visible, setVisible] = React.useState(false);
+export const CustomModal = React.forwardRef(
+  ({ children, showModal, onDismiss = () => {} }, ref) => {
+    const [visible, setVisible] = React.useState(false);
 
-  React.useEffect(() => {
-    setVisible(showModal);
-  }, [showModal]);
+    React.useEffect(() => {
+      if (showModal) setVisible(showModal);
+    }, [showModal]);
 
-  return (
-    <Modal animationType="fade" visible={visible} transparent={true}>
-      <TouchableOpacity
-        style={styles.container}
-        activeOpacity={1}
-        onPress={() => {
-          setVisible(false);
-          onDismiss();
-        }}>
+    const onModalHide = () => {
+      onDismiss();
+      setVisible(false);
+    };
+
+    React.useImperativeHandle(ref, () => ({
+      dismiss: onModalHide,
+    }));
+
+    return (
+      <Modal
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        isVisible={visible}
+        transparent={true}
+        onModalHide={onModalHide}>
         {children}
-      </TouchableOpacity>
-    </Modal>
-  );
-};
+      </Modal>
+    );
+  },
+);
 
 export const CustomModalTitle = ({ children }) => (
   <Text style={styles.txtTitleStyle}>{children?.toUpperCase()}</Text>
@@ -30,7 +39,7 @@ export const CustomModalTitle = ({ children }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00000050',
+    // backgroundColor: '#00000050',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -43,5 +52,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-// export default CustomModal;

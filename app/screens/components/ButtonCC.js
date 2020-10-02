@@ -3,6 +3,8 @@ import { AppStyles, images } from '@theme';
 import { StyleSheet, Image } from 'react-native';
 import { CustomButton } from '@components';
 import { translate } from '@localize';
+import { showComingSoon } from '@slices/app';
+import { useDispatch } from 'react-redux';
 
 const BUTTON_HEIGHT = 60;
 const LAYOUT_WIDTH = '90%';
@@ -13,18 +15,23 @@ export const ButtonRed = ({
   label,
   onPress,
   style,
-}) => (
-  <CustomButton
-    style={[styles.btnStyle, style]}
-    onPress={onPress}
-    width={width}
-    height={height}
-    label={label}
-    borderColor={AppStyles.colors.accent}
-    textColor="#fff"
-    bgColor={AppStyles.colors.accent}
-  />
-);
+}) => {
+  const dispatch = useDispatch();
+  const showPopup = () => dispatch(showComingSoon());
+
+  return (
+    <CustomButton
+      style={[styles.btnStyle, style]}
+      onPress={onPress ?? showPopup}
+      width={width}
+      height={height}
+      label={label}
+      borderColor={AppStyles.colors.accent}
+      textColor="#fff"
+      bgColor={AppStyles.colors.accent}
+    />
+  );
+};
 
 export const ButtonYellow = ({
   width = LAYOUT_WIDTH,
@@ -32,18 +39,23 @@ export const ButtonYellow = ({
   label,
   onPress,
   style,
-}) => (
-  <CustomButton
-    style={[styles.btnStyle, style]}
-    onPress={onPress}
-    width={width}
-    height={height}
-    label={label}
-    borderColor={AppStyles.colors.button}
-    textColor="#000"
-    bgColor={AppStyles.colors.button}
-  />
-);
+}) => {
+  const dispatch = useDispatch();
+  const showPopup = () => dispatch(showComingSoon());
+
+  return (
+    <CustomButton
+      style={[styles.btnStyle, style]}
+      onPress={onPress ?? showPopup}
+      width={width}
+      height={height}
+      label={label}
+      borderColor={AppStyles.colors.button}
+      textColor="#000"
+      bgColor={AppStyles.colors.button}
+    />
+  );
+};
 
 export const ButtonFacebook = ({
   width = LAYOUT_WIDTH,
