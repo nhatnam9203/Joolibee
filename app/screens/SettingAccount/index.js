@@ -1,9 +1,9 @@
-import { CustomButton, CustomFlatList } from '@components';
+import { CustomFlatList } from '@components';
 import { translate } from '@localize';
 import { AppStyles } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { SettingItem } from '../components';
+import { SettingItem, ButtonCC } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
 import ScreenName from '../ScreenName';
@@ -24,12 +24,10 @@ const SettingAccountScreen = () => {
   // LOGOUT BUTTON
   const renderLogoutButton = () => (
     <View style={styles.logoutContent}>
-      <CustomButton
+      <ButtonCC.ButtonBorderRed
         width={350}
         height={60}
         label={translate('txtSignOut')}
-        borderColor={AppStyles.colors.accent}
-        textColor={AppStyles.colors.accent}
         onPress={btnLogoutPressed}
       />
     </View>

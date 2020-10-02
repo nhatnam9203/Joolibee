@@ -111,6 +111,30 @@ export const ButtonGoogle = ({
   );
 };
 
+export const ButtonBorderRed = ({
+  width = LAYOUT_WIDTH,
+  height = BUTTON_HEIGHT,
+  label,
+  onPress,
+  style,
+}) => {
+  const dispatch = useDispatch();
+  const showPopup = () => dispatch(showComingSoon());
+
+  return (
+    <CustomButton
+      style={[styles.btnStyle, style]}
+      onPress={onPress ?? showPopup}
+      width={width}
+      height={height}
+      label={label}
+      bgColor={'#fff'}
+      borderColor={AppStyles.colors.accent}
+      textColor={AppStyles.colors.accent}
+    />
+  );
+};
+
 const styles = StyleSheet.create({
   btnStyle: {
     marginVertical: 10,

@@ -29,12 +29,13 @@ const SignInScreen = () => {
   const dispatch = useDispatch();
 
   const SignInSchema = Yup.object().shape({
-    phone: Yup.string()
-      .required(translate('txtRequired'))
-      .matches(regex.phone, translate('txtWrongPhoneNumber'))
-      .min(10, translate('txtTooShort'))
-      .max(15, translate('txtTooLong')),
-    password: Yup.string().required(translate('txtRequired')),
+    phone: Yup.string(),
+    // .required(translate('txtRequired'))
+    // .matches(regex.phone, translate('txtWrongPhoneNumber'))
+    // .min(10, translate('txtTooShort'))
+    // .max(15, translate('txtTooLong')),
+    password: Yup.string(),
+    // .required(translate('txtRequired')),
     remember: Yup.bool(),
   });
 
@@ -162,10 +163,10 @@ const SignInScreen = () => {
               />
 
               {/**FACEBOOK*/}
-              <ButtonCC.ButtonFacebook onPress={handleSubmit} />
+              <ButtonCC.ButtonFacebook />
 
               {/**GOOGLE*/}
-              <ButtonCC.ButtonGoogle onPress={handleSubmit} />
+              <ButtonCC.ButtonGoogle />
 
               {/**SIGN UP*/}
               <View style={styles.textContent}>
