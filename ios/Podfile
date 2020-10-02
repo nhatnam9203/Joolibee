@@ -14,7 +14,7 @@ target 'loyalty' do
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-  
+
 
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
@@ -33,4 +33,13 @@ target 'loyalty' do
   post_install do |installer|
     flipper_post_install(installer)
   end
+
+  target 'loyaltyProduction' do
+  end
+  target 'loyaltyStaging' do
+  end
 end
+
+
+
+
