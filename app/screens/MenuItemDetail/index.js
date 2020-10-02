@@ -162,6 +162,7 @@ const MenuItemDetailScreen = () => {
         onPress={onPress}
         item={item}
         selected={selected}
+        key={item.id}
         type={
           type !== -1
             ? MenuDetailItemSelectType.Radio

@@ -9,7 +9,7 @@ export const CustomModal = ({ children, showModal, onDismiss = () => {} }) => {
   }, [showModal]);
 
   return (
-    <Modal animationType="slide" visible={visible} transparent={true}>
+    <Modal animationType="fade" visible={visible} transparent={true}>
       <TouchableOpacity
         style={styles.container}
         activeOpacity={1}
@@ -30,7 +30,7 @@ export const CustomModalTitle = ({ children }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00000080',
+    backgroundColor: '#00000050',
     justifyContent: 'center',
     alignItems: 'center',
   },

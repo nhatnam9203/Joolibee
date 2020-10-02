@@ -54,7 +54,7 @@ const OrderScreen = () => {
   return (
     <>
       <SinglePageLayout backgroundColor={AppStyles.colors.background}>
-        <View style={styles.content}>
+        <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
           <OrderSection>
             <OrderSectionItem
@@ -140,7 +140,10 @@ const OrderScreen = () => {
                   paddingHorizontal: 10,
                 }}>
                 <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
-                  {translate('txtShippingTo')} :
+                  {shippingType === ShippingType.InPlace
+                    ? translate('txtShippingTo')
+                    : translate('txtToReceive')}
+                  :
                 </Text>
                 <Text
                   style={[styles.txtStyle, { flex: 1 }]}
@@ -153,11 +156,13 @@ const OrderScreen = () => {
                 <Image source={images.icons.ic_order_edit} />
               </TouchableOpacity>
             </OrderSectionItem>
-            <TextInput
-              placeholder={translate('txtNote')}
-              multiline={true}
-              style={styles.txtNoteStyle}
-            />
+            <OrderSectionItem>
+              <TextInput
+                placeholder={translate('txtNote')}
+                multiline={true}
+                style={styles.txtNoteStyle}
+              />
+            </OrderSectionItem>
           </OrderSection>
 
           <OrderSection title={translate('txtItemSelect')}>
@@ -171,7 +176,7 @@ const OrderScreen = () => {
           <OrderSection title={translate('txtPromotionApply')}>
             <OrderSectionItem></OrderSectionItem>
           </OrderSection>
-        </View>
+        </SafeAreaView>
       </SinglePageLayout>
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>

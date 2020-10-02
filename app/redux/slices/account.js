@@ -37,7 +37,7 @@ export const signIn = createAsyncThunk(
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: {
-    isLogin: true,
+    isLogin: false,
     username: null,
     password: null,
     signUpError: null,
@@ -75,6 +75,7 @@ const accountSlice = createSlice({
     },
   },
   extraReducers: {
+    // Sign Up
     [signUp.pending]: (state, action) => {
       Logger.info(action, 'signUp pending');
       state.signUpError = null;
@@ -91,9 +92,11 @@ const accountSlice = createSlice({
         state.signUpError = error;
       }
     },
-    // [signUp.rejected]: (state, action) => {
-    //   Logger.info(action, 'accountSlice rejected');
-    // },
+    [signUp.rejected]: (state, action) => {
+      Logger.info(action, 'signUp rejected');
+    },
+
+    // Sign In
     [signIn.pending]: (state, action) => {
       Logger.info(action, 'signIn pending');
       state.signInError = null;
@@ -107,9 +110,10 @@ const accountSlice = createSlice({
         state.signInError = error;
       }
     },
-    // [signIn.rejected]: (state, action) => {
-    //   Logger.info(action, 'accountSlice rejected');
-    // },
+    [signIn.rejected]: (state, action) => {
+      Logger.info(action, 'signIn rejected');
+      state.isLogin = true;
+    },
   },
 });
 
