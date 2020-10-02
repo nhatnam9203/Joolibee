@@ -1,21 +1,19 @@
 import React from 'react';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
 import { Text } from 'react-native-paper';
-import { CustomModal, CustomPickerSelect, CustomButton } from '@components';
+import { CustomPickerSelect, CustomButton } from '@components';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import { translate } from '@localize';
 import { JollibeeLogo } from '../components';
+import { PopupLayout } from '@layouts';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
-  const modalRef = React.createRef(null);
+  const popupRef = React.createRef(null);
 
   return (
-    <CustomModal.CustomModal
-      showModal={visible}
-      onDismiss={onToggle}
-      ref={modalRef}>
+    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
         <View style={styles.content_top}>
           <JollibeeLogo style={styles.icon_jollibee} />
@@ -64,7 +62,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
           </View>
 
           <CustomButton
-            onPress={() => modalRef.current.dismiss()}
+            onPress={() => popupRef.current.forceQuit()}
             label={translate('txtButtonConfirm')}
             width={181}
             height={58}
@@ -84,14 +82,15 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
           </Text>
         </View>
       </View>
-    </CustomModal.CustomModal>
+    </PopupLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: scaleWidth(388),
-    height: '95%',
+    width: '90%',
+    maxHeight: '95%',
+    flex: 1,
     backgroundColor: AppStyles.colors.button,
     borderRadius: 8,
     overflow: 'hidden',

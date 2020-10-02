@@ -1,15 +1,32 @@
 import { CustomModal } from '@components';
-import { AppStyles } from '@theme';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-const PopupLayout = ({ visible, onToggle, children }) => {
+const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
+  const modalRef = React.createRef(null);
+
+  const dismiss = () => {
+    modalRef.current.dismiss();
+  };
+
+  React.useImperativeHandle(ref, () => ({
+    forceQuit: dismiss,
+  }));
+
   return (
-    <CustomModal.CustomModal showModal={visible} onDismiss={onToggle}>
-      <View style={styles.container}>{children}</View>
+    <CustomModal.CustomModal
+      showModal={visible}
+      onDismiss={onToggle}
+      ref={modalRef}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={dismiss}
+        activeOpacity={1}>
+        {children}
+      </TouchableOpacity>
     </CustomModal.CustomModal>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

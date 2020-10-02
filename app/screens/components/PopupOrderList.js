@@ -46,18 +46,26 @@ const defaultData = [
 
 export const PopupOrderList = ({ visible, onToggle }) => {
   const navigation = useNavigation();
+  const popupRef = React.createRef(null);
+
   const renderItem = (props) => <OrderItem {...props} />;
+
+  const orderPressed = () => {
+    popupRef.current.forceQuit();
+  };
 
   const paymentPressed = () => {
     navigation.navigate(ScreenName.Order);
-    onToggle();
+    popupRef.current.forceQuit();
   };
 
   return (
-    <PopupLayout visible={visible} onToggle={onToggle}>
+    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.closeButtonStyle} onPress={onToggle}>
+          <TouchableOpacity
+            style={styles.closeButtonStyle}
+            onPress={() => popupRef.current.forceQuit()}>
             <Image source={images.icons.ic_close_blur} />
           </TouchableOpacity>
           <Text style={styles.txtHeader}>Phần ăn đã chọn</Text>
@@ -84,6 +92,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
             <ButtonCC.ButtonYellow
               label={translate('txtOrderMore')}
               style={styles.bottomButton}
+              onPress={orderPressed}
             />
             <ButtonCC.ButtonRed
               label={translate('txtPayment')}
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
     width: '90%',
     maxHeight: '90%',
     backgroundColor: 'red',
-    paddingBottom: 130,
+    paddingBottom: 150,
   },
 
   header: {

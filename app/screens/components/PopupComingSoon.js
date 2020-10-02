@@ -7,8 +7,10 @@ import { Text } from 'react-native-paper';
 import { ButtonCC, LabelTitle } from '../components';
 
 export const PopupComingSoon = ({ visible, onToggle }) => {
+  const popupRef = React.createRef(null);
+
   return (
-    <PopupLayout visible={visible} onToggle={onToggle}>
+    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
         <LabelTitle
           label={translate('txtNotification')}
@@ -23,7 +25,7 @@ export const PopupComingSoon = ({ visible, onToggle }) => {
         <ButtonCC.ButtonYellow
           label={translate('txtClose')}
           width={200}
-          onPress={onToggle}
+          onPress={() => popupRef.current.forceQuit()}
         />
       </View>
     </PopupLayout>

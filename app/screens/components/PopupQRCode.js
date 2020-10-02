@@ -14,8 +14,10 @@ const QRCODE_LOGO_SIZE = 60 - QRCODE_LOGO_MARGIN;
 const TITLE_FONT_SIZE = 30;
 
 export const PopupQRCode = ({ visible, onToggle, code = '0001234567' }) => {
+  const popupRef = React.createRef(null);
+
   return (
-    <PopupLayout visible={visible} onToggle={onToggle}>
+    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
         <LabelTitle
           label={translate('txtQRCode')}
@@ -42,7 +44,9 @@ export const PopupQRCode = ({ visible, onToggle, code = '0001234567' }) => {
         <ButtonCC.ButtonYellow
           label={translate('txtClose')}
           width={200}
-          onPress={onToggle}
+          onPress={() => {
+            popupRef.current.forceQuit();
+          }}
         />
       </View>
     </PopupLayout>
@@ -56,7 +60,6 @@ const styles = StyleSheet.create({
     maxHeight: '90%',
     backgroundColor: '#fff',
     alignItems: 'center',
-    paddingHorizontal: 20,
   },
 
   txtDescription: {

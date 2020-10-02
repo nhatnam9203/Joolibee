@@ -17,9 +17,8 @@ const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const [isVisible, setVisiblePopup] = React.useState(true);
 
-  const onTogglePopup = () => {
-    setVisiblePopup((prev) => !prev);
-  };
+  const onTogglePopup = () => setVisiblePopup(false);
+
   return (
     <TopBarScreenLayout
       style={{ backgroundColor: AppStyles.colors.accent }}

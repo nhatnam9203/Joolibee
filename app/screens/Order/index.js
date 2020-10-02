@@ -192,10 +192,10 @@ const OrderScreen = () => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: {
+    flex: 1,
     paddingHorizontal: 10,
     paddingTop: 20,
-    paddingBottom: 100,
-    flex: 1,
+    paddingBottom: 250,
   },
 
   confirmStyle: {
