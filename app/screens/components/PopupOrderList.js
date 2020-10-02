@@ -6,6 +6,8 @@ import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { ButtonCC, OrderItem } from '../components';
+import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../ScreenName';
 
 const defaultData = [
   {
@@ -43,7 +45,13 @@ const defaultData = [
 ];
 
 export const PopupOrderList = ({ visible, onToggle }) => {
+  const navigation = useNavigation();
   const renderItem = (props) => <OrderItem {...props} />;
+
+  const paymentPressed = () => {
+    navigation.navigate(ScreenName.Order);
+    onToggle();
+  };
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle}>
@@ -80,6 +88,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
             <ButtonCC.ButtonRed
               label={translate('txtPayment')}
               style={styles.bottomButton}
+              onPress={paymentPressed}
             />
           </View>
         </View>

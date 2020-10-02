@@ -104,5 +104,12 @@
   "txtSummary": "Tổng Cộng",
   "txtQRCode": "Mã Thành Viên",
   "txtQrCodeDescription": "Đưa mã này cho nhân viên khi thanh toán và tích điểm tại quầy",
-  "txtClose": "Đóng"
+  "txtClose": "Đóng",
+  "txtPlaceInShopOrder": "Lấy tại cửa hàng",
+  "txtShippingOrder": "Giao hàng tận nơi",
+  "txtShippingInfo": "Thông tin giao hàng",
+  "txtShippingTo": "Giao đến",
+  "txtItemSelect": "Món đã chọn",
+  "txtPaymentMethod": "Phương thức thanh toán",
+  "txtPromotionApply": "Áp dụng ưu đãi"
 }

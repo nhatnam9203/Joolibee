@@ -228,6 +228,9 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtOrder'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
     </Stack.Navigator>
