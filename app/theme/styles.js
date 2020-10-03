@@ -103,7 +103,11 @@ const AppStyles = {
       alignItems: 'center',
     },
 
-    horizontalLayout: { flexDirection: 'row' },
+    horizontalLayout: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
 
     itemTitle: {
       fontFamily: 'SVN-Merge',

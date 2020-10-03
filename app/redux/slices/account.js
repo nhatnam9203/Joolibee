@@ -37,12 +37,13 @@ export const signIn = createAsyncThunk(
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: {
-    isLogin: true,
+    isLogin: false,
     username: null,
     password: null,
     signUpError: null,
     signUpSuccess: false,
     signInError: null,
+    isShowQRCode: false,
   },
   reducers: {
     login(state, action) {
@@ -64,8 +65,17 @@ const accountSlice = createSlice({
     clearSignInState(state, action) {
       state.signInError = null;
     },
+
+    showQRCode(state, action) {
+      state.isShowQRCode = true;
+    },
+
+    dismissQRCode(state, action) {
+      state.isShowQRCode = false;
+    },
   },
   extraReducers: {
+    // Sign Up
     [signUp.pending]: (state, action) => {
       Logger.info(action, 'signUp pending');
       state.signUpError = null;
@@ -82,9 +92,11 @@ const accountSlice = createSlice({
         state.signUpError = error;
       }
     },
-    // [signUp.rejected]: (state, action) => {
-    //   Logger.info(action, 'accountSlice rejected');
-    // },
+    [signUp.rejected]: (state, action) => {
+      Logger.info(action, 'signUp rejected');
+    },
+
+    // Sign In
     [signIn.pending]: (state, action) => {
       Logger.info(action, 'signIn pending');
       state.signInError = null;
@@ -98,9 +110,10 @@ const accountSlice = createSlice({
         state.signInError = error;
       }
     },
-    // [signIn.rejected]: (state, action) => {
-    //   Logger.info(action, 'accountSlice rejected');
-    // },
+    [signIn.rejected]: (state, action) => {
+      Logger.info(action, 'signIn rejected');
+      state.isLogin = true;
+    },
   },
 });
 
@@ -112,5 +125,7 @@ export const {
   logout,
   clearSignupState,
   clearSignInState,
+  showQRCode,
+  dismissQRCode,
 } = actions;
 export default reducer;

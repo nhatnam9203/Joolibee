@@ -100,7 +100,7 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            <Text style={styles.nameStyle}>{'TRAN HOANG NHA'}</Text>
+            <Text style={styles.nameStyle}>{'LEVINCI'}</Text>
             <Text
               style={styles.editTextStyle}
               onPress={() => {

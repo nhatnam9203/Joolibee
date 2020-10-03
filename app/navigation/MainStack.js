@@ -21,7 +21,8 @@ import {
   DetailMyAddressScreen,
   SearchAddressScreen,
   MyOrdersScreen,
-  DeitalOrdersScreen
+  DeitalOrdersScreen,
+  OrderScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -236,6 +237,18 @@ function MainStack() {
         name={ScreenName.DeitalOrders}
         options={{
           headerTitle: '',
+        }}
+      />
+
+      <Stack.Screen
+        component={OrderScreen}
+        name={ScreenName.Order}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtOrder'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
     </Stack.Navigator>

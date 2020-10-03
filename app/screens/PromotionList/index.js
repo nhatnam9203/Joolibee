@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ItemImageRight } from '../components';
+import { FlatListItemWithImgHorizontal } from '../components';
 
 const defaultData = [
   {
@@ -71,7 +71,7 @@ const PromotionListScreen = () => {
   const [data, setData] = React.useState([]);
 
   const renderItem = ({ item }) => (
-    <ItemImageRight
+    <FlatListItemWithImgHorizontal
       imgStyle={styles.imageStyle}
       contentStyle={styles.itemStyle}
       image={item.image}
@@ -89,7 +89,7 @@ const PromotionListScreen = () => {
           </Text>
         </View>
       </View>
-    </ItemImageRight>
+    </FlatListItemWithImgHorizontal>
   );
 
   const goToBack = React.useCallback(() => {

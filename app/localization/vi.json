@@ -98,5 +98,23 @@
   "txtMyAddress": "Địa chỉ giao hàng",
   "txtMyAddressDetail": "Thêm địa chỉ giao hàng",
   "txtSearchAddress": "Nhập địa chỉ",
-  "txtMyOrders": "Danh sách đơn hàng"
+  "txtMyOrders": "Danh sách đơn hàng",
+
+  "txtOrder": "Thông tin đơn hàng",
+  "txtOrderMore": "Thêm Món",
+  "txtPayment": "Thanh Toán",
+  "txtSummary": "Tổng Cộng",
+  "txtQRCode": "Mã Thành Viên",
+  "txtQrCodeDescription": "Đưa mã này cho nhân viên khi thanh toán và tích điểm tại quầy",
+  "txtClose": "Đóng",
+  "txtPlaceInShopOrder": "Lấy tại cửa hàng",
+  "txtShippingOrder": "Giao hàng tận nơi",
+  "txtShippingInfo": "Thông tin giao hàng",
+  "txtShippingTo": "Giao đến",
+  "txtItemSelect": "Món đã chọn",
+  "txtPaymentMethod": "Phương thức thanh toán",
+  "txtPromotionApply": "Áp dụng ưu đãi",
+  "txtNote": "Ghi chú",
+  "txtToReceive": "Đến nhận",
+  "txtInComingSoon": "Tinh năng đang phát triển ...\n ---------------- \n Vui lòng thử lại sau!"
 }

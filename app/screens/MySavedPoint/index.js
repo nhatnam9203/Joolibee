@@ -5,7 +5,7 @@ import { images, AppStyles } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { SettingItem, ItemImageRight } from '../components';
+import { SettingItem, FlatListItemWithImgHorizontal } from '../components';
 import ScreenName from '../ScreenName';
 
 const newRewards = [
@@ -135,7 +135,7 @@ const MySavedPointScreen = () => {
   };
 
   const renderNewRewardItem = ({ item }) => (
-    <ItemImageRight
+    <FlatListItemWithImgHorizontal
       imgStyle={styles.imageStyle}
       contentStyle={styles.itemStyle}
       image={item.image}
@@ -153,7 +153,7 @@ const MySavedPointScreen = () => {
           </Text>
         </View>
       </View>
-    </ItemImageRight>
+    </FlatListItemWithImgHorizontal>
   );
 
   const renderNewRewardHeader = () => (

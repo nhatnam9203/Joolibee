@@ -7,15 +7,18 @@ import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
+import { SinglePageLayout } from '@layouts';
 
 const ExampleScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}></View>
-    </SafeAreaView>
+    <SinglePageLayout>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}></View>
+      </SafeAreaView>
+    </SinglePageLayout>
   );
 };
 

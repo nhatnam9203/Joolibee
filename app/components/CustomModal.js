@@ -1,27 +1,52 @@
 import React from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import Modal from 'react-native-modal';
 
-export const CustomModal = ({ children, showModal }) => {
-  const [visible, setVisible] = React.useState(false);
+const ANIMATION_TIME = 500;
+export const CustomModal = React.forwardRef(
+  (
+    {
+      children,
+      showModal,
+      onDismiss = () => {},
+      animationIn = 'zoomIn',
+      animationOut = 'zoomOut',
+    },
+    ref,
+  ) => {
+    const [visible, setVisible] = React.useState(false);
 
-  React.useEffect(() => {
-    if (showModal) {
-      setVisible(true);
-    }
-  }, [showModal]);
+    React.useEffect(() => {
+      if (showModal) setVisible(showModal);
+    }, [showModal]);
 
-  return (
-    <Modal animationType="slide" visible={visible} transparent={true}>
-      <TouchableOpacity
-        style={styles.container}
-        activeOpacity={1}
-        onPress={() => setVisible(false)}
-        >
-        <View style={styles.content}>{children}</View>
-      </TouchableOpacity>
-    </Modal>
-  );
-};
+    const onModalHide = () => {
+      onDismiss();
+      setVisible(false);
+    };
+
+    React.useImperativeHandle(ref, () => ({
+      dismiss: onModalHide,
+    }));
+
+    return (
+      <Modal
+        testID="modal"
+        animationIn={animationIn}
+        animationOut={animationOut}
+        animationInTiming={ANIMATION_TIME}
+        animationOutTiming={ANIMATION_TIME}
+        backdropTransitionInTiming={ANIMATION_TIME}
+        backdropTransitionOutTiming={ANIMATION_TIME}
+        isVisible={visible}
+        transparent={true}
+        onModalHide={onModalHide}
+        style={styles.container}>
+        {children}
+      </Modal>
+    );
+  },
+);
 
 export const CustomModalTitle = ({ children }) => (
   <Text style={styles.txtTitleStyle}>{children?.toUpperCase()}</Text>
@@ -30,19 +55,8 @@ export const CustomModalTitle = ({ children }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00000080',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  content: {
-    flex: 0,
-    // backgroundColor: '#fff',
-    borderRadius: 8,
-    minWidth: '80%',
-    minHeight: '40%',
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 0,
+    margin: 0,
   },
 
   txtTitleStyle: {
@@ -53,5 +67,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-// export default CustomModal;

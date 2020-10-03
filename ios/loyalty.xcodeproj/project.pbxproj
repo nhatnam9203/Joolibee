@@ -18,6 +18,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* loyaltyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* loyaltyTests.m */; };
+		2E39D525F318C97338734C0D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		362280FC250A989B0013AF4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		362280FD250A989B0013AF4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		36228101250A989B0013AF4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -55,10 +56,12 @@
 		420F8CE3F84C228FBB6FEB2A /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACFB27421ABE5C2FE698242 /* libPods-loyalty.a */; };
 		4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
 		5CA1F5B1135A152EF30C7B67 /* libPods-loyalty-loyaltyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */; };
+		5F73E7353E7E6BFF0EBF6E22 /* libPods-loyalty-loyaltyStaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C17F0A6AE123DC17E332682 /* libPods-loyalty-loyaltyStaging.a */; };
 		61721FA2FBBE4795A3C3E80B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
 		68C286FD8F5D4177B6C4FD1E /* MergeBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00B5EA903425488085BA59EF /* MergeBlack.ttf */; };
 		79DEE0C382A247D483C6D939 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */; };
 		9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */; };
+		98A0073DE1AFF11A6A65F12C /* libPods-loyalty-loyaltyProduction.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F20B80C7C384EF4C449CA994 /* libPods-loyalty-loyaltyProduction.a */; };
 		C449417E934641FC869A269C /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C613C548F16D49B597BAD0AE /* Roboto-MediumItalic.ttf */; };
 		C530E202D46741A6B994FE16 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		CAE1D5A1C610461F886F0681 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A51CAE7213A4C07B49BAFE6 /* Roboto-Black.ttf */; };
@@ -85,7 +88,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00B5EA903425488085BA59EF /* MergeBlack.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MergeBlack.ttf; path = ../app/assets/fonts/MergeBlack.ttf; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* loyaltyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = loyaltyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../app/assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		16320D309CC64C6E92CD8CA4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		1A51CAE7213A4C07B49BAFE6 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../app/assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		1C17F0A6AE123DC17E332682 /* libPods-loyalty-loyaltyStaging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyaltyStaging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD98607EB3F47D5890A6D66 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* loyalty-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* loyalty-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "loyalty-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,23 +111,26 @@
 		31E34C1685964FB39CDC829D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
 		36228115250A989B0013AF4C /* loyaltyProduction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyaltyProduction.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		36228116250A989B0013AF4C /* loyalty copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "loyalty copy-Info.plist"; path = "/Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyalty copy-Info.plist"; sourceTree = "<absolute>"; };
+		36228116250A989B0013AF4C /* loyaltyStaging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = loyaltyStaging.plist; path = /Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyaltyStaging.plist; sourceTree = "<absolute>"; };
 		36228134250A98AB0013AF4C /* loyaltyStaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = loyaltyStaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		36228135250A98AB0013AF4C /* loyaltyProduction copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "loyaltyProduction copy-Info.plist"; path = "/Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyaltyProduction copy-Info.plist"; sourceTree = "<absolute>"; };
+		36228135250A98AB0013AF4C /* loyaltyProduction.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = loyaltyProduction.plist; path = /Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/loyaltyProduction.plist; sourceTree = "<absolute>"; };
 		365B4DAA0751458495036028 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../app/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		4610D41D79134DD1A4799EC9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		46871193418F477B93CA949B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../app/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../app/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../app/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		5B2CEBC054CE4CE98628217D /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../app/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		5C396211B99E759F0EEA7829 /* Pods-loyalty-loyaltyStaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyStaging.debug.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyStaging/Pods-loyalty-loyaltyStaging.debug.xcconfig"; sourceTree = "<group>"; };
 		6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyaltyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79D276853EA6FF0530878953 /* Pods-loyalty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.debug.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.debug.xcconfig"; sourceTree = "<group>"; };
+		82024A650570694D74DC96C9 /* Pods-loyalty-loyaltyProduction.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyProduction.release.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyProduction/Pods-loyalty-loyaltyProduction.release.xcconfig"; sourceTree = "<group>"; };
 		8219FE22F1CA416E81C71D12 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		87134E4D647E4E4BB539555A /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../app/assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		8CD94D5A50D04CBA9B86FFCA /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		92A745CE1E709FE80EB3B780 /* Pods-loyalty-loyaltyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyTests.release.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests.release.xcconfig"; sourceTree = "<group>"; };
 		93B7236A4FB84259A343EA15 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		96A37AAE03034580B0A7EEFA /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		9BDAA208A6A0FD606E0D10DD /* Pods-loyalty-loyaltyStaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyStaging.release.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyStaging/Pods-loyalty-loyaltyStaging.release.xcconfig"; sourceTree = "<group>"; };
 		A83C2E8615074E32B0E2813C /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		A8FAE8CD4759418D80D9AC9C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		AAFC97C8B9ED4459B9E90E7E /* Pods-loyalty-loyaltyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyTests.debug.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,9 +140,11 @@
 		CACFB27421ABE5C2FE698242 /* libPods-loyalty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF28ED93469B4E5CAACFD8C9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		E00AF169B1774831890436BE /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		E6684704F6AD744FDE83CD9F /* Pods-loyalty-loyaltyProduction.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyaltyProduction.debug.xcconfig"; path = "Target Support Files/Pods-loyalty-loyaltyProduction/Pods-loyalty-loyaltyProduction.debug.xcconfig"; sourceTree = "<group>"; };
 		E69EC462DDC14E17B5901198 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../app/assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F20B80C7C384EF4C449CA994 /* libPods-loyalty-loyaltyProduction.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyaltyProduction.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F58C5CA68DC74C64AC5500D8 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		F90FBB0CF6EE4F94AC0DCA85 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				420F8CE3F84C228FBB6FEB2A /* libPods-loyalty.a in Frameworks */,
+				2E39D525F318C97338734C0D /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98A0073DE1AFF11A6A65F12C /* libPods-loyalty-loyaltyProduction.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F73E7353E7E6BFF0EBF6E22 /* libPods-loyalty-loyaltyStaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,11 +220,12 @@
 		13B07FAE1A68108700A75B9A /* loyalty */ = {
 			isa = PBXGroup;
 			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				36228116250A989B0013AF4C /* loyaltyStaging.plist */,
+				36228135250A98AB0013AF4C /* loyaltyProduction.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -227,6 +239,8 @@
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				CACFB27421ABE5C2FE698242 /* libPods-loyalty.a */,
 				6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */,
+				F20B80C7C384EF4C449CA994 /* libPods-loyalty-loyaltyProduction.a */,
+				1C17F0A6AE123DC17E332682 /* libPods-loyalty-loyaltyStaging.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -238,6 +252,10 @@
 				327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */,
 				AAFC97C8B9ED4459B9E90E7E /* Pods-loyalty-loyaltyTests.debug.xcconfig */,
 				92A745CE1E709FE80EB3B780 /* Pods-loyalty-loyaltyTests.release.xcconfig */,
+				E6684704F6AD744FDE83CD9F /* Pods-loyalty-loyaltyProduction.debug.xcconfig */,
+				82024A650570694D74DC96C9 /* Pods-loyalty-loyaltyProduction.release.xcconfig */,
+				5C396211B99E759F0EEA7829 /* Pods-loyalty-loyaltyStaging.debug.xcconfig */,
+				9BDAA208A6A0FD606E0D10DD /* Pods-loyalty-loyaltyStaging.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -295,8 +313,6 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				63DDA987CAAE35C17BDD3235 /* Pods */,
 				7E0E8C9B25724BB4A182EF70 /* Resources */,
-				36228116250A989B0013AF4C /* loyalty copy-Info.plist */,
-				36228135250A98AB0013AF4C /* loyaltyProduction copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -401,11 +417,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36228112250A989B0013AF4C /* Build configuration list for PBXNativeTarget "loyaltyProduction" */;
 			buildPhases = (
+				C4D0E68B0B5F6E3D651A3907 /* [CP] Check Pods Manifest.lock */,
 				362280FA250A989B0013AF4C /* Start Packager */,
 				362280FB250A989B0013AF4C /* Sources */,
 				362280FE250A989B0013AF4C /* Frameworks */,
 				36228100250A989B0013AF4C /* Resources */,
 				36228110250A989B0013AF4C /* Bundle React Native code and images */,
+				7F416E395C590E51281326BA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -420,11 +438,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36228131250A98AB0013AF4C /* Build configuration list for PBXNativeTarget "loyaltyStaging" */;
 			buildPhases = (
+				E2807FA6420260664DA166C6 /* [CP] Check Pods Manifest.lock */,
 				36228119250A98AB0013AF4C /* Start Packager */,
 				3622811A250A98AB0013AF4C /* Sources */,
 				3622811D250A98AB0013AF4C /* Frameworks */,
 				3622811F250A98AB0013AF4C /* Resources */,
 				3622812F250A98AB0013AF4C /* Bundle React Native code and images */,
+				712A3A6A3A040B02E63F2EAC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -458,6 +478,10 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					362280F8250A989B0013AF4C = {
+						DevelopmentTeam = AP95TBLGP3;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -744,6 +768,110 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-loyalty/Pods-loyalty-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		712A3A6A3A040B02E63F2EAC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-loyalty-loyaltyStaging/Pods-loyalty-loyaltyStaging-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-loyalty-loyaltyStaging/Pods-loyalty-loyaltyStaging-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F416E395C590E51281326BA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-loyalty-loyaltyProduction/Pods-loyalty-loyaltyProduction-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-loyalty-loyaltyProduction/Pods-loyalty-loyaltyProduction-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		87448D48602B9A5634C54F04 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -796,6 +924,28 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-loyalty-loyaltyTests/Pods-loyalty-loyaltyTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C4D0E68B0B5F6E3D651A3907 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-loyalty-loyaltyProduction-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D1CEBC2D6398D03FFCB6E31F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -812,6 +962,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-loyalty-loyaltyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2807FA6420260664DA166C6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-loyalty-loyaltyStaging-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1016,7 +1188,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = loyalty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1026,6 +1200,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.develop;
 				PRODUCT_NAME = loyalty;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1140,17 +1315,22 @@
 		};
 		36228113250A989B0013AF4C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6684704F6AD744FDE83CD9F /* Pods-loyalty-loyaltyProduction.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AP95TBLGP3;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = "loyalty copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/loyaltyProduction.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1158,21 +1338,27 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		36228114250A989B0013AF4C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82024A650570694D74DC96C9 /* Pods-loyalty-loyaltyProduction.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "loyalty copy-Info.plist";
+				DEVELOPMENT_TEAM = AP95TBLGP3;
+				INFOPLIST_FILE = "$(SRCROOT)/loyaltyProduction.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1180,14 +1366,16 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = jollibee_royalty;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		36228132250A98AB0013AF4C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C396211B99E759F0EEA7829 /* Pods-loyalty-loyaltyStaging.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1215,10 +1403,13 @@
 		};
 		36228133250A98AB0013AF4C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9BDAA208A6A0FD606E0D10DD /* Pods-loyalty-loyaltyStaging.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "loyaltyProduction copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1228,6 +1419,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

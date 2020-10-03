@@ -1,12 +1,18 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
-import { ItemImageRight, ButtonCC, TopBarComponent } from '../../../components';
+import {
+  FlatListItemWithImgHorizontal,
+  ButtonCC,
+  TopBarComponent,
+} from '../../../components';
 import { CustomFlatList } from '@components';
 import { images, AppStyles } from '@theme';
 import { StyleSheet, View, Text } from 'react-native';
 import ScreenName from '../../../ScreenName';
 import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
+import { useDispatch } from 'react-redux';
+import { showComingSoon } from '@slices/app';
 
 const defaultData = [
   {
@@ -55,7 +61,7 @@ const defaultData = [
 
 const PromotionPage = () => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   const [data, setData] = React.useState([]);
 
   const goToPromotionList = () => {
@@ -63,11 +69,12 @@ const PromotionPage = () => {
   };
 
   const renderItem = ({ item }) => (
-    <ItemImageRight
+    <FlatListItemWithImgHorizontal
       image={item.image}
       item={item}
       onPress={goToPromotionList}
-      contentStyle={styles.itemContentStyle}>
+      contentStyle={styles.itemContentStyle}
+      imgHeight="100%">
       <Text style={styles.itemTitle} numberOfLines={2} ellipsizeMode="tail">
         {item.title}
       </Text>
@@ -78,8 +85,11 @@ const PromotionPage = () => {
         label={translate('txtBuyNow')}
         width={110}
         height={33}
+        onPress={() => {
+          dispatch(showComingSoon());
+        }}
       />
-    </ItemImageRight>
+    </FlatListItemWithImgHorizontal>
   );
 
   React.useEffect(() => {

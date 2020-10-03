@@ -73,7 +73,7 @@ const CustomAccordionList = ({
                   selectedIndex === index,
                 )
               ) : (
-                <View style={styles.itemContent}>
+                <View style={styles.itemContent} key={item.id}>
                   <Text style={styles.itemTextStyle}>{item.title}</Text>
                 </View>
               ),

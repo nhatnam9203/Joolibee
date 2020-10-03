@@ -64,33 +64,35 @@ const index = () => {
     }, []);
 
     return (
-        <View style={styles.container}>
-            <CustomFlatList
-                data={data}
-                renderItem={renderItem}
-                horizontal={false}
-                keyExtractor={(item, index) => index + ''}
-                contentContainerStyle={styles.contentContainerStyle}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={() => <Text style={[AppStyles.fonts.title, styles.txtTitle]}>Địa chỉ mặc định</Text>}
-                ListFooterComponent={() => (
-                    <>
-                        <AddressAdditionalList
-                            goToDetail={goToDetail}
-                        />
-                        <CustomButton
-                            onPress={()=>goToDetail(null)}
-                            label={'THÊM ĐỊA CHỈ MỚI'}
-                            width={246}
-                            height={58}
-                            bgColor={AppStyles.colors.button}
-                            styleText={{ fontSize: 16 }}
-                            style={styles.btnContainer}
-                        />
-                    </>
-                )}
-            />
-        </View>
+      <View style={styles.container}>
+        <CustomFlatList
+          data={data}
+          renderItem={renderItem}
+          horizontal={false}
+          keyExtractor={(item, index) => index + ''}
+          contentContainerStyle={styles.contentContainerStyle}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={() => (
+            <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
+              Địa chỉ mặc định
+            </Text>
+          )}
+          ListFooterComponent={() => (
+            <>
+              <AddressAdditionalList goToDetail={goToDetail} />
+              <CustomButton
+                onPress={() => goToDetail(null)}
+                label={'THÊM ĐỊA CHỈ MỚI'}
+                width={246}
+                height={58}
+                bgColor={AppStyles.colors.button}
+                styleText={{ fontSize: 16 }}
+                style={styles.btnContainer}
+              />
+            </>
+          )}
+        />
+      </View>
     );
 };
 

@@ -4,7 +4,7 @@ import { AppStyles } from '@theme';
 
 const DEFAULT_HEIGHT = 154;
 
-export const ItemImageRight = ({
+export const FlatListItemWithImgHorizontal = ({
   children,
   ID,
   image,
@@ -12,11 +12,26 @@ export const ItemImageRight = ({
   imgStyle,
   style,
   contentStyle,
+  imgPosition = 'right',
+  imgHeight = DEFAULT_HEIGHT,
+  imgWidth = DEFAULT_HEIGHT,
 }) => {
+  const renderImage = () => (
+    <Image
+      style={[
+        styles.imageStyle,
+        imgStyle,
+        { width: imgWidth, height: imgHeight },
+      ]}
+      source={image}
+    />
+  );
+
   return (
     <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+      {imgPosition === 'left' && renderImage()}
       <View style={[styles.content, contentStyle]}>{children}</View>
-      <Image style={[styles.imageStyle, imgStyle]} source={image} />
+      {imgPosition === 'right' && renderImage()}
     </TouchableOpacity>
   );
 };
@@ -27,26 +42,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     ...AppStyles.styles.shadow,
     borderRadius: 8,
+    ...AppStyles.styles.horizontalLayout,
     overflow: 'hidden',
-    height: DEFAULT_HEIGHT,
-  },
-  imageStyle: {
-    width: DEFAULT_HEIGHT,
-    height: DEFAULT_HEIGHT,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: 'absolute',
     flex: 0,
   },
+
+  imageStyle: {
+    flex: 0,
+  },
+
   content: {
-    position: 'absolute',
-    right: DEFAULT_HEIGHT,
-    left: 0,
-    top: 0,
-    bottom: 0,
     justifyContent: 'center',
     alignItems: 'flex-start',
     padding: 5,
+    flex: 1,
   },
 });

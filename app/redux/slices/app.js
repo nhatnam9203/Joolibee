@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const appSlice = createSlice({
   name: 'app',
-  initialState: { loading: false, loading_app: true },
+  initialState: { loading: false, loading_app: true, comingSoonShow: false },
   reducers: {
     showLoading(state, action) {
       state.loading = true;
@@ -10,12 +10,24 @@ const appSlice = createSlice({
     hideLoading(state, action) {
       state.loading = false;
     },
+    showComingSoon(state, action) {
+      state.comingSoonShow = true;
+    },
+    dismissComingSoon(state, action) {
+      state.comingSoonShow = false;
+    },
     loadingSuccess(state, action) {
       state.loading_app = false;
-    }
+    },
   },
 });
 
 const { actions, reducer } = appSlice;
-export const { showLoading, hideLoading, loadingSuccess } = actions;
+export const {
+  showLoading,
+  hideLoading,
+  loadingSuccess,
+  showComingSoon,
+  dismissComingSoon,
+} = actions;
 export default reducer;
