@@ -10,7 +10,6 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 
 const defaultData = [
     {
-
         date: 'Hôm nay',
         status_text: 'Đang giao hàng',
         id: '0000065',

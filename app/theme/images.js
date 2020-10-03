@@ -15,7 +15,7 @@ const images = {
     tab_promotion: require('../assets/icons/tab-promotion.png'),
     tab_store: require('../assets/icons/tab-store.png'),
     popup_close: require('../assets/icons/popup-close.png'),
- 
+
     ic_text_jollibee: require('../assets/icons/ic-text-jollibee.png'),
     Walkthough1: require('../assets/icons/Walktrough1.png'),
     Walkthough2: require('../assets/icons/Walktrough2.png'),
@@ -61,6 +61,8 @@ const images = {
     ic_qr_logo: require('../assets/icons/ic-qr-logo.png'),
     ic_delivery: require('../assets/icons/ic-delivery.png'),
     ic_in_store: require('../assets/icons/ic-in-store.png'),
+    ic_arrow_down: require('../assets/icons/ic-arrow-down.png'),
+    ic_arrow_up: require('../assets/icons/ic-arrow-up.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

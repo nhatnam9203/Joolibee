@@ -2,28 +2,34 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { AppStyles, metrics } from "@theme";
 
-export default function orderProductList() {
-    return (
-        <View style={styles.container}>
+export default function orderProductList({ data = [] }) {
+    const renderItem = (item, index) => (
+        <View
+            key={index + ''}
+            style={styles.container}>
             <View style={styles.leftContainer}>
                 <Text
                     style={[AppStyles.fonts.textBold, styles.txtContent]}>
-                    01 miếng gà giòn vui vẻ + 01 mỳ ý sốt bò bằm
+                    {item.options}
                 </Text>
-                <Text style={[AppStyles.fonts.text, styles.txtContent]}>Súp bí đỏ (+25.000đ)</Text>
-                <Text style={[AppStyles.fonts.text, styles.txtContent]}>7 Up nhỏ - 330ml (+5.000đ)</Text>
+                <Text style={[AppStyles.fonts.text, styles.txtContent]}>{item.extra}</Text>
+                <Text style={[AppStyles.fonts.text, styles.txtContent]}>{item.soft_drink}</Text>
             </View>
 
             <View style={styles.rightContainer}>
-                <BlockQuantity qty={5} />
+                <BlockQuantity qty={item.qty} />
                 <Text
                     style={AppStyles.fonts.textBold}>
-                    170.000 đ
-                </Text>
+                    {item.price} đ
+                    </Text>
             </View>
         </View>
-    )
+    );
+
+    return data.map(renderItem)
 }
+
+
 
 const BlockQuantity = ({ qty }) => (
     <View style={styles.blockQuantity}>
@@ -39,8 +45,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: metrics.padding + 5,
         paddingVertical: metrics.padding + 10,
+        marginBottom: 15,
         borderRadius: 6,
         ...AppStyles.styles.shadow,
+
     },
     rightContainer: {
         width: '41%',
@@ -49,7 +57,7 @@ const styles = StyleSheet.create({
     },
 
     leftContainer: {
-        width: '57%',
+        width: '56%',
     },
 
     txtContent: {

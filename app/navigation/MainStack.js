@@ -56,7 +56,7 @@ const forFade = ({ current }) => ({
 function MainStack() {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenName.Main}
+      initialRouteName={ScreenName.DeitalOrders}
       headerMode="screen"
       screenOptions={{
         ...AppStyles.navigation.default,

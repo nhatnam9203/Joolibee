@@ -8,12 +8,10 @@ import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 
 
 const index = ({ item, onPress }) => {
-    const onHandlePress = () => {
-        onPress(item)
-    }
     return (
         <TouchableOpacity
-            onPress={onHandlePress}
+            // onPress={onHandlePress}
+            disabled={true}
             style={styles.itemContainer}>
 
             <View style={styles.leftContainer}>
