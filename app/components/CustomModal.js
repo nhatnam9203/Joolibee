@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import Modal from 'react-native-modal';
 
-const ANIMATION_TIME = 500;
+const ANIMATION_TIME = 350;
 export const CustomModal = React.forwardRef(
   (
     {

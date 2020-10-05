@@ -39,6 +39,7 @@ export const ButtonYellow = ({
   label,
   onPress,
   style,
+  textStyle,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(showComingSoon());
@@ -46,6 +47,7 @@ export const ButtonYellow = ({
   return (
     <CustomButton
       style={[styles.btnStyle, style]}
+      styleText={textStyle}
       onPress={onPress ?? showPopup}
       width={width}
       height={height}

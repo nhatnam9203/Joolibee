@@ -18,16 +18,19 @@ import { SettingItem, ButtonCC, LabelTitle } from '../components';
 import ScreenName from '../ScreenName';
 import { SinglePageLayout } from '@layouts';
 
-const OrderSection = ({ title, children }) => {
+const OrderSection = ({ title, children, buttonComponent }) => {
   return (
     <View>
-      {!!title && (
-        <LabelTitle
-          label={title}
-          color={AppStyles.colors.accent}
-          fontSize={18}
-        />
-      )}
+      <View style={AppStyles.styles.horizontalLayout}>
+        {!!title && (
+          <LabelTitle
+            label={title}
+            color={AppStyles.colors.accent}
+            fontSize={18}
+          />
+        )}
+        {buttonComponent && buttonComponent()}
+      </View>
       <View>{children}</View>
     </View>
   );
@@ -165,7 +168,15 @@ const OrderScreen = () => {
             </OrderSectionItem>
           </OrderSection>
 
-          <OrderSection title={translate('txtItemSelect')}>
+          <OrderSection
+            title={translate('txtItemSelect')}
+            buttonComponent={() => (
+              <ButtonCC.ButtonYellow
+                label={translate('txtOrderMore')}
+                style={styles.buttonHeaderStyle}
+                textStyle={styles.headerButtonTextStyle}
+              />
+            )}>
             <OrderSectionItem></OrderSectionItem>
             <OrderSectionItem></OrderSectionItem>
             <OrderSectionItem></OrderSectionItem>
@@ -255,6 +266,13 @@ const styles = StyleSheet.create({
   },
 
   txtNoteStyle: {},
+
+  buttonHeaderStyle: { width: '40%', height: '60%' },
+
+  headerButtonTextStyle: {
+    fontSize: 14,
+    color: '#1B1B1B',
+  },
 });
 
 export default OrderScreen;
