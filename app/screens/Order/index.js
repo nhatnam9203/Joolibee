@@ -20,7 +20,12 @@ import {
   Switch,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { ButtonCC, LabelTitle, PopupNoticeEnvironment } from '../components';
+import {
+  ButtonCC,
+  LabelTitle,
+  PopupNoticeEnvironment,
+  PopupOrderSuccess,
+} from '../components';
 import ScreenName from '../ScreenName';
 import { SinglePageLayout } from '@layouts';
 import { OrderItem } from './widget';
@@ -63,11 +68,16 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [shippingType, setShippingType] = React.useState(ShippingType.InShop);
   const [showNotice, setShowNotice] = React.useState(false);
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
 
-  const onTogglePopup = () => {
+  const onTogglePopupNotice = () => {
     setShowNotice(false);
+  };
+  const onTogglePopupSuccess = () => {
+    setShowPopupSuccess(false);
   };
 
   React.useEffect(() => {
@@ -259,11 +269,25 @@ const OrderScreen = () => {
           <Text style={styles.txtStyle}>Tổng cộng : </Text>
           <Text style={styles.txtPriceStyle}>0.00 đ</Text>
         </View>
-        <ButtonCC.ButtonRed label={translate('txtConfirm')} />
+        <ButtonCC.ButtonRed
+          label={translate('txtConfirm')}
+          onPress={() => {
+            setShowPopupSuccess(true);
+          }}
+        />
       </View>
 
       {/**Popup Notice */}
-      <PopupNoticeEnvironment visible={showNotice} onToggle={onTogglePopup} />
+      <PopupNoticeEnvironment
+        visible={showNotice}
+        onToggle={onTogglePopupNotice}
+      />
+
+      {/**Popup Order Success */}
+      <PopupOrderSuccess
+        visible={showPopupSuccess}
+        onToggle={onTogglePopupSuccess}
+      />
     </>
   );
 };
