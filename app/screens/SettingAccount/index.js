@@ -1,4 +1,4 @@
-import { CustomFlatList } from '@components';
+import { CustomFlatList, CustomSwitch } from '@components';
 import { translate } from '@localize';
 import { AppStyles } from '@theme';
 import React from 'react';
@@ -39,6 +39,7 @@ const SettingAccountScreen = () => {
         key: 'key_notify',
         title: translate('txtReceiveNotify'),
         isArrow: false,
+        buttonComponent: () => <CustomSwitch />,
       },
       {
         key: 'key_change_password',
@@ -71,7 +72,12 @@ const SettingAccountScreen = () => {
             bounces={false}
             data={settingList}
             renderItem={({ item }) => (
-              <SettingItem item={item} key={item.key} onPress={item?.onPress} />
+              <SettingItem
+                item={item}
+                key={item.key}
+                onPress={item?.onPress}
+                buttonComponent={item.buttonComponent}
+              />
             )}
             ItemSeparatorComponent={() => (
               <View style={AppStyles.styles.rowSeparator} />

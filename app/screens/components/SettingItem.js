@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { images, metrics } from '@theme';
 
-export const SettingItem = ({ item, onPress = () => {} }) => {
+export const SettingItem = ({ item, onPress = () => {}, buttonComponent }) => {
   const { icon, title, isArrow } = item;
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -17,6 +17,7 @@ export const SettingItem = ({ item, onPress = () => {} }) => {
       {isArrow && (
         <Image style={styles.arrowStyle} source={images.icons.ic_arrow} />
       )}
+      {buttonComponent && buttonComponent()}
     </TouchableOpacity>
   );
 };

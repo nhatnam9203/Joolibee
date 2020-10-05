@@ -21,6 +21,7 @@ import {
   DetailMyAddressScreen,
   SearchAddressScreen,
   OrderScreen,
+  MyRewardScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -231,6 +232,15 @@ function MainStack() {
           headerBackImage: () => (
             <HeaderImage src={images.icons.ic_close_blur} />
           ),
+        }}
+      />
+
+      <Stack.Screen
+        component={MyRewardScreen}
+        name={ScreenName.MyReward}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyReward'),
         }}
       />
     </Stack.Navigator>

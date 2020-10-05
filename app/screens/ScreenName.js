@@ -22,6 +22,7 @@ const ScreenName = {
   DetailMyAddress: 'DetailMyAddress',
   SearchAddress: 'SearchAddress',
   Order: 'Order',
+  MyReward: 'MyReward',
 };
 
 export default ScreenName;

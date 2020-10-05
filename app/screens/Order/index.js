@@ -91,7 +91,7 @@ const OrderScreen = () => {
       <SinglePageLayout backgroundColor={AppStyles.colors.background}>
         <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
-          <OrderSection>
+          <OrderSection key="ShippingType">
             <OrderSectionItem
               onPress={() => {
                 setShippingType(ShippingType.InPlace);
@@ -141,7 +141,9 @@ const OrderScreen = () => {
           </OrderSection>
 
           {/**Shipping Info */}
-          <OrderSection title={`${translate('txtShippingInfo')}`.toUpperCase()}>
+          <OrderSection
+            title={`${translate('txtShippingInfo')}`.toUpperCase()}
+            key="ShippingInfo">
             <OrderSectionItem>
               <View
                 style={{
@@ -202,6 +204,7 @@ const OrderScreen = () => {
             </OrderSectionItem>
           </OrderSection>
 
+          {/**Order Items List*/}
           <OrderSection
             title={translate('txtItemSelect')}
             buttonComponent={() => (
@@ -210,7 +213,8 @@ const OrderScreen = () => {
                 style={styles.buttonHeaderStyle}
                 textStyle={styles.headerButtonTextStyle}
               />
-            )}>
+            )}
+            key="OrderItems">
             {OrderItems.map((item) => (
               <OrderSectionItem>
                 <OrderItem item={item} />
@@ -239,7 +243,11 @@ const OrderScreen = () => {
               </View>
             </OrderSectionItem>
           </OrderSection>
-          <OrderSection title={translate('txtPaymentMethod')}>
+
+          {/**Payment*/}
+          <OrderSection
+            title={translate('txtPaymentMethod')}
+            key="OrderPayment">
             <OrderSectionItem>
               <View style={AppStyles.styles.horizontalLayout}>
                 <Image source={images.icons.ic_money} />
@@ -249,7 +257,11 @@ const OrderScreen = () => {
               </View>
             </OrderSectionItem>
           </OrderSection>
-          <OrderSection title={translate('txtPromotionApply')}>
+
+          {/**Promotion */}
+          <OrderSection
+            title={translate('txtPromotionApply')}
+            key="OrderPromotion">
             <OrderSectionItem>
               <View style={AppStyles.styles.horizontalLayout}>
                 <Image source={images.icons.ic_sticked} />
@@ -258,6 +270,9 @@ const OrderScreen = () => {
               <CustomButtonImage
                 image={images.icons.ic_order_edit}
                 style={styles.editOrderStyle}
+                onPress={() => {
+                  navigation.navigate(ScreenName.MyReward);
+                }}
               />
             </OrderSectionItem>
           </OrderSection>
@@ -269,6 +284,7 @@ const OrderScreen = () => {
           <Text style={styles.txtStyle}>Tổng cộng : </Text>
           <Text style={styles.txtPriceStyle}>0.00 đ</Text>
         </View>
+
         <ButtonCC.ButtonRed
           label={translate('txtConfirm')}
           onPress={() => {

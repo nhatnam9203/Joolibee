@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Text } from 'react-native-paper';
-import { TopBarScreenLayout } from '@layouts';
+import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
 import { scale } from '@utils';
@@ -23,7 +23,7 @@ const HomePage = () => {
     <TopBarScreenLayout
       style={{ backgroundColor: AppStyles.colors.accent }}
       topBar={<TopBarComponent />}>
-      <ScrollView>
+      <SinglePageLayout>
         <View style={styles.containerTop}>
           <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
             Đặt món ngay! giao tận nơi hoặc lấy tại cửa hàng
@@ -41,11 +41,11 @@ const HomePage = () => {
             }}
           />
 
-          <Image source={images['jollibee_home']} style={styles.jollibeeHome} />
+          <Image source={images.jollibee_home} style={styles.jollibeeHome} />
         </View>
 
         <ImageBackground
-          source={images['layout_white_home']}
+          source={images.layout_white_home}
           style={styles.layoutPromotion}>
           <View
             style={{
@@ -72,7 +72,7 @@ const HomePage = () => {
         <BestSellerList />
 
         <NewsList />
-      </ScrollView>
+      </SinglePageLayout>
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
     </TopBarScreenLayout>
   );

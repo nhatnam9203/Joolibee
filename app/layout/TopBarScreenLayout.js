@@ -2,12 +2,14 @@ import React from 'react';
 import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { AppStyles } from '@theme';
 
-const TopBarScreenLayout = ({ topBar, children,style }) => {
+const TopBarScreenLayout = ({ topBar, children, style }) => {
   return (
     <View style={AppStyles.styles.container}>
       {topBar}
       {children && (
-        <SafeAreaView style={[styles.container,style]}>{children}</SafeAreaView>
+        <SafeAreaView style={[styles.container, style]}>
+          {children}
+        </SafeAreaView>
       )}
     </View>
   );
