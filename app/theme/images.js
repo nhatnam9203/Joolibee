@@ -61,6 +61,7 @@ const images = {
     ic_in_store: require('../assets/icons/ic-in-store.png'),
     ic_money: require('../assets/icons/ic-money.png'),
     ic_sticked: require('../assets/icons/ic-sticked.png'),
+    ic_use_tools: require('../assets/icons/ic-use-tools.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

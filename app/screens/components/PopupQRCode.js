@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     maxHeight: '90%',
     backgroundColor: '#fff',
     alignItems: 'center',
+    borderRadius: 8,
   },
 
   txtDescription: {

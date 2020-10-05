@@ -18,3 +18,4 @@ export * from './PriceAndPoint';
 export * from './OrderCount';
 export * from './PopupQRCode';
 export * from './PopupComingSoon';
+export * from './PopupNoticeEnvironment';

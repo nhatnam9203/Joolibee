@@ -20,7 +20,7 @@ import {
   Switch,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { SettingItem, ButtonCC, LabelTitle } from '../components';
+import { ButtonCC, LabelTitle, PopupNoticeEnvironment } from '../components';
 import ScreenName from '../ScreenName';
 import { SinglePageLayout } from '@layouts';
 import { OrderItem } from './widget';
@@ -64,6 +64,17 @@ const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [shippingType, setShippingType] = React.useState(ShippingType.InShop);
+  const [showNotice, setShowNotice] = React.useState(false);
+
+  const onTogglePopup = () => {
+    setShowNotice(false);
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setShowNotice(true);
+    }, 1500);
+  }, []);
 
   return (
     <>
@@ -242,6 +253,7 @@ const OrderScreen = () => {
           </OrderSection>
         </SafeAreaView>
       </SinglePageLayout>
+
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>Tổng cộng : </Text>
@@ -249,6 +261,9 @@ const OrderScreen = () => {
         </View>
         <ButtonCC.ButtonRed label={translate('txtConfirm')} />
       </View>
+
+      {/**Popup Notice */}
+      <PopupNoticeEnvironment visible={showNotice} onToggle={onTogglePopup} />
     </>
   );
 };
