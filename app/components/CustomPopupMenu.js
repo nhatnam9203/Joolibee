@@ -36,7 +36,7 @@ const CustomPopupMenu = ({
         style={styles.btnContainer}>
         <Text
           style={[
-            AppStyles.fonts.textBold,
+            AppStyles.fonts.bold,
             !selected && { color: AppStyles.colors.placeholder },
           ]}>
           {selected ? selected : placeHolders}

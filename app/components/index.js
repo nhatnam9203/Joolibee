@@ -13,6 +13,7 @@ import CustomFlatList from './CustomFlatList';
 import CustomButtonImage from './CustomButtonImage';
 import CustomScrollTabView from './CustomScrollTabView';
 import CustomAccordionList from './CustomAccordionList';
+import CustomSwitch from './CustomSwitch';
 
 import CustomPopupMenu from './CustomPopupMenu';
 module.exports = {
@@ -31,5 +32,6 @@ module.exports = {
   CustomButtonImage,
   CustomScrollTabView,
   CustomAccordionList,
-  CustomPopupMenu
+  CustomPopupMenu,
+  CustomSwitch,
 };

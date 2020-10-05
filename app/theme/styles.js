@@ -43,14 +43,14 @@ const AppStyles = {
       fontSize: 16,
     },
 
+    bold: {
+      fontFamily: 'Roboto-Bold',
+      fontSize: 16,
+    },
+
     medium_SVN: {
       fontFamily: 'SVN-Merge',
       fontSize: 14,
-    },
-
-    textBold: {
-      fontFamily: 'Roboto-Bold',
-      fontSize: 16,
     },
 
     title: {

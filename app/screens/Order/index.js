@@ -1,5 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import { CustomFlatList, CustomTextLink, CustomInput } from '@components';
+import {
+  CustomFlatList,
+  CustomTextLink,
+  CustomInput,
+  CustomButtonImage,
+} from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
@@ -12,11 +17,15 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Switch,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SettingItem, ButtonCC, LabelTitle } from '../components';
 import ScreenName from '../ScreenName';
 import { SinglePageLayout } from '@layouts';
+import { OrderItem } from './widget';
+import { OrderItems } from './LocalData';
+import { CustomSwitch } from '@components';
 
 const OrderSection = ({ title, children, buttonComponent }) => {
   return (
@@ -48,6 +57,8 @@ const ShippingType = {
   InShop: 1,
   InPlace: 2,
 };
+
+const CONFIRM_HEIGHT = 150;
 
 const OrderScreen = () => {
   const dispatch = useDispatch();
@@ -155,9 +166,11 @@ const OrderScreen = () => {
                   16 Trương Định, P. 6, Q. 3, Tp. Hồ Chí Minh
                 </Text>
               </View>
-              <TouchableOpacity style={styles.editOrderStyle}>
-                <Image source={images.icons.ic_order_edit} />
-              </TouchableOpacity>
+
+              <CustomButtonImage
+                image={images.icons.ic_order_edit}
+                style={styles.editOrderStyle}
+              />
             </OrderSectionItem>
             <OrderSectionItem>
               <TextInput
@@ -177,15 +190,55 @@ const OrderScreen = () => {
                 textStyle={styles.headerButtonTextStyle}
               />
             )}>
-            <OrderSectionItem></OrderSectionItem>
-            <OrderSectionItem></OrderSectionItem>
-            <OrderSectionItem></OrderSectionItem>
+            {OrderItems.map((item) => (
+              <OrderSectionItem>
+                <OrderItem item={item} />
+              </OrderSectionItem>
+            ))}
+
+            <OrderSectionItem>
+              <View style={styles.orderSumContent}>
+                <Text style={styles.txtTitleStyle}>
+                  {translate('txtOrderCalculator')} :
+                </Text>
+                <Text style={styles.txtStyle}>25.000 đ</Text>
+              </View>
+            </OrderSectionItem>
+            <OrderSectionItem>
+              <View style={styles.orderSumContent}>
+                <View style={styles.container}>
+                  <Text style={styles.txtTitleStyle}>
+                    {translate('txtNotice')}
+                  </Text>
+                  <Text style={styles.txtStyle}>
+                    {translate('txtNoticeEnvironment')}
+                  </Text>
+                </View>
+                <CustomSwitch />
+              </View>
+            </OrderSectionItem>
           </OrderSection>
           <OrderSection title={translate('txtPaymentMethod')}>
-            <OrderSectionItem></OrderSectionItem>
+            <OrderSectionItem>
+              <View style={AppStyles.styles.horizontalLayout}>
+                <Image source={images.icons.ic_money} />
+                <Text style={styles.txtStyle}>
+                  {translate('txtPaymentMoney')}
+                </Text>
+              </View>
+            </OrderSectionItem>
           </OrderSection>
           <OrderSection title={translate('txtPromotionApply')}>
-            <OrderSectionItem></OrderSectionItem>
+            <OrderSectionItem>
+              <View style={AppStyles.styles.horizontalLayout}>
+                <Image source={images.icons.ic_sticked} />
+                <Text style={styles.txtStyle}>Ưu đãi 40.000 đ</Text>
+              </View>
+              <CustomButtonImage
+                image={images.icons.ic_order_edit}
+                style={styles.editOrderStyle}
+              />
+            </OrderSectionItem>
           </OrderSection>
         </SafeAreaView>
       </SinglePageLayout>
@@ -205,8 +258,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 10,
-    paddingTop: 20,
-    paddingBottom: 250,
+    marginTop: 20,
+    marginBottom: CONFIRM_HEIGHT * 2,
   },
 
   confirmStyle: {
@@ -221,16 +274,18 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderColor: AppStyles.colors.accent,
+    height: CONFIRM_HEIGHT,
   },
 
   orderSumContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    padding: 10,
   },
 
-  txtTitleStyle: { ...AppStyles.fonts.medium, fontSize: 16 },
-  txtStyle: { ...AppStyles.fonts.text, fontSize: 16 },
+  txtTitleStyle: { ...AppStyles.fonts.medium, fontSize: 16, margin: 5 },
+  txtStyle: { ...AppStyles.fonts.text, fontSize: 16, margin: 5 },
 
   txtPriceStyle: {
     ...AppStyles.fonts.title,

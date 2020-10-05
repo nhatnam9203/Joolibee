@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
 
   itemPriceStyle: {
-    ...AppStyles.fonts.textBold,
+    ...AppStyles.fonts.bold,
     color: AppStyles.colors.accent,
     flex: 0,
     marginLeft: 5,

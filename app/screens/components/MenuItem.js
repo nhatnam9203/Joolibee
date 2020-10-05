@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: '#fff',
-    ...AppStyles.fonts.textBold,
+    ...AppStyles.fonts.bold,
   },
 });
