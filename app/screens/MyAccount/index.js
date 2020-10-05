@@ -47,6 +47,10 @@ const MyAccountScreen = () => {
         icon: images.icons.ic_order_list,
         title: translate('txtSettingOrderList'),
         isArrow: true,
+        onPress: () => {
+          navigation.navigate(ScreenName.MyOrders);
+        },
+        
       },
       {
         key: 'key_notify',

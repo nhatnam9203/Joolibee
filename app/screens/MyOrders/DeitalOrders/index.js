@@ -1,7 +1,8 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { AppStyles } from "@theme";
+import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
+import { AppStyles, images } from "@theme";
 import { CustomButton } from "@components";
+import { statusOrder } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from "./pages";
 
 const defaultData = [
@@ -22,8 +23,11 @@ const defaultData = [
 ];
 
 
-export default function index({ navigation }) {
-    const [data, setData] = React.useState([])
+export default function index({ navigation, route }) {
+    const [data, setData] = React.useState([]);
+    const { order } = route.params;
+    let order_complete = order.status_text == 'Hoàn thành' ? true : false;
+    console.log(order_complete)
     React.useEffect(() => {
         navigation.setOptions({
             headerTitle: HeaderTitle()
@@ -33,8 +37,8 @@ export default function index({ navigation }) {
 
     const HeaderTitle = () => (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={AppStyles.fonts.medium_SVN, styles.headerTitle}>Đơn hàng #0000066</Text>
-            <Text style={AppStyles.fonts.text, styles.headerSubTitle}>11:00 AM, 24-8-2020</Text>
+            <Text style={AppStyles.fonts.medium_SVN, styles.headerTitle}>Đơn hàng #{order.id}</Text>
+            <Text style={AppStyles.fonts.text, styles.headerSubTitle}>11:00 AM, {order.date}</Text>
         </View>
     );
 
@@ -51,8 +55,15 @@ export default function index({ navigation }) {
                 showsVerticalScrollIndicator={false}
             >
                 {/* -------------- TRANG THAI DON HANG  -------------- */}
-                <OrderTitle title='TRẠNG THÁI ĐƠN HÀNG' />
-                <OrderStatus />
+                {!order_complete && <View style={styles.imageStatusOrder}>
+                    <Image
+                        style={styles.image}
+                        source={statusOrder.getImage(order.status_text)}
+                    />
+                </View>}
+
+                {order_complete && <OrderTitle title='TRẠNG THÁI ĐƠN HÀNG' />}
+                <OrderStatus status={order.status_text} />
                 {/* -------------- TRANG THAI DON HANG  -------------- */}
 
                 {/* -------------- THONG TIN DON HANG  -------------- */}
@@ -92,7 +103,27 @@ const styles = StyleSheet.create({
 
         backgroundColor: AppStyles.colors.background
     },
-    contentContainerStyle: { paddingHorizontal: 15, paddingBottom: 20 },
+    contentContainerStyle: {
+        paddingHorizontal: 15,
+        paddingBottom: 20
+    },
+    imageStatusOrder: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 50,
+        borderBottomWidth: 1,
+        borderBottomColor: '#E2E2E2',
+    },
+    wrapperImage: {
+        width: 318,
+        height: 318,
+        borderRadius: 318 / 2,
+        overflow: 'hidden'
+    },
+    image: {
+        width: 318,
+        height: 318,
+    },
     headerTitle: {
         fontSize: 18,
         color: '#FFFFFF'

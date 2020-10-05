@@ -63,6 +63,8 @@ const images = {
     ic_in_store: require('../assets/icons/ic-in-store.png'),
     ic_arrow_down: require('../assets/icons/ic-arrow-down.png'),
     ic_arrow_up: require('../assets/icons/ic-arrow-up.png'),
+    ic_order_phone: require('../assets/icons/ic-order-phone.png'),
+    ic_order_text: require('../assets/icons/ic-order-text.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),
@@ -84,6 +86,9 @@ const images = {
   menu_detail_item_pepsi: require('../assets/images/menu-detail-item-pepsi.png'),
   menu_detail_item_nuocsuoi: require('../assets/images/menu-detail-item-nuocsuoi.png'),
   bee_man: require('../assets/images/jollibee-wellcome.gif'),
+  jolibee_delivery: require('../assets/images/jolibee-delivery.gif'),
+  jolibee_cooking: require('../assets/images/jolibee-cooking.gif'),
+  jollibee_arrived: require('../assets/images/jollibee-arrived.gif'),
 };
 
 export default images;

@@ -1,13 +1,15 @@
 import React from 'react'
-import {  StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import StepIndicator from 'react-native-step-indicator'
 import { Accordian } from "@components";
-import { AppStyles, metrics } from "@theme";
+import { AppStyles, metrics, images } from "@theme";
+
 const data = [
     { title: 'Đã xác nhận & chuẩn bị đơn hàng', description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn' },
     { title: 'Đang giao hàng', description: 'Trần văn C (0778010203)' },
     { title: 'Đã đến nơi', description: 'Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.' },
     { title: 'Hoàn thành', description: 'Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng' },
+    { title: 'Đã hủy', description: 'Đơn hàng của bạn đã huỷ' },
 ];
 
 const stepIndicatorStyles = {
@@ -25,7 +27,15 @@ const stepIndicatorStyles = {
     stepIndicatorFinishedColor: AppStyles.colors.accent,
     stepIndicatorLabelUnFinishedColor: AppStyles.colors.complete,
 }
-export default function orderStatus() {
+export default function orderStatus({ status }) {
+
+    let indexStatus = data.findIndex((item) => item.title.includes(status));
+    console.log('indexStatus', indexStatus)
+    const ImageLink = ({ source, onPress }) => (
+        <TouchableOpacity onPress={onPress}>
+            <Image source={source} />
+        </TouchableOpacity>
+    )
 
     const renderLabel = ({ position, label, currentPosition }) => {
         const nextPosition = currentPosition + 1;
@@ -33,10 +43,17 @@ export default function orderStatus() {
         const active = position < nextPosition ? 1 : 0.4;
         return (
             <View style={styles.labelContainer}>
-                <Text style={[AppStyles.fonts.textBold, { opacity: active }]}>
-                    {label}
-                </Text>
-                <Text style={[AppStyles.fonts.mini, { width: 150, opacity: active }]}>{description}</Text>
+                <View style={styles.labelLeft}>
+                    <Text style={[AppStyles.fonts.textBold, { opacity: active }]}>
+                        {label}
+                    </Text>
+                    <Text style={[AppStyles.fonts.mini, { width: 150, opacity: active }]}>{description}</Text>
+                </View>
+
+                {(position == 1 && currentPosition == 1) && <View style={styles.labelRight}>
+                    <ImageLink source={images.icons.ic_order_text} />
+                    <ImageLink source={images.icons.ic_order_phone} />
+                </View>}
 
             </View >
         )
@@ -56,7 +73,7 @@ export default function orderStatus() {
             customStyles={stepIndicatorStyles}
             stepCount={data.length}
             direction='vertical'
-            currentPosition={3}
+            currentPosition={indexStatus}
             labels={data.map(item => item.title)}
             renderLabel={renderLabel}
             renderStepIndicator={renderStepIndicator}
@@ -65,24 +82,33 @@ export default function orderStatus() {
 
     const renderHeader = () => (
         <View style={styles.labelContainer}>
-            <View
-                style={[styles.stepIndicator, styles.positionDotHeader]}
-            />
-            <View style={{ marginLeft: 20 }}>
+            <View style={styles.labelLeft}>
                 <Text style={[AppStyles.fonts.textBold]}>
-                    {data[3].title}
+                    {data[indexStatus].title}
                 </Text>
-                <Text style={[AppStyles.fonts.mini, { width: 150 }]}>{data[3].description}</Text>
+                <Text style={[AppStyles.fonts.mini, { width: 150 }]}>{data[indexStatus].description}</Text>
             </View>
+
+            {indexStatus == 1 && <View style={styles.labelRight}>
+                <ImageLink source={images.icons.ic_order_text} />
+                <ImageLink source={images.icons.ic_order_phone} />
+            </View>}
+
         </View >
     )
 
     return (
         <View style={styles.container}>
-            <Accordian
+            {indexStatus < 4 ? <Accordian
+                styleTitle={AppStyles.fonts.medium_SVN, styles.orderTitle}
+                title={indexStatus != 3 ? 'TRẠNG THÁI ĐƠN HÀNG' : null}
                 renderHeader={renderHeader}
                 renderContent={renderContent}
             />
+            :
+            renderHeader()
+        
+        }
         </View>
     )
 }
@@ -98,8 +124,22 @@ const styles = StyleSheet.create({
 
     labelContainer: {
         width: 280,
-        marginVertical: 10
+        marginVertical: 10,
+        alignItems: 'center',
+        flexDirection: 'row'
     },
+
+    labelLeft: {
+        width: '70%'
+    },
+
+    labelRight: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '30%'
+    },
+
     stepIndicator: {
         width: 10,
         height: 10,
@@ -108,5 +148,9 @@ const styles = StyleSheet.create({
     positionDotHeader: {
         backgroundColor: AppStyles.colors.accent,
         position: 'absolute', top: 8
+    },
+    orderTitle: {
+        fontSize: 18,
+        color: AppStyles.colors.accent
     }
 })

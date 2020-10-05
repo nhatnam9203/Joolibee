@@ -1,5 +1,5 @@
-import { AppStyles } from "@theme";
-export default function getColorStatusOrder(status = '') {
+import { AppStyles, images } from "@theme";
+export function getColor(status = '') {
     switch (status.toLowerCase()) {
         case 'đang giao hàng':
             return AppStyles.colors.button
@@ -18,5 +18,21 @@ export default function getColorStatusOrder(status = '') {
 
         default:
             return AppStyles.colors.confirmed
+    }
+};
+
+export function getImage(status = '') {
+    switch (status.toLowerCase()) {
+        case 'đang giao hàng':
+            return images.jolibee_delivery
+
+        case 'đã xác nhận':
+            return images.jolibee_cooking
+
+        case 'đã đến nơi':
+            return images.jollibee_arrived
+
+        default:
+            return ''
     }
 };

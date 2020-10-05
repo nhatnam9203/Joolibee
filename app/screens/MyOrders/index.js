@@ -2,8 +2,7 @@ import { CustomFlatList } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, metrics, images } from '@theme';
-import { CustomButton } from '@components';
-import { getColorStatusOrder } from '@utils';
+import { statusOrder } from '@utils';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
@@ -26,7 +25,7 @@ const defaultData = [
     },
     {
         date: 'Hôm nay',
-        status_text: 'Đã hủy',
+        status_text: 'Đã đến nơi',
         id: '0000067',
         shipping_method: 'Giao đến',
         address: '16 Trương Định, Phường.6, Quận.3 Hồ Chí Minh'
@@ -89,22 +88,56 @@ const index = () => {
     const navigation = useNavigation();
     const [data, setData] = React.useState([]);
 
-    const goToDetail = (item) => {
-        const values = item ?
-            {
-                phone: item.phone,
-                place: item.title,
-                fullName: item.fullName,
-                note: item.note,
-                address: item.address
-
-            } : null
-        navigation.navigate(ScreenName.DetailMyAddress, { values })
-    }
-
     React.useEffect(() => {
         setData(defaultData);
     }, []);
+
+    const goToDetail = (item) => () => {
+        navigation.navigate(ScreenName.DeitalOrders, { order: item })
+    }
+
+    const renderItem = ({ item }) => {
+
+        const txt_color = item.status_text == 'Hoàn thành' ? '#1B1B1B' : '#FFFFFF'
+        return (
+            <TouchableOpacity
+                onPress={goToDetail(item)}
+                style={styles.itemContainer}>
+                <Image
+                    source={images.icons.ic_order}
+                />
+                <View style={{ paddingHorizontal: 10, justifyContent: 'space-between', width: '90%' }}>
+                    <Text style={[AppStyles.fonts.text, styles.txtDate]}>
+                        {item.date}
+                    </Text>
+
+                    <Text style={AppStyles.fonts.medium}>
+                        Đơn hàng #{item.id}
+                    </Text>
+
+                    <Text numberOfLines={1} style={[AppStyles.fonts.text, { fontSize: 14 }]}>
+                        {item.shipping_method}: {item.address}
+                    </Text>
+                    <View style={[styles.statusContainer, { backgroundColor: statusOrder.getColor(item.status_text) }]}>
+                        <Text numberOfLines={1} style={[AppStyles.fonts.mini, { color: txt_color, fontWeight: '700' }]} >
+                            {item.status_text}
+                        </Text>
+                    </View>
+
+                    {/* ----- BUTTON ĐAT LAI -----  */}
+                    {item.status_text == 'Hoàn thành' &&
+                        <TouchableOpacity style={styles.btnPreOrder}>
+                            <Text numberOfLines={1} style={AppStyles.fonts.medium} style={styles.txtPreOrder} >
+                                Đặt lại
+                        </Text>
+                        </TouchableOpacity>}
+                    {/* ----- BUTTON ĐAT LAI -----  */}
+
+                </View>
+
+            </TouchableOpacity>
+        )
+    }
 
     return (
         <View style={styles.container}>
@@ -120,45 +153,7 @@ const index = () => {
     );
 };
 
-const renderItem = ({ item }) => {
-    const txt_color = item.status_text == 'Hoàn thành' ? '#1B1B1B' : '#FFFFFF'
-    return (
-        <TouchableOpacity style={styles.itemContainer}>
-            <Image
-                source={images.icons.ic_order}
-            />
-            <View style={{ paddingHorizontal: 10, justifyContent: 'space-between', width: '90%' }}>
-                <Text style={[AppStyles.fonts.text, styles.txtDate]}>
-                    {item.date}
-                </Text>
 
-                <Text style={AppStyles.fonts.medium}>
-                    Đơn hàng #{item.id}
-                </Text>
-
-                <Text numberOfLines={1} style={[AppStyles.fonts.text, { fontSize: 14 }]}>
-                    {item.shipping_method}: {item.address}
-                </Text>
-                <View style={[styles.statusContainer, { backgroundColor: getColorStatusOrder(item.status_text) }]}>
-                    <Text numberOfLines={1} style={[AppStyles.fonts.mini, { color: txt_color,fontWeight:'700' }]} >
-                        {item.status_text}
-                    </Text>
-                </View>
-
-                {/* ----- BUTTON ĐAT LAI -----  */}
-                {item.status_text == 'Hoàn thành' &&
-                    <TouchableOpacity style={styles.btnPreOrder}>
-                        <Text numberOfLines={1} style={AppStyles.fonts.medium} style={styles.txtPreOrder} >
-                            Đặt lại
-                    </Text>
-                    </TouchableOpacity>}
-                {/* ----- BUTTON ĐAT LAI -----  */}
-
-            </View>
-
-        </TouchableOpacity>
-    )
-}
 const styles = StyleSheet.create({
     container: { flex: 1, paddingHorizontal: 5, backgroundColor: AppStyles.colors.background },
     contentContainerStyle: { paddingVertical: 15 },
