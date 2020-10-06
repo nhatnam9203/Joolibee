@@ -12,7 +12,7 @@ import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
 import { scale } from '@utils';
 import { TopBarComponent, PopupSelectAreaComponent } from '../../../components';
-import { ProductPromotionList, BestSellerList, NewsList } from './widget';
+import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList } from './widget';
 const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const [isVisible, setVisiblePopup] = React.useState(true);
@@ -72,6 +72,11 @@ const HomePage = () => {
         <BestSellerList />
 
         <NewsList />
+
+        <ServiceList />
+
+        <AboutJollibee />
+        
       </SinglePageLayout>
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
     </TopBarScreenLayout>
