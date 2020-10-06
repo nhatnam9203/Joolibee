@@ -116,5 +116,14 @@
   "txtPromotionApply": "Áp dụng ưu đãi",
   "txtNote": "Ghi chú",
   "txtToReceive": "Đến nhận",
-  "txtInComingSoon": "Tinh năng đang phát triển ...\n ---------------- \n Vui lòng thử lại sau!"
+  "txtInComingSoon": "Tinh năng đang phát triển ...\n ---------------- \n Vui lòng thử lại sau!",
+  "txtOrderCalculator": "Tạm tính",
+  "txtNotice": "Lấy dung cụ ăn uống nhựa",
+  "txtNoticeEnvironment": "Để góp phần bảo vệ môi trường, bạn hãy chỉ lấy dụng cụ muỗng nĩa nhựa khi cần thiết thôi nhé!",
+  "txtPaymentMoney": "Tiền Mặt",
+  "txtFollowOrder": "Theo dõi đơn hàng",
+  "txtContinueOrder": "Tiếp tục chọn món",
+  "txtOrderSucceeded": "Đặt hàng thành công",
+  "txtYourOrderCode": "Mã đơn hàng của bạn là: ",
+  "txtThankForYourOrder": "Cám ơn bạn đã đặt hàng tại Jollibee."
 }

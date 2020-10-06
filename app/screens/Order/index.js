@@ -1,5 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import { CustomFlatList, CustomTextLink, CustomInput } from '@components';
+import {
+  CustomFlatList,
+  CustomTextLink,
+  CustomInput,
+  CustomButtonImage,
+} from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
@@ -12,22 +17,34 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Switch,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { SettingItem, ButtonCC, LabelTitle } from '../components';
+import {
+  ButtonCC,
+  LabelTitle,
+  PopupNoticeEnvironment,
+  PopupOrderSuccess,
+} from '../components';
 import ScreenName from '../ScreenName';
 import { SinglePageLayout } from '@layouts';
+import { OrderItem } from './widget';
+import { OrderItems } from './LocalData';
+import { CustomSwitch } from '@components';
 
-const OrderSection = ({ title, children }) => {
+const OrderSection = ({ title, children, buttonComponent }) => {
   return (
     <View>
-      {!!title && (
-        <LabelTitle
-          label={title}
-          color={AppStyles.colors.accent}
-          fontSize={18}
-        />
-      )}
+      <View style={AppStyles.styles.horizontalLayout}>
+        {!!title && (
+          <LabelTitle
+            label={title}
+            color={AppStyles.colors.accent}
+            fontSize={18}
+          />
+        )}
+        {buttonComponent && buttonComponent()}
+      </View>
       <View>{children}</View>
     </View>
   );
@@ -46,17 +63,35 @@ const ShippingType = {
   InPlace: 2,
 };
 
+const CONFIRM_HEIGHT = 150;
+
 const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [shippingType, setShippingType] = React.useState(ShippingType.InShop);
+  const [showNotice, setShowNotice] = React.useState(false);
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
+
+  const onTogglePopupNotice = () => {
+    setShowNotice(false);
+  };
+  const onTogglePopupSuccess = () => {
+    setShowPopupSuccess(false);
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setShowNotice(true);
+    }, 1500);
+  }, []);
 
   return (
     <>
       <SinglePageLayout backgroundColor={AppStyles.colors.background}>
         <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
-          <OrderSection>
+          <OrderSection key="ShippingType">
             <OrderSectionItem
               onPress={() => {
                 setShippingType(ShippingType.InPlace);
@@ -106,7 +141,9 @@ const OrderScreen = () => {
           </OrderSection>
 
           {/**Shipping Info */}
-          <OrderSection title={`${translate('txtShippingInfo')}`.toUpperCase()}>
+          <OrderSection
+            title={`${translate('txtShippingInfo')}`.toUpperCase()}
+            key="ShippingInfo">
             <OrderSectionItem>
               <View
                 style={{
@@ -153,9 +190,11 @@ const OrderScreen = () => {
                   16 Trương Định, P. 6, Q. 3, Tp. Hồ Chí Minh
                 </Text>
               </View>
-              <TouchableOpacity style={styles.editOrderStyle}>
-                <Image source={images.icons.ic_order_edit} />
-              </TouchableOpacity>
+
+              <CustomButtonImage
+                image={images.icons.ic_order_edit}
+                style={styles.editOrderStyle}
+              />
             </OrderSectionItem>
             <OrderSectionItem>
               <TextInput
@@ -166,26 +205,106 @@ const OrderScreen = () => {
             </OrderSectionItem>
           </OrderSection>
 
-          <OrderSection title={translate('txtItemSelect')}>
-            <OrderSectionItem></OrderSectionItem>
-            <OrderSectionItem></OrderSectionItem>
-            <OrderSectionItem></OrderSectionItem>
+          {/**Order Items List*/}
+          <OrderSection
+            title={translate('txtItemSelect')}
+            buttonComponent={() => (
+              <ButtonCC.ButtonYellow
+                label={translate('txtOrderMore')}
+                style={styles.buttonHeaderStyle}
+                textStyle={styles.headerButtonTextStyle}
+              />
+            )}
+            key="OrderItems">
+            {OrderItems.map((item) => (
+              <OrderSectionItem>
+                <OrderItem item={item} />
+              </OrderSectionItem>
+            ))}
+
+            <OrderSectionItem>
+              <View style={styles.orderSumContent}>
+                <Text style={styles.txtTitleStyle}>
+                  {translate('txtOrderCalculator')} :
+                </Text>
+                <Text style={styles.txtStyle}>25.000 đ</Text>
+              </View>
+            </OrderSectionItem>
+            <OrderSectionItem>
+              <View style={styles.orderSumContent}>
+                <View style={styles.container}>
+                  <Text style={styles.txtTitleStyle}>
+                    {translate('txtNotice')}
+                  </Text>
+                  <Text style={styles.txtStyle}>
+                    {translate('txtNoticeEnvironment')}
+                  </Text>
+                </View>
+                <CustomSwitch />
+              </View>
+            </OrderSectionItem>
           </OrderSection>
-          <OrderSection title={translate('txtPaymentMethod')}>
-            <OrderSectionItem></OrderSectionItem>
+
+          {/**Payment*/}
+          <OrderSection
+            title={translate('txtPaymentMethod')}
+            key="OrderPayment">
+            <OrderSectionItem>
+              <View style={AppStyles.styles.horizontalLayout}>
+                <Image source={images.icons.ic_money} />
+                <Text style={styles.txtStyle}>
+                  {translate('txtPaymentMoney')}
+                </Text>
+              </View>
+            </OrderSectionItem>
           </OrderSection>
-          <OrderSection title={translate('txtPromotionApply')}>
-            <OrderSectionItem></OrderSectionItem>
+
+          {/**Promotion */}
+          <OrderSection
+            title={translate('txtPromotionApply')}
+            key="OrderPromotion">
+            <OrderSectionItem>
+              <View style={AppStyles.styles.horizontalLayout}>
+                <Image source={images.icons.ic_sticked} />
+                <Text style={styles.txtStyle}>Ưu đãi 40.000 đ</Text>
+              </View>
+              <CustomButtonImage
+                image={images.icons.ic_order_edit}
+                style={styles.editOrderStyle}
+                onPress={() => {
+                  navigation.navigate(ScreenName.MyReward);
+                }}
+              />
+            </OrderSectionItem>
           </OrderSection>
         </SafeAreaView>
       </SinglePageLayout>
+
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>Tổng cộng : </Text>
           <Text style={styles.txtPriceStyle}>0.00 đ</Text>
         </View>
-        <ButtonCC.ButtonRed label={translate('txtConfirm')} />
+
+        <ButtonCC.ButtonRed
+          label={translate('txtConfirm')}
+          onPress={() => {
+            setShowPopupSuccess(true);
+          }}
+        />
       </View>
+
+      {/**Popup Notice */}
+      <PopupNoticeEnvironment
+        visible={showNotice}
+        onToggle={onTogglePopupNotice}
+      />
+
+      {/**Popup Order Success */}
+      <PopupOrderSuccess
+        visible={showPopupSuccess}
+        onToggle={onTogglePopupSuccess}
+      />
     </>
   );
 };
@@ -195,8 +314,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 10,
-    paddingTop: 20,
-    paddingBottom: 250,
+    marginTop: 20,
+    marginBottom: CONFIRM_HEIGHT * 2,
   },
 
   confirmStyle: {
@@ -211,16 +330,18 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderColor: AppStyles.colors.accent,
+    height: CONFIRM_HEIGHT,
   },
 
   orderSumContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    padding: 10,
   },
 
-  txtTitleStyle: { ...AppStyles.fonts.medium, fontSize: 16 },
-  txtStyle: { ...AppStyles.fonts.text, fontSize: 16 },
+  txtTitleStyle: { ...AppStyles.fonts.medium, fontSize: 16, margin: 5 },
+  txtStyle: { ...AppStyles.fonts.text, fontSize: 16, margin: 5 },
 
   txtPriceStyle: {
     ...AppStyles.fonts.title,
@@ -256,6 +377,13 @@ const styles = StyleSheet.create({
   },
 
   txtNoteStyle: {},
+
+  buttonHeaderStyle: { width: '40%', height: '60%' },
+
+  headerButtonTextStyle: {
+    fontSize: 14,
+    color: '#1B1B1B',
+  },
 });
 
 export default OrderScreen;

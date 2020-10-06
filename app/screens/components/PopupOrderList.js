@@ -48,7 +48,9 @@ export const PopupOrderList = ({ visible, onToggle }) => {
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
 
-  const renderItem = (props) => <OrderItem {...props} />;
+  const renderItem = ({ item, index }) => (
+    <OrderItem item={item} key={item.id + ''} />
+  );
 
   const orderPressed = () => {
     popupRef.current.forceQuit();
@@ -74,6 +76,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
           <CustomFlatList
             data={defaultData}
             renderItem={renderItem}
+            keyExtractor={(item) => item.id + ''}
             ItemSeparatorComponent={() => (
               <View style={AppStyles.styles.rowSeparator} />
             )}

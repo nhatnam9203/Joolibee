@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   },
 
   txtBoldStyleLink: {
-    ...AppStyles.fonts.textBold,
+    ...AppStyles.fonts.bold,
     color: '#0696F8',
     marginLeft: 5,
   },

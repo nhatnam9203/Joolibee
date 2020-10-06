@@ -6,7 +6,7 @@ import { translate } from '@localize';
 import { showComingSoon } from '@slices/app';
 import { useDispatch } from 'react-redux';
 
-const BUTTON_HEIGHT = 60;
+const BUTTON_HEIGHT = 45;
 const LAYOUT_WIDTH = '90%';
 
 export const ButtonRed = ({
@@ -39,6 +39,7 @@ export const ButtonYellow = ({
   label,
   onPress,
   style,
+  textStyle,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(showComingSoon());
@@ -46,6 +47,7 @@ export const ButtonYellow = ({
   return (
     <CustomButton
       style={[styles.btnStyle, style]}
+      styleText={textStyle}
       onPress={onPress ?? showPopup}
       width={width}
       height={height}

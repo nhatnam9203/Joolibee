@@ -11,6 +11,7 @@ import MyAccountScreen from './MyAccount';
 import SettingAccountScreen from './SettingAccount';
 import EditAccountScreen from './EditAccount';
 import RewardScreen from './Reward';
+import MyRewardScreen from './Reward/MyRewardScreen';
 import PointHistoryScreen from './PointHistory';
 import MySavedPointScreen from './MySavedPoint';
 import SupportScreen from './Support';
@@ -51,4 +52,5 @@ module.exports = {
   MyOrdersScreen,
   DeitalOrdersScreen,
   OrderScreen,
+  MyRewardScreen,
 };

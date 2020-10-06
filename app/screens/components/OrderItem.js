@@ -17,8 +17,7 @@ export const OrderItem = ({ item, onPress, index }) => (
     onPress={() => {}}
     imgPosition="left"
     imgWidth={IMAGE_SIZE}
-    imgHeight={IMAGE_SIZE}
-    key={item.id}>
+    imgHeight={IMAGE_SIZE}>
     <View style={[AppStyles.styles.horizontalLayout, styles.content]}>
       <View style={styles.txtContent}>
         <LabelTitle

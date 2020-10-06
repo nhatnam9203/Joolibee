@@ -41,7 +41,7 @@ const CustomButton = ({
       ]}>
       {children && children}
       {!!label && (
-        <Text style={[styles.txtStyle, { color: textColor },styleText]}>
+        <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
           {label?.toUpperCase()}
         </Text>
       )}
