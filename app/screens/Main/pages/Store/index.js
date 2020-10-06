@@ -136,6 +136,7 @@ const StorePage = () => {
                     itemMenu={renderItem}
                     selected={city}
                     openMenu={openModal(0)}
+                    closeMenu={closeModal}
                 />
 
                 <CustomPopupMenu
@@ -145,6 +146,7 @@ const StorePage = () => {
                     selected={districts}
                     itemMenu={renderItem}
                     openMenu={openModal(1)}
+                    closeMenu={closeModal}
                 />
             </View>
             {/* ------------ Select city and districts --------------------- */}

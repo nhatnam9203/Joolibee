@@ -1,24 +1,26 @@
 import * as React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 const CustomPickerSelect = ({
   style,
-  onChangeItem = () => {},
+  onChangeItem = () => { },
   placeholder,
   ...props
 }) => {
   return (
-    <RNPickerSelect
-      style={pickerSelectStyles}
-      placeholder={{
-        label: placeholder || 'Select ...',
-        value: null,
-      }}
-      {...props}
-      useNativeAndroidPickerStyle={false}
-      onValueChange={onChangeItem}
-    />
+    <View style={Platform.OS == 'android' ? styles.wrapperPicker : {}}>
+      <RNPickerSelect
+        style={pickerSelectStyles}
+        placeholder={{
+          label: placeholder || 'Select ...',
+          value: null,
+        }}
+        {...props}
+        //useNativeAndroidPickerStyle={false}
+        onValueChange={onChangeItem}
+      />
+    </View>
   );
 };
 
@@ -43,12 +45,10 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 8,
     color: '#484848',
     paddingRight: 30, // to ensure the text is never behind the icon
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
-    borderRadius: 6,
+
     height: 58,
     fontFamily: 'Roboto-Regular',
-    marginVertical: 10,
+
   },
   placeholder: {
     color: '#9E9E9E',
@@ -125,6 +125,18 @@ const styles = StyleSheet.create({
     padding: 0,
     flex: 1,
   },
+
+  wrapperPicker: {
+    width: '100%',
+    height: 58,
+    borderWidth: 1,
+    borderColor: '#BCBCBC',
+    borderRadius: 6,
+    justifyContent: 'center',
+    marginVertical: 10,
+    paddingHorizontal: 16,
+    backgroundColor: '#FFFFFF',
+  }
 });
 
 export default CustomPickerSelect;
