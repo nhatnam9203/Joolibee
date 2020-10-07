@@ -61,7 +61,7 @@ const CustomPopupMenu = ({
         <Text
           style={[
             AppStyles.fonts.bold,
-            !label && { color: AppStyles.colors.placeholder },
+
           ]}>
           {label ? label : placeHolders}
         </Text>

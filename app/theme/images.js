@@ -68,6 +68,7 @@ const images = {
     ic_arrow_up: require('../assets/icons/ic-arrow-up.png'),
     ic_order_phone: require('../assets/icons/ic-order-phone.png'),
     ic_order_text: require('../assets/icons/ic-order-text.png'),
+    ic_send_chat: require('../assets/icons/ic-send-chat.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),
@@ -94,8 +95,8 @@ const images = {
   jollibee_arrived: require('../assets/images/jollibee-arrived.gif'),
   jollibee_like: require('../assets/images/jollibee-arrived.png'),
   jollibee_bubble: require('../assets/images/jollibee-bubble.png'),
-  jollibee_bigorder:require('../assets/images/jollibee-bigorder.png'),
-  bg_services:require('../assets/images/bg-services.png'),
+  jollibee_bigorder: require('../assets/images/jollibee-bigorder.png'),
+  bg_services: require('../assets/images/bg-services.png'),
 };
 
 export default images;

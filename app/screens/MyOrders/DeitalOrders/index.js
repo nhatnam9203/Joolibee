@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
 import { AppStyles, images } from "@theme";
 import { CustomButton } from "@components";
+import { PopupRating } from "../../components";
 import { statusOrder } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from "./pages";
 
@@ -25,14 +26,23 @@ const defaultData = [
 
 export default function index({ navigation, route }) {
     const [data, setData] = React.useState([]);
+    const [visible, setVisible] = React.useState(false);
     const { order } = route.params;
     let order_complete = order.status_text == 'Hoàn thành' ? true : false;
-    console.log(order_complete)
+
+    const onTogglePopup = () => setVisible(!visible)
+    const onClose = () => setVisible(false)
     React.useEffect(() => {
         navigation.setOptions({
             headerTitle: HeaderTitle()
         });
-        setData(defaultData)
+
+        setData(defaultData);
+
+        setTimeout(() => {
+            onTogglePopup()
+        }, 3000);
+
     }, []);
 
     const HeaderTitle = () => (
@@ -91,6 +101,7 @@ export default function index({ navigation, route }) {
                 <OrderTotal />
                 {/* --------------  TOTAL PRICE -------------- */}
 
+                <PopupRating visible={visible} onToggle={onClose} />
 
             </ScrollView>
         </View>
@@ -113,7 +124,7 @@ const styles = StyleSheet.create({
         paddingVertical: 50,
         borderBottomWidth: 1,
         borderBottomColor: '#E2E2E2',
-        marginBottom:20
+        marginBottom: 20
     },
     wrapperImage: {
         width: 318,
