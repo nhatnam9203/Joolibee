@@ -30,7 +30,7 @@ platform :ios do
     # sh "pod update"
     match(type: "appstore")
     # increment_build_number(build_number: ENV["BUILD_NUMBER"])
-    # unlock_keychain(path: "login.keychain", password: ENV["KEYCHAIN_PASSWORD"])
+    unlock_keychain(path: "login.keychain", password: ENV["KEYCHAIN_PASSWORD"])
     # gym(scheme: "360" )# Build your app
     # deliver(force: true, username: ENV["FASTLANE_USER"], app_identifier: ENV["BUNDLE_IDENTIFIER"] )
     # sh "watchbuild"
