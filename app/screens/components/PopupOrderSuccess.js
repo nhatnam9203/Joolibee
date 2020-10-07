@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
     maxHeight: '90%',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 8,
   },
 
   txtDescription: {

@@ -1,23 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  CustomFlatList,
-  CustomTextLink,
-  CustomInput,
-  CustomButtonImage,
-} from '@components';
+import { CustomButtonImage, CustomSwitch } from '@components';
+import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { images, AppStyles } from '@theme';
+import { AppStyles, images } from '@theme';
 import React from 'react';
 import {
+  Image,
   SafeAreaView,
   StyleSheet,
-  View,
   Text,
-  Image,
-  TouchableOpacity,
   TextInput,
-  Switch,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import {
@@ -27,10 +22,8 @@ import {
   PopupOrderSuccess,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { SinglePageLayout } from '@layouts';
-import { OrderItem } from './widget';
 import { OrderItems } from './LocalData';
-import { CustomSwitch } from '@components';
+import { OrderItem } from './widget';
 
 const OrderSection = ({ title, children, buttonComponent }) => {
   return (
@@ -169,7 +162,7 @@ const OrderScreen = () => {
                 <Text style={styles.txtStyle}>dfdf</Text>
               </View>
             </OrderSectionItem>
-            
+
             <OrderSectionItem>
               <View
                 style={{

@@ -16,7 +16,6 @@ import CustomAccordionList from './CustomAccordionList';
 import Accordian from './Accordian';
 import CustomSwitch from './CustomSwitch';
 
-
 module.exports = {
   TopBar,
   CustomButton,
@@ -33,6 +32,6 @@ module.exports = {
   CustomButtonImage,
   CustomScrollTabView,
   CustomAccordionList,
-
-  Accordian
+  CustomSwitch,
+  Accordian,
 };

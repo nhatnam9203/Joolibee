@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
     width: '90%',
     maxHeight: '90%',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 15,
   },
 
   txtDescription: {
