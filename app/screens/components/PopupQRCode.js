@@ -58,9 +58,8 @@ const styles = StyleSheet.create({
     flex: 0,
     width: '90%',
     maxHeight: '90%',
-    backgroundColor: '#fff',
     alignItems: 'center',
-    borderRadius: 8,
+    justifyContent: 'center',
   },
 
   txtDescription: {
