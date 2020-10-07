@@ -169,6 +169,7 @@ const OrderScreen = () => {
                 <Text style={styles.txtStyle}>dfdf</Text>
               </View>
             </OrderSectionItem>
+            
             <OrderSectionItem>
               <View
                 style={{

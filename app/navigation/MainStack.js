@@ -20,6 +20,8 @@ import {
   MyAddressScreen,
   DetailMyAddressScreen,
   SearchAddressScreen,
+  MyOrdersScreen,
+  DeitalOrdersScreen,
   OrderScreen,
   MyRewardScreen,
 } from '../screens';
@@ -220,6 +222,22 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSearchAddress'),
+        }}
+      />
+
+      <Stack.Screen
+        component={MyOrdersScreen}
+        name={ScreenName.MyOrders}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtMyOrders'),
+        }}
+      />
+      <Stack.Screen
+        component={DeitalOrdersScreen}
+        name={ScreenName.DeitalOrders}
+        options={{
+          headerTitle: '',
         }}
       />
 

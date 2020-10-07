@@ -86,86 +86,96 @@ const STORES = [
 ];
 
 const StorePage = () => {
-  const [city, setCity] = React.useState(null);
-  const [districts, setDistricts] = React.useState(null);
-  const [visible, showModal] = React.useState([false, false]);
-  const refMap = React.useRef(null);
 
-  const openModal = (i) => () => {
-    let _visible = [...visible];
-    _visible[i] = !_visible[i];
-    showModal(_visible);
-  };
+    const [city, setCity] = React.useState(null);
+    const [districts, setDistricts] = React.useState(null);
+    const [visible, showModal] = React.useState([false, false]);
+    const refMap = React.useRef(null);
 
-  const closeModal = () => {
-    showModal([false, false]);
-  };
+    const openModal = (i) => () => {
+        let _visible = [...visible]
+        _visible[i] = !_visible[i]
+        showModal(_visible)
+    }
 
-  const onChangeItem = (item) => () => {
-    visible[0] ? setCity(item) : setDistricts(item);
-    closeModal();
-  };
+    const closeModal = () => {
+        showModal([false, false])
+    }
 
-  const fitAllMarkers = () => {
-    refMap.current.fitToCoordinates(STORES, {
-      edgePadding: DEFAULT_PADDING,
-      animated: true,
-    });
-  };
+    const onChangeItem = (item) => () => {
+        visible[0] ? setCity(item) : setDistricts(item)
+        closeModal();
+    }
 
-  const renderItem = (item, index) => (
-    <TouchableOpacity
-      onPress={onChangeItem(item.label)}
-      key={index + ''}
-      style={styles.itemContainer}>
-      <Text style={AppStyles.fonts.text}>{item.label}</Text>
-    </TouchableOpacity>
-  );
-  return (
-    <TopBarScreenLayout topBar={<TopBarComponent />}>
-      {/* ------------ Select city and districts --------------------- */}
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <CustomPopupMenu
-          placeHolders="Chọn tỉnh thành"
-          visible={visible[0]}
-          menus={citys}
-          itemMenu={renderItem}
-          selected={city}
-          openMenu={openModal(0)}
-        />
+    const fitAllMarkers = () => {
+        refMap.current.fitToCoordinates(STORES, {
+            edgePadding: DEFAULT_PADDING,
+            animated: true,
+        });
+    }
 
-        <CustomPopupMenu
-          placeHolders="Chọn quận huyện"
-          visible={visible[1]}
-          menus={districs}
-          selected={districts}
-          itemMenu={renderItem}
-          openMenu={openModal(1)}
-        />
-      </View>
-      {/* ------------ Select city and districts --------------------- */}
+    const renderItem = (item, index) => (
+        <TouchableOpacity
+            onPress={onChangeItem(item.label)}
+            key={index + ''}
+            style={styles.itemContainer}>
+            <Text style={AppStyles.fonts.text}>
+                {item.label}
+            </Text>
+        </TouchableOpacity>
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => (
-          <View style={styles.container}>
-            <MapView
-              ref={refMap}
-              style={styles.map}
-              initialRegion={INITIAL_REGION}
-              onMapReady={fitAllMarkers}>
-              <Markers data={STORES} />
-            </MapView>
-          </View>
-        )}
-        keyExtractor={(_, index) => index + ''}
-        renderItem={({ item, index }) => (
-          <ItemStore item={item} index={index} onPress={() => {}} />
-        )}
-        data={STORES}
-      />
-    </TopBarScreenLayout>
-  );
+    );
+    return (
+        <TopBarScreenLayout topBar={<TopBarComponent />}>
+            {/* ------------ Select city and districts --------------------- */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <CustomPopupMenu
+                    placeHolders='Chọn tỉnh thành'
+                    visible={visible[0]}
+                    menus={citys}
+                    itemMenu={renderItem}
+                    selected={city}
+                    openMenu={openModal(0)}
+                />
+
+                <CustomPopupMenu
+                    placeHolders='Chọn quận huyện'
+                    visible={visible[1]}
+                    menus={districs}
+                    selected={districts}
+                    itemMenu={renderItem}
+                    openMenu={openModal(1)}
+                />
+            </View>
+            {/* ------------ Select city and districts --------------------- */}
+
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={() => (
+                    <View style={styles.container}>
+                        <MapView
+                            // provider='google'
+                            ref={refMap}
+                            style={styles.map}
+                             initialRegion={INITIAL_REGION}
+                            onMapReady={fitAllMarkers}
+                            showsUserLocation={true}
+                           
+                        >
+                            <Markers data={STORES} mapView={refMap} />
+
+                        </MapView>
+                    </View>
+                )}
+                keyExtractor={(_, index) => index + ''}
+                renderItem={({ item, index }) => <ItemStore item={item} index={index} />}
+                data={STORES}
+
+            />
+
+
+        </TopBarScreenLayout>
+    )
 };
 
 const styles = StyleSheet.create({

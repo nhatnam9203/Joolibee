@@ -15,7 +15,7 @@ const images = {
     tab_promotion: require('../assets/icons/tab-promotion.png'),
     tab_store: require('../assets/icons/tab-store.png'),
     popup_close: require('../assets/icons/popup-close.png'),
-    bee_man: require('../assets/icons/bee-man.png'),
+
     ic_text_jollibee: require('../assets/icons/ic-text-jollibee.png'),
     Walkthough1: require('../assets/icons/Walktrough1.png'),
     Walkthough2: require('../assets/icons/Walktrough2.png'),
@@ -56,12 +56,18 @@ const images = {
     ic_store_phone: require('../assets/icons/ic-store-phone.png'),
     ic_store_clock: require('../assets/icons/ic-store-clock.png'),
     ic_pin_restaurant: require('../assets/icons/ic-pin-restaurant.png'),
+    ic_order: require('../assets/icons/ic-order.png'),
+
     ic_qr_logo: require('../assets/icons/ic-qr-logo.png'),
     ic_delivery: require('../assets/icons/ic-delivery.png'),
     ic_in_store: require('../assets/icons/ic-in-store.png'),
     ic_money: require('../assets/icons/ic-money.png'),
     ic_sticked: require('../assets/icons/ic-sticked.png'),
     ic_use_tools: require('../assets/icons/ic-use-tools.png'),
+    ic_arrow_down: require('../assets/icons/ic-arrow-down.png'),
+    ic_arrow_up: require('../assets/icons/ic-arrow-up.png'),
+    ic_order_phone: require('../assets/icons/ic-order-phone.png'),
+    ic_order_text: require('../assets/icons/ic-order-text.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),
@@ -82,6 +88,10 @@ const images = {
   item_detail_thumb: require('../assets/images/menu-item-detail-thumb.png'),
   menu_detail_item_pepsi: require('../assets/images/menu-detail-item-pepsi.png'),
   menu_detail_item_nuocsuoi: require('../assets/images/menu-detail-item-nuocsuoi.png'),
+  bee_man: require('../assets/images/jollibee-wellcome.gif'),
+  jolibee_delivery: require('../assets/images/jolibee-delivery.gif'),
+  jolibee_cooking: require('../assets/images/jolibee-cooking.gif'),
+  jollibee_arrived: require('../assets/images/jollibee-arrived.gif'),
 };
 
 export default images;
