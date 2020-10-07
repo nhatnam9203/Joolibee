@@ -1,6 +1,6 @@
 import { CustomModal } from '@components';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
   const modalRef = React.createRef(null);
@@ -18,12 +18,7 @@ const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
       showModal={visible}
       onDismiss={onToggle}
       ref={modalRef}>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={dismiss}
-        activeOpacity={1}>
-        {children}
-      </TouchableOpacity>
+      {children}
     </CustomModal.CustomModal>
   );
 });

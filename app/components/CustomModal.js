@@ -41,6 +41,7 @@ export const CustomModal = React.forwardRef(
         isVisible={visible}
         transparent={true}
         onModalHide={onModalHide}
+        onBackdropPress={onModalHide}
         style={styles.container}>
         {children}
       </Modal>
@@ -57,6 +58,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     margin: 0,
+    alignItems:'center',
+    justifyContent:'center'
   },
 
   txtTitleStyle: {

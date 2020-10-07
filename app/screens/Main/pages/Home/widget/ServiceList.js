@@ -30,7 +30,7 @@ const data = [
   }
 ];
 
-const index = () => {
+const index = ({ openDetail }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
@@ -45,7 +45,7 @@ const index = () => {
 
       <Carousel
         data={data}
-        renderItem={renderItem}
+        renderItem={({ item, index }) => renderItem(item, index, openDetail)}
         sliderWidth={width}
         itemWidth={scaleWidth(374)}
         itemHeight={scaleHeight(227)}
@@ -64,7 +64,7 @@ const index = () => {
   );
 };
 
-const renderItem = ({ item, index }) => {
+const renderItem = (item, index, onPress) => {
   return (
     <ImageBackground
       source={images.bg_services}
@@ -82,7 +82,7 @@ const renderItem = ({ item, index }) => {
           {item.content}
         </Text>
         <CustomButton
-          onPress={() => alert('ads')}
+          onPress={onPress}
           label={'XEM THÊM'}
           width={134}
           height={43}
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     width: scaleWidth(182),
     height: scaleHeight(200)
   },
-  
+
   btn: {
     alignSelf: 'flex-start',
     marginTop: scaleHeight(10),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, View, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
@@ -23,6 +23,8 @@ export default index = ({ visible, onToggle }) => {
 
                 </View>
                 <WebView
+                    renderLoading={()=><ActivityIndicator animating color='red' />}
+                    startInLoadingState={true}
                     scrollEnabled={true}
                     source={{ uri: 'https://jollibee.com.vn/dich-vu/kid-party' }}
                 // style={{ marginTop: 20 }}
@@ -40,11 +42,11 @@ const styles = StyleSheet.create({
         backgroundColor: AppStyles.colors.white,
     },
     iconContainer: {
-        width: '100%',
-        height: 60,
-        backgroundColor: 'white',
+        // width: '100%',
+        // height: 60,
+        // backgroundColor: 'white',
         position: 'absolute',
-        top: 0,
+        top: 15,
         zIndex: 10000,
         justifyContent: 'center',
         paddingLeft: 10

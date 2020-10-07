@@ -9,7 +9,7 @@ const CustomPickerSelect = ({
   ...props
 }) => {
   return (
-    <View style={Platform.OS == 'android' ? styles.wrapperPicker : {}}>
+    <View style={ styles.wrapperPicker}>
       <RNPickerSelect
         style={pickerSelectStyles}
         placeholder={{
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     justifyContent: 'center',
     marginVertical: 10,
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
     backgroundColor: '#FFFFFF',
   }
 });

@@ -13,8 +13,8 @@ import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
-import { TopBarComponent, PopupSelectAreaComponent,MenuPageName } from '../../../components';
-import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList, Detail,PromotionPageName } from './widget';
+import { TopBarComponent, PopupSelectAreaComponent, MenuPageName } from '../../../components';
+import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList, Detail, PromotionPageName } from './widget';
 const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const [isVisible, setVisiblePopup] = React.useState(true);
@@ -37,7 +37,7 @@ const HomePage = () => {
           </Text>
 
           <CustomButton
-             onPress={onCHangeScreen(MenuPageName)}
+            onPress={onCHangeScreen(MenuPageName)}
             label={'XEM THỰC ĐƠN'}
             width={141}
             height={43}
@@ -78,11 +78,11 @@ const HomePage = () => {
 
         <BestSellerList />
 
-        <NewsList />
+        <NewsList openDetail={onToggleDetail} />
 
-        <ServiceList />
+        <ServiceList openDetail={onToggleDetail} />
 
-        <AboutJollibee />
+        <AboutJollibee openDetail={onToggleDetail} />
 
       </SinglePageLayout>
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />

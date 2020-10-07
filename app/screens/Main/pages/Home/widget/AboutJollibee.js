@@ -11,7 +11,7 @@ import { CustomButton } from '@components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 
-const index = () => {
+const index = ({openDetail}) => {
   return (
     <View style={styles.container}>
       <Text
@@ -34,7 +34,7 @@ const index = () => {
         </Text>
 
       <CustomButton
-        onPress={() => alert('ads')}
+        onPress={openDetail}
         label={'XEM THÊM'}
         width={134}
         height={43}

@@ -17,7 +17,7 @@ const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 const data = [1, 2, 3, 4, 5];
 
-const index = () => {
+const index = ({ openDetail }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
@@ -32,7 +32,7 @@ const index = () => {
 
       <Carousel
         data={data}
-        renderItem={renderItem}
+        renderItem={(item, index) => renderItem(item, index, openDetail)}
         sliderWidth={width}
         itemWidth={width}
         itemHeight={scaleHeight(384)}
@@ -51,7 +51,7 @@ const index = () => {
   );
 };
 
-const renderItem = (item, index) => {
+const renderItem = (item, index,onPress) => {
   return (
     <View style={styles.wrapperItem}>
       <View
@@ -71,7 +71,7 @@ const renderItem = (item, index) => {
         </View>
 
         <CustomButton
-          onPress={() => alert('ads')}
+          onPress={onPress}
           label={'XEM THÊM'}
           width={134}
           height={43}
