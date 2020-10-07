@@ -20,3 +20,5 @@ export * from './PopupQRCode';
 export * from './PopupComingSoon';
 export * from './PopupNoticeEnvironment';
 export * from './PopupOrderSuccess';
+import CustomPopupMenu from './CustomPopupMenu';
+export { CustomPopupMenu }

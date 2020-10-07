@@ -18,14 +18,7 @@ const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
       showModal={visible}
       onDismiss={onToggle}
       ref={modalRef}>
-      <TouchableOpacity
-        onPress={dismiss}
-        activeOpacity={1}
-        style={styles.container}>
-        <TouchableOpacity activeOpacity={1} style={styles.content}>
-          {children}
-        </TouchableOpacity>
-      </TouchableOpacity>
+      {children}
     </CustomModal.CustomModal>
   );
 });
@@ -35,11 +28,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  content: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 8,
   },
 });
 

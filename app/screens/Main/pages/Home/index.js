@@ -7,18 +7,25 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Text } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
+import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
-import { TopBarComponent, PopupSelectAreaComponent } from '../../../components';
-import { ProductPromotionList, BestSellerList, NewsList } from './widget';
+import { TopBarComponent, PopupSelectAreaComponent, MenuPageName } from '../../../components';
+import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList, Detail, PromotionPageName } from './widget';
 const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const [isVisible, setVisiblePopup] = React.useState(true);
+  const [visible_detail, showDetail] = React.useState(false);
+  const navigation = useNavigation();
+  const onTogglePopup = () => setVisiblePopup(true);
+  const onToggleDetail = () => showDetail(!visible_detail);
 
-  const onTogglePopup = () => setVisiblePopup(false);
-
+  const onCHangeScreen = (screen) => () => {
+    navigation.navigate(screen)
+  }
   return (
     <TopBarScreenLayout
       style={{ backgroundColor: AppStyles.colors.accent }}
@@ -30,7 +37,7 @@ const HomePage = () => {
           </Text>
 
           <CustomButton
-            // onPress={onToggle}
+            onPress={onCHangeScreen(MenuPageName)}
             label={'XEM THỰC ĐƠN'}
             width={141}
             height={43}
@@ -57,7 +64,7 @@ const HomePage = () => {
             </Text>
 
             <CustomButton
-              // onPress={onToggle}
+              onPress={onCHangeScreen(PromotionPageName)}
               label={'KHUYẾN MÃI'}
               width={134}
               height={43}
@@ -71,9 +78,15 @@ const HomePage = () => {
 
         <BestSellerList />
 
-        <NewsList />
+        <NewsList openDetail={onToggleDetail} />
+
+        <ServiceList openDetail={onToggleDetail} />
+
+        <AboutJollibee openDetail={onToggleDetail} />
+
       </SinglePageLayout>
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
+      <Detail visible={visible_detail} onToggle={onToggleDetail} />
     </TopBarScreenLayout>
   );
 };
