@@ -34,9 +34,9 @@ target 'loyalty' do
     flipper_post_install(installer)
   end
 
-  target 'loyaltyProduction' do
+  target 'loyalty-develop' do
   end
-  target 'loyaltyStaging' do
+  target 'loyalty-staging' do
   end
 end
 
