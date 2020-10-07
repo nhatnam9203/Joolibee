@@ -9,7 +9,7 @@ ios_target='loyalty'
 ios_staging_target='loyalty-staging'
 ios_develop_target='loyalty-develop'
 workspace_path='./ios/loyalty.xcworkspace'
-bundle_id='loyalty'
+bundle_id='com.jollibee.loyalty'
 
 # ios platform
 platform :ios do
@@ -25,11 +25,18 @@ platform :ios do
       end
   end
 
+desc 'Fetch certificates and provisioning profiles'
+lane :certificates do
+  match(app_identifier: 'com.app.bundle', type: 'development', readonly: true)
+  match(app_identifier: 'com.app.bundle', type: 'appstore', readonly: true)
+end
+
   private_lane :staging_build do
       ensure_git_branch(branch: 'staging')
       ensure_git_status_clean
       git_pull
       increment_build_number_in_plist(xcodeproj: ios_project_path, target: ios_staging_target)
+      match(app_identifier: bundle_id, type: 'development', readonly: true)
       gym(scheme: ios_staging_target, workspace: workspace_path)
   end
 
@@ -37,6 +44,7 @@ platform :ios do
       ensure_git_branch(branch: 'feature/fastlane')
       ensure_git_status_clean
       git_pull
+      match(app_identifier: bundle_id, type: 'production', readonly: true)
       increment_build_number_in_plist(xcodeproj: ios_project_path, target: ios_target)
       gym(scheme: ios_target, workspace: workspace_path)
   end

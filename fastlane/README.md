@@ -34,6 +34,11 @@ fastlane codepush
 ----
 
 ## iOS
+### ios certificates
+```
+fastlane ios certificates
+```
+Fetch certificates and provisioning profiles
 ### ios staging
 ```
 fastlane ios staging
