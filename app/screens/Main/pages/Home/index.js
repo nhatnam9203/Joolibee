@@ -85,6 +85,7 @@ const HomePage = () => {
         <AboutJollibee openDetail={onToggleDetail} />
 
       </SinglePageLayout>
+
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
       <Detail visible={visible_detail} onToggle={onToggleDetail} />
     </TopBarScreenLayout>

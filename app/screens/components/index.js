@@ -21,4 +21,6 @@ export * from './PopupComingSoon';
 export * from './PopupNoticeEnvironment';
 export * from './PopupOrderSuccess';
 import CustomPopupMenu from './CustomPopupMenu';
+export * from './PopupRating';
+export * from './PopupChat';
 export { CustomPopupMenu }
