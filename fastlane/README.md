@@ -34,11 +34,11 @@ fastlane codepush
 ----
 
 ## iOS
-### ios certificates
+### ios appstore_match
 ```
-fastlane ios certificates
+fastlane ios appstore_match
 ```
-Fetch certificates and provisioning profiles
+Deploy a new version to the App Store
 ### ios staging
 ```
 fastlane ios staging
