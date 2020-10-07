@@ -5,101 +5,103 @@ import { AppStyles, images } from '@theme';
 
 import { Rating } from 'react-native-ratings';
 import React from 'react';
-import { Image, SafeAreaView, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, TouchableOpacity, Text, View, ScrollView } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat'
 
-
-import { useNavigation } from '@react-navigation/native';
-import { JollibeeLogo } from "./JollibeeLogo";
-import { LabelTitle } from "./LabelTitle";
-
+import Modal from "react-native-modal";
 export const PopupChat = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
-  const [content, setContent] = React.useState('');
-
   const onChangeText = (content) => {
     setContent(content)
   }
 
-  const onClose =  React.useCallback(
+  const onClose = React.useCallback(
     () => {
       popupRef.current.forceQuit();
     },
     [visible],
   )
 
+  const [messages, setMessages] = React.useState([]);
+
+  React.useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello developer',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ])
+  }, [])
+
+  const onSend = React.useCallback((messages = []) => {
+    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+  }, [])
+
   return (
-    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
-      <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
-        <SafeAreaView style={{ flex: 1, alignItems: 'center' }}>
+    <Modal
+      isVisible={visible}
 
-          <TouchableOpacity onPress={onClose} style={{ alignSelf: 'flex-start', paddingLeft: 15, paddingTop: 15 }} >
+      style={styles.bottomModal}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={onClose} style={{ position: 'absolute', left: 15 }} >
             <Image
-
-              source={images.icons.popup_close}
+              source={images.icons.ic_popup_close_red}
             />
           </TouchableOpacity>
 
-          <JollibeeLogo />
-          <LabelTitle label='ĐÁNH GIÁ PHẢN HỒI' color={AppStyles.colors.white} style={{ marginVertical: 10 }} />
-          <Text style={[AppStyles.fonts.text, styles.txtContent]}>
-            Cảm nhận của bạn về ứng dung Jollibee như thế nào?
+          <Text style={[AppStyles.fonts.medium_SVN, { fontSize: 24 }]}>
+            TIN NHẮN
           </Text>
+        </View>
 
-          <Rating
-            showRating={false}
-            //onFinishRating={this.ratingCompleted}
-            style={{ paddingTop: 10 }}
-            ratingCount={5}
-            tintColor={AppStyles.colors.accent}
-            imageSize={50}
-            ratingColor={AppStyles.colors.button}
-          />
-
-          <CustomInput
-            style={{ marginVertical: 15 }}
-            onChangeText={onChangeText}
-            value={content}
-            placeholder='Nội dung góp ý của bạn'
-            multiline={true}
-            style={styles.input}
-          />
-
-          <CustomButton
-            onPress={onClose}
-            label='GỬI'
-            width={238}
-            height={58}
-            bgColor={AppStyles.colors.button}
-          />
-
-        </SafeAreaView>
-      </SinglePageLayout>
-    </PopupLayout>
+        <GiftedChat
+          messages={messages}
+          onSend={messages => onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+        />
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: '100%',
-    height: '80%',
-    backgroundColor: AppStyles.colors.accent,
+    height: '75%',
+    backgroundColor: AppStyles.colors.white,
+    borderRadius: 20,
+    overflow: 'hidden'
   },
 
-  input: {
-    height: 127,
-    alignItems: 'flex-start',
-    marginVertical: 20,
-    width: '90%'
+  header: {
+    height: 70,
+    backgroundColor: AppStyles.colors.button,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
 
-  txtContent: {
-    color: AppStyles.colors.white,
-    textAlign: 'center',
-    paddingHorizontal: 40
+  bottomModal: {
+    justifyContent: "flex-end",
+    margin: 0,
   },
-
-
-
-  contentContainerStyle: { paddingBottom: 20 },
+  scrollableModal: {
+    height: 300,
+  },
+  scrollableModalContent1: {
+    height: 200,
+    backgroundColor: "orange",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

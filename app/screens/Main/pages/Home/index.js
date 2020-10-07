@@ -13,8 +13,8 @@ import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
-import { TopBarComponent, PopupSelectAreaComponent, MenuPageName } from '../../../components';
-import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList, Detail, PromotionPageName } from './widget';
+import { TopBarComponent, PopupSelectAreaComponent, MenuPageName, PromotionPageName,PopupChat } from '../../../components';
+import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList, Detail } from './widget';
 const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const [isVisible, setVisiblePopup] = React.useState(true);
@@ -86,7 +86,8 @@ const HomePage = () => {
 
       </SinglePageLayout>
 
-      <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
+      {/* <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} /> */}
+      <PopupChat visible={isVisible}/>
       <Detail visible={visible_detail} onToggle={onToggleDetail} />
     </TopBarScreenLayout>
   );

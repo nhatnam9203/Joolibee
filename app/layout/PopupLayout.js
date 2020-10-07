@@ -23,12 +23,4 @@ const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
   );
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
 export default PopupLayout;
