@@ -1,14 +1,15 @@
-before_all do
-  ensure_git_branch
-  ensure_git_status_clean
-  git_pull
-end
+# before_all do
+#   ensure_git_branch
+#   ensure_git_status_clean
+#   git_pull
+# end
 
 ios_project_path='./ios/loyalty.xcodeproj'
-ios_target='loyaltyProduction'
+ios_target='loyalty'
+ios_staging_target='loyalty-staging'
+ios_develop_target='loyalty-develop'
 workspace_path='./ios/loyalty.xcworkspace'
-bundle_id=''
-tar
+bundle_id='loyalty'
 
 # ios platform
 platform :ios do
@@ -25,13 +26,19 @@ platform :ios do
   end
 
   private_lane :staging_build do
-      increment_build_number_in_plist(xcodeproj: ios_project_path, target: ios_target)
-      gym(scheme: 'ReactNativeFastlane-staging', workspace: workspace_path)
+      ensure_git_branch(branch: 'staging')
+      ensure_git_status_clean
+      git_pull
+      increment_build_number_in_plist(xcodeproj: ios_project_path, target: ios_staging_target)
+      gym(scheme: ios_staging_target, workspace: workspace_path)
   end
 
   private_lane :release_build do
+      ensure_git_branch(branch: 'develop')
+      ensure_git_status_clean
+      git_pull
       increment_build_number_in_plist(xcodeproj: ios_project_path, target: ios_target)
-      gym(scheme: 'ReactNativeFastlane-release', workspace: workspace_path)
+      gym(scheme: ios_target, workspace: workspace_path)
   end
 
   private_lane :screenshots do
@@ -42,7 +49,7 @@ platform :ios do
       end
   end
 
-  lane :beta do
+  lane :staging do
       staging_build
       upload_to_testflight(username: 'youremail@gmail.com', app_identifier: 'ReactNativeFastlane')
       commit_version_bump(message: 'bump build')

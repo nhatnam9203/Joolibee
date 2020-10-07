@@ -11,7 +11,8 @@
     "pod": "cd ios && pod install --repo-update && cd ..",
     "clean": "rm -rf node_modules && watchman watch-del-all",
     "clean:ios": "cd ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf Podfile.lock",
-    "clean:android": "cd android && ./gradlew clean"
+    "clean:android": "cd android && ./gradlew clean",
+    "release:ios": "bundle exec fastlane ios release"
   },
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
