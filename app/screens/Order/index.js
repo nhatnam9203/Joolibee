@@ -73,6 +73,12 @@ const OrderScreen = () => {
     setShowPopupSuccess(false);
   };
 
+  const onEdit = () => {
+    shippingType == ShippingType["InShop"]
+      ? navigation.navigate(ScreenName.StorePickup)
+      : () => { }
+  };
+
   React.useEffect(() => {
     setTimeout(() => {
       setShowNotice(true);
@@ -185,6 +191,7 @@ const OrderScreen = () => {
               </View>
 
               <CustomButtonImage
+                onPress={onEdit}
                 image={images.icons.ic_order_edit}
                 style={styles.editOrderStyle}
               />

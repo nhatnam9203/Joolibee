@@ -76,7 +76,7 @@ const HomePage = () => {
 
         <ProductPromotionList />
 
-        <BestSellerList />
+        <BestSellerList openMenu={onCHangeScreen(MenuPageName)}/>
 
         <NewsList openDetail={onToggleDetail} />
 
