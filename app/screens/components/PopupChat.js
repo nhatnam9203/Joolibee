@@ -3,13 +3,28 @@ import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, Text, View, Keyboard, UIManager, LayoutAnimation } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View,
+  Keyboard,
+  UIManager,
+  LayoutAnimation,
+  ScrollView
+} from 'react-native';
 import { GiftedChat, Send, MessageText, Bubble } from 'react-native-gifted-chat'
-
 import Modal from "react-native-modal";
+
+const suggests = [
+  { _id: 4, text: 'Tôi xuống ngay' },
+  { _id: 5, text: 'Tôi đồng ý' },
+  { _id: 6, text: 'Vui lòng chờ tôi 1 lát nhé' },
+]
+
 export const PopupChat = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
-
 
   const onClose = React.useCallback(
     () => {
@@ -60,6 +75,7 @@ export const PopupChat = ({ visible, onToggle }) => {
   }
 
   const onSend = React.useCallback((messages = []) => {
+    console.log('messages', messages)
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
   }, []);
 
@@ -96,29 +112,56 @@ export const PopupChat = ({ visible, onToggle }) => {
     />
   );
 
+  const renderSuggestList = () => {
+
+    return suggests.map((item, index) => {
+      const message = [{
+        text: item.text,
+        user: {
+          _id: 1,
+        },
+        createdAt: new Date(),
+        _id: Math.random(5)
+      }];
+
+      return (
+        <TouchableOpacity
+          onPress={() => onSend(message)}
+          key={index + ''}
+          style={styles.suggestMessageContainer}>
+          <Text style={styles.txtSuggest}>{item.text}</Text>
+        </TouchableOpacity>
+      )
+    })
+
+  }
   const renderChatFooter = (props) => (
-    <View style={{ paddingVertical: 10 }}>
-      <View style={{
-        width: 115,
-        height: 42,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#AADEE5',
-        borderRadius: 7
-      }}>
-        <Text style={styles.txtSuggest}>dsfdsfsdfd</Text>
-      </View>
+    <View style={{ marginVertical: 10 }}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+      >
+        {renderSuggestList()}
+      </ScrollView>
     </View>
   );
 
   return (
     <Modal
+      testID="modal"
+      animationIn={"zoomIn"}
+      animationOut={"zoomOut"}
+      animationInTiming={350}
+      animationOutTiming={350}
+      backdropTransitionInTiming={350}
+      backdropTransitionOutTiming={350}
+      onBackdropPress={onToggle}
+
       isVisible={visible}
       style={styles.bottomModal}>
       <View style={[styles.container, { height }]}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={onClose} style={{ position: 'absolute', left: 15 }} >
+          <TouchableOpacity onPress={onToggle} style={{ position: 'absolute', left: 15 }} >
             <Image
               source={images.icons.ic_popup_close_red}
             />
@@ -172,6 +215,17 @@ const styles = StyleSheet.create({
     width: 60,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  suggestMessageContainer: {
+    paddingHorizontal: 15,
+    height: 42,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#AADEE5',
+    borderRadius: 7,
+    marginHorizontal: 10
   },
 
   txtMessage: {
