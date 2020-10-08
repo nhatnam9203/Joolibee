@@ -9,10 +9,9 @@ import {
 } from 'react-native';
 import { TopBarScreenLayout } from '@layouts';
 
-import { TopBarComponent, CustomPopupMenu } from '../../../components';
-import MapView from 'react-native-maps';
+import { TopBarComponent, CustomPopupMenu, CustomMapView, ItemStore } from '../../../components';
 import { AppStyles } from '@theme';
-import { ItemStore, Markers } from './pages';
+import { Markers } from './pages';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = { top: 60, right: 60, bottom: 60, left: 60 };
@@ -44,8 +43,8 @@ const districs = [
 ];
 
 const INITIAL_REGION = {
-  latitude: 20.98023,
-  longitude: 105.7881,
+  latitude: 10.780644,
+  longitude: 106.635679,
   latitudeDelta: 0.5,
   longitudeDelta: (0.5 * width) / height,
 };
@@ -77,7 +76,7 @@ const STORES = [
   },
   {
     store_id: '5',
-    store_name: 'POPEYES THẢO ĐiỀN',
+    store_name: 'JOLLIBEE THẢO ĐiỀN',
     store_phone: '028.3519 1029',
     address: '20 Thảo Điền, KP 2, P. Thảo Điền, Q2, HCM',
     latitude: '10.80372123098',
@@ -148,18 +147,16 @@ const StorePage = () => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => (
           <View style={styles.container}>
-            <MapView
-              // provider='google'
+            <CustomMapView
               ref={refMap}
               style={styles.map}
               initialRegion={INITIAL_REGION}
               onMapReady={fitAllMarkers}
-              showsUserLocation={true}
 
             >
               <Markers data={STORES} mapView={refMap} />
 
-            </MapView>
+            </CustomMapView>
           </View>
         )}
         keyExtractor={(_, index) => index + ''}

@@ -2,21 +2,25 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import MapView from 'react-native-maps';
 
-export default CustomMapView = (props) => {
+const CustomMapView = React.forwardRef((props, ref) => {
+    //const refMapView = React.createRef(null);
+    console.log('ref',ref)
     return (
         <MapView
             // provider='google'
             {...props}
+            ref={ref}
             style={styles.map}
             showsUserLocation={true}
             followsUserLocation={true}
 
         >
-            {/* <Markers data={STORES} mapView={refMap} /> */}
             {props.children}
         </MapView>
-    )
-}
+    );
+});
+
+
 
 const styles = StyleSheet.create({
     map: {
@@ -24,3 +28,5 @@ const styles = StyleSheet.create({
         top: 0,
     },
 })
+
+export default CustomMapView
