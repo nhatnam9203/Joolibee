@@ -17,19 +17,8 @@ const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 const data = [1, 2, 3, 4, 5];
 
-const index = () => {
-  const refScrollView = React.createRef(null);
-  let page = 0;
+const index = ({ openMenu }) => {
 
-  // React.useEffect(() => {
-  //     const looping = setInterval(() => {
-  //         if (refScrollView) {
-  //             page = page <= data.length ? page + 1 : 0;
-  //             refScrollView.current.scrollTo({ x: (scaleWidth(165) * page), y: 0, animated: true });
-  //         }
-  //     }, 2000);
-  //     return () => clearInterval(looping)
-  // }, []);
 
   return (
     <View style={styles.container}>
@@ -42,14 +31,18 @@ const index = () => {
           Bán Chạy
         </Text>
 
-        <Text
-          style={[
-            AppStyles.fonts.medium,
-            styles.txtMenu,
-            { color: AppStyles.colors.text },
-          ]}>
-          XEM THỰC ĐƠN
+        <TouchableOpacity
+        onPress={openMenu}
+        >
+          <Text
+            style={[
+              AppStyles.fonts.medium,
+              styles.txtMenu,
+              { color: AppStyles.colors.text },
+            ]}>
+            XEM THỰC ĐƠN
         </Text>
+        </TouchableOpacity>
       </View>
 
       {/* <ScrollView

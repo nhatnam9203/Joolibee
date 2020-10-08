@@ -25,6 +25,7 @@ import SearchAddressScreen from './MyAddress/SearchAddress';
 import MyOrdersScreen from './MyOrders';
 import DeitalOrdersScreen from './MyOrders/DeitalOrders';
 import OrderScreen from './Order';
+import StorePickupScreen from './StorePickup';
 module.exports = {
   ScreenName,
   WelcomeScreen,
@@ -53,4 +54,5 @@ module.exports = {
   DeitalOrdersScreen,
   OrderScreen,
   MyRewardScreen,
+  StorePickupScreen
 };

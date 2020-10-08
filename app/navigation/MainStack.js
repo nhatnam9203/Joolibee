@@ -24,6 +24,7 @@ import {
   DeitalOrdersScreen,
   OrderScreen,
   MyRewardScreen,
+  StorePickupScreen
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -259,6 +260,18 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtMyReward'),
+        }}
+      />
+
+      <Stack.Screen
+        component={StorePickupScreen}
+        name={ScreenName.StorePickup}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtStore'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
     </Stack.Navigator>

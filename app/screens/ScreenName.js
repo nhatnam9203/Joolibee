@@ -25,6 +25,7 @@ const ScreenName = {
   DeitalOrders: 'DeitalOrders',
   Order: 'Order',
   MyReward: 'MyReward',
+  StorePickup: 'StorePickup'
 };
 
 export default ScreenName;

@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import StepIndicator from 'react-native-step-indicator'
 import { Accordian } from "@components";
 import { AppStyles, metrics, images } from "@theme";
+import { PopupChat } from "../../../components";
+import { makeAPhoneCall } from "@utils";
 
 const data = [
     { title: 'Đã xác nhận & chuẩn bị đơn hàng', description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn' },
@@ -28,14 +30,19 @@ const stepIndicatorStyles = {
     stepIndicatorLabelUnFinishedColor: AppStyles.colors.complete,
 }
 export default function orderStatus({ status }) {
+    const [visible, showPopup] = React.useState(false);
 
     let indexStatus = data.findIndex((item) => item.title.includes(status));
-    console.log('indexStatus', indexStatus)
+
     const ImageLink = ({ source, onPress }) => (
         <TouchableOpacity onPress={onPress}>
             <Image source={source} />
         </TouchableOpacity>
     )
+
+    const onTogglePopup = () => showPopup(!visible);
+
+    const onCall = () => makeAPhoneCall.makeAPhoneCall('0921234567')
 
     const renderLabel = ({ position, label, currentPosition }) => {
         const nextPosition = currentPosition + 1;
@@ -51,8 +58,8 @@ export default function orderStatus({ status }) {
                 </View>
 
                 {(position == 1 && currentPosition == 1) && <View style={styles.labelRight}>
-                    <ImageLink source={images.icons.ic_order_text} />
-                    <ImageLink source={images.icons.ic_order_phone} />
+                    <ImageLink source={images.icons.ic_order_text} onPress={onTogglePopup} />
+                    <ImageLink source={images.icons.ic_order_phone} onPress={onCall} />
                 </View>}
 
             </View >
@@ -90,8 +97,8 @@ export default function orderStatus({ status }) {
             </View>
 
             {indexStatus == 1 && <View style={styles.labelRight}>
-                <ImageLink source={images.icons.ic_order_text} />
-                <ImageLink source={images.icons.ic_order_phone} />
+                <ImageLink source={images.icons.ic_order_text} onPress={onTogglePopup} />
+                <ImageLink source={images.icons.ic_order_phone} onPress={onCall} />
             </View>}
 
         </View >
@@ -105,10 +112,13 @@ export default function orderStatus({ status }) {
                 renderHeader={renderHeader}
                 renderContent={renderContent}
             />
-            :
-            renderHeader()
-        
-        }
+                :
+                renderHeader()
+
+            }
+
+            <PopupChat visible={visible} onToggle={onTogglePopup} />
+
         </View>
     )
 }

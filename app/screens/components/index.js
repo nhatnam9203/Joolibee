@@ -23,4 +23,6 @@ export * from './PopupOrderSuccess';
 import CustomPopupMenu from './CustomPopupMenu';
 export * from './PopupRating';
 export * from './PopupChat';
-export { CustomPopupMenu }
+
+import CustomMapView from './MapView';
+export { CustomPopupMenu, CustomMapView }

@@ -76,7 +76,7 @@ const HomePage = () => {
 
         <ProductPromotionList />
 
-        <BestSellerList />
+        <BestSellerList openMenu={onCHangeScreen(MenuPageName)}/>
 
         <NewsList openDetail={onToggleDetail} />
 
@@ -87,6 +87,7 @@ const HomePage = () => {
       </SinglePageLayout>
 
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
+      {/* <PopupChat visible={isVisible}/> */}
       <Detail visible={visible_detail} onToggle={onToggleDetail} />
     </TopBarScreenLayout>
   );

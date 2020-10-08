@@ -1,6 +1,6 @@
 import { CustomModal } from '@components';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
   const modalRef = React.createRef(null);
