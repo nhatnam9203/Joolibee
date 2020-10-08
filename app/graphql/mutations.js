@@ -2,17 +2,29 @@ import gql from 'graphql-tag';
 
 // create customer account mutation
 export const SIGN_UP = gql`
-  mutation($name: String!, $email: String!, $password: String!) {
-    createCustomer(
-      input: {
-        firstname: $name
-        lastname: $name
-        email: $email
-        password: $password
-      }
-    ) {
-      customer {
-        email
+  mutation(
+    $email: String!
+    $password: String!
+    $firstname: String
+    $lastname: String!
+    $date_of_birth: String
+  ) {
+    mutation {
+      createCustomer(
+        input: {
+          firstname: $firstname
+          lastname: $lastname
+          email: $email
+          password: $password
+          is_subscribed: true
+        }
+      ) {
+        customer {
+          firstname
+          lastname
+          email
+          is_subscribed
+        }
       }
     }
   }

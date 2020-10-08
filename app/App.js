@@ -24,6 +24,7 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import { graphQlClient } from './graphql';
 import { Loading } from '@components';
 import { hideLoading } from '@slices/app';
+import SplashScreen from 'react-native-splash-screen';
 
 const { persistor, store } = configureAppStore();
 
@@ -67,7 +68,9 @@ enableScreens();
 setI18nConfig('vi');
 
 export default function App() {
-  // React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <StoreProvider store={store}>
