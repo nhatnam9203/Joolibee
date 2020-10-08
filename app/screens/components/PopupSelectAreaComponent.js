@@ -89,7 +89,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    maxHeight: '95%',
+    maxHeight: '90%',
     flex: 1,
     backgroundColor: AppStyles.colors.button,
     borderRadius: 8,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     height: '60%',
     backgroundColor: AppStyles.colors.accent,
     alignItems: 'center',
-    paddingHorizontal: scaleWidth(22),
+    paddingHorizontal: scaleWidth(15),
     paddingTop: scaleHeight(25),
   },
   content_bottom: {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   polygonStyle: {
     position: 'absolute',
-    bottom: -25,
+    bottom: -32,
     left: 0,
     right: 0,
     flex: 0,
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     fontSize: scaleWidth(24),
     marginTop: scaleHeight(15),
     color: AppStyles.colors.white,
+    textAlign:'center'
   },
   icon_jollibee: {
     resizeMode: 'contain',

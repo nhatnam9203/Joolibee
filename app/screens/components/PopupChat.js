@@ -12,7 +12,8 @@ import {
   Keyboard,
   UIManager,
   LayoutAnimation,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 import { GiftedChat, Send, MessageText, Bubble } from 'react-native-gifted-chat'
 import Modal from "react-native-modal";
@@ -48,7 +49,7 @@ export const PopupChat = ({ visible, onToggle }) => {
         user: {
           _id: 2,
           name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
+          // avatar: 'https://placeimg.com/140/140/any',
         },
       },
     ]);
@@ -181,6 +182,9 @@ export const PopupChat = ({ visible, onToggle }) => {
           renderMessageText={renderMessageText}
           renderChatFooter={renderChatFooter}
           renderBubble={renderBubble}
+          renderAvatar={null}
+          multiline={true}
+          minInputToolbarHeight={Platform.OS == 'android' ? 44 : 60}
           user={{
             _id: 1,
           }}

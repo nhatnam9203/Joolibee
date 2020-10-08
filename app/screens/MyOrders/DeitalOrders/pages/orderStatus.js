@@ -4,6 +4,7 @@ import StepIndicator from 'react-native-step-indicator'
 import { Accordian } from "@components";
 import { AppStyles, metrics, images } from "@theme";
 import { PopupChat } from "../../../components";
+import { makeAPhoneCall } from "@utils";
 
 const data = [
     { title: 'Đã xác nhận & chuẩn bị đơn hàng', description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn' },
@@ -41,6 +42,8 @@ export default function orderStatus({ status }) {
 
     const onTogglePopup = () => showPopup(!visible);
 
+    const onCall = () => makeAPhoneCall.makeAPhoneCall('0921234567')
+
     const renderLabel = ({ position, label, currentPosition }) => {
         const nextPosition = currentPosition + 1;
         const description = data[position].description;
@@ -55,8 +58,8 @@ export default function orderStatus({ status }) {
                 </View>
 
                 {(position == 1 && currentPosition == 1) && <View style={styles.labelRight}>
-                    <ImageLink source={images.icons.ic_order_text} onPress={onTogglePopup}/>
-                    <ImageLink source={images.icons.ic_order_phone}  />
+                    <ImageLink source={images.icons.ic_order_text} onPress={onTogglePopup} />
+                    <ImageLink source={images.icons.ic_order_phone} onPress={onCall} />
                 </View>}
 
             </View >
@@ -95,7 +98,7 @@ export default function orderStatus({ status }) {
 
             {indexStatus == 1 && <View style={styles.labelRight}>
                 <ImageLink source={images.icons.ic_order_text} onPress={onTogglePopup} />
-                <ImageLink source={images.icons.ic_order_phone}  />
+                <ImageLink source={images.icons.ic_order_phone} onPress={onCall} />
             </View>}
 
         </View >
