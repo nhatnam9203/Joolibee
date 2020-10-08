@@ -1,7 +1,9 @@
 import React from 'react';
 import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { useFirebaseAuthentication } from '@firebase';
-import { normalizePhoneNumber } from '@utils';
+import { validate } from '@utils';
+
+const { normalizePhoneNumber } = validate;
 
 const PAGES = {
   InputPhone: 0,
@@ -34,20 +36,27 @@ const SignUpScreen = () => {
     await confirmCode(code);
   };
 
-  const sendFirebaseCode = async (phone) => {
-    await signInWithPhoneNumber(normalizePhoneNumber('+84', phone));
-  };
-
+  // Get firebase code after input phone number
   const onSubmitPhoneNumber = async (values) => {
-    setData(values);
     const { phone } = values;
 
-    const response = await sendFirebaseCode(phone);
-    Logger.info(response, 'onSubmitPhoneNumber -> response');
+    // call firebase phone auth
+    const { verificationId, error } = await signInWithPhoneNumber(
+      normalizePhoneNumber('+84', phone),
+    );
 
-    // setPage(PAGES.InputCode);
+    // response
+    if (verificationId) {
+      setData(Object.assign({}, values, { verificationId }));
+      // next step
+      setPage(PAGES.InputCode);
+    } else if (error) {
+      // show error
+      Logger.error(error, 'SignUp -> onSubmitPhoneNumber -> get code error!');
+    }
   };
 
+  //
   const onSubmitVerifyCode = (values) => {
     Logger.info(values, 'onSubmitVerifyCode');
   };

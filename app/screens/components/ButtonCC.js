@@ -40,6 +40,7 @@ export const ButtonYellow = ({
   onPress,
   style,
   textStyle,
+  disabled,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(showComingSoon());
@@ -55,6 +56,7 @@ export const ButtonYellow = ({
       borderColor={AppStyles.colors.button}
       textColor="#000"
       bgColor={AppStyles.colors.button}
+      disabled={disabled}
     />
   );
 };

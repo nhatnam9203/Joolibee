@@ -31,7 +31,7 @@
   "txtPrivacy": "Đồng ý với",
   "txtPrivacyLink": "Chính sách & Quy định chung",
   "txtPrivacyMail": "Nhận chương trình khuyến mãi qua email",
-  "txtNotHaveAccount": "Đã chưa có tài khoản ?",
+  "txtNotHaveAccount": "Chưa có tài khoản ?",
   "txtHaveAccount": "Đã có tài khoản ?",
   "txtMale": "Nam",
   "txtFemale": "Nữ",
@@ -99,7 +99,6 @@
   "txtMyAddressDetail": "Thêm địa chỉ giao hàng",
   "txtSearchAddress": "Nhập địa chỉ",
   "txtMyOrders": "Danh sách đơn hàng",
-
   "txtOrder": "Thông tin đơn hàng",
   "txtOrderMore": "Thêm Món",
   "txtPayment": "Thanh Toán",
@@ -126,5 +125,7 @@
   "txtOrderSucceeded": "Đặt hàng thành công",
   "txtYourOrderCode": "Mã đơn hàng của bạn là: ",
   "txtThankForYourOrder": "Cám ơn bạn đã đặt hàng tại Jollibee.",
-  "txtStore": "Cửa hàng"
+  "txtStore": "Cửa hàng",
+  "txtVerifyCodeTime": "Mã xác thực sẽ hết hiệu lực trong",
+  "txtSecondUnit": "giây"
 }

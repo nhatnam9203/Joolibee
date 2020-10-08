@@ -11,10 +11,15 @@ export const useFirebaseAuthentication = ({ verifyCallback }) => {
 
   const signInWithPhoneNumber = async (phoneNumber) => {
     // console.log('=======> call firebase verify code');
-    return new Promise((response, reject) => {
+    return new Promise((resolve, reject) =>
       auth()
         .verifyPhoneNumber(phoneNumber)
         .on('state_changed', async (phoneAuthSnapshot) => {
+          Logger.log(
+            phoneAuthSnapshot,
+            'signInWithPhoneNumber -> phoneAuthSnapshot',
+          );
+
           switch (phoneAuthSnapshot.state) {
             case auth.PhoneAuthState.AUTO_VERIFIED:
               await setVerificationId(phoneAuthSnapshot.verificationId);
@@ -22,17 +27,17 @@ export const useFirebaseAuthentication = ({ verifyCallback }) => {
                 phoneAuthSnapshot.code,
                 phoneAuthSnapshot.verificationId,
               );
-              response(phoneAuthSnapshot);
+              resolve(phoneAuthSnapshot);
 
               break;
             case auth.PhoneAuthState.CODE_SENT:
               await setVerificationId(phoneAuthSnapshot.verificationId);
-              response(phoneAuthSnapshot);
+              resolve(phoneAuthSnapshot);
 
               break;
             case auth.PhoneAuthState.AUTO_VERIFY_TIMEOUT:
               await setVerificationId(phoneAuthSnapshot.verificationId);
-              response(phoneAuthSnapshot);
+              resolve(phoneAuthSnapshot);
 
               break;
             case auth.PhoneAuthState.ERROR:
@@ -47,8 +52,8 @@ export const useFirebaseAuthentication = ({ verifyCallback }) => {
             default:
               break;
           }
-        });
-    });
+        }),
+    );
   };
 
   const confirmCode = async (code, id) => {
