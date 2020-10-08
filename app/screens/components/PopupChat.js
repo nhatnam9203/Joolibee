@@ -1,19 +1,15 @@
-import { CustomInput, CustomButton } from '@components';
-import { SinglePageLayout, PopupLayout } from '@layouts';
+
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 
-import { Rating } from 'react-native-ratings';
 import React from 'react';
-import { Image, SafeAreaView, StyleSheet, TouchableOpacity, Text, View, ScrollView } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat'
+import { Image, StyleSheet, TouchableOpacity, Text, View, Keyboard, UIManager, LayoutAnimation } from 'react-native';
+import { GiftedChat, Send, MessageText, Bubble } from 'react-native-gifted-chat'
 
 import Modal from "react-native-modal";
 export const PopupChat = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
-  const onChangeText = (content) => {
-    setContent(content)
-  }
+
 
   const onClose = React.useCallback(
     () => {
@@ -23,12 +19,16 @@ export const PopupChat = ({ visible, onToggle }) => {
   )
 
   const [messages, setMessages] = React.useState([]);
-
+  const [height, setHeight] = React.useState('75%');
   React.useEffect(() => {
+
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: 'Đơn hàng của bạn sắp tới',
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -36,19 +36,87 @@ export const PopupChat = ({ visible, onToggle }) => {
           avatar: 'https://placeimg.com/140/140/any',
         },
       },
-    ])
-  }, [])
+    ]);
+
+    Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+    return () => {
+      Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
+      Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
+    }
+  }, []);
+
+  const keyboardDidShow = () => {
+    setHeight('100%');
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+
+  }
+
+  const keyboardDidHide = () => {
+    setHeight('75%');
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+
+  }
 
   const onSend = React.useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-  }, [])
+  }, []);
+
+  const renderSend = (props) => (
+    <Send
+      {...props}
+      containerStyle={styles.containerSend}
+    >
+      <Image source={images.icons.ic_send_chat} />
+    </Send>
+  );
+
+
+
+  const renderMessageText = (props) => {
+    return (
+      <MessageText
+        {...props}
+        customTextStyle={styles.txtMessage}
+      />
+
+    )
+  }
+
+  const renderBubble = (props) => (
+    <Bubble
+      {...props}
+      wrapperStyle={{
+        left: {
+          backgroundColor: '#AADEE5'
+        }
+      }}
+
+    />
+  );
+
+  const renderChatFooter = (props) => (
+    <View style={{ paddingVertical: 10 }}>
+      <View style={{
+        width: 115,
+        height: 42,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#AADEE5',
+        borderRadius: 7
+      }}>
+        <Text style={styles.txtSuggest}>dsfdsfsdfd</Text>
+      </View>
+    </View>
+  );
 
   return (
     <Modal
       isVisible={visible}
-
       style={styles.bottomModal}>
-      <View style={styles.container}>
+      <View style={[styles.container, { height }]}>
         <View style={styles.header}>
           <TouchableOpacity onPress={onClose} style={{ position: 'absolute', left: 15 }} >
             <Image
@@ -63,11 +131,18 @@ export const PopupChat = ({ visible, onToggle }) => {
 
         <GiftedChat
           messages={messages}
+          placeholder='Nhập tin nhắn'
+          keyboardShouldPersistTaps={'handled'}
           onSend={messages => onSend(messages)}
+          renderSend={renderSend}
+          renderMessageText={renderMessageText}
+          renderChatFooter={renderChatFooter}
+          renderBubble={renderBubble}
           user={{
             _id: 1,
           }}
         />
+
       </View>
     </Modal>
   );
@@ -76,9 +151,10 @@ export const PopupChat = ({ visible, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '75%',
+    // height: '100%',
     backgroundColor: AppStyles.colors.white,
-    borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
     overflow: 'hidden'
   },
 
@@ -91,17 +167,27 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
 
+  containerSend: {
+    height: 60,
+    width: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  txtMessage: {
+    fontSize: 14,
+    ...AppStyles.fonts.text
+  },
+
+  txtSuggest: {
+    ...AppStyles.fonts.medium,
+    fontSize: 14,
+    color: '#AADEE5',
+  },
+
   bottomModal: {
     justifyContent: "flex-end",
     margin: 0,
   },
-  scrollableModal: {
-    height: 300,
-  },
-  scrollableModalContent1: {
-    height: 200,
-    backgroundColor: "orange",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
 });
