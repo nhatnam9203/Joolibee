@@ -18,11 +18,9 @@ const CustomInput = ({ children, style, inputStyle = {}, ...inputProps }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 58,
+    height: 54,
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
-    borderRadius: 6,
+    borderRadius: 10,
     margin: 10,
     paddingHorizontal: 10,
     justifyContent: 'flex-start',

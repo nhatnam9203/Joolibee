@@ -24,7 +24,6 @@ const SinglePageLayout = ({ children, backgroundColor }) => {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          bounces={false}
           contentContainerStyle={styles.scrollContentContainer}>
           {children && children}
         </ScrollView>

@@ -9,12 +9,13 @@ const CustomCheckBox = ({
 }) => {
   return (
     <CheckBox
-      style={styles.checkBoxStyle}
+      style={[styles.checkBoxStyle, { backgroundColor: normalColor }]}
       boxType="square"
-      tintColors={{ true: normalColor, false: normalColor }}
+      tintColors={{ true: selectedColor, false: normalColor }}
       tintColor={normalColor}
+      // onFillColor={selectedColor}
       onCheckColor={selectedColor}
-      onTintColor={selectedColor}
+      onTintColor={normalColor}
       animationDuration={0.25}
       {...props}
     />
@@ -24,8 +25,8 @@ const CustomCheckBox = ({
 const styles = StyleSheet.create({
   checkBoxStyle: {
     marginRight: 5,
-    width: 23,
-    height: 23,
+    width: 19,
+    height: 19,
   },
 });
 

@@ -6,7 +6,7 @@ import { translate } from '@localize';
 import { showComingSoon } from '@slices/app';
 import { useDispatch } from 'react-redux';
 
-const BUTTON_HEIGHT = 45;
+const BUTTON_HEIGHT = 58;
 const LAYOUT_WIDTH = '90%';
 
 export const ButtonRed = ({
