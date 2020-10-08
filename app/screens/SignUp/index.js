@@ -34,16 +34,18 @@ const SignUpScreen = () => {
     await confirmCode(code);
   };
 
-  const sendFirebaseCode = async () => {
-    const { phone } = data;
-    if (!phone) {
-      return;
-    }
+  const sendFirebaseCode = async (phone) => {
     await signInWithPhoneNumber(normalizePhoneNumber('+84', phone));
   };
 
-  const onSubmitPhoneNumber = (values) => {
-    Logger.info(values, 'onSubmitPhoneNumber');
+  const onSubmitPhoneNumber = async (values) => {
+    setData(values);
+    const { phone } = values;
+
+    const response = await sendFirebaseCode(phone);
+    Logger.info(response, 'onSubmitPhoneNumber -> response');
+
+    // setPage(PAGES.InputCode);
   };
 
   const onSubmitVerifyCode = (values) => {
