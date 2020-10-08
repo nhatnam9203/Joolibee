@@ -18,7 +18,6 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* loyaltyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* loyaltyTests.m */; };
-		2E39D525F318C97338734C0D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		3622811B250A98AB0013AF4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		3622811C250A98AB0013AF4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		36228120250A98AB0013AF4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -36,6 +35,7 @@
 		3622812C250A98AB0013AF4C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
 		3622812D250A98AB0013AF4C /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		3622812E250A98AB0013AF4C /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
+		362935F8252F0386003B0C53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 362935F7252F0386003B0C53 /* GoogleService-Info.plist */; };
 		36828ECE252D75910011133E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		36828ECF252D75910011133E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		36828ED4252D75910011133E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -54,8 +54,8 @@
 		36828EE1252D75910011133E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		36828EE2252D75910011133E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
 		36873965252D7B2900B55CE9 /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36873964252D7B2900B55CE9 /* libPods-loyalty.a */; };
+		369B26BB252F0BA000042CCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 369B26B9252F0BA000042CCD /* GoogleService-Info.plist */; };
 		3A929302AEA83886704325A0 /* libPods-loyalty-loyalty-staging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9520C17344E27F1F3575343 /* libPods-loyalty-loyalty-staging.a */; };
-		420F8CE3F84C228FBB6FEB2A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
 		5CA1F5B1135A152EF30C7B67 /* libPods-loyalty-loyaltyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0531FA339E2A4B93B08FC2 /* libPods-loyalty-loyaltyTests.a */; };
 		61721FA2FBBE4795A3C3E80B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
@@ -99,7 +99,6 @@
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = loyalty/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = loyalty/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* InfoDevelop.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoDevelop.plist; path = loyalty/InfoDevelop.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = loyalty/main.m; sourceTree = "<group>"; };
 		14D8E42006ED443AB2C295D6 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../app/assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		16320D309CC64C6E92CD8CA4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -110,12 +109,15 @@
 		31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../app/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		31E34C1685964FB39CDC829D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
-		36228116250A989B0013AF4C /* InfoStaging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoStaging.plist; path = /Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/InfoStaging.plist; sourceTree = "<absolute>"; };
 		36228134250A98AB0013AF4C /* loyalty-staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36228135250A98AB0013AF4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Volumes/DATA/work/2020/Levinci/jollibee/loyalty/ios/Info.plist; sourceTree = "<absolute>"; };
+		362935F7252F0386003B0C53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		365B4DAA0751458495036028 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../app/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		36828EE8252D75910011133E /* loyalty-develop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-develop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36873964252D7B2900B55CE9 /* libPods-loyalty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-loyalty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		369B26B9252F0BA000042CCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		369B26BA252F0BA000042CCD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		369B26C4252F0BAA00042CCD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4610D41D79134DD1A4799EC9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		46871193418F477B93CA949B /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../app/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		479F322204D36E5EE930312F /* Pods-loyalty-loyalty-develop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty-loyalty-develop.debug.xcconfig"; path = "Target Support Files/Pods-loyalty-loyalty-develop/Pods-loyalty-loyalty-develop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -168,9 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				420F8CE3F84C228FBB6FEB2A /* (null) in Frameworks */,
 				36873965252D7B2900B55CE9 /* libPods-loyalty.a in Frameworks */,
-				2E39D525F318C97338734C0D /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,12 +227,13 @@
 		13B07FAE1A68108700A75B9A /* loyalty */ = {
 			isa = PBXGroup;
 			children = (
+				369B26C3252F0BAA00042CCD /* staging */,
+				369B26B8252F0BA000042CCD /* dev */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				36228135250A98AB0013AF4C /* Info.plist */,
-				13B07FB61A68108700A75B9A /* InfoDevelop.plist */,
-				36228116250A989B0013AF4C /* InfoStaging.plist */,
+				362935F7252F0386003B0C53 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -251,6 +252,25 @@
 				A9520C17344E27F1F3575343 /* libPods-loyalty-loyalty-staging.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		369B26B8252F0BA000042CCD /* dev */ = {
+			isa = PBXGroup;
+			children = (
+				369B26B9252F0BA000042CCD /* GoogleService-Info.plist */,
+				369B26BA252F0BA000042CCD /* Info.plist */,
+			);
+			name = dev;
+			path = loyalty/dev;
+			sourceTree = "<group>";
+		};
+		369B26C3252F0BAA00042CCD /* staging */ = {
+			isa = PBXGroup;
+			children = (
+				369B26C4252F0BAA00042CCD /* Info.plist */,
+			);
+			name = staging;
+			path = loyalty/staging;
 			sourceTree = "<group>";
 		};
 		63DDA987CAAE35C17BDD3235 /* Pods */ = {
@@ -547,6 +567,7 @@
 				79DEE0C382A247D483C6D939 /* Roboto-BoldItalic.ttf in Resources */,
 				9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */,
 				4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */,
+				362935F8252F0386003B0C53 /* GoogleService-Info.plist in Resources */,
 				069CBEDA4A25449E8EC4E11A /* Roboto-LightItalic.ttf in Resources */,
 				1C335018A6384F68B41A00C3 /* Roboto-Medium.ttf in Resources */,
 				C449417E934641FC869A269C /* Roboto-MediumItalic.ttf in Resources */,
@@ -606,6 +627,7 @@
 				36828EDA252D75910011133E /* Roboto-BoldItalic.ttf in Resources */,
 				36828EDB252D75910011133E /* Roboto-Italic.ttf in Resources */,
 				36828EDC252D75910011133E /* Roboto-Light.ttf in Resources */,
+				369B26BB252F0BA000042CCD /* GoogleService-Info.plist in Resources */,
 				36828EDD252D75910011133E /* Roboto-LightItalic.ttf in Resources */,
 				36828EDE252D75910011133E /* Roboto-Medium.ttf in Resources */,
 				36828EDF252D75910011133E /* Roboto-MediumItalic.ttf in Resources */,
@@ -1362,7 +1384,7 @@
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/InfoStaging.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/loyalty/staging/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1388,7 +1410,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "$(SRCROOT)/InfoStaging.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/loyalty/staging/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1419,7 +1441,7 @@
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/loyalty/InfoDevelop.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/loyalty/dev/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1446,7 +1468,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZS935V8BHL;
-				INFOPLIST_FILE = "$(SRCROOT)/loyalty/InfoDevelop.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/loyalty/dev/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

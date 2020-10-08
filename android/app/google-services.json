@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "579642910552",
+    "firebase_url": "https://jollibee-vietnam.firebaseio.com",
+    "project_id": "jollibee-vietnam",
+    "storage_bucket": "jollibee-vietnam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579642910552:android:0cc0634155fb8f333e272d",
+        "android_client_info": {
+          "package_name": "com.jollibee.loyalty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579642910552-ano8kp2n2lu863rbf6eq2cvs28uul02m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL2HHozGM5H3iBAyKRk6iZJXir1DDbNeY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579642910552-ano8kp2n2lu863rbf6eq2cvs28uul02m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jollibee.loyalty"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

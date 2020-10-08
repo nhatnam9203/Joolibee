@@ -254,9 +254,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  txtForgotPass: { color: '#fff' },
+  txtForgotPass: { ...AppStyles.fonts.bold, color: '#fff', fontSize: 16 },
 
-  txtSignIn: { color: '#1B1B1B' },
+  txtSignIn: { ...AppStyles.fonts.bold, color: '#1B1B1B' },
 });
 
 export default SignInScreen;

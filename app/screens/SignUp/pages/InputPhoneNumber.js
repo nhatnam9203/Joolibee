@@ -26,17 +26,16 @@ export const InputPhoneNumber = ({ next }) => {
 
   const inputPhoneDataSubmit = React.useCallback(
     (values) => {
-      Logger.log(values, 'inputPhoneDataSubmit');
-      // const action = signUp(values, { dispatch });
-      // dispatch(action);
+      // Logger.log(values, 'inputPhoneDataSubmit');
+
       next(values);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch],
+    [next],
   );
 
   return (
-    <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
+    <SinglePageLayout backgroundColor={AppStyles.colors.accent} bounces={false}>
       <Formik
         initialValues={{
           phone: '',
@@ -100,5 +99,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  btnStyle: { marginTop: 50, width: '50%' },
+
+  btnStyle: { marginTop: 80, width: '65%' },
 });

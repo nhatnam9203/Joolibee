@@ -7,9 +7,10 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  StatusBar,
 } from 'react-native';
 
-const SinglePageLayout = ({ children, backgroundColor }) => {
+const SinglePageLayout = ({ children, backgroundColor, bounces }) => {
   const ref = React.useRef(null);
   useScrollToTop(ref);
 
@@ -18,9 +19,12 @@ const SinglePageLayout = ({ children, backgroundColor }) => {
       style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
       // keyboardVerticalOffset={isIphoneX() ? 88 : 64}
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
+      <StatusBar barStyle="light-content" />
+
       <View style={styles.content}>
         <ScrollView
           ref={ref}
+          bounces={bounces}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

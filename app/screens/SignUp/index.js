@@ -1,5 +1,7 @@
 import React from 'react';
 import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
+import { useFirebaseAuthentication } from '@firebase';
+import { normalizePhoneNumber } from '@utils';
 
 const PAGES = {
   InputPhone: 0,
@@ -11,31 +13,51 @@ const SignUpScreen = () => {
   // redux
 
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
-  const [values, setValues] = React.useState(PAGES.InputPhone);
+  const [data, setData] = React.useState(null);
+
+  const verifyCallback = (response) => {
+    const { message, data, status } = response;
+    if (status === 1) {
+      // Verified
+    }
+    Logger.debug(message, 'SignUpScreen -> verifyCallback -> message');
+  };
+
+  const { confirmCode, signInWithPhoneNumber } = useFirebaseAuthentication({
+    verifyCallback: verifyCallback,
+  });
+
+  const onConfirmCode = async (code) => {
+    if (!code) {
+      return;
+    }
+    await confirmCode(code);
+  };
+
+  const sendFirebaseCode = async () => {
+    const { phone } = data;
+    if (!phone) {
+      return;
+    }
+    await signInWithPhoneNumber(normalizePhoneNumber('+84', phone));
+  };
+
+  const onSubmitPhoneNumber = (values) => {
+    Logger.info(values, 'onSubmitPhoneNumber');
+  };
+
+  const onSubmitVerifyCode = (values) => {
+    Logger.info(values, 'onSubmitVerifyCode');
+  };
 
   switch (showPage) {
     case 0:
     default:
-      return (
-        <InputPhoneNumber
-          next={(obj) => {
-            setValues(obj);
-            setPage(PAGES.InputCode);
-          }}
-        />
-      );
+      return <InputPhoneNumber next={onSubmitPhoneNumber} />;
     case 1:
-      return (
-        <VerifyPhoneCode
-          next={(obj) => {
-            setValues(obj);
-            setPage(PAGES.SignUp);
-          }}
-          infos={values}
-        />
-      );
+      return <VerifyPhoneCode next={onSubmitVerifyCode} infos={data} />;
     case 2:
-      return <SignUpForm infos={values} />;
+      return <SignUpForm infos={data} />;
   }
 };
 

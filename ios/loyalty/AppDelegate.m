@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import "RNSplashScreen.h"
+#import <Firebase.h>
 
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
@@ -46,6 +47,10 @@ static void InitializeFlipper(UIApplication *application) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [GMSServices provideAPIKey:@"AIzaSyCEcBBUpQXwO9spOcJ3pmfxaLNI1Can2_4"];
+  
+  if ([FIRApp defaultApp] == nil) {
+     [FIRApp configure];
+   }
   [RNSplashScreen show];
   
   return YES;

@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   txtLinkStyle: {
     fontSize: 16,
     textDecorationLine: 'underline',
+    lineHeight: 22,
     marginLeft: 5,
   },
 });

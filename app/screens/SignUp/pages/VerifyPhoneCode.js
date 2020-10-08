@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
   },
-  btnStyle: { marginTop: 50, width: '50%' },
+  btnStyle: { marginTop: 80, width: '65%' },
   textStyle: {
     ...AppStyles.fonts.text,
     color: '#fff',

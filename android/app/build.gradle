@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services' // config firebase
 
 import com.android.build.OutputFile
 
@@ -209,8 +210,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:17.2.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 // gif
-    implementation 'com.facebook.fresco:animated-gif:1.12.0' 
-    implementation 'com.facebook.fresco:animated-gif:2.0.0' 
+    implementation 'com.facebook.fresco:animated-gif:1.12.0'
+    implementation 'com.facebook.fresco:animated-gif:2.0.0'
 
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
