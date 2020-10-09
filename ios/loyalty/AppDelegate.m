@@ -4,6 +4,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <RNGoogleSignin/RNGoogleSignin.h>
 #import "RNSplashScreen.h"
 #import <Firebase.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -57,16 +58,22 @@ static void InitializeFlipper(UIApplication *application) {
   
   [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
   
+  
+  
+
+  
   return YES;
 }
 //fbsdk
 
-
-// Objective-C // // SceneDelegate.m  @interface SceneDelegate () @end @implementation SceneDelegate - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts { UIOpenURLContext *context = URLContexts.allObjects.firstObject; [FBSDKApplicationDelegate.sharedInstance application:UIApplication.sharedApplication openURL:context.URL sourceApplication:context.options.sourceApplication annotation:context.options.annotation]; }
-    
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options { [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options]; return YES; }
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options { [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url options:options] ||
+  [RNGoogleSignin application:application openURL:url options:options]
+  ;
+  
+  return YES; }
 //fbsdk-end
+
+
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {

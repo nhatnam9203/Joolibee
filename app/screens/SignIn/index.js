@@ -23,7 +23,8 @@ import {
 } from '../components';
 import ScreenName from '../ScreenName';
 import { regex } from '@utils';
-import { loginFb } from '@social';
+import { loginFb, loginGoogle } from '@social';
+import {statusCodes } from '@react-native-community/google-signin';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -63,8 +64,26 @@ const SignInScreen = () => {
 
   const signinFB = async () => {
     const data = await loginFb();
-    if (data.id) {
+    if (data) {
       signInSubmit(data)
+    }
+  }
+
+  const signinGoogle = async () => {
+    const data = await loginGoogle();
+    try {
+      data && signInSubmit(data)
+    } catch (error) {
+      console.log(error)
+      if (error === statusCodes.SIGN_IN_CANCELLED) {
+        return;
+      } else if (error === statusCodes.IN_PROGRESS) {
+        return;
+      } else if (error === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        alert('play services not available or outdated')
+      } else {
+        alert('something went wrong')
+      }
     }
   }
 
@@ -189,7 +208,9 @@ const SignInScreen = () => {
                   />
 
                   {/**GOOGLE*/}
-                  <ButtonCC.ButtonGoogle />
+                  <ButtonCC.ButtonGoogle
+                    onPress={signinGoogle}
+                  />
 
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>

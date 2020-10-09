@@ -52,8 +52,11 @@ export const loginFb = async () => new Promise(async (resolve, reject) => {
         requestApi(data.accessToken, responseInfoCallback)
     } else {
         let result = await checkPermissionFb();
-        let data = await AccessToken.getCurrentAccessToken();
-        if (result == 'public_profile') requestApi(data.accessToken, responseInfoCallback);
+
+        if (result == 'public_profile') {
+            let data = await AccessToken.getCurrentAccessToken();
+            requestApi(data.accessToken, responseInfoCallback);
+        }
         else alert(result && result)
     }
 });
