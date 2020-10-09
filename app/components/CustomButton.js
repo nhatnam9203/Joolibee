@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableHighlight, Text, View } from 'react-native';
 
+const DISABLE_COLOR = '#4448';
+
 const CustomButton = ({
   onPress,
   width = 36,
@@ -13,6 +15,7 @@ const CustomButton = ({
   borderColor,
   style,
   styleText,
+  disabled,
   ...props
 }) => (
   <TouchableHighlight
@@ -21,7 +24,8 @@ const CustomButton = ({
         width: width,
         height: height,
         borderRadius: height / 2,
-        ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
+        backgroundColor: bgColor,
+        // ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
       },
       absolute && styles.btnAbsoluteStyle,
       style,
@@ -29,23 +33,38 @@ const CustomButton = ({
     activeOpacity={0.2}
     underlayColor={bgColor}
     onPress={onPress}
+    disabled={disabled}
     {...props}>
-    <View
-      style={[
-        styles.content,
-        {
-          backgroundColor: bgColor,
-          borderRadius: height / 2,
-          ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
-        },
-      ]}>
-      {children && children}
-      {!!label && (
-        <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
-          {label?.toUpperCase()}
-        </Text>
+    <>
+      <View
+        style={[
+          styles.content,
+          {
+            backgroundColor: bgColor,
+            borderRadius: height / 2,
+            ...(borderColor &&
+              !disabled && { borderWidth: 1, borderColor: borderColor }),
+          },
+        ]}>
+        {children && children}
+        {!!label && (
+          <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
+            {label?.toUpperCase()}
+          </Text>
+        )}
+      </View>
+      {disabled && (
+        <View
+          style={[
+            styles.absolute,
+            {
+              borderRadius: height / 2,
+              backgroundColor: DISABLE_COLOR,
+            },
+          ]}
+        />
       )}
-    </View>
+    </>
   </TouchableHighlight>
 );
 
@@ -58,6 +77,13 @@ const styles = StyleSheet.create({
   },
   btnAbsoluteStyle: { position: 'absolute', top: 10, left: 10 },
   txtStyle: { fontFamily: 'SVN-Merge', fontSize: 16, marginLeft: 5 },
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
 });
 
 export default CustomButton;

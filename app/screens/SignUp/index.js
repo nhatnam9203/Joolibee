@@ -36,9 +36,12 @@ const SignUpScreen = () => {
     await confirmCode(code);
   };
 
-  // Get firebase code after input phone number
-  const onSubmitPhoneNumber = async (values) => {
+  const requestAuthCode = async (values) => {
     const { phone } = values;
+    if (!phone) {
+      Logger.error(error, 'SignUp -> requestAuthCode -> phone not found!');
+      return;
+    }
 
     // call firebase phone auth
     const { verificationId, error } = await signInWithPhoneNumber(
@@ -52,8 +55,13 @@ const SignUpScreen = () => {
       setPage(PAGES.InputCode);
     } else if (error) {
       // show error
-      Logger.error(error, 'SignUp -> onSubmitPhoneNumber -> get code error!');
+      Logger.error(error, 'SignUp -> requestAuthCode -> get code error!');
     }
+  };
+
+  // Get firebase code after input phone number
+  const onSubmitPhoneNumber = async (values) => {
+    await requestAuthCode(values);
   };
 
   //
@@ -66,7 +74,13 @@ const SignUpScreen = () => {
     default:
       return <InputPhoneNumber next={onSubmitPhoneNumber} />;
     case 1:
-      return <VerifyPhoneCode next={onSubmitVerifyCode} infos={data} />;
+      return (
+        <VerifyPhoneCode
+          next={onSubmitVerifyCode}
+          infos={data}
+          resendCode={() => requestAuthCode(data)}
+        />
+      );
     case 2:
       return <SignUpForm infos={data} />;
   }

@@ -5,38 +5,80 @@ import { AppStyles } from '@theme';
 import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { ButtonCC, LabelTitle } from '../../components';
-import { format } from '@utils';
+import { format, validate } from '@utils';
+import { saveValueWithExpires, get, StorageKey } from '@storage';
+import Config from 'react-native-config';
 
-const COUNTDOWN_SECONDS = 10;
-const GET_CODE_COUNT_MAX = 3;
+const COUNTDOWN_SECONDS = 20;
+const TIME_WAITING = COUNTDOWN_SECONDS - 15;
 
-export const VerifyPhoneCode = ({ infos, next }) => {
-  const { phone = 'undefine' } = infos;
+export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
+  const { phone = 'undefine', verificationId } = infos;
   var interval;
   // count number get code call
-  const [getCodeCount, updateGetCodeCount] = React.useState(GET_CODE_COUNT_MAX);
+  const [getCodeCount, updateGetCodeCount] = React.useState(0);
   // time count down
   const [timer, setSecond] = React.useState(COUNTDOWN_SECONDS);
   // start count down
   const [timing, setTiming] = React.useState(false);
+  const [codeInput, setCodeInput] = React.useState(null);
 
   const verifyCode = () => {
     next(infos);
   };
 
-  const resendCode = () => {};
-  const getCode = () => {
-    if (!timing && getCodeCount > 0) {
+  const resetTimer = () => {
+    setTiming(false);
+    if (interval) {
+      clearInterval(interval);
+    }
+    setSecond(COUNTDOWN_SECONDS);
+  };
+
+  // Request firebase send code to phone,
+  const resendCodeRequest = () => {
+    if (getCodeCount > 0) {
+      resetTimer();
+      const sendCodeCount = getCodeCount - 1;
       // count number get code
-      updateGetCodeCount(getCodeCount - 1);
+      updateGetCodeCount(sendCodeCount);
+      // storage resend code request times
+      saveValueWithExpires(
+        sendCodeCount,
+        StorageKey.FirebaseCodeSendCount + phone,
+        Config.RESEND_FIREBASE_CODE_TIME_BLOCK,
+      );
+      Logger.info(sendCodeCount, 'resendCodeRequest');
       // call send code
       if (resendCode) {
         resendCode();
       }
-      // start timer
-      setTiming(true);
     }
   };
+
+  React.useEffect(() => {
+    if (phone) {
+      const getResendCount = async () => {
+        const saveData = await get(StorageKey.FirebaseCodeSendCount + phone);
+        Logger.info(saveData, 'VerifyPhoneCode -> phone');
+        if (!validate.isExist(saveData)) {
+          Logger.info(
+            Config.RESEND_FIREBASE_CODE_COUNT,
+            'VerifyPhoneCode -> saveData',
+          );
+          updateGetCodeCount(Config.RESEND_FIREBASE_CODE_COUNT);
+        }
+      };
+
+      getResendCount();
+    }
+  }, [phone]);
+
+  React.useEffect(() => {
+    if (verificationId) {
+      setTiming(true);
+    }
+  }, [verificationId]);
 
   React.useEffect(() => {
     if (timing) {
@@ -56,10 +98,6 @@ export const VerifyPhoneCode = ({ infos, next }) => {
     return () => clearInterval(interval);
   }, [timing]);
 
-  React.useEffect(() => {
-    setTiming(true);
-  }, []);
-
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Animated.View style={styles.container}>
@@ -69,12 +107,17 @@ export const VerifyPhoneCode = ({ infos, next }) => {
             phone +
             translate('txtInputPhoneDesc2')}
         </Text>
+
         <CustomInput
           placeholder={translate('txtPhoneCode')}
           autoFocus={true}
-          textContentType="telephoneNumber"
+          textContentType="oneTimeCode"
           keyboardType="numeric"
+          returnKeyType="next"
+          onChangeText={(txt) => setCodeInput(txt)}
+          value={codeInput}
         />
+
         {timing && (
           <Text style={styles.textHighlightStyle}>
             {translate('txtVerifyCodeTime') +
@@ -84,23 +127,43 @@ export const VerifyPhoneCode = ({ infos, next }) => {
               translate('txtSecondUnit')}
           </Text>
         )}
+
         <ButtonCC.ButtonYellow
           label={translate('txtContinue')}
           style={styles.btnStyle}
           onPress={verifyCode}
-          disabled={timing}
+          disabled={!timing}
         />
-        <View style={styles.resendCodeStyle}>
-          <Text style={styles.textStyle}>
-            {translate('txtNotReceivedCode')}
-          </Text>
 
-          <CustomTextLink
-            label={translate('txtResend')}
-            style={styles.textBoldStyle}
-            onPress={resendCode}
-          />
-        </View>
+        {/**resend code */}
+        {(!timing || timer < TIME_WAITING) && getCodeCount > 0 && (
+          <View style={styles.resendCodeStyle}>
+            <Text style={styles.textStyle}>
+              {translate('txtNotReceivedCode')}
+            </Text>
+
+            <CustomTextLink
+              label={translate('txtResend')}
+              style={styles.textBoldStyle}
+              onPress={resendCodeRequest}
+            />
+          </View>
+        )}
+
+        {/**code send past number of max count */}
+        {getCodeCount <= 0 && (
+          <View style={styles.resendCodeStyle}>
+            <Text style={styles.textStyle}>
+              {translate('txtNotReceivedCode')}
+            </Text>
+
+            <CustomTextLink
+              label={translate('txtContactSupport')}
+              style={styles.textBoldStyle}
+              onPress={resendCodeRequest}
+            />
+          </View>
+        )}
       </Animated.View>
     </SinglePageLayout>
   );
@@ -133,7 +196,7 @@ const styles = StyleSheet.create({
     ...AppStyles.fonts.text,
     color: AppStyles.colors.button,
     textAlign: 'center',
-    marginBottom: 10,
+    marginVertical: 10,
   },
 
   resendCodeStyle: {

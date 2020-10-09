@@ -28,7 +28,7 @@ const AppStyles = {
     inputError: buttonColor,
     confirmed: '#3FB4C3',
     complete: '#BCBCBC',
-    green:'#A9B91A'
+    green: '#A9B91A',
   },
   fonts: {
     text: {

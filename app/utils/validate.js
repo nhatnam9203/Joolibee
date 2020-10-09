@@ -13,3 +13,7 @@ export const normalizePhoneNumber = (countryCode, phone) => {
 
   return countryCode + phone;
 };
+
+export const isExist = (value) => !!value && value.length > 0;
+
+export const isEmptyString = (str) => (str ? str?.trim().length === 0 : true);
