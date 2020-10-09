@@ -11,6 +11,20 @@ PODS:
     - React-Core (= 0.63.2)
     - React-jsi (= 0.63.2)
     - ReactCommon/turbomodule/core (= 0.63.2)
+  - FBSDKCoreKit (7.1.1):
+    - FBSDKCoreKit/Basics (= 7.1.1)
+    - FBSDKCoreKit/Core (= 7.1.1)
+  - FBSDKCoreKit/Basics (7.1.1)
+  - FBSDKCoreKit/Core (7.1.1):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (7.1.1):
+    - FBSDKLoginKit/Login (= 7.1.1)
+  - FBSDKLoginKit/Login (7.1.1):
+    - FBSDKCoreKit (~> 7.1.1)
+  - FBSDKShareKit (7.1.1):
+    - FBSDKShareKit/Share (= 7.1.1)
+  - FBSDKShareKit/Share (7.1.1):
+    - FBSDKCoreKit (~> 7.1.1)
   - Firebase/Auth (6.30.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.8.0)
@@ -123,7 +137,7 @@ PODS:
     - GoogleMaps
   - Google-Maps-iOS-Utils/QuadTree (2.1.0):
     - GoogleMaps
-  - GoogleDataTransport (7.5.0):
+  - GoogleDataTransport (7.5.1):
     - nanopb (~> 1.30906.0)
   - GoogleMaps (3.5.0):
     - GoogleMaps/Maps (= 3.5.0)
@@ -328,6 +342,20 @@ PODS:
     - react-native-config/App (= 1.3.3)
   - react-native-config/App (1.3.3):
     - React
+  - react-native-fbsdk (2.0.0):
+    - React
+    - react-native-fbsdk/Core (= 2.0.0)
+    - react-native-fbsdk/Login (= 2.0.0)
+    - react-native-fbsdk/Share (= 2.0.0)
+  - react-native-fbsdk/Core (2.0.0):
+    - FBSDKCoreKit (~> 7.0)
+    - React
+  - react-native-fbsdk/Login (2.0.0):
+    - FBSDKLoginKit (~> 7.0)
+    - React
+  - react-native-fbsdk/Share (2.0.0):
+    - FBSDKShareKit (~> 7.0)
+    - React
   - react-native-google-maps (0.27.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 3.5.0)
@@ -412,12 +440,12 @@ PODS:
     - React-Core
   - RNDateTimePicker (3.0.3):
     - React-Core
-  - RNDeviceInfo (6.2.0):
+  - RNDeviceInfo (6.0.4):
     - React-Core
   - RNFBApp (8.4.5):
     - Firebase/CoreOnly (~> 6.30.0)
     - React-Core
-  - RNFBAuth (9.2.7):
+  - RNFBAuth (9.3.0):
     - Firebase/Auth (~> 6.30.0)
     - React-Core
     - RNFBApp
@@ -427,8 +455,8 @@ PODS:
     - RNFBApp
   - RNGestureHandler (1.8.0):
     - React
-  - RNLocalize (1.4.2):
-    - React-Core
+  - RNLocalize (1.4.1):
+    - React
   - RNReanimated (1.13.1):
     - React
   - RNScreens (2.11.0):
@@ -481,6 +509,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -519,6 +548,9 @@ SPEC REPOS:
     - boost-for-react-native
     - CocoaAsyncSocket
     - CocoaLibEvent
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -577,6 +609,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-fbsdk:
+    :path: "../node_modules/react-native-fbsdk"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
@@ -649,6 +683,9 @@ SPEC CHECKSUMS:
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   FBLazyVector: 3ef4a7f62e7db01092f9d517d2ebc0d0677c4a37
   FBReactNativeSpec: dc7fa9088f0f2a998503a352b0554d69a4391c5a
+  FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
+  FBSDKLoginKit: 1a61d79e2b25e2fc0d03dccab1e34b38bbdf2546
+  FBSDKShareKit: 00a055c1999b099596e00212dd1c0600c6697019
   Firebase: 210f41ca352067d83b1ba4fd2e7fb49a0c017397
   FirebaseAuth: 300433de340c1b058dbb8aec224a3f1bcfda5184
   FirebaseCore: 9a41e2de78fef10f63cee30ab10e2945266bc1fc
@@ -666,7 +703,7 @@ SPEC CHECKSUMS:
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   Google-Maps-iOS-Utils: c32891ff472eaaa1fca032beedafa1a013af7875
-  GoogleDataTransport: 445302b7da4216da63071a4c29e7023f47192e5a
+  GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
   GoogleMaps: 32ca02de09de357a10ac773f2c70f1986751392d
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
@@ -685,12 +722,13 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-config: 9a061347e0136fdb32d43a34d60999297d672361
+  react-native-fbsdk: 00c15d138bba6d4efa628670886fc58cec858c19
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
-  react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
+  react-native-safe-area-context: 01158a92c300895d79dee447e980672dc3fb85a6
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-webview: 4e96d493f9f90ba4f03b28933f30b2964df07e39
+  react-native-webview: c51f73be304c61d359ec3e7c5e4e8f2c977fd360
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
   React-RCTBlob: 39cf0ece1927996c4466510e25d2105f67010e13
@@ -701,17 +739,17 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
-  RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
-  RNCCheckbox: 5313bf49c2977c1c8f7135434fc01dc80f86bf0b
-  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNCAsyncStorage: 3eea36d9460c5159b592f9ecbe5a77f8aca98006
+  RNCCheckbox: 0d96d7725fecba464d0af856e93ce66dde780d75
+  RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNCPicker: a724b3aa22b182697c190a8fd7b060b66119e136
-  RNDateTimePicker: 6f62fd42ac8b58bcc30c43ac3620e5097e8a227f
-  RNDeviceInfo: eb63f95c93ff1aae15353d113c130aebc6127915
+  RNDateTimePicker: e9fcd5ecdc0c5b018871e0d178d6040dca11973c
+  RNDeviceInfo: 6d3fae29bb57a18fabac7d09d49aca0be0d78977
   RNFBApp: 570b136767f588b7eef0ab918284e9fe364d0c3e
-  RNFBAuth: 5d071451384af263ac5f3598452c304db314a6ef
+  RNFBAuth: 7fb279b3d3dfbe1499b92c842722d9343fb522c1
   RNFBMessaging: dc3849747c2c61bfcd3c1ce6b5390f27ff4f7756
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
-  RNLocalize: 452d4118e338dee1e5ca3fac4d5a11a4ab26a46a
+  RNLocalize: c388679af021ddd6069c215f7fdd2acf4e77ede5
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
@@ -719,6 +757,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 035ed2c2403dd0a574b8e4c056accc8cc13fa348
+PODFILE CHECKSUM: 197026c8cc213014e382e29d28f2419c5f19050a
 
-COCOAPODS: 1.10.0.rc.1
+COCOAPODS: 1.9.1

@@ -19,7 +19,7 @@ target 'loyalty' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-
+pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
   target 'loyaltyTests' do
     inherit! :complete
     # Pods for testing
