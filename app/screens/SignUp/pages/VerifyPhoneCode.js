@@ -8,6 +8,7 @@ import { ButtonCC, LabelTitle } from '../../components';
 import { format, validate } from '@utils';
 import { saveValueWithExpires, get, StorageKey } from '@storage';
 import Config from 'react-native-config';
+import { useDispatch } from 'react-redux';
 
 const COUNTDOWN_SECONDS = 20;
 const TIME_WAITING = COUNTDOWN_SECONDS - 15;
@@ -15,6 +16,7 @@ const TIME_WAITING = COUNTDOWN_SECONDS - 15;
 export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
   const { phone = 'undefine', verificationId } = infos;
   var interval;
+  const dispatch = useDispatch();
   // count number get code call
   const [getCodeCount, updateGetCodeCount] = React.useState(0);
   // time count down
@@ -59,9 +61,10 @@ export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
   React.useEffect(() => {
     if (phone) {
       const getResendCount = async () => {
-        const saveData = await get(StorageKey.FirebaseCodeSendCount + phone);
-        Logger.info(saveData, 'VerifyPhoneCode -> phone');
-        if (!validate.isExist(saveData)) {
+        const numOfCount = await get(StorageKey.FirebaseCodeSendCount + phone);
+        if (typeof numOfCount === 'number') {
+          updateGetCodeCount(numOfCount);
+        } else {
           Logger.info(
             Config.RESEND_FIREBASE_CODE_COUNT,
             'VerifyPhoneCode -> saveData',
@@ -78,7 +81,7 @@ export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
     if (verificationId) {
       setTiming(true);
     }
-  }, [verificationId]);
+  }, [verificationId, dispatch]);
 
   React.useEffect(() => {
     if (timing) {

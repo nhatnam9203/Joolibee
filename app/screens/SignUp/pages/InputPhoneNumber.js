@@ -1,14 +1,15 @@
 import { CustomInput } from '@components';
-import { translate } from '@localize';
-import { AppStyles } from '@theme';
-import React from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
-import { ButtonCC, LabelTitle, TextInputErrorMessage } from '../../components';
 import { SinglePageLayout } from '@layouts';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { translate } from '@localize';
+import { hideLoading, showLoading } from '@slices/app';
+import { AppStyles } from '@theme';
 import { regex } from '@utils';
+import { Formik } from 'formik';
+import React from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import * as Yup from 'yup';
+import { ButtonCC, LabelTitle, TextInputErrorMessage } from '../../components';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -26,8 +27,6 @@ export const InputPhoneNumber = ({ next }) => {
 
   const inputPhoneDataSubmit = React.useCallback(
     (values) => {
-      // Logger.log(values, 'inputPhoneDataSubmit');
-
       next(values);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +49,6 @@ export const InputPhoneNumber = ({ next }) => {
           values,
           errors,
           touched,
-          setFieldValue,
         }) => (
           <SafeAreaView>
             <View style={styles.container}>

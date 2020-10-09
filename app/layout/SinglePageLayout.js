@@ -15,24 +15,26 @@ const SinglePageLayout = ({ children, backgroundColor, bounces }) => {
   useScrollToTop(ref);
 
   return (
-    <KeyboardAvoidingView
-      style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
-      // keyboardVerticalOffset={isIphoneX() ? 88 : 64}
-      {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
-      <StatusBar barStyle="light-content" />
+    <>
+      <KeyboardAvoidingView
+        style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
+        // keyboardVerticalOffset={isIphoneX() ? 88 : 64}
+        {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
+        <StatusBar barStyle="light-content" />
 
-      <View style={styles.content}>
-        <ScrollView
-          ref={ref}
-          bounces={bounces}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContentContainer}>
-          {children && children}
-        </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+        <View style={styles.content}>
+          <ScrollView
+            ref={ref}
+            bounces={bounces}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContentContainer}>
+            {children && children}
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 

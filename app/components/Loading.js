@@ -2,9 +2,9 @@ import React from 'react';
 import Spinner from 'react-native-spinkit';
 import { View, StyleSheet } from 'react-native';
 
-const LOADING_TIME_OUT = 1500;
+const LOADING_TIME_OUT = 10000;
 let timer;
-const Loading = ({ isLoading, onCancelLoading }) => {
+const Loading = ({ isLoading, onCancelLoading, transparent = false }) => {
   const [showLoading, setShowLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -22,7 +22,12 @@ const Loading = ({ isLoading, onCancelLoading }) => {
   }, [isLoading, onCancelLoading]);
 
   return showLoading ? (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        // eslint-disable-next-line react-native/no-inline-styles
+        { backgroundColor: transparent ? 'transparent' : '#00000060' },
+      ]}>
       <Spinner
         style={styles.spinner}
         size={100}
@@ -37,7 +42,6 @@ const Loading = ({ isLoading, onCancelLoading }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#00000060',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

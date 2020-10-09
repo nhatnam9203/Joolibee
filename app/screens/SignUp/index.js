@@ -2,6 +2,8 @@ import React from 'react';
 import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { useFirebaseAuthentication } from '@firebase';
 import { validate } from '@utils';
+import { hideLoading, showLoading } from '@slices/app';
+import { useDispatch } from 'react-redux';
 
 const { normalizePhoneNumber } = validate;
 
@@ -13,7 +15,7 @@ const PAGES = {
 
 const SignUpScreen = () => {
   // redux
-
+  const dispatch = useDispatch();
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
   const [data, setData] = React.useState(null);
 
@@ -43,11 +45,14 @@ const SignUpScreen = () => {
       return;
     }
 
+    dispatch(showLoading());
+
     // call firebase phone auth
     const { verificationId, error } = await signInWithPhoneNumber(
       normalizePhoneNumber('+84', phone),
     );
 
+    dispatch(hideLoading());
     // response
     if (verificationId) {
       setData(Object.assign({}, values, { verificationId }));
