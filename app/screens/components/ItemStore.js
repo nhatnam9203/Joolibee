@@ -1,17 +1,15 @@
-import { CustomFlatList } from '@components';
-import { translate } from '@localize';
-import { useNavigation } from '@react-navigation/native';
+
 import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 
 
 
-const index = ({ item, onPress }) => {
+const index = ({ item, onPress, isChecked }) => {
     return (
         <TouchableOpacity
-            // onPress={onHandlePress}
-            disabled={true}
+            onPress={onPress}
+            disabled={onPress ? false : true}
             style={styles.itemContainer}>
 
             <View style={styles.leftContainer}>
@@ -29,6 +27,10 @@ const index = ({ item, onPress }) => {
                 <StoreInfo url={images.icons.ic_store_phone} content={item.store_phone} />
                 <StoreInfo url={images.icons.ic_store_clock} content='09:00 - 20:00 (Thứ 2 - Chủ Nhật)' />
             </View>
+
+            {isChecked && <Image
+                source={images.icons.ic_checked}
+            />}
         </TouchableOpacity>
     );
 };

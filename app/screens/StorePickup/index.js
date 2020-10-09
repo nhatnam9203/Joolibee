@@ -3,15 +3,13 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
   FlatList,
   Dimensions, Image
 } from 'react-native';
-
-import { CustomPopupMenu, CustomMapView } from '../components';
-// import MapView from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
+import { CustomPopupMenu, CustomMapView, ItemStore } from '../components';
 import { AppStyles, images } from '@theme';
-import { ItemStore, Markers } from './pages';
+import { Markers } from './pages';
 import { CustomButton } from '@components';
 
 const { width, height } = Dimensions.get('window');
@@ -44,9 +42,9 @@ const districs = [
 ];
 
 const INITIAL_REGION = {
-  latitude: 20.98023,
-  longitude: 105.7881,
-  latitudeDelta: 0.5,
+  latitude: 10.780644,
+  longitude: 106.635679,
+  latitudeDelta: 0.1,
   longitudeDelta: (0.5 * width) / height,
 };
 
@@ -77,7 +75,7 @@ const STORES = [
   },
   {
     store_id: '5',
-    store_name: 'POPEYES THẢO ĐiỀN',
+    store_name: 'JOLLIBEE THẢO ĐiỀN',
     store_phone: '028.3519 1029',
     address: '20 Thảo Điền, KP 2, P. Thảo Điền, Q2, HCM',
     latitude: '10.80372123098',
@@ -86,12 +84,15 @@ const STORES = [
 ];
 
 const StorePage = () => {
-
+  const navigation = useNavigation();
+  const refMap = React.useRef(null);
   const [city, setCity] = React.useState(null);
   const [districts, setDistricts] = React.useState(null);
+  const [store_pickuped, pickupStore] = React.useState(null);
   const [visible, showModal] = React.useState([false, false]);
-  const refMap = React.useRef(null);
-  const popupRef = React.createRef(null);
+
+  const store_name = store_pickuped ? store_pickuped.store_name : 'Vui lòng chọn 1 cửa hàng'
+
   const openModal = (i) => () => {
     let _visible = [...visible]
     _visible[i] = !_visible[i]
@@ -110,6 +111,14 @@ const StorePage = () => {
     setDistricts(item)
   }
 
+  const onChangeStore = (item) => () => {
+    pickupStore(item)
+  }
+
+  const onBack = () => {
+    navigation.goBack()
+  }
+
   const fitAllMarkers = () => {
     refMap.current?.fitToCoordinates(STORES, {
       edgePadding: DEFAULT_PADDING,
@@ -119,19 +128,21 @@ const StorePage = () => {
 
   const renderFooter = () => {
     return (
-      <View style={styles.footerContainer}>
+      <View style={[styles.footerContainer, { opacity: store_pickuped ? 1 : 0.4 }]}>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-          <Image
-            source={images.icons.ic_sticked}
-          />
-          <Text style={styles.txtTitle}>Vui lòng chọn 1 cửa hàng</Text>
+          {store_pickuped && <Image
+            source={images.icons.ic_checked}
+          />}
+
+          <Text style={styles.txtTitle}>{store_name}</Text>
         </View>
 
         <CustomButton
+          disabled={store_pickuped ? false : true}
           width={'95%'}
           height={58}
           label='XÁC NHẬN'
-          //onPress={onPress}
+          onPress={onBack}
           textColor={AppStyles.colors.text}
           bgColor={AppStyles.colors.button}
         />
@@ -183,7 +194,11 @@ const StorePage = () => {
           </View>
         )}
         keyExtractor={(_, index) => index + ''}
-        renderItem={({ item, index }) => <ItemStore item={item} index={index} />}
+        renderItem={({ item, index }) => <ItemStore
+          item={item}
+          onPress={onChangeStore(item)}
+          isChecked={item == store_pickuped}
+        />}
         data={STORES}
 
       />

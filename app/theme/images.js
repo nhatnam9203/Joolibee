@@ -70,6 +70,7 @@ const images = {
     ic_order_text: require('../assets/icons/ic-order-text.png'),
     ic_send_chat: require('../assets/icons/ic-send-chat.png'),
     ic_popup_close_red: require('../assets/images/ic-popup-close-red.png'),
+    ic_checked: require('../assets/icons/ic-checked.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

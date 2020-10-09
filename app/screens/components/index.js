@@ -25,4 +25,5 @@ export * from './PopupRating';
 export * from './PopupChat';
 
 import CustomMapView from './MapView';
-export { CustomPopupMenu, CustomMapView }
+import ItemStore from './ItemStore';
+export { CustomPopupMenu, CustomMapView, ItemStore }
