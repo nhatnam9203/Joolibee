@@ -17,14 +17,17 @@ const SignUpScreen = () => {
   // redux
   const dispatch = useDispatch();
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
-  const [data, setData] = React.useState(null);
+  const [formData, setFormData] = React.useState(null);
 
   const verifyCallback = (response) => {
     const { message, data, status } = response;
+    dispatch(hideLoading());
     if (status === 1) {
       // Verified
+      setFormData(Object.assign({}, formData, { verified: status === 1 }));
     }
     Logger.debug(message, 'SignUpScreen -> verifyCallback -> message');
+    Logger.debug(data, 'SignUpScreen -> verifyCallback -> data');
   };
 
   const { confirmCode, signInWithPhoneNumber } = useFirebaseAuthentication({
@@ -35,6 +38,7 @@ const SignUpScreen = () => {
     if (!code) {
       return;
     }
+    dispatch(showLoading());
     await confirmCode(code);
   };
 
@@ -55,7 +59,7 @@ const SignUpScreen = () => {
     dispatch(hideLoading());
     // response
     if (verificationId) {
-      setData(Object.assign({}, values, { verificationId }));
+      setFormData(Object.assign({}, values, { verificationId }));
       // next step
       setPage(PAGES.InputCode);
     } else if (error) {
@@ -72,6 +76,7 @@ const SignUpScreen = () => {
   //
   const onSubmitVerifyCode = (values) => {
     Logger.info(values, 'onSubmitVerifyCode');
+    setPage(PAGES.SignUp);
   };
 
   switch (showPage) {
@@ -82,12 +87,13 @@ const SignUpScreen = () => {
       return (
         <VerifyPhoneCode
           next={onSubmitVerifyCode}
-          infos={data}
-          resendCode={() => requestAuthCode(data)}
+          infos={formData}
+          resendCode={() => requestAuthCode(formData)}
+          confirmCode={onConfirmCode}
         />
       );
     case 2:
-      return <SignUpForm infos={data} />;
+      return <SignUpForm infos={formData} />;
   }
 };
 

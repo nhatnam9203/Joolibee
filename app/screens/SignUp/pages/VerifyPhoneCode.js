@@ -10,11 +10,11 @@ import { saveValueWithExpires, get, StorageKey } from '@storage';
 import Config from 'react-native-config';
 import { useDispatch } from 'react-redux';
 
-const COUNTDOWN_SECONDS = 20;
+const COUNTDOWN_SECONDS = 60;
 const TIME_WAITING = COUNTDOWN_SECONDS - 15;
 
-export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
-  const { phone = 'undefine', verificationId } = infos;
+export const VerifyPhoneCode = ({ infos, next, resendCode, confirmCode }) => {
+  const { phone = 'undefine', verificationId, verified } = infos;
   var interval;
   const dispatch = useDispatch();
   // count number get code call
@@ -26,7 +26,11 @@ export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
   const [codeInput, setCodeInput] = React.useState(null);
 
   const verifyCode = () => {
-    next(infos);
+    if (validate.isEmptyString(codeInput)) {
+      return;
+    }
+
+    confirmCode(codeInput);
   };
 
   const resetTimer = () => {
@@ -65,10 +69,6 @@ export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
         if (typeof numOfCount === 'number') {
           updateGetCodeCount(numOfCount);
         } else {
-          Logger.info(
-            Config.RESEND_FIREBASE_CODE_COUNT,
-            'VerifyPhoneCode -> saveData',
-          );
           updateGetCodeCount(Config.RESEND_FIREBASE_CODE_COUNT);
         }
       };
@@ -100,6 +100,12 @@ export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
     }
     return () => clearInterval(interval);
   }, [timing]);
+
+  React.useEffect(() => {
+    if (verified) {
+      next(infos);
+    }
+  }, [verified, infos, next]);
 
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
@@ -135,7 +141,7 @@ export const VerifyPhoneCode = ({ infos, next, resendCode }) => {
           label={translate('txtContinue')}
           style={styles.btnStyle}
           onPress={verifyCode}
-          disabled={!timing}
+          disabled={!timing || validate.isEmptyString(codeInput)}
         />
 
         {/**resend code */}
