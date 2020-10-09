@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "579642910552-9d1qi4smthsnt0vapgsdimv12rj4qhq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jollibee.loyalty",
+            "certificate_hash": "2d302c739105c0aef4abd06beb9cad62f5681f6a"
+          }
+        },
+        {
+          "client_id": "579642910552-patvhd5lg4rgu40796u4g3egjrca2grc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jollibee.loyalty",
+            "certificate_hash": "f714592e4f5a5cf6a79189a174bcf128add214d3"
+          }
+        },
+        {
           "client_id": "579642910552-ano8kp2n2lu863rbf6eq2cvs28uul02m.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -32,10 +48,10 @@
               "client_type": 3
             },
             {
-              "client_id": "579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n.apps.googleusercontent.com",
+              "client_id": "579642910552-396n6lf3dn6akrdrb166hd9f413tqmsk.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.jollibee.loyalty"
+                "bundle_id": "com.jollibee.loyalty.develop"
               }
             }
           ]

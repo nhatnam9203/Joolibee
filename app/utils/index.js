@@ -5,6 +5,7 @@ import * as statusOrder from './statusOrder';
 import * as makeAPhoneCall from './makeAPhoneCall';
 import * as validate from './validate';
 import * as format from './format';
+
 module.exports = {
   StringUtil,
   scale,
@@ -13,4 +14,5 @@ module.exports = {
   makeAPhoneCall,
   validate,
   format,
+  
 };
