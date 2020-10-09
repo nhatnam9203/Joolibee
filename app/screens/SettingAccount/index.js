@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
 import ScreenName from '../ScreenName';
 import { useNavigation } from '@react-navigation/native';
-
+import { logoutFb } from '@social';
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -17,6 +17,7 @@ const SettingAccountScreen = () => {
 
   /**functions */
   const btnLogoutPressed = React.useCallback(() => {
+    logoutFb();
     const action = logout();
     dispatch(action);
   }, [dispatch]);

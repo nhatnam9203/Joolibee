@@ -1,4 +1,4 @@
-package com.loyalty;
+package com.jollibee.loyalty;
 
 import com.facebook.react.ReactActivity;
 

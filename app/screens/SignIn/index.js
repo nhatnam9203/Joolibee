@@ -22,8 +22,8 @@ import {
   TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { regex, socialSignin } from '@utils';
-import { LoginManager } from "react-native-fbsdk";
+import { regex } from '@utils';
+import { loginFb } from '@social';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -62,11 +62,17 @@ const SignInScreen = () => {
   };
 
   const signinFB = async () => {
-    const data = await socialSignin.loginFb();
+    const data = await loginFb();
     if (data.id) {
       signInSubmit(data)
     }
   }
+
+  // React.useEffect(() => {
+  //   setTimeout(() => {
+  //     signinFB()
+  //   }, 2000);
+  // }, [])
 
   return (
     <AppScrollViewIOSBounceColorsWrapper
