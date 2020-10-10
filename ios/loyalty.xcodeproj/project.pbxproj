@@ -36,6 +36,10 @@
 		3622812D250A98AB0013AF4C /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		3622812E250A98AB0013AF4C /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
 		362935F8252F0386003B0C53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 362935F7252F0386003B0C53 /* GoogleService-Info.plist */; };
+		36296D5E2531AC7900B07E24 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36296D5D2531AC7900B07E24 /* File.swift */; };
+		36296D5F2531AC7900B07E24 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36296D5D2531AC7900B07E24 /* File.swift */; };
+		36296D602531AC7900B07E24 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36296D5D2531AC7900B07E24 /* File.swift */; };
+		3675F17725307B57009B5F55 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3675F17625307B57009B5F55 /* Info.plist */; };
 		36828ECE252D75910011133E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		36828ECF252D75910011133E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		36828ED4252D75910011133E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -110,9 +114,13 @@
 		31E34C1685964FB39CDC829D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		327FEA7F4D2C7FFC0FC53B42 /* Pods-loyalty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-loyalty.release.xcconfig"; path = "Target Support Files/Pods-loyalty/Pods-loyalty.release.xcconfig"; sourceTree = "<group>"; };
 		36228134250A98AB0013AF4C /* loyalty-staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		36228135250A98AB0013AF4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/hoan/Desktop/jollibee/ios/Info.plist; sourceTree = "<absolute>"; };
 		362935F7252F0386003B0C53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		36296D5A2531AC7800B07E24 /* loyalty-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "loyalty-Bridging-Header.h"; sourceTree = "<group>"; };
+		36296D5B2531AC7800B07E24 /* loyalty-staging-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "loyalty-staging-Bridging-Header.h"; sourceTree = "<group>"; };
+		36296D5C2531AC7800B07E24 /* loyalty-develop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "loyalty-develop-Bridging-Header.h"; sourceTree = "<group>"; };
+		36296D5D2531AC7900B07E24 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		365B4DAA0751458495036028 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../app/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		3675F17625307B57009B5F55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36828EE8252D75910011133E /* loyalty-develop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-develop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36873964252D7B2900B55CE9 /* libPods-loyalty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-loyalty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		369B26B9252F0BA000042CCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -232,10 +240,14 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				36228135250A98AB0013AF4C /* Info.plist */,
+				3675F17625307B57009B5F55 /* Info.plist */,
 				362935F7252F0386003B0C53 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				36296D5D2531AC7900B07E24 /* File.swift */,
+				36296D5A2531AC7800B07E24 /* loyalty-Bridging-Header.h */,
+				36296D5B2531AC7800B07E24 /* loyalty-staging-Bridging-Header.h */,
+				36296D5C2531AC7800B07E24 /* loyalty-develop-Bridging-Header.h */,
 			);
 			name = loyalty;
 			sourceTree = "<group>";
@@ -502,7 +514,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = AP95TBLGP3;
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1200;
 						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -515,10 +527,12 @@
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
 					36228117250A98AB0013AF4C = {
+						LastSwiftMigration = 1200;
 						ProvisioningStyle = Manual;
 					};
 					36828ECA252D75910011133E = {
 						DevelopmentTeam = ZS935V8BHL;
+						LastSwiftMigration = 1200;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -568,6 +582,7 @@
 				9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */,
 				4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */,
 				362935F8252F0386003B0C53 /* GoogleService-Info.plist in Resources */,
+				3675F17725307B57009B5F55 /* Info.plist in Resources */,
 				069CBEDA4A25449E8EC4E11A /* Roboto-LightItalic.ttf in Resources */,
 				1C335018A6384F68B41A00C3 /* Roboto-Medium.ttf in Resources */,
 				C449417E934641FC869A269C /* Roboto-MediumItalic.ttf in Resources */,
@@ -1102,6 +1117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				36296D5E2531AC7900B07E24 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1128,6 +1144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3622811B250A98AB0013AF4C /* AppDelegate.m in Sources */,
+				36296D5F2531AC7900B07E24 /* File.swift in Sources */,
 				3622811C250A98AB0013AF4C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1137,6 +1154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36828ECE252D75910011133E /* AppDelegate.m in Sources */,
+				36296D602531AC7900B07E24 /* File.swift in Sources */,
 				36828ECF252D75910011133E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1173,6 +1191,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AAFC97C8B9ED4459B9E90E7E /* Pods-loyalty-loyaltyTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1196,6 +1215,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 92A745CE1E709FE80EB3B780 /* Pods-loyalty-loyaltyTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = loyaltyTests/Info.plist;
@@ -1238,6 +1258,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
 				PRODUCT_NAME = loyalty;
 				PROVISIONING_PROFILE_SPECIFIER = jollibee_loyalty_distribute;
+				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1266,6 +1287,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
 				PRODUCT_NAME = loyalty;
 				PROVISIONING_PROFILE_SPECIFIER = jollibee_loyalty_distribute;
+				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1402,6 +1424,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-staging-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1428,6 +1451,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-staging-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1459,6 +1483,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.develop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-develop-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1486,6 +1511,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty.develop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-develop-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

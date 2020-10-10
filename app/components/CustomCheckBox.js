@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 const CustomCheckBox = ({
@@ -9,11 +9,15 @@ const CustomCheckBox = ({
 }) => {
   return (
     <CheckBox
-      style={[styles.checkBoxStyle, { backgroundColor: normalColor }]}
+      style={
+        Platform.OS === 'ios' && [
+          styles.checkBoxStyle,
+          { backgroundColor: normalColor },
+        ]
+      }
       boxType="square"
       tintColors={{ true: selectedColor, false: normalColor }}
       tintColor={normalColor}
-      // onFillColor={selectedColor}
       onCheckColor={selectedColor}
       onTintColor={normalColor}
       animationDuration={0.25}

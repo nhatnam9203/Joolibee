@@ -1,7 +1,6 @@
 import { CustomInput } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
-import { hideLoading, showLoading } from '@slices/app';
 import { AppStyles } from '@theme';
 import { regex } from '@utils';
 import { Formik } from 'formik';
@@ -29,7 +28,6 @@ export const InputPhoneNumber = ({ next }) => {
     (values) => {
       next(values);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [next],
   );
 
