@@ -27,6 +27,7 @@ import ScreenName from '../../ScreenName';
 
 const BUTTON_HEIGHT = 60;
 const LAYOUT_WIDTH = '90%';
+const HALF_LAYOUT_WIDTH = '42.5%';
 const FULL_WIDTH = '100%';
 
 export const SignUpForm = ({ infos }) => {
@@ -114,18 +115,34 @@ export const SignUpForm = ({ infos }) => {
           <SafeAreaView>
             <View style={styles.container}>
               <View style={styles.topContent}>
-                <CustomInput
-                  style={{
-                    width: LAYOUT_WIDTH,
-                    borderRadius: metrics.borderRadius,
-                  }}
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
-                  placeholder={translate('txtInputName')}
-                  textContentType="name"
-                  border
-                />
+                <View style={AppStyles.styles.horizontalLayout}>
+                  <CustomInput
+                    style={{
+                      width: HALF_LAYOUT_WIDTH,
+                      borderRadius: metrics.borderRadius,
+                    }}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                    placeholder={translate('txtInputName')}
+                    textContentType="name"
+                    border
+                  />
+
+                  <CustomInput
+                    style={{
+                      width: HALF_LAYOUT_WIDTH,
+                      borderRadius: metrics.borderRadius,
+                    }}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                    placeholder={translate('txtInputName')}
+                    textContentType="name"
+                    border
+                  />
+                </View>
+
                 {/**Name input error */}
                 {errors.name && touched.name && (
                   <TextInputErrorMessage
