@@ -12,6 +12,7 @@ const metrics = {
   padding: 10,
   margin: 10,
   safeAreaPadding: 44,
+  borderRadius: 4,
 };
 
 export default metrics;

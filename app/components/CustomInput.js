@@ -1,9 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
-const CustomInput = ({ children, style, inputStyle = {}, ...inputProps }) => {
+const CustomInput = ({
+  children,
+  style,
+  inputStyle = {},
+  border,
+  ...inputProps
+}) => {
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style, border && styles.boder]}>
       <TextInput
         style={[styles.inputStyle, inputStyle]}
         placeholderTextColor="#9E9E9E"
@@ -38,6 +44,8 @@ const styles = StyleSheet.create({
     color: '#484848',
     flex: 1,
   },
+
+  boder: { borderWidth: 1, borderColor: '#BCBCBC' },
 });
 
 export default CustomInput;

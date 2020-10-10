@@ -10,7 +10,7 @@ import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { clearSignupState, signUp } from '@slices/account';
-import { AppStyles, images } from '@theme';
+import { AppStyles, images, metrics } from '@theme';
 import { Formik } from 'formik';
 import _ from 'lodash';
 import React from 'react';
@@ -115,28 +115,38 @@ export const SignUpForm = ({ infos }) => {
             <View style={styles.container}>
               <View style={styles.topContent}>
                 <CustomInput
-                  style={{ width: LAYOUT_WIDTH }}
+                  style={{
+                    width: LAYOUT_WIDTH,
+                    borderRadius: metrics.borderRadius,
+                  }}
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
                   value={values.name}
                   placeholder={translate('txtInputName')}
                   textContentType="name"
+                  border
                 />
                 {/**Name input error */}
                 {errors.name && touched.name && (
                   <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
+                    style={{
+                      width: LAYOUT_WIDTH,
+                    }}
                     message={errors.name}
                     color={AppStyles.colors.inputError}
                   />
                 )}
 
                 <CustomInput
-                  style={{ width: LAYOUT_WIDTH }}
+                  style={{
+                    width: LAYOUT_WIDTH,
+                    borderRadius: metrics.borderRadius,
+                  }}
                   value={phone}
                   placeholder={translate('txtInputPhone')}
                   editable={false}
-                  textContentType="telephoneNumber">
+                  textContentType="telephoneNumber"
+                  border>
                   <View style={styles.btnIcon}>
                     <Image
                       source={images.icons.ic_check_success}
@@ -146,12 +156,16 @@ export const SignUpForm = ({ infos }) => {
                 </CustomInput>
 
                 <CustomInput
-                  style={{ width: LAYOUT_WIDTH }}
+                  style={{
+                    width: LAYOUT_WIDTH,
+                    borderRadius: metrics.borderRadius,
+                  }}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
                   placeholder={translate('txtInputEmail')}
                   textContentType="emailAddress"
+                  border
                 />
                 {/**Email input error */}
                 {errors.email && touched.email && (
@@ -163,12 +177,16 @@ export const SignUpForm = ({ infos }) => {
                 )}
 
                 <PasswordInput
-                  style={{ width: LAYOUT_WIDTH }}
+                  style={{
+                    width: LAYOUT_WIDTH,
+                    borderRadius: metrics.borderRadius,
+                  }}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
                   placeholder={translate('txtInputPassword')}
                   textContentType="password"
+                  border
                 />
                 {/**Password input error */}
                 {errors.password && touched.password && (
@@ -180,17 +198,24 @@ export const SignUpForm = ({ infos }) => {
                 )}
 
                 <PasswordInput
-                  style={{ width: LAYOUT_WIDTH }}
+                  style={{
+                    width: LAYOUT_WIDTH,
+                    borderRadius: metrics.borderRadius,
+                  }}
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
                   value={values.password}
                   placeholder={translate('txtInputConfirmPassword')}
                   textContentType="password"
+                  border
                 />
                 {/**Confirm password input error */}
                 {errors.confirmPassword && (
                   <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
+                    style={{
+                      width: LAYOUT_WIDTH,
+                      borderRadius: metrics.borderRadius,
+                    }}
                     message={errors.confirmPassword}
                     color={AppStyles.colors.inputError}
                   />
@@ -202,11 +227,15 @@ export const SignUpForm = ({ infos }) => {
                     defaultValue={values.birthday}
                     renderBase={() => (
                       <CustomInput
-                        style={{ width: FULL_WIDTH }}
+                        style={{
+                          width: FULL_WIDTH,
+                          borderRadius: metrics.borderRadius,
+                        }}
                         onBlur={handleBlur('birthday')}
                         value={values.birthday}
                         placeholder={translate('txtPickerDate')}
-                        pointerEvents="none">
+                        pointerEvents="none"
+                        border>
                         <View style={styles.btnIcon}>
                           <Image
                             source={images.icons.ic_calendar}
@@ -218,7 +247,10 @@ export const SignUpForm = ({ infos }) => {
                   />
 
                   <CustomPickerSelect
-                    style={{ width: FULL_WIDTH }}
+                    style={{
+                      width: FULL_WIDTH,
+                      borderRadius: metrics.borderRadius,
+                    }}
                     items={[
                       { label: translate('txtMale'), value: 1, key: 'male' },
                       {
@@ -234,6 +266,7 @@ export const SignUpForm = ({ infos }) => {
                     onChangeItem={(item) =>
                       setFieldValue('gender', item?.value)
                     }
+                    border
                   />
                 </View>
 
@@ -345,18 +378,13 @@ const PopupSignUpSuccess = ({ onPress, showModal }) => (
 );
 
 const styles = StyleSheet.create({
-  avoidContainer: { flex: 1, backgroundColor: AppStyles.colors.background },
-
   container: {
     flex: 1,
+    paddingVertical: 10,
   },
 
   topContent: {
     alignItems: 'center',
-  },
-
-  scrollContentContainer: {
-    paddingVertical: 0,
   },
 
   // privacy
@@ -398,7 +426,7 @@ const styles = StyleSheet.create({
   },
 
   bottomContent: {
-    marginVertical: 10,
+    marginBottom: 10,
     flex: 0,
     alignItems: 'center',
     paddingHorizontal: 10,
@@ -411,24 +439,6 @@ const styles = StyleSheet.create({
   },
 
   imgIconStyle: { resizeMode: 'center' },
-
-  btnIconStyle: {
-    width: 22,
-    height: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  errorContent: {
-    flex: 0,
-    marginHorizontal: 15,
-    marginBottom: 10,
-  },
-
-  txtErrorMessage: {
-    color: AppStyles.colors.accent,
-    ...AppStyles.fonts.mini,
-  },
 
   pickerContentStyle: {
     width: LAYOUT_WIDTH,

@@ -22,17 +22,16 @@ const SinglePageLayout = ({ children, backgroundColor, bounces }) => {
         {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
         <StatusBar barStyle="light-content" />
 
-        <View style={styles.content}>
-          <ScrollView
-            ref={ref}
-            bounces={bounces}
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContentContainer}>
-            {children && children}
-          </ScrollView>
-        </View>
+        <ScrollView
+          ref={ref}
+          bounces={bounces}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContentContainer}
+          style={styles.content}>
+          {children && children}
+        </ScrollView>
       </KeyboardAvoidingView>
     </>
   );
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
   avoidContainer: { flex: 1, backgroundColor: AppStyles.colors.background },
 
   content: {
-    flex: 0,
+    flex: 1,
   },
 
   scrollContentContainer: {

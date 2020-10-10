@@ -4,12 +4,13 @@ import RNPickerSelect from 'react-native-picker-select';
 
 const CustomPickerSelect = ({
   style,
-  onChangeItem = () => { },
+  onChangeItem = () => {},
   placeholder,
+  border,
   ...props
 }) => {
   return (
-    <View style={ styles.wrapperPicker}>
+    <View style={[styles.wrapperPicker, style, border && styles.border]}>
       <RNPickerSelect
         style={pickerSelectStyles}
         placeholder={{
@@ -31,10 +32,8 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 16,
     color: '#484848',
     paddingRight: 30, // to ensure the text is never behind the icon
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
-    borderRadius: 6,
+    // backgroundColor: '#FFFFFF',
+    borderRadius: 10,
     height: 58,
     fontFamily: 'Roboto-Regular',
     marginVertical: 10,
@@ -45,10 +44,8 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 8,
     color: '#484848',
     paddingRight: 30, // to ensure the text is never behind the icon
-
     height: 58,
     fontFamily: 'Roboto-Regular',
-
   },
   placeholder: {
     color: '#9E9E9E',
@@ -58,85 +55,23 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
-  container: {
-    borderWidth: 0,
-    height: 58,
-    backgroundColor: 'red',
-  },
-
-  containerStyle: {
-    height: 52,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
-    borderRadius: 6,
-    margin: 10,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-
-  itemStyle: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingVertical: 10,
-    marginVertical: 10,
-  },
-
-  dropDownStyle: { backgroundColor: '#FFFFFF' },
-
-  arrowStyle: { color: '#959595' },
-
-  labelStyle: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-    padding: 0,
-    color: '#9E9E9E',
-    flex: 1,
-  },
-
-  selectedLabelStyle: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-    padding: 0,
-    color: '#484848',
-    flex: 1,
-  },
-
-  activeLabelStyle: {
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-    padding: 0,
-    color: '#484848',
-    flex: 1,
-  },
-
-  placeholderStyle: {
-    color: '#9E9E9E',
-    fontFamily: 'Roboto-Regular',
-    fontSize: 16,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-    padding: 0,
-    flex: 1,
-  },
-
   wrapperPicker: {
     width: '100%',
-    height: 58,
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
-    borderRadius: 6,
+    height: 54,
+    // borderWidth: 1,
+    // borderColor: '#BCBCBC',
+    borderRadius: 10,
     justifyContent: 'center',
-    marginVertical: 10,
+    paddingHorizontal: 10,
     // paddingHorizontal: 16,
     backgroundColor: '#FFFFFF',
-  }
+    margin: 10,
+  },
+
+  border: {
+    borderWidth: 1,
+    borderColor: '#BCBCBC',
+  },
 });
 
 export default CustomPickerSelect;
