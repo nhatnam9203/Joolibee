@@ -5,6 +5,7 @@ import CheckBox from '@react-native-community/checkbox';
 const CustomCheckBox = ({
   normalColor = '#989898',
   selectedColor = '#3FB4C3',
+  fillColor,
   ...props
 }) => {
   return (
@@ -12,7 +13,7 @@ const CustomCheckBox = ({
       style={
         Platform.OS === 'ios' && [
           styles.checkBoxStyle,
-          { backgroundColor: normalColor },
+          fillColor && { backgroundColor: normalColor },
         ]
       }
       boxType="square"

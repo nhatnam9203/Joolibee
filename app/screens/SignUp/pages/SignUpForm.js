@@ -288,7 +288,7 @@ export const SignUpForm = ({ infos }) => {
                     onValueChange={() =>
                       setFieldValue('privacyChecked', !values.privacyChecked)
                     }
-                    normalColor={AppStyles.colors.text}
+                    normalColor="#989898"
                   />
 
                   <CustomTextLink
@@ -316,7 +316,7 @@ export const SignUpForm = ({ infos }) => {
                         !values.publicMailChecked,
                       )
                     }
-                    normalColor={AppStyles.colors.text}
+                    normalColor="#989898"
                   />
                 </View>
               </View>
