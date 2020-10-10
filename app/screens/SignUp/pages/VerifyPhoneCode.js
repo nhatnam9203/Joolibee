@@ -113,6 +113,7 @@ export const VerifyPhoneCode = ({ infos, next, resendCode, confirmCode }) => {
         <LabelTitle label={translate('txtPhoneCode')} color="#fff" />
         <Text style={styles.textStyle}>
           {translate('txtInputPhoneDesc1') +
+            ' ' +
             phone +
             translate('txtInputPhoneDesc2')}
         </Text>

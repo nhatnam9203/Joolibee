@@ -38,10 +38,12 @@ export const SignUpForm = ({ infos }) => {
 
   // validate form
   const SignupSchema = Yup.object().shape({
-    name: Yup.string()
+    firstName: Yup.string()
       .min(2, translate('txtTooShort'))
-      .max(50, translate('txtTooLong'))
-      .required(translate('txtRequired')),
+      .max(10, translate('txtTooLong')),
+    lastName: Yup.string()
+      .min(2, translate('txtTooShort'))
+      .max(30, translate('txtTooLong')),
     email: Yup.string().email(translate('txtInvalidEmail')),
     password: Yup.string()
       .min(6, translate('txtTooShort'))
@@ -93,7 +95,8 @@ export const SignUpForm = ({ infos }) => {
       <Formik
         initialValues={{
           email: '',
-          name: '',
+          firstName: '',
+          lastName: '',
           phone: phone,
           password: '',
           confirmPassword: '',
@@ -121,10 +124,10 @@ export const SignUpForm = ({ infos }) => {
                       width: HALF_LAYOUT_WIDTH,
                       borderRadius: metrics.borderRadius,
                     }}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                    placeholder={translate('txtInputName')}
+                    onChangeText={handleChange('firstName')}
+                    onBlur={handleBlur('firstName')}
+                    value={values.firstName}
+                    placeholder={translate('txtInputFirstName')}
                     textContentType="name"
                     border
                   />
@@ -134,10 +137,10 @@ export const SignUpForm = ({ infos }) => {
                       width: HALF_LAYOUT_WIDTH,
                       borderRadius: metrics.borderRadius,
                     }}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                    placeholder={translate('txtInputName')}
+                    onChangeText={handleChange('lastName')}
+                    onBlur={handleBlur('lastName')}
+                    value={values.lastName}
+                    placeholder={translate('txtInputLastName')}
                     textContentType="name"
                     border
                   />
