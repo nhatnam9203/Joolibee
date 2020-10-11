@@ -97,7 +97,7 @@ function MainStack() {
         name={ScreenName.SettingAccount}
         options={{
           headerShown: true,
-          headerTitle: translate('txtSetting'),
+          // headerTitle: translate('txtSetting'),
           headerBackground: () => <View style={styles.container} />,
         }}
       />
@@ -167,7 +167,7 @@ function MainStack() {
         name={ScreenName.ChangeLanguage}
         options={{
           headerShown: true,
-          headerTitle: translate('txtChangeLanguage'),
+          // headerTitle: translate('txtChangeLanguage'),
           headerBackground: () => <View style={styles.container} />,
         }}
       />

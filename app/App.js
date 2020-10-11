@@ -2,7 +2,7 @@
  * React Native App
  * Everything starts from the entry point
  */
-import { setI18nConfig } from '@localize';
+import { setI18nConfig, RNLocalize } from '@localize';
 import { AppStyles } from '@theme';
 import Navigator from 'app/navigation';
 import configureAppStore from 'app/redux/store';
@@ -23,7 +23,7 @@ import {
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { graphQlClient } from './graphql';
 import { Loading } from '@components';
-import { hideLoading } from '@slices/app';
+import { showLoading, hideLoading } from '@slices/app';
 import SplashScreen from 'react-native-splash-screen';
 
 const { persistor, store } = configureAppStore();
@@ -64,8 +64,6 @@ const theme = {
 };
 
 enableScreens();
-// set initial config
-setI18nConfig('vi');
 
 export default function App() {
   React.useEffect(() => {
@@ -76,10 +74,12 @@ export default function App() {
     <StoreProvider store={store}>
       <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
         <ApolloProvider client={graphQlClient}>
-          <PaperProvider theme={theme}>
-            <Navigator />
-            <LoadingProvider />
-          </PaperProvider>
+          <LangProvider>
+            <PaperProvider theme={theme}>
+              <Navigator />
+              <LoadingProvider />
+            </PaperProvider>
+          </LangProvider>
         </ApolloProvider>
       </PersistGate>
     </StoreProvider>
@@ -97,4 +97,38 @@ const LoadingProvider = () => {
   }, [dispatch]);
 
   return <Loading isLoading={isLoading} onCancelLoading={onCancelLoading} />;
+};
+
+const LangProvider = ({ children }) => {
+  const dispatch = useDispatch();
+  const settingLanguage = useSelector((state) => state.setting.language);
+  Logger.debug(settingLanguage, 'LangProvider');
+  const reloadLanguage = React.useCallback(() => {
+    Logger.debug(settingLanguage, 'LangProvider -> reloadLanguage');
+
+    // dispatch(showLoading());
+    // set initial config
+    setI18nConfig(settingLanguage);
+    // dispatch(hideLoading());
+  }, [settingLanguage]);
+
+  reloadLanguage();
+
+  React.useEffect(() => {
+    function handleLocalizationChange() {
+      console.log(RNLocalize.getLocales());
+      reloadLanguage();
+    }
+
+    RNLocalize.addEventListener('change', handleLocalizationChange);
+    // …later (ex: component unmount)
+    return RNLocalize.removeEventListener('change', handleLocalizationChange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    setI18nConfig(settingLanguage);
+  }, [settingLanguage]);
+
+  return <>{children}</>;
 };

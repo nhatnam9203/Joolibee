@@ -2,6 +2,7 @@ import { I18nManager } from 'react-native';
 import * as RNLocalize from 'react-native-localize';
 import i18n from 'i18n-js';
 import { memoize } from 'lodash'; // Use for caching/memoize for better performance
+import { localizeData } from './localize';
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
@@ -34,4 +35,4 @@ const setI18nConfig = (language) => {
   i18n.locale = languageTag;
 };
 
-export { translate, setI18nConfig };
+export { translate, setI18nConfig, localizeData, RNLocalize };

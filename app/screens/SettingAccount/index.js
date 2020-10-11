@@ -6,9 +6,10 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { SettingItem, ButtonCC } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
-import ScreenName from '../ScreenName';
+import { localData } from './localData';
 import { useNavigation } from '@react-navigation/native';
 import { logoutFb } from '@social';
+
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -35,33 +36,13 @@ const SettingAccountScreen = () => {
   );
 
   React.useEffect(() => {
-    setSettingList([
-      {
-        key: 'key_notify',
-        title: translate('txtReceiveNotify'),
-        isArrow: false,
-        buttonComponent: () => <CustomSwitch />,
-      },
-      {
-        key: 'key_change_password',
-        title: translate('txtChangePassword'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.ChangePassword);
-        },
-      },
-      {
-        key: 'key_change_language',
-        title: translate('txtChangeLanguage'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.ChangeLanguage);
-        },
-      },
-      {
-        key: 'key_logout',
-      },
-    ]);
+    const unsubscribe = navigation.addListener('focus', () => {
+      navigation.setOptions({ title: translate('txtSetting') });
+
+      setSettingList(localData(navigation));
+    });
+
+    return unsubscribe;
   }, [navigation]);
 
   return (
@@ -85,6 +66,7 @@ const SettingAccountScreen = () => {
             )}
             contentContainerStyle={styles.contentContainer}
             ListFooterComponent={renderLogoutButton}
+            keyExtractor={(item) => item.key}
           />
         </View>
       </View>

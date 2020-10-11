@@ -1,28 +1,35 @@
-import { CustomFlatList, CustomTextLink } from '@components';
+import { CustomFlatList } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { images, AppStyles, metrics } from '@theme';
+import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import {
+  Image,
   SafeAreaView,
   StyleSheet,
-  View,
   Text,
-  Image,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { MenuItem, ButtonCC } from '../components';
-import ScreenName from '../ScreenName';
-
-const En_Key = 'en';
-const Vi_Key = 'vi';
+import { useDispatch, useSelector } from 'react-redux';
+import { ButtonCC } from '../components';
+import { changeLanguage } from '@slices/setting';
+import { showLoading, hideLoading } from '@slices/app';
+import { localizeData } from '@localize';
 
 const ChangeLanguageScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const settingLanguage = useSelector((state) => state.setting.language);
   const [languageList, setLanguageList] = React.useState([]);
-  const [selected, setSelected] = React.useState(Vi_Key);
+  const [selected, setSelected] = React.useState();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: translate('txtSetting'),
+    });
+  }, [navigation]);
 
   const renderItem = ({ item }) =>
     item?.flag ? (
@@ -52,20 +59,12 @@ const ChangeLanguageScreen = () => {
     );
 
   React.useEffect(() => {
-    setLanguageList([
-      {
-        key: 'vi',
-        text: translate('txtVietnam'),
-        flag: images.icons.ic_flag_vietnam,
-      },
-      {
-        key: 'en',
-        text: translate('txtEnglish'),
-        flag: images.icons.ic_flag_english,
-      },
-      { key: 'none' },
-    ]);
-  }, [navigation]);
+    setLanguageList(localizeData);
+  }, []);
+
+  React.useEffect(() => {
+    setSelected(settingLanguage);
+  }, [settingLanguage]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,7 +79,17 @@ const ChangeLanguageScreen = () => {
           />
         </View>
         <View style={styles.confirmStyle}>
-          <ButtonCC.ButtonYellow label={translate('txtConfirm')} />
+          <ButtonCC.ButtonYellow
+            label={translate('txtConfirm')}
+            onPress={() => {
+              dispatch(changeLanguage(selected));
+              dispatch(showLoading());
+              setTimeout(() => {
+                dispatch(hideLoading());
+                navigation.goBack();
+              }, 1500);
+            }}
+          />
         </View>
       </View>
     </SafeAreaView>
