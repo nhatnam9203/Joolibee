@@ -60,7 +60,7 @@ const ChangeLanguageScreen = () => {
   };
 
   React.useEffect(() => {
-    setLanguageList(localizeData);
+    setLanguageList(Object.values(localizeData));
   }, []);
 
   React.useEffect(() => {

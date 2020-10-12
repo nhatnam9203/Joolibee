@@ -2,6 +2,8 @@ import { translate } from '@localize';
 import ScreenName from '../ScreenName';
 import { CustomSwitch } from '@components';
 import React from 'react';
+import { LanguageFlag } from '../components';
+
 export const localData = (navigation) => [
   {
     key: 'key_notify',
@@ -24,6 +26,7 @@ export const localData = (navigation) => [
     onPress: () => {
       navigation.navigate(ScreenName.ChangeLanguage);
     },
+    buttonComponent: () => <LanguageFlag />,
   },
   {
     key: 'key_logout',

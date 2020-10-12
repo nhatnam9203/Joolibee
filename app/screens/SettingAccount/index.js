@@ -3,7 +3,7 @@ import { translate } from '@localize';
 import { AppStyles } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { SettingItem, ButtonCC } from '../components';
+import { SettingItem, ButtonCC, LanguageFlag } from '../components';
 import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
 import { localData } from './localData';
@@ -21,7 +21,7 @@ const SettingAccountScreen = () => {
   /**functions */
   const btnLogoutPressed = React.useCallback(async () => {
     logoutFb();
-    await logoutGoogle()
+    await logoutGoogle();
     const action = logout();
     dispatch(action);
   }, [dispatch]);
