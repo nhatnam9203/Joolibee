@@ -1,3 +1,4 @@
 import useNavigationFocus from './useNavigationFocus';
+import useChangeLanguage from './useChangeLanguage';
 
-module.exports = { useNavigationFocus };
+module.exports = { useNavigationFocus, useChangeLanguage };

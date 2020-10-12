@@ -17,17 +17,18 @@ import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
-import { useNavigationFocus } from '@hooks';
+import { useChangeLanguage } from '@hooks';
 
 const MyAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
+  const [language] = useChangeLanguage();
 
-  useNavigationFocus(() => {
+  React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
     setSettingList(localData(navigation));
-  });
+  }, [language, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>

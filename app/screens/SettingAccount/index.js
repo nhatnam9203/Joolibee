@@ -9,18 +9,14 @@ import { logout } from '@slices/account';
 import { localData } from './localData';
 import { useNavigation } from '@react-navigation/native';
 import { logoutFb } from '@social';
-import { useNavigationFocus } from '@hooks';
+import { useChangeLanguage } from '@hooks';
 
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const [settingList, setSettingList] = React.useState([]);
-
-  useNavigationFocus(() => {
-    navigation.setOptions({ headerTitle: translate('txtSetting') });
-    setSettingList(localData(navigation));
-  });
+  const [language] = useChangeLanguage();
 
   /**functions */
   const btnLogoutPressed = React.useCallback(() => {
@@ -40,6 +36,11 @@ const SettingAccountScreen = () => {
       />
     </View>
   );
+
+  React.useEffect(() => {
+    navigation.setOptions({ headerTitle: translate('txtSetting') });
+    setSettingList(localData(navigation));
+  }, [language, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -13,17 +13,17 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ButtonCC } from '../components';
-import { changeLanguage } from '@slices/setting';
 import { showLoading, hideLoading } from '@slices/app';
 import { localizeData } from '@localize';
+import { useChangeLanguage } from '@hooks';
 
 const ChangeLanguageScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const settingLanguage = useSelector((state) => state.setting.language);
   const [languageList, setLanguageList] = React.useState([]);
   const [selected, setSelected] = React.useState();
+  const [language, setLanguage] = useChangeLanguage();
 
   const renderItem = ({ item }) =>
     item?.flag ? (
@@ -53,14 +53,10 @@ const ChangeLanguageScreen = () => {
     );
 
   const submitButtonPressed = async () => {
-    await dispatch(changeLanguage(selected));
-    navigation.setOptions({ headerTitle: translate('txtChangeLanguage') });
-
-    dispatch(showLoading());
-    setTimeout(() => {
-      dispatch(hideLoading());
-      navigation.goBack();
-    }, 1500);
+    await dispatch(showLoading());
+    await setLanguage(selected);
+    await dispatch(hideLoading());
+    navigation.goBack();
   };
 
   React.useEffect(() => {
@@ -68,8 +64,9 @@ const ChangeLanguageScreen = () => {
   }, []);
 
   React.useEffect(() => {
-    setSelected(settingLanguage);
-  }, [settingLanguage]);
+    setSelected(language);
+    navigation.setOptions({ headerTitle: translate('txtChangeLanguage') });
+  }, [language, navigation]);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -3,6 +3,7 @@ import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
+import { useChangeLanguage } from '@hooks';
 
 export const HomePageName = 'Home';
 export const PromotionPageName = 'Promotion';
