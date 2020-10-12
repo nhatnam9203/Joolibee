@@ -29,6 +29,7 @@ export const BottomBarComponent = ({ state, descriptors, navigation }) => {
       icon: images.icons.tab_store,
     },
   };
+  const [language] = useChangeLanguage();
 
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
@@ -75,7 +76,7 @@ export const BottomBarComponent = ({ state, descriptors, navigation }) => {
             onLongPress={onLongPress}
             key={route.key}
             style={styles.buttonStyle}>
-            {routes[route.name]?.icon && (
+            {language && routes[route.name]?.icon && (
               <Image
                 style={[
                   styles.iconStyle,
