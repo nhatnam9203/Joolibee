@@ -25,7 +25,7 @@ import { graphQlClient } from './graphql';
 import { Loading } from '@components';
 import { hideLoading } from '@slices/app';
 import SplashScreen from 'react-native-splash-screen';
-import { useCodePushUpdate } from '@hooks';
+import { useCodePushUpdate, useChangeLanguage } from '@hooks';
 import codePush from 'react-native-code-push';
 
 const { persistor, store } = configureAppStore();
@@ -75,10 +75,6 @@ let codePushOptions = {
 function ConsumerApp() {
   React.useEffect(() => {
     SplashScreen.hide();
-    codePush.sync({
-      updateDialog: true,
-      installMode: codePush.InstallMode.IMMEDIATE,
-    });
   }, []);
 
   return (
@@ -111,35 +107,25 @@ const LoadingProvider = () => {
 };
 
 const LangProvider = ({ children }) => {
-  const dispatch = useDispatch();
-  const settingLanguage = useSelector((state) => state.setting.language);
-  Logger.debug(settingLanguage, 'LangProvider');
-  const reloadLanguage = React.useCallback(() => {
-    Logger.debug(settingLanguage, 'LangProvider -> reloadLanguage');
+  const [language] = useChangeLanguage();
 
-    // dispatch(showLoading());
-    // set initial config
-    setI18nConfig(settingLanguage);
-    // dispatch(hideLoading());
-  }, [settingLanguage]);
+  const reloadLanguage = React.useCallback(() => {
+    setI18nConfig(language);
+  }, [language]);
 
   reloadLanguage();
 
-  React.useEffect(() => {
-    function handleLocalizationChange() {
-      console.log(RNLocalize.getLocales());
-      reloadLanguage();
-    }
+  // React.useEffect(() => {
+  //   function handleLocalizationChange() {
+  //     console.log(RNLocalize.getLocales());
+  //     reloadLanguage();
+  //   }
 
-    RNLocalize.addEventListener('change', handleLocalizationChange);
-    // …later (ex: component unmount)
-    return RNLocalize.removeEventListener('change', handleLocalizationChange);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  React.useEffect(() => {
-    setI18nConfig(settingLanguage);
-  }, [settingLanguage]);
+  //   RNLocalize.addEventListener('change', handleLocalizationChange);
+  //   // …later (ex: component unmount)
+  //   return RNLocalize.removeEventListener('change', handleLocalizationChange);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return <>{children}</>;
 };
