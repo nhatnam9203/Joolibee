@@ -68,6 +68,8 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
+      <key>codepush.appcenter.ms</key>
+      <dict><!-- read the ATS Apple Docs for available options --></dict>
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
