@@ -25,12 +25,6 @@ const ChangeLanguageScreen = () => {
   const [languageList, setLanguageList] = React.useState([]);
   const [selected, setSelected] = React.useState();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: translate('txtSetting'),
-    });
-  }, [navigation]);
-
   const renderItem = ({ item }) =>
     item?.flag ? (
       <TouchableOpacity
@@ -58,6 +52,17 @@ const ChangeLanguageScreen = () => {
       []
     );
 
+  const submitButtonPressed = async () => {
+    await dispatch(changeLanguage(selected));
+    navigation.setOptions({ headerTitle: translate('txtChangeLanguage') });
+
+    dispatch(showLoading());
+    setTimeout(() => {
+      dispatch(hideLoading());
+      navigation.goBack();
+    }, 1500);
+  };
+
   React.useEffect(() => {
     setLanguageList(localizeData);
   }, []);
@@ -81,14 +86,7 @@ const ChangeLanguageScreen = () => {
         <View style={styles.confirmStyle}>
           <ButtonCC.ButtonYellow
             label={translate('txtConfirm')}
-            onPress={() => {
-              dispatch(changeLanguage(selected));
-              dispatch(showLoading());
-              setTimeout(() => {
-                dispatch(hideLoading());
-                navigation.goBack();
-              }, 1500);
-            }}
+            onPress={submitButtonPressed}
           />
         </View>
       </View>

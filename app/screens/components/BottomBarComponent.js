@@ -105,7 +105,7 @@ export const BottomBarComponent = ({ state, descriptors, navigation }) => {
 const styles = StyleSheet.create({
   barStyle: {
     height: metrics.tabBarHeight,
-    padding: metrics.padding,
+    padding: 0,
     backgroundColor: AppStyles.colors.primary,
     flexDirection: 'row',
     borderTopColor: AppStyles.colors.accent,
@@ -117,8 +117,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Roboto-Regular',
     margin: 5,
-    height: 20,
-    paddingBottom: 5,
     lineHeight: 21,
     textAlignVertical: 'center',
   },

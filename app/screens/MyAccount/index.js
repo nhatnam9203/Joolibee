@@ -16,80 +16,18 @@ import { Avatar } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
+import { localData } from './localData';
+import { useNavigationFocus } from '@hooks';
 
 const MyAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
 
-  React.useEffect(() => {
-    setSettingList([
-      {
-        key: 'key_point',
-        icon: images.icons.ic_jollibee,
-        title: translate('txtSettingPoint'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.MySavedPoint);
-        },
-      },
-      {
-        key: 'key_promotion',
-        icon: images.icons.ic_promotion,
-        title: translate('txtSettingPromotion'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.Reward);
-        },
-      },
-      {
-        key: 'key_order_list',
-        icon: images.icons.ic_order_list,
-        title: translate('txtSettingOrderList'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.MyOrders);
-        },
-        
-      },
-      {
-        key: 'key_notify',
-        icon: images.icons.ic_notify,
-        title: translate('txtSettingNotify'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.HistorySavedPoint);
-        },
-      },
-      {
-        key: 'key_address',
-        icon: images.icons.ic_address,
-        title: translate('txtSettingAddress'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.MyAddress);
-        },
-      },
-      {
-        key: 'key_support',
-        icon: images.icons.ic_support,
-        title: translate('txtSettingSupport'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.Support);
-        },
-      },
-      {
-        key: 'key_setting',
-        icon: images.icons.ic_setting,
-        title: translate('txtSetting'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.SettingAccount);
-        },
-      },
-    ]);
-  }, [navigation]);
+  useNavigationFocus(() => {
+    navigation.setOptions({ headerTitle: translate('txtSetting') });
+    setSettingList(localData(navigation));
+  });
 
   return (
     <SafeAreaView style={styles.container}>
