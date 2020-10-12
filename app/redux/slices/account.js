@@ -8,12 +8,12 @@ const KEY_CONSTANT = 'account';
 export const signUp = createAsyncThunk(
   `${KEY_CONSTANT}/signUp`,
   async (input, { dispatch }) => {
-    dispatch(showLoading());
+    await dispatch(showLoading());
     const response = await graphQlClient.mutate({
       mutation: mutation.SIGN_UP,
       variables: input,
     });
-    dispatch(hideLoading());
+    await dispatch(hideLoading());
 
     return response;
   },
@@ -109,6 +109,7 @@ const accountSlice = createSlice({
       } else {
         state.signInError = error;
       }
+      state.isLogin = true;
     },
     [signIn.rejected]: (state, action) => {
       Logger.info(action, 'signIn rejected');

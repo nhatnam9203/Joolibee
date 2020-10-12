@@ -21,7 +21,7 @@ import sagas from '../sagas';
 const config = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: [],
+  blacklist: ['app'],
   debug: Config.NODE_ENV !== 'production', //to get useful logging
 };
 const initialState = {};

@@ -11,11 +11,29 @@ const useCodePushUpdate = () => {
         installMode: codePush.InstallMode.IMMEDIATE,
       },
       (status) => {
+        Logger.info(status, 'useCodePushUpdate -> status');
+
         switch (status) {
           case codePush.SyncStatus.UPDATE_INSTALLED:
             // self.setState({ modalVisible: true });
             Logger.info(status, 'useCodePushUpdate -> UPDATE_INSTALLED');
-            setProgress(100);
+            break;
+          case codePush.SyncStatus.SYNC_IN_PROGRESS:
+            // self.setState({ modalVisible: true });
+            Logger.info(status, 'useCodePushUpdate -> SYNC_IN_PROGRESS');
+            break;
+          case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+            Logger.info('Checking for updates.', 'useCodePushUpdate');
+            break;
+          case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+            Logger.info('Downloading package.', 'useCodePushUpdate');
+            break;
+          case codePush.SyncStatus.INSTALLING_UPDATE:
+            Logger.info('Installing update.', 'useCodePushUpdate');
+            break;
+          case codePush.SyncStatus.UP_TO_DATE:
+            Logger.info('Up-to-date.', 'useCodePushUpdate');
+            setProgress(0);
             break;
         }
       },

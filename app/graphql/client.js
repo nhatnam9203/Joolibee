@@ -32,6 +32,11 @@ const authLink = setContext(async (req, { headers }) => {
 
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response, forward }) => {
+    Logger.debug(
+      { graphQLErrors, networkError, response },
+      '*************graphQLErrors*************',
+    );
+
     if (graphQLErrors?.length > 0) {
       Logger.debug(graphQLErrors, '*************graphQLErrors*************');
 

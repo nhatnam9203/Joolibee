@@ -13,19 +13,39 @@ import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
-import { TopBarComponent, PopupSelectAreaComponent, MenuPageName, PromotionPageName } from '../../../components';
-import { ProductPromotionList, BestSellerList, NewsList, AboutJollibee, ServiceList, Detail } from './widget';
+import {
+  TopBarComponent,
+  PopupSelectAreaComponent,
+  MenuPageName,
+  PromotionPageName,
+} from '../../../components';
+import {
+  ProductPromotionList,
+  BestSellerList,
+  NewsList,
+  AboutJollibee,
+  ServiceList,
+  Detail,
+} from './widget';
 const { scaleWidth, scaleHeight } = scale;
+
 const HomePage = () => {
-  const [isVisible, setVisiblePopup] = React.useState(true);
+  const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
   const navigation = useNavigation();
   const onTogglePopup = () => setVisiblePopup(true);
   const onToggleDetail = () => showDetail(!visible_detail);
 
   const onCHangeScreen = (screen) => () => {
-    navigation.navigate(screen)
-  }
+    navigation.navigate(screen);
+  };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setVisiblePopup(true);
+    }, 1200);
+  }, []);
+
   return (
     <TopBarScreenLayout
       style={{ backgroundColor: AppStyles.colors.accent }}
@@ -76,14 +96,13 @@ const HomePage = () => {
 
         <ProductPromotionList />
 
-        <BestSellerList openMenu={onCHangeScreen(MenuPageName)}/>
+        <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
 
         <NewsList openDetail={onToggleDetail} />
 
         <ServiceList openDetail={onToggleDetail} />
 
         <AboutJollibee openDetail={onToggleDetail} />
-
       </SinglePageLayout>
 
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />

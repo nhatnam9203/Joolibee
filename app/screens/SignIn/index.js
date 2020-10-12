@@ -24,7 +24,7 @@ import {
 import ScreenName from '../ScreenName';
 import { regex } from '@utils';
 import { loginFb, loginGoogle } from '@social';
-import {statusCodes } from '@react-native-community/google-signin';
+import { statusCodes } from '@react-native-community/google-signin';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -65,27 +65,27 @@ const SignInScreen = () => {
   const signinFB = async () => {
     const data = await loginFb();
     if (data) {
-      signInSubmit(data)
+      signInSubmit(data);
     }
   };
 
   const signinGoogle = async () => {
     const data = await loginGoogle();
     try {
-      data && signInSubmit(data)
+      data && signInSubmit(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       if (error === statusCodes.SIGN_IN_CANCELLED) {
         return;
       } else if (error === statusCodes.IN_PROGRESS) {
         return;
       } else if (error === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        alert('play services not available or outdated')
+        alert('play services not available or outdated');
       } else {
-        alert('something went wrong')
+        alert('something went wrong');
       }
     }
-  }
+  };
 
   // React.useEffect(() => {
   //   setTimeout(() => {
@@ -100,7 +100,11 @@ const SignInScreen = () => {
       bottomBounceColor={AppStyles.colors.button}>
       <SinglePageLayout>
         <Formik
-          initialValues={{ phone: '', password: '', email: 'nha@gmail.com' }}
+          initialValues={{
+            phone: '',
+            password: 'aabbcc',
+            email: 'nha@gmail.com',
+          }}
           onSubmit={signInSubmit}
           validationSchema={SignInSchema}
           isValidating={true}>
@@ -207,8 +211,7 @@ const SignInScreen = () => {
                 <ButtonCC.ButtonFacebook onPress={signinFB} />
 
                 {/**GOOGLE*/}
-                <ButtonCC.ButtonGoogle onPress={signinGoogle}
-/>
+                <ButtonCC.ButtonGoogle onPress={signinGoogle} />
 
                 {/**SIGN UP*/}
                 <View style={styles.textContent}>

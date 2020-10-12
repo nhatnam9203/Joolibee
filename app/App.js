@@ -69,13 +69,19 @@ enableScreens();
 
 let codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-  installMode: codePush.InstallMode.ON_NEXT_RESUME,
+  installMode: codePush.InstallMode.IMMEDIATE,
 };
 
 function ConsumerApp() {
+  const [progress] = useCodePushUpdate();
+
   React.useEffect(() => {
     SplashScreen.hide();
   }, []);
+
+  React.useEffect(() => {
+    Logger.info(progress, 'App -> check progress');
+  }, [progress]);
 
   return (
     <StoreProvider store={store}>

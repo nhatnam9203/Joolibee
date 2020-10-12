@@ -29,6 +29,13 @@ export const SIGN_UP = gql`
     }
   }
 `;
+export const SIGN_IN = gql`
+  mutation($email: String!, $password: String!) {
+    generateCustomerToken(email: $email, password: $password) {
+      token
+    }
+  }
+`;
 
 export const SIGN_OUT = gql`
   mutation {
