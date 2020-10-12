@@ -23,8 +23,10 @@ import {
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { graphQlClient } from './graphql';
 import { Loading } from '@components';
-import { showLoading, hideLoading } from '@slices/app';
+import { hideLoading } from '@slices/app';
 import SplashScreen from 'react-native-splash-screen';
+import { useCodePushUpdate } from '@hooks';
+import codePush from 'react-native-code-push';
 
 const { persistor, store } = configureAppStore();
 
@@ -65,9 +67,18 @@ const theme = {
 
 enableScreens();
 
-export default function App() {
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME,
+};
+
+function ConsumerApp() {
   React.useEffect(() => {
     SplashScreen.hide();
+    codePush.sync({
+      updateDialog: true,
+      installMode: codePush.InstallMode.IMMEDIATE,
+    });
   }, []);
 
   return (
@@ -132,3 +143,6 @@ const LangProvider = ({ children }) => {
 
   return <>{children}</>;
 };
+
+const App = codePush(codePushOptions)(ConsumerApp);
+export default App;

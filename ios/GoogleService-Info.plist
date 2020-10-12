@@ -32,5 +32,6 @@
 	<string>1:579642910552:ios:ad1b1e7fd22fa0b13e272d</string>
 	<key>DATABASE_URL</key>
 	<string>https://jollibee-vietnam.firebaseio.com</string>
+
 </dict>
 </plist>

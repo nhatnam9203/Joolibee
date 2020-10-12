@@ -57,6 +57,9 @@
 		36828EE0252D75910011133E /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DEB570D0E4423C962BDA0A /* Roboto-Regular.ttf */; };
 		36828EE1252D75910011133E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506F5A05B6D041DFB3C5968D /* Roboto-Thin.ttf */; };
 		36828EE2252D75910011133E /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A633A20DF314AE1B651A1EE /* Roboto-ThinItalic.ttf */; };
+		3683B05125340886006BF952 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3683B05025340886006BF952 /* AppCenter-Config.plist */; };
+		3683B0CF25341AC9006BF952 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3683B05025340886006BF952 /* AppCenter-Config.plist */; };
+		3683B0D025341ACA006BF952 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3683B05025340886006BF952 /* AppCenter-Config.plist */; };
 		36873965252D7B2900B55CE9 /* libPods-loyalty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36873964252D7B2900B55CE9 /* libPods-loyalty.a */; };
 		369B26BB252F0BA000042CCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 369B26B9252F0BA000042CCD /* GoogleService-Info.plist */; };
 		3A929302AEA83886704325A0 /* libPods-loyalty-loyalty-staging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9520C17344E27F1F3575343 /* libPods-loyalty-loyalty-staging.a */; };
@@ -122,6 +125,7 @@
 		365B4DAA0751458495036028 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../app/assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		3675F17625307B57009B5F55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36828EE8252D75910011133E /* loyalty-develop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "loyalty-develop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3683B05025340886006BF952 /* AppCenter-Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppCenter-Config.plist"; sourceTree = "<group>"; };
 		36873964252D7B2900B55CE9 /* libPods-loyalty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-loyalty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		369B26B9252F0BA000042CCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		369B26BA252F0BA000042CCD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				3675F17625307B57009B5F55 /* Info.plist */,
 				362935F7252F0386003B0C53 /* GoogleService-Info.plist */,
+				3683B05025340886006BF952 /* AppCenter-Config.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				36296D5D2531AC7900B07E24 /* File.swift */,
@@ -583,6 +588,7 @@
 				4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */,
 				362935F8252F0386003B0C53 /* GoogleService-Info.plist in Resources */,
 				3675F17725307B57009B5F55 /* Info.plist in Resources */,
+				3683B05125340886006BF952 /* AppCenter-Config.plist in Resources */,
 				069CBEDA4A25449E8EC4E11A /* Roboto-LightItalic.ttf in Resources */,
 				1C335018A6384F68B41A00C3 /* Roboto-Medium.ttf in Resources */,
 				C449417E934641FC869A269C /* Roboto-MediumItalic.ttf in Resources */,
@@ -616,6 +622,7 @@
 				36228122250A98AB0013AF4C /* MergeBlack.ttf in Resources */,
 				36228123250A98AB0013AF4C /* Roboto-Black.ttf in Resources */,
 				36228124250A98AB0013AF4C /* Roboto-BlackItalic.ttf in Resources */,
+				3683B0CF25341AC9006BF952 /* AppCenter-Config.plist in Resources */,
 				36228125250A98AB0013AF4C /* Roboto-Bold.ttf in Resources */,
 				36228126250A98AB0013AF4C /* Roboto-BoldItalic.ttf in Resources */,
 				36228127250A98AB0013AF4C /* Roboto-Italic.ttf in Resources */,
@@ -646,6 +653,7 @@
 				36828EDD252D75910011133E /* Roboto-LightItalic.ttf in Resources */,
 				36828EDE252D75910011133E /* Roboto-Medium.ttf in Resources */,
 				36828EDF252D75910011133E /* Roboto-MediumItalic.ttf in Resources */,
+				3683B0D025341ACA006BF952 /* AppCenter-Config.plist in Resources */,
 				36828EE0252D75910011133E /* Roboto-Regular.ttf in Resources */,
 				36828EE1252D75910011133E /* Roboto-Thin.ttf in Resources */,
 				36828EE2252D75910011133E /* Roboto-ThinItalic.ttf in Resources */,
