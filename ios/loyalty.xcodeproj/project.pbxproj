@@ -39,7 +39,6 @@
 		36296D5E2531AC7900B07E24 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36296D5D2531AC7900B07E24 /* File.swift */; };
 		36296D5F2531AC7900B07E24 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36296D5D2531AC7900B07E24 /* File.swift */; };
 		36296D602531AC7900B07E24 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36296D5D2531AC7900B07E24 /* File.swift */; };
-		3675F17725307B57009B5F55 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3675F17625307B57009B5F55 /* Info.plist */; };
 		36828ECE252D75910011133E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		36828ECF252D75910011133E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		36828ED4252D75910011133E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -520,7 +519,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = AP95TBLGP3;
 						LastSwiftMigration = 1200;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -587,7 +586,6 @@
 				9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */,
 				4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */,
 				362935F8252F0386003B0C53 /* GoogleService-Info.plist in Resources */,
-				3675F17725307B57009B5F55 /* Info.plist in Resources */,
 				3683B05125340886006BF952 /* AppCenter-Config.plist in Resources */,
 				069CBEDA4A25449E8EC4E11A /* Roboto-LightItalic.ttf in Resources */,
 				1C335018A6384F68B41A00C3 /* Roboto-Medium.ttf in Resources */,
@@ -1254,9 +1252,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = AP95TBLGP3;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1273,7 +1271,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
 				PRODUCT_NAME = loyalty;
-				PROVISIONING_PROFILE_SPECIFIER = jollibee_loyalty_distribute;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1288,9 +1286,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = AP95TBLGP3;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1302,7 +1300,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jollibee.loyalty;
 				PRODUCT_NAME = loyalty;
-				PROVISIONING_PROFILE_SPECIFIER = jollibee_loyalty_distribute;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "loyalty-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
