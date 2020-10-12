@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '@slices/account';
 import { localData } from './localData';
 import { useNavigation } from '@react-navigation/native';
-import { logoutFb } from '@social';
+import { logoutFb, logoutGoogle } from '@social';
 import { useChangeLanguage } from '@hooks';
 
 const SettingAccountScreen = () => {
@@ -19,8 +19,9 @@ const SettingAccountScreen = () => {
   const [language] = useChangeLanguage();
 
   /**functions */
-  const btnLogoutPressed = React.useCallback(() => {
+  const btnLogoutPressed = React.useCallback(async () => {
     logoutFb();
+    await logoutGoogle()
     const action = logout();
     dispatch(action);
   }, [dispatch]);
