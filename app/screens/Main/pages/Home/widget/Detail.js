@@ -27,7 +27,6 @@ export default index = ({ visible, onToggle }) => {
                     startInLoadingState={true}
                     scrollEnabled={true}
                     source={{ uri: 'https://jollibee.com.vn/dich-vu/kid-party' }}
-                // style={{ marginTop: 20 }}
                 />
             </View>
         </Modal>
