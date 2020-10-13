@@ -3,22 +3,19 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import Config from 'react-native-config';
 
 GoogleSignin.configure({
-    scopes: [`${Config.GOOGLE_ENDPOINT}/auth/userinfo.profile`],
-    webClientId: "579642910552-ano8kp2n2lu863rbf6eq2cvs28uul02m.apps.googleusercontent.com",
-    offlineAccess: false,
+    scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+    webClientId: Config.WEB_CLIENT_ID + '',
     forceCodeForRefreshToken: true,
-    iosClientId: `${Config.IOS_CLIENT_ID}`,
+    offlineAccess: true,
+    iosClientId: '579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n.apps.googleusercontent.com'
 });
-
 
 export const loginGoogle = async () => new Promise(async (resolve, reject) => {
     try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
-        console.log('userInfo',userInfo)
         resolve(userInfo)
     } catch (error) {
-        console.log('error',error)
         reject(error.code)
     }
 });
