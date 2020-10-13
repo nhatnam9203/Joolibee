@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services' // config firebase
-apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: '../../node_modules/react-native-code-push/android/codepush.gradle'
 import com.android.build.OutputFile
 
 /**
@@ -127,6 +127,15 @@ project.ext.vectoricons = [
 
 apply from: '../../node_modules/react-native-vector-icons/fonts.gradle'
 
+project.ext.envConfigFiles = [
+    debug: '.env.development',
+    release: '.env.production',
+    staging: '.env.staging',
+    anothercustombuild: '.env',
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + '/dotenv.gradle'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -140,7 +149,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName '1.0'
         multiDexEnabled true
     }
     splits {
@@ -212,7 +221,7 @@ dependencies {
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
-    implementation "com.google.android.gms:play-services-auth:17.0.0"
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
     implementation(project(':react-native-maps')) {
         exclude group: 'com.google.android.gms', module: 'play-services-base'
@@ -220,7 +229,7 @@ dependencies {
     }
     implementation 'com.google.android.gms:play-services-base:17.2.1'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-// gif
+    // gif
     implementation 'com.facebook.fresco:animated-gif:1.12.0'
     implementation 'com.facebook.fresco:animated-gif:2.0.0'
 
