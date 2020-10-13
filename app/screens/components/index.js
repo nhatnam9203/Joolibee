@@ -23,7 +23,8 @@ export * from './PopupOrderSuccess';
 import CustomPopupMenu from './CustomPopupMenu';
 export * from './PopupRating';
 export * from './PopupChat';
+export * from './LanguageFlag';
 
 import CustomMapView from './MapView';
 import ItemStore from './ItemStore';
-export { CustomPopupMenu, CustomMapView, ItemStore }
+export { CustomPopupMenu, CustomMapView, ItemStore };

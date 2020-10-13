@@ -14,10 +14,12 @@ export const SettingItem = ({ item, onPress = () => {}, buttonComponent }) => {
       <View style={styles.content}>
         {!!title && <Text style={styles.nameStyle}>{title}</Text>}
       </View>
+
+      {buttonComponent && buttonComponent()}
+
       {isArrow && (
         <Image style={styles.arrowStyle} source={images.icons.ic_arrow} />
       )}
-      {buttonComponent && buttonComponent()}
     </TouchableOpacity>
   );
 };

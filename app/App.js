@@ -72,7 +72,7 @@ let codePushOptions = {
   installMode: codePush.InstallMode.IMMEDIATE,
 };
 
-function ConsumerApp() {
+let App = () => {
   const [progress] = useCodePushUpdate();
 
   React.useEffect(() => {
@@ -97,7 +97,7 @@ function ConsumerApp() {
       </PersistGate>
     </StoreProvider>
   );
-}
+};
 
 const LoadingProvider = () => {
   const dispatch = useDispatch();
@@ -136,5 +136,5 @@ const LangProvider = ({ children }) => {
   return <>{children}</>;
 };
 
-const App = codePush(codePushOptions)(ConsumerApp);
+App = codePush(codePushOptions)(App);
 export default App;

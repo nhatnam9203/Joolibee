@@ -27,9 +27,13 @@ const useCodePushUpdate = () => {
             break;
           case codePush.SyncStatus.DOWNLOADING_PACKAGE:
             Logger.info('Downloading package.', 'useCodePushUpdate');
+            // Show "downloading" modal
+
             break;
           case codePush.SyncStatus.INSTALLING_UPDATE:
             Logger.info('Installing update.', 'useCodePushUpdate');
+            // Hide "downloading" modal
+
             break;
           case codePush.SyncStatus.UP_TO_DATE:
             Logger.info('Up-to-date.', 'useCodePushUpdate');
