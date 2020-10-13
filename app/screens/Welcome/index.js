@@ -10,6 +10,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { isIphoneX } from 'react-native-iphone-x-helper'
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../ScreenName';
 
@@ -25,8 +26,8 @@ const slides = [
     url: images['jollibee_driver_intro'],
     url_bg: images['jollibee_bg_intro'],
     style_image: {
-      width: '70%',
-      height: '60%',
+      width: isIphoneX() ? '80%' : '70%',
+      height: isIphoneX() ? '63%' : '60%',
       resizeMode: 'contain',
       marginTop: scaleHeight(70)
     },
@@ -37,8 +38,8 @@ const slides = [
     url: images['jollibee_shop_intro'],
     url_bg: images['jollibee_bg_intro'],
     style_image: {
-      width: '70%',
-      height: '60%',
+      width: isIphoneX() ? '80%' : '70%',
+      height: isIphoneX() ? '63%' : '60%',
       resizeMode: 'contain',
       marginTop: scaleHeight(55)
     },
