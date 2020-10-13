@@ -7,8 +7,9 @@ GoogleSignin.configure({
     webClientId: Config.WEB_CLIENT_ID + '',
     forceCodeForRefreshToken: true,
     offlineAccess: true,
-    iosClientId: '579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n.apps.googleusercontent.com'
+    iosClientId: Config.IOS_CLIENT_ID + ''
 });
+
 
 export const loginGoogle = async () => new Promise(async (resolve, reject) => {
     try {
