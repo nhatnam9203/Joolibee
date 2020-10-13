@@ -27,6 +27,8 @@ import { hideLoading } from '@slices/app';
 import SplashScreen from 'react-native-splash-screen';
 import { useCodePushUpdate, useChangeLanguage } from '@hooks';
 import codePush from 'react-native-code-push';
+import { dropdownRef } from './navigation/NavigationService';
+import DropdownAlert from 'react-native-dropdownalert';
 
 const { persistor, store } = configureAppStore();
 
@@ -91,6 +93,7 @@ let App = () => {
             <PaperProvider theme={theme}>
               <Navigator />
               <LoadingProvider />
+              <DropdownAlert ref={dropdownRef} showCancel={true} />
             </PaperProvider>
           </LangProvider>
         </ApolloProvider>

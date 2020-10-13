@@ -6,7 +6,7 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
-import { SinglePageLayout } from '@layouts';
+import { SinglePageLayout, PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { clearSignupState, signUp } from '@slices/account';
@@ -65,6 +65,8 @@ export const SignUpForm = ({ infos }) => {
   const signUpError = useSelector((state) => state.account.signUpError);
   const signUpSuccess = useSelector((state) => state.account.signUpSuccess);
 
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
+
   // function
   const signUpDataSubmit = React.useCallback(
     (formValues) => {
@@ -77,17 +79,17 @@ export const SignUpForm = ({ infos }) => {
   const goSignInPage = () => {
     const action = clearSignupState();
     dispatch(action);
+
+    setShowPopupSuccess(false);
     navigation.navigate(ScreenName.SignIn);
   };
 
-  // React.useEffect(() => {
-  //   const resetSignupState = () => {
-  //     const action = clearSignupState();
-  //     dispatch(action);
-  //   };
-
-  //   return resetSignupState();
-  // }, [dispatch]);
+  // !TODO: Khá bảnh ...
+  React.useEffect(() => {
+    if (signUpSuccess) {
+      setShowPopupSuccess(true);
+    }
+  }, [signUpSuccess]);
 
   // render
   return (
@@ -372,28 +374,37 @@ export const SignUpForm = ({ infos }) => {
         )}
       </Formik>
 
-      <PopupSignUpSuccess showModal={signUpSuccess} onPress={goSignInPage} />
+      <PopupSignUpSuccess
+        showModal={showPopupSuccess}
+        onPress={goSignInPage}
+        onToggle={() => setShowPopupSuccess(false)}
+      />
     </SinglePageLayout>
   );
 };
 
 const POPUP_BUTTON_WIDTH = 200;
-const PopupSignUpSuccess = ({ onPress, showModal }) => (
-  <CustomModal.CustomModal showModal={showModal}>
-    <Image source={images.icons.ic_succeeded} />
-    <CustomModal.CustomModalTitle>
-      {translate('txtSignupSuccess')}
-    </CustomModal.CustomModalTitle>
-    <CustomButton
-      style={styles.btnStyle}
-      onPress={onPress}
-      width={POPUP_BUTTON_WIDTH}
-      height={BUTTON_HEIGHT}
-      label={translate('txtSignIn')}
-      borderColor={AppStyles.colors.button}
-      textColor={AppStyles.colors.text}
-      bgColor={AppStyles.colors.button}
-    />
+const PopupSignUpSuccess = ({ onPress, showModal, onToggle }) => (
+  <CustomModal.CustomModal
+    showModal={showModal}
+    disableBackdrop
+    onToggle={onToggle}>
+    <View style={styles.popup_container}>
+      <Image source={images.icons.ic_succeeded} />
+      <CustomModal.CustomModalTitle>
+        {translate('txtSignupSuccess')}
+      </CustomModal.CustomModalTitle>
+      <CustomButton
+        style={styles.btnStyle}
+        onPress={onPress}
+        width={POPUP_BUTTON_WIDTH}
+        height={BUTTON_HEIGHT}
+        label={translate('txtSignIn')}
+        borderColor={AppStyles.colors.button}
+        textColor={AppStyles.colors.text}
+        bgColor={AppStyles.colors.button}
+      />
+    </View>
   </CustomModal.CustomModal>
 );
 
@@ -401,6 +412,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 10,
+  },
+
+  popup_container: {
+    flex: 0,
+    width: '90%',
+    maxHeight: '90%',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 15,
   },
 
   topContent: {

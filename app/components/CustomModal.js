@@ -11,6 +11,7 @@ export const CustomModal = React.forwardRef(
       onDismiss = () => {},
       animationIn = 'zoomIn',
       animationOut = 'zoomOut',
+      disableBackdrop,
     },
     ref,
   ) => {
@@ -21,6 +22,8 @@ export const CustomModal = React.forwardRef(
     }, [showModal]);
 
     const onModalHide = () => {
+      if (disableBackdrop) return;
+
       onDismiss();
       setVisible(false);
     };
@@ -58,8 +61,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     margin: 0,
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   txtTitleStyle: {
