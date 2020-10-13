@@ -32,18 +32,21 @@ const authLink = setContext(async (req, { headers }) => {
 
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response, forward }) => {
-    Logger.debug(
-      { graphQLErrors, networkError, response },
-      '*************graphQLErrors*************',
-    );
+    Logger.debug(graphQLErrors, '*************graphQLErrors*************');
+
+    Logger.debug(networkError, '*************networkError*************');
+
+    Logger.debug(response, '*************response*************');
 
     if (graphQLErrors?.length > 0) {
-      Logger.debug(graphQLErrors, '*************graphQLErrors*************');
-
       let queryErrors = [];
       let arrErrors = {};
+
       graphQLErrors.map(({ message, locations, path, extensions }, index) => {
-        if (extensions.category === 'graphql') {
+        if (
+          extensions.category === 'graphql' ||
+          extensions.category === 'graphql-input'
+        ) {
           // error call graphql wrong
           queryErrors.push(message);
         } else {

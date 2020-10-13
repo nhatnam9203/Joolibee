@@ -38,10 +38,10 @@ export const SignUpForm = ({ infos }) => {
 
   // validate form
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
+    firstname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(10, translate('txtTooLong')),
-    lastName: Yup.string()
+    lastname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     email: Yup.string().email(translate('txtInvalidEmail')),
@@ -57,7 +57,7 @@ export const SignUpForm = ({ infos }) => {
     privacyChecked: Yup.bool()
       .oneOf([true], translate('txtPrivacyRequired'))
       .required(translate('txtPrivacyRequired')),
-    publicMailChecked: Yup.bool(),
+    is_subscribed: Yup.bool(),
   });
 
   // state
@@ -95,13 +95,16 @@ export const SignUpForm = ({ infos }) => {
       <Formik
         initialValues={{
           email: '',
-          firstName: '',
-          lastName: '',
-          phone: phone,
+          firstname: '',
+          lastname: '',
+          phone_number: phone,
           password: '',
           confirmPassword: '',
-          birthday: '',
+          dob: '',
           gender: null,
+          is_subscribed: false,
+          validateType: 'fb',
+          fcmToken: '123456',
         }}
         onSubmit={signUpDataSubmit}
         validationSchema={SignupSchema}
@@ -124,9 +127,9 @@ export const SignUpForm = ({ infos }) => {
                       width: HALF_LAYOUT_WIDTH,
                       borderRadius: metrics.borderRadius,
                     }}
-                    onChangeText={handleChange('firstName')}
-                    onBlur={handleBlur('firstName')}
-                    value={values.firstName}
+                    onChangeText={handleChange('firstname')}
+                    onBlur={handleBlur('firstname')}
+                    value={values.firstname}
                     placeholder={translate('txtInputFirstName')}
                     textContentType="name"
                     border
@@ -137,9 +140,9 @@ export const SignUpForm = ({ infos }) => {
                       width: HALF_LAYOUT_WIDTH,
                       borderRadius: metrics.borderRadius,
                     }}
-                    onChangeText={handleChange('lastName')}
-                    onBlur={handleBlur('lastName')}
-                    value={values.lastName}
+                    onChangeText={handleChange('lastname')}
+                    onBlur={handleBlur('lastname')}
+                    value={values.lastname}
                     placeholder={translate('txtInputLastName')}
                     textContentType="name"
                     border
@@ -224,7 +227,7 @@ export const SignUpForm = ({ infos }) => {
                   }}
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
-                  value={values.password}
+                  value={values.confirmPassword}
                   placeholder={translate('txtInputConfirmPassword')}
                   textContentType="password"
                   border
@@ -243,16 +246,16 @@ export const SignUpForm = ({ infos }) => {
 
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
-                    onChangeDate={handleChange('birthday')}
-                    defaultValue={values.birthday}
+                    onChangeDate={handleChange('dob')}
+                    defaultValue={values.dob}
                     renderBase={() => (
                       <CustomInput
                         style={{
                           width: FULL_WIDTH,
                           borderRadius: metrics.borderRadius,
                         }}
-                        onBlur={handleBlur('birthday')}
-                        value={values.birthday}
+                        onBlur={handleBlur('dob')}
+                        value={values.dob}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
@@ -329,12 +332,9 @@ export const SignUpForm = ({ infos }) => {
                 <View style={styles.checkBoxContent}>
                   <TextCheckBox
                     label={translate('txtPrivacyMail')}
-                    value={values.publicMailChecked}
+                    value={values.is_subscribed}
                     onValueChange={() =>
-                      setFieldValue(
-                        'publicMailChecked',
-                        !values.publicMailChecked,
-                      )
+                      setFieldValue('is_subscribed', !values.is_subscribed)
                     }
                     normalColor="#989898"
                   />

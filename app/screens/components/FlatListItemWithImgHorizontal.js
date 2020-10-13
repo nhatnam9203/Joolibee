@@ -15,6 +15,7 @@ export const FlatListItemWithImgHorizontal = ({
   imgPosition = 'right',
   imgHeight = DEFAULT_HEIGHT,
   imgWidth = DEFAULT_HEIGHT,
+  shadow = true,
 }) => {
   const renderImage = () => (
     <Image
@@ -28,7 +29,9 @@ export const FlatListItemWithImgHorizontal = ({
   );
 
   return (
-    <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.container, style, shadow && AppStyles.styles.shadow]}
+      onPress={onPress}>
       {imgPosition === 'left' && renderImage()}
       <View style={[styles.content, contentStyle]}>{children}</View>
       {imgPosition === 'right' && renderImage()}
@@ -40,7 +43,6 @@ const styles = StyleSheet.create({
   container: {
     margin: 5,
     backgroundColor: '#fff',
-    ...AppStyles.styles.shadow,
     borderRadius: 8,
     ...AppStyles.styles.horizontalLayout,
     overflow: 'hidden',

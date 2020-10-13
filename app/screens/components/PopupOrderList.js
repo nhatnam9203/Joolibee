@@ -49,7 +49,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
   const renderItem = ({ item, index }) => (
-    <OrderItem item={item} key={item.id + ''} />
+    <OrderItem item={item} key={item.id + ''} shadow={false} />
   );
 
   const orderPressed = () => {

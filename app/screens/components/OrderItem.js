@@ -8,7 +8,7 @@ import { OrderCount } from './OrderCount';
 
 const IMAGE_SIZE = 69;
 
-export const OrderItem = ({ item, onPress, index }) => (
+export const OrderItem = ({ item, onPress, index, shadow }) => (
   <FlatListItemWithImgHorizontal
     imgStyle={styles.imageStyle}
     contentStyle={styles.itemStyle}
@@ -17,7 +17,8 @@ export const OrderItem = ({ item, onPress, index }) => (
     onPress={() => {}}
     imgPosition="left"
     imgWidth={IMAGE_SIZE}
-    imgHeight={IMAGE_SIZE}>
+    imgHeight={IMAGE_SIZE}
+    shadow={shadow}>
     <View style={[AppStyles.styles.horizontalLayout, styles.content]}>
       <View style={styles.txtContent}>
         <LabelTitle
