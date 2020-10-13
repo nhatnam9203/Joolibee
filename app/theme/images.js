@@ -99,6 +99,12 @@ const images = {
   jollibee_bubble: require('../assets/images/jollibee-bubble.png'),
   jollibee_bigorder: require('../assets/images/jollibee-bigorder.png'),
   bg_services: require('../assets/images/bg-services.png'),
+  jollibee_cirlce_intro: require('../assets/images/jollibee-circle-intro.png'),
+  jollibee_bg_intro: require('../assets/images/jollibee-bg-intro.png'),
+  jollibee_driver_intro: require('../assets/images/jollibee-driver-intro.png'),
+  jollibee_shop_intro: require('../assets/images/jollibee-shop.png'),
+  jollibee_light_intro: require('../assets/images/jollibee-light-intro.png'),
+  jollibee_gift_intro: require('../assets/images/jollibee-gift-intro.png'),
 };
 
 export default images;
