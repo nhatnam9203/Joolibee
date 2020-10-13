@@ -6,12 +6,11 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
+  Text,
   TouchableOpacity
 } from 'react-native';
-import {
-  Text
-} from 'react-native-paper';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { isIphoneX } from 'react-native-iphone-x-helper'
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../ScreenName';
 
@@ -24,18 +23,38 @@ const { scaleWidth, scaleHeight } = scale;
 const { width, height } = Dimensions.get('window');
 const slides = [
   {
-    url:
-      images.icons['Walkthough1'],
+    url: images['jollibee_driver_intro'],
+    url_bg: images['jollibee_bg_intro'],
+    style_image: {
+      width: isIphoneX() ? '80%' : '70%',
+      height: isIphoneX() ? '63%' : '60%',
+      resizeMode: 'contain',
+      marginTop: scaleHeight(70)
+    },
     title: 'Giao Hàng Tận Nơi',
     content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`
   },
   {
-    url: images.icons['Walkthough2'],
+    url: images['jollibee_shop_intro'],
+    url_bg: images['jollibee_bg_intro'],
+    style_image: {
+      width: isIphoneX() ? '80%' : '70%',
+      height: isIphoneX() ? '63%' : '60%',
+      resizeMode: 'contain',
+      marginTop: scaleHeight(55)
+    },
     title: 'Khuyến Mãi Hấp Dẫn',
     content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has bee industry's standard`
   },
   {
-    url: images.icons['Walkthough3'],
+    url: images['jollibee_gift_intro'],
+    url_bg: images['jollibee_light_intro'],
+    style_image: {
+      width: '70%',
+      height: '90%',
+      resizeMode: 'contain',
+      marginTop: '15%'
+    },
     title: 'Tích Điểm Đổi Quà',
     content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`
   },
@@ -67,18 +86,13 @@ const WelcomeScreen = () => {
     setPage(0)
   }
 
-  const Silde = ({ item, index }) => {
-    const btnBackgroundColor = index != 3 ? AppStyles.colors.button : AppStyles.colors.accent;
-    const txtColor = index != 3 ? AppStyles.colors.text : AppStyles.colors.white;
-    const label = index != 3 ? translate('btnConttinue') : translate('btnExperience')
+  const LastSlide = ({ item, index }) => {
     return (
       <ImageBackground
         source={item.url}
-         resizeMode='stretch'
         style={{
           width,
           height,
-
         }}>
 
         <SafeAreaView style={{
@@ -86,22 +100,7 @@ const WelcomeScreen = () => {
           height,
           alignItems: 'center'
         }}>
-          {index != 3 && < TouchableOpacity
-            onPress={onSkip}
-            style={styles.btnSkip}
-            hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-          >
-            <Text style={styles.txt_skip}>
-              Bỏ qua
-          </Text>
-
-            <Image
-              source={images.icons.arrow_skip}
-              style={styles.icon_skip}
-            />
-          </TouchableOpacity>}
-
-          {index != 3 && <View style={styles.content}>
+          <View style={styles.containerLastTop}>
             <Text style={styles.title_content}>
               {item.title}
             </Text>
@@ -109,29 +108,82 @@ const WelcomeScreen = () => {
             <Text style={styles.text_content}>
               {item.content}
             </Text>
-          </View>}
-
-          {index == 3 && <View style={styles.contentTop}>
-            <Text style={styles.title_content}>
-              {item.title}
-            </Text>
-
-            <Text style={styles.text_content}>
-              {item.content}
-            </Text>
-          </View>}
+          </View>
           <CustomButton
             onPress={nextPage(index)}
-            label={label}
+            label={translate('btnExperience')}
             width={width * 0.8}
             height={58}
-            bgColor={btnBackgroundColor}
-            style={styles.btn}
-            txtColor={txtColor}
+            bgColor={AppStyles.colors.accent}
+            style={styles.btnLast}
+            textColor={AppStyles.colors.white}
           />
         </SafeAreaView>
       </ImageBackground >
+    )
+  }
 
+  const Silde = ({ item, index }) => {
+    const btnBackgroundColor = index != 3 ? AppStyles.colors.button : AppStyles.colors.accent;
+    const txtColor = index != 3 ? AppStyles.colors.text : AppStyles.colors.white;
+    const label = index != 3 ? translate('btnConttinue') : translate('btnExperience')
+    return (
+      <>
+        {index != 3 ?
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <ImageBackground
+              source={item.url_bg}
+              style={styles.contentTop}
+            >
+              {index != 3 && < TouchableOpacity
+                onPress={onSkip}
+                style={styles.btnSkip}
+                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+              >
+                <Text style={styles.txt_skip}>
+                  Bỏ qua
+              </Text>
+
+                <Image
+                  source={images.icons.arrow_skip}
+                  style={styles.icon_skip}
+                />
+              </TouchableOpacity>}
+              <Image
+                source={item.url}
+                style={item.style_image}
+              />
+            </ImageBackground>
+
+            <ImageBackground
+              source={images.jollibee_cirlce_intro}
+              style={styles.contentBottom}
+            >
+              <View style={styles.txtContentBottom}>
+                <Text style={styles.title_content}>
+                  {item.title}
+                </Text>
+
+                <Text style={styles.text_content}>
+                  {item.content}
+                </Text>
+
+                <CustomButton
+                  onPress={nextPage(index)}
+                  label={label}
+                  width={width * 0.8}
+                  height={58}
+                  bgColor={btnBackgroundColor}
+                  style={styles.btn}
+                  txtColor={txtColor}
+                />
+              </View>
+            </ImageBackground>
+          </View>
+          :
+          <LastSlide item={item} index={index} />
+        }
+      </>
 
     )
   }
@@ -158,9 +210,12 @@ const WelcomeScreen = () => {
 
 const styles = StyleSheet.create({
   btn: {
+    marginTop: 25
+  },
 
+  btnLast: {
     position: 'absolute',
-    bottom: scaleHeight(80)
+    bottom: scaleHeight(85)
   },
   btnSkip: {
     justifyContent: 'center',
@@ -170,19 +225,41 @@ const styles = StyleSheet.create({
     right: scaleWidth(20),
     flexDirection: 'row',
   },
-  content: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: scaleHeight(190),
-    width: scaleWidth(360),
-  },
+
   contentTop: {
+    width: '100%',
+    height: '80%',
+    resizeMode: 'center',
+    backgroundColor: AppStyles.colors.button,
+    alignItems: 'center'
+  },
+
+  containerLastTop: {
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
     top: scaleHeight(45),
     width: scaleWidth(360),
+  },
+
+  contentBottom: {
+    bottom: scaleHeight(180),
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+
+  txtContentBottom: {
+    alignItems: 'center',
+    marginTop: '15%',
+    paddingHorizontal: 15,
+  },
+
+  imageTop: {
+    width: '70%',
+    height: '60%',
+    resizeMode: 'contain',
+    marginTop: '15%'
   },
   title_content: {
     fontSize: scaleWidth(30),
@@ -193,9 +270,9 @@ const styles = StyleSheet.create({
   text_content: {
     fontSize: scaleWidth(16),
     color: AppStyles.colors.white,
-    textAlign: 'left',
-    marginTop: scaleHeight(10),
-    lineHeight: scaleHeight(21)
+    lineHeight: scaleHeight(21),
+    paddingTop: 5,
+    textAlign: 'center'
   },
   txt_skip: {
     fontSize: scaleWidth(14),
