@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp ${PROJECT_DIR}/../.env.develop ${PROJECT_DIR}/../.env&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp ${PROJECT_DIR}/../.env.development ${PROJECT_DIR}/../.env&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -63,7 +63,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp ${PROJECT_DIR}/../.env.develop ${PROJECT_DIR}/../.env&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp ${PROJECT_DIR}/../.env.development ${PROJECT_DIR}/../.env&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -115,7 +115,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp ${PROJECT_DIR}/../.env.develop ${PROJECT_DIR}/../.env&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp ${PROJECT_DIR}/../.env.development ${PROJECT_DIR}/../.env&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
