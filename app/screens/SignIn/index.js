@@ -25,6 +25,9 @@ import ScreenName from '../ScreenName';
 import { regex } from '@utils';
 import { loginFb, loginGoogle } from '@social';
 import { statusCodes } from '@react-native-community/google-signin';
+import { mutation } from '@graphql';
+import { useMutation } from 'react-apollo';
+
 const LAYOUT_WIDTH = '90%';
 
 const SignInScreen = () => {
@@ -44,14 +47,22 @@ const SignInScreen = () => {
   });
 
   const signInError = useSelector((state) => state.account.signInError);
-
+  //const [generateCustomerToken, { data }] = useMutation(mutation.SIGN_IN);
   const signInSubmit = React.useCallback(
     (values) => {
-      const action = signIn(values, { dispatch });
+      let input = {
+        email: values.phone,
+        password: values.password
+      }
+      console.log('values',input)
+
+      const action = signIn(input, { dispatch });
       dispatch(action);
     },
     [dispatch],
   );
+
+
 
   const goSignUpPage = () => {
     navigation.navigate(ScreenName.SignUp);
@@ -99,9 +110,9 @@ const SignInScreen = () => {
       <SinglePageLayout>
         <Formik
           initialValues={{
-            phone: '',
-            password: 'aabbcc',
-            email: 'nha@gmail.com',
+            phone: '0975783565',
+            password: 'Admin123456',
+            email: '0975783565',
           }}
           onSubmit={signInSubmit}
           validationSchema={SignInSchema}

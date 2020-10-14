@@ -106,14 +106,15 @@ const accountSlice = createSlice({
       const { error, data } = action.payload;
       if (data?.generateCustomerToken?.token) {
         state.signInError = null;
+        state.isLogin = true;
       } else {
         state.signInError = error;
       }
-      state.isLogin = true;
+     
     },
     [signIn.rejected]: (state, action) => {
       Logger.info(action, 'signIn rejected');
-      state.isLogin = true;
+       state.isLogin = false;
     },
   },
 });
