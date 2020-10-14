@@ -7,6 +7,7 @@ import { createHttpLink } from 'apollo-link-http';
 import Config from 'react-native-config';
 import _ from 'lodash';
 import { AsyncStoreExt } from '@services';
+import NavigationService from '../navigation/NavigationService';
 
 const httpLink = createHttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
@@ -32,41 +33,52 @@ const authLink = setContext(async (req, { headers }) => {
 
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response, forward }) => {
-    Logger.debug(
-      { graphQLErrors, networkError, response },
-      '*************graphQLErrors*************',
-    );
-
+    /**
+     * graphQLErrors
+     * Do something with a graphQL error
+     */
     if (graphQLErrors?.length > 0) {
-      Logger.debug(graphQLErrors, '*************graphQLErrors*************');
+      let errors = [];
 
-      let queryErrors = [];
-      let arrErrors = {};
       graphQLErrors.map(({ message, locations, path, extensions }, index) => {
-        if (extensions.category === 'graphql') {
+        if (
+          extensions.category === 'graphql' ||
+          extensions.category === 'graphql-input'
+        ) {
           // error call graphql wrong
-          queryErrors.push(message);
+          errors.push(message);
         } else {
           switch (extensions.code) {
             default:
-              arrErrors[index] = message;
+              errors[index] = message;
               break;
           }
         }
       });
 
-      if (queryErrors.length > 0) {
-        Logger.error(queryErrors, 'Graphql query wrong');
+      if (errors.length > 0) {
+        NavigationService.alertWithError({ message: errors.join('\n ') });
       }
 
-      if (!_.isEmpty(arrErrors)) {
-        response.error = arrErrors;
+      if (!_.isEmpty(errors)) {
+        response = Object.assign({}, response, { errors: errors });
       }
     }
+    //graphQLErrors
 
+    /**
+     * networkError
+     * Do something with a network error
+     */
     if (networkError) {
-      Logger.debug('[Network error]:', networkError);
+      const { name, statusCode, result = {} } = networkError;
+
+      // Logger.debug('[Network error]:', networkError);
+      NavigationService.alertWithError({
+        message: name + ' with status code ' + statusCode,
+      });
     }
+    //networkError
   },
 );
 

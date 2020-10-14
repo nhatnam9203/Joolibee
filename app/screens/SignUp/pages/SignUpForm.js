@@ -6,7 +6,7 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
-import { SinglePageLayout } from '@layouts';
+import { SinglePageLayout, PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { clearSignupState, signUp } from '@slices/account';
@@ -38,10 +38,10 @@ export const SignUpForm = ({ infos }) => {
 
   // validate form
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
+    firstname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(10, translate('txtTooLong')),
-    lastName: Yup.string()
+    lastname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     email: Yup.string().email(translate('txtInvalidEmail')),
@@ -57,13 +57,15 @@ export const SignUpForm = ({ infos }) => {
     privacyChecked: Yup.bool()
       .oneOf([true], translate('txtPrivacyRequired'))
       .required(translate('txtPrivacyRequired')),
-    publicMailChecked: Yup.bool(),
+    is_subscribed: Yup.bool(),
   });
 
   // state
 
   const signUpError = useSelector((state) => state.account.signUpError);
   const signUpSuccess = useSelector((state) => state.account.signUpSuccess);
+
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
 
   // function
   const signUpDataSubmit = React.useCallback(
@@ -77,17 +79,17 @@ export const SignUpForm = ({ infos }) => {
   const goSignInPage = () => {
     const action = clearSignupState();
     dispatch(action);
+
+    setShowPopupSuccess(false);
     navigation.navigate(ScreenName.SignIn);
   };
 
-  // React.useEffect(() => {
-  //   const resetSignupState = () => {
-  //     const action = clearSignupState();
-  //     dispatch(action);
-  //   };
-
-  //   return resetSignupState();
-  // }, [dispatch]);
+  // !TODO: Khá bảnh ...
+  React.useEffect(() => {
+    if (signUpSuccess) {
+      setShowPopupSuccess(true);
+    }
+  }, [signUpSuccess]);
 
   // render
   return (
@@ -95,13 +97,16 @@ export const SignUpForm = ({ infos }) => {
       <Formik
         initialValues={{
           email: '',
-          firstName: '',
-          lastName: '',
-          phone: phone,
+          firstname: '',
+          lastname: '',
+          phone_number: phone,
           password: '',
           confirmPassword: '',
-          birthday: '',
+          dob: '',
           gender: null,
+          is_subscribed: false,
+          validateType: 'fb',
+          fcmToken: '123456',
         }}
         onSubmit={signUpDataSubmit}
         validationSchema={SignupSchema}
@@ -124,9 +129,9 @@ export const SignUpForm = ({ infos }) => {
                       width: HALF_LAYOUT_WIDTH,
                       borderRadius: metrics.borderRadius,
                     }}
-                    onChangeText={handleChange('firstName')}
-                    onBlur={handleBlur('firstName')}
-                    value={values.firstName}
+                    onChangeText={handleChange('firstname')}
+                    onBlur={handleBlur('firstname')}
+                    value={values.firstname}
                     placeholder={translate('txtInputFirstName')}
                     textContentType="name"
                     border
@@ -137,9 +142,9 @@ export const SignUpForm = ({ infos }) => {
                       width: HALF_LAYOUT_WIDTH,
                       borderRadius: metrics.borderRadius,
                     }}
-                    onChangeText={handleChange('lastName')}
-                    onBlur={handleBlur('lastName')}
-                    value={values.lastName}
+                    onChangeText={handleChange('lastname')}
+                    onBlur={handleBlur('lastname')}
+                    value={values.lastname}
                     placeholder={translate('txtInputLastName')}
                     textContentType="name"
                     border
@@ -224,7 +229,7 @@ export const SignUpForm = ({ infos }) => {
                   }}
                   onChangeText={handleChange('confirmPassword')}
                   onBlur={handleBlur('confirmPassword')}
-                  value={values.password}
+                  value={values.confirmPassword}
                   placeholder={translate('txtInputConfirmPassword')}
                   textContentType="password"
                   border
@@ -243,16 +248,16 @@ export const SignUpForm = ({ infos }) => {
 
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
-                    onChangeDate={handleChange('birthday')}
-                    defaultValue={values.birthday}
+                    onChangeDate={handleChange('dob')}
+                    defaultValue={values.dob}
                     renderBase={() => (
                       <CustomInput
                         style={{
                           width: FULL_WIDTH,
                           borderRadius: metrics.borderRadius,
                         }}
-                        onBlur={handleBlur('birthday')}
-                        value={values.birthday}
+                        onBlur={handleBlur('dob')}
+                        value={values.dob}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
@@ -329,12 +334,9 @@ export const SignUpForm = ({ infos }) => {
                 <View style={styles.checkBoxContent}>
                   <TextCheckBox
                     label={translate('txtPrivacyMail')}
-                    value={values.publicMailChecked}
+                    value={values.is_subscribed}
                     onValueChange={() =>
-                      setFieldValue(
-                        'publicMailChecked',
-                        !values.publicMailChecked,
-                      )
+                      setFieldValue('is_subscribed', !values.is_subscribed)
                     }
                     normalColor="#989898"
                   />
@@ -372,28 +374,37 @@ export const SignUpForm = ({ infos }) => {
         )}
       </Formik>
 
-      <PopupSignUpSuccess showModal={signUpSuccess} onPress={goSignInPage} />
+      <PopupSignUpSuccess
+        showModal={showPopupSuccess}
+        onPress={goSignInPage}
+        onToggle={() => setShowPopupSuccess(false)}
+      />
     </SinglePageLayout>
   );
 };
 
 const POPUP_BUTTON_WIDTH = 200;
-const PopupSignUpSuccess = ({ onPress, showModal }) => (
-  <CustomModal.CustomModal showModal={showModal}>
-    <Image source={images.icons.ic_succeeded} />
-    <CustomModal.CustomModalTitle>
-      {translate('txtSignupSuccess')}
-    </CustomModal.CustomModalTitle>
-    <CustomButton
-      style={styles.btnStyle}
-      onPress={onPress}
-      width={POPUP_BUTTON_WIDTH}
-      height={BUTTON_HEIGHT}
-      label={translate('txtSignIn')}
-      borderColor={AppStyles.colors.button}
-      textColor={AppStyles.colors.text}
-      bgColor={AppStyles.colors.button}
-    />
+const PopupSignUpSuccess = ({ onPress, showModal, onToggle }) => (
+  <CustomModal.CustomModal
+    showModal={showModal}
+    disableBackdrop
+    onToggle={onToggle}>
+    <View style={styles.popup_container}>
+      <Image source={images.icons.ic_succeeded} />
+      <CustomModal.CustomModalTitle>
+        {translate('txtSignupSuccess')}
+      </CustomModal.CustomModalTitle>
+      <CustomButton
+        style={styles.btnStyle}
+        onPress={onPress}
+        width={POPUP_BUTTON_WIDTH}
+        height={BUTTON_HEIGHT}
+        label={translate('txtSignIn')}
+        borderColor={AppStyles.colors.button}
+        textColor={AppStyles.colors.text}
+        bgColor={AppStyles.colors.button}
+      />
+    </View>
   </CustomModal.CustomModal>
 );
 
@@ -401,6 +412,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 10,
+  },
+
+  popup_container: {
+    flex: 0,
+    width: '90%',
+    maxHeight: '90%',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 15,
   },
 
   topContent: {

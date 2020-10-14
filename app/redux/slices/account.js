@@ -84,7 +84,7 @@ const accountSlice = createSlice({
     [signUp.fulfilled]: (state, action) => {
       Logger.info(action, 'signUp fulfilled');
       const { error, data } = action.payload;
-      if (data?.createCustomer?.customer) {
+      if (data?.registerCustomer?.customer) {
         state.signUpSuccess = true;
         state.signUpError = null;
       } else {
