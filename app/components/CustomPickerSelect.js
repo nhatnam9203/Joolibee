@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import Icon from 'react-native-vector-icons/Entypo';
 
 const CustomPickerSelect = ({
   style,
@@ -20,6 +21,9 @@ const CustomPickerSelect = ({
         {...props}
         //useNativeAndroidPickerStyle={false}
         onValueChange={onChangeItem}
+        Icon={() => {
+          return <Icon name="chevron-thin-down" color="gray" size={18} />;
+        }}
       />
     </View>
   );
@@ -32,11 +36,9 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 16,
     color: '#484848',
     paddingRight: 30, // to ensure the text is never behind the icon
-    // backgroundColor: '#FFFFFF',
-    borderRadius: 10,
     height: 58,
+    width: '100%',
     fontFamily: 'Roboto-Regular',
-    marginVertical: 10,
   },
   inputAndroid: {
     fontSize: 16,
@@ -52,20 +54,24 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Roboto-Regular',
   },
+  iconContainer: {
+    top: 10,
+    right: 12,
+    bottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 const styles = StyleSheet.create({
   wrapperPicker: {
     width: '100%',
     height: 54,
-    // borderWidth: 1,
-    // borderColor: '#BCBCBC',
-    borderRadius: 10,
+    borderRadius: 8,
     justifyContent: 'center',
-    paddingHorizontal: 10,
-    // paddingHorizontal: 16,
     backgroundColor: '#FFFFFF',
     margin: 10,
+    overflow: 'hidden',
   },
 
   border: {
