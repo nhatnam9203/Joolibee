@@ -59,7 +59,7 @@ const HomePage = () => {
           <CustomButton
             onPress={onCHangeScreen(MenuPageName)}
             label={'XEM THỰC ĐƠN'}
-            width={141}
+            width={'42%'}
             height={43}
             bgColor={AppStyles.colors.button}
             styleText={{ fontSize: scaleWidth(14) }}
@@ -86,10 +86,10 @@ const HomePage = () => {
             <CustomButton
               onPress={onCHangeScreen(PromotionPageName)}
               label={'KHUYẾN MÃI'}
-              width={134}
+              width={'42%'}
               height={43}
               bgColor={AppStyles.colors.button}
-              styleText={{ fontSize: scaleWidth(14) }}
+              styleText={{ fontSize: 14 }}
             />
           </View>
         </ImageBackground>

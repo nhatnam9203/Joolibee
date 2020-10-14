@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 75,
         flex: 0,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
         padding: metrics.padding,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     content: {
         paddingHorizontal: 10,
-        width: 270,
+        width: '85%',
     },
     txtTitle: {
         fontSize: 21,
