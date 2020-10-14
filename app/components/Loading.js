@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from 'react-native-spinkit';
 import { View, StyleSheet } from 'react-native';
 
-const LOADING_TIME_OUT = 10000;
+const LOADING_TIME_OUT = 30000;
 let timer;
 const Loading = ({ isLoading, onCancelLoading, transparent = false }) => {
   const [showLoading, setShowLoading] = React.useState(false);

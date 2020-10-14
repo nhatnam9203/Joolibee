@@ -7,14 +7,26 @@ export * from './StorageKey';
  * @param {*} key Key Storage
  * @param {*} expires Time Expired
  */
-export const saveValueWithExpires = (value, key, expires) =>
+export const saveValueWithExpires = (value, key, expires = null) =>
   storage.save({
     key: key,
     data: value,
     expires: expires,
   });
 
-export const get = (key, options) =>
+export const save = (value, key) =>
+  storage.save({
+    key: key,
+    data: value,
+    expires: null,
+  });
+
+export const remove = (key) =>
+  storage.remove({
+    key,
+  });
+
+export const get = async (key, options) =>
   new Promise((resolve, reject) =>
     storage
       .load({

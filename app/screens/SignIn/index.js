@@ -22,9 +22,10 @@ import {
   TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { regex } from '@utils';
+import { regex, validate } from '@utils';
 import { loginFb, loginGoogle } from '@social';
 import { statusCodes } from '@react-native-community/google-signin';
+
 const LAYOUT_WIDTH = '90%';
 
 const SignInScreen = () => {
@@ -33,13 +34,12 @@ const SignInScreen = () => {
   const dispatch = useDispatch();
 
   const SignInSchema = Yup.object().shape({
-    phone: Yup.string(),
-    // .required(translate('txtRequired'))
-    // .matches(regex.phone, translate('txtWrongPhoneNumber'))
-    // .min(10, translate('txtTooShort'))
-    // .max(15, translate('txtTooLong')),
-    password: Yup.string(),
-    // .required(translate('txtRequired')),
+    username: Yup.string()
+      .required(translate('txtRequired'))
+      // .matches(regex.phone, translate('txtWrongPhoneNumber'))
+      // .min(10, translate('txtTooShort'))
+      .max(30, translate('txtTooLong')),
+    password: Yup.string().required(translate('txtRequired')),
     remember: Yup.bool(),
   });
 
@@ -47,7 +47,20 @@ const SignInScreen = () => {
 
   const signInSubmit = React.useCallback(
     (values) => {
-      const action = signIn(values, { dispatch });
+      //refactor data
+      const { username, ...data } = values;
+      let submitData = Object.assign({}, data, { email: username });
+
+      // let submitData = values;
+      // if (validate.phoneNumber(username)) {
+      //   submitData = Object.assign({}, data, { email: username });
+      // }
+
+      // if (validate.email(username)) {
+      //   submitData = Object.assign({}, data, { email: username });
+      // }
+
+      const action = signIn(submitData, { dispatch });
       dispatch(action);
     },
     [dispatch],
@@ -99,9 +112,8 @@ const SignInScreen = () => {
       <SinglePageLayout>
         <Formik
           initialValues={{
-            phone: '',
-            password: 'aabbcc',
-            email: 'nha@gmail.com',
+            username: null,
+            password: null,
           }}
           onSubmit={signInSubmit}
           validationSchema={SignInSchema}
@@ -115,117 +127,117 @@ const SignInScreen = () => {
             touched,
             setFieldValue,
           }) => (
-              <View style={styles.container}>
-                {/**Red*/}
-                <View style={styles.topContent}>
-                  {/**LOGO */}
-                  <JollibeeLogo />
+            <View style={styles.container}>
+              {/**Red*/}
+              <View style={styles.topContent}>
+                {/**LOGO */}
+                <JollibeeLogo />
 
-                  {/**TITLE */}
-                  <LabelTitle label={translate('txtPleaseSignIn')} color="#fff" />
+                {/**TITLE */}
+                <LabelTitle label={translate('txtPleaseSignIn')} color="#fff" />
 
-                  {/**PHONE*/}
-                  <CustomInput
+                {/**PHONE*/}
+                <CustomInput
+                  style={{ width: LAYOUT_WIDTH }}
+                  onChangeText={handleChange('username')}
+                  onBlur={handleBlur('username')}
+                  value={values.username}
+                  placeholder={translate('txtInputPhone')}
+                  textContentType="telephoneNumber"
+                  keyboardType="phone-pad"
+                />
+
+                {/**Phone input error */}
+                {errors.username && touched.username && (
+                  <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
-                    onChangeText={handleChange('phone')}
-                    onBlur={handleBlur('phone')}
-                    value={values.phone}
-                    placeholder={translate('txtInputPhone')}
-                    textContentType="telephoneNumber"
-                    keyboardType="phone-pad"
+                    message={errors.username}
+                    color={AppStyles.colors.inputError}
                   />
+                )}
 
-                  {/**Phone input error */}
-                  {errors.phone && touched.phone && (
+                {/**PASSWORD*/}
+                <PasswordInput
+                  style={{ width: LAYOUT_WIDTH }}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  placeholder={translate('txtInputPassword')}
+                  textContentType="password"
+                />
+                {/**Password input error */}
+                {errors.password && touched.password && (
+                  <TextInputErrorMessage
+                    style={{ width: LAYOUT_WIDTH }}
+                    messages={errors.password}
+                    color={AppStyles.colors.inputError}
+                  />
+                )}
+
+                {/**Server response error */}
+                {!_.isEmpty(signInError) &&
+                  Object.values(signInError).map((item, index) => (
                     <TextInputErrorMessage
                       style={{ width: LAYOUT_WIDTH }}
-                      message={errors.phone}
+                      message={item}
                       color={AppStyles.colors.inputError}
+                      key={index}
                     />
-                  )}
+                  ))}
 
-                  {/**PASSWORD*/}
-                  <PasswordInput
-                    style={{ width: LAYOUT_WIDTH }}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    placeholder={translate('txtInputPassword')}
-                    textContentType="password"
+                {/**REMEMBER*/}
+                <View style={styles.rememberStyle}>
+                  <TextCheckBox
+                    label={translate('txtRemember')}
+                    value={values.remember}
+                    onValueChange={() =>
+                      setFieldValue('remember', !values.remember)
+                    }
+                    normalColor="#fff"
+                    fillColor={true}
                   />
-                  {/**Password input error */}
-                  {errors.password && touched.password && (
-                    <TextInputErrorMessage
-                      style={{ width: LAYOUT_WIDTH }}
-                      messages={errors.password}
-                      color={AppStyles.colors.inputError}
-                    />
-                  )}
 
-                  {/**Server response error */}
-                  {!_.isEmpty(signInError) &&
-                    Object.values(signInError).map((item, index) => (
-                      <TextInputErrorMessage
-                        style={{ width: LAYOUT_WIDTH }}
-                        message={item}
-                        color={AppStyles.colors.inputError}
-                        key={index}
-                      />
-                    ))}
-
-                  {/**REMEMBER*/}
-                  <View style={styles.rememberStyle}>
-                    <TextCheckBox
-                      label={translate('txtRemember')}
-                      value={values.remember}
-                      onValueChange={() =>
-                        setFieldValue('remember', !values.remember)
-                      }
-                      normalColor="#fff"
-                      fillColor={true}
-                    />
-
-                    <CustomTextLink
-                      label={translate('txtForgetPassWord')}
-                      style={styles.txtForgotPass}
-                      onPress={goForgotPasswordScreen}
-                    />
-                  </View>
-
-                  <View style={styles.polygonStyle}>
-                    <Image source={images.login_polygon} />
-                  </View>
+                  <CustomTextLink
+                    label={translate('txtForgetPassWord')}
+                    style={styles.txtForgotPass}
+                    onPress={goForgotPasswordScreen}
+                  />
                 </View>
 
-                {/**Yellow*/}
-                <View style={styles.bottomContent}>
-                  {/**SIGN IN*/}
-                  <ButtonCC.ButtonRed
-                    onPress={handleSubmit}
-                    label={translate('txtSignIn')}
-                  />
-
-                  {/**FACEBOOK*/}
-                  <ButtonCC.ButtonFacebook onPress={signinFB} />
-
-                  {/**GOOGLE*/}
-                  <ButtonCC.ButtonGoogle onPress={signinGoogle} />
-
-                  {/**SIGN UP*/}
-                  <View style={styles.textContent}>
-                    <Text style={styles.txtStyle}>
-                      {translate('txtNotHaveAccount')}
-                    </Text>
-
-                    <CustomTextLink
-                      label={translate('txtSignUpNow')}
-                      style={styles.txtSignIn}
-                      onPress={goSignUpPage}
-                    />
-                  </View>
+                <View style={styles.polygonStyle}>
+                  <Image source={images.login_polygon} />
                 </View>
               </View>
-            )}
+
+              {/**Yellow*/}
+              <View style={styles.bottomContent}>
+                {/**SIGN IN*/}
+                <ButtonCC.ButtonRed
+                  onPress={handleSubmit}
+                  label={translate('txtSignIn')}
+                />
+
+                {/**FACEBOOK*/}
+                <ButtonCC.ButtonFacebook onPress={signinFB} />
+
+                {/**GOOGLE*/}
+                <ButtonCC.ButtonGoogle onPress={signinGoogle} />
+
+                {/**SIGN UP*/}
+                <View style={styles.textContent}>
+                  <Text style={styles.txtStyle}>
+                    {translate('txtNotHaveAccount')}
+                  </Text>
+
+                  <CustomTextLink
+                    label={translate('txtSignUpNow')}
+                    style={styles.txtSignIn}
+                    onPress={goSignUpPage}
+                  />
+                </View>
+              </View>
+            </View>
+          )}
         </Formik>
       </SinglePageLayout>
     </AppScrollViewIOSBounceColorsWrapper>

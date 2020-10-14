@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
+import { save, get, StorageKey } from '@storage';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { SplashScreen, ScreenName } from '../screens';
@@ -11,17 +12,29 @@ const Stack = createStackNavigator();
 
 function SplashStack() {
   return (
-    <Stack.Navigator initialRouteName={ScreenName.Main} headerMode="none">
+    <Stack.Navigator headerMode="none">
       <Stack.Screen component={SplashScreen} name={ScreenName.Splash} />
     </Stack.Navigator>
   );
 }
 function App() {
-  const isLogIn = useSelector((state) => state.account.isLogin);
+  const tokenKey = useSelector((state) => state.account.tokenKey);
   const loading = useSelector((state) => state.app.loading_app);
+
+  const [token, setToken] = React.useState(null);
+
+  React.useEffect(() => {
+    const loadToken = async () => {
+      const tokenObject = await get(StorageKey.Token);
+      Logger.debug(tokenObject, 'App -> useEffect');
+      setToken(tokenObject[tokenKey]);
+    };
+    loadToken();
+  }, [tokenKey]);
+
   return (
     <NavigationContainer ref={navigationRef}>
-      {loading ? <SplashStack /> : isLogIn ? <MainStack /> : <AuthStack />}
+      {loading ? <SplashStack /> : token ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }
