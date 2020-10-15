@@ -52,17 +52,17 @@ const districs = [
   },
 ];
 
+const INITIAL_REGION = {
+  latitude: 10.780644,
+  longitude: 106.635679,
+  latitudeDelta: 0.5,
+  longitudeDelta: (0.5 * width) / height,
+};
+
 const StorePage = () => {
   const dispatch = useDispatch();
-  const init_location = useSelector((state) => state.store.init_location);
+ // const init_location = useSelector((state) => state.store.init_location);
 
-  const INITIAL_REGION = {
-    latitude: init_location?.coords?.latitude,
-    longitude: init_location?.coords?.latitude,
-    latitudeDelta: 0.5,
-    longitudeDelta: (0.5 * width) / height,
-  };
-  console.log('init_location', init_location)
 
   const [visible, showModal] = React.useState([false, false]);
   const [params, setParams] = React.useState({})

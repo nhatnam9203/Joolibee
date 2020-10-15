@@ -11,8 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
-import { useGeolocation } from "@hooks";
-import { setInitLocation } from '@slices/store';
+// import { useGeolocation } from "@hooks";
+// import { setInitLocation } from '@slices/store';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
 import {
@@ -34,7 +34,7 @@ const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  let curr_location = useGeolocation();
+  // let curr_location = useGeolocation();
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
   const navigation = useNavigation();
@@ -51,9 +51,9 @@ const HomePage = () => {
     }, 1200);
   }, []);
 
-  React.useEffect(()=>{
-    dispatch(setInitLocation(curr_location))
-  },[curr_location])
+  // React.useEffect(()=>{
+  //   dispatch(setInitLocation(curr_location))
+  // },[curr_location])
 
   return (
     <TopBarScreenLayout

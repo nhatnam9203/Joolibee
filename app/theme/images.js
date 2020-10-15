@@ -94,7 +94,7 @@ const images = {
   bee_man: require('../assets/images/jollibee-wellcome.gif'),
   jolibee_delivery: require('../assets/images/jolibee-delivery.gif'),
   jolibee_cooking: require('../assets/images/jolibee-cooking.gif'),
-  jollibee_arrived: require('../assets/images/jollibee-arrived.gif'),
+  jollibee_arrived: require('../assets/images/jollibee-arrived-gif.gif'),
   jollibee_like: require('../assets/images/jollibee-arrived.png'),
   jollibee_bubble: require('../assets/images/jollibee-bubble.png'),
   jollibee_bigorder: require('../assets/images/jollibee-bigorder.png'),
