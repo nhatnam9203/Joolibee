@@ -1,4 +1,4 @@
-import { QueryMenuList } from './MenuList';
+import { QueryMenuList } from './QueryMenuList';
 
 module.exports = {
   QueryMenuList,
