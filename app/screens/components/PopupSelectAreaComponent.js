@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaleWidth(22),
     paddingTop: scaleHeight(25),
     alignItems: 'center',
+    marginTop: 20,
   },
   polygonStyle: {
     position: 'absolute',
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: scaleWidth(24),
     marginTop: scaleHeight(15),
     color: AppStyles.colors.white,
-    textAlign:'center'
+    textAlign: 'center',
   },
   icon_jollibee: {
     resizeMode: 'contain',

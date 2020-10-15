@@ -1,11 +1,11 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
 import { TopBarComponent, MenuItem } from '../../../components';
-import { CustomFlatList } from '@components';
 import { images } from '@theme';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../../../ScreenName';
+import { QCC } from '@graphql';
 
 const defaultData = [
   {
@@ -65,15 +65,7 @@ const MenuPage = () => {
   return (
     <TopBarScreenLayout topBar={<TopBarComponent />}>
       <View style={styles.container}>
-        <CustomFlatList
-          data={data}
-          renderItem={renderItem}
-          horizontal={false}
-          numColumns={2}
-          keyExtractor={(item, index) => item.id.toString()}
-          contentContainerStyle={styles.contentContainerStyle}
-          showsVerticalScrollIndicator={false}
-        />
+        <QCC.QueryMenuList renderItem={renderItem} />
       </View>
     </TopBarScreenLayout>
   );

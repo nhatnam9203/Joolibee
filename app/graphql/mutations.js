@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 // SIGN UP CUSTOMER ACCOUNT
 export const SIGN_UP = gql`
@@ -38,6 +38,7 @@ export const SIGN_UP = gql`
   }
 `;
 
+// SIGN IN CUSTOMER ACCOUNT
 export const SIGN_IN = gql`
 mutation($email:String!,$password:String!){
   generateCustomerToken(email:$email,password:$password){

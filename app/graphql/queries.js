@@ -1,29 +1,46 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const ORDER_LIST = gql`
-  query {
-    deliveryOrders {
-      new {
-        address
-        created_at
-        firstname
-        grand_total
-        id
-        lastname
+  {
+    customerOrders {
+      items {
         order_number
-        payment_method
+        id
+        created_at
+        grand_total
         status
+        address
+        shipping_method
       }
-      recently {
-        address
-        created_at
-        firstname
-        grand_total
+    }
+  }
+`;
+
+// MENU
+
+export const MENU_DETAIL = gql`
+  {
+    products(filter: { category_id: { eq: "3" } }) {
+      items {
         id
-        lastname
-        order_number
-        payment_method
-        status
+        name
+        image {
+          url
+        }
+        price_range {
+          maximum_price {
+            final_price {
+              value
+              currency
+            }
+          }
+          minimum_price {
+            final_price {
+              value
+              currency
+            }
+          }
+        }
       }
     }
   }

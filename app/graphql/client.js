@@ -1,19 +1,19 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
-import { onError } from 'apollo-link-error';
-import { createHttpLink } from 'apollo-link-http';
 import Config from 'react-native-config';
 import _ from 'lodash';
-import { AsyncStoreExt } from '@services';
 import NavigationService from '../navigation/NavigationService';
+import { get, StorageKey } from '@storage';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+  HttpLink,
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
 
-const httpLink = createHttpLink({ uri: Config.GRAPHQL_ENDPOINT });
+const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
 const authLink = setContext(async (req, { headers }) => {
-  // get auth token
-  const jwt = await AsyncStoreExt.getJwtToken();
   let myHeaders = headers;
   if (!headers) {
     myHeaders = {
@@ -22,13 +22,25 @@ const authLink = setContext(async (req, { headers }) => {
       Accept: 'application/json',
     };
   }
-  return {
-    headers: {
-      ...myHeaders,
-      Authorization: jwt ? `Bearer ${jwt}` : '',
-      // Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
-    },
-  };
+
+  // get auth token
+  const jwtObject = await get(StorageKey.Token);
+
+  if (jwtObject) {
+    const key = jwtObject[StorageKey.Token];
+    const jwt = jwtObject[key];
+    return {
+      headers: {
+        ...myHeaders,
+        Authorization: jwt ? `Bearer ${jwt}` : '',
+        // Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
+      },
+    };
+  } else {
+    return {
+      headers: myHeaders,
+    };
+  }
 });
 
 const errorLink = onError(

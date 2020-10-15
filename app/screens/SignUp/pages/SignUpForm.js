@@ -152,12 +152,12 @@ export const SignUpForm = ({ infos }) => {
                 </View>
 
                 {/**Name input error */}
-                {errors.name && touched.name && (
+                {errors.firstname && touched.firstname && (
                   <TextInputErrorMessage
                     style={{
                       width: LAYOUT_WIDTH,
                     }}
-                    message={errors.name}
+                    message={errors.firstname}
                     color={AppStyles.colors.inputError}
                   />
                 )}

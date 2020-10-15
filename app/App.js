@@ -7,7 +7,7 @@ import { AppStyles } from '@theme';
 import Navigator from 'app/navigation';
 import configureAppStore from 'app/redux/store';
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import { ActivityIndicator } from 'react-native';
 import {
   configureFonts,

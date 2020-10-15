@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n</string>
+				<string>com.googleusercontent.apps.579642910552-396n6lf3dn6akrdrb166hd9f413tqmsk</string>
 			</array>
 		</dict>
 		<dict>
@@ -41,6 +41,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CodePushDeploymentKey</key>
+	<string>1A4ffLpNVXjb0F6_CPk-bMpKkST4u9xoyM22A</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -111,7 +113,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>CodePushDeploymentKey</key>
-  <string>1A4ffLpNVXjb0F6_CPk-bMpKkST4u9xoyM22A</string>
 </dict>
 </plist>

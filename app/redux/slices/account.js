@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { mutation, graphQlClient } from '@graphql';
 import { showLoading, hideLoading } from './app';
+import { save, get, remove, StorageKey } from '@storage';
+import { generate } from '@utils';
 
 const KEY_CONSTANT = 'account';
 
@@ -22,7 +24,6 @@ export const signUp = createAsyncThunk(
 export const signIn = createAsyncThunk(
   `${KEY_CONSTANT}/signIn`,
   async (input, { dispatch }) => {
-    Logger.log(input, 'signIn');
     dispatch(showLoading());
     const response = await graphQlClient.mutate({
       mutation: mutation.SIGN_IN,
@@ -34,37 +35,24 @@ export const signIn = createAsyncThunk(
   },
 );
 
+const initialState = {
+  isRemember: false,
+  tokenKey: null,
+  isShowQRCode: false,
+  signInLoading: false,
+  signUpLoading: false,
+};
+
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
-  initialState: {
-    isLogin: false,
-    username: null,
-    password: null,
-    signUpError: null,
-    signUpSuccess: false,
-    signInError: null,
-    isShowQRCode: false,
-  },
+  initialState,
   reducers: {
-    login(state, action) {
-      state.isLogin = true;
-      state.username = action.payload.username;
-      state.password = action.payload.password;
+    logout: (state, action) => {
+      remove(StorageKey.Token);
+      return initialState;
     },
-    loginSuccess(state, action) {},
-    loginFail(state, action) {},
-    logout(state, action) {
-      state.isLogin = false;
-      state.username = null;
-      state.password = null;
-    },
-    clearSignupState(state, action) {
-      state.signUpError = null;
-      state.signUpSuccess = false;
-    },
-    clearSignInState(state, action) {
-      state.signInError = null;
-    },
+    clearSignupState(state, action) {},
+    clearSignInState(state, action) {},
 
     showQRCode(state, action) {
       state.isShowQRCode = true;
@@ -85,11 +73,7 @@ const accountSlice = createSlice({
       Logger.info(action, 'signUp fulfilled');
       const { error, data } = action.payload;
       if (data?.registerCustomer?.customer) {
-        state.signUpSuccess = true;
-        state.signUpError = null;
       } else {
-        state.signUpSuccess = false;
-        state.signUpError = error;
       }
     },
     [signUp.rejected]: (state, action) => {
@@ -99,31 +83,47 @@ const accountSlice = createSlice({
     // Sign In
     [signIn.pending]: (state, action) => {
       Logger.info(action, 'signIn pending');
-      state.signInError = null;
+      state.signInLoading = true;
     },
     [signIn.fulfilled]: (state, action) => {
       Logger.info(action, 'signIn fulfilled');
       const { error, data } = action.payload;
-      if (data?.generateCustomerToken?.token) {
-        state.signInError = null;
-        state.isLogin = true;
+      state.signInLoading = false;
+
+      const { generateCustomerToken } = data;
+
+      if (generateCustomerToken?.token) {
+        // received token from server
+        const token = generateCustomerToken?.token;
+
+        // get token object save in store
+        const storeTokenObj = get(StorageKey.Token) || {};
+
+        // gen new key at time
+        const str = generate.timeInMilliseconds();
+
+        // store token to local store
+        storeTokenObj[str] = token;
+        storeTokenObj[StorageKey.Token] = str;
+        save(storeTokenObj, StorageKey.Token);
+
+        // update state
+        state.tokenKey = str;
+        Logger.info(state, 'tokenKey');
       } else {
-        state.signInError = error;
+        state.tokenKey = null;
       }
-     
     },
     [signIn.rejected]: (state, action) => {
       Logger.info(action, 'signIn rejected');
-       state.isLogin = false;
+      state.signInLoading = false;
+      state.tokenKey = null;
     },
   },
 });
 
 const { actions, reducer } = accountSlice;
 export const {
-  login,
-  loginSuccess,
-  loginFail,
   logout,
   clearSignupState,
   clearSignInState,

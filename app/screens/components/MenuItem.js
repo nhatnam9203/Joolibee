@@ -1,12 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles } from '@theme';
+import { JollibeeImage } from './JollibeeImage';
+import { images } from '@theme';
 
 export const MenuItem = ({ item, onPress }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
-    <Image style={styles.imageStyle} source={item.image} />
+    <JollibeeImage
+      style={styles.imageStyle}
+      url={item.thumbnail_image}
+      defaultSource={images.menu_3}
+    />
     <View style={styles.textContentStyle}>
-      <Text style={styles.textStyle}>{`${item.title}`.toUpperCase()}</Text>
+      <Text style={styles.textStyle}>{`${item.name}`.toUpperCase()}</Text>
     </View>
   </TouchableOpacity>
 );
@@ -21,7 +27,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-  imageStyle: { flex: 1, resizeMode: 'center' },
+  imageStyle: {
+    flex: 1,
+    resizeMode: 'center',
+  },
   textContentStyle: {
     height: 55,
     backgroundColor: AppStyles.colors.accent,
