@@ -1,57 +1,25 @@
 import React from 'react';
 import { TopBarScreenLayout } from '@layouts';
-import { TopBarComponent, MenuItem } from '../components';
+import {
+  TopBarComponent,
+  MenuProductItem,
+  MenuItemLoading,
+} from '../components';
 import { CustomFlatList, CustomButtonImage } from '@components';
 import { images, AppStyles } from '@theme';
 import { View, StyleSheet, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
 import ScreenName from '../ScreenName';
+import { QCC } from '@graphql';
 
-const defaultData = [
-  {
-    image: images.menu_3,
-    title: 'Món Mới',
-    id: 1,
-  },
-  {
-    image: images.menu_2,
-    title: 'Gà Giòn vui vẻ',
-    id: 2,
-  },
-  {
-    image: images.menu_1,
-    title: 'gà sốt cay',
-    id: 3,
-  },
-  {
-    image: images.menu_4,
-    title: 'mỳ ý sốt bò bầm',
-    id: 4,
-  },
-  {
-    image: images.menu_5,
-    title: 'món tráng miệng',
-    id: 5,
-  },
-  {
-    image: images.menu_6,
-    title: 'Phần ăn phụ',
-    id: 6,
-  },
-  {
-    image: images.menu_7,
-    title: 'Burger & cơm',
-    id: 7,
-  },
-];
+const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
+  const { menuItem } = route.params;
 
-const MenuDetailScreen = ({}) => {
   const navigation = useNavigation();
-  const [data, setData] = React.useState([]);
 
   const renderItem = ({ item }) => (
-    <MenuItem
+    <MenuProductItem
       item={item}
       onPress={() => {
         navigation.navigate(ScreenName.MenuItemDetail);
@@ -59,13 +27,11 @@ const MenuDetailScreen = ({}) => {
     />
   );
 
+  const renderLoading = () => <MenuItemLoading />;
+
   const goToBack = React.useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-
-  React.useEffect(() => {
-    setData(defaultData);
-  }, []);
 
   return (
     <TopBarScreenLayout topBar={<TopBarComponent />}>
@@ -85,7 +51,9 @@ const MenuDetailScreen = ({}) => {
         />
       </View>
       <View style={styles.headerStyle}>
-        <Text style={styles.txtHeaderStyle}>Header</Text>
+        {!!menuItem?.name && (
+          <Text style={styles.txtHeaderStyle}>{menuItem?.name}</Text>
+        )}
         <CustomButtonImage
           image={images.icons.ic_header_back}
           onPress={goToBack}
@@ -93,14 +61,10 @@ const MenuDetailScreen = ({}) => {
         />
       </View>
       <View style={styles.container}>
-        <CustomFlatList
-          data={data}
+        <QCC.QueryMenuDetailList
+          categoryId={menuItem.id}
           renderItem={renderItem}
-          horizontal={false}
-          numColumns={2}
-          keyExtractor={(item, index) => item.id.toString()}
-          contentContainerStyle={styles.contentContainerStyle}
-          showsVerticalScrollIndicator={false}
+          renderItemLoading={renderLoading}
         />
       </View>
     </TopBarScreenLayout>
@@ -109,8 +73,6 @@ const MenuDetailScreen = ({}) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, paddingHorizontal: 5 },
-
-  contentContainerStyle: { paddingTop: 10, paddingBottom: 10 },
 
   addressStyle: {
     height: 40,

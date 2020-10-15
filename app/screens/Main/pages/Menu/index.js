@@ -13,12 +13,12 @@ import { QCC } from '@graphql';
 const MenuPage = () => {
   const navigation = useNavigation();
 
-  const goToMenuDetail = () => {
-    navigation.navigate(ScreenName.MenuDetail);
+  const goToMenuDetail = (menuItem) => {
+    navigation.navigate(ScreenName.MenuDetail, { menuItem });
   };
 
   const renderItem = ({ item }) => (
-    <MenuItem item={item} onPress={goToMenuDetail} />
+    <MenuItem item={item} onPress={() => goToMenuDetail(item)} />
   );
 
   const renderLoading = ({ item }) => <MenuItemLoading />;

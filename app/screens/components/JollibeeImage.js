@@ -12,11 +12,19 @@ export const JollibeeImage = ({
 
   React.useEffect(() => {
     if (url) {
-      const fullPath = `${Config.DOMAIN}${url}`;
+      const fullPath = url.includes(Config.DOMAIN)
+        ? url
+        : `${Config.DOMAIN}${url}`;
       Logger.info(fullPath, 'JollibeeImage -> url');
-      setSource({ uri: fullPath });
+      setSource({ uri: fullPath, cache: 'only-if-cached' });
     }
   }, [url]);
 
-  return <Image style={style} source={source ?? defaultSource} />;
+  return (
+    <Image
+      style={style}
+      source={source ?? defaultSource}
+      resizeMode="contain"
+    />
+  );
 };

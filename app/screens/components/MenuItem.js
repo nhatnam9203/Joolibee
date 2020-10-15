@@ -29,8 +29,30 @@ export const MenuItem = ({ item, onPress }) => (
   </TouchableOpacity>
 );
 
+export const MenuProductItem = ({
+  item: {
+    id,
+    name,
+    image: { url },
+    price_range: { maximum_price, minimum_price },
+  },
+  onPress,
+}) => (
+  <TouchableOpacity style={styles.container} onPress={onPress}>
+    <JollibeeImage
+      style={styles.imageStyle}
+      url={url}
+      defaultSource={images.menu_3}
+    />
+    <View style={styles.bottomStyle}>
+      <Text style={styles.textStyle}>{`${name}`.toUpperCase()}</Text>
+    </View>
+  </TouchableOpacity>
+);
+
 const HEIGHT = 200;
 const TEXT_HEIGHT = 45;
+const BOTTOM_HEIGHT = 90;
 
 const styles = StyleSheet.create({
   container: {
@@ -67,5 +89,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: HEIGHT - TEXT_HEIGHT,
     backgroundColor: '#fff',
+  },
+
+  bottomStyle: {
+    height: BOTTOM_HEIGHT,
+    backgroundColor: AppStyles.colors.accent,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0,
   },
 });
