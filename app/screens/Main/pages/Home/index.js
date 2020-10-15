@@ -11,6 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
+import { useGeolocation } from "@hooks";
+import { setInitLocation } from '@slices/store';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
 import {
@@ -27,9 +29,12 @@ import {
   ServiceList,
   Detail,
 } from './widget';
+import { useDispatch } from 'react-redux';
 const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  let curr_location = useGeolocation();
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
   const navigation = useNavigation();
@@ -39,12 +44,16 @@ const HomePage = () => {
   const onCHangeScreen = (screen) => () => {
     navigation.navigate(screen);
   };
-
   React.useEffect(() => {
+   
     setTimeout(() => {
       setVisiblePopup(true);
     }, 1200);
   }, []);
+
+  React.useEffect(()=>{
+    dispatch(setInitLocation(curr_location))
+  },[curr_location])
 
   return (
     <TopBarScreenLayout
@@ -106,7 +115,7 @@ const HomePage = () => {
       </SinglePageLayout>
 
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
-      {/* <PopupChat visible={isVisible}/> */}
+
       <Detail visible={visible_detail} onToggle={onToggleDetail} />
     </TopBarScreenLayout>
   );
