@@ -1,5 +1,5 @@
 import { CustomFlatList } from '@components';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 
@@ -13,27 +13,35 @@ const MENU_LIST = gql`
   }
 `;
 
-export const QueryMenuList = ({ renderItem }) => {
-  const { loading, error, data } = useQuery(MENU_LIST, {
-    variables: null,
-  });
+const defaultData = [
+  { id: 1 },
+  { id: 2 },
+  { id: 3 },
+  { id: 4 },
+  { id: 5 },
+  { id: 6 },
+];
 
-  if (loading) {
-    Logger.debug(loading, 'Loading ....');
-    return <></>;
-  }
+export const QueryMenuList = ({
+  renderItem = () => <View />,
+  renderItemLoading = () => <View />,
+}) => {
+  const { loading, error, data = { categoryList: defaultData } } = useQuery(
+    MENU_LIST,
+    {
+      variables: null,
+    },
+  );
 
   if (error) {
     Logger.debug(error, 'Error!');
     return null;
   }
 
-  Logger.debug(data, 'data -----!');
-
   return (
     <CustomFlatList
-      data={data.categoryList}
-      renderItem={renderItem}
+      data={data?.categoryList}
+      renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
       numColumns={2}
       keyExtractor={(item, index) => item.id.toString()}

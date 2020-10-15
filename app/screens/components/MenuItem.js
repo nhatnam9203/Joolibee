@@ -1,8 +1,20 @@
+import { AppStyles, images } from '@theme';
 import React from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { AppStyles } from '@theme';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  Fade,
+} from 'rn-placeholder';
 import { JollibeeImage } from './JollibeeImage';
-import { images } from '@theme';
+
+export const MenuItemLoading = () => (
+  <Placeholder style={styles.container} Animation={Fade}>
+    <PlaceholderMedia style={styles.placeholderMedia} />
+    <PlaceholderLine style={styles.textContentStyle} />
+  </Placeholder>
+);
 
 export const MenuItem = ({ item, onPress }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -17,30 +29,43 @@ export const MenuItem = ({ item, onPress }) => (
   </TouchableOpacity>
 );
 
+const HEIGHT = 200;
+const TEXT_HEIGHT = 45;
+
 const styles = StyleSheet.create({
   container: {
     flex: 0.5,
     margin: 5,
-    height: 200,
+    height: HEIGHT,
     backgroundColor: '#fff',
     ...AppStyles.styles.shadow,
     borderRadius: 8,
     overflow: 'hidden',
   },
+
   imageStyle: {
     flex: 1,
     resizeMode: 'center',
   },
+
   textContentStyle: {
-    height: 55,
+    height: TEXT_HEIGHT,
     backgroundColor: AppStyles.colors.accent,
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 0,
   },
+
   textStyle: {
     textAlign: 'center',
     textAlignVertical: 'center',
     color: '#fff',
     ...AppStyles.fonts.bold,
+  },
+
+  placeholderMedia: {
+    width: '100%',
+    height: HEIGHT - TEXT_HEIGHT,
+    backgroundColor: '#fff',
   },
 });
