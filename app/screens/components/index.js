@@ -24,6 +24,7 @@ import CustomPopupMenu from './CustomPopupMenu';
 export * from './PopupRating';
 export * from './PopupChat';
 export * from './LanguageFlag';
+export * from './JollibeeImage';
 
 import CustomMapView from './MapView';
 import ItemStore from './ItemStore';

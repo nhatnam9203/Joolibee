@@ -104,6 +104,7 @@ const accountSlice = createSlice({
 
         // store token to local store
         storeTokenObj[str] = token;
+        storeTokenObj[StorageKey.Token] = str;
         save(storeTokenObj, StorageKey.Token);
 
         // update state

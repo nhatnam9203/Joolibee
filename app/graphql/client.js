@@ -12,8 +12,6 @@ import { get, StorageKey } from '@storage';
 const httpLink = createHttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
 const authLink = setContext(async (req, { headers }) => {
-  // get auth token
-  const jwt = await get(StorageKey.Token);
   let myHeaders = headers;
   if (!headers) {
     myHeaders = {
@@ -22,13 +20,25 @@ const authLink = setContext(async (req, { headers }) => {
       Accept: 'application/json',
     };
   }
-  return {
-    headers: {
-      ...myHeaders,
-      Authorization: jwt ? `Bearer ${jwt}` : '',
-      // Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
-    },
-  };
+
+  // get auth token
+  const jwtObject = await get(StorageKey.Token);
+
+  if (jwtObject) {
+    const key = jwtObject[StorageKey.Token];
+    const jwt = jwtObject[key];
+    return {
+      headers: {
+        ...myHeaders,
+        Authorization: jwt ? `Bearer ${jwt}` : '',
+        // Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
+      },
+    };
+  } else {
+    return {
+      headers: myHeaders,
+    };
+  }
 });
 
 const errorLink = onError(

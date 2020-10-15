@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { CustomFlatList } from '@components';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import React from 'react';
 
 const MENU_LIST = gql`
@@ -17,12 +17,21 @@ const MENU_LIST = gql`
 export const QueryMenuList = ({ renderItem }) => (
   <Query query={MENU_LIST}>
     {({ loading, error, data }) => {
-      if (loading) return Logger.debug('Loading ....');
-      if (error) return Logger.debug(`Error! ${error.message}`);
+      if (loading) {
+        Logger.debug(loading, 'Loading ....');
+        return <></>;
+      }
+
+      if (error) {
+        Logger.debug(error, 'Error!');
+        return null;
+      }
+
+      Logger.debug(data, 'data -----!');
 
       return (
         <CustomFlatList
-          data={data}
+          data={data.categoryList}
           renderItem={renderItem}
           horizontal={false}
           numColumns={2}
