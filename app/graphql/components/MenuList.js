@@ -1,8 +1,7 @@
-import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
 import { CustomFlatList } from '@components';
 import { StyleSheet, Text } from 'react-native';
 import React from 'react';
+import { gql, useQuery } from '@apollo/client';
 
 const MENU_LIST = gql`
   query categoryList($arrayCategory: [String]) {
@@ -14,35 +13,35 @@ const MENU_LIST = gql`
   }
 `;
 
-export const QueryMenuList = ({ renderItem }) => (
-  <Query query={MENU_LIST}>
-    {({ loading, error, data }) => {
-      if (loading) {
-        Logger.debug(loading, 'Loading ....');
-        return <></>;
-      }
+export const QueryMenuList = ({ renderItem }) => {
+  const { loading, error, data } = useQuery(MENU_LIST, {
+    variables: null,
+  });
 
-      if (error) {
-        Logger.debug(error, 'Error!');
-        return null;
-      }
+  if (loading) {
+    Logger.debug(loading, 'Loading ....');
+    return <></>;
+  }
 
-      Logger.debug(data, 'data -----!');
+  if (error) {
+    Logger.debug(error, 'Error!');
+    return null;
+  }
 
-      return (
-        <CustomFlatList
-          data={data.categoryList}
-          renderItem={renderItem}
-          horizontal={false}
-          numColumns={2}
-          keyExtractor={(item, index) => item.id.toString()}
-          contentContainerStyle={styles.contentContainerStyle}
-          showsVerticalScrollIndicator={false}
-        />
-      );
-    }}
-  </Query>
-);
+  Logger.debug(data, 'data -----!');
+
+  return (
+    <CustomFlatList
+      data={data.categoryList}
+      renderItem={renderItem}
+      horizontal={false}
+      numColumns={2}
+      keyExtractor={(item, index) => item.id.toString()}
+      contentContainerStyle={styles.contentContainerStyle}
+      showsVerticalScrollIndicator={false}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   contentContainerStyle: { paddingVertical: 15 },

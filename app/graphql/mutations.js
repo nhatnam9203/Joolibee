@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 // SIGN UP CUSTOMER ACCOUNT
 export const SIGN_UP = gql`

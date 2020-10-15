@@ -1,15 +1,17 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
-import { setContext } from 'apollo-link-context';
-import { onError } from 'apollo-link-error';
-import { createHttpLink } from 'apollo-link-http';
 import Config from 'react-native-config';
 import _ from 'lodash';
 import NavigationService from '../navigation/NavigationService';
 import { get, StorageKey } from '@storage';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+  HttpLink,
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
 
-const httpLink = createHttpLink({ uri: Config.GRAPHQL_ENDPOINT });
+const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
 const authLink = setContext(async (req, { headers }) => {
   let myHeaders = headers;
