@@ -62,8 +62,8 @@ export const SignUpForm = ({ infos }) => {
 
   // state
 
-  const signUpError = useSelector((state) => state.account.signUpError);
-  const signUpSuccess = useSelector((state) => state.account.signUpSuccess);
+  const signUpLoading = useSelector((state) => state.account.signUpLoading);
+  const signUpSucceeded = useSelector((state) => state.account.signUpSucceeded);
 
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
 
@@ -86,10 +86,10 @@ export const SignUpForm = ({ infos }) => {
 
   // !TODO: Khá bảnh ...
   React.useEffect(() => {
-    if (signUpSuccess) {
+    if (signUpSucceeded) {
       setShowPopupSuccess(true);
     }
-  }, [signUpSuccess]);
+  }, [signUpSucceeded]);
 
   // render
   return (
@@ -296,7 +296,7 @@ export const SignUpForm = ({ infos }) => {
                 </View>
 
                 {/**Server response error */}
-                {!_.isEmpty(signUpError) &&
+                {/* {!_.isEmpty(signUpError) &&
                   Object.values(signUpError).map((item, index) => (
                     <TextInputErrorMessage
                       style={{ width: LAYOUT_WIDTH }}
@@ -304,7 +304,7 @@ export const SignUpForm = ({ infos }) => {
                       color={AppStyles.colors.inputError}
                       key={index}
                     />
-                  ))}
+                  ))} */}
 
                 <View style={styles.checkBoxContent}>
                   <TextCheckBox

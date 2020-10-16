@@ -41,6 +41,7 @@ const initialState = {
   isShowQRCode: false,
   signInLoading: false,
   signUpLoading: false,
+  signUpSucceeded: false,
 };
 
 const accountSlice = createSlice({
@@ -66,18 +67,21 @@ const accountSlice = createSlice({
     // Sign Up
     [signUp.pending]: (state, action) => {
       Logger.info(action, 'signUp pending');
-      state.signUpError = null;
-      state.signUpSuccess = false;
+      state.signUpLoading = true;
     },
     [signUp.fulfilled]: (state, action) => {
       Logger.info(action, 'signUp fulfilled');
+      state.signUpLoading = false;
       const { error, data } = action.payload;
       if (data?.registerCustomer?.customer) {
+        state.signUpSucceeded = true;
       } else {
+        state.signUpSucceeded = false;
       }
     },
     [signUp.rejected]: (state, action) => {
       Logger.info(action, 'signUp rejected');
+      state.signUpLoading = true;
     },
 
     // Sign In
