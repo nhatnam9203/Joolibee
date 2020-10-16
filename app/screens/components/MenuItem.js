@@ -8,6 +8,10 @@ import {
   Fade,
 } from 'rn-placeholder';
 import { JollibeeImage } from './JollibeeImage';
+import { format } from '@utils';
+import { translate } from '@localize';
+
+const MENU_DETAIL_HEIGHT = 240;
 
 export const MenuItemLoading = () => (
   <Placeholder style={styles.container} Animation={Fade}>
@@ -18,29 +22,72 @@ export const MenuItemLoading = () => (
 
 export const MenuItem = ({ item, onPress }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
-    <JollibeeImage
-      style={styles.imageStyle}
-      url={item.thumbnail_image}
-      defaultSource={images.menu_3}
-    />
-    <View style={styles.textContentStyle}>
-      <Text style={styles.textStyle}>{`${item.name}`.toUpperCase()}</Text>
+    <View style={styles.content}>
+      <JollibeeImage
+        style={styles.imageStyle}
+        url={item.thumbnail_image}
+        defaultSource={images.menu_3}
+      />
+      <View style={styles.textContentStyle}>
+        <Text style={styles.textStyle}>{`${item.name}`.toUpperCase()}</Text>
+      </View>
     </View>
   </TouchableOpacity>
 );
 
-const HEIGHT = 200;
+export const MenuProductItem = ({
+  item: {
+    id,
+    name,
+    image: { url },
+    price_range: { maximum_price, minimum_price },
+  },
+  onPress,
+}) => (
+  <TouchableOpacity
+    style={[styles.container, { height: MENU_DETAIL_HEIGHT }]}
+    onPress={onPress}>
+    <View style={styles.content}>
+      <JollibeeImage
+        style={styles.imageStyle}
+        url={url}
+        defaultSource={images.menu_3}
+      />
+      <View style={styles.bottomStyle}>
+        <Text style={styles.textStyle} numberOfLines={2}>
+          {`${name}`.toUpperCase()}
+        </Text>
+        <View style={styles.priceContent}>
+          <Text style={styles.priceStyle}>
+            {format.jollibeeCurrency(maximum_price?.final_price)}
+          </Text>
+          <Text style={styles.pointStyle}>
+            {'(+' + 1 + ' ' + translate('txtPoint') + ')'}
+          </Text>
+        </View>
+      </View>
+    </View>
+  </TouchableOpacity>
+);
+
+const MENU_HEIGHT = 200;
 const TEXT_HEIGHT = 45;
+const BOTTOM_HEIGHT = 86;
 
 const styles = StyleSheet.create({
   container: {
     flex: 0.5,
+    height: MENU_HEIGHT,
     margin: 5,
-    height: HEIGHT,
     backgroundColor: '#fff',
-    ...AppStyles.styles.shadow,
     borderRadius: 8,
+    ...AppStyles.styles.shadow,
+  },
+
+  content: {
+    flex: 1,
     overflow: 'hidden',
+    borderRadius: 8,
   },
 
   imageStyle: {
@@ -57,15 +104,43 @@ const styles = StyleSheet.create({
   },
 
   textStyle: {
-    textAlign: 'center',
+    textAlign: 'left',
     textAlignVertical: 'center',
     color: '#fff',
     ...AppStyles.fonts.bold,
+    fontSize: 14,
   },
 
   placeholderMedia: {
     width: '100%',
-    height: HEIGHT - TEXT_HEIGHT,
+    height: MENU_HEIGHT - TEXT_HEIGHT,
     backgroundColor: '#fff',
+  },
+
+  bottomStyle: {
+    backgroundColor: AppStyles.colors.accent,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0,
+    padding: 10,
+    height: BOTTOM_HEIGHT,
+  },
+
+  priceContent: {
+    ...AppStyles.styles.horizontalLayout,
+    width: '100%',
+    marginTop: 5,
+  },
+
+  priceStyle: {
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    fontSize: 16,
+    color: '#fff',
+  },
+
+  pointStyle: {
+    ...AppStyles.fonts.regular,
+    fontSize: 12,
+    color: '#fff',
   },
 });

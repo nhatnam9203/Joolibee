@@ -3,31 +3,26 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 
-const MENU_LIST = gql`
-  query categoryList($arrayCategory: [String]) {
-    categoryList(filters: { ids: { in: $arrayCategory } }) {
-      id
-      thumbnail_image
-      name
-      products(pageSize: 5, currentPage: 1) {
-        items {
-          id
-          name
-          image {
-            url
-          }
-          price_range {
-            maximum_price {
-              final_price {
-                value
-                currency
-              }
+const MENU_DETAIL_LIST = gql`
+  query products($categoryId: String!) {
+    products(filter: { category_id: { eq: $categoryId } }) {
+      items {
+        id
+        name
+        image {
+          url
+        }
+        price_range {
+          maximum_price {
+            final_price {
+              value
+              currency
             }
-            minimum_price {
-              final_price {
-                value
-                currency
-              }
+          }
+          minimum_price {
+            final_price {
+              value
+              currency
             }
           }
         }
@@ -45,16 +40,18 @@ const defaultData = [
   { id: 6 },
 ];
 
-export const QueryMenuList = ({
+export const QueryMenuDetailList = ({
   renderItem = () => <View />,
   renderItemLoading = () => <View />,
+  categoryId,
 }) => {
-  const { loading, error, data = { categoryList: defaultData } } = useQuery(
-    MENU_LIST,
-    {
-      variables: null,
-    },
-  );
+  const {
+    loading,
+    error,
+    data = { products: { items: defaultData } },
+  } = useQuery(MENU_DETAIL_LIST, {
+    variables: { categoryId },
+  });
 
   if (error) {
     Logger.debug(error, 'Error!');
@@ -63,11 +60,11 @@ export const QueryMenuList = ({
 
   return (
     <CustomFlatList
-      data={data?.categoryList}
+      data={data?.products?.items}
       renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
       numColumns={2}
-      keyExtractor={(item, index) => item.id.toString()}
+      keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
     />

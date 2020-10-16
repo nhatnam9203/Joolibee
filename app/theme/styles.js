@@ -56,6 +56,11 @@ const AppStyles = {
       fontSize: 14,
     },
 
+    SVN_Merge_Bold: {
+      fontFamily: 'SVN-Merge',
+      fontWeight: 'bold',
+    },
+
     title: {
       fontFamily: 'SVN-Merge',
       fontSize: 28,
@@ -81,14 +86,13 @@ const AppStyles = {
     },
 
     shadow: {
-      shadowColor: '#000',
+      shadowColor: '#0006',
       shadowOffset: {
-        width: 1,
-        height: 1,
+        width: 2,
+        height: 2,
       },
-      shadowOpacity: 0.22,
-      shadowRadius: 2.22,
-
+      shadowOpacity: 0.3,
+      shadowRadius: 2,
       elevation: 3,
     },
 

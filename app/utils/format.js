@@ -11,3 +11,14 @@ export const dateTime = (date = moment(), formatString) => {
 
   return moment(date).format(formatString);
 }
+}
+export const jollibeeCurrency = ({ value = 0, currency }) => {
+  return (
+    Number(value)
+      .toFixed(2)
+      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+      .replace(/\.?0+$/, '') +
+    ' ' +
+    currency
+  );
+};
