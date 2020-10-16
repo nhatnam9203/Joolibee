@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
 import { AppStyles, images } from "@theme";
 import { CustomButton } from "@components";
 import { PopupRating } from "../../components";
-import { statusOrder,scale } from '@utils';
+import { statusOrder, scale } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from "./pages";
 const { scaleWidth, scaleHeight } = scale;
 
@@ -29,7 +29,7 @@ export default function index({ navigation, route }) {
     const [data, setData] = React.useState([]);
     const [visible, setVisible] = React.useState(false);
     const { order } = route.params;
-    let order_complete = order.status_text == 'Hoàn thành' ? true : false;
+    let order_complete = order.status_text == 'Hoàn thành' || order.status_text == 'Đã hủy' ? true : false;
 
     const onTogglePopup = () => setVisible(!visible)
     const onClose = () => setVisible(false)
@@ -53,56 +53,76 @@ export default function index({ navigation, route }) {
         </View>
     );
 
-    const OrderTitle = ({ title }) => (
-        <View style={{ marginVertical: 20 }}>
+    const OrderTitle = ({ title, style }) => (
+        <View style={[{ marginVertical: 20 }, style]}>
             <Text style={AppStyles.fonts.medium_SVN, styles.orderTitle}>{title}</Text>
+        </View>
+    );
+
+    const ExpectedTime = () => (
+        <View style={{ padding: 20 }}>
+            <Text style={AppStyles.fonts.bold, { fontSize: 14 }}>Nhận hàng dự kiến:
+            <Text style={AppStyles.fonts.medium_SVN, { fontSize: 18 }}>
+                    10:30
+            </Text>
+            </Text>
         </View>
     );
 
     return (
         <View style={styles.container}>
             <ScrollView
+                //scrollEnabled={false}
                 contentContainerStyle={styles.contentContainerStyle}
                 showsVerticalScrollIndicator={false}
             >
                 {/* -------------- TRANG THAI DON HANG  -------------- */}
-                {!order_complete && <View style={styles.imageStatusOrder}>
-                    <Image
-                        style={styles.image}
-                        source={statusOrder.getImage(order.status_text)}
-                    />
-                </View>}
 
-                {order_complete && <OrderTitle title='TRẠNG THÁI ĐƠN HÀNG' />}
-                <OrderStatus status={order.status_text} />
+                <View style={{ flex: 1, backgroundColor: AppStyles.colors.white, }}>
+                    {!order_complete && <View style={styles.imageStatusOrder}>
+                        <Image
+                            style={styles.image}
+                            source={statusOrder.getImage(order.status_text)}
+                        />
+                    </View>}
+
+                    {order.status_text == 'Đang giao hàng' && <ExpectedTime />}
+
+                    {/* {order_complete && <OrderTitle title='TRẠNG THÁI ĐƠN HÀNG' style={{ paddingHorizontal: 15 }} />} */}
+                    <OrderStatus status={order.status_text} />
+                </View>
+
                 {/* -------------- TRANG THAI DON HANG  -------------- */}
 
-                {/* -------------- THONG TIN DON HANG  -------------- */}
-                <OrderTitle title='THÔNG TIN GIAO HÀNG' />
-                <OrderInfo />
-                {/* -------------- THONG TIN DON HANG  -------------- */}
 
-                {/* -------------- SAN PHAM DA CHON  -------------- */}
+                <View style={{ flex: 1, paddingHorizontal: 15 }}>
+                    {/* -------------- THONG TIN DON HANG  -------------- */}
+                    <OrderTitle title='THÔNG TIN GIAO HÀNG' />
+                    <OrderInfo />
+                    {/* -------------- THONG TIN DON HANG  -------------- */}
 
-                <View style={styles.headerPreOrder}>
-                    <OrderTitle title='MÓN ĂN ĐÃ CHỌN' />
-                    <CustomButton
-                        // onPress={onToggle}
-                        label={'ĐẶT LẠI'}
-                        width={140}
-                        height={42}
-                        bgColor={AppStyles.colors.button}
-                        styleText={{ fontSize: 14 }}
-                    />
+                    {/* -------------- SAN PHAM DA CHON  -------------- */}
+
+                    <View style={styles.headerPreOrder}>
+                        <OrderTitle title='MÓN ĂN ĐÃ CHỌN' />
+                        <CustomButton
+                            // onPress={onToggle}
+                            label={'ĐẶT LẠI'}
+                            width={140}
+                            height={42}
+                            bgColor={AppStyles.colors.button}
+                            styleText={{ fontSize: 14 }}
+                        />
+                    </View>
+                    <OrderProductList data={data} />
+                    {/* --------------  SAN PHAM DA CHON  -------------- */}
+
+                    {/* --------------  TOTAL PRICE  -------------- */}
+                    <OrderTotal />
+                    {/* --------------  TOTAL PRICE -------------- */}
+
+                    {order_complete && <PopupRating visible={visible} onToggle={onClose} />}
                 </View>
-                <OrderProductList data={data} />
-                {/* --------------  SAN PHAM DA CHON  -------------- */}
-
-                {/* --------------  TOTAL PRICE  -------------- */}
-                <OrderTotal />
-                {/* --------------  TOTAL PRICE -------------- */}
-
-                <PopupRating visible={visible} onToggle={onClose} />
 
             </ScrollView>
         </View>
@@ -116,15 +136,13 @@ const styles = StyleSheet.create({
         backgroundColor: AppStyles.colors.background
     },
     contentContainerStyle: {
-        paddingHorizontal: 15,
+        // paddingHorizontal: 15,
         paddingBottom: 20
     },
     imageStatusOrder: {
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: 50,
-        borderBottomWidth: 1,
-        borderBottomColor: '#E2E2E2',
+        paddingTop: 50,
         marginBottom: 20
     },
     wrapperImage: {

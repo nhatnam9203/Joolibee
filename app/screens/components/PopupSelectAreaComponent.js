@@ -7,10 +7,28 @@ import { scale } from '@utils';
 import { translate } from '@localize';
 import { JollibeeLogo } from '../components';
 import { PopupLayout } from '@layouts';
+import { useSelector } from 'react-redux';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
+  const init_location = useSelector((state) => state.store.init_location);
+  const [city, setCity] = React.useState(-1);
+  const [district, setDistrict] = React.useState(-1)
+
+
+
+  const onChangeItem = React.useCallback((type, value) => () => {
+    switch (type) {
+      case 'city':
+        setCity(value)
+        break;
+
+      default:
+        setDistrict(value)
+        break;
+    }
+  }, []);
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -28,8 +46,8 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
               { label: 'Hà Nội', value: 0 },
             ]}
             placeholder={translate('txtSelectDistrict')}
-            defaultValue={1}
-            // onChangeItem={(item) => setFieldValue('gender', item.value)}
+            defaultValue={city}
+            onChangeItem={(item) => onChangeItem('city', item?.value)}
           />
           <CustomPickerSelect
             items={[
@@ -37,8 +55,8 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
               { label: 'Quận 2', value: 0 },
             ]}
             placeholder={translate('txtSelectWard')}
-            defaultValue={1}
-            // onChangeItem={(item) => setFieldValue('gender', item.value)}
+            defaultValue={district}
+            onChangeItem={(item) => onChangeItem('district', item?.value)}
           />
 
           <View style={styles.polygonStyle}>

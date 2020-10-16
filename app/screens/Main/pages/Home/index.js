@@ -11,8 +11,8 @@ import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
-// import { useGeolocation } from "@hooks";
-// import { setInitLocation } from '@slices/store';
+import { getCurrentPosition } from "@location";
+import { setInitLocation, getPosition } from '@slices/store';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
 import {
@@ -44,11 +44,26 @@ const HomePage = () => {
   const onCHangeScreen = (screen) => () => {
     navigation.navigate(screen);
   };
+
+  const requestCurrentLocation = async () => {
+    try {
+      let result = await getCurrentPosition();
+      let latlng = {
+        lat: result.coords.latitude,
+        lng: result.coords.longitude
+      };
+      dispatch(getPosition(latlng, { dispatch })
+      )
+    } catch (error) {
+
+    } finally {
+      setTimeout(() => {
+        setVisiblePopup(true);
+      }, 1200);
+    }
+  }
   React.useEffect(() => {
-   
-    setTimeout(() => {
-      setVisiblePopup(true);
-    }, 1200);
+    requestCurrentLocation()
   }, []);
 
   // React.useEffect(()=>{
