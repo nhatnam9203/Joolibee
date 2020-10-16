@@ -9,6 +9,29 @@ const MENU_LIST = gql`
       id
       thumbnail_image
       name
+      products(pageSize: 5, currentPage: 1) {
+        items {
+          id
+          name
+          image {
+            url
+          }
+          price_range {
+            maximum_price {
+              final_price {
+                value
+                currency
+              }
+            }
+            minimum_price {
+              final_price {
+                value
+                currency
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

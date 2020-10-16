@@ -1,17 +1,19 @@
 import Config from 'react-native-config';
 import _ from 'lodash';
 import NavigationService from '../navigation/NavigationService';
-import { get, StorageKey } from '@storage';
+import { get, StorageKey, remove } from '@storage';
 import {
   ApolloClient,
   InMemoryCache,
   ApolloLink,
   HttpLink,
+  withClientState,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
+const cache = new InMemoryCache();
 
 const authLink = setContext(async (req, { headers }) => {
   let myHeaders = headers;
@@ -49,24 +51,42 @@ const errorLink = onError(
      * graphQLErrors
      * Do something with a graphQL error
      */
+    Logger.debug(graphQLErrors, 'graphQLErrors');
+    Logger.debug(operation, 'operation');
     if (graphQLErrors?.length > 0) {
       let errors = [];
 
-      graphQLErrors.map(({ message, locations, path, extensions }, index) => {
-        if (
-          extensions.category === 'graphql' ||
-          extensions.category === 'graphql-input'
-        ) {
-          // error call graphql wrong
-          errors.push(message);
-        } else {
-          switch (extensions.code) {
+      graphQLErrors.map(
+        (
+          { message, locations, path, extensions: { category, code } },
+          index,
+        ) => {
+          switch (category) {
+            case 'graphql':
+            case 'graphql-input':
+              errors.push(message);
+
+              break;
+            case 'graphql-authorization':
+              Logger.debug(graphQLErrors, 'graphql-authorization');
+              remove(StorageKey.Token);
+              cache.writeData({
+                data: {
+                  authStatus: {
+                    __typename: 'authStatus',
+                    status: 'loggedOut',
+                  },
+                },
+              });
+
+              break;
             default:
               errors[index] = message;
+
               break;
           }
-        }
-      });
+        },
+      );
 
       if (errors.length > 0) {
         NavigationService.alertWithError({ message: errors.join('\n ') });
@@ -96,7 +116,6 @@ const errorLink = onError(
 
 const link = ApolloLink.from([authLink, errorLink, httpLink]);
 
-const cache = new InMemoryCache();
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'no-cache',
