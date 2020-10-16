@@ -45,16 +45,6 @@ const index = ({ openMenu }) => {
         </TouchableOpacity>
       </View>
 
-      {/* <ScrollView
-                ref={refScrollView}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ alignItems: 'center' }}
-                horizontal
-
-            >
-                {[1, 2, 3, 4, 5].map(renderItem)}
-            </ScrollView> */}
-
       <View
         style={{
           position: 'absolute',
