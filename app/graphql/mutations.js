@@ -40,12 +40,12 @@ export const SIGN_UP = gql`
 
 // SIGN IN CUSTOMER ACCOUNT
 export const SIGN_IN = gql`
-  mutation($email: String!, $password: String!) {
-    generateCustomerToken(email: $email, password: $password) {
-      token
-    }
+mutation($email:String!,$password:String!){
+  generateCustomerToken(email:$email,password:$password){
+    token
   }
-`;
+} 
+`
 
 export const SIGN_OUT = gql`
   mutation {

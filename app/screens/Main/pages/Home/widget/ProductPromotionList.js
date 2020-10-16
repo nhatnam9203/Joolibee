@@ -38,7 +38,7 @@ const index = () => {
           onPress={() => alert('ads')}
           key={index + ''}
           style={styles.containerItem}>
-          <Image source={images['jollibee_combo']} />
+          <Image source={images['jollibee_combo']} style={styles.imageProduct} />
         </CustomButton>
       </View>
     );
@@ -104,6 +104,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  imageProduct: {
+    width: scaleWidth(124),
+    height: scaleHeight(124),
+  }
 });
 
 export default index;

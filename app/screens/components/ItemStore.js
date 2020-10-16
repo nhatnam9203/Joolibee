@@ -2,10 +2,18 @@
 import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
+import moment from "moment";
 
-
+const checkWeekDay = () => {
+    let curr_day = moment().weekday();
+    return curr_day < 5 && curr_day > 0 ? true : false;
+};
 
 const index = ({ item, onPress, isChecked }) => {
+    let time_store = checkWeekDay()
+        ? `${item.weekday_opening_hours} (T2-T6)`
+        : `${item.weekend_opening_hours} (T7-CN)`
+        
     return (
         <TouchableOpacity
             onPress={onPress}
@@ -21,11 +29,11 @@ const index = ({ item, onPress, isChecked }) => {
             </View>
 
             <View style={styles.rightContainer}>
-                <Text style={[AppStyles.fonts.medium_SVN]}>{item.store_name}</Text>
+                <Text style={[AppStyles.fonts.medium_SVN]}>{item.name}</Text>
 
                 <StoreInfo url={images.icons.ic_store_address} content={item.address} />
-                <StoreInfo url={images.icons.ic_store_phone} content={item.store_phone} />
-                <StoreInfo url={images.icons.ic_store_clock} content='09:00 - 20:00 (Thứ 2 - Chủ Nhật)' />
+                <StoreInfo url={images.icons.ic_store_phone} content={item.phone} />
+                <StoreInfo url={images.icons.ic_store_clock} content={time_store} />
             </View>
 
             {isChecked && <Image

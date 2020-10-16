@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "579642910552-f8voatga64ftfc7236t3sj2qm1lvsce6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jollibee.loyalty",
+            "certificate_hash": "e5f9f9c6ed2b71efcd598fd3f7d146708a13ba5f"
+          }
+        },
+        {
           "client_id": "579642910552-u7nbikscmp7qont42hb5em4dbdsaaja9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

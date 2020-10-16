@@ -44,7 +44,7 @@ const SignInScreen = () => {
   });
 
   const signInError = useSelector((state) => state.account.signInError);
-
+  //const [generateCustomerToken, { data }] = useMutation(mutation.SIGN_IN);
   const signInSubmit = React.useCallback(
     (values) => {
       //refactor data
@@ -65,6 +65,8 @@ const SignInScreen = () => {
     },
     [dispatch],
   );
+
+
 
   const goSignUpPage = () => {
     navigation.navigate(ScreenName.SignUp);

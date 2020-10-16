@@ -3,8 +3,9 @@ import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
 import { AppStyles, images } from "@theme";
 import { CustomButton } from "@components";
 import { PopupRating } from "../../components";
-import { statusOrder } from '@utils';
+import { statusOrder,scale } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from "./pages";
+const { scaleWidth, scaleHeight } = scale;
 
 const defaultData = [
     {
@@ -133,8 +134,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     image: {
-        width: 318,
-        height: 318,
+        width: scaleWidth(318),
+        height: scaleHeight(318),
     },
     headerTitle: {
         fontSize: 18,

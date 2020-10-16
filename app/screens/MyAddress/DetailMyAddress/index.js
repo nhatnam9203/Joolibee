@@ -31,7 +31,7 @@ const index = (props) => {
     );
 
     const isCheckValue = values ? true : false;
-    console.log('isCheckValue',isCheckValue)
+    console.log('isCheckValue', isCheckValue)
 
     const initialValues = isCheckValue ? values : {
         phone: '',
@@ -208,19 +208,20 @@ const index = (props) => {
                                 }}
                             />}
 
+
                             <View style={styles.btnContainer}>
                                 <CustomButton
-                                    onPress={handleSubmit}
+                                    //onPress={handleSubmit}
                                     label='LƯU ĐỊA CHỈ NÀY'
                                     width={width * 0.9}
                                     height={58}
                                     bgColor={AppStyles.colors.button}
                                 />
                             </View>
-
                         </View>
                     )}
             </Formik>
+
         </SinglePageLayout>
 
     );
@@ -241,7 +242,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: AppStyles.colors.white,
-        marginTop:40
+        // position: 'absolute',
+        // bottom: 0
+
     }
 });
 export default index
