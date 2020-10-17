@@ -101,7 +101,6 @@ const StorePage = () => {
   }
 
   React.useEffect(() => {
-    console.log('active')
     dispatch(filterStore(params))
 
     //return () => setParams({})

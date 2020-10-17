@@ -1,11 +1,11 @@
-import { CustomFlatList } from '@components';
+import { CustomFlatList, CustomButton } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { AppStyles, metrics, images } from '@theme';
-import ScreenName from '../ScreenName';
+import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { scale } from '@utils';
+import { PopupWebView } from '../components';
 
 const { scaleWidth, scaleHeight } = scale;
 const defaultData = [
@@ -30,43 +30,45 @@ const defaultData = [
 const index = () => {
     const navigation = useNavigation();
     const [data, setData] = React.useState([]);
+    const [visible_detail, showDetail] = React.useState(false);
+    const onToggleDetail = () => showDetail(!visible_detail);
 
     React.useEffect(() => {
         setData(defaultData);
     }, []);
 
-    const goToDetail = (item) => () => {
-        navigation.navigate(ScreenName.DeitalOrders, { order: item })
-    }
 
-    const renderItem = (item, index, onPress) => {
+
+    const ItemSeperator = () => (<View style={{ height: scaleHeight(70) }} />)
+
+    const renderItem = ({ item, index }) => {
         return (
-            <View style={styles.wrapperItem}>
-                <View
-                    key={index + ''}
-                    style={styles.containerItem}>
-                    <Image source={item.url} style={styles.imgProduct} />
 
-                    <View style={styles.content}>
-                        <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
-                            {item.title}
-                        </Text>
+            <View
+                key={index + ''}
+                style={styles.containerItem}>
+                <Image source={item.url} style={styles.imgProduct} />
 
-                        <Text style={[AppStyles.fonts.text, styles.txtContent]}>
-                            {item.content}
-                        </Text>
-                    </View>
+                <View style={styles.content}>
+                    <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
+                        {item.title}
+                    </Text>
 
-                    <CustomButton
-                        onPress={onPress}
-                        label={'XEM THÊM'}
-                        width={134}
-                        height={43}
-                        bgColor={AppStyles.colors.button}
-                        style={styles.btn}
-                    />
+                    <Text style={[AppStyles.fonts.text, styles.txtContent]}>
+                        {item.content}
+                    </Text>
                 </View>
+
+                <CustomButton
+                    onPress={onToggleDetail}
+                    label={'XEM THÊM'}
+                    width={134}
+                    height={43}
+                    bgColor={AppStyles.colors.button}
+                    style={styles.btn}
+                />
             </View>
+
         );
     };
 
@@ -75,30 +77,25 @@ const index = () => {
             <CustomFlatList
                 data={data}
                 renderItem={renderItem}
-                horizontal={false}
                 keyExtractor={(item, index) => index + ''}
                 contentContainerStyle={styles.contentContainerStyle}
+                ItemSeparatorComponent={ItemSeperator}
                 showsVerticalScrollIndicator={false}
             />
+
+            <PopupWebView visible={visible_detail} onToggle={onToggleDetail} />
         </View>
     );
 };
 
 
 const styles = StyleSheet.create({
-    container: { flex: 1, paddingHorizontal: 5, backgroundColor: AppStyles.colors.background },
-    contentContainerStyle: { paddingVertical: 15 },
-    wrapperItem: {
-        width: '100%',
-        height: scaleHeight(390),
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 15,
-    },
+    container: { flex: 1, backgroundColor: AppStyles.colors.background },
+    contentContainerStyle: { paddingVertical: 70, paddingHorizontal: 10 },
 
     containerItem: {
         width: '100%',
-        height: scaleHeight(344),
+        height: scaleHeight(370),
         alignItems: 'center',
         backgroundColor: AppStyles.colors.white,
         borderRadius: scaleWidth(10),
@@ -109,6 +106,18 @@ const styles = StyleSheet.create({
     content: {
         paddingHorizontal: scaleWidth(10),
         top: scaleHeight(-20),
+    },
+    imgProduct: {
+        width: scaleWidth(281),
+        height: scaleHeight(174),
+        resizeMode: 'stretch',
+        top: scaleHeight(-40),
+        zIndex: 100000,
+    },
+
+    btn: {
+        alignSelf: 'flex-start',
+        marginTop: scaleHeight(10),
     },
 
 });

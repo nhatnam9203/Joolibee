@@ -17,7 +17,7 @@ const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 const data = [1, 2, 3, 4, 5];
 
-const index = ({ openDetail }) => {
+const index = ({ openDetail, onCHangeScreen }) => {
   return (
     <View style={styles.container}>
 
@@ -32,7 +32,7 @@ const index = ({ openDetail }) => {
         </Text>
 
         <TouchableOpacity
-          onPress={openDetail}
+          onPress={onCHangeScreen}
         >
           <Text
             style={styles.txtSeeAll}>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.cyan,
-    // top: scaleHeight(-40),
+    top: -50,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
     paddingVertical: scaleHeight(20),
@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
   btn: {
     alignSelf: 'flex-start',
     marginTop: scaleHeight(10),
-    paddingLeft: scaleWidth(10),
   },
   txtSeeAll: {
     textDecorationLine: 'underline',

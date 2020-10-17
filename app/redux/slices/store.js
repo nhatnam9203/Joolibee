@@ -31,7 +31,6 @@ const storeSlice = createSlice({
             const { payload } = action;
             let query = (item) => {
                 const { city, region } = item;
-                console.log('payload',payload)
                 let _city = city.toLowerCase();
                 let _region = region.toLowerCase()
                 if (payload.city && !payload.district) return _city.includes(payload.city);

@@ -56,7 +56,6 @@ export const getCurrentPosition = () => new Promise(async (resolve, reject) => {
 export const reverseGeocoding = async (options) => {
     try {
         const res = await Geocoder.geocodePosition(options);
-        console.log('resssss',res)
         return res
 
     }

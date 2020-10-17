@@ -11,7 +11,6 @@ export const dateTime = (date = moment(), formatString) => {
 
   return moment(date).format(formatString);
 }
-}
 export const jollibeeCurrency = ({ value = 0, currency }) => {
   return (
     Number(value)

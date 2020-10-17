@@ -9,6 +9,7 @@
       android:icon="@mipmap/consumer"
       android:roundIcon="@mipmap/consumer"
       android:allowBackup="false"
+      android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
