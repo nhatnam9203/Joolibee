@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Animated } from 'react-native'
 import StepIndicator from 'react-native-step-indicator'
 import { Accordian } from "@components";
 import { AppStyles, metrics, images } from "@theme";
@@ -18,7 +18,7 @@ const stepIndicatorStyles = {
     stepIndicatorSize: 12,
     currentStepIndicatorSize: 18,
     separatorStrokeWidth: 2,
-    currentStepStrokeWidth: 1,
+    currentStepStrokeWidth: 0,
     stepStrokeCurrentColor: AppStyles.colors.accent,
     stepStrokeWidth: 2,
     separatorStrokeFinishedWidth: 0,
@@ -31,7 +31,9 @@ const stepIndicatorStyles = {
 }
 export default function orderStatus({ status }) {
     const refScrollView = React.useRef(null);
+    const scale = React.useRef(new Animated.Value(15)).current;
     const [visible, showPopup] = React.useState(false);
+
 
     let indexStatus = data.findIndex((item) => item.title.includes(status));
 
@@ -43,13 +45,39 @@ export default function orderStatus({ status }) {
 
     const onScrollTo = () => {
         if (refScrollView.current) {
-            refScrollView.current.scrollTo({ x: 0, y: data[indexStatus].y, animate: true })
+            setTimeout(() => {
+                refScrollView.current.scrollTo({ x: 0, y: data[indexStatus].y, animate: true })
+            }, 200);
         }
     }
 
+    const loopAnimateFade = () => Animated.loop(
+        Animated.sequence([
+            Animated.timing(scale, {
+                toValue: 0.2,
+                duration: 1000,
+                useNativeDriver: true,
+            }),
+
+            Animated.timing(scale, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true,
+            })
+        ]),
+        {
+            iterations: 2000,
+
+
+        }
+    ).start()
+
     React.useEffect(() => {
-        onScrollTo()
-    }, [])
+        onScrollTo();
+        setTimeout(() => {
+            loopAnimateFade()
+        }, 500);
+    }, []);
 
     const onTogglePopup = () => showPopup(!visible);
 
@@ -85,11 +113,32 @@ export default function orderStatus({ status }) {
 
     const renderStepIndicator = ({ position, stepStatus }) => {
         const activeBg = { backgroundColor: stepStatus === 'unfinished' ? AppStyles.colors.complete : AppStyles.colors.accent };
+        const bgWarpper = stepStatus == 'unfinished' && { backgroundColor: AppStyles.colors.complete };
+        const scaleIndicator = stepStatus !== 'unfinished' && { transform: [{ scale }] }
         return (
-            <View
+            <View style={[
+                styles.wrapperStepIndicator,
+                bgWarpper
+            ]}>
+                <Animated.View
+                    style={[
+                        styles.fadeStepIndicator,
+                        activeBg,
+                        scaleIndicator
+                    ]}
+                >
 
-                style={[styles.stepIndicator, activeBg]}
-            />
+                </Animated.View>
+                <View
+                    style={[styles.stepIndicator, activeBg,
+                    stepStatus !== 'unfinished' && {
+                        transform: [{
+                            scale: 0.8
+                        }],
+                    }
+                    ]}
+                />
+            </View>
         )
     };
 
@@ -132,6 +181,7 @@ export default function orderStatus({ status }) {
                 title='TRẠNG THÁI ĐƠN HÀNG'
                 renderHeader={renderHeader}
                 renderContent={renderContent}
+                callBack={onScrollTo}
             />
 
             <PopupChat visible={visible} onToggle={onTogglePopup} />
@@ -164,11 +214,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '30%'
     },
+    fadeStepIndicator: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        opacity: 0.5
+    },
 
     stepIndicator: {
         width: 10,
         height: 10,
         borderRadius: 5,
+        position: 'absolute', 
+    },
+
+    wrapperStepIndicator: {
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     positionDotHeader: {
         backgroundColor: AppStyles.colors.accent,

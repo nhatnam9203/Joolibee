@@ -62,8 +62,8 @@ const StorePage = () => {
   const init_location = useSelector((state) => state.store.init_location);
   const stores = useStore()
   const INITIAL_REGION = {
-    latitude: init_location.lat,
-    longitude: init_location.lng,
+    latitude: init_location?.lat,
+    longitude: init_location?.lng,
     latitudeDelta: 0.5,
     longitudeDelta: (0.5 * width) / height,
   };

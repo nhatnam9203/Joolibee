@@ -142,18 +142,19 @@ const styles = StyleSheet.create({
     imageStatusOrder: {
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop: 50,
+        // paddingTop: 50,
         marginBottom: 20
     },
     wrapperImage: {
-        width: 318,
-        height: 318,
-        borderRadius: 318 / 2,
-        overflow: 'hidden'
+        // width: 318,
+        // height: 318,
+        // borderRadius: 318 / 2,
+        // overflow: 'hidden'
     },
     image: {
-        width: scaleWidth(318),
-        height: scaleHeight(318),
+        width: '100%',
+        height: scaleHeight(350),
+        // resizeMode:'stretch'
     },
     headerTitle: {
         fontSize: 18,

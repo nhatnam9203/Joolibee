@@ -56,9 +56,7 @@ const HomePage = () => {
     } catch (error) {
 
     } finally {
-      setTimeout(() => {
-        setVisiblePopup(true);
-      }, 1200);
+      setVisiblePopup(true);
     }
   }
   React.useEffect(() => {
