@@ -407,6 +407,8 @@ PODS:
   - react-native-fbsdk/Share (2.0.0):
     - FBSDKShareKit (~> 7.0)
     - React
+  - react-native-geolocation (2.0.2):
+    - React
   - react-native-google-maps (0.27.1):
     - Google-Maps-iOS-Utils (= 2.1.0)
     - GoogleMaps (= 3.5.0)
@@ -581,6 +583,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
+  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -704,6 +707,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
+  react-native-geolocation:
+    :path: "../node_modules/@react-native-community/geolocation"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
@@ -834,6 +839,7 @@ SPEC CHECKSUMS:
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-config: 9a061347e0136fdb32d43a34d60999297d672361
   react-native-fbsdk: 00c15d138bba6d4efa628670886fc58cec858c19
+  react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
@@ -874,6 +880,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 2cc570694beed07fe42d236fe73a0754384418dc
+PODFILE CHECKSUM: 29b0fc0ade5c5258276d6963de44eea4b747fae2
 
 COCOAPODS: 1.10.0.rc.1

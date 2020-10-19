@@ -23,6 +23,8 @@ target 'loyalty' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+
   target 'loyaltyTests' do
     inherit! :complete
     # Pods for testing
