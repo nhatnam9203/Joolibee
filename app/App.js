@@ -22,7 +22,7 @@ import {
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { graphQlClient } from './graphql';
-import { Loading } from '@components';
+import { Loading, RootPermission } from '@components';
 import { hideLoading } from '@slices/app';
 import SplashScreen from 'react-native-splash-screen';
 import { useCodePushUpdate, useChangeLanguage } from '@hooks';
@@ -94,6 +94,7 @@ let App = () => {
               <Navigator />
               <LoadingProvider />
               <DropdownAlert ref={dropdownRef} showCancel={true} />
+              <RootPermission />
             </PaperProvider>
           </LangProvider>
         </ApolloProvider>

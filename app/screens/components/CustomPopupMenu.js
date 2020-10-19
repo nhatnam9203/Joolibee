@@ -15,7 +15,7 @@ import { AppStyles, images, metrics } from '@theme';
 const ANIMATION_TIME = 350
 const CustomPopupMenu = ({
   visible,
-  contentContainerModalStyle,
+  value,
   menus = [],
   placeHolders = '',
   openMenu,
@@ -23,7 +23,6 @@ const CustomPopupMenu = ({
   onChangeItem
 }) => {
   const [layout, setLayout] = React.useState({});
-  const [label, setLabel] = React.useState(null);
   const setOnLayout = React.useCallback(
     (i) => {
       if (i.nativeEvent) setLayout(i.nativeEvent.layout);
@@ -34,7 +33,6 @@ const CustomPopupMenu = ({
   const onHandleChangeItem = React.useCallback(
     (item) => () => {
       onChangeItem(item)
-      setLabel(item.label);
       closeMenu()
     },
     [visible],
@@ -63,7 +61,7 @@ const CustomPopupMenu = ({
             AppStyles.fonts.bold,
 
           ]}>
-          {label ? label : placeHolders}
+          {value ? value : placeHolders}
         </Text>
 
         <Image source={images.icons.ic_dropdown} />

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { mutation, graphQlClient } from '@graphql';
 import { showLoading, hideLoading } from './app';
-import {  } from "../../api/apiGoogle";
+
 const KEY_CONSTANT = 'account';
 
 // First, create the thunk

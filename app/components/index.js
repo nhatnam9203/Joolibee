@@ -15,7 +15,7 @@ import CustomScrollTabView from './CustomScrollTabView';
 import CustomAccordionList from './CustomAccordionList';
 import Accordian from './Accordian';
 import CustomSwitch from './CustomSwitch';
-
+import RootPermission from './RootPermission';
 module.exports = {
   TopBar,
   CustomButton,
@@ -34,4 +34,5 @@ module.exports = {
   CustomAccordionList,
   CustomSwitch,
   Accordian,
+  RootPermission
 };
