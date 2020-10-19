@@ -25,6 +25,7 @@ import {
   OrderScreen,
   MyRewardScreen,
   StorePickupScreen,
+  NewsScreen
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -272,6 +273,15 @@ function MainStack() {
           headerBackImage: () => (
             <HeaderImage src={images.icons.ic_close_blur} />
           ),
+        }}
+      />
+
+      <Stack.Screen
+        component={NewsScreen}
+        name={ScreenName.News}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtNews'),
         }}
       />
     </Stack.Navigator>

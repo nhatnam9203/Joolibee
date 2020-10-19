@@ -11,42 +11,48 @@ import { CustomButton } from '@components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 
-const index = ({openDetail}) => {
+const index = ({ openDetail }) => {
   return (
     <View style={styles.container}>
-      <Text
-        style={[
-          AppStyles.fonts.title,
-          { color: AppStyles.colors.text, fontSize: scaleWidth(32) },
-        ]}>
-        Jollibee Việt Nam
+      <View style={{ paddingHorizontal: 15 }}>
+        <Text
+          style={[
+            AppStyles.fonts.title,
+            { color: AppStyles.colors.text, fontSize: scaleWidth(32) },
+          ]}>
+          Jollibee Việt Nam
         </Text>
 
-      <Text
-        style={[
-          AppStyles.fonts.mini,
-          styles.txtContent
-        ]}>
-        Cửa hàng Jollibee đầu tiên được mở tại Việt Nam vào năm
-        2005. Kể từ đó, Jollibee đã nỗ lực hết mình để mang đến
-        các gia đình Việt những phần ăn ngon miệng với mức giá
-        hợp lý.
+        <Text
+          style={[
+            AppStyles.fonts.mini,
+            styles.txtContent
+          ]}>
+          Cửa hàng Jollibee đầu tiên được mở tại Việt Nam vào năm
+          2005. Kể từ đó, Jollibee đã nỗ lực hết mình để mang đến
+          các gia đình Việt những phần ăn ngon miệng với mức giá
+          hợp lý.
         </Text>
 
-      <CustomButton
-        onPress={openDetail}
-        label={'XEM THÊM'}
-        width={134}
-        height={43}
-        bgColor={AppStyles.colors.accent}
-        textColor={AppStyles.colors.white}
-      />
-
-      <View style={styles.contentImage}>
-        <Image
-          source={images.jollibee_like}
+        <CustomButton
+          onPress={openDetail}
+          label={'XEM THÊM'}
+          width={134}
+          height={43}
+          bgColor={AppStyles.colors.accent}
+          textColor={AppStyles.colors.white}
         />
+
+        <View style={styles.contentImage}>
+          <Image
+            source={images.jollibee_like}
+          />
+        </View>
+
       </View>
+
+
+      <View style={styles.viewBottom} />
     </View>
   );
 };
@@ -56,8 +62,8 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.button,
-    paddingHorizontal: 10,
     paddingVertical: 30,
+    top: -50,
   },
   contentImage: {
     alignItems: 'center',
@@ -68,6 +74,15 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     lineHeight: 20
   },
+
+  viewBottom: {
+    position: 'absolute',
+    bottom: -50,
+    height: 50,
+    width: '100%',
+    backgroundColor: AppStyles.colors.button,
+
+  }
 });
 
 export default index;

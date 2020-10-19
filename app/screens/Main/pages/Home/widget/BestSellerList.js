@@ -45,16 +45,6 @@ const index = ({ openMenu }) => {
         </TouchableOpacity>
       </View>
 
-      {/* <ScrollView
-                ref={refScrollView}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ alignItems: 'center' }}
-                horizontal
-
-            >
-                {[1, 2, 3, 4, 5].map(renderItem)}
-            </ScrollView> */}
-
       <View
         style={{
           position: 'absolute',
@@ -112,7 +102,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: scaleHeight(381),
     backgroundColor: AppStyles.colors.orange,
-    // top: scaleHeight(-40),
+    top: -50,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(10),
   },

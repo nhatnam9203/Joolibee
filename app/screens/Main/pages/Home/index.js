@@ -1,18 +1,17 @@
 import React from 'react';
 import {
-  ScrollView,
   StyleSheet,
   View,
   Image,
   ImageBackground,
+  Text
 } from 'react-native';
-import { Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
-// import { useGeolocation } from "@hooks";
-// import { setInitLocation } from '@slices/store';
+import { getCurrentPosition } from "@location";
+import { getPosition } from '@slices/store';
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
 import {
@@ -20,6 +19,7 @@ import {
   PopupSelectAreaComponent,
   MenuPageName,
   PromotionPageName,
+  PopupWebView
 } from '../../../components';
 import {
   ProductPromotionList,
@@ -27,7 +27,6 @@ import {
   NewsList,
   AboutJollibee,
   ServiceList,
-  Detail,
 } from './widget';
 import { useDispatch } from 'react-redux';
 const { scaleWidth, scaleHeight } = scale;
@@ -44,16 +43,26 @@ const HomePage = () => {
   const onCHangeScreen = (screen) => () => {
     navigation.navigate(screen);
   };
-  React.useEffect(() => {
-   
-    setTimeout(() => {
+
+  const requestCurrentLocation = async () => {
+    try {
+      let result = await getCurrentPosition();
+      let latlng = {
+        lat: result.coords.latitude,
+        lng: result.coords.longitude
+      };
+      dispatch(getPosition(latlng, { dispatch })
+      )
+    } catch (error) {
+
+    } finally {
       setVisiblePopup(true);
-    }, 1200);
+    }
+  }
+  React.useEffect(() => {
+    requestCurrentLocation()
   }, []);
 
-  // React.useEffect(()=>{
-  //   dispatch(setInitLocation(curr_location))
-  // },[curr_location])
 
   return (
     <TopBarScreenLayout
@@ -101,22 +110,27 @@ const HomePage = () => {
               styleText={{ fontSize: 14 }}
             />
           </View>
+
         </ImageBackground>
 
         <ProductPromotionList />
 
+
+
         <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
 
-        <NewsList openDetail={onToggleDetail} />
+        <NewsList openDetail={onToggleDetail} onCHangeScreen={onCHangeScreen(ScreenName.News)} />
 
         <ServiceList openDetail={onToggleDetail} />
 
         <AboutJollibee openDetail={onToggleDetail} />
+
+       
       </SinglePageLayout>
 
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
 
-      <Detail visible={visible_detail} onToggle={onToggleDetail} />
+      <PopupWebView visible={visible_detail} onToggle={onToggleDetail} />
     </TopBarScreenLayout>
   );
 };
@@ -125,7 +139,7 @@ const styles = StyleSheet.create({
   container: { backgroundColor: AppStyles.colors.accent },
   containerTop: {
     paddingHorizontal: metrics.padding,
-    paddingTop: metrics.padding,
+
   },
   txtTitle: {
     fontSize: scaleWidth(24),
@@ -140,17 +154,17 @@ const styles = StyleSheet.create({
   },
   layoutPromotion: {
     width: '100%',
-    height: scaleHeight(250),
+    height: scaleHeight(350),
     justifyContent: 'center',
   },
 
   jollibeeHome: {
     position: 'absolute',
-    top: scaleHeight(5),
+    top: 0,
     right: -scaleWidth(50),
-    width: scaleWidth(256),
-    height: scaleHeight(238),
-    resizeMode: 'stretch',
+    width: scaleWidth(270),
+    height: scaleHeight(280),
+    resizeMode: 'contain',
   },
 });
 

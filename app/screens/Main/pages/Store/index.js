@@ -4,6 +4,8 @@ import {
   View,
   FlatList,
   Dimensions,
+  Platform,
+  PixelRatio
 } from 'react-native';
 import { TopBarScreenLayout } from '@layouts';
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +16,10 @@ import { Markers } from './pages';
 import { filterStore } from '@slices/store';
 
 const { width, height } = Dimensions.get('window');
-const DEFAULT_PADDING = { top: 60, right: 60, bottom: 60, left: 60 };
+const DEFAULT_PADDING = { top: 60, 
+  right: 60, 
+  bottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(height / 2) : (height / 2), 
+  left: 60 };
 //define menu
 const citys = [
   {
@@ -52,22 +57,20 @@ const districs = [
   },
 ];
 
-const INITIAL_REGION = {
-  latitude: 10.780644,
-  longitude: 106.635679,
-  latitudeDelta: 0.5,
-  longitudeDelta: (0.5 * width) / height,
-};
-
 const StorePage = () => {
   const dispatch = useDispatch();
- // const init_location = useSelector((state) => state.store.init_location);
-
+  const init_location = useSelector((state) => state.store.init_location);
+  const stores = useStore()
+  const INITIAL_REGION = {
+    latitude: init_location?.lat,
+    longitude: init_location?.lng,
+    latitudeDelta: 0.5,
+    longitudeDelta: (0.5 * width) / height,
+  };
 
   const [visible, showModal] = React.useState([false, false]);
-  const [params, setParams] = React.useState({})
+  const [params, setParams] = React.useState(init_location)
   const refMap = React.useRef(null);
-  const stores = useStore()
   const openModal = (i) => () => {
     let _visible = [...visible]
     _visible[i] = !_visible[i]
@@ -85,6 +88,8 @@ const StorePage = () => {
     });
   }
 
+
+
   // -------------------- Filter Stores --------------------------//
   const onChangeItemCity = (item) => {
     let newParams = { city: item.label.toLowerCase() }
@@ -97,6 +102,8 @@ const StorePage = () => {
 
   React.useEffect(() => {
     dispatch(filterStore(params))
+
+    //return () => setParams({})
   }, [params])
   // -------------------- Filter Stores --------------------------//
 

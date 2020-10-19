@@ -24,19 +24,16 @@ export default class Accordian extends Component {
         const { title, styleTitle } = this.props;
         return (
             <View>
-                <TouchableOpacity ref={this.accordian} onPress={() => this.toggleExpand()}>
-                    {!title ? this.renderExpand() :
-                        <Text style={styleTitle}>{title}</Text>
-                    }
-                    <Image source={this.state.expanded ? images.icons.ic_arrow_up : images.icons.ic_arrow_down} style={{
-                        position: 'absolute',
-                        top: !title ? 5 : 0,
-                        right: 0
-                    }} />
+                <TouchableOpacity
+                    style={styles.row}
+                    ref={this.accordian}
+                    onPress={() => this.toggleExpand()}>
+                    <Text style={styleTitle}>{title}</Text>
+                    <Image source={this.state.expanded ? images.icons.ic_arrow_up : images.icons.ic_arrow_down} />
                 </TouchableOpacity>
                 <View style={styles.parentHr} />
                 {
-                    title && this.renderExpand()
+                    this.renderExpand()
 
                 }
 
@@ -46,7 +43,7 @@ export default class Accordian extends Component {
 
     toggleExpand = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ expanded: !this.state.expanded })
+        this.setState({ expanded: !this.state.expanded }, () => this.props.callBack())
     }
 
 }

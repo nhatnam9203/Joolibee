@@ -17,17 +17,28 @@ const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 const data = [1, 2, 3, 4, 5];
 
-const index = ({ openDetail }) => {
+const index = ({ openDetail, onCHangeScreen }) => {
   return (
     <View style={styles.container}>
+
       <View style={styles.containerTop}>
         <Text
           style={[
+
             AppStyles.fonts.title,
             { color: AppStyles.colors.text, fontSize: scaleWidth(32) },
           ]}>
           Tin Tức
         </Text>
+
+        <TouchableOpacity
+          onPress={onCHangeScreen}
+        >
+          <Text
+            style={styles.txtSeeAll}>
+            XEM TẤT CẢ
+        </Text>
+        </TouchableOpacity>
       </View>
 
       <Carousel
@@ -51,7 +62,7 @@ const index = ({ openDetail }) => {
   );
 };
 
-const renderItem = (item, index,onPress) => {
+const renderItem = (item, index, onPress) => {
   return (
     <View style={styles.wrapperItem}>
       <View
@@ -87,10 +98,10 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.cyan,
-    // top: scaleHeight(-40),
+    top: -50,
     alignItems: 'center',
-    paddingHorizontal: scaleWidth(10),
-    paddingVertical: scaleHeight(30),
+    paddingHorizontal: scaleWidth(15),
+    paddingVertical: scaleHeight(20),
   },
 
   containerTop: {
@@ -98,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingBottom: scaleHeight(20),
+    marginVertical: scaleHeight(30),
   },
 
   wrapperItem: {
@@ -143,7 +154,11 @@ const styles = StyleSheet.create({
   btn: {
     alignSelf: 'flex-start',
     marginTop: scaleHeight(10),
-    paddingLeft: scaleWidth(10),
+  },
+  txtSeeAll: {
+    textDecorationLine: 'underline',
+    ...AppStyles.fonts.bold,
+    fontSize: 14,
   },
 });
 
