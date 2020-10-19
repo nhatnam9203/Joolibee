@@ -7,7 +7,6 @@ import {
   InMemoryCache,
   ApolloLink,
   HttpLink,
-  withClientState,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
@@ -70,14 +69,6 @@ const errorLink = onError(
             case 'graphql-authorization':
               Logger.debug(graphQLErrors, 'graphql-authorization');
               remove(StorageKey.Token);
-              cache.writeData({
-                data: {
-                  authStatus: {
-                    __typename: 'authStatus',
-                    status: 'loggedOut',
-                  },
-                },
-              });
 
               break;
             default:

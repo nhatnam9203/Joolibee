@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const trimSpaces = (text) => text && text.replace(/\s/g, '');
 
@@ -8,9 +8,9 @@ export const pad_ = (n, len) =>
   (0).toFixed(len).slice(2, -n.toString().length) + n.toString();
 
 export const dateTime = (date = moment(), formatString) => {
-
   return moment(date).format(formatString);
-}
+};
+
 export const jollibeeCurrency = ({ value = 0, currency }) => {
   return (
     Number(value)
