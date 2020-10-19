@@ -31,24 +31,20 @@ const MENU_DETAIL_LIST = gql`
   }
 `;
 
-const defaultData = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-  { id: 5 },
-  { id: 6 },
-];
-
 export const QueryMenuDetailList = ({
   renderItem = () => <View />,
   renderItemLoading = () => <View />,
   categoryId,
+  input,
 }) => {
   const {
     loading,
     error,
-    data = { products: { items: defaultData } },
+    // eslint-disable-next-line no-unused-vars
+    data = {
+      products: { items: input },
+    },
+    fetchMore,
   } = useQuery(MENU_DETAIL_LIST, {
     variables: { categoryId },
   });
@@ -60,8 +56,8 @@ export const QueryMenuDetailList = ({
 
   return (
     <CustomFlatList
-      data={data?.products?.items}
-      renderItem={loading ? renderItemLoading : renderItem}
+      data={data.products?.items}
+      renderItem={renderItem}
       horizontal={false}
       numColumns={2}
       keyExtractor={(item) => item.id.toString()}

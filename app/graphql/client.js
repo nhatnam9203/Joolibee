@@ -44,17 +44,20 @@ const authLink = setContext(async (req, { headers }) => {
   }
 });
 
+/**
+ * Error Handle - graphQLErrors/networkError
+ */
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response, forward }) => {
-    /**
-     * graphQLErrors
-     * Do something with a graphQL error
-     */
     Logger.debug(graphQLErrors, 'graphQLErrors');
     Logger.debug(operation, 'operation');
+
+    /**
+     * graphQLErrors
+     * Do something with a graphql error
+     */
     if (graphQLErrors?.length > 0) {
       let errors = [];
-
       graphQLErrors.map(
         (
           { message, locations, path, extensions: { category, code } },
@@ -63,6 +66,7 @@ const errorLink = onError(
           switch (category) {
             case 'graphql':
             case 'graphql-input':
+              // client query/mutation wrong
               errors.push(message);
 
               break;

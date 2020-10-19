@@ -14,8 +14,11 @@ import ScreenName from '../ScreenName';
 import { QCC } from '@graphql';
 
 const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
-  const { menuItem } = route.params;
+  const {
+    menuItem: { products = { items: [] }, id, name },
+  } = route.params;
 
+  Logger.debug(products.items, 'MenuDetailScreen => items');
   const navigation = useNavigation();
 
   const renderItem = ({ item }) => (
@@ -51,9 +54,7 @@ const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
         />
       </View>
       <View style={styles.headerStyle}>
-        {!!menuItem?.name && (
-          <Text style={styles.txtHeaderStyle}>{menuItem?.name}</Text>
-        )}
+        {!!name && <Text style={styles.txtHeaderStyle}>{name}</Text>}
         <CustomButtonImage
           image={images.icons.ic_header_back}
           onPress={goToBack}
@@ -62,7 +63,8 @@ const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
       </View>
       <View style={styles.container}>
         <QCC.QueryMenuDetailList
-          categoryId={menuItem.id}
+          input={products.items}
+          categoryId={id}
           renderItem={renderItem}
           renderItemLoading={renderLoading}
         />
