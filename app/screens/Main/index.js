@@ -22,7 +22,7 @@ const MainTab = createBottomTabNavigator();
 function MainTabScreen() {
   const dispatch = useDispatch();
   const showOrderList = useSelector((state) => state.order.isShowOrderList);
-  const showQRCode = useSelector((state) => state.account.isShowQRCode);
+  const showQRCode = useSelector((state) => state.account?.isShowQRCode);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
   return (

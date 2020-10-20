@@ -55,7 +55,7 @@ export const MenuProductItem = ({
       />
       <View style={styles.bottomStyle}>
         <Text style={styles.textStyle} numberOfLines={2}>
-          {`${name}`.toUpperCase()}
+          {`${name}`}
         </Text>
         <View style={styles.priceContent}>
           <Text style={styles.priceStyle}>
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: 'left',
     textAlignVertical: 'center',
-    color: '#fff',
     ...AppStyles.fonts.bold,
+    color: '#fff',
     fontSize: 14,
   },
 
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   bottomStyle: {
     backgroundColor: AppStyles.colors.accent,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flex: 0,
     padding: 10,
     height: BOTTOM_HEIGHT,

@@ -1,5 +1,4 @@
 import Config from 'react-native-config';
-import _ from 'lodash';
 import NavigationService from '../navigation/NavigationService';
 import { get, StorageKey, remove } from '@storage';
 import {
@@ -10,6 +9,9 @@ import {
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
+import configureAppStore from '../redux/store';
+const { store } = configureAppStore();
+import { signOutRequest } from '../redux/slices/account';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 const cache = new InMemoryCache();
@@ -48,7 +50,7 @@ const authLink = setContext(async (req, { headers }) => {
  * Error Handle - graphQLErrors/networkError
  */
 const errorLink = onError(
-  ({ graphQLErrors, networkError, operation, response, forward }) => {
+  ({ graphQLErrors, networkError, operation, response = {}, forward }) => {
     Logger.debug(graphQLErrors, 'graphQLErrors');
     Logger.debug(operation, 'operation');
 
@@ -71,9 +73,10 @@ const errorLink = onError(
 
               break;
             case 'graphql-authorization':
-              Logger.debug(graphQLErrors, 'graphql-authorization');
               remove(StorageKey.Token);
-
+              errors.push(message);
+              // kick out user here ...
+              store.dispatch(signOutRequest());
               break;
             default:
               errors[index] = message;
@@ -83,12 +86,10 @@ const errorLink = onError(
         },
       );
 
+      // alert message on top
       if (errors.length > 0) {
         NavigationService.alertWithError({ message: errors.join('\n ') });
-      }
-
-      if (!_.isEmpty(errors)) {
-        response = Object.assign({}, response, { errors: errors });
+        response.errors = errors;
       }
     }
     //graphQLErrors
@@ -113,19 +114,22 @@ const link = ApolloLink.from([authLink, errorLink, httpLink]);
 
 const defaultOptions = {
   watchQuery: {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'cache-and-network',
     errorPolicy: 'ignore',
   },
   query: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'ignore',
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all',
   },
   mutate: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'ignore',
+    errorPolicy: 'all',
   },
 };
 
-const graphQlClient = new ApolloClient({ link, cache, defaultOptions });
+const graphQlClient = new ApolloClient({
+  link,
+  cache,
+  defaultOptions,
+});
 
 export default graphQlClient;

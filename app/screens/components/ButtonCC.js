@@ -7,7 +7,7 @@ import { showComingSoon } from '@slices/app';
 import { useDispatch } from 'react-redux';
 
 const BUTTON_HEIGHT = 58;
-const LAYOUT_WIDTH = '90%';
+const LAYOUT_WIDTH = '80%';
 
 export const ButtonRed = ({
   width = LAYOUT_WIDTH,
@@ -21,7 +21,7 @@ export const ButtonRed = ({
 
   return (
     <CustomButton
-      style={[styles.btnStyle, style]}
+      style={[styles.btnStyle, AppStyles.styles.shadow, style]}
       onPress={onPress ?? showPopup}
       width={width}
       height={height}
@@ -47,7 +47,7 @@ export const ButtonYellow = ({
 
   return (
     <CustomButton
-      style={[styles.btnStyle, style]}
+      style={[styles.btnStyle, AppStyles.styles.shadow, style]}
       styleText={textStyle}
       onPress={onPress ?? showPopup}
       width={width}
@@ -66,13 +66,14 @@ export const ButtonFacebook = ({
   height = BUTTON_HEIGHT,
   label = translate('txtSignInFacebook'),
   onPress,
+  style,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(showComingSoon());
 
   return (
     <CustomButton
-      style={styles.btnStyle}
+      style={[styles.btnStyle, AppStyles.styles.shadow, style]}
       onPress={onPress ?? showPopup}
       width={width}
       height={height}
@@ -93,13 +94,14 @@ export const ButtonGoogle = ({
   height = BUTTON_HEIGHT,
   label = translate('txtSignInGoogle'),
   onPress,
+  style,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(showComingSoon());
 
   return (
     <CustomButton
-      style={styles.btnStyle}
+      style={[styles.btnStyle, AppStyles.styles.shadow, style]}
       onPress={onPress ?? showPopup}
       width={width}
       height={height}
@@ -134,6 +136,7 @@ export const ButtonBorderRed = ({
       label={label}
       bgColor={'#fff'}
       borderColor={AppStyles.colors.accent}
+      borderWidth={2}
       textColor={AppStyles.colors.accent}
     />
   );
@@ -142,6 +145,5 @@ export const ButtonBorderRed = ({
 const styles = StyleSheet.create({
   btnStyle: {
     marginVertical: 10,
-    ...AppStyles.styles.shadow,
   },
 });

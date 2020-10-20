@@ -36,8 +36,10 @@ export const signIn = createAsyncThunk(
 );
 
 const initialState = {
-  isRemember: false,
-  tokenKey: null,
+  user: {
+    isRemember: false,
+    tokenKey: null,
+  },
   isShowQRCode: false,
   signInLoading: false,
   signUpLoading: false,
@@ -46,11 +48,10 @@ const initialState = {
 
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
-  initialState,
+  initialState: initialState,
   reducers: {
-    logout: (state, action) => {
-      remove(StorageKey.Token);
-      return initialState;
+    signOutRequest: (state, action) => {
+      state.user = initialState.user;
     },
     clearSignupState(state, action) {},
     clearSignInState(state, action) {},
@@ -112,7 +113,7 @@ const accountSlice = createSlice({
         save(storeTokenObj, StorageKey.Token);
 
         // update state
-        state.tokenKey = str;
+        state.user.tokenKey = str;
         Logger.info(state, 'tokenKey');
       } else {
         state.tokenKey = null;
@@ -121,17 +122,18 @@ const accountSlice = createSlice({
     [signIn.rejected]: (state, action) => {
       Logger.info(action, 'signIn rejected');
       state.signInLoading = false;
-      state.tokenKey = null;
+      state.user.tokenKey = null;
     },
   },
 });
 
 const { actions, reducer } = accountSlice;
 export const {
-  logout,
   clearSignupState,
   clearSignInState,
   showQRCode,
   dismissQRCode,
+  signOutRequest,
 } = actions;
+
 export default reducer;

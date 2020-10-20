@@ -18,7 +18,7 @@ function SplashStack() {
   );
 }
 function App() {
-  const tokenKey = useSelector((state) => state.account.tokenKey);
+  const tokenKey = useSelector((state) => state.account.user.tokenKey);
   const loading = useSelector((state) => state.app.loading_app);
 
   const [token, setToken] = React.useState(null);

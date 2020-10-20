@@ -1,22 +1,18 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { applyMiddleware } from 'redux';
-import { createInjectorsEnhancer } from 'redux-injectors';
+import Config from 'react-native-config';
+import { combineReducers } from 'redux';
 import {
-  persistCombineReducers,
-  persistStore,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from 'redux-persist';
-import createSagaMiddleware from 'redux-saga';
-import Config from 'react-native-config';
-
 import rootReducers from '../slices'; // where reducers is a object of reducers
-import sagas from '../sagas';
 
 const config = {
   key: 'root',
@@ -26,27 +22,12 @@ const config = {
 };
 const initialState = {};
 const middleware = [];
-const reduxSagaMonitorOptions = {};
+const reducers = combineReducers(rootReducers);
 
-const sagaMiddleware = createSagaMiddleware(reduxSagaMonitorOptions);
-middleware.push(sagaMiddleware);
-const { run: runSaga } = sagaMiddleware;
+const persistedReducer = persistReducer(config, reducers);
 
-if (__DEV__) {
-  // middleware.push(createLogger());
-}
-
-const reducers = persistCombineReducers(config, rootReducers);
-const enhancers = [
-  applyMiddleware(...middleware),
-  createInjectorsEnhancer({
-    createReducer: reducers,
-    runSaga,
-  }),
-];
-const persistConfig = { enhancers };
 const store = configureStore({
-  reducer: reducers,
+  reducer: persistedReducer,
   middleware: [
     ...getDefaultMiddleware({
       serializableCheck: {
@@ -57,16 +38,8 @@ const store = configureStore({
   ],
   preloadedState: initialState,
   devTools: Config.NODE_ENV !== 'production',
-  enhancers: enhancers,
 });
 
-const persistor = persistStore(store, persistConfig, () => {
-  //   console.log('Test', store.getState());
-});
-const configureAppStore = () => {
-  return { persistor, store };
-};
+const persistor = persistStore(store);
 
-sagaMiddleware.run(sagas);
-
-export default configureAppStore;
+export default { store, persistor };

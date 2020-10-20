@@ -13,6 +13,7 @@ const CustomButton = ({
   children,
   absolute = false,
   borderColor,
+  borderWidth = 1,
   style,
   styleText,
   disabled,
@@ -43,7 +44,10 @@ const CustomButton = ({
             backgroundColor: bgColor,
             borderRadius: height / 2,
             ...(borderColor &&
-              !disabled && { borderWidth: 1, borderColor: borderColor }),
+              !disabled && {
+                borderWidth: borderWidth,
+                borderColor: borderColor,
+              }),
           },
         ]}>
         {children && children}
