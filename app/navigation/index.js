@@ -29,7 +29,6 @@ function App() {
   React.useEffect(() => {
     const loadToken = async () => {
       const tokenObject = await get(StorageKey.Token);
-      Logger.debug(tokenObject, 'App -> useEffect');
       setToken(tokenObject[tokenKey]);
     };
     loadToken();
