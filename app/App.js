@@ -9,7 +9,7 @@ import { setI18nConfig } from '@localize';
 import { hideLoading } from '@slices/app';
 import { AppStyles } from '@theme';
 import Navigator from 'app/navigation';
-import configureAppStore from 'app/redux/store';
+import { persistor, store } from 'app/redux/store';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import codePush from 'react-native-code-push';
@@ -27,10 +27,9 @@ import {
   useSelector,
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { dropdownRef } from './navigation/NavigationService';
+import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
 import { graphQlClient } from './graphql';
-
-const { persistor, store } = configureAppStore();
+import GraphErrorHandler from './GraphErrorHandler';
 
 const fontConfig = {
   default: {
@@ -90,15 +89,17 @@ let App = () => {
       <StoreProvider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <LangProvider>
-            <PaperProvider theme={theme}>
-              <Navigator />
-              <LoadingProvider />
-              <DropdownAlert
-                ref={dropdownRef}
-                showCancel={true}
-                closeInterval={6000}
-              />
-            </PaperProvider>
+            <GraphErrorHandler ref={graphQLErrorRef}>
+              <PaperProvider theme={theme}>
+                <Navigator />
+                <LoadingProvider />
+                <DropdownAlert
+                  ref={dropdownRef}
+                  showCancel={true}
+                  closeInterval={6000}
+                />
+              </PaperProvider>
+            </GraphErrorHandler>
           </LangProvider>
         </PersistGate>
       </StoreProvider>

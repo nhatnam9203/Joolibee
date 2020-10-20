@@ -9,9 +9,6 @@ import {
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
-import configureAppStore from '../redux/store';
-const { store } = configureAppStore();
-import { signOutRequest } from '../redux/slices/account';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 const cache = new InMemoryCache();
@@ -76,7 +73,7 @@ const errorLink = onError(
               remove(StorageKey.Token);
               errors.push(message);
               // kick out user here ...
-              store.dispatch(signOutRequest());
+              NavigationService.logout();
               break;
             default:
               errors[index] = message;

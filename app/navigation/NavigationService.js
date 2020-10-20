@@ -2,6 +2,7 @@ import * as React from 'react';
 
 export const navigationRef = React.createRef();
 export const dropdownRef = React.createRef();
+export const graphQLErrorRef = React.createRef();
 
 function navigate(name, params) {
   navigationRef.current?.navigate(name, params);
@@ -19,9 +20,15 @@ function alertWithError(error) {
   alert(Object.assign({}, error, { type: 'error' }));
 }
 
+function logout() {
+  graphQLErrorRef.current?.forceLogout();
+}
+
 export default {
   navigate,
   goBack,
   alert,
   alertWithError,
+  graphQLErrorRef,
+  logout,
 };

@@ -13,33 +13,34 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import rootReducers from '../slices'; // where reducers is a object of reducers
+import logger from 'redux-logger';
 
 const config = {
   key: 'root',
+  // version: 1,
   storage: AsyncStorage,
   blacklist: ['app'],
   debug: Config.NODE_ENV !== 'production', //to get useful logging
 };
 const initialState = {};
-const middleware = [];
 const reducers = combineReducers(rootReducers);
 
 const persistedReducer = persistReducer(config, reducers);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: [
-    ...getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-    ...middleware,
-  ],
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
   preloadedState: initialState,
   devTools: Config.NODE_ENV !== 'production',
 });
 
 const persistor = persistStore(store);
 
-export default { store, persistor };
+module.exports = {
+  store,
+  persistor,
+};

@@ -17,8 +17,11 @@ function SplashStack() {
     </Stack.Navigator>
   );
 }
+
 function App() {
-  const tokenKey = useSelector((state) => state.account.user.tokenKey);
+  const {
+    user: { tokenKey },
+  } = useSelector((state) => state.account);
   const loading = useSelector((state) => state.app.loading_app);
 
   const [token, setToken] = React.useState(null);
@@ -34,7 +37,7 @@ function App() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {loading ? <SplashStack /> : true ? <MainStack /> : <AuthStack />}
+      {loading ? <SplashStack /> : tokenKey ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }
