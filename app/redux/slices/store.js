@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { showLoading, hideLoading } from './app';
 import { stores, cities, districts } from "../../mocks";
 import { reverseGeocoding } from "@location";
+import { format } from "@utils";
 const initStores = Object.values(stores);
 
 
@@ -65,10 +66,25 @@ const storeSlice = createSlice({
             if (payload) {
                 const location = payload[0];
 
-                
+                let city = format.convertString(location?.adminArea);
+
+                let default_city = cities.findIndex((item) => {
+                    let label = format.convertString(item.label);
+                    if (city.includes(label)) return city.includes(label)
+                });
+                if (default_city > -1) {
+                    state.districts = districts.filter((item) => item.key == cities[default_city].label);
+                    let default_district = state.districts.findIndex((item) => {
+                        let label = format.convertString(item.key);
+                        if (city.includes(label)) return city.includes(label)
+                    });
+                }
+
                 state.init_location = {
                     "district": location.subAdminArea,
                     "city": location.adminArea,
+                    "default_city": default_city,
+
                     ...location.position
                 }
             } else {
