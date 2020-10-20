@@ -36,7 +36,7 @@ function App() {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      {loading ? <SplashStack /> : tokenKey ? <MainStack /> : <AuthStack />}
+      {loading ? <SplashStack /> : token ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

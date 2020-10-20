@@ -7,7 +7,6 @@ const GraphErrorHandler = React.forwardRef(({ children }, ref) => {
 
   React.useImperativeHandle(ref, () => ({
     forceLogout: () => {
-      Logger.debug('logout', 'forceLogout ');
       dispatch(signOutRequest);
     },
   }));
