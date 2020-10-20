@@ -11,12 +11,15 @@ import { JollibeeImage } from './JollibeeImage';
 import { format } from '@utils';
 import { translate } from '@localize';
 
-const MENU_DETAIL_HEIGHT = 240;
+const MENU_DETAIL_HEIGHT = 238;
+const BOTTOM_DETAIL_HEIGHT = 86;
 
 export const MenuItemLoading = () => (
   <Placeholder style={styles.container} Animation={Fade}>
-    <PlaceholderMedia style={styles.placeholderMedia} />
-    <PlaceholderLine style={styles.textContentStyle} />
+    <View style={styles.content}>
+      <PlaceholderMedia style={styles.placeholderMedia} />
+      <View style={styles.textContentStyle} />
+    </View>
   </Placeholder>
 );
 
@@ -29,7 +32,7 @@ export const MenuItem = ({ item, onPress }) => (
         defaultSource={images.menu_3}
       />
       <View style={styles.textContentStyle}>
-        <Text style={styles.textStyle}>{`${item.name}`.toUpperCase()}</Text>
+        <Text style={styles.textStyle}>{`${item.name}`}</Text>
       </View>
     </View>
   </TouchableOpacity>
@@ -53,7 +56,7 @@ export const MenuProductItem = ({
         url={url}
         defaultSource={images.menu_3}
       />
-      <View style={styles.bottomStyle}>
+      <View style={[styles.bottomStyle, { height: BOTTOM_DETAIL_HEIGHT }]}>
         <Text style={styles.textStyle} numberOfLines={2}>
           {`${name}`}
         </Text>
@@ -62,7 +65,7 @@ export const MenuProductItem = ({
             {format.jollibeeCurrency(maximum_price?.final_price)}
           </Text>
           <Text style={styles.pointStyle}>
-            {'(+' + 1 + ' ' + translate('txtPoint') + ')'}
+            {`(+${1}${translate('txtPoint')})`}
           </Text>
         </View>
       </View>
@@ -70,24 +73,23 @@ export const MenuProductItem = ({
   </TouchableOpacity>
 );
 
-const MENU_HEIGHT = 200;
+const MENU_HEIGHT = 198;
 const TEXT_HEIGHT = 45;
-const BOTTOM_HEIGHT = 86;
+const BOTTOM_HEIGHT = 55;
 
 const styles = StyleSheet.create({
   container: {
     flex: 0.5,
     height: MENU_HEIGHT,
-    margin: 5,
-    backgroundColor: '#fff',
-    borderRadius: 8,
+    margin: 10,
     ...AppStyles.styles.shadow,
   },
 
   content: {
     flex: 1,
     overflow: 'hidden',
-    borderRadius: 8,
+    borderRadius: 6,
+    backgroundColor: '#fff',
   },
 
   imageStyle: {
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     flex: 0,
-    padding: 10,
+    paddingHorizontal: 10,
     height: BOTTOM_HEIGHT,
   },
 

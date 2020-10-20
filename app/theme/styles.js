@@ -86,13 +86,13 @@ const AppStyles = {
     },
 
     shadow: {
-      shadowColor: '#0006',
+      shadowColor: '#0004',
       shadowOffset: {
         width: 2,
         height: 2,
       },
-      shadowOpacity: 0.3,
-      shadowRadius: 2,
+      shadowOpacity: 0.16,
+      shadowRadius: 3,
       elevation: 3,
     },
 

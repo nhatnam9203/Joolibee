@@ -11,13 +11,6 @@ const GraphErrorHandler = React.forwardRef(({ children }, ref) => {
     },
   }));
 
-  const isLoading = useSelector((state) => state.app.loading);
-
-  //   const onCancelLoading = React.useCallback(() => {
-  //     const action = hideLoading();
-  //     dispatch(action);
-  //   }, [dispatch]);
-
   return <>{children}</>;
 });
 
