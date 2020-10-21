@@ -30,6 +30,11 @@ const BUTTON_HEIGHT = 60;
 const LAYOUT_WIDTH = '90%';
 const HALF_LAYOUT_WIDTH = '42.5%';
 const FULL_WIDTH = '100%';
+const PROCESS_STATUS = {
+  START: 1,
+  SUCCESS: 2,
+  FINISH: 3,
+};
 
 export const SignUpForm = ({ infos }) => {
   const { phone } = infos;
@@ -67,7 +72,9 @@ export const SignUpForm = ({ infos }) => {
     (state) => state.account?.user?.tempCheckSignup,
   );
 
-  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(
+    PROCESS_STATUS.START,
+  );
 
   // function
   const signUpDataSubmit = React.useCallback(
@@ -80,16 +87,21 @@ export const SignUpForm = ({ infos }) => {
   );
 
   const goSignInPage = () => {
-    setShowPopupSuccess(false);
-    navigation.navigate(ScreenName.SignIn);
+    setShowPopupSuccess(PROCESS_STATUS.FINISH);
   };
 
   // !TODO: Khá bảnh ...
   React.useEffect(() => {
     if (signUpSucceeded) {
-      setShowPopupSuccess(true);
+      setShowPopupSuccess(PROCESS_STATUS.SUCCESS);
     }
   }, [signUpSucceeded]);
+
+  React.useEffect(() => {
+    if (showPopupSuccess === PROCESS_STATUS.FINISH) {
+      navigation.navigate(ScreenName.SignIn);
+    }
+  }, [showPopupSuccess, navigation]);
 
   // render
   return (
@@ -375,9 +387,9 @@ export const SignUpForm = ({ infos }) => {
       </Formik>
 
       <PopupSignUpSuccess
-        showModal={showPopupSuccess}
+        showModal={showPopupSuccess === PROCESS_STATUS.SUCCESS}
         onPress={goSignInPage}
-        onToggle={() => setShowPopupSuccess(false)}
+        onToggle={() => setShowPopupSuccess(PROCESS_STATUS.FINISH)}
       />
     </SinglePageLayout>
   );
