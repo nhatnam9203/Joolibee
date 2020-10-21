@@ -1,21 +1,19 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { account, app, order } from '@slices';
 import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BottomBarComponent,
   HomePageName,
   MenuPageName,
-  PromotionPageName,
-  StorePageName,
+  PopupComingSoon,
   PopupOrderList,
   PopupQRCode,
-  PopupComingSoon,
+  PromotionPageName,
+  StorePageName,
 } from '../components';
 import { HomePage, MenuPage, PromotionPage, StorePage } from './pages';
-import { useSelector, useDispatch } from 'react-redux';
-import { dismissOrderList } from '@slices/order';
-import { dismissQRCode } from '@slices/account';
-import { dismissComingSoon } from '@slices/app';
-import { StyleSheet, View } from 'react-native';
 
 const MainTab = createBottomTabNavigator();
 
@@ -37,19 +35,19 @@ function MainTabScreen() {
       {/**Popup Order List Items */}
       <PopupOrderList
         visible={showOrderList}
-        onToggle={() => dispatch(dismissOrderList())}
+        onToggle={() => dispatch(order.dismissOrderList())}
       />
 
       {/**Popup QR Code */}
       <PopupQRCode
         visible={showQRCode}
-        onToggle={() => dispatch(dismissQRCode())}
+        onToggle={() => dispatch(account.dismissQRCode())}
       />
 
       {/**Popup ComingSoon */}
       <PopupComingSoon
         visible={showComingSoon}
-        onToggle={() => dispatch(dismissComingSoon())}
+        onToggle={() => dispatch(app.dismissComingSoon())}
       />
     </View>
   );

@@ -5,7 +5,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { SettingItem, ButtonCC, LanguageFlag } from '../components';
 import { useDispatch } from 'react-redux';
-import { signOutRequest } from '@slices/account';
+import { account } from '@slices';
 import { localData } from './localData';
 import { useNavigation } from '@react-navigation/native';
 import { logoutFb, logoutGoogle } from '@social';
@@ -22,7 +22,7 @@ const SettingAccountScreen = () => {
   const btnLogoutPressed = async () => {
     // logoutFb();
     // await logoutGoogle();
-    dispatch(signOutRequest());
+    dispatch(account.signOutRequest());
     Logger.info('hahaha');
   };
 

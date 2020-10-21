@@ -8,7 +8,7 @@ import { translate } from '@localize';
 import { JollibeeLogo } from '../components';
 import { PopupLayout } from '@layouts';
 import { useSelector, useDispatch } from 'react-redux';
-import { filterDistrictByCity, setInitLocation, filterStore } from '@slices/store';
+import { store } from '@slices';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
@@ -24,50 +24,48 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   React.useEffect(() => {
     setCity(init_location?.default_city);
     setDistrict(init_location?.default_district);
-  }, [])
+  }, []);
 
   const onHandleChangeCity = (value) => {
-    let indexCity = cities.findIndex((item) => item.value == value)
-    setCity(indexCity)
-    dispatch(filterDistrictByCity({ key: cities[indexCity]?.label }))
-  }
+    let indexCity = cities.findIndex((item) => item.value === value);
+    setCity(indexCity);
+    dispatch(store.filterDistrictByCity({ key: cities[indexCity]?.label }));
+  };
 
   const onHandleChangeDistrict = (value) => {
-    let indexDistrict = districts.findIndex((item) => item.value == value)
-    setDistrict(indexDistrict)
-  }
+    let indexDistrict = districts.findIndex((item) => item.value === value);
+    setDistrict(indexDistrict);
+  };
 
   const onChangeItem = React.useCallback((type, value) => {
-    console.log('value',value)
+    console.log('value', value);
     switch (type) {
       case 'city':
-        onHandleChangeCity(value)
+        onHandleChangeCity(value);
         break;
 
       default:
-        onHandleChangeDistrict(value)
+        onHandleChangeDistrict(value);
         break;
     }
   }, []);
 
   const onHandleSubmit = () => {
-
     let _city = cities[city]?.label;
     let _district = districts[district]?.label;
     let update_location = {
       ...init_location,
       city: _city,
       district: _district,
-    }
-    dispatch(setInitLocation(update_location));
-    popupRef.current.forceQuit()
-  }
+    };
+    dispatch(store.setInitLocation(update_location));
+    popupRef.current.forceQuit();
+  };
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
-
-        <ScrollView >
+        <ScrollView>
           <View style={styles.content_top}>
             <JollibeeLogo style={styles.icon_jollibee} />
 
@@ -105,7 +103,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
                   { color: AppStyles.colors.text, marginLeft: 15 },
                 ]}>
                 60.000 đ
-            </Text>
+              </Text>
             </View>
 
             <CustomButton

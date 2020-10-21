@@ -1,39 +1,9 @@
+import { graphQlClient, mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { mutation, graphQlClient } from '@graphql';
-import { showLoading, hideLoading } from './app';
-import { save, get, remove, StorageKey } from '@storage';
+import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
 
 const KEY_CONSTANT = 'account';
-
-// First, create the thunk
-export const signUp = createAsyncThunk(
-  `${KEY_CONSTANT}/signUp`,
-  async (input, { dispatch }) => {
-    await dispatch(showLoading());
-    const response = await graphQlClient.mutate({
-      mutation: mutation.SIGN_UP,
-      variables: input,
-    });
-    await dispatch(hideLoading());
-
-    return response;
-  },
-);
-
-export const signIn = createAsyncThunk(
-  `${KEY_CONSTANT}/signIn`,
-  async (input, { dispatch }) => {
-    dispatch(showLoading());
-    const response = await graphQlClient.mutate({
-      mutation: mutation.SIGN_IN,
-      variables: input,
-    });
-    dispatch(hideLoading());
-
-    return response;
-  },
-);
 
 const initialState = {
   user: {
@@ -45,6 +15,31 @@ const initialState = {
   signUpLoading: false,
   signUpSucceeded: false,
 };
+
+// First, create the thunk
+const signUp = createAsyncThunk(
+  `${KEY_CONSTANT}/signUp`,
+  async (input, { dispatch }) => {
+    const response = await graphQlClient.mutate({
+      mutation: mutation.SIGN_UP,
+      variables: input,
+    });
+
+    return response;
+  },
+);
+
+const signIn = createAsyncThunk(
+  `${KEY_CONSTANT}/signIn`,
+  async (input, { dispatch }) => {
+    const response = await graphQlClient.mutate({
+      mutation: mutation.SIGN_IN,
+      variables: input,
+    });
+
+    return response;
+  },
+);
 
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
@@ -92,7 +87,7 @@ const accountSlice = createSlice({
     },
     [signIn.fulfilled]: (state, action) => {
       Logger.info(action, 'signIn fulfilled');
-      const { error, data } = action.payload;
+      const { data } = action.payload;
       state.signInLoading = false;
 
       const { generateCustomerToken } = data;
@@ -128,12 +123,7 @@ const accountSlice = createSlice({
 });
 
 const { actions, reducer } = accountSlice;
-export const {
-  clearSignupState,
-  clearSignInState,
-  showQRCode,
-  dismissQRCode,
-  signOutRequest,
-} = actions;
-
-export default reducer;
+module.exports = {
+  reducer,
+  actions: { signIn, signUp, ...actions },
+};

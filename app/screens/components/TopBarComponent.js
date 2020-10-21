@@ -1,11 +1,10 @@
-import React from 'react';
 import { TopBar } from '@components';
-import { images, AppStyles } from '@theme';
 import { useNavigation } from '@react-navigation/native';
-import ScreenName from '../ScreenName';
+import { account, order } from '@slices';
+import { AppStyles, images } from '@theme';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { showOrderList } from '@slices/order';
-import { showQRCode } from '@slices/account';
+import ScreenName from '../ScreenName';
 
 export const TopBarComponent = React.memo(() => {
   const navigation = useNavigation();
@@ -26,7 +25,7 @@ export const TopBarComponent = React.memo(() => {
           <TopBar.Action
             source={images.icons.nav_qrcode}
             onPress={() => {
-              dispatch(showQRCode());
+              dispatch(account.showQRCode());
             }}
           />
         </>
@@ -43,7 +42,7 @@ export const TopBarComponent = React.memo(() => {
           <TopBar.Action
             source={images.icons.nav_order}
             onPress={() => {
-              dispatch(showOrderList());
+              dispatch(order.showOrderList());
             }}
           />
         </>

@@ -18,7 +18,6 @@ import {
   ButtonCC,
 } from '../components';
 import { useDispatch } from 'react-redux';
-import { logout } from '@slices/account';
 import ScreenName from '../ScreenName';
 import { useNavigation } from '@react-navigation/native';
 import { SinglePageLayout } from '@layouts';

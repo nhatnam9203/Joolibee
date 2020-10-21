@@ -3,8 +3,7 @@ import { setI18nConfig } from '@localize';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const KEY_CONSTANT = 'setting';
-
-export const changeLanguage = createAsyncThunk(
+const changeLanguage = createAsyncThunk(
   `${KEY_CONSTANT}/language`,
   async (input, { dispatch }) => {
     return input;
@@ -24,5 +23,7 @@ const appSlice = createSlice({
 });
 
 const { actions, reducer } = appSlice;
-export const {} = actions;
-export default reducer;
+module.exports = {
+  reducer,
+  actions: { changeLanguage, ...actions },
+};

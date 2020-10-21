@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ButtonCC } from '../components';
-import { showLoading, hideLoading } from '@slices/app';
+import { app } from '@slices';
 import { localizeData } from '@localize';
 import { useChangeLanguage } from '@hooks';
 
@@ -53,9 +53,9 @@ const ChangeLanguageScreen = () => {
     );
 
   const submitButtonPressed = async () => {
-    await dispatch(showLoading());
+    await dispatch(app.showLoading());
     await setLanguage(selected);
-    await dispatch(hideLoading());
+    await dispatch(app.hideLoading());
     navigation.goBack();
   };
 

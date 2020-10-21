@@ -2,7 +2,7 @@ import React from 'react';
 import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { useFirebaseAuthentication } from '@firebase';
 import { validate } from '@utils';
-import { hideLoading, showLoading } from '@slices/app';
+import { app } from '@slices';
 import { useDispatch } from 'react-redux';
 
 const { normalizePhoneNumber } = validate;
@@ -21,7 +21,7 @@ const SignUpScreen = () => {
 
   const verifyCallback = (response) => {
     const { message, data, status } = response;
-    dispatch(hideLoading());
+    dispatch(app.hideLoading());
     if (status === 1) {
       // Verified
       setFormData(Object.assign({}, formData, { verified: status === 1 }));
@@ -38,7 +38,7 @@ const SignUpScreen = () => {
     if (!code) {
       return;
     }
-    dispatch(showLoading());
+    dispatch(app.showLoading());
     await confirmCode(code);
   };
 
@@ -49,14 +49,14 @@ const SignUpScreen = () => {
       return;
     }
 
-    dispatch(showLoading());
+    dispatch(app.showLoading());
 
     // call firebase phone auth
     const { verificationId, error } = await signInWithPhoneNumber(
       normalizePhoneNumber('+84', phone),
     );
 
-    dispatch(hideLoading());
+    dispatch(app.hideLoading());
     // response
     if (verificationId) {
       setFormData(Object.assign({}, values, { verificationId }));
@@ -80,9 +80,6 @@ const SignUpScreen = () => {
   };
 
   switch (showPage) {
-    case 0:
-    default:
-      return <InputPhoneNumber next={onSubmitPhoneNumber} />;
     case 1:
       return (
         <VerifyPhoneCode
@@ -94,6 +91,9 @@ const SignUpScreen = () => {
       );
     case 2:
       return <SignUpForm infos={formData} />;
+    case 0:
+    default:
+      return <InputPhoneNumber next={onSubmitPhoneNumber} />;
   }
 };
 

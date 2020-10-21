@@ -1,4 +1,4 @@
-import { changeLanguage } from '@slices/setting';
+import { setting } from '@slices';
 import { useSelector, useDispatch } from 'react-redux';
 
 const useChangeLanguage = () => {
@@ -6,7 +6,7 @@ const useChangeLanguage = () => {
   const language = useSelector((state) => state.setting.language);
 
   const setLanguage = async (lang) => {
-    await dispatch(changeLanguage(lang));
+    await dispatch(setting.changeLanguage(lang));
   };
 
   return [language, setLanguage];

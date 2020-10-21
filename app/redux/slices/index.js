@@ -1,15 +1,25 @@
-import accountReducer from './account';
-import appReducer from './app';
-import orderReducer from './order';
-import settingReducer from './setting';
-import storeReducer from './store';
-export default Object.assign(
+import account from './account';
+import app from './app';
+import order from './order';
+import setting from './setting';
+import store from './store';
+
+const rootReducers = Object.assign(
   {},
   {
-    account: accountReducer,
-    app: appReducer,
-    order: orderReducer,
-    setting: settingReducer,
-    store: storeReducer,
+    account: account.reducer,
+    app: app.reducer,
+    order: order.reducer,
+    setting: setting.reducer,
+    store: store.reducer,
   },
 );
+
+module.exports = {
+  rootReducers,
+  account: account.actions,
+  app: app.actions,
+  order: order.actions,
+  setting: setting.actions,
+  store: store.actions,
+};
