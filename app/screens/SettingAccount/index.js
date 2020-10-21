@@ -23,7 +23,6 @@ const SettingAccountScreen = () => {
     // logoutFb();
     // await logoutGoogle();
     dispatch(account.signOutRequest());
-    Logger.info('hahaha');
   };
 
   // LOGOUT BUTTON
