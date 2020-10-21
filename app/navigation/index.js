@@ -19,19 +19,20 @@ function SplashStack() {
 }
 
 function App() {
-  const {
-    user: { tokenKey }
-    
-  } = useSelector((state) => state.account);
-
+  // ! Khá bảnh ....
+  const { tokenKey } = useSelector((state) => state.account?.user);
+  // ! Khá bảnh ....
   const loading = useSelector((state) => state.app.loading_app);
-
   const [token, setToken] = React.useState(null);
 
   React.useEffect(() => {
     const loadToken = async () => {
-      const tokenObject = await get(StorageKey.Token);
-      setToken(tokenObject[tokenKey]);
+      if (tokenKey) {
+        const tokenObject = await get(StorageKey.Token);
+        setToken(tokenObject[tokenKey]);
+      } else {
+        setToken(null);
+      }
     };
     loadToken();
   }, [tokenKey]);

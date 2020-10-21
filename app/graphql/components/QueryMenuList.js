@@ -50,30 +50,31 @@ export const QueryMenuList = ({
   renderItemLoading = () => <View />,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const {
-    loading,
-    error,
-    data = { categoryList: defaultData },
-    refetch,
-  } = useQuery(MENU_LIST, {
+  const { loading, error, data, refetch } = useQuery(MENU_LIST, {
     variables: null,
   });
 
-  if (error) {
-    return null;
-  }
+  React.useEffect(() => {
+    if (refreshing) {
+      setRefreshing(false);
+    }
+  }, [data, refreshing]);
 
   const handleRefresh = () => {
     setRefreshing(true);
     refetch();
     setTimeout(() => {
-      setRefreshing(true);
+      setRefreshing(false);
     }, 3000);
   };
 
+  if (error) {
+    return null;
+  }
+
   return (
     <CustomFlatList
-      data={data?.categoryList}
+      data={data?.categoryList || defaultData}
       renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
       numColumns={2}

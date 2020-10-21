@@ -5,7 +5,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { SettingItem, ButtonCC, LanguageFlag } from '../components';
 import { useDispatch } from 'react-redux';
-import { signOut } from '@slices/account';
+import { signOutRequest } from '@slices/account';
 import { localData } from './localData';
 import { useNavigation } from '@react-navigation/native';
 import { logoutFb, logoutGoogle } from '@social';
@@ -19,17 +19,18 @@ const SettingAccountScreen = () => {
   const [language] = useChangeLanguage();
 
   /**functions */
-  const btnLogoutPressed = React.useCallback(async () => {
-    logoutFb();
-    await logoutGoogle();
-    dispatch(signOut());
-  }, [dispatch]);
+  const btnLogoutPressed = async () => {
+    // logoutFb();
+    // await logoutGoogle();
+    dispatch(signOutRequest());
+    Logger.info('hahaha');
+  };
 
   // LOGOUT BUTTON
   const renderLogoutButton = () => (
     <View style={styles.logoutContent}>
       <ButtonCC.ButtonBorderRed
-        width={350}
+        width={'90%'}
         height={60}
         label={translate('txtSignOut')}
         onPress={btnLogoutPressed}
