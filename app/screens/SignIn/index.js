@@ -36,7 +36,7 @@ const SignInScreen = () => {
   const SignInSchema = Yup.object().shape({
     username: Yup.string()
       .required(translate('txtRequired'))
-      .matches(regex.phone, translate('txtWrongPhoneNumber'))
+      // .matches(regex.phone, translate('txtWrongPhoneNumber'))
       .min(10, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     password: Yup.string().required(translate('txtRequired')),

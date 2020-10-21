@@ -1,104 +1,71 @@
-import { CustomFlatList } from '@components';
+import moment from "moment";
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, metrics, images } from '@theme';
-import { statusOrder } from '@utils';
+import { statusOrder, format } from '@utils';
+import { GCC } from '@graphql';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import {
+    Placeholder,
+    PlaceholderLine,
 
-const defaultData = [
-    {
-        date: 'Hôm nay',
-        status_text: 'Đang giao hàng',
-        id: '0000065',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-    {
+    Fade,
+} from 'rn-placeholder';
 
-        date: 'Hôm nay',
-        status_text: 'Đã xác nhận',
-        id: '0000066',
-        shipping_method: 'Giao đến',
-        address: '16 Trương Định, Phường.6, Quận.3 Hồ Chí Minh'
-    },
-    {
-        date: 'Hôm nay',
-        status_text: 'Đã đến nơi',
-        id: '0000067',
-        shipping_method: 'Giao đến',
-        address: '16 Trương Định, Phường.6, Quận.3 Hồ Chí Minh'
-    },
 
-    {
-        date: '20/08/2020',
-        status_text: 'Đã hủy',
-        id: '0000068',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-
-    {
-        date: '20/08/2020',
-        status_text: 'Hoàn thành',
-        id: '0000069',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-
-    {
-        date: '20/08/2020',
-        status_text: 'Hoàn thành',
-        id: '0000070',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-    {
-        date: '20/08/2020',
-        status_text: 'Hoàn thành',
-        id: '0000071',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-    {
-        date: '20/08/2020',
-        status_text: 'Hoàn thành',
-        id: '0000068',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-    {
-        date: '20/08/2020',
-        status_text: 'Hoàn thành',
-        id: '0000072',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-    {
-        date: '20/08/2020',
-        status_text: 'Hoàn thành',
-        id: '0000073',
-        shipping_method: 'Đến lấy',
-        address: 'JOLLIBEE TRƯỜNG CHINH'
-    },
-];
 
 const index = () => {
     const navigation = useNavigation();
-    const [data, setData] = React.useState([]);
-
-    React.useEffect(() => {
-        setData(defaultData);
-    }, []);
 
     const goToDetail = (item) => () => {
         navigation.navigate(ScreenName.DeitalOrders, { order: item })
     }
 
-    const renderItem = ({ item }) => {
+    const getShippingMethod = (txt = '') => {
+        switch (txt) {
+            case 'freeshipping_freeshipping':
 
-        const txt_color = item.status_text == 'Hoàn thành' ? '#1B1B1B' : '#FFFFFF'
+                return 'Giao đến'
+            default:
+                return 'Đến lấy'
+        }
+    };
+
+    const getDateStatus = (date) => {
+        const current_day = moment().format('DD/MM/yyyy');
+        let dateOrder = format.dateTime(date, 'DD/MM/yyyy');
+        return dateOrder == current_day ? 'Hôm nay' : dateOrder;
+    };
+
+    const renderItemLoading = () => (
+        <Placeholder
+            Animation={Fade}
+            style={[styles.itemContainer, { width: '95%' }]}
+            Left={() => (
+                <PlaceholderLine style={styles.avatarPlaceholder} />
+            )}
+        >
+            <View style={{ paddingHorizontal: 10, justifyContent: 'space-between' }}>
+
+                <PlaceholderLine width={18} style={styles.txtDate} />
+
+                <PlaceholderLine width={50} />
+
+                <PlaceholderLine width={90} />
+
+                <PlaceholderLine style={styles.statusPlaceHolder} />
+
+
+
+            </View>
+        </Placeholder>
+    )
+
+    const renderItem = ({ item }) => {
+        const status_text = statusOrder.convertStatusOrder(item.status);
+        const txt_color = status_text == 'Hoàn thành' ? '#1B1B1B' : '#FFFFFF';
         return (
             <TouchableOpacity
                 onPress={goToDetail(item)}
@@ -108,24 +75,24 @@ const index = () => {
                 />
                 <View style={{ paddingHorizontal: 10, justifyContent: 'space-between', width: '90%' }}>
                     <Text style={[AppStyles.fonts.text, styles.txtDate]}>
-                        {item.date}
+                        {getDateStatus(item.created_at)}
                     </Text>
 
                     <Text style={AppStyles.fonts.medium}>
-                        Đơn hàng #{item.id}
+                        Đơn hàng #{item.order_number}
                     </Text>
 
                     <Text numberOfLines={1} style={[AppStyles.fonts.text, { fontSize: 14 }]}>
-                        {item.shipping_method}: {item.address}
+                        {getShippingMethod(item.shipping_method)}: {item.address}
                     </Text>
-                    <View style={[styles.statusContainer, { backgroundColor: statusOrder.getColor(item.status_text) }]}>
+                    <View style={[styles.statusContainer, { backgroundColor: statusOrder.getColor(status_text) }]}>
                         <Text numberOfLines={1} style={[AppStyles.fonts.mini, { color: txt_color, fontWeight: '700' }]} >
-                            {item.status_text}
+                            {status_text}
                         </Text>
                     </View>
 
                     {/* ----- BUTTON ĐAT LAI -----  */}
-                    {item.status_text == 'Hoàn thành' &&
+                    {status_text == 'Hoàn thành' &&
                         <TouchableOpacity style={styles.btnPreOrder}>
                             <Text numberOfLines={1} style={AppStyles.fonts.medium} style={styles.txtPreOrder} >
                                 Đặt lại
@@ -141,13 +108,9 @@ const index = () => {
 
     return (
         <View style={styles.container}>
-            <CustomFlatList
-                data={data}
+            <GCC.QueryOrderList
                 renderItem={renderItem}
-                horizontal={false}
-                keyExtractor={(item, index) => index + ''}
-                contentContainerStyle={styles.contentContainerStyle}
-                showsVerticalScrollIndicator={false}
+                renderItemLoading={renderItemLoading}
             />
         </View>
     );
@@ -192,7 +155,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         right: 5,
-    }
+    },
+    statusPlaceHolder: {
+        borderRadius: 12,
+        width: 94,
+        height: 24
+    },
+    avatarPlaceholder: {
+        borderRadius: 39 / 2,
+        width: 39,
+        height: 39
+    },
 
 });
 export default index
