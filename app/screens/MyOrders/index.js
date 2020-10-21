@@ -3,7 +3,7 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, metrics, images } from '@theme';
 import { statusOrder, format } from '@utils';
-import { QCC } from '@graphql';
+import { GCC } from '@graphql';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
@@ -108,7 +108,7 @@ const index = () => {
 
     return (
         <View style={styles.container}>
-            <QCC.QueryOrderList
+            <GCC.QueryOrderList
                 renderItem={renderItem}
                 renderItemLoading={renderItemLoading}
             />
