@@ -7,7 +7,7 @@ import { app } from '@slices';
 import { useDispatch } from 'react-redux';
 
 const BUTTON_HEIGHT = 58;
-const LAYOUT_WIDTH = '80%';
+const LAYOUT_WIDTH = '90%';
 
 export const ButtonRed = ({
   width = LAYOUT_WIDTH,

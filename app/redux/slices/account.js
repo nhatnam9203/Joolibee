@@ -11,8 +11,6 @@ const initialState = {
     tokenKey: null,
   },
   isShowQRCode: false,
-  signInLoading: false,
-  signUpLoading: false,
   signUpSucceeded: false,
 };
 
@@ -24,7 +22,6 @@ const signUp = createAsyncThunk(
       mutation: mutation.SIGN_UP,
       variables: input,
     });
-
     return response;
   },
 );
@@ -63,11 +60,12 @@ const accountSlice = createSlice({
     // Sign Up
     [signUp.pending]: (state, action) => {
       Logger.info(action, 'signUp pending');
-      state.signUpLoading = true;
+
+      state.signUpSucceeded = false;
     },
     [signUp.fulfilled]: (state, action) => {
       Logger.info(action, 'signUp fulfilled');
-      state.signUpLoading = false;
+
       const { error, data } = action.payload;
       if (data?.registerCustomer?.customer) {
         state.signUpSucceeded = true;
@@ -77,18 +75,16 @@ const accountSlice = createSlice({
     },
     [signUp.rejected]: (state, action) => {
       Logger.info(action, 'signUp rejected');
-      state.signUpLoading = true;
+      state.signUpSucceeded = false;
     },
 
     // Sign In
     [signIn.pending]: (state, action) => {
       Logger.info(action, 'signIn pending');
-      state.signInLoading = true;
     },
     [signIn.fulfilled]: (state, action) => {
       Logger.info(action, 'signIn fulfilled');
       const { data } = action.payload;
-      state.signInLoading = false;
 
       const { generateCustomerToken } = data;
 
@@ -116,7 +112,6 @@ const accountSlice = createSlice({
     },
     [signIn.rejected]: (state, action) => {
       Logger.info(action, 'signIn rejected');
-      state.signInLoading = false;
       state.user.tokenKey = null;
     },
   },
