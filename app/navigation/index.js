@@ -20,12 +20,9 @@ function SplashStack() {
 
 function App() {
   // ! Khá bảnh ....
-  const { user } = useSelector((state) => state.account);
-  const { tokenKey } = user;
+  const { tokenKey } = useSelector((state) => state.account?.user);
   // ! Khá bảnh ....
-
   const loading = useSelector((state) => state.app.loading_app);
-
   const [token, setToken] = React.useState(null);
 
   React.useEffect(() => {
@@ -33,6 +30,8 @@ function App() {
       if (tokenKey) {
         const tokenObject = await get(StorageKey.Token);
         setToken(tokenObject[tokenKey]);
+      } else {
+        setToken(null);
       }
     };
     loadToken();
