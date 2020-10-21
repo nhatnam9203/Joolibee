@@ -20,7 +20,7 @@ const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = {
   top: 60,
   right: 60,
-  bottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(height / 2) : (height / 2),
+  bottom: 60,
   left: 60
 };
 

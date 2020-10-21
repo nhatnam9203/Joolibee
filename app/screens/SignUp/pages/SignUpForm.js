@@ -62,8 +62,10 @@ export const SignUpForm = ({ infos }) => {
 
   // state
 
-  const signUpLoading = useSelector((state) => state.account.signUpLoading);
-  const signUpSucceeded = useSelector((state) => state.account.signUpSucceeded);
+  const signUpLoading = useSelector((state) => state.account?.signUpLoading);
+  const signUpSucceeded = useSelector(
+    (state) => state.account?.signUpSucceeded,
+  );
 
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
 

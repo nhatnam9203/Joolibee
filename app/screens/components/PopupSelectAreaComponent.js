@@ -21,6 +21,10 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const [city, setCity] = React.useState(-1);
   const [district, setDistrict] = React.useState(-1);
 
+  React.useEffect(() => {
+    setCity(init_location?.default_city);
+    setDistrict(init_location?.default_district);
+  }, [])
 
   const onHandleChangeCity = (value) => {
     let indexCity = cities.findIndex((item) => item.value == value)
@@ -34,6 +38,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   }
 
   const onChangeItem = React.useCallback((type, value) => {
+    console.log('value',value)
     switch (type) {
       case 'city':
         onHandleChangeCity(value)
@@ -54,10 +59,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
       city: _city,
       district: _district,
     }
-    console.log('update_location', update_location)
-
     dispatch(setInitLocation(update_location));
-
     popupRef.current.forceQuit()
   }
 
@@ -76,13 +78,13 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
             <CustomPickerSelect
               items={cities}
               placeholder={translate('txtSelectDistrict')}
-              defaultValue={city}
+              value={city}
               onChangeItem={(item) => onChangeItem('city', item)}
             />
             <CustomPickerSelect
               items={districts}
               placeholder={translate('txtSelectWard')}
-              defaultValue={district}
+              value={district}
               onChangeItem={(item) => onChangeItem('district', item)}
             />
 

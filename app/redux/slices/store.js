@@ -67,24 +67,28 @@ const storeSlice = createSlice({
                 const location = payload[0];
 
                 let city = format.convertString(location?.adminArea);
+                let district = format.convertString(location?.subAdminArea);
 
+                let default_district = -1;
                 let default_city = cities.findIndex((item) => {
                     let label = format.convertString(item.label);
                     if (city.includes(label)) return city.includes(label)
                 });
+
                 if (default_city > -1) {
                     state.districts = districts.filter((item) => item.key == cities[default_city].label);
-                    let default_district = state.districts.findIndex((item) => {
-                        let label = format.convertString(item.key);
-                        if (city.includes(label)) return city.includes(label)
+                    default_district = state.districts.findIndex((item) => {
+                        let label = format.convertString(item.label);
+                        if (district.includes(label)) return district.includes(label)
                     });
+
                 }
 
                 state.init_location = {
                     "district": location.subAdminArea,
                     "city": location.adminArea,
                     "default_city": default_city,
-
+                    "default_district": default_district,
                     ...location.position
                 }
             } else {

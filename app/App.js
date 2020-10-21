@@ -2,35 +2,34 @@
  * React Native App
  * Everything starts from the entry point
  */
-import { setI18nConfig, RNLocalize } from '@localize';
+import { ApolloProvider } from '@apollo/client';
+import { Loading, RootPermission } from '@components';
+import { useChangeLanguage, useCodePushUpdate } from '@hooks';
+import { setI18nConfig } from '@localize';
+import { hideLoading } from '@slices/app';
 import { AppStyles } from '@theme';
 import Navigator from 'app/navigation';
-import configureAppStore from 'app/redux/store';
+import { persistor, store } from 'app/redux/store';
 import React from 'react';
-import { ApolloProvider } from '@apollo/client';
 import { ActivityIndicator } from 'react-native';
+import codePush from 'react-native-code-push';
+import DropdownAlert from 'react-native-dropdownalert';
 import {
   configureFonts,
   DefaultTheme,
   Provider as PaperProvider,
 } from 'react-native-paper';
 import { enableScreens } from 'react-native-screens';
+import SplashScreen from 'react-native-splash-screen';
 import {
   Provider as StoreProvider,
-  useSelector,
   useDispatch,
+  useSelector,
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
+import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
 import { graphQlClient } from './graphql';
-import { Loading, RootPermission } from '@components';
-import { hideLoading } from '@slices/app';
-import SplashScreen from 'react-native-splash-screen';
-import { useCodePushUpdate, useChangeLanguage } from '@hooks';
-import codePush from 'react-native-code-push';
-import { dropdownRef } from './navigation/NavigationService';
-import DropdownAlert from 'react-native-dropdownalert';
-
-const { persistor, store } = configureAppStore();
+import GraphErrorHandler from './GraphErrorHandler';
 
 const fontConfig = {
   default: {
@@ -86,23 +85,30 @@ let App = () => {
   }, [progress]);
 
   return (
-    <StoreProvider store={store}>
-      <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
-        <ApolloProvider client={graphQlClient}>
+    <ApolloProvider client={graphQlClient}>
+      <StoreProvider store={store}>
+        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <LangProvider>
-            <PaperProvider theme={theme}>
-              <Navigator />
-              <LoadingProvider />
-              <DropdownAlert ref={dropdownRef} showCancel={true} />
-              <RootPermission />
-            </PaperProvider>
+            <GraphErrorHandler ref={graphQLErrorRef}>
+              <PaperProvider theme={theme}>
+                <Navigator />
+                <LoadingProvider />
+                <RootPermission/>
+                <DropdownAlert
+                  ref={dropdownRef}
+                  showCancel={true}
+                  closeInterval={6000}
+                />
+              </PaperProvider>
+            </GraphErrorHandler>
           </LangProvider>
-        </ApolloProvider>
-      </PersistGate>
-    </StoreProvider>
+        </PersistGate>
+      </StoreProvider>
+    </ApolloProvider>
   );
 };
 
+/**Loading Provider */
 const LoadingProvider = () => {
   const dispatch = useDispatch();
 
@@ -116,6 +122,7 @@ const LoadingProvider = () => {
   return <Loading isLoading={isLoading} onCancelLoading={onCancelLoading} />;
 };
 
+/**Language Provider */
 const LangProvider = ({ children }) => {
   const [language] = useChangeLanguage();
 

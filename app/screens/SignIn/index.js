@@ -43,7 +43,7 @@ const SignInScreen = () => {
     remember: Yup.bool(),
   });
 
-  const signInError = useSelector((state) => state.account.signInError);
+  const signInError = useSelector((state) => state.account?.signInError);
   //const [generateCustomerToken, { data }] = useMutation(mutation.SIGN_IN);
   const signInSubmit = React.useCallback(
     (values) => {

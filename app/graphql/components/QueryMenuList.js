@@ -1,5 +1,5 @@
 import { CustomFlatList } from '@components';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, RefreshControl, View } from 'react-native';
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 
@@ -49,17 +49,27 @@ export const QueryMenuList = ({
   renderItem = () => <View />,
   renderItemLoading = () => <View />,
 }) => {
-  const { loading, error, data = { categoryList: defaultData } } = useQuery(
-    MENU_LIST,
-    {
-      variables: null,
-    },
-  );
+  const [refreshing, setRefreshing] = React.useState(false);
+  const {
+    loading,
+    error,
+    data = { categoryList: defaultData },
+    refetch,
+  } = useQuery(MENU_LIST, {
+    variables: null,
+  });
 
   if (error) {
-    Logger.debug(error, 'Error!');
     return null;
   }
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    refetch();
+    setTimeout(() => {
+      setRefreshing(true);
+    }, 3000);
+  };
 
   return (
     <CustomFlatList
@@ -70,6 +80,9 @@ export const QueryMenuList = ({
       keyExtractor={(item, index) => item.id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
     />
   );
 };
