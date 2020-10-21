@@ -3,9 +3,16 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, metrics, images } from '@theme';
 import { statusOrder } from '@utils';
+import { QCC } from '@graphql';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import {
+    Placeholder,
+    PlaceholderLine,
+
+    Fade,
+} from 'rn-placeholder';
 
 const defaultData = [
     {
@@ -96,8 +103,31 @@ const index = () => {
         navigation.navigate(ScreenName.DeitalOrders, { order: item })
     }
 
-    const renderItem = ({ item }) => {
+    const renderItemLoading = () => (
+        <Placeholder
+            Animation={Fade}
+            style={[styles.itemContainer, { width: '95%' }]}
+            Left={() => (
+                <PlaceholderLine style={styles.avatarPlaceholder} />
+            )}
+        >
+            <View style={{ paddingHorizontal: 10, justifyContent: 'space-between' }}>
 
+                <PlaceholderLine width={18} style={styles.txtDate} />
+
+                <PlaceholderLine width={50} />
+
+                <PlaceholderLine width={90} />
+
+                <PlaceholderLine style={styles.statusPlaceHolder} />
+
+
+
+            </View>
+        </Placeholder>
+    )
+
+    const renderItem = ({ item }) => {
         const txt_color = item.status_text == 'Hoàn thành' ? '#1B1B1B' : '#FFFFFF'
         return (
             <TouchableOpacity
@@ -141,13 +171,9 @@ const index = () => {
 
     return (
         <View style={styles.container}>
-            <CustomFlatList
-                data={data}
+            <QCC.QueryOrderList
                 renderItem={renderItem}
-                horizontal={false}
-                keyExtractor={(item, index) => index + ''}
-                contentContainerStyle={styles.contentContainerStyle}
-                showsVerticalScrollIndicator={false}
+                renderItemLoading={renderItemLoading}
             />
         </View>
     );
@@ -192,7 +218,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         right: 5,
-    }
+    },
+    statusPlaceHolder: {
+        borderRadius: 12,
+        width: 94,
+        height: 24
+    },
+    avatarPlaceholder:{
+        borderRadius: 39 / 2,
+        width: 39,
+        height: 39
+    },
 
 });
 export default index
