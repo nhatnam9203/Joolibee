@@ -9,7 +9,7 @@ import {
 import { SinglePageLayout, PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { clearSignupState, signUp } from '@slices/account';
+import { account } from '@slices';
 import { AppStyles, images, metrics } from '@theme';
 import { Formik } from 'formik';
 import _ from 'lodash';
@@ -72,14 +72,14 @@ export const SignUpForm = ({ infos }) => {
   // function
   const signUpDataSubmit = React.useCallback(
     (formValues) => {
-      const action = signUp(formValues, { dispatch });
+      const action = account.signUp(formValues, { dispatch });
       dispatch(action);
     },
     [dispatch],
   );
 
   const goSignInPage = () => {
-    const action = clearSignupState();
+    const action = account.clearSignupState();
     dispatch(action);
 
     setShowPopupSuccess(false);

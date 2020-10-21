@@ -22,12 +22,12 @@ const appSlice = createSlice({
   },
 });
 
-const { actions, reducer } = appSlice;
-export const {
-  showLoading,
-  hideLoading,
-  loadingSuccess,
-  showComingSoon,
-  dismissComingSoon,
-} = actions;
-export default reducer;
+// const { actions, reducer } = appSlice;
+// export const {
+//   showLoading,
+//   hideLoading,
+//   loadingSuccess,
+//   showComingSoon,
+//   dismissComingSoon,
+// } = actions;
+export default appSlice;

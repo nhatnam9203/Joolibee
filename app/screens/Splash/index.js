@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Text } from 'react-native-paper';
 import { AppStyles, images } from '@theme';
 
-import { loadingSuccess } from '@slices/app';
+import { app } from '@slices';
 import { scale } from '@utils';
 import { translate } from '@localize';
 import { useCodePushUpdate } from '@hooks';
@@ -17,7 +17,7 @@ const SplashScreen = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      dispatch(loadingSuccess());
+      dispatch(app.loadingSuccess());
     }, 1500);
   }, [progress, dispatch]);
 

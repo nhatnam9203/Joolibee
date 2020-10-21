@@ -13,6 +13,6 @@ const orderSlice = createSlice({
   },
 });
 
-const { actions, reducer } = orderSlice;
-export const { showOrderList, dismissOrderList } = actions;
-export default reducer;
+// const { actions, reducer } = orderSlice;
+// export const { showOrderList, dismissOrderList } = actions;
+export default orderSlice;

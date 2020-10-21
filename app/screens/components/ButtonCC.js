@@ -3,7 +3,7 @@ import { AppStyles, images } from '@theme';
 import { StyleSheet, Image } from 'react-native';
 import { CustomButton } from '@components';
 import { translate } from '@localize';
-import { showComingSoon } from '@slices/app';
+import { app } from '@slices';
 import { useDispatch } from 'react-redux';
 
 const BUTTON_HEIGHT = 58;
@@ -17,7 +17,7 @@ export const ButtonRed = ({
   style,
 }) => {
   const dispatch = useDispatch();
-  const showPopup = () => dispatch(showComingSoon());
+  const showPopup = () => dispatch(app.showComingSoon());
 
   return (
     <CustomButton
@@ -43,7 +43,7 @@ export const ButtonYellow = ({
   disabled,
 }) => {
   const dispatch = useDispatch();
-  const showPopup = () => dispatch(showComingSoon());
+  const showPopup = () => dispatch(app.showComingSoon());
 
   return (
     <CustomButton
@@ -69,7 +69,7 @@ export const ButtonFacebook = ({
   style,
 }) => {
   const dispatch = useDispatch();
-  const showPopup = () => dispatch(showComingSoon());
+  const showPopup = () => dispatch(app.showComingSoon());
 
   return (
     <CustomButton
@@ -97,7 +97,7 @@ export const ButtonGoogle = ({
   style,
 }) => {
   const dispatch = useDispatch();
-  const showPopup = () => dispatch(showComingSoon());
+  const showPopup = () => dispatch(app.showComingSoon());
 
   return (
     <CustomButton
@@ -125,7 +125,7 @@ export const ButtonBorderRed = ({
   style,
 }) => {
   const dispatch = useDispatch();
-  const showPopup = () => dispatch(showComingSoon());
+  const showPopup = () => dispatch(app.showComingSoon());
 
   return (
     <CustomButton

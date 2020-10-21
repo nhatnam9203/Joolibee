@@ -5,23 +5,28 @@ import {
   FlatList,
   Dimensions,
   Platform,
-  PixelRatio
+  PixelRatio,
 } from 'react-native';
-import _ from "lodash";
+import _ from 'lodash';
 import { TopBarScreenLayout } from '@layouts';
-import { useDispatch, useSelector } from "react-redux";
-import { TopBarComponent, CustomPopupMenu, CustomMapView, ItemStore } from '../../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  TopBarComponent,
+  CustomPopupMenu,
+  CustomMapView,
+  ItemStore,
+} from '../../../components';
 import { AppStyles } from '@theme';
-import { useStore } from "@hooks";
+import { useStore } from '@hooks';
 import { Markers } from './pages';
-import { filterStore,filterDistrictByCity } from '@slices/store';
+import { store } from '@slices';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = {
   top: 60,
   right: 60,
   bottom: 60,
-  left: 60
+  left: 60,
 };
 
 const StorePage = () => {
@@ -30,7 +35,7 @@ const StorePage = () => {
   const cities = useSelector((state) => state.store.cities);
   const districts = useSelector((state) => state.store.districts);
   const initCities = _.uniqBy(cities, 'label');
-  const stores = useStore()
+  const stores = useStore();
   const INITIAL_REGION = {
     latitude: init_location?.lat,
     longitude: init_location?.lng,
@@ -39,44 +44,41 @@ const StorePage = () => {
   };
 
   const [visible, showModal] = React.useState([false, false]);
-  const [params, setParams] = React.useState(init_location)
+  const [params, setParams] = React.useState(init_location);
   const refMap = React.useRef(null);
   const openModal = (i) => () => {
-    let _visible = [...visible]
-    _visible[i] = !_visible[i]
-    showModal(_visible)
-  }
+    let _visible = [...visible];
+    _visible[i] = !_visible[i];
+    showModal(_visible);
+  };
 
   const closeModal = () => {
-    showModal([false, false])
-  }
+    showModal([false, false]);
+  };
 
   const fitAllMarkers = () => {
     refMap.current.fitToCoordinates(stores, {
       edgePadding: DEFAULT_PADDING,
       animated: true,
     });
-  }
-
-
+  };
 
   // -------------------- Filter Stores --------------------------//
   const onChangeItemCity = (item) => {
-    let newParams = { city: item.label }
+    let newParams = { city: item.label };
     setParams(newParams);
-    dispatch(filterDistrictByCity({ key: item.label }))
-    
-  }
+    dispatch(store.filterDistrictByCity({ key: item.label }));
+  };
 
   const onChangeItemDistrict = (item) => {
     setParams({ ...params, district: item.label });
-  }
+  };
 
   React.useEffect(() => {
-     dispatch(filterStore(params))
+    dispatch(store.filterStore(params));
 
     //return () => setParams({})
-  }, [params])
+  }, [params, dispatch]);
   // -------------------- Filter Stores --------------------------//
 
   return (
@@ -84,25 +86,23 @@ const StorePage = () => {
       {/* ------------ Select city and districts --------------------- */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
-          placeHolders='Chọn tỉnh thành'
+          placeHolders="Chọn tỉnh thành"
           visible={visible[0]}
           menus={initCities}
           onChangeItem={onChangeItemCity}
           value={params?.city}
           openMenu={openModal(0)}
           closeMenu={closeModal}
-
         />
 
         <CustomPopupMenu
-          placeHolders='Chọn quận huyện'
+          placeHolders="Chọn quận huyện"
           visible={visible[1]}
           menus={districts}
           value={params?.district}
           onChangeItem={onChangeItemDistrict}
           openMenu={openModal(1)}
           closeMenu={closeModal}
-
         />
       </View>
       {/* ------------ Select city and districts --------------------- */}
@@ -115,22 +115,19 @@ const StorePage = () => {
               ref={refMap}
               style={styles.map}
               initialRegion={INITIAL_REGION}
-              onMapReady={fitAllMarkers}
-            >
+              onMapReady={fitAllMarkers}>
               <Markers data={stores} mapView={refMap} />
-
             </CustomMapView>
           </View>
         )}
         keyExtractor={(_, index) => index + ''}
-        renderItem={({ item, index }) => <ItemStore item={item} index={index} />}
+        renderItem={({ item, index }) => (
+          <ItemStore item={item} index={index} />
+        )}
         data={stores}
-
       />
-
-
     </TopBarScreenLayout>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

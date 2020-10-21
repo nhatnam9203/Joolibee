@@ -5,7 +5,7 @@ import {
 } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { signIn } from '@slices/account';
+import { account, app } from '@slices';
 import { AppStyles, images } from '@theme';
 import { Formik } from 'formik';
 import _ from 'lodash';
@@ -36,8 +36,8 @@ const SignInScreen = () => {
   const SignInSchema = Yup.object().shape({
     username: Yup.string()
       .required(translate('txtRequired'))
-      // .matches(regex.phone, translate('txtWrongPhoneNumber'))
-      // .min(10, translate('txtTooShort'))
+      .matches(regex.phone, translate('txtWrongPhoneNumber'))
+      .min(10, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     password: Yup.string().required(translate('txtRequired')),
     remember: Yup.bool(),
@@ -46,8 +46,8 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   //const [generateCustomerToken, { data }] = useMutation(mutation.SIGN_IN);
   const signInSubmit = React.useCallback(
-    (values) => {
-      //refactor data
+    async (values) => {
+      //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
       const { username, ...data } = values;
       let submitData = Object.assign({}, data, { email: username });
 
@@ -59,14 +59,13 @@ const SignInScreen = () => {
       // if (validate.email(username)) {
       //   submitData = Object.assign({}, data, { email: username });
       // }
-
-      const action = signIn(submitData, { dispatch });
-      dispatch(action);
+      dispatch(app.showLoading());
+      Logger.debug(account, 'account');
+      dispatch(account.signIn(submitData, { dispatch }));
+      dispatch(app.hideLoading());
     },
     [dispatch],
   );
-
-
 
   const goSignUpPage = () => {
     navigation.navigate(ScreenName.SignUp);

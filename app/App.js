@@ -6,7 +6,7 @@ import { ApolloProvider } from '@apollo/client';
 import { Loading, RootPermission } from '@components';
 import { useChangeLanguage, useCodePushUpdate } from '@hooks';
 import { setI18nConfig } from '@localize';
-import { hideLoading } from '@slices/app';
+import { app } from '@slices';
 import { AppStyles } from '@theme';
 import Navigator from 'app/navigation';
 import { persistor, store } from 'app/redux/store';
@@ -93,7 +93,7 @@ let App = () => {
               <PaperProvider theme={theme}>
                 <Navigator />
                 <LoadingProvider />
-                <RootPermission/>
+                <RootPermission />
                 <DropdownAlert
                   ref={dropdownRef}
                   showCancel={true}
@@ -115,8 +115,7 @@ const LoadingProvider = () => {
   const isLoading = useSelector((state) => state.app.loading);
 
   const onCancelLoading = React.useCallback(() => {
-    const action = hideLoading();
-    dispatch(action);
+    dispatch(app.hideLoading());
   }, [dispatch]);
 
   return <Loading isLoading={isLoading} onCancelLoading={onCancelLoading} />;

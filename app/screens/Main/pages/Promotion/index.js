@@ -12,7 +12,7 @@ import ScreenName from '../../../ScreenName';
 import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
 import { useDispatch } from 'react-redux';
-import { showComingSoon } from '@slices/app';
+import { app } from '@slices';
 
 const defaultData = [
   {
@@ -86,7 +86,7 @@ const PromotionPage = () => {
         width={110}
         height={33}
         onPress={() => {
-          dispatch(showComingSoon());
+          dispatch(app.showComingSoon());
         }}
       />
     </FlatListItemWithImgHorizontal>
