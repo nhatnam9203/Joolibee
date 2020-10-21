@@ -1,38 +1,18 @@
-import * as TopBar from './TopBar';
-import CustomButton from './CustomButton';
-import CustomInput from './CustomInput';
-import HeaderImage from './HeaderImage';
-import Loading from './Loading';
-import CustomCheckBox from './CustomCheckBox';
-import CustomPickerSelect from './CustomPickerSelect';
-import CustomCalendarPicker from './CustomCalendarPicker';
-import CustomBirthdayPicker from './CustomBirthdayPicker';
-import * as CustomModal from './CustomModal';
-import CustomTextLink from './CustomTextLink';
-import CustomFlatList from './CustomFlatList';
-import CustomButtonImage from './CustomButtonImage';
-import CustomScrollTabView from './CustomScrollTabView';
-import CustomAccordionList from './CustomAccordionList';
-import Accordian from './Accordian';
-import CustomSwitch from './CustomSwitch';
-import RootPermission from './RootPermission';
-module.exports = {
-  TopBar,
-  CustomButton,
-  CustomInput,
-  HeaderImage,
-  Loading,
-  CustomCheckBox,
-  CustomPickerSelect,
-  CustomCalendarPicker,
-  CustomBirthdayPicker,
-  CustomModal,
-  CustomTextLink,
-  CustomFlatList,
-  CustomButtonImage,
-  CustomScrollTabView,
-  CustomAccordionList,
-  CustomSwitch,
-  Accordian,
-  RootPermission
-};
+export { default as CustomAccordionList } from './CustomAccordionList';
+export { default as CustomBirthdayPicker } from './CustomBirthdayPicker';
+export { default as CustomButton } from './CustomButton';
+export { default as CustomButtonImage } from './CustomButtonImage';
+export { default as CustomCalendarPicker } from './CustomCalendarPicker';
+export { default as CustomCheckBox } from './CustomCheckBox';
+export { default as CustomFlatList } from './CustomFlatList';
+export { default as CustomInput } from './CustomInput';
+export * from './CustomModal';
+export { default as CustomPickerSelect } from './CustomPickerSelect';
+export { default as CustomScrollTabView } from './CustomScrollTabView';
+export { default as CustomSwitch } from './CustomSwitch';
+export { default as CustomTextLink } from './CustomTextLink';
+export { default as HeaderImage } from './HeaderImage';
+export { default as Loading } from './Loading';
+export { default as RootPermission } from './RootPermission';
+export * from './TopBar';
+export { default as Accordian } from './Accordian';
