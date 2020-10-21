@@ -64,7 +64,7 @@ export const SignUpForm = ({ infos }) => {
   // state
 
   const signUpSucceeded = useSelector(
-    (state) => state.account?.signUpSucceeded,
+    (state) => state.account?.user?.tempCheckSignup,
   );
 
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
@@ -80,9 +80,6 @@ export const SignUpForm = ({ infos }) => {
   );
 
   const goSignInPage = () => {
-    const action = account.clearSignupState();
-    dispatch(action);
-
     setShowPopupSuccess(false);
     navigation.navigate(ScreenName.SignIn);
   };

@@ -9,9 +9,9 @@ const initialState = {
   user: {
     isRemember: false,
     tokenKey: null,
+    tempCheckSignup: false,
   },
   isShowQRCode: false,
-  signUpSucceeded: false,
 };
 
 // First, create the thunk
@@ -61,21 +61,21 @@ const accountSlice = createSlice({
     [signUp.pending]: (state, action) => {
       Logger.info(action, 'signUp pending');
 
-      state.signUpSucceeded = false;
+      state.user.tempCheckSignup = false;
     },
     [signUp.fulfilled]: (state, action) => {
       Logger.info(action, 'signUp fulfilled');
 
       const { error, data } = action.payload;
       if (data?.registerCustomer?.customer) {
-        state.signUpSucceeded = true;
+        state.user.tempCheckSignup = true;
       } else {
-        state.signUpSucceeded = false;
+        state.user.tempCheckSignup = false;
       }
     },
     [signUp.rejected]: (state, action) => {
       Logger.info(action, 'signUp rejected');
-      state.signUpSucceeded = false;
+      state.user.tempCheckSignup = false;
     },
 
     // Sign In
