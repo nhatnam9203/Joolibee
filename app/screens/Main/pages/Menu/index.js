@@ -8,7 +8,7 @@ import {
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../../../ScreenName';
-import { QCC } from '@graphql';
+import { GCC } from '@graphql';
 
 const MenuPage = () => {
   const navigation = useNavigation();
@@ -26,7 +26,7 @@ const MenuPage = () => {
   return (
     <TopBarScreenLayout topBar={<TopBarComponent />}>
       <View style={styles.container}>
-        <QCC.QueryMenuList
+        <GCC.QueryMenuList
           renderItem={renderItem}
           renderItemLoading={renderLoading}
         />

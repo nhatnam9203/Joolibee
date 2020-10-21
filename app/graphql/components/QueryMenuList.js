@@ -45,7 +45,7 @@ const defaultData = [
   { id: 6 },
 ];
 
-export const QueryMenuList = ({
+const QueryMenuList = ({
   renderItem = () => <View />,
   renderItemLoading = () => <View />,
 }) => {
@@ -91,3 +91,5 @@ export const QueryMenuList = ({
 const styles = StyleSheet.create({
   contentContainerStyle: { paddingVertical: 15 },
 });
+
+export default QueryMenuList;

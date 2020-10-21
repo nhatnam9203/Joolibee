@@ -11,7 +11,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { translate } from '@localize';
 import ScreenName from '../ScreenName';
-import { QCC } from '@graphql';
+import { GCC } from '@graphql';
 
 const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
   const {
@@ -62,7 +62,7 @@ const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
         />
       </View>
       <View style={styles.container}>
-        <QCC.QueryMenuDetailList
+        <GCC.QueryMenuDetailList
           input={products.items}
           categoryId={id}
           renderItem={renderItem}
