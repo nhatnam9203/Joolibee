@@ -1,4 +1,4 @@
-import { CustomFlatList, TopBar } from '@components';
+import { CustomFlatList, Bar, Action } from '@components';
 import { TopBarScreenLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -103,18 +103,15 @@ const PromotionListScreen = () => {
   return (
     <TopBarScreenLayout
       topBar={
-        <TopBar.Bar
+        <Bar
           style={AppStyles.styles.topBar}
           leftComponents={
             <>
-              <TopBar.Action
-                source={images.icons.nav_close}
-                onPress={goToBack}
-              />
+              <Action source={images.icons.nav_close} onPress={goToBack} />
             </>
           }>
           <Text style={styles.txtHeaderStyle}>Header</Text>
-        </TopBar.Bar>
+        </Bar>
       }>
       <View style={styles.container}>
         <CustomFlatList

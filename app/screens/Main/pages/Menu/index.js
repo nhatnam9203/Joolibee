@@ -10,6 +10,8 @@ import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../../../ScreenName';
 import { GCC } from '@graphql';
 
+const { QueryMenuList } = GCC;
+
 const MenuPage = () => {
   const navigation = useNavigation();
 
@@ -18,15 +20,21 @@ const MenuPage = () => {
   };
 
   const renderItem = ({ item }) => (
-    <MenuItem item={item} onPress={() => goToMenuDetail(item)} />
+    <MenuItem
+      key={item.id.toString()}
+      item={item}
+      onPress={() => goToMenuDetail(item)}
+    />
   );
 
-  const renderLoading = ({ item }) => <MenuItemLoading />;
+  const renderLoading = ({ item }) => (
+    <MenuItemLoading key={item.id.toString()} />
+  );
 
   return (
     <TopBarScreenLayout topBar={<TopBarComponent />}>
       <View style={styles.container}>
-        <GCC.QueryMenuList
+        <QueryMenuList
           renderItem={renderItem}
           renderItemLoading={renderLoading}
         />

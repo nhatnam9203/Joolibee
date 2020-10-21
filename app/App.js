@@ -74,15 +74,9 @@ let codePushOptions = {
 };
 
 let App = () => {
-  const [progress] = useCodePushUpdate();
-
   React.useEffect(() => {
     SplashScreen.hide();
   }, []);
-
-  React.useEffect(() => {
-    Logger.info(progress, 'App -> check progress');
-  }, [progress]);
 
   return (
     <ApolloProvider client={graphQlClient}>

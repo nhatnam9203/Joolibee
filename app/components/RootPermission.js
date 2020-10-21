@@ -7,20 +7,19 @@ import { useDispatch } from 'react-redux';
 const RootPermission = () => {
   const dispatch = useDispatch();
 
-  const requestCurrentLocation = async () => {
-    try {
-      let result = await getCurrentPosition();
-      let latlng = {
-        lat: result.coords.latitude,
-        lng: result.coords.longitude,
-      };
-      dispatch(store.getPosition(latlng, { dispatch }));
-    } catch (error) {}
-  };
-
   React.useEffect(() => {
+    const requestCurrentLocation = async () => {
+      try {
+        let result = await getCurrentPosition();
+        let latlng = {
+          lat: result.coords.latitude,
+          lng: result.coords.longitude,
+        };
+        dispatch(store.getPosition(latlng, { dispatch }));
+      } catch (error) {}
+    };
     requestCurrentLocation();
-  }, []);
+  }, [dispatch]);
 
   return <View />;
 };

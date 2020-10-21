@@ -1,9 +1,3 @@
-import QueryMenuList from './QueryMenuList';
-import QueryMenuDetailList from './QueryMenuDetailList';
+export * from './QueryMenuList';
+export * from './QueryMenuDetailList';
 import { QueryOrderList } from './QueryOrderList';
-
-module.exports = {
-  QueryMenuList,
-  QueryMenuDetailList,
-  QueryOrderList
-};

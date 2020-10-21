@@ -1,7 +1,7 @@
-import { CustomFlatList } from '@components';
-import { StyleSheet, RefreshControl, View } from 'react-native';
-import React from 'react';
 import { gql, useQuery } from '@apollo/client';
+import React from 'react';
+import { StyleSheet, RefreshControl } from 'react-native';
+import { CustomFlatList } from '@components';
 
 const MENU_LIST = gql`
   query categoryList($arrayCategory: [String]) {
@@ -45,12 +45,14 @@ const defaultData = [
   { id: 6 },
 ];
 
-const QueryMenuList = ({
-  renderItem = () => <View />,
-  renderItemLoading = () => <View />,
-}) => {
+export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { loading, error, data, refetch } = useQuery(MENU_LIST, {
+  const {
+    loading,
+    error,
+    data = { categoryList: defaultData },
+    refetch,
+  } = useQuery(MENU_LIST, {
     variables: null,
   });
 
@@ -68,13 +70,11 @@ const QueryMenuList = ({
     }, 3000);
   };
 
-  if (error) {
-    return null;
-  }
+  if (error) return <></>;
 
   return (
     <CustomFlatList
-      data={data?.categoryList || defaultData}
+      data={data.categoryList}
       renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
       numColumns={2}
@@ -91,5 +91,3 @@ const QueryMenuList = ({
 const styles = StyleSheet.create({
   contentContainerStyle: { paddingVertical: 15 },
 });
-
-export default QueryMenuList;

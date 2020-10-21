@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  ImageBackground,
-  Text
-} from 'react-native';
+import { StyleSheet, View, Image, ImageBackground, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
@@ -18,7 +12,7 @@ import {
   PopupSelectAreaComponent,
   MenuPageName,
   PromotionPageName,
-  PopupWebView
+  PopupWebView,
 } from '../../../components';
 import {
   ProductPromotionList,
@@ -31,7 +25,6 @@ import {
 const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
-
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
   const navigation = useNavigation();
@@ -45,7 +38,6 @@ const HomePage = () => {
   React.useEffect(() => {
     setVisiblePopup(true);
   }, []);
-
 
   return (
     <TopBarScreenLayout
@@ -93,22 +85,20 @@ const HomePage = () => {
               styleText={{ fontSize: 14 }}
             />
           </View>
-
         </ImageBackground>
 
         <ProductPromotionList />
 
-
-
         <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
 
-        <NewsList openDetail={onToggleDetail} onCHangeScreen={onCHangeScreen(ScreenName.News)} />
+        <NewsList
+          openDetail={onToggleDetail}
+          onCHangeScreen={onCHangeScreen(ScreenName.News)}
+        />
 
         <ServiceList openDetail={onToggleDetail} />
 
         <AboutJollibee openDetail={onToggleDetail} />
-
-       
       </SinglePageLayout>
 
       <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
@@ -122,7 +112,6 @@ const styles = StyleSheet.create({
   container: { backgroundColor: AppStyles.colors.accent },
   containerTop: {
     paddingHorizontal: metrics.padding,
-
   },
   txtTitle: {
     fontSize: scaleWidth(24),

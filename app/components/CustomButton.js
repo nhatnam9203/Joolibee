@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, Text, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 
 const DISABLE_COLOR = '#4448';
 
@@ -19,7 +19,7 @@ const CustomButton = ({
   disabled,
   ...props
 }) => (
-  <TouchableHighlight
+  <TouchableOpacity
     style={[
       {
         width: width,
@@ -31,7 +31,7 @@ const CustomButton = ({
       absolute && styles.btnAbsoluteStyle,
       style,
     ]}
-    activeOpacity={0.2}
+    activeOpacity={0.6}
     underlayColor={bgColor}
     onPress={onPress}
     disabled={disabled}
@@ -69,7 +69,7 @@ const CustomButton = ({
         />
       )}
     </>
-  </TouchableHighlight>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({

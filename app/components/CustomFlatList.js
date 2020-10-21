@@ -1,16 +1,9 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
-const CustomFlatList = ({ onRefresh, refreshing, ...props }) => {
-  return (
-    <FlatList
-      {...props}
-      containerStyle={styles.containerStyle}
-      refreshing={refreshing}
-      onRefresh={onRefresh}
-    />
-  );
-};
+const CustomFlatList = ({ ...props }) => (
+  <FlatList {...props} containerStyle={styles.containerStyle} />
+);
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -18,4 +11,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
 });
+
 export default CustomFlatList;

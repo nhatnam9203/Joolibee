@@ -14,12 +14,9 @@ const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
   }));
 
   return (
-    <CustomModal.CustomModal
-      showModal={visible}
-      onDismiss={onToggle}
-      ref={modalRef}>
+    <CustomModal showModal={visible} onDismiss={onToggle} ref={modalRef}>
       {children}
-    </CustomModal.CustomModal>
+    </CustomModal>
   );
 });
 

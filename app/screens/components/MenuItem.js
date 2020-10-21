@@ -1,12 +1,7 @@
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import {
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-  Fade,
-} from 'rn-placeholder';
+import { Placeholder, PlaceholderMedia, Fade } from 'rn-placeholder';
 import { JollibeeImage } from './JollibeeImage';
 import { format } from '@utils';
 import { translate } from '@localize';
@@ -17,7 +12,7 @@ const BOTTOM_DETAIL_HEIGHT = 86;
 export const MenuItemLoading = () => (
   <Placeholder style={styles.container} Animation={Fade}>
     <View style={styles.content}>
-      <PlaceholderMedia style={styles.placeholderMedia} />
+      <PlaceholderMedia style={styles.placeholderMedia} color="#fff" />
       <View style={styles.textContentStyle} />
     </View>
   </Placeholder>
@@ -32,7 +27,7 @@ export const MenuItem = ({ item, onPress }) => (
         defaultSource={images.menu_3}
       />
       <View style={styles.textContentStyle}>
-        <Text style={styles.textStyle}>{`${item.name}`}</Text>
+        {!!item?.name && <Text style={styles.textStyle}>{`${item.name}`}</Text>}
       </View>
     </View>
   </TouchableOpacity>
