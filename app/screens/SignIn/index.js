@@ -59,10 +59,9 @@ const SignInScreen = () => {
       // if (validate.email(username)) {
       //   submitData = Object.assign({}, data, { email: username });
       // }
-      dispatch(app.showLoading());
-      Logger.debug(account, 'account');
-      dispatch(account.signIn(submitData, { dispatch }));
-      dispatch(app.hideLoading());
+      await dispatch(app.showLoading());
+      await dispatch(account.signIn(submitData, { dispatch }));
+      await dispatch(app.hideLoading());
     },
     [dispatch],
   );
