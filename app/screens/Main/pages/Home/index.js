@@ -1,7 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Image, ImageBackground, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
+import {
+  TopBarScreenLayout,
+  SinglePageLayout,
+  AppScrollViewIOSBounceColorsWrapper,
+} from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
 
@@ -40,83 +44,93 @@ const HomePage = () => {
   }, []);
 
   return (
-    <TopBarScreenLayout
-      style={{ backgroundColor: AppStyles.colors.accent }}
-      topBar={<TopBarComponent />}>
-      <SinglePageLayout>
-        <View style={styles.containerTop}>
-          <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
-            Đặt món ngay! giao tận nơi hoặc lấy tại cửa hàng
-          </Text>
-
-          <CustomButton
-            onPress={onCHangeScreen(MenuPageName)}
-            label={'XEM THỰC ĐƠN'}
-            width={'42%'}
-            height={43}
-            bgColor={AppStyles.colors.button}
-            styleText={{ fontSize: scaleWidth(14) }}
-            style={{
-              marginVertical: scaleHeight(10),
-            }}
-          />
-
-          <Image source={images.jollibee_home} style={styles.jollibeeHome} />
-        </View>
-
-        <ImageBackground
-          source={images.layout_white_home}
-          style={styles.layoutPromotion}>
-          <View
-            style={{
-              paddingHorizontal: scaleWidth(10),
-              paddingTop: scaleHeight(40),
-            }}>
-            <Text style={[AppStyles.fonts.title, styles.txtPromotion]}>
-              Nhận khuyến mãi mỗi ngày tại Jollibee
+    <AppScrollViewIOSBounceColorsWrapper
+      style={styles.container}
+      topBounceColor={AppStyles.colors.accent}
+      bottomBounceColor={AppStyles.colors.button}>
+      <TopBarScreenLayout
+        style={{ backgroundColor: 'transparent' }}
+        topBar={<TopBarComponent />}>
+        <SinglePageLayout>
+          <View style={styles.containerTop}>
+            <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
+              Đặt món ngay! giao tận nơi hoặc lấy tại cửa hàng
             </Text>
 
             <CustomButton
-              onPress={onCHangeScreen(PromotionPageName)}
-              label={'KHUYẾN MÃI'}
+              onPress={onCHangeScreen(MenuPageName)}
+              label={'XEM THỰC ĐƠN'}
               width={'42%'}
               height={43}
               bgColor={AppStyles.colors.button}
-              styleText={{ fontSize: 14 }}
+              styleText={{ fontSize: scaleWidth(14) }}
+              style={{
+                margin: scaleHeight(10),
+              }}
             />
+
+            <Image source={images.jollibee_home} style={styles.jollibeeHome} />
+
+            <ImageBackground
+              source={images.layout_white_home}
+              style={styles.layoutPromotion}>
+              <View
+                style={{
+                  paddingHorizontal: scaleWidth(10),
+                  paddingTop: scaleHeight(40),
+                }}>
+                <Text style={[AppStyles.fonts.title, styles.txtPromotion]}>
+                  Nhận khuyến mãi mỗi ngày tại Jollibee
+                </Text>
+
+                <CustomButton
+                  onPress={onCHangeScreen(PromotionPageName)}
+                  label={'KHUYẾN MÃI'}
+                  width={'42%'}
+                  height={43}
+                  bgColor={AppStyles.colors.button}
+                  styleText={{ fontSize: 14 }}
+                />
+              </View>
+            </ImageBackground>
           </View>
-        </ImageBackground>
 
-        <ProductPromotionList />
+          <ProductPromotionList />
 
-        <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
+          <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
 
-        <NewsList
-          openDetail={onToggleDetail}
-          onCHangeScreen={onCHangeScreen(ScreenName.News)}
+          <NewsList
+            openDetail={onToggleDetail}
+            onCHangeScreen={onCHangeScreen(ScreenName.News)}
+          />
+
+          <ServiceList openDetail={onToggleDetail} />
+
+          <AboutJollibee openDetail={onToggleDetail} />
+        </SinglePageLayout>
+
+        <PopupSelectAreaComponent
+          visible={isVisible}
+          onToggle={onTogglePopup}
         />
 
-        <ServiceList openDetail={onToggleDetail} />
-
-        <AboutJollibee openDetail={onToggleDetail} />
-      </SinglePageLayout>
-
-      <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
-
-      <PopupWebView visible={visible_detail} onToggle={onToggleDetail} />
-    </TopBarScreenLayout>
+        <PopupWebView visible={visible_detail} onToggle={onToggleDetail} />
+      </TopBarScreenLayout>
+    </AppScrollViewIOSBounceColorsWrapper>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: AppStyles.colors.accent },
+  container: { flex: 1 },
   containerTop: {
-    paddingHorizontal: metrics.padding,
+    backgroundColor: AppStyles.colors.accent,
+    flex: 0,
   },
   txtTitle: {
     fontSize: scaleWidth(24),
     width: scaleWidth(200),
     color: AppStyles.colors.white,
+    marginHorizontal: 10,
   },
   txtPromotion: {
     fontSize: scaleWidth(24),

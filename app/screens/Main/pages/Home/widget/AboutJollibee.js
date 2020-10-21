@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-
-} from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { Text } from 'react-native-paper';
 import { AppStyles, images } from '@theme';
 import { CustomButton } from '@components';
@@ -23,15 +18,10 @@ const index = ({ openDetail }) => {
           Jollibee Việt Nam
         </Text>
 
-        <Text
-          style={[
-            AppStyles.fonts.mini,
-            styles.txtContent
-          ]}>
-          Cửa hàng Jollibee đầu tiên được mở tại Việt Nam vào năm
-          2005. Kể từ đó, Jollibee đã nỗ lực hết mình để mang đến
-          các gia đình Việt những phần ăn ngon miệng với mức giá
-          hợp lý.
+        <Text style={[AppStyles.fonts.mini, styles.txtContent]}>
+          Cửa hàng Jollibee đầu tiên được mở tại Việt Nam vào năm 2005. Kể từ
+          đó, Jollibee đã nỗ lực hết mình để mang đến các gia đình Việt những
+          phần ăn ngon miệng với mức giá hợp lý.
         </Text>
 
         <CustomButton
@@ -44,35 +34,30 @@ const index = ({ openDetail }) => {
         />
 
         <View style={styles.contentImage}>
-          <Image
-            source={images.jollibee_like}
-          />
+          <Image source={images.jollibee_like} />
         </View>
-
       </View>
 
-
-      <View style={styles.viewBottom} />
+      {/* <View style={styles.viewBottom} /> */}
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.button,
-    paddingVertical: 30,
+    paddingTop: 30,
     top: -50,
   },
   contentImage: {
     alignItems: 'center',
-    paddingTop: 20
+    paddingTop: 20,
   },
   txtContent: {
     fontSize: 14,
     marginVertical: 15,
-    lineHeight: 20
+    lineHeight: 20,
   },
 
   viewBottom: {
@@ -81,8 +66,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: '100%',
     backgroundColor: AppStyles.colors.button,
-
-  }
+  },
 });
 
 export default index;
