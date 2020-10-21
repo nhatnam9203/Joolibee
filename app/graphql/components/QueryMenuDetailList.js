@@ -31,7 +31,7 @@ const MENU_DETAIL_LIST = gql`
   }
 `;
 
-export const QueryMenuDetailList = ({
+const QueryMenuDetailList = ({
   renderItem = () => <View />,
   renderItemLoading = () => <View />,
   categoryId,
@@ -70,3 +70,5 @@ export const QueryMenuDetailList = ({
 const styles = StyleSheet.create({
   contentContainerStyle: { paddingVertical: 15 },
 });
+
+export default QueryMenuDetailList;

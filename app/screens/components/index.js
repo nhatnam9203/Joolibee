@@ -28,5 +28,5 @@ export * from './JollibeeImage';
 
 import CustomMapView from './MapView';
 import ItemStore from './ItemStore';
-import PopupWebView from "./PopupWebView";
+import PopupWebView from './PopupWebView';
 export { CustomPopupMenu, CustomMapView, ItemStore, PopupWebView };
