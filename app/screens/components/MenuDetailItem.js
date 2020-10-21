@@ -29,20 +29,8 @@ export const MenuDetailItem = ({
     }
   };
 
-  const renderSelectType = () => {
+  const renderSelectType = (item) => {
     switch (type) {
-      case MenuDetailItemSelectType.Radio:
-      default:
-        return (
-          <Image
-            style={styles.arrowStyle}
-            source={
-              radioChecked
-                ? images.icons.ic_radio_active
-                : images.icons.ic_radio_inactive
-            }
-          />
-        );
       case MenuDetailItemSelectType.Multiline:
         return (
           <View style={styles.multilineSelectContent}>
@@ -65,6 +53,18 @@ export const MenuDetailItem = ({
         );
       case MenuDetailItemSelectType.None:
         return null;
+      case MenuDetailItemSelectType.Radio:
+      default:
+        return (
+          <Image
+            style={styles.arrowStyle}
+            source={
+              radioChecked
+                ? images.icons.ic_radio_active
+                : images.icons.ic_radio_inactive
+            }
+          />
+        );
     }
   };
 

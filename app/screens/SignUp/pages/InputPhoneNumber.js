@@ -6,15 +6,12 @@ import { regex } from '@utils';
 import { Formik } from 'formik';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { ButtonCC, LabelTitle, TextInputErrorMessage } from '../../components';
 
 const LAYOUT_WIDTH = '90%';
 
 export const InputPhoneNumber = ({ next }) => {
-  const dispatch = useDispatch();
-
   // validate form
   const InputPhoneSchema = Yup.object().shape({
     phone: Yup.string()

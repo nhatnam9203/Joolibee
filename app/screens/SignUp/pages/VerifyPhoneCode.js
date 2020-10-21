@@ -1,14 +1,14 @@
 import { CustomInput, CustomTextLink } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
+import { get, saveValueWithExpires, StorageKey } from '@storage';
 import { AppStyles } from '@theme';
+import { format, validate } from '@utils';
 import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-import { ButtonCC, LabelTitle } from '../../components';
-import { format, validate } from '@utils';
-import { saveValueWithExpires, get, StorageKey } from '@storage';
 import Config from 'react-native-config';
 import { useDispatch } from 'react-redux';
+import { ButtonCC, LabelTitle } from '../../components';
 
 const COUNTDOWN_SECONDS = 60;
 const TIME_WAITING = COUNTDOWN_SECONDS - 15;

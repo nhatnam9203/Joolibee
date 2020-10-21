@@ -4,7 +4,7 @@
  */
 import { ApolloProvider } from '@apollo/client';
 import { Loading, RootPermission } from '@components';
-import { useChangeLanguage, useCodePushUpdate } from '@hooks';
+import { useChangeLanguage } from '@hooks';
 import { setI18nConfig } from '@localize';
 import { app } from '@slices';
 import { AppStyles } from '@theme';
@@ -27,9 +27,9 @@ import {
   useSelector,
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
-import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
-import { graphQlClient } from './graphql';
 import GraphErrorHandler from './GraphErrorHandler';
+import { graphQlClient } from './graphql';
+import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
 
 const fontConfig = {
   default: {

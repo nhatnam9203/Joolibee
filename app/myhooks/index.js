@@ -8,5 +8,5 @@ module.exports = {
   useChangeLanguage,
   useCodePushUpdate,
   useStore,
-  useGeolocation
+  useGeolocation,
 };

@@ -7,12 +7,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 
 import { AppStyles, images, metrics } from '@theme';
 
-
-const ANIMATION_TIME = 350
+const ANIMATION_TIME = 350;
 const CustomPopupMenu = ({
   visible,
   value,
@@ -20,7 +19,7 @@ const CustomPopupMenu = ({
   placeHolders = '',
   openMenu,
   closeMenu,
-  onChangeItem
+  onChangeItem,
 }) => {
   const [layout, setLayout] = React.useState({});
   const setOnLayout = React.useCallback(
@@ -32,8 +31,8 @@ const CustomPopupMenu = ({
 
   const onHandleChangeItem = React.useCallback(
     (item) => () => {
-      onChangeItem(item)
-      closeMenu()
+      onChangeItem(item);
+      closeMenu();
     },
     [visible],
   );
@@ -43,11 +42,8 @@ const CustomPopupMenu = ({
       onPress={onHandleChangeItem(item)}
       key={index + ''}
       style={styles.itemContainer}>
-      <Text style={AppStyles.fonts.text}>
-        {item.label}
-      </Text>
+      <Text style={AppStyles.fonts.text}>{item.label}</Text>
     </TouchableOpacity>
-
   );
 
   return (
@@ -56,11 +52,7 @@ const CustomPopupMenu = ({
         onLayout={setOnLayout}
         onPress={openMenu}
         style={styles.btnContainer}>
-        <Text
-          style={[
-            AppStyles.fonts.bold,
-
-          ]}>
+        <Text style={[AppStyles.fonts.bold]}>
           {value ? value : placeHolders}
         </Text>
 
@@ -71,14 +63,13 @@ const CustomPopupMenu = ({
         style={styles.modal}
         visible={visible}
         onBackdropPress={closeMenu}
-        animationIn='zoomIn'
-        animationOut='zoomOut'
+        animationIn="zoomIn"
+        animationOut="zoomOut"
         animationInTiming={ANIMATION_TIME}
         animationOutTiming={ANIMATION_TIME}
         backdropTransitionInTiming={ANIMATION_TIME}
         backdropTransitionOutTiming={ANIMATION_TIME}
-        transparent={true}
-      >
+        transparent={true}>
         <View
           style={[
             styles.container,

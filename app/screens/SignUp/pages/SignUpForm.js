@@ -7,13 +7,12 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
-import { SinglePageLayout, PopupLayout } from '@layouts';
+import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
 import { AppStyles, images, metrics } from '@theme';
 import { Formik } from 'formik';
-import _ from 'lodash';
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -90,7 +89,6 @@ export const SignUpForm = ({ infos }) => {
     setShowPopupSuccess(PROCESS_STATUS.FINISH);
   };
 
-  // !TODO: Khá bảnh ...
   React.useEffect(() => {
     if (signUpSucceeded) {
       setShowPopupSuccess(PROCESS_STATUS.SUCCESS);

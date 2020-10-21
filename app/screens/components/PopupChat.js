@@ -1,4 +1,3 @@
-
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 
@@ -13,31 +12,32 @@ import {
   UIManager,
   LayoutAnimation,
   ScrollView,
-  Platform
+  Platform,
 } from 'react-native';
-import { GiftedChat, Send, MessageText, Bubble } from 'react-native-gifted-chat'
-import Modal from "react-native-modal";
+import {
+  GiftedChat,
+  Send,
+  MessageText,
+  Bubble,
+} from 'react-native-gifted-chat';
+import Modal from 'react-native-modal';
 
 const suggests = [
   { _id: 4, text: 'Tôi xuống ngay' },
   { _id: 5, text: 'Tôi đồng ý' },
   { _id: 6, text: 'Vui lòng chờ tôi 1 lát nhé' },
-]
+];
 
 export const PopupChat = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
-  const onClose = React.useCallback(
-    () => {
-      popupRef.current.forceQuit();
-    },
-    [visible],
-  )
+  const onClose = React.useCallback(() => {
+    popupRef.current.forceQuit();
+  }, [visible]);
 
   const [messages, setMessages] = React.useState([]);
   const [height, setHeight] = React.useState('75%');
   React.useEffect(() => {
-
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
@@ -58,72 +58,61 @@ export const PopupChat = ({ visible, onToggle }) => {
     Keyboard.addListener('keyboardDidHide', keyboardDidHide);
 
     return () => {
-      Keyboard.removeListener("keyboardDidShow", keyboardDidShow);
-      Keyboard.removeListener("keyboardDidHide", keyboardDidHide);
-    }
+      Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+      Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
+    };
   }, []);
 
   const keyboardDidShow = () => {
     setHeight('100%');
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-  }
+  };
 
   const keyboardDidHide = () => {
     setHeight('75%');
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-  }
+  };
 
   const onSend = React.useCallback((messages = []) => {
-    console.log('messages', messages)
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    console.log('messages', messages);
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages),
+    );
   }, []);
 
   const renderSend = (props) => (
-    <Send
-      {...props}
-      containerStyle={styles.containerSend}
-    >
+    <Send {...props} containerStyle={styles.containerSend}>
       <Image source={images.icons.ic_send_chat} />
     </Send>
   );
 
-
-
   const renderMessageText = (props) => {
-    return (
-      <MessageText
-        {...props}
-        customTextStyle={styles.txtMessage}
-      />
-
-    )
-  }
+    return <MessageText {...props} customTextStyle={styles.txtMessage} />;
+  };
 
   const renderBubble = (props) => (
     <Bubble
       {...props}
       wrapperStyle={{
         left: {
-          backgroundColor: '#AADEE5'
-        }
+          backgroundColor: '#AADEE5',
+        },
       }}
-
     />
   );
 
   const renderSuggestList = () => {
-
     return suggests.map((item, index) => {
-      const message = [{
-        text: item.text,
-        user: {
-          _id: 1,
+      const message = [
+        {
+          text: item.text,
+          user: {
+            _id: 1,
+          },
+          createdAt: new Date(),
+          _id: Math.random(5),
         },
-        createdAt: new Date(),
-        _id: Math.random(5)
-      }];
+      ];
 
       return (
         <TouchableOpacity
@@ -132,16 +121,12 @@ export const PopupChat = ({ visible, onToggle }) => {
           style={styles.suggestMessageContainer}>
           <Text style={styles.txtSuggest}>{item.text}</Text>
         </TouchableOpacity>
-      )
-    })
-
-  }
+      );
+    });
+  };
   const renderChatFooter = (props) => (
     <View style={{ marginVertical: 10 }}>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-      >
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
         {renderSuggestList()}
       </ScrollView>
     </View>
@@ -150,22 +135,21 @@ export const PopupChat = ({ visible, onToggle }) => {
   return (
     <Modal
       testID="modal"
-      animationIn={"zoomIn"}
-      animationOut={"zoomOut"}
+      animationIn={'zoomIn'}
+      animationOut={'zoomOut'}
       animationInTiming={350}
       animationOutTiming={350}
       backdropTransitionInTiming={350}
       backdropTransitionOutTiming={350}
       onBackdropPress={onToggle}
-
       isVisible={visible}
       style={styles.bottomModal}>
       <View style={[styles.container, { height }]}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={onToggle} style={{ position: 'absolute', left: 15 }} >
-            <Image
-              source={images.icons.ic_popup_close_red}
-            />
+          <TouchableOpacity
+            onPress={onToggle}
+            style={{ position: 'absolute', left: 15 }}>
+            <Image source={images.icons.ic_popup_close_red} />
           </TouchableOpacity>
 
           <Text style={[AppStyles.fonts.medium_SVN, { fontSize: 24 }]}>
@@ -175,9 +159,9 @@ export const PopupChat = ({ visible, onToggle }) => {
 
         <GiftedChat
           messages={messages}
-          placeholder='Nhập tin nhắn'
+          placeholder="Nhập tin nhắn"
           keyboardShouldPersistTaps={'handled'}
-          onSend={messages => onSend(messages)}
+          onSend={(messages) => onSend(messages)}
           renderSend={renderSend}
           renderMessageText={renderMessageText}
           renderChatFooter={renderChatFooter}
@@ -189,7 +173,6 @@ export const PopupChat = ({ visible, onToggle }) => {
             _id: 1,
           }}
         />
-
       </View>
     </Modal>
   );
@@ -202,7 +185,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.colors.white,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
 
   header: {
@@ -211,7 +194,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
 
   containerSend: {
@@ -229,12 +212,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#AADEE5',
     borderRadius: 7,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
 
   txtMessage: {
     fontSize: 14,
-    ...AppStyles.fonts.text
+    ...AppStyles.fonts.text,
   },
 
   txtSuggest: {
@@ -244,8 +227,7 @@ const styles = StyleSheet.create({
   },
 
   bottomModal: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     margin: 0,
   },
-
 });

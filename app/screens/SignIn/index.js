@@ -1,11 +1,13 @@
 import { CustomInput, CustomTextLink } from '@components';
 import {
-  SinglePageLayout,
   AppScrollViewIOSBounceColorsWrapper,
+  SinglePageLayout,
 } from '@layouts';
 import { translate } from '@localize';
+import { statusCodes } from '@react-native-community/google-signin';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
+import { loginFb, loginGoogle } from '@social';
 import { AppStyles, images } from '@theme';
 import { Formik } from 'formik';
 import _ from 'lodash';
@@ -22,9 +24,6 @@ import {
   TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { regex, validate } from '@utils';
-import { loginFb, loginGoogle } from '@social';
-import { statusCodes } from '@react-native-community/google-signin';
 
 const LAYOUT_WIDTH = '90%';
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { account } from '@slices';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const GraphErrorHandler = React.forwardRef(({ children }, ref) => {
   const dispatch = useDispatch();
