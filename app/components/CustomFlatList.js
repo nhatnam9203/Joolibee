@@ -18,4 +18,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
 });
+
 export default CustomFlatList;

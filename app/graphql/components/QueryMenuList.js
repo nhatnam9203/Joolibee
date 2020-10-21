@@ -1,5 +1,5 @@
 import { CustomFlatList } from '@components';
-import { StyleSheet, RefreshControl, View } from 'react-native';
+import { StyleSheet, RefreshControl, View, Text } from 'react-native';
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 
@@ -69,7 +69,11 @@ const QueryMenuList = ({
   };
 
   if (error) {
-    return null;
+    return (
+      <>
+        <Text>{error}</Text>
+      </>
+    );
   }
 
   return (

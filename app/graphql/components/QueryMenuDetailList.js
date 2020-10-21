@@ -50,8 +50,11 @@ const QueryMenuDetailList = ({
   });
 
   if (error) {
-    Logger.debug(error, 'Error!');
-    return null;
+    return (
+      <>
+        <Text>{error}</Text>
+      </>
+    );
   }
 
   return (
