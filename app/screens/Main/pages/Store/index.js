@@ -7,59 +7,29 @@ import {
   Platform,
   PixelRatio
 } from 'react-native';
+import _ from "lodash";
 import { TopBarScreenLayout } from '@layouts';
 import { useDispatch, useSelector } from "react-redux";
 import { TopBarComponent, CustomPopupMenu, CustomMapView, ItemStore } from '../../../components';
 import { AppStyles } from '@theme';
 import { useStore } from "@hooks";
 import { Markers } from './pages';
-import { filterStore } from '@slices/store';
+import { filterStore,filterDistrictByCity } from '@slices/store';
 
 const { width, height } = Dimensions.get('window');
-const DEFAULT_PADDING = { top: 60, 
-  right: 60, 
-  bottom: (Platform.OS === 'android') ? PixelRatio.getPixelSizeForLayoutSize(height / 2) : (height / 2), 
-  left: 60 };
-//define menu
-const citys = [
-  {
-    id: 1,
-    label: 'Hồ chí minh',
-    value: 1,
-  },
-  {
-    id: 2,
-    label: 'Hà Nội',
-    value: 2,
-  },
-  {
-    id: 3,
-    label: 'Đồng Nai',
-    value: 3,
-  },
-  {
-    id: 4,
-    label: 'Cần Thơ',
-    value: 4,
-  },
-];
-
-const districs = [
-  {
-    id: 1,
-    label: 'Quận 3',
-    value: 1,
-  },
-  {
-    id: 2,
-    label: 'Quận 5',
-    value: 2,
-  },
-];
+const DEFAULT_PADDING = {
+  top: 60,
+  right: 60,
+  bottom: 60,
+  left: 60
+};
 
 const StorePage = () => {
   const dispatch = useDispatch();
   const init_location = useSelector((state) => state.store.init_location);
+  const cities = useSelector((state) => state.store.cities);
+  const districts = useSelector((state) => state.store.districts);
+  const initCities = _.uniqBy(cities, 'label');
   const stores = useStore()
   const INITIAL_REGION = {
     latitude: init_location?.lat,
@@ -92,16 +62,18 @@ const StorePage = () => {
 
   // -------------------- Filter Stores --------------------------//
   const onChangeItemCity = (item) => {
-    let newParams = { city: item.label.toLowerCase() }
+    let newParams = { city: item.label }
     setParams(newParams);
+    dispatch(filterDistrictByCity({ key: item.label }))
+    
   }
 
   const onChangeItemDistrict = (item) => {
-    setParams({ ...params, district: item.label.toLowerCase() });
+    setParams({ ...params, district: item.label });
   }
 
   React.useEffect(() => {
-    dispatch(filterStore(params))
+     dispatch(filterStore(params))
 
     //return () => setParams({})
   }, [params])
@@ -114,9 +86,9 @@ const StorePage = () => {
         <CustomPopupMenu
           placeHolders='Chọn tỉnh thành'
           visible={visible[0]}
-          menus={citys}
+          menus={initCities}
           onChangeItem={onChangeItemCity}
-
+          value={params?.city}
           openMenu={openModal(0)}
           closeMenu={closeModal}
 
@@ -125,8 +97,8 @@ const StorePage = () => {
         <CustomPopupMenu
           placeHolders='Chọn quận huyện'
           visible={visible[1]}
-          menus={districs}
-
+          menus={districts}
+          value={params?.district}
           onChangeItem={onChangeItemDistrict}
           openMenu={openModal(1)}
           closeMenu={closeModal}

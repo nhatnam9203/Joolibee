@@ -1,26 +1,31 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { showLoading, hideLoading } from './app';
-import { includes } from "lodash";
-import { stores } from "../../mocks";
+import { stores, cities, districts } from "../../mocks";
 import { reverseGeocoding } from "@location";
+import { format } from "@utils";
 const initStores = Object.values(stores);
+
 
 export const getPosition = createAsyncThunk(
     `store/reverseGeocoding`,
     async (latlng, { dispatch }) => {
-        await dispatch(showLoading());
+        // await dispatch(showLoading());
         const response = await reverseGeocoding(latlng)
-        await dispatch(hideLoading());
+        // await dispatch(hideLoading());
 
         return response;
     },
 );
 
 
+
+
 const storeSlice = createSlice({
     name: 'store',
     initialState: {
         stores: initStores,
+        cities,
+        districts: [],
         init_location: {}
     },
     reducers: {
@@ -33,16 +38,23 @@ const storeSlice = createSlice({
                 const { city, region } = item;
                 let _city = city.toLowerCase();
                 let _region = region.toLowerCase()
-                if (payload.city && !payload.district) return _city.includes(payload.city);
-                if (payload.city && payload.district) return _city.includes(payload.city) && _region.includes(payload.district);
+                if (payload.city && !payload.district) return _city.includes(payload.city?.toLowerCase());
+                if (payload.city && payload.district) return _city.includes(payload.city?.toLowerCase()) && _region.includes(payload.district?.toLowerCase());
                 if (!payload.city && !payload.district) return item
             }
-  
             state.stores = initStores.filter((item) => query(item))
         },
+
+        filterDistrictByCity(state, action) {
+            const { payload } = action;
+            state.districts = districts.filter((item) => item.key == payload.key)
+        },
+
         setInitLocation(state, action) {
             state.init_location = action.payload
         },
+
+
     },
     extraReducers: {
         [getPosition.pending]: (state, action) => {
@@ -53,9 +65,30 @@ const storeSlice = createSlice({
             const { payload } = action;
             if (payload) {
                 const location = payload[0];
+
+                let city = format.convertString(location?.adminArea);
+                let district = format.convertString(location?.subAdminArea);
+
+                let default_district = -1;
+                let default_city = cities.findIndex((item) => {
+                    let label = format.convertString(item.label);
+                    if (city.includes(label)) return city.includes(label)
+                });
+
+                if (default_city > -1) {
+                    state.districts = districts.filter((item) => item.key == cities[default_city].label);
+                    default_district = state.districts.findIndex((item) => {
+                        let label = format.convertString(item.label);
+                        if (district.includes(label)) return district.includes(label)
+                    });
+
+                }
+
                 state.init_location = {
                     "district": location.subAdminArea,
-                    city: location.adminArea,
+                    "city": location.adminArea,
+                    "default_city": default_city,
+                    "default_district": default_district,
                     ...location.position
                 }
             } else {
@@ -73,6 +106,7 @@ const { actions, reducer } = storeSlice;
 export const {
     updateStore,
     filterStore,
+    filterDistrictByCity,
     setInitLocation
 } = actions;
 export default reducer;

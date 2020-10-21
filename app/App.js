@@ -3,7 +3,7 @@
  * Everything starts from the entry point
  */
 import { ApolloProvider } from '@apollo/client';
-import { Loading } from '@components';
+import { Loading, RootPermission } from '@components';
 import { useChangeLanguage, useCodePushUpdate } from '@hooks';
 import { setI18nConfig } from '@localize';
 import { hideLoading } from '@slices/app';
@@ -93,6 +93,7 @@ let App = () => {
               <PaperProvider theme={theme}>
                 <Navigator />
                 <LoadingProvider />
+                <RootPermission/>
                 <DropdownAlert
                   ref={dropdownRef}
                   showCancel={true}

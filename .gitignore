@@ -60,3 +60,4 @@ buck-out/
 
 # configuration
 .env
+ios/Podfile.lock

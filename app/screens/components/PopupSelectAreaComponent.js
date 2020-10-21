@@ -7,28 +7,61 @@ import { scale } from '@utils';
 import { translate } from '@localize';
 import { JollibeeLogo } from '../components';
 import { PopupLayout } from '@layouts';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterDistrictByCity, setInitLocation, filterStore } from '@slices/store';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
+  const dispatch = useDispatch();
   const popupRef = React.createRef(null);
   const init_location = useSelector((state) => state.store.init_location);
+  const cities = useSelector((state) => state.store.cities);
+  const districts = useSelector((state) => state.store.districts);
+
   const [city, setCity] = React.useState(-1);
-  const [district, setDistrict] = React.useState(-1)
+  const [district, setDistrict] = React.useState(-1);
 
+  React.useEffect(() => {
+    setCity(init_location?.default_city);
+    setDistrict(init_location?.default_district);
+  }, [])
 
+  const onHandleChangeCity = (value) => {
+    let indexCity = cities.findIndex((item) => item.value == value)
+    setCity(indexCity)
+    dispatch(filterDistrictByCity({ key: cities[indexCity]?.label }))
+  }
 
-  const onChangeItem = React.useCallback((type, value) => () => {
+  const onHandleChangeDistrict = (value) => {
+    let indexDistrict = districts.findIndex((item) => item.value == value)
+    setDistrict(indexDistrict)
+  }
+
+  const onChangeItem = React.useCallback((type, value) => {
+    console.log('value',value)
     switch (type) {
       case 'city':
-        setCity(value)
+        onHandleChangeCity(value)
         break;
 
       default:
-        setDistrict(value)
+        onHandleChangeDistrict(value)
         break;
     }
   }, []);
+
+  const onHandleSubmit = () => {
+
+    let _city = cities[city]?.label;
+    let _district = districts[district]?.label;
+    let update_location = {
+      ...init_location,
+      city: _city,
+      district: _district,
+    }
+    dispatch(setInitLocation(update_location));
+    popupRef.current.forceQuit()
+  }
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -43,22 +76,16 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
             </Text>
 
             <CustomPickerSelect
-              items={[
-                { label: 'Tp. Hồ Chí Minh', value: 1 },
-                { label: 'Hà Nội', value: 0 },
-              ]}
+              items={cities}
               placeholder={translate('txtSelectDistrict')}
-              defaultValue={city}
-              onChangeItem={(item) => onChangeItem('city', item?.value)}
+              value={city}
+              onChangeItem={(item) => onChangeItem('city', item)}
             />
             <CustomPickerSelect
-              items={[
-                { label: 'Quận 1', value: 1 },
-                { label: 'Quận 2', value: 0 },
-              ]}
+              items={districts}
               placeholder={translate('txtSelectWard')}
-              defaultValue={district}
-              onChangeItem={(item) => onChangeItem('district', item?.value)}
+              value={district}
+              onChangeItem={(item) => onChangeItem('district', item)}
             />
 
             <View style={styles.polygonStyle}>
@@ -82,7 +109,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
             </View>
 
             <CustomButton
-              onPress={() => popupRef.current.forceQuit()}
+              onPress={onHandleSubmit}
               label={translate('txtButtonConfirm')}
               width={181}
               height={58}

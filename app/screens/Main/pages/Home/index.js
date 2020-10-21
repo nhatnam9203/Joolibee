@@ -10,8 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TopBarScreenLayout, SinglePageLayout } from '@layouts';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
-import { getCurrentPosition } from "@location";
-import { getPosition } from '@slices/store';
+
 import ScreenName from '../../../ScreenName';
 import { scale } from '@utils';
 import {
@@ -28,12 +27,11 @@ import {
   AboutJollibee,
   ServiceList,
 } from './widget';
-import { useDispatch } from 'react-redux';
+
 const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-  // let curr_location = useGeolocation();
+
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
   const navigation = useNavigation();
@@ -44,23 +42,8 @@ const HomePage = () => {
     navigation.navigate(screen);
   };
 
-  const requestCurrentLocation = async () => {
-    try {
-      let result = await getCurrentPosition();
-      let latlng = {
-        lat: result.coords.latitude,
-        lng: result.coords.longitude
-      };
-      dispatch(getPosition(latlng, { dispatch })
-      )
-    } catch (error) {
-
-    } finally {
-      setVisiblePopup(true);
-    }
-  }
   React.useEffect(() => {
-    requestCurrentLocation()
+    setVisiblePopup(true);
   }, []);
 
 
