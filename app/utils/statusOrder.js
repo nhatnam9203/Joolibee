@@ -36,3 +36,19 @@ export function getImage(status = '') {
             return ''
     }
 };
+
+export function convertStatusOrder(status = '') {
+    switch (status.toLowerCase()) {
+        case 'đang giao hàng':
+            return 'đang giao hàng'
+
+        case 'received':
+            return 'đã xác nhận'
+
+        case 'đã đến nơi':
+            return 'đã đến nơi'
+
+        default:
+            return ''
+    }
+};

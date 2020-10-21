@@ -4,7 +4,6 @@ import React from 'react';
 import { ORDER_LIST } from "../queries";
 import { gql, useQuery } from '@apollo/client';
 
-
 const defaultData = [
     { id: 1 },
     { id: 2 },
@@ -30,8 +29,7 @@ export const QueryOrderList = ({
 
     let _data = data?.customerOrders?.items ? data?.customerOrders?.items : defaultData
 
-    console.log('_data', _data);
-    
+
     if (error) {
         return null;
     }
