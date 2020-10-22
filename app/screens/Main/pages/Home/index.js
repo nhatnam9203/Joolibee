@@ -40,7 +40,9 @@ const HomePage = () => {
   };
 
   React.useEffect(() => {
-    setVisiblePopup(true);
+    setTimeout(() => {
+      setVisiblePopup(true);
+    }, 1000);
   }, []);
 
   return (

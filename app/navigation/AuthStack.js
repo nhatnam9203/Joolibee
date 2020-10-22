@@ -11,22 +11,35 @@ import {
   WelcomeScreen,
   ForgotPasswordScreen,
 } from '../screens';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 function AuthStack() {
+  const showWelcome = useSelector((state) => state.app.loadIntro);
+
   return (
     <Stack.Navigator
-      initialRouteName={ScreenName.Welcome}
+      initialRouteName={showWelcome ? ScreenName.Welcome : ScreenName.SignIn}
       screenOptions={{
         ...AppStyles.navigation.default,
         headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
       }}>
+      {showWelcome && (
+        <Stack.Screen
+          component={WelcomeScreen}
+          name={ScreenName.Welcome}
+          options={{ headerShown: false }}
+        />
+      )}
+
       <Stack.Screen
-        component={WelcomeScreen}
-        name={ScreenName.Welcome}
-        options={{ headerShown: false }}
+        component={SignInScreen}
+        name={ScreenName.SignIn}
+        options={{
+          headerShown: false,
+        }}
       />
 
       <Stack.Screen
@@ -38,14 +51,6 @@ function AuthStack() {
           // headerBackImage: () => <View />,
           // headerStyle: { backgroundColor: 'transparent' },
           headerBackground: () => <View style={styles.container} />,
-        }}
-      />
-
-      <Stack.Screen
-        component={SignInScreen}
-        name={ScreenName.SignIn}
-        options={{
-          headerShown: false,
         }}
       />
 

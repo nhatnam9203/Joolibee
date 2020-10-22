@@ -7,17 +7,19 @@ import {
   Image,
   SafeAreaView,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { isIphoneX } from 'react-native-iphone-x-helper'
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../ScreenName';
 
 import { CustomButton } from '@components';
-import { AppStyles, images } from "@theme";
-import { scale } from "@utils";
+import { AppStyles, images } from '@theme';
+import { scale } from '@utils';
 import { translate } from '@localize';
+import { app } from '@slices';
+import { useDispatch } from 'react-redux';
 
 const { scaleWidth, scaleHeight } = scale;
 const { width, height } = Dimensions.get('window');
@@ -29,10 +31,10 @@ const slides = [
       width: isIphoneX() ? '80%' : '70%',
       height: isIphoneX() ? '63%' : '60%',
       resizeMode: 'contain',
-      marginTop: scaleHeight(70)
+      marginTop: scaleHeight(70),
     },
     title: 'Giao Hàng Tận Nơi',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`
+    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`,
   },
   {
     url: images['jollibee_shop_intro'],
@@ -41,10 +43,10 @@ const slides = [
       width: isIphoneX() ? '80%' : '70%',
       height: isIphoneX() ? '63%' : '60%',
       resizeMode: 'contain',
-      marginTop: scaleHeight(55)
+      marginTop: scaleHeight(55),
     },
     title: 'Khuyến Mãi Hấp Dẫn',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has bee industry's standard`
+    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has bee industry's standard`,
   },
   {
     url: images['jollibee_gift_intro'],
@@ -53,38 +55,40 @@ const slides = [
       width: '70%',
       height: '90%',
       resizeMode: 'contain',
-      marginTop: '15%'
+      marginTop: '15%',
     },
     title: 'Tích Điểm Đổi Quà',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`
+    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`,
   },
   {
     url: images.icons['Walkthough4'],
     title: 'Hãy là người đầu tiên trải nghiệm!',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`
+    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`,
   },
-]
+];
+
 const WelcomeScreen = () => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   const refAppIntro = React.useRef(null);
   const [page, setPage] = React.useState(-1);
 
   const nextPage = (page) => () => {
     if (!refAppIntro.current) return;
-    if (page + 1 > 3) onSkip()
+    if (page + 1 > 3) onSkip();
     refAppIntro.current.goToSlide(page + 1);
-    setPage(page + 1)
-  }
+    setPage(page + 1);
+  };
 
   const onHandleSlideChange = (page) => {
-    setPage(page)
-  }
+    setPage(page);
+  };
 
   const onSkip = () => {
-    navigation.navigate(ScreenName.SignIn)
-    setPage(0)
-  }
+    navigation.navigate(ScreenName.SignIn);
+    setPage(0);
+    dispatch(app.hadLoadIntro());
+  };
 
   const LastSlide = ({ item, index }) => {
     return (
@@ -94,20 +98,16 @@ const WelcomeScreen = () => {
           width,
           height,
         }}>
-
-        <SafeAreaView style={{
-          width,
-          height,
-          alignItems: 'center'
-        }}>
+        <SafeAreaView
+          style={{
+            width,
+            height,
+            alignItems: 'center',
+          }}>
           <View style={styles.containerLastTop}>
-            <Text style={styles.title_content}>
-              {item.title}
-            </Text>
+            <Text style={styles.title_content}>{item.title}</Text>
 
-            <Text style={styles.text_content}>
-              {item.content}
-            </Text>
+            <Text style={styles.text_content}>{item.content}</Text>
           </View>
           <CustomButton
             onPress={nextPage(index)}
@@ -119,54 +119,45 @@ const WelcomeScreen = () => {
             textColor={AppStyles.colors.white}
           />
         </SafeAreaView>
-      </ImageBackground >
-    )
-  }
+      </ImageBackground>
+    );
+  };
 
   const Silde = ({ item, index }) => {
-    const btnBackgroundColor = index != 3 ? AppStyles.colors.button : AppStyles.colors.accent;
-    const txtColor = index != 3 ? AppStyles.colors.text : AppStyles.colors.white;
-    const label = index != 3 ? translate('btnConttinue') : translate('btnExperience')
+    const btnBackgroundColor =
+      index != 3 ? AppStyles.colors.button : AppStyles.colors.accent;
+    const txtColor =
+      index != 3 ? AppStyles.colors.text : AppStyles.colors.white;
+    const label =
+      index != 3 ? translate('btnConttinue') : translate('btnExperience');
     return (
       <>
-        {index != 3 ?
+        {index != 3 ? (
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <ImageBackground
-              source={item.url_bg}
-              style={styles.contentTop}
-            >
-              {index != 3 && < TouchableOpacity
-                onPress={onSkip}
-                style={styles.btnSkip}
-                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-              >
-                <Text style={styles.txt_skip}>
-                  Bỏ qua
-              </Text>
+            <ImageBackground source={item.url_bg} style={styles.contentTop}>
+              {index != 3 && (
+                <TouchableOpacity
+                  onPress={onSkip}
+                  style={styles.btnSkip}
+                  hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}>
+                  <Text style={styles.txt_skip}>Bỏ qua</Text>
 
-                <Image
-                  source={images.icons.arrow_skip}
-                  style={styles.icon_skip}
-                />
-              </TouchableOpacity>}
-              <Image
-                source={item.url}
-                style={item.style_image}
-              />
+                  <Image
+                    source={images.icons.arrow_skip}
+                    style={styles.icon_skip}
+                  />
+                </TouchableOpacity>
+              )}
+              <Image source={item.url} style={item.style_image} />
             </ImageBackground>
 
             <ImageBackground
               source={images.jollibee_cirlce_intro}
-              style={styles.contentBottom}
-            >
+              style={styles.contentBottom}>
               <View style={styles.txtContentBottom}>
-                <Text style={styles.title_content}>
-                  {item.title}
-                </Text>
+                <Text style={styles.title_content}>{item.title}</Text>
 
-                <Text style={styles.text_content}>
-                  {item.content}
-                </Text>
+                <Text style={styles.text_content}>{item.content}</Text>
 
                 <CustomButton
                   onPress={nextPage(index)}
@@ -180,42 +171,43 @@ const WelcomeScreen = () => {
               </View>
             </ImageBackground>
           </View>
-          :
+        ) : (
           <LastSlide item={item} index={index} />
-        }
+        )}
       </>
+    );
+  };
 
-    )
-  }
-
-
-
-
-  return <AppIntroSlider
-    ref={refAppIntro}
-    renderItem={Silde}
-    keyExtractor={(_, index) => index + ''}
-    onSlideChange={onHandleSlideChange}
-    data={slides}
-    showDoneButton={false}
-    showNextButton={false}
-    dotStyle={{
-      backgroundColor: '#707070'
-    }}
-    activeDotStyle={{
-      backgroundColor: page == slides.length - 1 ? AppStyles.colors.accent : AppStyles.colors.button
-    }}
-  />;
+  return (
+    <AppIntroSlider
+      ref={refAppIntro}
+      renderItem={Silde}
+      keyExtractor={(_, index) => index + ''}
+      onSlideChange={onHandleSlideChange}
+      data={slides}
+      showDoneButton={false}
+      showNextButton={false}
+      dotStyle={{
+        backgroundColor: '#707070',
+      }}
+      activeDotStyle={{
+        backgroundColor:
+          page == slides.length - 1
+            ? AppStyles.colors.accent
+            : AppStyles.colors.button,
+      }}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
   btn: {
-    marginTop: 25
+    marginTop: 25,
   },
 
   btnLast: {
     position: 'absolute',
-    bottom: scaleHeight(85)
+    bottom: scaleHeight(85),
   },
   btnSkip: {
     justifyContent: 'center',
@@ -231,7 +223,7 @@ const styles = StyleSheet.create({
     height: '80%',
     resizeMode: 'center',
     backgroundColor: AppStyles.colors.button,
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   containerLastTop: {
@@ -259,31 +251,31 @@ const styles = StyleSheet.create({
     width: '70%',
     height: '60%',
     resizeMode: 'contain',
-    marginTop: '15%'
+    marginTop: '15%',
   },
   title_content: {
     fontSize: scaleWidth(30),
     color: AppStyles.colors.white,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   text_content: {
     fontSize: scaleWidth(16),
     color: AppStyles.colors.white,
     lineHeight: scaleHeight(21),
     paddingTop: 5,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   txt_skip: {
     fontSize: scaleWidth(14),
     color: AppStyles.colors.white,
-    marginRight: scaleWidth(6)
+    marginRight: scaleWidth(6),
   },
   icon_skip: {
     width: scaleWidth(26),
     height: scaleHeight(26),
-    resizeMode: 'contain'
-  }
-})
+    resizeMode: 'contain',
+  },
+});
 
 export default WelcomeScreen;

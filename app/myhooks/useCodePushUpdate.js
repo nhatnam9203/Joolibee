@@ -17,6 +17,7 @@ const useCodePushUpdate = () => {
           case codePush.SyncStatus.UPDATE_INSTALLED:
             // self.setState({ modalVisible: true });
             Logger.info(status, 'useCodePushUpdate -> UPDATE_INSTALLED');
+            setProgress(100);
             break;
           case codePush.SyncStatus.SYNC_IN_PROGRESS:
             // self.setState({ modalVisible: true });
@@ -36,8 +37,9 @@ const useCodePushUpdate = () => {
 
             break;
           case codePush.SyncStatus.UP_TO_DATE:
+          default:
             Logger.info('Up-to-date.', 'useCodePushUpdate');
-            setProgress(0);
+            setProgress(100);
             break;
         }
       },
@@ -46,7 +48,7 @@ const useCodePushUpdate = () => {
         // self.setState({
         //   status: 'Downloaded ' + receivedBytes + ' of ' + totalBytes,
         // });
-        setProgress((receivedBytes / totalBytes) * 100);
+        setProgress((receivedBytes / totalBytes).toFixed(2) * 100);
         Logger.info(
           'Downloaded ' + receivedBytes + ' of ' + totalBytes,
           'useCodePushUpdate',

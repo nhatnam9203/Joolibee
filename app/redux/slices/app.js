@@ -2,7 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const appSlice = createSlice({
   name: 'app',
-  initialState: { loading: false, loading_app: true, comingSoonShow: false },
+  initialState: {
+    loading: false,
+    loading_app: true,
+    comingSoonShow: false,
+    loadIntro: true,
+  },
   reducers: {
     showLoading(state, action) {
       state.loading = true;
@@ -18,6 +23,9 @@ const appSlice = createSlice({
     },
     loadingSuccess(state, action) {
       state.loading_app = false;
+    },
+    hadLoadIntro(state, action) {
+      state.loadIntro = false;
     },
   },
 });

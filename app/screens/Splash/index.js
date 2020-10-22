@@ -8,7 +8,11 @@ import { app } from '@slices';
 import { scale } from '@utils';
 import { translate } from '@localize';
 import { useCodePushUpdate } from '@hooks';
-
+import {
+  TopBarScreenLayout,
+  SinglePageLayout,
+  AppScrollViewIOSBounceColorsWrapper,
+} from '@layouts';
 const { scaleWidth, scaleHeight } = scale;
 
 const SplashScreen = () => {
@@ -16,13 +20,22 @@ const SplashScreen = () => {
   const [progress] = useCodePushUpdate();
 
   React.useEffect(() => {
+    // if (progress >= 100) {
+    //   setTimeout(() => {
+    //     dispatch(app.loadingSuccess());
+    //   }, 1500);
+    // }
+
     setTimeout(() => {
       dispatch(app.loadingSuccess());
-    }, 1500);
+    }, 3000);
   }, [progress, dispatch]);
 
   return (
-    <View style={styles.container}>
+    <AppScrollViewIOSBounceColorsWrapper
+      style={styles.container}
+      topBounceColor={AppStyles.colors.accent}
+      bottomBounceColor="#BA0404">
       <Image source={images['bee_man']} style={styles.ic_bee_man} />
 
       <View style={styles.container_footer}>
@@ -32,28 +45,36 @@ const SplashScreen = () => {
           resizeMode="center"
         />
 
-        {progress > 0 && <Text style={styles.text_spash}>{progress}</Text>}
+        {progress > 0 ? (
+          <Text style={styles.textDownloadProgress}>
+            {Math.min(progress, 100) + '%'}
+          </Text>
+        ) : (
+          <Text style={styles.textDownloadProgress}>
+            {translate('txtWelcome')}
+          </Text>
+        )}
       </View>
-    </View>
+    </AppScrollViewIOSBounceColorsWrapper>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyles.colors.accent,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   container_footer: {
     position: 'absolute',
-    bottom: scaleHeight(50),
+    bottom: 20,
     alignItems: 'center',
   },
 
   ic_bee_man: {
-    resizeMode: 'center',
+    resizeMode: 'contain',
+    flex: 1,
     marginBottom: scaleHeight(100),
   },
 
@@ -61,7 +82,7 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
   },
 
-  text_spash: {
+  textDownloadProgress: {
     fontSize: scaleWidth(21),
     fontFamily: 'Roboto-Regular',
     color: AppStyles.colors.background,
