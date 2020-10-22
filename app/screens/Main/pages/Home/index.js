@@ -1,28 +1,27 @@
-import React from 'react';
-import { StyleSheet, View, Image, ImageBackground, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import {
-  TopBarScreenLayout,
-  SinglePageLayout,
-  AppScrollViewIOSBounceColorsWrapper,
-} from '@layouts';
-import { AppStyles, metrics, images } from '@theme';
 import { CustomButton } from '@components';
-
-import ScreenName from '../../../ScreenName';
+import {
+  AppScrollViewIOSBounceColorsWrapper,
+  SinglePageLayout,
+  TopBarScreenLayout,
+} from '@layouts';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
+import React from 'react';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import {
-  TopBarComponent,
-  PopupSelectAreaComponent,
   MenuPageName,
-  PromotionPageName,
+  PopupSelectAreaComponent,
   PopupWebView,
+  PromotionPageName,
+  TopBarComponent,
 } from '../../../components';
+import ScreenName from '../../../ScreenName';
 import {
-  ProductPromotionList,
+  AboutJollibee,
   BestSellerList,
   NewsList,
-  AboutJollibee,
+  ProductPromotionList,
   ServiceList,
 } from './widget';
 

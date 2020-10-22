@@ -25,7 +25,7 @@ const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
     <MenuProductItem
       item={item}
       onPress={() => {
-        navigation.navigate(ScreenName.MenuItemDetail);
+        navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
       }}
     />
   );

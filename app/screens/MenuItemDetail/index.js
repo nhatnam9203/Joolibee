@@ -1,26 +1,17 @@
-import { CustomButton, CustomAccordionList, CustomInput } from '@components';
+import { CustomAccordionList, CustomButton, CustomInput } from '@components';
+import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
-import { AppStyles, images, metrics } from '@theme';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images } from '@theme';
 import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  SettingItem,
+  ButtonCC,
   MenuDetailItem,
   MenuDetailItemSelectType,
-  ButtonCC,
 } from '../components';
-import { useDispatch } from 'react-redux';
-import ScreenName from '../ScreenName';
-import { useNavigation } from '@react-navigation/native';
-import { SinglePageLayout } from '@layouts';
+import { GCC } from '@graphql';
 
 const defaultData = [
   {
@@ -151,9 +142,33 @@ const defaultData = [
   },
 ];
 
-const MenuItemDetailScreen = () => {
+const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { productItem } = route.params;
+
+  const renderMainSection = (item) => (
+    <View style={styles.header}>
+      <Image
+        style={styles.imageHeaderStyle}
+        source={images.item_detail_thumb}
+        resizeMode="center"
+      />
+      <View style={styles.headerContent}>
+        <Text
+          style={AppStyles.styles.itemTitle}
+          numberOfLines={5}
+          ellipsizeMode="tail">
+          {item.name}
+        </Text>
+        <View style={styles.priceContent}>
+          <Text style={styles.txtFrontDiscountStyle}>160000</Text>
+          <Text style={styles.txtPriceStyle}>139000 đ</Text>
+          <Text style={styles.txtPointStyle}>(+ 13 điểm)</Text>
+        </View>
+      </View>
+    </View>
+  );
 
   const renderItem = (item, index, type, onPress, selected) => {
     return (
@@ -171,10 +186,12 @@ const MenuItemDetailScreen = () => {
     );
   };
 
+  Logger.debug(productItem, 'productItem');
+
   return (
     <>
       <SinglePageLayout>
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <View style={styles.header}>
             <Image
               style={styles.imageHeaderStyle}
@@ -233,6 +250,11 @@ const MenuItemDetailScreen = () => {
             </View>
           </View>
         </View>
+     */}
+        <GCC.QueryProductDetail
+          productItem={productItem}
+          renderMainSection={renderMainSection}
+        />
       </SinglePageLayout>
 
       {/**Close Button */}
@@ -367,4 +389,5 @@ const styles = StyleSheet.create({
 
   txtStyle: { ...AppStyles.fonts.text },
 });
+
 export default MenuItemDetailScreen;

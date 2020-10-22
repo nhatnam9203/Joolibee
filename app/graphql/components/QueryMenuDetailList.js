@@ -8,6 +8,7 @@ const MENU_DETAIL_LIST = gql`
     products(filter: { category_id: { eq: $categoryId } }) {
       items {
         id
+        sku
         name
         image {
           url

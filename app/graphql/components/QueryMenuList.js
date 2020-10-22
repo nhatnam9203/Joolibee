@@ -12,6 +12,7 @@ const MENU_LIST = gql`
       products(pageSize: 5, currentPage: 1) {
         items {
           id
+          sku
           name
           image {
             url
