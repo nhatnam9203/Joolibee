@@ -24,7 +24,7 @@ import {
   TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
-
+import { regex } from '@utils';
 const LAYOUT_WIDTH = '90%';
 
 const SignInScreen = () => {
@@ -35,7 +35,7 @@ const SignInScreen = () => {
   const SignInSchema = Yup.object().shape({
     username: Yup.string()
       .required(translate('txtRequired'))
-      // .matches(regex.phone, translate('txtWrongPhoneNumber'))
+      .matches(regex.phone, translate('txtWrongPhoneNumber'))
       .min(10, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     password: Yup.string().required(translate('txtRequired')),
@@ -48,6 +48,7 @@ const SignInScreen = () => {
     async (values) => {
       //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
       const { username, ...data } = values;
+      Logger.debug(data, 'signInSubmit -> data');
       let submitData = Object.assign({}, data, { email: username });
 
       // let submitData = values;
@@ -164,11 +165,12 @@ const SignInScreen = () => {
                   placeholder={translate('txtInputPassword')}
                   textContentType="password"
                 />
+
                 {/**Password input error */}
                 {errors.password && touched.password && (
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
-                    messages={errors.password}
+                    message={errors.password}
                     color={AppStyles.colors.inputError}
                   />
                 )}
