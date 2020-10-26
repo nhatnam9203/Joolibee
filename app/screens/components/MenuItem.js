@@ -38,6 +38,8 @@ export const MenuProductItem = ({
     id,
     name,
     image: { url },
+    point = 0,
+    sku,
     price_range: { maximum_price, minimum_price },
   },
   onPress,
@@ -59,9 +61,11 @@ export const MenuProductItem = ({
           <Text style={styles.priceStyle}>
             {format.jollibeeCurrency(maximum_price?.final_price)}
           </Text>
-          <Text style={styles.pointStyle}>
-            {`(+${1}${translate('txtPoint')})`}
-          </Text>
+          {point > 0 && (
+            <Text style={styles.pointStyle}>
+              {`(+${point} ${translate('txtPoint')})`}
+            </Text>
+          )}
         </View>
       </View>
     </View>

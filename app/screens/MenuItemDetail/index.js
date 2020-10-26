@@ -10,8 +10,10 @@ import {
   ButtonCC,
   MenuDetailItem,
   MenuDetailItemSelectType,
+  JollibeeImage,
 } from '../components';
 import { GCC } from '@graphql';
+import { format } from '@utils';
 
 const defaultData = [
   {
@@ -147,28 +149,48 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
 
-  const renderMainSection = (item) => (
-    <View style={styles.header}>
-      <Image
-        style={styles.imageHeaderStyle}
-        source={images.item_detail_thumb}
-        resizeMode="center"
-      />
-      <View style={styles.headerContent}>
-        <Text
-          style={AppStyles.styles.itemTitle}
-          numberOfLines={5}
-          ellipsizeMode="tail">
-          {item.name}
-        </Text>
-        <View style={styles.priceContent}>
-          <Text style={styles.txtFrontDiscountStyle}>160000</Text>
-          <Text style={styles.txtPriceStyle}>139000 đ</Text>
-          <Text style={styles.txtPointStyle}>(+ 13 điểm)</Text>
+  const renderMainSection = ({
+    image,
+    name,
+    point,
+    price_range: { maximum_price, minimum_price },
+  }) => {
+    return (
+      <View style={styles.header}>
+        <JollibeeImage
+          style={styles.imageHeaderStyle}
+          url={image?.url}
+          defaultSource={images.menu_3}
+        />
+
+        <View style={styles.headerContent}>
+          <Text
+            style={AppStyles.styles.itemTitle}
+            numberOfLines={5}
+            ellipsizeMode="tail">
+            {name}
+          </Text>
+          <View style={styles.priceContent}>
+            {maximum_price && (
+              <Text style={styles.txtFrontDiscountStyle}>
+                {format.jollibeeCurrency(maximum_price?.final_price)}
+              </Text>
+            )}
+            {minimum_price && (
+              <Text style={styles.txtPriceStyle}>
+                {format.jollibeeCurrency(minimum_price?.final_price)}
+              </Text>
+            )}
+            {point > 0 && (
+              <Text style={styles.txtPointStyle}>
+                {`(+${point} ${translate('txtPoint')})`}
+              </Text>
+            )}
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   const renderItem = (item, index, type, onPress, selected) => {
     return (
@@ -186,12 +208,11 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
     );
   };
 
-  Logger.debug(productItem, 'productItem');
-
   return (
     <>
-      <SinglePageLayout>
-        {/* <View style={styles.container}>
+      <SinglePageLayout backgroundColor={AppStyles.colors.background}>
+        <View style={styles.container}>
+          {/* <View style={styles.container}>
           <View style={styles.header}>
             <Image
               style={styles.imageHeaderStyle}
@@ -251,10 +272,11 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
           </View>
         </View>
      */}
-        <GCC.QueryProductDetail
-          productItem={productItem}
-          renderMainSection={renderMainSection}
-        />
+          <GCC.QueryProductDetail
+            productItem={productItem}
+            renderMainSection={renderMainSection}
+          />
+        </View>
       </SinglePageLayout>
 
       {/**Close Button */}
@@ -276,23 +298,24 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
   );
 };
 
+const MIN_HEIGHT = 300;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyles.colors.background,
     paddingBottom: 80,
   },
 
   listStyle: { backgroundColor: AppStyles.colors.background },
 
-  header: { backgroundColor: '#FFF', marginTop: 0, paddingTop: 20 },
+  header: { backgroundColor: '#FFF', marginTop: 0, paddingVertical: 20 },
   headerContent: {
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
-  imageHeaderStyle: { width: '100%' },
+  imageHeaderStyle: { width: '100%', minHeight: MIN_HEIGHT, flex: 0 },
 
   priceContent: {
     marginLeft: 15,

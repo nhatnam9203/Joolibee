@@ -80,13 +80,13 @@ export const QueryProductDetail = ({
   renderItem,
   renderItemLoading,
   renderMainSection,
-  productItem,
+  productItem: { sku },
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [itemDetail, setItemDetail] = React.useState(null);
 
   const { loading, error, data, refetch } = useQuery(PRODUCT, {
-    variables: productItem,
+    variables: { sku },
   });
 
   React.useEffect(() => {
@@ -95,16 +95,17 @@ export const QueryProductDetail = ({
     }
 
     if (data) {
+      Logger.info(data, 'QueryProductDetail');
+
       const {
         products: {
           items: [first],
         },
       } = data;
+
       setItemDetail(first);
     }
   }, [data, refreshing]);
-
-  Logger.debug(itemDetail, 'itemDetail');
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -114,22 +115,19 @@ export const QueryProductDetail = ({
     }, 3000);
   };
 
-  Logger.info(productItem, 'productItem');
-  Logger.info(data, 'data');
-  Logger.info(error, 'error');
-
   if (error) return <></>;
+  // if (loading) return <></>;
 
-  const { items = [], ...main } = itemDetail || {};
   return (
     <CustomFlatList
-      data={items}
+      data={itemDetail?.item}
       renderItem={loading ? renderItemLoading : renderItem}
-      horizontal={false}
       keyExtractor={(item, index) => item.option_id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
-      ListHeaderComponent={() => (main ? renderMainSection(main) : <View />)}
+      ListHeaderComponent={() =>
+        itemDetail ? renderMainSection(itemDetail) : <View />
+      }
       // refreshControl={
       //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       // }
@@ -138,5 +136,5 @@ export const QueryProductDetail = ({
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { paddingVertical: 15 },
+  contentContainerStyle: { paddingBottom: 15 },
 });

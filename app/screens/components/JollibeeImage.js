@@ -3,6 +3,7 @@ import { Config } from 'react-native-config';
 import React from 'react';
 import { images } from '@theme';
 import FastImage from 'react-native-fast-image';
+import Spinner from 'react-native-spinkit';
 
 export const JollibeeImage = ({
   url,
@@ -18,7 +19,10 @@ export const JollibeeImage = ({
     setDownload((loaded / total).toFixed(2) * 100);
   };
   const onLoadEnd = () => setDownload(-1);
-  const onError = () => setDownload(-1);
+  const onError = () => {
+    setDownload(-1);
+    setSource(defaultSource);
+  };
 
   React.useEffect(() => {
     if (url) {
@@ -31,9 +35,9 @@ export const JollibeeImage = ({
   }, [url]);
 
   return (
-    <>
+    <View style={style}>
       <FastImage
-        style={style}
+        style={styles.imgContent}
         source={source ?? defaultSource}
         resizeMode={FastImage.resizeMode.contain}
         onLoadStart={onLoadStart}
@@ -42,19 +46,24 @@ export const JollibeeImage = ({
         onError={onError}
       />
       {download > 0 && (
-        <View style={styles.container}>
-          <Text>{download + '%'}</Text>
+        <View style={styles.spinnerContent}>
+          {/* <Text>{download + '%'}</Text> */}
+          <Spinner size={15} type="Circle" color="#707070" />
         </View>
       )}
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 0,
-    alignSelf: 'center',
-    padding: 10,
-    backgroundColor: '#fff9',
+  imgContent: { flex: 1 },
+  spinnerContent: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });

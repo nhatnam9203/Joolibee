@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useApolloClient } from '@apollo/client';
 import React from 'react';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { CustomFlatList } from '@components';
@@ -13,6 +13,7 @@ const MENU_LIST = gql`
         items {
           id
           sku
+          point
           name
           image {
             url
@@ -47,15 +48,14 @@ const defaultData = [
 ];
 
 export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
+  const client = useApolloClient();
   const [refreshing, setRefreshing] = React.useState(false);
   const {
     loading,
     error,
     data = { categoryList: defaultData },
     refetch,
-  } = useQuery(MENU_LIST, {
-    variables: null,
-  });
+  } = useQuery(MENU_LIST);
 
   React.useEffect(() => {
     if (refreshing) {
