@@ -9,6 +9,8 @@ import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { cart } from '@slices';
 import {
   MenuPageName,
   PopupSelectAreaComponent,
@@ -28,6 +30,8 @@ import {
 const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const cart_id = useSelector((state) => state.cart?.cart_id);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
   const navigation = useNavigation();
@@ -39,10 +43,15 @@ const HomePage = () => {
   };
 
   React.useEffect(() => {
+
+    if (!cart_id) dispatch(cart.createEmptyCart());
+
     setTimeout(() => {
       setVisiblePopup(true);
     }, 1000);
   }, []);
+
+
 
   return (
     <AppScrollViewIOSBounceColorsWrapper

@@ -7,7 +7,9 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { ButtonCC, OrderItem } from '../components';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
+import { cart } from '@slices';
 
 const defaultData = [
   {
@@ -45,8 +47,12 @@ const defaultData = [
 ];
 
 export const PopupOrderList = ({ visible, onToggle }) => {
+  const dispatch = useDispatch()
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
+  const cart_id = useSelector((state) => state.cart?.cart_id);
+  const cart_detail = useSelector((state) => state.cart?.cart_detail);
+  const { items, prices: { grand_total } } = cart_detail;
 
   const renderItem = ({ item, index }) => (
     <OrderItem item={item} key={item.id + ''} shadow={false} />
@@ -61,6 +67,10 @@ export const PopupOrderList = ({ visible, onToggle }) => {
     popupRef.current.forceQuit();
   };
 
+  React.useEffect(() => {
+    dispatch(cart.cartDetail(cart_id))
+  }, [])
+
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
@@ -74,7 +84,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
         </View>
         <View style={styles.bodyList}>
           <CustomFlatList
-            data={defaultData}
+            data={items}
             renderItem={renderItem}
             keyExtractor={(item) => item.id + ''}
             ItemSeparatorComponent={() => (
@@ -82,13 +92,13 @@ export const PopupOrderList = ({ visible, onToggle }) => {
             )}
             contentContainerStyle={styles.contentContainerStyle}
           />
-        </View>
+        </View  >
         <View style={styles.bottomContent}>
           <View style={AppStyles.styles.horizontalLayout}>
             <Text style={styles.labelSum}>{translate('txtSummary')} :</Text>
             <View style={styles.priceContent}>
-              <Text style={styles.priceStyle}>270.000</Text>
-              <Text style={styles.pointStyle}>(+ 13 điểm)</Text>
+              <Text style={styles.priceStyle}>{grand_total.value}đ</Text>
+              <Text style={styles.pointStyle}>(+ 0 điểm)</Text>
             </View>
           </View>
           <View style={AppStyles.styles.horizontalLayout}>
@@ -114,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 0,
     width: '90%',
     maxHeight: '90%',
-    backgroundColor: 'red',
+    backgroundColor: '#fff',
     paddingBottom: 150,
   },
 

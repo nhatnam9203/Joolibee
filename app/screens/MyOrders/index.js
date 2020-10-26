@@ -10,7 +10,6 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import {
     Placeholder,
     PlaceholderLine,
-
     Fade,
 } from 'rn-placeholder';
 
@@ -35,7 +34,7 @@ const index = () => {
 
     const getDateStatus = (date) => {
         const current_day = moment().format('DD/MM/yyyy');
-        let dateOrder = format.dateTime(date, 'DD/MM/yyyy');
+        let dateOrder = format.date(date);
         return dateOrder == current_day ? 'Hôm nay' : dateOrder;
     };
 

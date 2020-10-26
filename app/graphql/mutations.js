@@ -46,11 +46,30 @@ mutation($email:String!,$password:String!){
   }
 } 
 `
-
-export const SIGN_OUT = gql`
-  mutation {
-    revokeStaffToken {
-      result
-    }
+// FEED BACK CUSTOMER
+export const FEED_BACK = gql`
+  mutation (
+    $orderId : String!
+    $rating : Int!
+    $comment : String
+    ) {
+      feedBackCustomer(
+        order_id: $orderId
+        customer_rating: $rating
+        customer_comment: $comment
+      ) {
+        result
+      }
   }
 `;
+// 
+
+// CREATE EMPTY CART
+export const CREATE_EMPTY_CART = gql`
+mutation {
+  createEmptyCart 
+}
+`
+
+
+

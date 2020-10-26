@@ -34,8 +34,7 @@ export default function orderStatus({ status }) {
     const scale = React.useRef(new Animated.Value(15)).current;
     const [visible, showPopup] = React.useState(false);
 
-
-    let indexStatus = data.findIndex((item) => item.title.includes(status));
+    let indexStatus = data.findIndex((item) => item.title.toLowerCase().includes(status));
 
     const ImageLink = ({ source, onPress }) => (
         <TouchableOpacity onPress={onPress}>
@@ -228,7 +227,7 @@ const styles = StyleSheet.create({
         width: 10,
         height: 10,
         borderRadius: 5,
-        position: 'absolute', 
+        position: 'absolute',
     },
 
     wrapperStepIndicator: {
