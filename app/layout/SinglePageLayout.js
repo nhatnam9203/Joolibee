@@ -30,7 +30,7 @@ const SinglePageLayout = ({ children, backgroundColor, bounces }) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollContentContainer}
           style={styles.content}>
-          {children && children}
+          {children}
         </ScrollView>
       </KeyboardAvoidingView>
     </>

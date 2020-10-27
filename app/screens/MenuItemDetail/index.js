@@ -1,151 +1,14 @@
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
-import { SinglePageLayout } from '@layouts';
+import { GCC } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
+import { format } from '@utils';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import {
-  ButtonCC,
-  MenuDetailItem,
-  MenuDetailItemSelectType,
-  JollibeeImage,
-} from '../components';
-import { GCC } from '@graphql';
-import { format } from '@utils';
+import { ButtonCC, JollibeeImage, MenuDetailItem } from '../components';
 
-const defaultData = [
-  {
-    title: 'ĐỔI NƯỚC',
-    type: 1,
-    data: [
-      {
-        title: 'Pepsi',
-        image: images.menu_detail_item_pepsi,
-        price: '+5.000 đ',
-        id: 1,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 2,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 3,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 4,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 5,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 6,
-      },
-    ],
-  },
-  {
-    title: 'ĐỔI KHOAI',
-    type: 1,
-    data: [
-      {
-        title: 'Pepsi',
-        image: images.menu_detail_item_pepsi,
-        price: '+5.000 đ',
-        id: 1,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 2,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 3,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 4,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 5,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 6,
-      },
-    ],
-  },
-  {
-    title: 'MUA THÊM (add-on các món khác)',
-    type: -1,
-    data: [
-      {
-        title: 'Pepsi',
-        image: images.menu_detail_item_pepsi,
-        price: '+5.000 đ',
-        id: 1,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 2,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 3,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 4,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 5,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 6,
-      },
-    ],
-  },
-];
-
-const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
-  const dispatch = useDispatch();
+const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
 
@@ -200,7 +63,7 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
     />
   );
 
-  const renderItem = (item, index) => {
+  const renderItem = (item) => {
     Logger.info(item, 'renderItem item');
     const {
       item: { title, options, type, option_id, required },
@@ -246,16 +109,14 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
 
   return (
     <>
-      <SinglePageLayout backgroundColor="#fff">
-        <View style={styles.container}>
-          <GCC.QueryProductDetail
-            productItem={productItem}
-            renderMainSection={RenderMainSection}
-            renderItem={renderItem}
-            renderFooter={renderFooter}
-          />
-        </View>
-      </SinglePageLayout>
+      <View style={styles.container}>
+        <GCC.QueryProductDetail
+          productItem={productItem}
+          renderMainSection={RenderMainSection}
+          renderItem={renderItem}
+          renderFooter={renderFooter}
+        />
+      </View>
 
       {/**Close Button */}
       <CustomButton
@@ -283,7 +144,7 @@ const ORDER_AMOUNT_HEIGHT = 120;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyles.colors.background,
+    backgroundColor: '#fff',
   },
 
   listStyle: { backgroundColor: AppStyles.colors.background },
