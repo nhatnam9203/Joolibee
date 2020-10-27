@@ -74,7 +74,7 @@ const CustomAccordionList = ({
                 )
               ) : (
                 <View style={styles.itemContent} key={item.id}>
-                  <Text style={styles.itemTextStyle}>{item.title}</Text>
+                  <Text style={styles.itemTextStyle}>{item.label}</Text>
                 </View>
               ),
             )}

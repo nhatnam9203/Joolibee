@@ -192,89 +192,66 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
     );
   };
 
-  const renderItem = (item, index, type, onPress, selected) => {
+  const renderOptionsItem = (item, index, type, onPress, selected) => (
+    <MenuDetailItem
+      onPress={onPress}
+      item={item}
+      selected={selected}
+      key={item.id}
+      type={type}
+    />
+  );
+
+  const renderItem = (item, index) => {
+    Logger.info(item, 'renderItem item');
+    const {
+      item: { title, options, type, option_id },
+    } = item;
     return (
-      <MenuDetailItem
-        onPress={onPress}
-        item={item}
-        selected={selected}
-        key={item.id}
-        type={
-          type !== -1
-            ? MenuDetailItemSelectType.Radio
-            : MenuDetailItemSelectType.Multiline
-        }
+      <CustomAccordionList
+        title={title}
+        data={options.filter((x) => x.product)}
+        type={type}
+        key={option_id}
+        headerTextStyle={styles.listHeaderTextStyle}
+        headerStyle={styles.listHeaderStyle}
+        style={styles.listStyle}
+        renderItem={renderOptionsItem}
       />
     );
   };
+
+  const renderFooter = () => (
+    <View style={styles.orderContentStyle}>
+      <TouchableOpacity style={styles.buttonOrderStyle}>
+        <Image source={images.icons.ic_sub} />
+      </TouchableOpacity>
+      <CustomInput
+        style={styles.mulInputStyle}
+        inputStyle={styles.inputStyle}
+        keyboardType="numeric"
+        allowFontScaling={true}
+        numberOfLines={1}
+        defaultValue="0"
+        multiline={false}
+        clearTextOnFocus={true}
+        maxLength={3}
+      />
+      <TouchableOpacity style={styles.buttonOrderStyle}>
+        <Image source={images.icons.ic_plus} />
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <>
       <SinglePageLayout backgroundColor={AppStyles.colors.background}>
         <View style={styles.container}>
-          {/* <View style={styles.container}>
-          <View style={styles.header}>
-            <Image
-              style={styles.imageHeaderStyle}
-              source={images.item_detail_thumb}
-              resizeMode="center"
-            />
-            <View style={styles.headerContent}>
-              <Text
-                style={AppStyles.styles.itemTitle}
-                numberOfLines={5}
-                ellipsizeMode="tail">
-                03 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 KHOAI TÂY
-                (VỪA) + 02 NƯỚC NGỌT (VỪA)
-              </Text>
-              <View style={styles.priceContent}>
-                <Text style={styles.txtFrontDiscountStyle}>160000</Text>
-                <Text style={styles.txtPriceStyle}>139000 đ</Text>
-                <Text style={styles.txtPointStyle}>(+ 13 điểm)</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.container}>
-            {defaultData.map(({ title, data, type }, index) => (
-              <CustomAccordionList
-                title={title}
-                data={data}
-                type={type}
-                key={`${index}`}
-                headerTextStyle={styles.listHeaderTextStyle}
-                headerStyle={styles.listHeaderStyle}
-                renderItem={renderItem}
-                isRadio={index !== 2}
-                style={styles.listStyle}
-              />
-            ))}
-
-            <View style={styles.orderContentStyle}>
-              <TouchableOpacity style={styles.buttonOrderStyle}>
-                <Image source={images.icons.ic_sub} />
-              </TouchableOpacity>
-              <CustomInput
-                style={styles.mulInputStyle}
-                inputStyle={styles.inputStyle}
-                keyboardType="numeric"
-                allowFontScaling={true}
-                numberOfLines={1}
-                defaultValue="0"
-                multiline={false}
-                clearTextOnFocus={true}
-                maxLength={3}
-              />
-              <TouchableOpacity style={styles.buttonOrderStyle}>
-                <Image source={images.icons.ic_plus} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-     */}
           <GCC.QueryProductDetail
             productItem={productItem}
             renderMainSection={renderMainSection}
+            renderItem={renderItem}
+            renderFooter={renderFooter}
           />
         </View>
       </SinglePageLayout>
@@ -303,7 +280,6 @@ const MIN_HEIGHT = 300;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 80,
   },
 
   listStyle: { backgroundColor: AppStyles.colors.background },
@@ -357,11 +333,11 @@ const styles = StyleSheet.create({
 
   orderContentStyle: {
     flexDirection: 'row',
-    height: 80,
+
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    marginTop: 15,
+    paddingBottom: 160,
   },
 
   buttonOrderStyle: {

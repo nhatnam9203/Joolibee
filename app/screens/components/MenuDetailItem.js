@@ -2,10 +2,11 @@ import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomCheckBox, CustomInput } from '@components';
+import { JollibeeImage } from './JollibeeImage';
 
 export const MenuDetailItemSelectType = {
   Radio: 'radio',
-  Multiline: 'multiline',
+  Multiline: 'checkbox',
   None: 'none',
 };
 
@@ -34,17 +35,19 @@ export const MenuDetailItem = ({
       case MenuDetailItemSelectType.Multiline:
         return (
           <View style={styles.multilineSelectContent}>
-            <CustomInput
-              style={styles.mulInputStyle}
-              inputStyle={styles.inputStyle}
-              keyboardType="numeric"
-              allowFontScaling={true}
-              numberOfLines={1}
-              defaultValue="0"
-              multiline={false}
-              clearTextOnFocus={true}
-              maxLength={3}
-            />
+            {item.can_change_quantity && (
+              <CustomInput
+                style={styles.mulInputStyle}
+                inputStyle={styles.inputStyle}
+                keyboardType="numeric"
+                allowFontScaling={true}
+                numberOfLines={1}
+                defaultValue={item.quantity}
+                multiline={false}
+                clearTextOnFocus={true}
+                maxLength={3}
+              />
+            )}
             <CustomCheckBox
               normalColor={AppStyles.colors.accent}
               selectedColor={AppStyles.colors.accent}
@@ -73,10 +76,13 @@ export const MenuDetailItem = ({
       style={styles.container}
       onPress={itemPress}
       activeOpacity={0.7}>
-      <Image style={styles.imageStyle} source={item.image} />
+      <JollibeeImage
+        style={styles.imageStyle}
+        url={item?.product?.image?.url}
+      />
       <View style={styles.textContentStyle}>
         <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
-          {item.title}
+          {item.label}
         </Text>
         {!!item?.price && (
           <Text style={styles.itemPriceStyle}>{item.price}</Text>

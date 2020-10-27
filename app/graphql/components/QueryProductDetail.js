@@ -80,6 +80,7 @@ export const QueryProductDetail = ({
   renderItem,
   renderItemLoading,
   renderMainSection,
+  renderFooter,
   productItem: { sku },
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -120,7 +121,7 @@ export const QueryProductDetail = ({
 
   return (
     <CustomFlatList
-      data={itemDetail?.item}
+      data={itemDetail?.items}
       renderItem={loading ? renderItemLoading : renderItem}
       keyExtractor={(item, index) => item.option_id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
@@ -128,6 +129,7 @@ export const QueryProductDetail = ({
       ListHeaderComponent={() =>
         itemDetail ? renderMainSection(itemDetail) : <View />
       }
+      ListFooterComponent={renderFooter}
       // refreshControl={
       //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       // }
