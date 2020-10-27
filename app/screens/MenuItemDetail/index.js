@@ -131,7 +131,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
           <Text style={styles.txtStyle}>Tổng cộng : </Text>
           <Text style={styles.txtPriceStyle}>0.00 đ</Text>
         </View>
-        <ButtonCC.ButtonRed label={translate('txtConfirm')} />
+        <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
     </>
   );
