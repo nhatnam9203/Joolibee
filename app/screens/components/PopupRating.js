@@ -6,26 +6,40 @@ import { AppStyles, images } from '@theme';
 import { Rating } from 'react-native-ratings';
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, TouchableOpacity, Text } from 'react-native';
-
-
+import { account, app } from '@slices';
+import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { JollibeeLogo } from "./JollibeeLogo";
 import { LabelTitle } from "./LabelTitle";
 
-export const PopupRating = ({ visible, onToggle }) => {
+export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
+  const dispatch = useDispatch();
   const popupRef = React.createRef(null);
   const [content, setContent] = React.useState('');
-
+  const [rating, setRating] = React.useState(0);
   const onChangeText = (content) => {
     setContent(content)
   }
 
-  const onClose =  React.useCallback(
-    () => {
-      popupRef.current.forceQuit();
-    },
-    [visible],
-  )
+  const ratingCompleted = (number) => {
+    setRating(number)
+  }
+
+  const onClose = () => {
+    popupRef.current.forceQuit();
+  }
+
+  const onHandleSubmit = async () => {
+    let submitData = {
+      orderId,
+      rating,
+      comment: content
+    }
+    await dispatch(app.showLoading());
+    await dispatch(account.feedBack(submitData, { dispatch }));
+    await dispatch(app.hideLoading());
+    await onClose();
+  }
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -47,7 +61,7 @@ export const PopupRating = ({ visible, onToggle }) => {
 
           <Rating
             showRating={false}
-            //onFinishRating={this.ratingCompleted}
+            onFinishRating={ratingCompleted}
             style={{ paddingTop: 10 }}
             ratingCount={5}
             tintColor={AppStyles.colors.accent}
@@ -65,7 +79,7 @@ export const PopupRating = ({ visible, onToggle }) => {
           />
 
           <CustomButton
-            onPress={onClose}
+            onPress={onHandleSubmit}
             label='GỬI'
             width={238}
             height={58}

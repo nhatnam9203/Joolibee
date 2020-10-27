@@ -1,11 +1,11 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native'
-import { AppStyles, images } from "@theme";
+import { AppStyles } from "@theme";
 import { CustomButton } from "@components";
 import { PopupRating } from "../../components";
-import { statusOrder, scale } from '@utils';
+import { statusOrder, scale, format } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from "./pages";
-const { scaleWidth, scaleHeight } = scale;
+const { scaleHeight } = scale;
 
 const defaultData = [
     {
@@ -26,10 +26,14 @@ const defaultData = [
 
 
 export default function index({ navigation, route }) {
+    const { order } = route.params;
     const [data, setData] = React.useState([]);
     const [visible, setVisible] = React.useState(false);
-    const { order } = route.params;
-    let order_complete = order.status_text == 'Hoàn thành' || order.status_text == 'Đã hủy' ? true : false;
+
+    let status = statusOrder.convertStatusOrder(order.status);
+    let order_complete = status == 'hoàn thành' || status == 'đã hủy' ? true : false;
+    let hours = format.hours(order.created_at);
+    let date = format.date(order.created_at);
 
     const onTogglePopup = () => setVisible(!visible)
     const onClose = () => setVisible(false)
@@ -48,8 +52,8 @@ export default function index({ navigation, route }) {
 
     const HeaderTitle = () => (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={AppStyles.fonts.medium_SVN, styles.headerTitle}>Đơn hàng #{order.id}</Text>
-            <Text style={AppStyles.fonts.text, styles.headerSubTitle}>11:00 AM, {order.date}</Text>
+            <Text style={AppStyles.fonts.medium_SVN, styles.headerTitle}>Đơn hàng #{order.order_number}</Text>
+            <Text style={AppStyles.fonts.text, styles.headerSubTitle}>{hours}, {date}</Text>
         </View>
     );
 
@@ -82,14 +86,14 @@ export default function index({ navigation, route }) {
                     {!order_complete && <View style={styles.imageStatusOrder}>
                         <Image
                             style={styles.image}
-                            source={statusOrder.getImage(order.status_text)}
+                            source={statusOrder.getImage(status)}
                         />
                     </View>}
 
-                    {order.status_text == 'Đang giao hàng' && <ExpectedTime />}
+                    {status == 'Đang giao hàng' && <ExpectedTime />}
 
                     {/* {order_complete && <OrderTitle title='TRẠNG THÁI ĐƠN HÀNG' style={{ paddingHorizontal: 15 }} />} */}
-                    <OrderStatus status={order.status_text} />
+                    <OrderStatus status={status} />
                 </View>
 
                 {/* -------------- TRANG THAI DON HANG  -------------- */}
@@ -121,7 +125,7 @@ export default function index({ navigation, route }) {
                     <OrderTotal />
                     {/* --------------  TOTAL PRICE -------------- */}
 
-                    {order_complete && <PopupRating visible={visible} onToggle={onClose} />}
+                    {order_complete && <PopupRating visible={visible} onToggle={onClose} orderId={order.id} />}
                 </View>
 
             </ScrollView>

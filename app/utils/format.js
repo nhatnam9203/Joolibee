@@ -11,6 +11,15 @@ export const dateTime = (date = new Date(), formatString) => {
   return moment(date).format(formatString);
 };
 
+export const date = (date = new Date()) => {
+  return moment(date).format('DD/MM/YYYY');
+};
+
+export const hours = (date = new Date()) => {
+  return moment(date).format('hh:mm A');
+};
+
+// export const 
 export const jollibeeCurrency = ({ value = 0, currency = '' }) => {
   switch (currency) {
     case 'VND':

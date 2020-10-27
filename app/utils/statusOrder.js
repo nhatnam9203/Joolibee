@@ -38,6 +38,7 @@ export function getImage(status = '') {
 };
 
 export function convertStatusOrder(status = '') {
+    console.log('status', status)
     switch (status.toLowerCase()) {
         case 'đang giao hàng':
             return 'đang giao hàng'
@@ -47,6 +48,8 @@ export function convertStatusOrder(status = '') {
 
         case 'đã đến nơi':
             return 'đã đến nơi'
+        case 'complete':
+            return 'hoàn thành'
 
         default:
             return ''

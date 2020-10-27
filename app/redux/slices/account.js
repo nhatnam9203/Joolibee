@@ -2,7 +2,7 @@ import { graphQlClient, mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
-
+import { cart } from "./index";
 const KEY_CONSTANT = 'account';
 
 const initialState = {
@@ -33,10 +33,20 @@ const signIn = createAsyncThunk(
       mutation: mutation.SIGN_IN,
       variables: input,
     });
-
     return response;
   },
 );
+
+const feedBack = createAsyncThunk(
+  `${KEY_CONSTANT}/feedBack`,
+  async (input, { dispatch }) => {
+    const response = await graphQlClient.mutate({
+      mutation: mutation.FEED_BACK,
+      variables: input
+    });
+    return response
+  }
+)
 
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
@@ -45,8 +55,8 @@ const accountSlice = createSlice({
     signOutRequest: (state, action) => {
       state.user = initialState.user;
     },
-    clearSignupState(state, action) {},
-    clearSignInState(state, action) {},
+    clearSignupState(state, action) { },
+    clearSignInState(state, action) { },
 
     showQRCode(state, action) {
       state.isShowQRCode = true;
@@ -102,7 +112,6 @@ const accountSlice = createSlice({
         storeTokenObj[str] = token;
         storeTokenObj[StorageKey.Token] = str;
         save(storeTokenObj, StorageKey.Token);
-
         // update state
         state.user.tokenKey = str;
         Logger.info(state, 'tokenKey');
@@ -114,11 +123,25 @@ const accountSlice = createSlice({
       Logger.info(action, 'signIn rejected');
       state.user.tokenKey = null;
     },
+
+    //FeedBack
+    [feedBack.pending]: (state, action) => {
+      Logger.info(action, 'feedBack pending');
+    },
+
+    [feedBack.fulfilled]: (state, action) => {
+      Logger.info(action, 'feedBack fulfilled');
+    },
+
+    [feedBack.rejected]: (state, action) => {
+      Logger.info(action, 'feedBack rejected');
+    },
+
   },
 });
 
 const { actions, reducer } = accountSlice;
 module.exports = {
   reducer,
-  actions: { signIn, signUp, ...actions },
+  actions: { signIn, signUp, feedBack, ...actions },
 };
