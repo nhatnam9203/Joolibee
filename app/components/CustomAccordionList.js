@@ -37,9 +37,13 @@ const CustomAccordionList = ({
   required,
   ...props
 }) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
   const ref = React.useRef();
+
+  React.useEffect(() => {
+    setOpen(required);
+  }, [required]);
 
   return (
     <Transitioning.View

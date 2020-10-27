@@ -38,7 +38,8 @@ export const JollibeeImage = ({
   }, [url]);
 
   return (
-    <View style={[styles.container, { width, height }]}>
+    <View
+      style={[styles.container, width && height ? { width, height } : style]}>
       <FastImage
         source={source ?? defaultSource}
         resizeMode={FastImage.resizeMode.contain}

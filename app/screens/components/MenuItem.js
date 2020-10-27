@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
 
   imageStyle: {
     flex: 1,
-    resizeMode: 'center',
   },
 
   textContentStyle: {

@@ -222,23 +222,25 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
 
   const renderFooter = () => (
     <View style={styles.orderContentStyle}>
-      <TouchableOpacity style={styles.buttonOrderStyle}>
-        <Image source={images.icons.ic_sub} />
-      </TouchableOpacity>
-      <CustomInput
-        style={styles.mulInputStyle}
-        inputStyle={styles.inputStyle}
-        keyboardType="numeric"
-        allowFontScaling={true}
-        numberOfLines={1}
-        defaultValue="0"
-        multiline={false}
-        clearTextOnFocus={true}
-        maxLength={3}
-      />
-      <TouchableOpacity style={styles.buttonOrderStyle}>
-        <Image source={images.icons.ic_plus} />
-      </TouchableOpacity>
+      <View style={styles.orderAmountStyle}>
+        <TouchableOpacity style={styles.buttonOrderStyle}>
+          <Image source={images.icons.ic_sub} />
+        </TouchableOpacity>
+        <CustomInput
+          style={styles.mulInputStyle}
+          inputStyle={styles.inputStyle}
+          keyboardType="numeric"
+          allowFontScaling={true}
+          numberOfLines={1}
+          defaultValue="0"
+          multiline={false}
+          clearTextOnFocus={true}
+          maxLength={3}
+        />
+        <TouchableOpacity style={styles.buttonOrderStyle}>
+          <Image source={images.icons.ic_plus} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -275,6 +277,8 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
 };
 
 const MIN_HEIGHT = 289;
+const TOTAL_HEIGHT = 125;
+const ORDER_AMOUNT_HEIGHT = 120;
 
 const styles = StyleSheet.create({
   container: {
@@ -343,28 +347,39 @@ const styles = StyleSheet.create({
   },
 
   orderContentStyle: {
-    flexDirection: 'row',
-
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    height: TOTAL_HEIGHT + ORDER_AMOUNT_HEIGHT,
+    marginTop: 10,
     backgroundColor: '#fff',
-    paddingBottom: 160,
+    paddingBottom: 20,
+  },
+
+  orderAmountStyle: {
+    flex: 0,
+    flexDirection: 'row',
+    height: ORDER_AMOUNT_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   buttonOrderStyle: {
-    width: 30,
-    height: 30,
+    width: 47,
+    height: 47,
     backgroundColor: AppStyles.colors.accent,
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 5,
   },
 
   mulInputStyle: {
-    height: 35,
-    width: 60,
+    height: 47,
+    width: 80,
     borderColor: '#707070',
+    borderWidth: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 2,
     paddingVertical: 2,
   },
@@ -389,6 +404,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderColor: AppStyles.colors.accent,
+    height: TOTAL_HEIGHT,
+    ...AppStyles.styles.shadow,
   },
 
   orderSumContent: {

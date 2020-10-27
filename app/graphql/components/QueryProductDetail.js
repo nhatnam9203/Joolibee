@@ -143,5 +143,5 @@ export const QueryProductDetail = ({
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { paddingBottom: 15 },
+  contentContainerStyle: { paddingBottom: 0 },
 });
