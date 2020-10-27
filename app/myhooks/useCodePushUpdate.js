@@ -1,7 +1,7 @@
 import codePush from 'react-native-code-push';
 import React from 'react';
 
-const useCodePushUpdate = () => {
+export const useCodePushUpdate = () => {
   const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
@@ -59,5 +59,3 @@ const useCodePushUpdate = () => {
 
   return [progress];
 };
-
-export default useCodePushUpdate;

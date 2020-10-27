@@ -149,12 +149,10 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
 
-  const renderMainSection = ({
-    image,
-    name,
-    point,
-    price_range: { maximum_price, minimum_price },
-  }) => {
+  const RenderMainSection = (itemProps) => {
+    const { image, name, point, price_range } = itemProps;
+    const { maximum_price, minimum_price } = price_range || {};
+
     return (
       <View style={styles.header}>
         <JollibeeImage
@@ -166,7 +164,7 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
         <View style={styles.headerContent}>
           <Text
             style={AppStyles.styles.itemTitle}
-            numberOfLines={5}
+            numberOfLines={0}
             ellipsizeMode="tail">
             {name}
           </Text>
@@ -205,7 +203,7 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
   const renderItem = (item, index) => {
     Logger.info(item, 'renderItem item');
     const {
-      item: { title, options, type, option_id },
+      item: { title, options, type, option_id, required },
     } = item;
     return (
       <CustomAccordionList
@@ -213,6 +211,7 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
         data={options.filter((x) => x.product)}
         type={type}
         key={option_id}
+        required={required}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}
@@ -245,11 +244,11 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
 
   return (
     <>
-      <SinglePageLayout backgroundColor={AppStyles.colors.background}>
+      <SinglePageLayout backgroundColor="#fff">
         <View style={styles.container}>
           <GCC.QueryProductDetail
             productItem={productItem}
-            renderMainSection={renderMainSection}
+            renderMainSection={RenderMainSection}
             renderItem={renderItem}
             renderFooter={renderFooter}
           />
@@ -275,23 +274,35 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
   );
 };
 
-const MIN_HEIGHT = 300;
+const MIN_HEIGHT = 289;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyles.colors.background,
   },
 
   listStyle: { backgroundColor: AppStyles.colors.background },
 
-  header: { backgroundColor: '#FFF', marginTop: 0, paddingVertical: 20 },
+  header: {
+    flex: 0,
+    backgroundColor: '#fff',
+    paddingBottom: 20,
+    marginBottom: 10,
+    ...AppStyles.styles.shadow,
+  },
+
   headerContent: {
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
-  imageHeaderStyle: { width: '100%', minHeight: MIN_HEIGHT, flex: 0 },
+  imageHeaderStyle: {
+    marginBottom: 10,
+    minHeight: MIN_HEIGHT,
+    width: '100%',
+  },
 
   priceContent: {
     marginLeft: 15,

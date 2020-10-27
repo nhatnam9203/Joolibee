@@ -34,6 +34,7 @@ const CustomAccordionList = ({
   headerStyle,
   renderItem,
   style,
+  required,
   ...props
 }) => {
   const [open, setOpen] = React.useState(true);
@@ -68,7 +69,11 @@ const CustomAccordionList = ({
                   index,
                   type,
                   () => {
-                    setSelectedIndex(index);
+                    if (selectedIndex === index) {
+                      if (!required) setSelectedIndex(null);
+                    } else {
+                      setSelectedIndex(index);
+                    }
                   },
                   selectedIndex === index,
                 )

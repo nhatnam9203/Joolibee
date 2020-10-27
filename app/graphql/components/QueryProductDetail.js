@@ -104,7 +104,12 @@ export const QueryProductDetail = ({
         },
       } = data;
 
-      setItemDetail(first);
+      let clone = { ...first };
+
+      let items = new Array(clone.items);
+      items?.sort((a, b) => a.position - b.position);
+
+      setItemDetail(Object.assign({}, clone, items));
     }
   }, [data, refreshing]);
 
