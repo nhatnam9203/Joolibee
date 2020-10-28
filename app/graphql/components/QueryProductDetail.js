@@ -1,7 +1,15 @@
 import { gql, useQuery } from '@apollo/client';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import { CustomFlatList } from '@components';
+import { Loading } from '@components';
+import { AppStyles } from '@theme';
 
 const PRODUCT = gql`
   query products($sku: String!) {
@@ -80,13 +88,14 @@ export const QueryProductDetail = ({
   renderItem,
   renderItemLoading,
   renderMainSection,
-  productItem,
+  renderFooter,
+  productItem: { sku },
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [itemDetail, setItemDetail] = React.useState(null);
 
   const { loading, error, data, refetch } = useQuery(PRODUCT, {
-    variables: productItem,
+    variables: { sku },
   });
 
   React.useEffect(() => {
@@ -95,16 +104,22 @@ export const QueryProductDetail = ({
     }
 
     if (data) {
+      Logger.info(data, 'QueryProductDetail');
+
       const {
         products: {
           items: [first],
         },
       } = data;
-      setItemDetail(first);
+
+      let clone = { ...first };
+
+      let items = new Array(clone.items);
+      items?.sort((a, b) => a.position - b.position);
+
+      setItemDetail(Object.assign({}, clone, items));
     }
   }, [data, refreshing]);
-
-  Logger.debug(itemDetail, 'itemDetail');
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -114,29 +129,50 @@ export const QueryProductDetail = ({
     }, 3000);
   };
 
-  Logger.info(productItem, 'productItem');
-  Logger.info(data, 'data');
-  Logger.info(error, 'error');
+  // if (error) return <></>;
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Loading isLoading={loading} transparent />
+      </View>
+    );
+  }
 
-  if (error) return <></>;
-
-  const { items = [], ...main } = itemDetail || {};
   return (
-    <CustomFlatList
-      data={items}
-      renderItem={loading ? renderItemLoading : renderItem}
-      horizontal={false}
-      keyExtractor={(item, index) => item.option_id.toString()}
-      contentContainerStyle={styles.contentContainerStyle}
-      showsVerticalScrollIndicator={false}
-      ListHeaderComponent={() => (main ? renderMainSection(main) : <View />)}
-      // refreshControl={
-      //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-      // }
-    />
+    <KeyboardAvoidingView
+      // style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
+      // keyboardVerticalOffset={isIphoneX() ? 88 : 64}
+      {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
+      <StatusBar barStyle="dark-content" />
+      <CustomFlatList
+        data={itemDetail?.items}
+        renderItem={loading ? renderItemLoading : renderItem}
+        keyExtractor={(item, index) => item.option_id.toString()}
+        contentContainerStyle={styles.contentContainerStyle}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() =>
+          itemDetail ? renderMainSection(itemDetail) : <View />
+        }
+        ListFooterComponent={renderFooter}
+
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        // }
+      />
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { paddingVertical: 15 },
+  contentContainerStyle: {
+    paddingBottom: 0,
+    backgroundColor: AppStyles.colors.background,
+  },
+
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: AppStyles.colors.background,
+  },
 });

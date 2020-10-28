@@ -18,7 +18,6 @@ const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
     menuItem: { products = { items: [] }, id, name },
   } = route.params;
 
-  Logger.debug(products.items, 'MenuDetailScreen => items');
   const navigation = useNavigation();
 
   const renderItem = ({ item }) => (

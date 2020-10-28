@@ -1,261 +1,131 @@
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
-import { SinglePageLayout } from '@layouts';
+import { GCC } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
+import { format } from '@utils';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import {
-  ButtonCC,
-  MenuDetailItem,
-  MenuDetailItemSelectType,
-} from '../components';
-import { GCC } from '@graphql';
+import { ButtonCC, JollibeeImage, MenuDetailItem } from '../components';
 
-const defaultData = [
-  {
-    title: 'ĐỔI NƯỚC',
-    type: 1,
-    data: [
-      {
-        title: 'Pepsi',
-        image: images.menu_detail_item_pepsi,
-        price: '+5.000 đ',
-        id: 1,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 2,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 3,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 4,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 5,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 6,
-      },
-    ],
-  },
-  {
-    title: 'ĐỔI KHOAI',
-    type: 1,
-    data: [
-      {
-        title: 'Pepsi',
-        image: images.menu_detail_item_pepsi,
-        price: '+5.000 đ',
-        id: 1,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 2,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 3,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 4,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 5,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 6,
-      },
-    ],
-  },
-  {
-    title: 'MUA THÊM (add-on các món khác)',
-    type: -1,
-    data: [
-      {
-        title: 'Pepsi',
-        image: images.menu_detail_item_pepsi,
-        price: '+5.000 đ',
-        id: 1,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 2,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 3,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 4,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 5,
-      },
-      {
-        title: 'Nước suối đóng chai',
-        image: images.menu_detail_item_nuocsuoi,
-        price: '+5.000 đ',
-        id: 6,
-      },
-    ],
-  },
-];
-
-const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
-  const dispatch = useDispatch();
+const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
+  const [quantity, setQuantity] = React.useState(1);
 
-  const renderMainSection = (item) => (
-    <View style={styles.header}>
-      <Image
-        style={styles.imageHeaderStyle}
-        source={images.item_detail_thumb}
-        resizeMode="center"
-      />
-      <View style={styles.headerContent}>
-        <Text
-          style={AppStyles.styles.itemTitle}
-          numberOfLines={5}
-          ellipsizeMode="tail">
-          {item.name}
-        </Text>
-        <View style={styles.priceContent}>
-          <Text style={styles.txtFrontDiscountStyle}>160000</Text>
-          <Text style={styles.txtPriceStyle}>139000 đ</Text>
-          <Text style={styles.txtPointStyle}>(+ 13 điểm)</Text>
+  const RenderMainSection = (itemProps) => {
+    const { image, name, point, price_range } = itemProps;
+    const { maximum_price, minimum_price } = price_range || {};
+
+    return (
+      <View style={styles.header}>
+        <JollibeeImage
+          style={styles.imageHeaderStyle}
+          url={image?.url}
+          defaultSource={images.menu_3}
+        />
+
+        <View style={styles.headerContent}>
+          <Text
+            style={AppStyles.styles.itemTitle}
+            numberOfLines={0}
+            ellipsizeMode="tail">
+            {name}
+          </Text>
+          <View style={styles.priceContent}>
+            {maximum_price && (
+              <Text style={styles.txtFrontDiscountStyle}>
+                {format.jollibeeCurrency(maximum_price?.final_price)}
+              </Text>
+            )}
+            {minimum_price && (
+              <Text style={styles.txtPriceStyle}>
+                {format.jollibeeCurrency(minimum_price?.final_price)}
+              </Text>
+            )}
+            {point > 0 && (
+              <Text style={styles.txtPointStyle}>
+                {`(+${point} ${translate('txtPoint')})`}
+              </Text>
+            )}
+          </View>
         </View>
       </View>
-    </View>
+    );
+  };
+
+  const renderOptionsItem = (item, index, type, onPress, selected) => (
+    <MenuDetailItem
+      onPress={onPress}
+      item={item}
+      selected={selected}
+      key={item.id}
+      type={type}
+    />
   );
 
-  const renderItem = (item, index, type, onPress, selected) => {
+  const renderItem = (item, index) => {
+    const {
+      item: { title, options, type, position, required },
+    } = item;
     return (
-      <MenuDetailItem
-        onPress={onPress}
-        item={item}
-        selected={selected}
-        key={item.id}
-        type={
-          type !== -1
-            ? MenuDetailItemSelectType.Radio
-            : MenuDetailItemSelectType.Multiline
-        }
+      <CustomAccordionList
+        title={title}
+        data={options.filter((x) => x.product)}
+        type={type}
+        key={`${position}`}
+        required={required}
+        headerTextStyle={styles.listHeaderTextStyle}
+        headerStyle={styles.listHeaderStyle}
+        style={styles.listStyle}
+        renderItem={renderOptionsItem}
       />
     );
   };
 
-  Logger.debug(productItem, 'productItem');
+  const renderFooter = () => (
+    <View style={styles.orderContentStyle}>
+      <View style={styles.orderAmountStyle}>
+        <CustomButton
+          style={styles.buttonOrderStyle}
+          onPress={() => setQuantity((prev) => prev - 1)}
+          disabled={quantity <= 1}
+          borderRadius={6}>
+          <Image source={images.icons.ic_sub} />
+        </CustomButton>
+        <CustomInput
+          style={styles.mulInputStyle}
+          inputStyle={styles.inputStyle}
+          keyboardType="numeric"
+          allowFontScaling={true}
+          numberOfLines={1}
+          editable={false}
+          value={quantity.toString()}
+          multiline={false}
+          clearTextOnFocus={true}
+          maxLength={3}
+        />
+        <CustomButton
+          style={styles.buttonOrderStyle}
+          onPress={() => setQuantity((prev) => prev + 1)}
+          disabled={quantity > 255}
+          borderRadius={6}>
+          <Image source={images.icons.ic_plus} />
+        </CustomButton>
+      </View>
+    </View>
+  );
 
   return (
     <>
-      <SinglePageLayout>
-        {/* <View style={styles.container}>
-          <View style={styles.header}>
-            <Image
-              style={styles.imageHeaderStyle}
-              source={images.item_detail_thumb}
-              resizeMode="center"
-            />
-            <View style={styles.headerContent}>
-              <Text
-                style={AppStyles.styles.itemTitle}
-                numberOfLines={5}
-                ellipsizeMode="tail">
-                03 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 KHOAI TÂY
-                (VỪA) + 02 NƯỚC NGỌT (VỪA)
-              </Text>
-              <View style={styles.priceContent}>
-                <Text style={styles.txtFrontDiscountStyle}>160000</Text>
-                <Text style={styles.txtPriceStyle}>139000 đ</Text>
-                <Text style={styles.txtPointStyle}>(+ 13 điểm)</Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.container}>
-            {defaultData.map(({ title, data, type }, index) => (
-              <CustomAccordionList
-                title={title}
-                data={data}
-                type={type}
-                key={`${index}`}
-                headerTextStyle={styles.listHeaderTextStyle}
-                headerStyle={styles.listHeaderStyle}
-                renderItem={renderItem}
-                isRadio={index !== 2}
-                style={styles.listStyle}
-              />
-            ))}
-
-            <View style={styles.orderContentStyle}>
-              <TouchableOpacity style={styles.buttonOrderStyle}>
-                <Image source={images.icons.ic_sub} />
-              </TouchableOpacity>
-              <CustomInput
-                style={styles.mulInputStyle}
-                inputStyle={styles.inputStyle}
-                keyboardType="numeric"
-                allowFontScaling={true}
-                numberOfLines={1}
-                defaultValue="0"
-                multiline={false}
-                clearTextOnFocus={true}
-                maxLength={3}
-              />
-              <TouchableOpacity style={styles.buttonOrderStyle}>
-                <Image source={images.icons.ic_plus} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-     */}
+      <View style={styles.container}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderMainSection={renderMainSection}
+          renderMainSection={RenderMainSection}
+          renderItem={renderItem}
+          renderFooter={renderFooter}
         />
-      </SinglePageLayout>
+      </View>
 
       {/**Close Button */}
       <CustomButton
@@ -267,32 +137,46 @@ const MenuItemDetailScreen = ({ route = { params: {} }, ...props }) => {
 
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>Tổng cộng : </Text>
+          <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
           <Text style={styles.txtPriceStyle}>0.00 đ</Text>
         </View>
-        <ButtonCC.ButtonRed label={translate('txtConfirm')} />
+        <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
     </>
   );
 };
 
+const MIN_HEIGHT = 289;
+const TOTAL_HEIGHT = 125;
+const ORDER_AMOUNT_HEIGHT = 120;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyles.colors.background,
-    paddingBottom: 80,
+    backgroundColor: '#fff',
   },
 
   listStyle: { backgroundColor: AppStyles.colors.background },
 
-  header: { backgroundColor: '#FFF', marginTop: 0, paddingTop: 20 },
+  header: {
+    flex: 0,
+    backgroundColor: '#fff',
+    paddingBottom: 20,
+    marginBottom: 10,
+    ...AppStyles.styles.shadow,
+  },
+
   headerContent: {
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
-  imageHeaderStyle: { width: '100%' },
+  imageHeaderStyle: {
+    marginBottom: 10,
+    minHeight: MIN_HEIGHT,
+    width: '100%',
+  },
 
   priceContent: {
     marginLeft: 15,
@@ -333,28 +217,39 @@ const styles = StyleSheet.create({
   },
 
   orderContentStyle: {
-    flexDirection: 'row',
-    height: 80,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    height: TOTAL_HEIGHT + ORDER_AMOUNT_HEIGHT,
+    marginTop: 10,
     backgroundColor: '#fff',
-    marginTop: 15,
+    paddingBottom: 20,
+  },
+
+  orderAmountStyle: {
+    flex: 0,
+    flexDirection: 'row',
+    height: ORDER_AMOUNT_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   buttonOrderStyle: {
-    width: 30,
-    height: 30,
+    width: 47,
+    height: 47,
     backgroundColor: AppStyles.colors.accent,
-    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 5,
+    ...AppStyles.styles.shadow,
   },
 
   mulInputStyle: {
-    height: 35,
-    width: 60,
+    height: 47,
+    width: 80,
     borderColor: '#707070',
+    borderWidth: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 2,
     paddingVertical: 2,
   },
@@ -362,7 +257,8 @@ const styles = StyleSheet.create({
   inputStyle: {
     paddingLeft: 0,
     margin: 0,
-    fontSize: 16,
+    fontSize: 15,
+    ...AppStyles.fonts.bold,
     height: '100%',
     textAlign: 'center',
   },
@@ -379,6 +275,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderColor: AppStyles.colors.accent,
+    height: TOTAL_HEIGHT,
+    ...AppStyles.styles.shadow,
   },
 
   orderSumContent: {

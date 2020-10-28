@@ -13,7 +13,7 @@ import { query } from '@graphql';
 import { format } from "@utils";
 
 export const PopupOrderList = ({ visible, onToggle }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
   const [refreshing, setRefreshing] = React.useState(false)

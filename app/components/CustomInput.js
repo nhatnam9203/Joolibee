@@ -17,7 +17,7 @@ const CustomInput = ({
         underlineColorAndroid="transparent"
         {...inputProps}
       />
-      {children && children}
+      {children}
     </View>
   );
 };

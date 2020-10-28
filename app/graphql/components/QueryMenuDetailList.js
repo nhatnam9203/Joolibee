@@ -10,6 +10,7 @@ const MENU_DETAIL_LIST = gql`
         id
         sku
         name
+        point
         image {
           url
         }
@@ -41,7 +42,6 @@ export const QueryMenuDetailList = ({
   const {
     loading,
     error,
-    // eslint-disable-next-line no-unused-vars
     data = {
       products: { items: input },
     },

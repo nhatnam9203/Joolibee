@@ -17,6 +17,7 @@ const CustomButton = ({
   style,
   styleText,
   disabled,
+  borderRadius,
   ...props
 }) => (
   <TouchableOpacity
@@ -24,7 +25,7 @@ const CustomButton = ({
       {
         width: width,
         height: height,
-        borderRadius: height / 2,
+        borderRadius: borderRadius ?? height / 2,
         backgroundColor: bgColor,
         // ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
       },
@@ -42,7 +43,7 @@ const CustomButton = ({
           styles.content,
           {
             backgroundColor: bgColor,
-            borderRadius: height / 2,
+            borderRadius: borderRadius ?? height / 2,
             ...(borderColor &&
               !disabled && {
                 borderWidth: borderWidth,
@@ -50,7 +51,7 @@ const CustomButton = ({
               }),
           },
         ]}>
-        {children && children}
+        {children}
         {!!label && (
           <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
             {label?.toUpperCase()}
@@ -62,7 +63,7 @@ const CustomButton = ({
           style={[
             styles.absolute,
             {
-              borderRadius: height / 2,
+              borderRadius: borderRadius ?? height / 2,
               backgroundColor: DISABLE_COLOR,
             },
           ]}

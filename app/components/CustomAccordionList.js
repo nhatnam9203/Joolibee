@@ -34,11 +34,16 @@ const CustomAccordionList = ({
   headerStyle,
   renderItem,
   style,
+  required,
   ...props
 }) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(null);
   const ref = React.useRef();
+
+  React.useEffect(() => {
+    setOpen(required);
+  }, [required]);
 
   return (
     <Transitioning.View
@@ -68,13 +73,19 @@ const CustomAccordionList = ({
                   index,
                   type,
                   () => {
-                    setSelectedIndex(index);
+                    if (selectedIndex === index) {
+                      {
+                        /* if (!required) setSelectedIndex(null); */
+                      }
+                    } else {
+                      setSelectedIndex(index);
+                    }
                   },
                   selectedIndex === index,
                 )
               ) : (
                 <View style={styles.itemContent} key={item.id}>
-                  <Text style={styles.itemTextStyle}>{item.title}</Text>
+                  <Text style={styles.itemTextStyle}>{item.label}</Text>
                 </View>
               ),
             )}

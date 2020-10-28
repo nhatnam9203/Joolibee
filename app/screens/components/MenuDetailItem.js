@@ -2,10 +2,11 @@ import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomCheckBox, CustomInput } from '@components';
+import { JollibeeImage } from './JollibeeImage';
 
 export const MenuDetailItemSelectType = {
   Radio: 'radio',
-  Multiline: 'multiline',
+  Multiline: 'checkbox',
   None: 'none',
 };
 
@@ -17,15 +18,30 @@ export const MenuDetailItem = ({
 }) => {
   const [radioChecked, setRadioChecked] = React.useState(false);
 
+  const selectItem = (select) => {
+    setRadioChecked(select);
+  };
+
   React.useEffect(() => {
     setRadioChecked(selected);
   }, [selected]);
+
+  React.useEffect(() => {
+    if (item.is_default) {
+      if (typeof onPress === 'function') {
+        onPress(item);
+      } else {
+        setRadioChecked(item.is_default);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item, item.is_default]);
 
   const itemPress = () => {
     if (typeof onPress === 'function') {
       onPress(item);
     } else {
-      setRadioChecked((prev) => !prev);
+      selectItem((prev) => !prev);
     }
   };
 
@@ -34,17 +50,19 @@ export const MenuDetailItem = ({
       case MenuDetailItemSelectType.Multiline:
         return (
           <View style={styles.multilineSelectContent}>
-            <CustomInput
-              style={styles.mulInputStyle}
-              inputStyle={styles.inputStyle}
-              keyboardType="numeric"
-              allowFontScaling={true}
-              numberOfLines={1}
-              defaultValue="0"
-              multiline={false}
-              clearTextOnFocus={true}
-              maxLength={3}
-            />
+            {item.can_change_quantity && (
+              <CustomInput
+                style={styles.mulInputStyle}
+                inputStyle={styles.inputStyle}
+                keyboardType="numeric"
+                allowFontScaling={true}
+                numberOfLines={1}
+                defaultValue={item.quantity}
+                multiline={false}
+                clearTextOnFocus={true}
+                maxLength={3}
+              />
+            )}
             <CustomCheckBox
               normalColor={AppStyles.colors.accent}
               selectedColor={AppStyles.colors.accent}
@@ -72,14 +90,19 @@ export const MenuDetailItem = ({
     <TouchableOpacity
       style={styles.container}
       onPress={itemPress}
-      activeOpacity={0.7}>
-      <Image style={styles.imageStyle} source={item.image} />
+      activeOpacity={0.8}>
+      <JollibeeImage
+        style={styles.imageStyle}
+        url={item?.product?.image?.url}
+        width={50}
+        height="100%"
+      />
       <View style={styles.textContentStyle}>
         <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
-          {item.title}
+          {item.label}
         </Text>
         {!!item?.price && (
-          <Text style={styles.itemPriceStyle}>{item.price}</Text>
+          <Text style={styles.itemPriceStyle}>{`+ ${item.price}`}</Text>
         )}
       </View>
       {renderSelectType(item)}
@@ -98,7 +121,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-  imageStyle: { flex: 0, resizeMode: 'center', width: 50, height: '100%' },
+  imageStyle: {
+    resizeMode: 'center',
+    flex: 1,
+  },
 
   textContentStyle: {
     height: '100%',
