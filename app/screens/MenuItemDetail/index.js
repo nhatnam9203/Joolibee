@@ -6,7 +6,12 @@ import { AppStyles, images } from '@theme';
 import { format } from '@utils';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ButtonCC, JollibeeImage, MenuDetailItem } from '../components';
+import {
+  ButtonCC,
+  JollibeeImage,
+  MenuDetailItem,
+  MenuOptionSelectedItem,
+} from '../components';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
@@ -56,13 +61,15 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
   const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
     <MenuDetailItem
-      item={item?.item}
+      item={item}
       key={`${index}`}
       type={type}
       onPress={onPress}
       selected={selected}
     />
   );
+
+  const onRenderSelectedItem = (item) => <MenuOptionSelectedItem item={item} />;
 
   const renderItem = (item, index) => {
     const {
@@ -80,6 +87,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}
         renderItem={renderOptionsItem}
+        renderSelectItem={onRenderSelectedItem}
       />
     );
   };

@@ -1,10 +1,9 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { Config } from 'react-native-config';
-import React from 'react';
 import { images } from '@theme';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Config } from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import Spinner from 'react-native-spinkit';
-import { useImageDimensions } from '@react-native-community/hooks';
 
 export const JollibeeImage = ({
   url,

@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomCheckBox, CustomInput } from '@components';
 import { JollibeeImage } from './JollibeeImage';
+import { destructuring } from '@utils';
 
 export const MenuDetailItemSelectType = {
   Radio: 'radio',
@@ -14,17 +15,17 @@ export const MenuDetailItem = ({
   item,
   onPress,
   type = MenuDetailItemSelectType.Multiline,
-  selected,
+  selected = false,
 }) => {
-  const [radioChecked, setRadioChecked] = React.useState(false);
+  const [radioChecked, setRadioChecked] = React.useState(selected);
 
   const selectItem = (select) => {
     setRadioChecked(select);
   };
 
   React.useEffect(() => {
-    setRadioChecked(item === selected);
-  }, [selected, item]);
+    setRadioChecked(selected);
+  }, [selected]);
 
   const onPressItem = () => {
     if (typeof onPress === 'function') {
@@ -34,7 +35,7 @@ export const MenuDetailItem = ({
     }
   };
 
-  const renderSelectType = (item) => {
+  const renderSelectType = () => {
     switch (type) {
       case MenuDetailItemSelectType.Multiline:
         return (
@@ -79,7 +80,8 @@ export const MenuDetailItem = ({
     <TouchableOpacity
       style={styles.container}
       onPress={onPressItem}
-      activeOpacity={0.8}>
+      activeOpacity={0.8}
+      key={item.id}>
       <JollibeeImage
         style={styles.imageStyle}
         url={item?.product?.image?.url}
@@ -94,10 +96,24 @@ export const MenuDetailItem = ({
           <Text style={styles.itemPriceStyle}>{`+ ${item.price}`}</Text>
         )}
       </View>
-      {renderSelectType(item)}
+      {renderSelectType()}
     </TouchableOpacity>
   );
 };
+
+export const MenuOptionSelectedItem = React.memo(({ item }) => {
+  return (
+    <View style={styles.selectedContainer}>
+      <JollibeeImage
+        style={styles.imageSelectedStyle}
+        url={destructuring.imageURLOfItem(item)}
+        height="100%"
+        width={30}
+      />
+      <Text style={styles.textSelectedStyle}>{'x' + item.quantity}</Text>
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -113,6 +129,13 @@ const styles = StyleSheet.create({
   imageStyle: {
     resizeMode: 'center',
     flex: 1,
+  },
+
+  imageSelectedStyle: {
+    resizeMode: 'center',
+    flex: 1,
+    backgroundColor: '#fff',
+    marginRight: 5,
   },
 
   textContentStyle: {
@@ -131,6 +154,12 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     textAlignVertical: 'center',
+  },
+
+  textSelectedStyle: {
+    ...AppStyles.fonts.bold,
+    color: AppStyles.colors.button,
+    fontSize: 16,
   },
 
   itemPriceStyle: {
@@ -163,5 +192,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     height: '100%',
     textAlign: 'center',
+  },
+
+  selectedContainer: {
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
 });

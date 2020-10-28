@@ -6,6 +6,7 @@ import * as makeAPhoneCall from './makeAPhoneCall';
 import * as validate from './validate';
 import * as format from './format';
 import * as generate from './generate';
+import * as destructuring from './destructuring';
 
 module.exports = {
   StringUtil,
@@ -16,4 +17,5 @@ module.exports = {
   validate,
   format,
   generate,
+  destructuring,
 };

@@ -33,6 +33,7 @@ const CustomAccordionList = ({
   headerTextStyle,
   headerStyle,
   renderItem,
+  renderSelectItem,
   style,
   required,
   ...props
@@ -41,15 +42,27 @@ const CustomAccordionList = ({
   const [selectedItem, setSelectedItem] = React.useState(null);
   const ref = React.useRef();
 
-  const onRenderItem = (item, index) => {
+  const onRenderItem = ({ item }, index) => {
+    const selected = item?.id === selectedItem?.id;
+    const onPress = () =>
+      selected && !required ? setSelectedItem(null) : setSelectedItem(item);
+
     return typeof renderItem === 'function' ? (
       renderItem({
         item,
         index,
         type,
-        onPress: () => setSelectedItem(item),
-        selected: selectedItem,
+        onPress,
+        selected,
       })
+    ) : (
+      <View />
+    );
+  };
+
+  const onRenderSelectedItem = () => {
+    return typeof renderSelectItem === 'function' ? (
+      renderSelectItem(selectedItem)
     ) : (
       <View />
     );
@@ -60,7 +73,7 @@ const CustomAccordionList = ({
       <CustomFlatList
         data={data}
         renderItem={onRenderItem}
-        keyExtractor={(item, index) => `${index}`}
+        keyExtractor={(item, index) => `${item.id}`}
       />
     </Animated.View>
   );
@@ -95,7 +108,10 @@ const CustomAccordionList = ({
           {!!title && (
             <Text style={headerTextStyle}>{`${title}`.toUpperCase()}</Text>
           )}
-          <ChevronIcon isOpen={open} />
+          <View style={styles.horizontal}>
+            {selectedItem && onRenderSelectedItem()}
+            <ChevronIcon isOpen={open} />
+          </View>
         </TouchableOpacity>
         {open && renderListItem()}
       </View>
@@ -133,6 +149,12 @@ const styles = StyleSheet.create({
     width: Icon_Size,
     borderRadius: Icon_Size / 2,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 });
