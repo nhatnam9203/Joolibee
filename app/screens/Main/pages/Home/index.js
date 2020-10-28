@@ -26,15 +26,23 @@ import {
   ProductPromotionList,
   ServiceList,
 } from './widget';
+import { useQuery } from '@apollo/client';
+import { query } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const cart_id = useSelector((state) => state.cart?.cart_id);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
-  const navigation = useNavigation();
+  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN);
+
+
+  const _data = data ? data?.homeScreen : {}
+  console.log('_data', _data)
+
   const onTogglePopup = () => setVisiblePopup(true);
   const onToggleDetail = () => showDetail(!visible_detail);
 
@@ -43,7 +51,6 @@ const HomePage = () => {
   };
 
   React.useEffect(() => {
-
     if (!cart_id) dispatch(cart.createEmptyCart());
 
     setTimeout(() => {
@@ -105,11 +112,18 @@ const HomePage = () => {
             </ImageBackground>
           </View>
 
-          <ProductPromotionList />
+          <ProductPromotionList
+            loading={loading}
+            data={_data.promotions ? _data.promotions : []}
+          />
 
-          <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
+          <BestSellerList
+            loading={loading}
+            data={_data.best_sellers ? _data.best_sellers : []}
+            openMenu={onCHangeScreen(MenuPageName)} />
 
           <NewsList
+            data={_data.news ? _data.news : []}
             openDetail={onToggleDetail}
             onCHangeScreen={onCHangeScreen(ScreenName.News)}
           />

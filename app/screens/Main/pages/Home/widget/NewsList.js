@@ -1,23 +1,26 @@
 import React from 'react';
 import {
-  ScrollView,
   StyleSheet,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  Fade,
+} from 'rn-placeholder';
 import { Text } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
-
-import { AppStyles, metrics, images } from '@theme';
+import { JollibeeImage } from "../../../../components";
+import { AppStyles } from '@theme';
 import { CustomButton } from '@components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
-const data = [1, 2, 3, 4, 5];
 
-const index = ({ openDetail, onCHangeScreen }) => {
+const index = ({ openDetail, onCHangeScreen, data }) => {
   return (
     <View style={styles.container}>
 
@@ -63,16 +66,17 @@ const index = ({ openDetail, onCHangeScreen }) => {
 };
 
 const renderItem = (item, index, onPress) => {
+  const { title, featured_image } = item || {};
   return (
     <View style={styles.wrapperItem}>
       <View
         key={index + ''}
         style={[styles.containerItem, AppStyles.styles.shadow]}>
-        <Image source={images['jollibee_news']} style={styles.imgProduct} />
+        <JollibeeImage url={featured_image} style={styles.imgProduct} />
 
         <View style={styles.content}>
           <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
-            KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE
+            {title?.toUpperCase()}
           </Text>
 
           <Text style={[AppStyles.fonts.text, styles.txtContent]}>

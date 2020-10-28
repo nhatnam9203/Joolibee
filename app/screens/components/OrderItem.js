@@ -8,40 +8,42 @@ import { OrderCount } from './OrderCount';
 
 const IMAGE_SIZE = 69;
 
-export const OrderItem = ({ item, onPress, index, shadow }) => (
-  <FlatListItemWithImgHorizontal
-    imgStyle={styles.imageStyle}
-    contentStyle={styles.itemStyle}
-    image={item.image}
-    item={item}
-    onPress={() => {}}
-    imgPosition="left"
-    imgWidth={IMAGE_SIZE}
-    imgHeight={IMAGE_SIZE}
-    shadow={shadow}>
-    <View style={[AppStyles.styles.horizontalLayout, styles.content]}>
-      <View style={styles.txtContent}>
-        <LabelTitle
-          label={item.title}
-          numberOfLines={2}
-          fontSize={15}
-          style={styles.titleStyle}
-        />
-        <Text style={styles.txtDescStyle}>{item.description}</Text>
+export const OrderItem = ({ item, onPress, index, shadow }) => {
+  const { product = {}, quantity } = item;
+  return (
+    <FlatListItemWithImgHorizontal
+      imgStyle={styles.imageStyle}
+      contentStyle={styles.itemStyle}
+      image={images.jollibee_combo}
+      onPress={() => { }}
+      imgPosition="left"
+      imgWidth={IMAGE_SIZE}
+      imgHeight={IMAGE_SIZE}
+      shadow={shadow}>
+      <View style={[AppStyles.styles.horizontalLayout, styles.content]}>
+        <View style={styles.txtContent}>
+          <LabelTitle
+            label={product.name}
+            numberOfLines={2}
+            fontSize={15}
+            style={styles.titleStyle}
+          />
+          <Text style={styles.txtDescStyle}>{product.name}</Text>
+        </View>
+        {/* <PriceAndPoint style={styles.priceStyle} {...item} /> */}
       </View>
-      <PriceAndPoint style={styles.priceStyle} {...item} />
-    </View>
-    <View style={styles.bottomStyle}>
-      <OrderCount />
-      <TouchableOpacity style={styles.buttonStyle}>
-        <Image source={images.icons.ic_order_edit} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonStyle}>
-        <Image source={images.icons.ic_delete} />
-      </TouchableOpacity>
-    </View>
-  </FlatListItemWithImgHorizontal>
-);
+      <View style={styles.bottomStyle}>
+        <OrderCount defaultValue={quantity + ''} />
+        <TouchableOpacity style={styles.buttonStyle}>
+          <Image source={images.icons.ic_order_edit} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonStyle}>
+          <Image source={images.icons.ic_delete} />
+        </TouchableOpacity>
+      </View>
+    </FlatListItemWithImgHorizontal>
+  )
+};
 
 const styles = StyleSheet.create({
   imageStyle: { alignSelf: 'flex-start', marginTop: 20 },

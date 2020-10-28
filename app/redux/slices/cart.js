@@ -20,16 +20,16 @@ const createEmptyCart = createAsyncThunk(
     }
 )
 
-const cartDetail = createAsyncThunk(
-    `${KEY_CONSTANT}/cartDetail`,
-    async (cartId) => {
-        const response = await graphQlClient.query({
-            query: query.CART_DETAIL,
-            variables: { cartId }
-        })
-        return response
-    }
-)
+// const cartDetail = createAsyncThunk(
+//     `${KEY_CONSTANT}/cartDetail`,
+//     async (cartId) => {
+//         const response = await graphQlClient.query({
+//             query: query.CART_DETAIL,
+//             variables: { cartId }
+//         })
+//         return response
+//     }
+// )
 
 const cartSlice = createSlice({
     name: KEY_CONSTANT,
@@ -55,25 +55,22 @@ const cartSlice = createSlice({
         },
 
         //Cart Detail
-        [cartDetail.pending]: (state, action) => {
-            Logger.info(action, 'cartDetail pending');
-        },
+        // [cartDetail.pending]: (state, action) => {
+        //     Logger.info(action, 'cartDetail pending');
+        // },
 
-        [cartDetail.fulfilled]: (state, action) => {
-            const { data, loading, error, } = action.payload;
-            const { cart } = data;
-            if (cart)
-                state.cart_detail = cart
+        // [cartDetail.fulfilled]: (state, action) => {
+        //     const { data, loading, error, } = action.payload;
+        //     const { cart } = data;
+        //     if (cart)
+        //         state.cart_detail = cart
 
-            Logger.info(action, 'cartDetail fulfilled');
-        },
+        //     Logger.info(action, 'cartDetail fulfilled');
+        // },
 
-        [cartDetail.rejected]: (state, action) => {
-            Logger.info(action, 'cartDetail rejected');
-        },
-
-
-
+        // [cartDetail.rejected]: (state, action) => {
+        //     Logger.info(action, 'cartDetail rejected');
+        // },
 
     },
 });
@@ -81,5 +78,5 @@ const cartSlice = createSlice({
 const { actions, reducer } = cartSlice;
 module.exports = {
     reducer,
-    actions: { createEmptyCart, cartDetail, ...actions },
+    actions: { createEmptyCart, ...actions },
 };

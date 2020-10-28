@@ -56,8 +56,6 @@ const index = () => {
 
                 <PlaceholderLine style={styles.statusPlaceHolder} />
 
-
-
             </View>
         </Placeholder>
     )

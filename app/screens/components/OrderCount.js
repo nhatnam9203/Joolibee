@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { CustomInput } from '@components';
 import { images, AppStyles } from '@theme';
 
-export const OrderCount = () => {
+export const OrderCount = ({ defaultValue = 0 }) => {
   return (
     <View style={styles.orderContentStyle}>
       <TouchableOpacity style={styles.buttonOrderStyle}>
@@ -15,7 +15,7 @@ export const OrderCount = () => {
         keyboardType="numeric"
         allowFontScaling={true}
         numberOfLines={1}
-        defaultValue="0"
+        defaultValue={defaultValue}
         multiline={false}
         clearTextOnFocus={true}
         maxLength={3}

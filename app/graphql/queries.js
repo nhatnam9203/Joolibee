@@ -119,7 +119,9 @@ query ($cartId : String!)
         name
         sku
       }
+
       quantity
+     
     }
     available_payment_methods {
       code
@@ -139,5 +141,70 @@ query ($cartId : String!)
       }
     }
   }
+}
+`
+
+// HOME_SCREEN
+export const HOME_SCREEN = gql`
+{
+  homeScreen{
+banners
+best_sellers {
+id
+name
+point
+price_range{
+    maximum_price{
+        final_price {
+            value
+            currency
+        }
+    }
+    minimum_price{
+        final_price {
+            value
+            currency
+        }
+    }
+}
+image {
+    url
+}
+}
+news {
+content
+featured_image
+post_id
+short_content
+title
+}
+promotions{
+  id
+  name
+  point
+  price_range{
+      maximum_price{
+          final_price {
+              value
+              currency
+          }
+      }
+      minimum_price{
+          final_price {
+              value
+              currency
+          }
+      }
+  }
+  image {
+      url
+  }
+}
+static_content {
+description
+short_description
+title
+}
+}
 }
 `
