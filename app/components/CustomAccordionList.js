@@ -74,7 +74,9 @@ const CustomAccordionList = ({
                   type,
                   () => {
                     if (selectedIndex === index) {
-                      if (!required) setSelectedIndex(null);
+                      {
+                        /* if (!required) setSelectedIndex(null); */
+                      }
                     } else {
                       setSelectedIndex(index);
                     }

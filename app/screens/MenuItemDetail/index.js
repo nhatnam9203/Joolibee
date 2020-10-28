@@ -11,6 +11,7 @@ import { ButtonCC, JollibeeImage, MenuDetailItem } from '../components';
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
+  const [quantity, setQuantity] = React.useState(1);
 
   const RenderMainSection = (itemProps) => {
     const { image, name, point, price_range } = itemProps;
@@ -63,17 +64,16 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     />
   );
 
-  const renderItem = (item) => {
-    Logger.info(item, 'renderItem item');
+  const renderItem = (item, index) => {
     const {
-      item: { title, options, type, option_id, required },
+      item: { title, options, type, position, required },
     } = item;
     return (
       <CustomAccordionList
         title={title}
         data={options.filter((x) => x.product)}
         type={type}
-        key={option_id}
+        key={`${position}`}
         required={required}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
@@ -86,23 +86,32 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderFooter = () => (
     <View style={styles.orderContentStyle}>
       <View style={styles.orderAmountStyle}>
-        <TouchableOpacity style={styles.buttonOrderStyle}>
+        <CustomButton
+          style={styles.buttonOrderStyle}
+          onPress={() => setQuantity((prev) => prev - 1)}
+          disabled={quantity <= 1}
+          borderRadius={6}>
           <Image source={images.icons.ic_sub} />
-        </TouchableOpacity>
+        </CustomButton>
         <CustomInput
           style={styles.mulInputStyle}
           inputStyle={styles.inputStyle}
           keyboardType="numeric"
           allowFontScaling={true}
           numberOfLines={1}
-          defaultValue="0"
+          editable={false}
+          value={quantity.toString()}
           multiline={false}
           clearTextOnFocus={true}
           maxLength={3}
         />
-        <TouchableOpacity style={styles.buttonOrderStyle}>
+        <CustomButton
+          style={styles.buttonOrderStyle}
+          onPress={() => setQuantity((prev) => prev + 1)}
+          disabled={quantity > 255}
+          borderRadius={6}>
           <Image source={images.icons.ic_plus} />
-        </TouchableOpacity>
+        </CustomButton>
       </View>
     </View>
   );
@@ -128,7 +137,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>Tổng cộng : </Text>
+          <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
           <Text style={styles.txtPriceStyle}>0.00 đ</Text>
         </View>
         <ButtonCC.ButtonRed label={translate('txtAddCart')} />
@@ -228,10 +237,10 @@ const styles = StyleSheet.create({
     width: 47,
     height: 47,
     backgroundColor: AppStyles.colors.accent,
-    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
+    margin: 5,
+    ...AppStyles.styles.shadow,
   },
 
   mulInputStyle: {
@@ -248,7 +257,8 @@ const styles = StyleSheet.create({
   inputStyle: {
     paddingLeft: 0,
     margin: 0,
-    fontSize: 16,
+    fontSize: 15,
+    ...AppStyles.fonts.bold,
     height: '100%',
     textAlign: 'center',
   },
