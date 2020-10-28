@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-
+import CustomFlatList from './CustomFlatList';
 import Animated, { Transition, Transitioning } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -38,12 +38,46 @@ const CustomAccordionList = ({
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(null);
+  const [selectedItem, setSelectedItem] = React.useState(null);
   const ref = React.useRef();
+
+  const onRenderItem = (item, index) => {
+    return typeof renderItem === 'function' ? (
+      renderItem({
+        item,
+        index,
+        type,
+        onPress: () => setSelectedItem(item),
+        selected: selectedItem,
+      })
+    ) : (
+      <View />
+    );
+  };
+
+  const renderListItem = () => (
+    <Animated.View style={styles.subListStyle}>
+      <CustomFlatList
+        data={data}
+        renderItem={onRenderItem}
+        keyExtractor={(item, index) => `${index}`}
+      />
+    </Animated.View>
+  );
 
   React.useEffect(() => {
     setOpen(required);
   }, [required]);
+
+  React.useEffect(() => {
+    if (data?.length > 0) {
+      data.sort((a, b) => a.position - b.position);
+      const result = data.find((x) => x.is_default === true);
+      if (result) {
+        setSelectedItem(result);
+      }
+    }
+  }, [data]);
 
   return (
     <Transitioning.View
@@ -61,36 +95,9 @@ const CustomAccordionList = ({
           {!!title && (
             <Text style={headerTextStyle}>{`${title}`.toUpperCase()}</Text>
           )}
-
           <ChevronIcon isOpen={open} />
         </TouchableOpacity>
-        {open && (
-          <Animated.View style={styles.subListStyle}>
-            {data.map((item, index) =>
-              renderItem ? (
-                renderItem(
-                  item,
-                  index,
-                  type,
-                  () => {
-                    if (selectedIndex === index) {
-                      {
-                        /* if (!required) setSelectedIndex(null); */
-                      }
-                    } else {
-                      setSelectedIndex(index);
-                    }
-                  },
-                  selectedIndex === index,
-                )
-              ) : (
-                <View style={styles.itemContent} key={item.id}>
-                  <Text style={styles.itemTextStyle}>{item.label}</Text>
-                </View>
-              ),
-            )}
-          </Animated.View>
-        )}
+        {open && renderListItem()}
       </View>
     </Transitioning.View>
   );

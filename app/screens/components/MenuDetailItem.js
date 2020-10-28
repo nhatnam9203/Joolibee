@@ -23,21 +23,10 @@ export const MenuDetailItem = ({
   };
 
   React.useEffect(() => {
-    setRadioChecked(selected);
-  }, [selected]);
+    setRadioChecked(item === selected);
+  }, [selected, item]);
 
-  React.useEffect(() => {
-    if (item.is_default) {
-      if (typeof onPress === 'function') {
-        onPress(item);
-      } else {
-        setRadioChecked(item.is_default);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, item.is_default]);
-
-  const itemPress = () => {
+  const onPressItem = () => {
     if (typeof onPress === 'function') {
       onPress(item);
     } else {
@@ -89,7 +78,7 @@ export const MenuDetailItem = ({
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={itemPress}
+      onPress={onPressItem}
       activeOpacity={0.8}>
       <JollibeeImage
         style={styles.imageStyle}

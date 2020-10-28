@@ -54,13 +54,13 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const renderOptionsItem = (item, index, type, onPress, selected) => (
+  const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
     <MenuDetailItem
-      onPress={onPress}
-      item={item}
-      selected={selected}
-      key={item.id}
+      item={item?.item}
+      key={`${index}`}
       type={type}
+      onPress={onPress}
+      selected={selected}
     />
   );
 
@@ -68,6 +68,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     const {
       item: { title, options, type, position, required },
     } = item;
+
     return (
       <CustomAccordionList
         title={title}
