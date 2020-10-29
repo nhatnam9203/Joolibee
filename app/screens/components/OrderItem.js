@@ -10,6 +10,7 @@ const IMAGE_SIZE = 69;
 
 export const OrderItem = ({ item, onPress, index, shadow }) => {
   const { product = {}, quantity } = item;
+
   const handleUpdateProduct = (qty) => () => {
     item['quantity'] = qty;
     onPress(item)

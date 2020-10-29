@@ -7,7 +7,7 @@ export const OrderCount = ({ defaultValue = 0, onPress }) => {
   return (
     <View style={styles.orderContentStyle}>
       <TouchableOpacity
-        onPress={onPress(defaultValue + 1)}
+        onPress={onPress(+defaultValue - 1)}
         style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_sub} />
       </TouchableOpacity>
@@ -23,7 +23,7 @@ export const OrderCount = ({ defaultValue = 0, onPress }) => {
         maxLength={3}
       />
       <TouchableOpacity
-        onPress={onPress(defaultValue - 1)}
+        onPress={onPress(+defaultValue + 1)}
         style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_plus} />
       </TouchableOpacity>
