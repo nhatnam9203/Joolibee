@@ -19,7 +19,7 @@ const MainTab = createBottomTabNavigator();
 
 function MainTabScreen() {
   const dispatch = useDispatch();
-  const showOrderList = useSelector((state) => state.order.isShowOrderList);
+  const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const showQRCode = useSelector((state) => state.account?.isShowQRCode);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
@@ -35,7 +35,7 @@ function MainTabScreen() {
       {/**Popup Order List Items */}
       <PopupOrderList
         visible={showOrderList}
-        onToggle={() => dispatch(order.dismissOrderList())}
+        onToggle={() => dispatch(app.dismissOrderList())}
       />
 
       {/**Popup QR Code */}

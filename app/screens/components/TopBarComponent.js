@@ -1,6 +1,6 @@
 import { Bar, Action, Space, Logo } from '@components';
 import { useNavigation } from '@react-navigation/native';
-import { account, order } from '@slices';
+import { account, app } from '@slices';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -42,7 +42,7 @@ export const TopBarComponent = React.memo(() => {
           <Action
             source={images.icons.nav_order}
             onPress={() => {
-              dispatch(order.showOrderList());
+              dispatch(app.showOrderList());
             }}
           />
         </>

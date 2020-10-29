@@ -7,6 +7,7 @@ const appSlice = createSlice({
     loading_app: true,
     comingSoonShow: false,
     loadIntro: true,
+    isShowOrderList: false
   },
   reducers: {
     showLoading(state, action) {
@@ -26,6 +27,12 @@ const appSlice = createSlice({
     },
     hadLoadIntro(state, action) {
       state.loadIntro = false;
+    },
+    showOrderList(state, action) {
+      state.isShowOrderList = true;
+    },
+    dismissOrderList(state, action) {
+      state.isShowOrderList = false;
     },
   },
 });

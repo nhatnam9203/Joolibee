@@ -21,7 +21,8 @@ export const PopupOrderList = ({ visible, onToggle }) => {
   const cart_id = useSelector((state) => state.cart?.cart_id);
   // --------- handle fetch data cart -----------
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
-    variables: { cartId: cart_id }
+    variables: { cartId: cart_id },
+    fetchPolicy: 'cache-first'
   });
   const { items, prices: { grand_total } } = data?.cart || { items: [], prices: { grand_total: {} } };
 

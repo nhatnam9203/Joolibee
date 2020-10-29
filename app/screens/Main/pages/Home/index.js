@@ -37,7 +37,9 @@ const HomePage = () => {
   const cart_id = useSelector((state) => state.cart?.cart_id);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
-  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN);
+  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN,{
+    fetchPolicy: 'cache-first'
+  });
 
 
   const _data = data ? data?.homeScreen : {}
