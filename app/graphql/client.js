@@ -21,7 +21,7 @@ const authLink = new ApolloLink(async (operation, forward) => {
   operation.setContext(({ headers }) => ({
     headers: {
       authorization: jwt ? `Bearer ${jwt}` : '',
-      Store: 'en',
+      // Store: 'en',
       ...headers,
     },
   }));
