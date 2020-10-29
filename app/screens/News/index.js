@@ -1,62 +1,81 @@
-import { CustomFlatList, CustomButton } from '@components';
+import { CustomFlatList, CustomButton, CustomHTML } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, RefreshControl } from 'react-native';
+import {
+    Placeholder,
+    PlaceholderLine,
+    PlaceholderMedia,
+    Fade,
+} from 'rn-placeholder';
 import { scale } from '@utils';
 import { PopupWebView } from '../components';
 
 const { scaleWidth, scaleHeight } = scale;
-const defaultData = [
-    {
-        title: 'KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE',
-        content: 'Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An và nhận được...',
-        url: images['jollibee_news']
-    },
-    {
-        title: 'KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE',
-        content: 'Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An và nhận được...',
-        url: images['jollibee_news']
-    },
-    {
-        title: 'KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE',
-        content: 'Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An và nhận được...',
-        url: images['jollibee_news']
-    },
+// const defaultData = [
+//     {
+//         title: 'KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE',
+//         content: 'Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An và nhận được...',
+//         url: images['jollibee_news']
+//     },
+//     {
+//         title: 'KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE',
+//         content: 'Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An và nhận được...',
+//         url: images['jollibee_news']
+//     },
+//     {
+//         title: 'KHÁM PHÁ NHÀ MÁY ĐẠT CHUẨN ISO 22000: 2018 CỦA JOLLIBEE',
+//         content: 'Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An và nhận được...',
+//         url: images['jollibee_news']
+//     },
 
-];
+// ];
 
-const index = () => {
+const index = ({ route }) => {
+    const { data, loading, refetch } = route.params;
     const navigation = useNavigation();
-    const [data, setData] = React.useState([]);
-    const [visible_detail, showDetail] = React.useState(false);
+    const [visible_detal, showDetail] = React.useState(false);
+    const [refreshing, setRefreshing] = React.useState(false);
     const onToggleDetail = () => showDetail(!visible_detail);
 
-    React.useEffect(() => {
-        setData(defaultData);
-    }, []);
-
-
+    const handleRefresh = () => {
+        setRefreshing(true);
+        refetch()
+        setRefreshing(false);
+    }
 
     const ItemSeperator = () => (<View style={{ height: scaleHeight(70) }} />)
 
     const renderItem = ({ item, index }) => {
+        const { title, featured_image, short_content } = item || {};
         return (
-
             <View
                 key={index + ''}
                 style={styles.containerItem}>
-                <Image source={item.url} style={styles.imgProduct} />
+                <Image source={images['jollibee_news']} style={styles.imgProduct} />
 
                 <View style={styles.content}>
-                    <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
-                        {item.title}
+                    <Text style={styles.txttitle}>
+                        {title}
                     </Text>
 
-                    <Text style={[AppStyles.fonts.text, styles.txtContent]}>
-                        {item.content}
-                    </Text>
+                    <CustomHTML
+                        html={short_content}
+                        renderers={{
+                            div: (...props) => {
+                                return (
+                                    <Text
+                                        key={props[3].key}
+                                        style={styles.txtContent}
+                                        numberOfLines={3}>
+                                        {props[3]?.rawChildren[0].data}
+                                    </Text>
+                                )
+                            }
+                        }}
+                    />
                 </View>
 
                 <CustomButton
@@ -72,21 +91,44 @@ const index = () => {
         );
     };
 
+    const renderItemLoading = () => {
+        return (
+            <Placeholder
+                Animation={Fade}
+            >
+                <View style={[styles.containerItem, { paddingHorizontal: 15, height: scaleHeight(320) }]}>
+                    <View style={styles.imgLoading}>
+                        <PlaceholderMedia style={styles.imgProductLoading} />
+                    </View>
+                    <PlaceholderLine height={15} />
+                    <PlaceholderLine height={10} style={{ alignSelf: 'flex-start' }} />
+                    <PlaceholderLine height={10} width='70%' style={{ alignSelf: 'flex-start' }} />
+                    <PlaceholderLine height={10} width='70%' style={{ alignSelf: 'flex-start' }} />
+                    <PlaceholderLine height={40} width={35} style={styles.btn} />
+                </View>
+            </Placeholder>
+        );
+    };
+
     return (
         <View style={styles.container}>
             <CustomFlatList
-                data={data}
-                renderItem={renderItem}
+                data={loading ? [1, 2, 3, 4, 5] : data}
+                renderItem={loading ? renderItemLoading : renderItem}
                 keyExtractor={(item, index) => index + ''}
                 contentContainerStyle={styles.contentContainerStyle}
                 ItemSeparatorComponent={ItemSeperator}
                 showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                }
             />
 
-            <PopupWebView visible={visible_detail} onToggle={onToggleDetail} />
+            <PopupWebView visible={visible_detal} onToggle={onToggleDetail} />
         </View>
     );
 };
+
 
 
 const styles = StyleSheet.create({
@@ -115,9 +157,34 @@ const styles = StyleSheet.create({
         zIndex: 100000,
     },
 
+    imgProductLoading: {
+        width: scaleWidth(281),
+        height: scaleHeight(174),
+        // resizeMode: 'center',
+        top: scaleHeight(-60),
+        position: 'absolute',
+        zIndex: 100000,
+    },
+
     btn: {
         alignSelf: 'flex-start',
         marginTop: scaleHeight(10),
+    },
+    txtContent: {
+        color: AppStyles.colors.text,
+        textAlign: 'left',
+        fontSize: scaleWidth(14),
+        ...AppStyles.fonts.text,
+    },
+    txttitle: {
+        color: AppStyles.colors.text,
+        fontSize: scaleWidth(16),
+        textAlign: 'center',
+        ...AppStyles.fonts.medium_SVN,
+    },
+    imgLoading: {
+        width: scaleWidth(281),
+        height: scaleHeight(130),
     },
 
 });

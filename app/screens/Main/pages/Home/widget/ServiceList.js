@@ -46,6 +46,7 @@ const index = ({ openDetail }) => {
       <Carousel
         data={data}
         renderItem={({ item, index }) => renderItem(item, index, openDetail)}
+        keyExtractor={(item, index) => index + ''}
         sliderWidth={width}
         itemWidth={scaleWidth(374)}
         itemHeight={scaleHeight(227)}

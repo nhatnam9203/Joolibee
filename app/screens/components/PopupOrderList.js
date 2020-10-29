@@ -3,63 +3,47 @@ import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from 'react-native-paper';
-import { ButtonCC, OrderItem } from '../components';
+import { Image, StyleSheet, TouchableOpacity, View, RefreshControl, Text } from 'react-native';
+import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { cart } from '@slices';
-
-const defaultData = [
-  {
-    id: 1,
-    image: images.jollibee_combo,
-    title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
-    description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
-    price: '60.000 đ',
-    point: 5,
-  },
-  {
-    id: 2,
-    image: images.jollibee_combo,
-    title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
-    description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
-    price: '30.000 đ',
-    point: 5,
-  },
-  {
-    id: 3,
-    image: images.jollibee_combo,
-    title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
-    description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
-    price: '90.000 đ',
-    point: 5,
-  },
-  {
-    id: 4,
-    image: images.jollibee_combo,
-    title: 'CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT',
-    description: 'Pepsi (Lớn) +20.000đ  Khoai tây lắc vị BBQ (Lớn) +10.000đ',
-    price: '90.000 đ',
-    point: 5,
-  },
-];
+import { useQuery } from '@apollo/client';
+import { query } from '@graphql';
+import { format } from "@utils";
+import { cart, app } from '@slices';
 
 export const PopupOrderList = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
+  const [refreshing, setRefreshing] = React.useState(false)
+  const cart_id = useSelector((state) => state.cart?.cart_id);
+  // --------- handle fetch data cart -----------
+  const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
+    variables: { cartId: cart_id }
+  });
+  const { items, prices: { grand_total } } = data?.cart || { items: [], prices: { grand_total: {} } };
 
-  // const cart_id = useSelector((state) => state.cart?.cart_id);
-  // const {
-  //   items = [],
-  //   prices: { grand_total },
-  // } = useSelector((state) => state.cart?.cart_detail);
+  const total = format.jollibeeCurrency({ value: grand_total.value, currency: 'VND' });
+  // -------- handle fetch data cart -----------
 
   const renderItem = ({ item, index }) => (
-    <OrderItem item={item} key={item.id + ''} shadow={false} />
+    <OrderItem item={item} key={item.id + ''} shadow={false} onPress={updateCart} />
   );
+  const renderEmptyList = () => (
+    <View style={{ padding: 15, alignItems: 'center' }}>
+      <Text style={styles.labelSum}>{error ? error : 'Không có sản phẩm'}</Text>
+    </View>
+  );
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    refetch();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
 
   const orderPressed = () => {
     popupRef.current.forceQuit();
@@ -70,9 +54,15 @@ export const PopupOrderList = ({ visible, onToggle }) => {
     popupRef.current.forceQuit();
   };
 
-  // React.useEffect(() => {
-  //   dispatch(cart.cartDetail(cart_id));
-  // }, []);
+  const updateCart = React.useCallback(
+    async (item) => {
+      console.log('item', item)
+      // await dispatch(app.showLoading());
+      // await dispatch(cart.updateCartProduct(item, { dispatch }));
+      // await dispatch(app.hideLoading());
+    },
+    [dispatch],
+  );
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -86,21 +76,26 @@ export const PopupOrderList = ({ visible, onToggle }) => {
           <Text style={styles.txtHeader}>Phần ăn đã chọn</Text>
         </View>
         <View style={styles.bodyList}>
-          <CustomFlatList
-            data={defaultData}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id + ''}
-            ItemSeparatorComponent={() => (
-              <View style={AppStyles.styles.rowSeparator} />
-            )}
-            contentContainerStyle={styles.contentContainerStyle}
-          />
-        </View>
+          {
+            <CustomFlatList
+              data={loading ? [1, 2, 3, 4] : items}
+              renderItem={loading ? OrderItemLoading : renderItem}
+              keyExtractor={(item, index) => index + ''}
+              ItemSeparatorComponent={() => (
+                <View style={AppStyles.styles.rowSeparator} />
+              )}
+              contentContainerStyle={styles.contentContainerStyle}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+              }
+              ListEmptyComponent={renderEmptyList}
+            />}
+        </View  >
         <View style={styles.bottomContent}>
           <View style={AppStyles.styles.horizontalLayout}>
             <Text style={styles.labelSum}>{translate('txtSummary')} :</Text>
             <View style={styles.priceContent}>
-              <Text style={styles.priceStyle}>{'0'}đ</Text>
+              <Text style={styles.priceStyle}>{total}</Text>
               <Text style={styles.pointStyle}>(+ 0 điểm)</Text>
             </View>
           </View>

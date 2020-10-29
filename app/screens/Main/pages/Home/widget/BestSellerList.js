@@ -1,24 +1,25 @@
 import React from 'react';
 import {
-  ScrollView,
+  Text,
   StyleSheet,
   View,
-  Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import { Text } from 'react-native-paper';
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  Fade,
+} from 'rn-placeholder';
+import { JollibeeImage } from "../../../../components";
 import Carousel from 'react-native-snap-carousel';
-
-import { AppStyles, metrics, images } from '@theme';
-import { CustomButton } from '@components';
-import { scale } from '@utils';
+import { format, scale } from "@utils";
+import { AppStyles } from '@theme';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
-const data = [1, 2, 3, 4, 5];
 
-const index = ({ openMenu }) => {
-
+const index = ({ openMenu, data, loading }) => {
 
   return (
     <View style={styles.container}>
@@ -32,7 +33,7 @@ const index = ({ openMenu }) => {
         </Text>
 
         <TouchableOpacity
-        onPress={openMenu}
+          onPress={openMenu}
         >
           <Text
             style={[
@@ -51,51 +52,84 @@ const index = ({ openMenu }) => {
           top: scaleHeight(110),
         }}>
         <Carousel
-          data={data}
-          renderItem={renderItem}
+          data={loading ? [1, 2, 3, 4] : data}
+          renderItem={loading ? renderItemLoading : renderItem}
+          keyExtractor={(item, index) => index + ''}
           sliderWidth={width}
           itemWidth={scaleWidth(180)}
           itemHeight={scaleHeight(218)}
           inactiveSlideScale={0.9}
           inactiveSlideOpacity={1}
           firstItem={0}
-          autoplay
+          autoplay={!loading}
           autoplayInterval={5000}
           loop
           loopClonesPerSide={2}
+          ListEmptyComponent={renderEmptyList}
         />
       </View>
     </View>
   );
 };
 
-const renderItem = (item, index) => {
+
+
+const renderItem = ({ item, index }) => {
+  const { price_range, point, image, name } = item;
+  const { maximum_price } = price_range || {};
+  const _price = format.jollibeeCurrency(maximum_price?.final_price);
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={() => alert('ads')}
       key={index + ''}
       style={[styles.containerItem, AppStyles.styles.shadow]}>
-      <Image source={images['jollibee_combo1']} style={styles.imgProduct} />
+      <JollibeeImage
+        url={image?.url}
+        style={styles.imgProduct}
+      />
       <Text
         numberOfLines={2}
         style={[
           AppStyles.fonts.medium_SVN,
           { color: AppStyles.colors.text, fontSize: scaleWidth(13) },
         ]}>
-        CƠM GÀ GIÒN + SÚP BÍ ĐỎ + NƯỚC NGỌT
+        {name?.toUpperCase()}
       </Text>
 
       <View style={styles.price}>
         <Text style={[AppStyles.fonts.medium_SVN, styles.txtPrice]}>
-          70.000 đ
+          {_price}
         </Text>
 
-        <Text style={[AppStyles.fonts.mini]}>(+5 điểm)</Text>
+        <Text style={[AppStyles.fonts.mini]}>(+{point} điểm)</Text>
       </View>
     </TouchableOpacity>
   );
 };
+
+const renderItemLoading = () => {
+
+  return (
+    <Placeholder
+      Animation={Fade}
+      style={styles.containerItemLoading}>
+      <View style={styles.topLoading}>
+        <PlaceholderMedia style={styles.imgProduct} />
+        <PlaceholderLine width={100} />
+      </View >
+
+      <View style={styles.bottomLoading}>
+        <PlaceholderLine width={40} />
+        <PlaceholderLine width={30} />
+      </View>
+    </Placeholder>
+  );
+};
+
+const renderEmptyList = () => (
+  <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>Không có sản phẩm</Text>
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -122,7 +156,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: AppStyles.colors.white,
     borderRadius: scaleWidth(10),
-    padding: scaleWidth(10),
+  },
+
+  containerItemLoading: {
+    width: scaleWidth(180),
+    width: scaleWidth(180),
+    height: scaleHeight(218),
+    backgroundColor: AppStyles.colors.white,
+    padding: 10,
+    borderRadius: scaleWidth(10),
+  },
+
+  topLoading: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '92%'
+  },
+
+  bottomLoading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
   },
   txtPrice: {
     color: AppStyles.colors.accent,

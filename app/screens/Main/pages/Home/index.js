@@ -26,26 +26,34 @@ import {
   ProductPromotionList,
   ServiceList,
 } from './widget';
+import { useQuery } from '@apollo/client';
+import { query } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const cart_id = useSelector((state) => state.cart?.cart_id);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
-  const navigation = useNavigation();
+  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN);
+
+
+  const _data = data ? data?.homeScreen : {}
+
   const onTogglePopup = () => setVisiblePopup(true);
   const onToggleDetail = () => showDetail(!visible_detail);
 
   const onCHangeScreen = (screen) => () => {
-    navigation.navigate(screen);
+    let params = { data: _data.news ? _data.news : [], loading, refetch };
+    navigation.navigate(screen, params);
   };
 
+
+
   React.useEffect(() => {
-
     if (!cart_id) dispatch(cart.createEmptyCart());
-
     setTimeout(() => {
       setVisiblePopup(true);
     }, 1000);
@@ -57,7 +65,9 @@ const HomePage = () => {
     <AppScrollViewIOSBounceColorsWrapper
       style={styles.container}
       topBounceColor={AppStyles.colors.accent}
-      bottomBounceColor={AppStyles.colors.button}>
+      bottomBounceColor={AppStyles.colors.button}
+
+    >
       <TopBarScreenLayout
         style={{ backgroundColor: 'transparent' }}
         topBar={<TopBarComponent />}>
@@ -105,11 +115,19 @@ const HomePage = () => {
             </ImageBackground>
           </View>
 
-          <ProductPromotionList />
+          <ProductPromotionList
+            loading={loading}
+            data={_data.promotions ? _data.promotions : []}
+          />
 
-          <BestSellerList openMenu={onCHangeScreen(MenuPageName)} />
+          <BestSellerList
+            loading={loading}
+            data={_data.best_sellers ? _data.best_sellers : []}
+            openMenu={onCHangeScreen(MenuPageName)} />
 
           <NewsList
+            loading={loading}
+            data={_data.news ? _data.news : []}
             openDetail={onToggleDetail}
             onCHangeScreen={onCHangeScreen(ScreenName.News)}
           />

@@ -30,3 +30,4 @@ import CustomMapView from './MapView';
 import ItemStore from './ItemStore';
 import PopupWebView from './PopupWebView';
 export { CustomPopupMenu, CustomMapView, ItemStore, PopupWebView };
+export * from './OrderItemLoading';

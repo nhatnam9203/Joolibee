@@ -1,24 +1,31 @@
 import React from 'react';
 import {
-  ScrollView,
+  Text,
   StyleSheet,
   View,
-  Image,
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import { Text } from 'react-native-paper';
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  Fade,
+} from 'rn-placeholder';
 import Carousel from 'react-native-snap-carousel';
-
-import { AppStyles, metrics, images } from '@theme';
+import { JollibeeImage } from "../../../../components";
+import { AppStyles, images } from '@theme';
 import { CustomButton } from '@components';
-import { scale } from '@utils';
+import { format, scale } from "@utils";
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
-const data = [1, 2, 3];
 
-const index = () => {
-  const renderItem = (item, index) => {
+const index = ({ data, loading }) => {
+
+  const renderItem = ({ item, index }) => {
+    const { price_range, image } = item;
+    const { minimum_price } = price_range || {};
+    const _price = format.jollibeeCurrency(minimum_price?.final_price);
     return (
       <View style={styles.wrapperItem}>
         <ImageBackground
@@ -30,7 +37,7 @@ const index = () => {
               AppStyles.fonts.medium_SVN,
               { color: AppStyles.colors.white },
             ]}>
-            50.000 đ
+            {_price}
           </Text>
         </ImageBackground>
 
@@ -38,11 +45,29 @@ const index = () => {
           onPress={() => alert('ads')}
           key={index + ''}
           style={styles.containerItem}>
-          <Image source={images['jollibee_combo']} style={styles.imageProduct} />
+          <JollibeeImage url={image?.url} style={styles.imageProduct} />
         </CustomButton>
       </View>
     );
   };
+
+  const renderItemLoading = () => {
+    return (
+      <Placeholder
+        Animation={Fade}
+        style={[styles.wrapperItem]}>
+
+        <View style={[
+          styles.containerItem,
+          loading && { borderColor: AppStyles.colors.disabled }
+        ]}>
+          <PlaceholderMedia style={styles.imageLoading} />
+        </View>
+
+      </Placeholder>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View
@@ -50,14 +75,15 @@ const index = () => {
           position: 'absolute',
         }}>
         <Carousel
-          data={data}
-          renderItem={renderItem}
+          data={loading ? [1, 2, 3] : data}
+          renderItem={loading ? renderItemLoading : renderItem}
+          keyExtractor={(_, index) => index + ''}
           sliderWidth={width}
           itemWidth={scaleWidth(175)}
           itemHeight={170}
           enableSnap={true}
           loop={true}
-          autoplay={true}
+          autoplay={!loading}
           autoplayInterval={5000}
           autoplayDelay={3000}
           removeClippedSubviews={false}
@@ -98,8 +124,8 @@ const styles = StyleSheet.create({
   price: {
     position: 'absolute',
     top: scaleHeight(7),
-    right: scaleWidth(-5),
-    width: scaleWidth(81),
+    right: scaleWidth(-10),
+    width: scaleWidth(90),
     height: scaleHeight(28),
     zIndex: 10000,
     justifyContent: 'center',
@@ -108,6 +134,10 @@ const styles = StyleSheet.create({
   imageProduct: {
     width: scaleWidth(124),
     height: scaleHeight(124),
+  },
+  imageLoading: {
+    width: '90%',
+    height: '90%'
   }
 });
 

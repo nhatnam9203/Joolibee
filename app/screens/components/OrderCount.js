@@ -3,10 +3,12 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { CustomInput } from '@components';
 import { images, AppStyles } from '@theme';
 
-export const OrderCount = () => {
+export const OrderCount = ({ defaultValue = 0, onPress }) => {
   return (
     <View style={styles.orderContentStyle}>
-      <TouchableOpacity style={styles.buttonOrderStyle}>
+      <TouchableOpacity
+        onPress={onPress(defaultValue + 1)}
+        style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_sub} />
       </TouchableOpacity>
       <CustomInput
@@ -15,12 +17,14 @@ export const OrderCount = () => {
         keyboardType="numeric"
         allowFontScaling={true}
         numberOfLines={1}
-        defaultValue="0"
+        defaultValue={defaultValue}
         multiline={false}
         clearTextOnFocus={true}
         maxLength={3}
       />
-      <TouchableOpacity style={styles.buttonOrderStyle}>
+      <TouchableOpacity
+        onPress={onPress(defaultValue - 1)}
+        style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_plus} />
       </TouchableOpacity>
     </View>

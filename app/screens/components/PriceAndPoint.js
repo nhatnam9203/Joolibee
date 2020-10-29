@@ -2,13 +2,18 @@ import React from 'react';
 import { AppStyles } from '@theme';
 import { translate } from '@localize';
 import { View, Text, StyleSheet } from 'react-native';
+import { format, scale } from "@utils";
 
-export const PriceAndPoint = ({ price, point }) => (
-  <View style={styles.priceContent}>
-    <Text style={styles.priceStyle}>{price}</Text>
-    <Text style={styles.pointStyle}>+ {`${point}`} điểm</Text>
-  </View>
-);
+export const PriceAndPoint = ({ price_range, point }) => {
+  const { minimum_price } = price_range || {};
+  const _price = format.jollibeeCurrency(minimum_price?.final_price);
+  return (
+    <View style={styles.priceContent}>
+      <Text style={styles.priceStyle}>{_price}</Text>
+      <Text style={styles.pointStyle}>+ {`${point}`} điểm</Text>
+    </View>
+  )
+};
 
 const styles = StyleSheet.create({
   priceStyle: {
