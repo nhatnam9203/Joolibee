@@ -48,14 +48,13 @@ const defaultData = [
 ];
 
 export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
-  const client = useApolloClient();
   const [refreshing, setRefreshing] = React.useState(false);
   const {
     loading,
     error,
     data = { categoryList: defaultData },
     refetch,
-  } = useQuery(MENU_LIST);
+  } = useQuery(MENU_LIST, { fetchPolicy: 'cache-first' });
 
   React.useEffect(() => {
     if (refreshing) {

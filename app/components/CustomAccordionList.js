@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-
+import CustomFlatList from './CustomFlatList';
 import Animated, { Transition, Transitioning } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -26,6 +26,12 @@ const ChevronIcon = ({ isOpen }) => {
   );
 };
 
+export const CustomAccordionListItemType = {
+  Radio: 'radio',
+  Multiline: 'checkbox',
+  None: 'none',
+};
+
 const CustomAccordionList = ({
   title,
   data = [],
@@ -33,17 +39,103 @@ const CustomAccordionList = ({
   headerTextStyle,
   headerStyle,
   renderItem,
+  renderSelectItem,
   style,
   required,
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(null);
+  const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
+
+  const selectedItem = (item) => {
+    const index = selectedListItem?.indexOf(item);
+
+    switch (type) {
+      case CustomAccordionListItemType.Multiline:
+        if (index < 0) {
+          selectedListItem?.push(item);
+          setSelectedListItem(selectedListItem);
+        }
+        break;
+      case CustomAccordionListItemType.Radio:
+      default:
+        selectedListItem.splice(0, selectedListItem.length);
+        if (index < 0) {
+          selectedListItem?.push(item);
+          setSelectedListItem(selectedListItem);
+        }
+        break;
+    }
+  };
+
+  const unSelectedItem = (item) => {
+    const index = selectedListItem?.indexOf(item);
+    selectedListItem?.splice(index, 1);
+    setSelectedListItem(selectedListItem);
+  };
+
+  const onRenderItem = ({ item }, index) => {
+    const selected = selectedListItem?.indexOf(item) > -1;
+    const onPress = () => {
+      switch (type) {
+        case CustomAccordionListItemType.Multiline:
+          selected ? unSelectedItem(item) : selectedItem(item);
+
+          break;
+        case CustomAccordionListItemType.Radio:
+        default:
+          selected && !required ? unSelectedItem(item) : selectedItem(item);
+          break;
+      }
+    };
+
+    return typeof renderItem === 'function' ? (
+      renderItem({
+        item,
+        index,
+        type,
+        onPress,
+        selected,
+      })
+    ) : (
+      <View />
+    );
+  };
+
+  const onRenderSelectedItem = () => {
+    return typeof renderSelectItem === 'function' &&
+      selectedListItem?.length > 0 ? (
+      renderSelectItem(selectedListItem)
+    ) : (
+      <View />
+    );
+  };
+
+  const renderListItem = () => (
+    <Animated.View style={styles.subListStyle}>
+      <CustomFlatList
+        data={data}
+        renderItem={onRenderItem}
+        keyExtractor={(item, index) => `${item.id}`}
+      />
+    </Animated.View>
+  );
 
   React.useEffect(() => {
     setOpen(required);
   }, [required]);
+
+  React.useEffect(() => {
+    if (data?.length > 0) {
+      data.sort((a, b) => a.position - b.position);
+      const result = data.find((x) => x.is_default === true);
+      if (result) {
+        selectedItem(result);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   return (
     <Transitioning.View
@@ -61,36 +153,12 @@ const CustomAccordionList = ({
           {!!title && (
             <Text style={headerTextStyle}>{`${title}`.toUpperCase()}</Text>
           )}
-
-          <ChevronIcon isOpen={open} />
+          <View style={styles.horizontal}>
+            {selectedItem && !open && onRenderSelectedItem()}
+            <ChevronIcon isOpen={open} />
+          </View>
         </TouchableOpacity>
-        {open && (
-          <Animated.View style={styles.subListStyle}>
-            {data.map((item, index) =>
-              renderItem ? (
-                renderItem(
-                  item,
-                  index,
-                  type,
-                  () => {
-                    if (selectedIndex === index) {
-                      {
-                        /* if (!required) setSelectedIndex(null); */
-                      }
-                    } else {
-                      setSelectedIndex(index);
-                    }
-                  },
-                  selectedIndex === index,
-                )
-              ) : (
-                <View style={styles.itemContent} key={item.id}>
-                  <Text style={styles.itemTextStyle}>{item.label}</Text>
-                </View>
-              ),
-            )}
-          </Animated.View>
-        )}
+        {open && renderListItem()}
       </View>
     </Transitioning.View>
   );
@@ -126,6 +194,12 @@ const styles = StyleSheet.create({
     width: Icon_Size,
     borderRadius: Icon_Size / 2,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 });

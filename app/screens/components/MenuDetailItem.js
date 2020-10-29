@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomCheckBox, CustomInput } from '@components';
 import { JollibeeImage } from './JollibeeImage';
+import { destructuring } from '@utils';
 
 export const MenuDetailItemSelectType = {
   Radio: 'radio',
@@ -14,9 +15,9 @@ export const MenuDetailItem = ({
   item,
   onPress,
   type = MenuDetailItemSelectType.Multiline,
-  selected,
+  selected = false,
 }) => {
-  const [radioChecked, setRadioChecked] = React.useState(false);
+  const [radioChecked, setRadioChecked] = React.useState(selected);
 
   const selectItem = (select) => {
     setRadioChecked(select);
@@ -26,18 +27,7 @@ export const MenuDetailItem = ({
     setRadioChecked(selected);
   }, [selected]);
 
-  React.useEffect(() => {
-    if (item.is_default) {
-      if (typeof onPress === 'function') {
-        onPress(item);
-      } else {
-        setRadioChecked(item.is_default);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item, item.is_default]);
-
-  const itemPress = () => {
+  const onPressItem = () => {
     if (typeof onPress === 'function') {
       onPress(item);
     } else {
@@ -45,7 +35,7 @@ export const MenuDetailItem = ({
     }
   };
 
-  const renderSelectType = (item) => {
+  const renderSelectType = () => {
     switch (type) {
       case MenuDetailItemSelectType.Multiline:
         return (
@@ -63,9 +53,12 @@ export const MenuDetailItem = ({
                 maxLength={3}
               />
             )}
+
             <CustomCheckBox
               normalColor={AppStyles.colors.accent}
               selectedColor={AppStyles.colors.accent}
+              value={radioChecked}
+              onValueChange={setRadioChecked}
             />
           </View>
         );
@@ -89,26 +82,62 @@ export const MenuDetailItem = ({
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={itemPress}
-      activeOpacity={0.8}>
+      onPress={onPressItem}
+      activeOpacity={0.8}
+      key={item.id}>
       <JollibeeImage
         style={styles.imageStyle}
-        url={item?.product?.image?.url}
+        url={destructuring.imageURLOfItem(item)}
         width={50}
         height="100%"
       />
       <View style={styles.textContentStyle}>
         <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
-          {item.label}
+          {item.label + (item.quantity > 1 ? ' x' + item.quantity : '')}
         </Text>
         {!!item?.price && (
           <Text style={styles.itemPriceStyle}>{`+ ${item.price}`}</Text>
         )}
       </View>
-      {renderSelectType(item)}
+      {renderSelectType()}
     </TouchableOpacity>
   );
 };
+
+const MAX_ITEMS_SHOW = 3;
+
+export const MenuOptionSelectedItem = React.memo(({ item, list }) => {
+  return list?.length > 0 ? (
+    <View style={styles.selectedContainer}>
+      {list.slice(0, MAX_ITEMS_SHOW).map((x, index) => (
+        <JollibeeImage
+          key={x.id?.toString()}
+          style={styles.imageSelectedStyle}
+          url={destructuring.imageURLOfItem(x)}
+          height="100%"
+          width={30}
+        />
+      ))}
+      {list.length > MAX_ITEMS_SHOW && (
+        <>
+          <Text>{`+ ${list.length - MAX_ITEMS_SHOW}`}</Text>
+        </>
+      )}
+    </View>
+  ) : (
+    <View style={styles.selectedContainer}>
+      <JollibeeImage
+        style={styles.imageSelectedStyle}
+        url={destructuring.imageURLOfItem(item)}
+        height="100%"
+        width={30}
+      />
+      {item.quantity > 1 && (
+        <Text style={styles.textSelectedStyle}>{' x ' + item.quantity}</Text>
+      )}
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -124,6 +153,12 @@ const styles = StyleSheet.create({
   imageStyle: {
     resizeMode: 'center',
     flex: 1,
+  },
+
+  imageSelectedStyle: {
+    resizeMode: 'center',
+    flex: 1,
+    backgroundColor: '#fff',
   },
 
   textContentStyle: {
@@ -142,6 +177,12 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     textAlignVertical: 'center',
+  },
+
+  textSelectedStyle: {
+    ...AppStyles.fonts.bold,
+    color: AppStyles.colors.text,
+    fontSize: 16,
   },
 
   itemPriceStyle: {
@@ -175,4 +216,18 @@ const styles = StyleSheet.create({
     height: '100%',
     textAlign: 'center',
   },
+
+  selectedContainer: {
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+
+  // imageSelectedStyle: { position: 'relative' },
 });

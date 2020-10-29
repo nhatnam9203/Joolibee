@@ -28,12 +28,7 @@ const Loading = ({ isLoading, onCancelLoading, transparent = false }) => {
         // eslint-disable-next-line react-native/no-inline-styles
         { backgroundColor: transparent ? 'transparent' : '#00000060' },
       ]}>
-      <Spinner
-        style={styles.spinner}
-        size={100}
-        type="Circle"
-        color="#E31837"
-      />
+      <Spinner style={styles.spinner} size={30} type="Circle" color="#E31837" />
     </View>
   ) : (
     []

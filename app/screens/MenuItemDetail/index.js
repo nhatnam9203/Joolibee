@@ -3,19 +3,31 @@ import { GCC } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
-import { format } from '@utils';
+import { format, destructuring } from '@utils';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ButtonCC, JollibeeImage, MenuDetailItem } from '../components';
+import {
+  ButtonCC,
+  JollibeeImage,
+  MenuDetailItem,
+  MenuOptionSelectedItem,
+} from '../components';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
   const [quantity, setQuantity] = React.useState(1);
+  const [price, setPrice] = React.useState(0);
 
-  const RenderMainSection = (itemProps) => {
+  const onCalculatePrice = ({ price_range }) => {
+    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+
+    setPrice(sellPrice);
+  };
+
+  const renderMainSection = (itemProps) => {
     const { image, name, point, price_range } = itemProps;
-    const { maximum_price, minimum_price } = price_range || {};
+    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
     return (
       <View style={styles.header}>
@@ -33,14 +45,14 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
             {name}
           </Text>
           <View style={styles.priceContent}>
-            {maximum_price && (
+            {showPrice && (
               <Text style={styles.txtFrontDiscountStyle}>
-                {format.jollibeeCurrency(maximum_price?.final_price)}
+                {format.jollibeeCurrency(showPrice)}
               </Text>
             )}
-            {minimum_price && (
+            {sellPrice && (
               <Text style={styles.txtPriceStyle}>
-                {format.jollibeeCurrency(minimum_price?.final_price)}
+                {format.jollibeeCurrency(sellPrice)}
               </Text>
             )}
             {point > 0 && (
@@ -54,20 +66,25 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const renderOptionsItem = (item, index, type, onPress, selected) => (
+  const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
     <MenuDetailItem
-      onPress={onPress}
       item={item}
-      selected={selected}
-      key={item.id}
+      key={`${index}`}
       type={type}
+      onPress={onPress}
+      selected={selected}
     />
+  );
+
+  const onRenderSelectedItem = ([first, ...arr]) => (
+    <MenuOptionSelectedItem item={first} list={[first, ...arr]} />
   );
 
   const renderItem = (item, index) => {
     const {
       item: { title, options, type, position, required },
     } = item;
+
     return (
       <CustomAccordionList
         title={title}
@@ -79,6 +96,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}
         renderItem={renderOptionsItem}
+        renderSelectItem={onRenderSelectedItem}
       />
     );
   };
@@ -121,9 +139,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.container}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderMainSection={RenderMainSection}
+          renderMainSection={renderMainSection}
           renderItem={renderItem}
           renderFooter={renderFooter}
+          onCalculatePrice={onCalculatePrice}
         />
       </View>
 
@@ -138,7 +157,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
-          <Text style={styles.txtPriceStyle}>0.00 đ</Text>
+          <Text style={styles.txtPriceStyle}>
+            {format.jollibeeCurrency(price)}
+          </Text>
         </View>
         <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
