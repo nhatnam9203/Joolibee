@@ -26,6 +26,12 @@ const ChevronIcon = ({ isOpen }) => {
   );
 };
 
+export const CustomAccordionListItemType = {
+  Radio: 'radio',
+  Multiline: 'checkbox',
+  None: 'none',
+};
+
 const CustomAccordionList = ({
   title,
   data = [],
@@ -39,13 +45,49 @@ const CustomAccordionList = ({
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
-  const [selectedItem, setSelectedItem] = React.useState(null);
+  const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
 
+  const selectedItem = (item) => {
+    const index = selectedListItem?.indexOf(item);
+
+    switch (type) {
+      case 'check_box':
+        selected ? unSelectedItem(item) : selectedItem(item);
+
+        break;
+      case 'radio':
+      default:
+        selected && !required ? unSelectedItem(item) : selectedItem(item);
+        break;
+    }
+
+    if (index < 0) {
+      selectedListItem?.push(item);
+      setSelectedListItem(selectedListItem);
+    }
+  };
+
+  const unSelectedItem = (item) => {
+    const index = selectedListItem?.indexOf(item);
+    selectedListItem?.splice(index, 1);
+    setSelectedListItem(selectedListItem);
+  };
+
   const onRenderItem = ({ item }, index) => {
-    const selected = item?.id === selectedItem?.id;
-    const onPress = () =>
-      selected && !required ? setSelectedItem(null) : setSelectedItem(item);
+    const selected = selectedListItem?.indexOf(item) > -1;
+    const onPress = () => {
+      switch (type) {
+        case 'check_box':
+          selected ? unSelectedItem(item) : selectedItem(item);
+
+          break;
+        case 'radio':
+        default:
+          selected && !required ? unSelectedItem(item) : selectedItem(item);
+          break;
+      }
+    };
 
     return typeof renderItem === 'function' ? (
       renderItem({
@@ -61,8 +103,9 @@ const CustomAccordionList = ({
   };
 
   const onRenderSelectedItem = () => {
-    return typeof renderSelectItem === 'function' ? (
-      renderSelectItem(selectedItem)
+    return typeof renderSelectItem === 'function' &&
+      selectedListItem?.length > 0 ? (
+      renderSelectItem(selectedListItem)
     ) : (
       <View />
     );
@@ -87,9 +130,10 @@ const CustomAccordionList = ({
       data.sort((a, b) => a.position - b.position);
       const result = data.find((x) => x.is_default === true);
       if (result) {
-        setSelectedItem(result);
+        selectedItem(result);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -109,7 +153,7 @@ const CustomAccordionList = ({
             <Text style={headerTextStyle}>{`${title}`.toUpperCase()}</Text>
           )}
           <View style={styles.horizontal}>
-            {selectedItem && onRenderSelectedItem()}
+            {selectedItem && !open && onRenderSelectedItem()}
             <ChevronIcon isOpen={open} />
           </View>
         </TouchableOpacity>

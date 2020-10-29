@@ -3,7 +3,7 @@ import { GCC } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
-import { format } from '@utils';
+import { format, destructuring } from '@utils';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {
@@ -17,10 +17,12 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
   const [quantity, setQuantity] = React.useState(1);
+  const [price, setPrice] = React.useState(0);
 
   const RenderMainSection = (itemProps) => {
     const { image, name, point, price_range } = itemProps;
-    const { maximum_price, minimum_price } = price_range || {};
+    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+    setPrice(sellPrice);
 
     return (
       <View style={styles.header}>
@@ -38,14 +40,14 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
             {name}
           </Text>
           <View style={styles.priceContent}>
-            {maximum_price && (
+            {showPrice && (
               <Text style={styles.txtFrontDiscountStyle}>
-                {format.jollibeeCurrency(maximum_price?.final_price)}
+                {format.jollibeeCurrency(showPrice)}
               </Text>
             )}
-            {minimum_price && (
+            {sellPrice && (
               <Text style={styles.txtPriceStyle}>
-                {format.jollibeeCurrency(minimum_price?.final_price)}
+                {format.jollibeeCurrency(sellPrice)}
               </Text>
             )}
             {point > 0 && (
@@ -69,12 +71,16 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     />
   );
 
-  const onRenderSelectedItem = (item) => <MenuOptionSelectedItem item={item} />;
+  const onRenderSelectedItem = ([first, ...arr]) => (
+    <MenuOptionSelectedItem item={first} list={[first, ...arr]} />
+  );
 
   const renderItem = (item, index) => {
     const {
       item: { title, options, type, position, required },
     } = item;
+
+    Logger.debug(type, 'CustomAccordionList > type');
 
     return (
       <CustomAccordionList
@@ -147,7 +153,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
-          <Text style={styles.txtPriceStyle}>0.00 đ</Text>
+          <Text style={styles.txtPriceStyle}>
+            {format.jollibeeCurrency(price)}
+          </Text>
         </View>
         <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
