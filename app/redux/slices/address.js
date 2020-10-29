@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { mutation, graphQlClient } from '@graphql';
 import { showLoading, hideLoading } from './app';
+import { useApolloClient } from '@apollo/client';
 
 const KEY_CONSTANT = 'account';
 
@@ -8,8 +9,10 @@ const KEY_CONSTANT = 'account';
 export const signUp = createAsyncThunk(
   `${KEY_CONSTANT}/signUp`,
   async (input, { dispatch }) => {
+    const client = useApolloClient();
+
     dispatch(showLoading());
-    const response = await graphQlClient.mutate({
+    const response = await client.mutate({
       mutation: mutation.SIGN_UP,
       variables: input,
     });
@@ -23,8 +26,10 @@ export const signIn = createAsyncThunk(
   `${KEY_CONSTANT}/signIn`,
   async (input, { dispatch }) => {
     Logger.log(input, 'signIn');
+    const client = useApolloClient();
+
     dispatch(showLoading());
-    const response = await graphQlClient.mutate({
+    const response = await client.mutate({
       mutation: mutation.SIGN_IN,
       variables: input,
     });
