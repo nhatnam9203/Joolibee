@@ -1,49 +1,33 @@
 import Config from 'react-native-config';
 import NavigationService from '../navigation/NavigationService';
 import { get, StorageKey, remove } from '@storage';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloLink,
-  HttpLink,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { setContext } from '@apollo/client/link/context';
+// import { setContext } from '@apollo/client/link/context';
+import { InMemoryCache } from '@apollo/client/core';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
-const cache = new InMemoryCache();
+export const cache = new InMemoryCache();
 
-const authLink = setContext(async (req, { headers }) => {
-  let myHeaders = headers;
-  if (!headers) {
-    myHeaders = {
-      'Content-Type': 'application/json',
-      credentials: 'same-origin',
-      Accept: 'application/json',
-      Store: 'en',
-    };
-  }
-
+const authLink = new ApolloLink(async (operation, forward) => {
   // get auth token
+  let jwt;
   const jwtObject = await get(StorageKey.Token);
-
   if (jwtObject) {
     const key = jwtObject[StorageKey.Token];
-    const jwt = jwtObject[key];
-    return {
-      headers: {
-        ...myHeaders,
-        Authorization: jwt ? `Bearer ${jwt}` : '',
-        // Authorization: 'Basic bGV2aW5jaToxcWF6QFdTWA==',
-      },
-    };
-  } else {
-    return {
-      headers: myHeaders,
-    };
+    jwt = jwtObject[key];
   }
-});
 
+  operation.setContext(({ headers }) => ({
+    headers: {
+      authorization: jwt ? `Bearer ${jwt}` : '',
+      Store: 'en',
+      ...headers,
+    },
+  }));
+
+  return forward(operation);
+});
 /**
  * Error Handle - graphQLErrors/networkError
  */
@@ -108,7 +92,33 @@ const errorLink = onError(
   },
 );
 
-const link = ApolloLink.from([authLink, errorLink, httpLink]);
+const timeStartLink = new ApolloLink((operation, forward) => {
+  operation.setContext({ start: new Date() });
+  // Logger.debug('operation', `Start Request -----> ${operation.operationName}`);
+  return forward(operation);
+});
+
+const logTimeLink = new ApolloLink((operation, forward) => {
+  return forward(operation).map((data) => {
+    // data from a previous link
+    const time = new Date() - operation.getContext().start;
+
+    Logger.debug(
+      `Complete in ${(time / 1000).toFixed(2)} s`,
+      `End Request -----> ${operation.operationName}`,
+    );
+
+    return data;
+  });
+});
+
+const link = ApolloLink.from([
+  timeStartLink,
+  authLink,
+  logTimeLink,
+  httpLink,
+  errorLink,
+]);
 
 const defaultOptions = {
   watchQuery: {
@@ -124,10 +134,9 @@ const defaultOptions = {
   },
 };
 
-const graphQlClient = new ApolloClient({
-  link,
-  cache,
-  defaultOptions,
-});
-
-export default graphQlClient;
+export const graphQlClient = (persistCache) =>
+  new ApolloClient({
+    link,
+    cache: persistCache ?? cache,
+    defaultOptions,
+  });

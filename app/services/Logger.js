@@ -7,11 +7,12 @@ import Config from 'react-native-config';
  */
 function info(message, tag) {
   if (Config.NODE_ENV !== 'production') {
-    console.info('>>>  ', tag);
+    console.log('\n');
+    console.info('[Jollibee]  ', tag);
     console.info(
       typeof message !== 'string' ? JSON.stringify(message) : message,
     );
-    console.info(' \n');
+    console.log('\n');
   }
 }
 
@@ -22,11 +23,12 @@ function info(message, tag) {
  */
 function log(message, tag) {
   if (Config.NODE_ENV !== 'production') {
-    console.log('>>>  ', tag);
+    console.log('\n');
+    console.log('[Jollibee]  ', tag);
     console.log(
       typeof message !== 'string' ? JSON.stringify(message) : message,
     );
-    console.log(' ========================\n');
+    console.log('\n');
   }
 }
 
@@ -37,11 +39,12 @@ function log(message, tag) {
  */
 function debug(message, tag) {
   if (Config.NODE_ENV !== 'production') {
-    console.log('>>>  ', tag);
+    console.log('\n');
+    console.log('[Jollibee]  ', tag);
     console.debug(
       typeof message !== 'string' ? JSON.stringify(message) : message,
     );
-    console.log(' ========================\n');
+    console.log('\n');
   }
 }
 
@@ -52,11 +55,12 @@ function debug(message, tag) {
  */
 function error(message, tag) {
   if (Config.NODE_ENV !== 'production') {
-    console.log('>>>  ', tag);
+    console.log('\n');
+    console.log('[Jollibee]  ', tag);
     console.error(
       typeof message !== 'string' ? JSON.stringify(message) : message,
     );
-    console.log(' ========================\n');
+    console.log('\n');
   }
 }
 

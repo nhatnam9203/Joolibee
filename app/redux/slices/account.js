@@ -2,7 +2,9 @@ import { graphQlClient, mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
-import { cart } from "./index";
+import { cart } from './index';
+import { useApolloClient } from '@apollo/client';
+
 const KEY_CONSTANT = 'account';
 
 const initialState = {
@@ -18,7 +20,9 @@ const initialState = {
 const signUp = createAsyncThunk(
   `${KEY_CONSTANT}/signUp`,
   async (input, { dispatch }) => {
-    const response = await graphQlClient.mutate({
+    const client = useApolloClient();
+
+    const response = await client.mutate({
       mutation: mutation.SIGN_UP,
       variables: input,
     });
@@ -29,7 +33,9 @@ const signUp = createAsyncThunk(
 const signIn = createAsyncThunk(
   `${KEY_CONSTANT}/signIn`,
   async (input, { dispatch }) => {
-    const response = await graphQlClient.mutate({
+    const client = useApolloClient();
+
+    const response = await client.mutate({
       mutation: mutation.SIGN_IN,
       variables: input,
     });
@@ -40,13 +46,15 @@ const signIn = createAsyncThunk(
 const feedBack = createAsyncThunk(
   `${KEY_CONSTANT}/feedBack`,
   async (input, { dispatch }) => {
-    const response = await graphQlClient.mutate({
+    const client = useApolloClient();
+
+    const response = await client.mutate({
       mutation: mutation.FEED_BACK,
-      variables: input
+      variables: input,
     });
-    return response
-  }
-)
+    return response;
+  },
+);
 
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
@@ -55,8 +63,8 @@ const accountSlice = createSlice({
     signOutRequest: (state, action) => {
       state.user = initialState.user;
     },
-    clearSignupState(state, action) { },
-    clearSignInState(state, action) { },
+    clearSignupState(state, action) {},
+    clearSignInState(state, action) {},
 
     showQRCode(state, action) {
       state.isShowQRCode = true;
@@ -136,7 +144,6 @@ const accountSlice = createSlice({
     [feedBack.rejected]: (state, action) => {
       Logger.info(action, 'feedBack rejected');
     },
-
   },
 });
 

@@ -28,8 +28,10 @@ import {
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import GraphErrorHandler from './GraphErrorHandler';
-import { graphQlClient } from './graphql';
+import { graphQlClient, cache } from './graphql';
 import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
+import { persistCache } from 'apollo3-cache-persist';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const fontConfig = {
   default: {
@@ -74,12 +76,28 @@ let codePushOptions = {
 };
 
 let App = () => {
+  const [client, setClient] = React.useState(null);
+
   React.useEffect(() => {
-    SplashScreen.hide();
+    persistCache({
+      cache,
+      storage: AsyncStorage,
+      trigger: 'background',
+    }).then(() => {
+      setClient(graphQlClient(cache));
+    });
   }, []);
 
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, [client]);
+
+  if (!client) {
+    return <></>;
+  }
+
   return (
-    <ApolloProvider client={graphQlClient}>
+    <ApolloProvider client={client}>
       <StoreProvider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <LangProvider>

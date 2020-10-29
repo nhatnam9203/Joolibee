@@ -90,12 +90,14 @@ export const QueryProductDetail = ({
   renderMainSection,
   renderFooter,
   productItem: { sku },
+  onCalculatePrice,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [itemDetail, setItemDetail] = React.useState(null);
 
   const { loading, error, data, refetch } = useQuery(PRODUCT, {
     variables: { sku },
+    fetchPolicy: 'cache-first',
   });
 
   React.useEffect(() => {
@@ -120,6 +122,12 @@ export const QueryProductDetail = ({
       setItemDetail(Object.assign({}, clone, items));
     }
   }, [data, refreshing]);
+
+  React.useEffect(() => {
+    if (typeof onCalculatePrice === 'function' && itemDetail) {
+      onCalculatePrice(itemDetail);
+    }
+  }, [itemDetail, onCalculatePrice]);
 
   const handleRefresh = () => {
     setRefreshing(true);

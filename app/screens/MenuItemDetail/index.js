@@ -19,10 +19,15 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const [quantity, setQuantity] = React.useState(1);
   const [price, setPrice] = React.useState(0);
 
-  const RenderMainSection = (itemProps) => {
+  const onCalculatePrice = ({ price_range }) => {
+    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+
+    setPrice(sellPrice);
+  };
+
+  const renderMainSection = (itemProps) => {
     const { image, name, point, price_range } = itemProps;
     const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
-    setPrice(sellPrice);
 
     return (
       <View style={styles.header}>
@@ -80,8 +85,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       item: { title, options, type, position, required },
     } = item;
 
-    Logger.debug(type, 'CustomAccordionList > type');
-
     return (
       <CustomAccordionList
         title={title}
@@ -136,9 +139,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.container}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderMainSection={RenderMainSection}
+          renderMainSection={renderMainSection}
           renderItem={renderItem}
           renderFooter={renderFooter}
+          onCalculatePrice={onCalculatePrice}
         />
       </View>
 

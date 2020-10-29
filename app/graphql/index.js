@@ -1,11 +1,6 @@
-import graphQlClient from './client';
+export * from './client';
 import * as mutation from './mutations';
+
 import * as query from './queries';
 import * as GCC from './components';
-
-module.exports = {
-  graphQlClient,
-  mutation,
-  query,
-  GCC,
-};
+export { mutation, query, GCC };

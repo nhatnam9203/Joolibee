@@ -52,19 +52,20 @@ const CustomAccordionList = ({
     const index = selectedListItem?.indexOf(item);
 
     switch (type) {
-      case 'check_box':
-        selected ? unSelectedItem(item) : selectedItem(item);
-
+      case CustomAccordionListItemType.Multiline:
+        if (index < 0) {
+          selectedListItem?.push(item);
+          setSelectedListItem(selectedListItem);
+        }
         break;
-      case 'radio':
+      case CustomAccordionListItemType.Radio:
       default:
-        selected && !required ? unSelectedItem(item) : selectedItem(item);
+        selectedListItem.splice(0, selectedListItem.length);
+        if (index < 0) {
+          selectedListItem?.push(item);
+          setSelectedListItem(selectedListItem);
+        }
         break;
-    }
-
-    if (index < 0) {
-      selectedListItem?.push(item);
-      setSelectedListItem(selectedListItem);
     }
   };
 
@@ -78,11 +79,11 @@ const CustomAccordionList = ({
     const selected = selectedListItem?.indexOf(item) > -1;
     const onPress = () => {
       switch (type) {
-        case 'check_box':
+        case CustomAccordionListItemType.Multiline:
           selected ? unSelectedItem(item) : selectedItem(item);
 
           break;
-        case 'radio':
+        case CustomAccordionListItemType.Radio:
         default:
           selected && !required ? unSelectedItem(item) : selectedItem(item);
           break;
