@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  Image
 } from 'react-native';
 import {
   Placeholder,
@@ -15,12 +16,12 @@ import { Text } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import { JollibeeImage } from "../../../../components";
 import { AppStyles } from '@theme';
-import { CustomButton } from '@components';
+import { CustomButton, CustomHTML } from '@components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const index = ({ openDetail, onCHangeScreen, data }) => {
+const index = ({ openDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
 
@@ -45,20 +46,21 @@ const index = ({ openDetail, onCHangeScreen, data }) => {
       </View>
 
       <Carousel
-        data={data}
-        renderItem={(item, index) => renderItem(item, index, openDetail)}
+        keyExtractor={(item, index) => index + ''}
+        data={loading ? [1, 2, 3] : data}
+        renderItem={(item, index) => loading ? renderItemLoading() : renderItem(item, index, openDetail)}
         sliderWidth={width}
         itemWidth={width}
-        itemHeight={scaleHeight(384)}
         hasParallaxImages={true}
         enableSnap={true}
         loop={true}
-        autoplay={true}
+        autoplay={!loading}
         autoplayInterval={5000}
         autoplayDelay={3000}
         removeClippedSubviews={false}
         useScrollView={true}
         lockScrollWhileSnapping={true}
+        horizontal
         loopClonesPerSide={2}
       />
     </View>
@@ -66,35 +68,71 @@ const index = ({ openDetail, onCHangeScreen, data }) => {
 };
 
 const renderItem = (item, index, onPress) => {
-  const { title, featured_image } = item || {};
+  const { title, featured_image, short_content } = item?.item || {};
   return (
     <View style={styles.wrapperItem}>
       <View
-        key={index + ''}
         style={[styles.containerItem, AppStyles.styles.shadow]}>
-        <JollibeeImage url={featured_image} style={styles.imgProduct} />
+        <View style={styles.imgLoading}>
+          <Image source={{ uri: "http://dev.jollibee.levincitest.com/media/mageplaza/bannerslider/banner/image/e/a/ea8ad72ff489c5-ba49262adc1c26427f0d_1.png" }} style={styles.imgProduct} />
+        </View>
+
 
         <View style={styles.content}>
           <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
-            {title?.toUpperCase()}
+            {title}
           </Text>
 
-          <Text style={[AppStyles.fonts.text, styles.txtContent]}>
-            Năm nay, Jollibee Việt Nam đưa vào vận hành nhà máy mới tại Long An
-            và nhận được...
-          </Text>
+          <CustomHTML
+            html={short_content}
+            renderers={{
+              div: (...props) => {
+                return (
+                  <Text
+                    key={props[3].key}
+                    style={styles.txtContent}
+                    numberOfLines={3}>
+                    {props[3]?.rawChildren[0].data}
+                  </Text>
+                )
+              }
+            }}
+          />
         </View>
 
-        <CustomButton
-          onPress={onPress}
-          label={'XEM THÊM'}
-          width={134}
-          height={43}
-          bgColor={AppStyles.colors.button}
-          style={styles.btn}
-        />
+        <View style={styles.btn}>
+          <CustomButton
+            onPress={onPress}
+            label={'XEM THÊM'}
+            width={134}
+            height={43}
+            bgColor={AppStyles.colors.button}
+          />
+        </View>
       </View>
     </View>
+  );
+};
+
+const renderItemLoading = () => {
+  return (
+    <Placeholder
+      Animation={Fade}
+      style={styles.wrapperItem}>
+
+      <View style={styles.containerItem}>
+        <View style={styles.imgLoading}>
+          <PlaceholderMedia style={styles.imgProduct} />
+        </View>
+
+        <PlaceholderLine height={15} />
+        <PlaceholderLine height={10} style={{ alignSelf: 'flex-start' }} />
+        <PlaceholderLine height={10} width='70%' style={{ alignSelf: 'flex-start' }} />
+        <PlaceholderLine height={10} width='70%' style={{ alignSelf: 'flex-start' }} />
+        <PlaceholderLine height={40} width={35} style={styles.btnLoading} />
+      </View>
+
+    </Placeholder>
   );
 };
 
@@ -105,7 +143,7 @@ const styles = StyleSheet.create({
     top: -50,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
-    paddingVertical: scaleHeight(20),
+
   },
 
   containerTop: {
@@ -118,15 +156,15 @@ const styles = StyleSheet.create({
 
   wrapperItem: {
     width: '100%',
-    height: scaleHeight(390),
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: scaleHeight(60),
+    paddingBottom: scaleHeight(40),
+    alignItems: 'flex-end',
     paddingHorizontal: 15,
   },
 
   containerItem: {
     width: '100%',
-    height: scaleHeight(344),
+    height: scaleHeight(320),
     alignItems: 'center',
     backgroundColor: AppStyles.colors.white,
     borderRadius: scaleWidth(10),
@@ -135,7 +173,7 @@ const styles = StyleSheet.create({
 
   content: {
     paddingHorizontal: scaleWidth(10),
-    top: scaleHeight(-20),
+    top: scaleHeight(-25),
   },
 
   txttitle: {
@@ -145,20 +183,34 @@ const styles = StyleSheet.create({
   },
   txtContent: {
     color: AppStyles.colors.text,
+    textAlign: 'left',
     fontSize: scaleWidth(14),
-    marginTop: scaleHeight(8),
+    ...AppStyles.fonts.text,
+
   },
   imgProduct: {
     width: scaleWidth(281),
     height: scaleHeight(174),
-    resizeMode: 'stretch',
-    top: scaleHeight(-40),
+    // resizeMode: 'center',
+    top: scaleHeight(-60),
+    position: 'absolute',
     zIndex: 100000,
   },
   btn: {
-    alignSelf: 'flex-start',
-    marginTop: scaleHeight(10),
+    position: 'absolute',
+    bottom: 20,
+    left: 15
   },
+  btnLoading: {
+    alignSelf: 'flex-start',
+    borderRadius: 20,
+    marginTop: 10
+  },
+  imgLoading: {
+    width: scaleWidth(281),
+    height: scaleHeight(130),
+  },
+
   txtSeeAll: {
     textDecorationLine: 'underline',
     ...AppStyles.fonts.bold,

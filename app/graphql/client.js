@@ -20,7 +20,7 @@ const authLink = setContext(async (req, { headers }) => {
       'Content-Type': 'application/json',
       credentials: 'same-origin',
       Accept: 'application/json',
-      Store: 'en',
+      // Store: 'en',
     };
   }
 

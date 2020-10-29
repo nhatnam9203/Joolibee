@@ -41,18 +41,19 @@ const HomePage = () => {
 
 
   const _data = data ? data?.homeScreen : {}
-  console.log('_data', _data)
 
   const onTogglePopup = () => setVisiblePopup(true);
   const onToggleDetail = () => showDetail(!visible_detail);
 
   const onCHangeScreen = (screen) => () => {
-    navigation.navigate(screen);
+    let params = { data: _data.news ? _data.news : [], loading, refetch };
+    navigation.navigate(screen, params);
   };
+
+
 
   React.useEffect(() => {
     if (!cart_id) dispatch(cart.createEmptyCart());
-
     setTimeout(() => {
       setVisiblePopup(true);
     }, 1000);
@@ -64,7 +65,9 @@ const HomePage = () => {
     <AppScrollViewIOSBounceColorsWrapper
       style={styles.container}
       topBounceColor={AppStyles.colors.accent}
-      bottomBounceColor={AppStyles.colors.button}>
+      bottomBounceColor={AppStyles.colors.button}
+
+    >
       <TopBarScreenLayout
         style={{ backgroundColor: 'transparent' }}
         topBar={<TopBarComponent />}>
@@ -123,6 +126,7 @@ const HomePage = () => {
             openMenu={onCHangeScreen(MenuPageName)} />
 
           <NewsList
+            loading={loading}
             data={_data.news ? _data.news : []}
             openDetail={onToggleDetail}
             onCHangeScreen={onCHangeScreen(ScreenName.News)}

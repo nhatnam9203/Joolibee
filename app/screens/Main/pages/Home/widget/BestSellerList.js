@@ -20,7 +20,6 @@ const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
 const index = ({ openMenu, data, loading }) => {
-  console.log('loading', loading)
 
   return (
     <View style={styles.container}>
@@ -55,6 +54,7 @@ const index = ({ openMenu, data, loading }) => {
         <Carousel
           data={loading ? [1, 2, 3, 4] : data}
           renderItem={loading ? renderItemLoading : renderItem}
+          keyExtractor={(item, index) => index + ''}
           sliderWidth={width}
           itemWidth={scaleWidth(180)}
           itemHeight={scaleHeight(218)}

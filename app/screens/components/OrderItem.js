@@ -10,6 +10,10 @@ const IMAGE_SIZE = 69;
 
 export const OrderItem = ({ item, onPress, index, shadow }) => {
   const { product = {}, quantity } = item;
+  const handleUpdateProduct = (qty) => () => {
+    item['quantity'] = qty;
+    onPress(item)
+  }
   return (
     <FlatListItemWithImgHorizontal
       imgStyle={styles.imageStyle}
@@ -28,16 +32,18 @@ export const OrderItem = ({ item, onPress, index, shadow }) => {
             fontSize={15}
             style={styles.titleStyle}
           />
-          <Text style={styles.txtDescStyle}>{product.name}</Text>
+          <Text style={styles.txtDescStyle}>{product.meta_description}</Text>
         </View>
-        {/* <PriceAndPoint style={styles.priceStyle} {...item} /> */}
+        <PriceAndPoint style={styles.priceStyle} {...product} />
       </View>
       <View style={styles.bottomStyle}>
-        <OrderCount defaultValue={quantity + ''} />
-        <TouchableOpacity style={styles.buttonStyle}>
+        <OrderCount defaultValue={quantity + ''} onPress={handleUpdateProduct} />
+        <TouchableOpacity
+          style={styles.buttonStyle}>
           <Image source={images.icons.ic_order_edit} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonStyle}>
+        <TouchableOpacity
+          style={styles.buttonStyle}>
           <Image source={images.icons.ic_delete} />
         </TouchableOpacity>
       </View>

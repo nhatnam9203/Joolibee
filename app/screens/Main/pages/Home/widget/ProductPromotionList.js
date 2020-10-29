@@ -77,6 +77,7 @@ const index = ({ data, loading }) => {
         <Carousel
           data={loading ? [1, 2, 3] : data}
           renderItem={loading ? renderItemLoading : renderItem}
+          keyExtractor={(_, index) => index + ''}
           sliderWidth={width}
           itemWidth={scaleWidth(175)}
           itemHeight={170}

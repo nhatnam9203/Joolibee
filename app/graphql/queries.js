@@ -118,10 +118,27 @@ query ($cartId : String!)
       product {
         name
         sku
-      }
-
+        point
+        meta_description
+        price_range{
+            maximum_price{
+                final_price {
+                    value
+                    currency
+                }
+            }
+             minimum_price{
+                final_price {
+                    value
+                    currency
+                }
+            }
+}
+        image {
+            url
+        }
+    }
       quantity
-     
     }
     available_payment_methods {
       code

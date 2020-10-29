@@ -4,13 +4,14 @@ import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View, RefreshControl, Text } from 'react-native';
-import { ButtonCC, OrderItem } from '../components';
+import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 import { useQuery } from '@apollo/client';
 import { query } from '@graphql';
 import { format } from "@utils";
+import { cart, app } from '@slices';
 
 export const PopupOrderList = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
@@ -18,21 +19,17 @@ export const PopupOrderList = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
   const [refreshing, setRefreshing] = React.useState(false)
   const cart_id = useSelector((state) => state.cart?.cart_id);
-
   // --------- handle fetch data cart -----------
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id }
   });
-
-  const carts = data ? data.cart : { items: [], prices: { grand_total: {} } }
-
-  const { items, prices: { grand_total } } = carts;
+  const { items, prices: { grand_total } } = data?.cart || { items: [], prices: { grand_total: {} } };
 
   const total = format.jollibeeCurrency({ value: grand_total.value, currency: 'VND' });
   // -------- handle fetch data cart -----------
 
   const renderItem = ({ item, index }) => (
-    <OrderItem item={item} key={item.id + ''} shadow={false} />
+    <OrderItem item={item} key={item.id + ''} shadow={false} onPress={updateCart} />
   );
   const renderEmptyList = () => (
     <View style={{ padding: 15, alignItems: 'center' }}>
@@ -57,7 +54,15 @@ export const PopupOrderList = ({ visible, onToggle }) => {
     popupRef.current.forceQuit();
   };
 
-
+  const updateCart = React.useCallback(
+    async (item) => {
+      console.log('item', item)
+      // await dispatch(app.showLoading());
+      // await dispatch(cart.updateCartProduct(item, { dispatch }));
+      // await dispatch(app.hideLoading());
+    },
+    [dispatch],
+  );
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -73,9 +78,9 @@ export const PopupOrderList = ({ visible, onToggle }) => {
         <View style={styles.bodyList}>
           {
             <CustomFlatList
-              data={items}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id + ''}
+              data={loading ? [1, 2, 3, 4] : items}
+              renderItem={loading ? OrderItemLoading : renderItem}
+              keyExtractor={(item, index) => index + ''}
               ItemSeparatorComponent={() => (
                 <View style={AppStyles.styles.rowSeparator} />
               )}

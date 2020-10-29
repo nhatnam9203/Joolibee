@@ -5,6 +5,7 @@ export { default as CustomButtonImage } from './CustomButtonImage';
 export { default as CustomCalendarPicker } from './CustomCalendarPicker';
 export { default as CustomCheckBox } from './CustomCheckBox';
 export { default as CustomFlatList } from './CustomFlatList';
+export { default as CustomHTML } from './CustomHTML';
 export { default as CustomInput } from './CustomInput';
 export * from './CustomModal';
 export { default as CustomPickerSelect } from './CustomPickerSelect';

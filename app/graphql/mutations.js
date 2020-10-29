@@ -71,5 +71,35 @@ mutation {
 }
 `
 
+export const UPDATE_CART_PRODUCT = gql`
+mutation(
+  $cart_id: String!
+  $cart_items: [CartItemInput]!
+  ) {
+  updateCartItems(
+    input: {
+      cart_id: $cart_id,
+      cart_items: $cart_items
+    }
+  ){
+    cart {
+      items {
+        id
+        product {
+          name
+        }
+        quantity
+      }
+      prices {
+        grand_total{
+          value
+          currency
+        }
+      }
+    }
+  }
+}
+`
+
 
 
