@@ -106,20 +106,20 @@ export const QueryProductDetail = ({
     }
 
     if (data) {
-      Logger.info(data, 'QueryProductDetail');
-
       const {
         products: {
           items: [first],
         },
       } = data;
 
-      let clone = { ...first };
+      if (first) {
+        let clone = { ...first };
 
-      let items = new Array(clone.items);
-      items?.sort((a, b) => a.position - b.position);
+        let items = new Array(clone.items);
+        items?.sort((a, b) => a.position - b.position);
 
-      setItemDetail(Object.assign({}, clone, items));
+        setItemDetail(Object.assign({}, clone, items));
+      }
     }
   }, [data, refreshing]);
 

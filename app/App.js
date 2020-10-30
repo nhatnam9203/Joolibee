@@ -83,7 +83,7 @@ let App = () => {
     persistCache({
       cache,
       storage: AsyncStorage,
-      trigger: 'background',
+      // trigger: 'background',
       debug: Config.NODE_ENV === 'development',
     }).then(() => {
       setClient(graphQlClient(cache));

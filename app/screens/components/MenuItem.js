@@ -1,7 +1,12 @@
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Placeholder, PlaceholderMedia, Fade } from 'rn-placeholder';
+import {
+  Placeholder,
+  PlaceholderMedia,
+  PlaceholderLine,
+  Fade,
+} from 'rn-placeholder';
 import { JollibeeImage } from './JollibeeImage';
 import { format } from '@utils';
 import { translate } from '@localize';
@@ -12,8 +17,12 @@ const BOTTOM_DETAIL_HEIGHT = 86;
 export const MenuItemLoading = () => (
   <Placeholder style={styles.container} Animation={Fade}>
     <View style={styles.content}>
-      <PlaceholderMedia style={styles.placeholderMedia} color="#fff" />
-      <View style={styles.textContentStyle} />
+      <View style={styles.imageStyle}>
+        <PlaceholderMedia color="#fff" />
+      </View>
+      <View style={styles.textContentStyle}>
+        <PlaceholderLine width={60} height={30} style={styles.textStyle} />
+      </View>
     </View>
   </Placeholder>
 );
@@ -109,12 +118,6 @@ const styles = StyleSheet.create({
     ...AppStyles.fonts.bold,
     color: '#fff',
     fontSize: 14,
-  },
-
-  placeholderMedia: {
-    width: '100%',
-    height: MENU_HEIGHT - TEXT_HEIGHT,
-    backgroundColor: '#fff',
   },
 
   bottomStyle: {

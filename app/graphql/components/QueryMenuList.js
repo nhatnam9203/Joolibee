@@ -75,7 +75,7 @@ export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
   return (
     <CustomFlatList
       data={data.categoryList}
-      renderItem={loading ? renderItemLoading : renderItem}
+      renderItem={true ? renderItemLoading : renderItem}
       horizontal={false}
       numColumns={2}
       keyExtractor={(item, index) => item.id.toString()}
