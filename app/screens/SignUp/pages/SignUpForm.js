@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import {
   CustomBirthdayPicker,
   CustomButton,
@@ -7,10 +8,11 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
+import { mutation } from '@graphql';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { account, app } from '@slices';
+import { app, account } from '@slices';
 import { AppStyles, images, metrics } from '@theme';
 import { Formik } from 'formik';
 import React from 'react';
@@ -66,9 +68,12 @@ export const SignUpForm = ({ infos }) => {
   });
 
   // state
-
   const signUpSucceeded = useSelector(
     (state) => state.account?.user?.tempCheckSignup,
+  );
+
+  const [registerCustomer, { data, error, loading }] = useMutation(
+    mutation.SIGN_UP,
   );
 
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(
@@ -79,15 +84,27 @@ export const SignUpForm = ({ infos }) => {
   const signUpDataSubmit = React.useCallback(
     async (formValues) => {
       await dispatch(app.showLoading());
-      await dispatch(account.signUp(formValues, { dispatch }));
-      await dispatch(app.hideLoading());
+      // await dispatch(account.signUp(formValues, { dispatch }));
+      registerCustomer({ variables: formValues });
     },
-    [dispatch],
+    [dispatch, registerCustomer],
   );
 
   const goSignInPage = () => {
     setShowPopupSuccess(PROCESS_STATUS.FINISH);
   };
+
+  React.useEffect(() => {
+    if (data) {
+      Logger.debug(data, 'signup success');
+      const onSignupSucceed = async () => {
+        await dispatch(app.hideLoading());
+        await dispatch(account.signUpSucceeded(data));
+      };
+
+      onSignupSucceed();
+    }
+  }, [data, dispatch]);
 
   React.useEffect(() => {
     if (signUpSucceeded) {

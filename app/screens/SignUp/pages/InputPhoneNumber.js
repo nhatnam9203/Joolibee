@@ -17,8 +17,7 @@ export const InputPhoneNumber = ({ next }) => {
     phone: Yup.string()
       .required(translate('txtRequired'))
       .matches(regex.phone, translate('txtWrongPhoneNumber'))
-      .min(10, translate('txtTooShort'))
-      .max(15, translate('txtTooLong')),
+      .length(10, translate('txtWrongPhoneNumber')),
   });
 
   const inputPhoneDataSubmit = React.useCallback(

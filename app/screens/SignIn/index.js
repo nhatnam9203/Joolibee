@@ -46,7 +46,7 @@ const SignInScreen = () => {
   });
 
   const signInError = useSelector((state) => state.account?.signInError);
-  const [registerCustomer, { loading, error, data }] = useMutation(
+  const [generateCustomerToken, { loading, error, data }] = useMutation(
     mutation.SIGN_IN,
   );
 
@@ -64,9 +64,9 @@ const SignInScreen = () => {
       //   submitData = Object.assign({}, data, { email: username });
       // }
       await dispatch(app.showLoading());
-      registerCustomer({ variables: submitData });
+      generateCustomerToken({ variables: submitData });
     },
-    [dispatch, registerCustomer],
+    [dispatch, generateCustomerToken],
   );
 
   const goSignUpPage = () => {

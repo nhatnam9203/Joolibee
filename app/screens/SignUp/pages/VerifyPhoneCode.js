@@ -24,7 +24,6 @@ export const VerifyPhoneCode = ({ infos, next, resendCode, confirmCode }) => {
   // start count down
   const [timing, setTiming] = React.useState(false);
   const [codeInput, setCodeInput] = React.useState(null);
-
   const verifyCode = () => {
     if (validate.isEmptyString(codeInput)) {
       return;

@@ -40,66 +40,51 @@ export const SIGN_UP = gql`
 
 // SIGN IN CUSTOMER ACCOUNT
 export const SIGN_IN = gql`
-mutation($email:String!,$password:String!){
-  generateCustomerToken(email:$email,password:$password){
-    token
-  }
-} 
-`
-// FEED BACK CUSTOMER
-export const FEED_BACK = gql`
-  mutation (
-    $orderId : String!
-    $rating : Int!
-    $comment : String
-    ) {
-      feedBackCustomer(
-        order_id: $orderId
-        customer_rating: $rating
-        customer_comment: $comment
-      ) {
-        result
-      }
+  mutation($email: String!, $password: String!) {
+    generateCustomerToken(email: $email, password: $password) {
+      token
+    }
   }
 `;
-// 
+// FEED BACK CUSTOMER
+export const FEED_BACK = gql`
+  mutation($orderId: String!, $rating: Int!, $comment: String) {
+    feedBackCustomer(
+      order_id: $orderId
+      customer_rating: $rating
+      customer_comment: $comment
+    ) {
+      result
+    }
+  }
+`;
+//
 
 // CREATE EMPTY CART
 export const CREATE_EMPTY_CART = gql`
-mutation {
-  createEmptyCart 
-}
-`
+  mutation {
+    createEmptyCart
+  }
+`;
 
 export const UPDATE_CART_PRODUCT = gql`
-mutation(
-  $cart_id: String!
-  $cart_items: [CartItemInput]!
-  ) {
-  updateCartItems(
-    input: {
-      cart_id: $cart_id,
-      cart_items: $cart_items
-    }
-  ){
-    cart {
-      items {
-        id
-        product {
-          name
+  mutation($cart_id: String!, $cart_items: [CartItemInput]!) {
+    updateCartItems(input: { cart_id: $cart_id, cart_items: $cart_items }) {
+      cart {
+        items {
+          id
+          product {
+            name
+          }
+          quantity
         }
-        quantity
-      }
-      prices {
-        grand_total{
-          value
-          currency
+        prices {
+          grand_total {
+            value
+            currency
+          }
         }
       }
     }
   }
-}
-`
-
-
-
+`;
