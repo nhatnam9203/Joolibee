@@ -8,12 +8,16 @@ import { OrderCount } from './OrderCount';
 
 const IMAGE_SIZE = 69;
 
-export const OrderItem = ({ item, onPress, index, shadow }) => {
+export const OrderItem = ({ item, onPress, shadow }) => {
   const { product = {}, quantity } = item;
 
-  const handleUpdateProduct = (qty) => () => {
-    item['quantity'] = qty;
-    onPress(item)
+  const [qty, setQuantity] = React.useState(quantity);
+
+  const handleUpdateProduct = (value) => () => {
+    let newItem = { ...item };
+    setQuantity(value)
+    newItem['quantity'] = value;
+    onPress(newItem)
   }
   return (
     <FlatListItemWithImgHorizontal
@@ -38,12 +42,13 @@ export const OrderItem = ({ item, onPress, index, shadow }) => {
         <PriceAndPoint style={styles.priceStyle} {...product} />
       </View>
       <View style={styles.bottomStyle}>
-        <OrderCount defaultValue={quantity + ''} onPress={handleUpdateProduct} />
+        <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />
         <TouchableOpacity
           style={styles.buttonStyle}>
           <Image source={images.icons.ic_order_edit} />
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={handleUpdateProduct(0)}
           style={styles.buttonStyle}>
           <Image source={images.icons.ic_delete} />
         </TouchableOpacity>

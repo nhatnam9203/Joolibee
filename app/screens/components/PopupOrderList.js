@@ -1,4 +1,4 @@
-import { CustomFlatList } from '@components';
+import { CustomFlatList, Loading } from '@components';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
@@ -8,10 +8,11 @@ import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { useQuery } from '@apollo/client';
-import { query } from '@graphql';
+import { useMutation, useQuery } from '@apollo/client';
+import { mutation, query } from '@graphql';
 import { format } from "@utils";
-import { cart, app } from '@slices';
+
+
 
 export const PopupOrderList = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
@@ -22,12 +23,17 @@ export const PopupOrderList = ({ visible, onToggle }) => {
   // --------- handle fetch data cart -----------
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
-    fetchPolicy: 'cache-first'
+    //  fetchPolicy: 'cache-first'
   });
   const { items, prices: { grand_total } } = data?.cart || { items: [], prices: { grand_total: {} } };
 
   const total = format.jollibeeCurrency({ value: grand_total.value, currency: 'VND' });
   // -------- handle fetch data cart -----------
+
+  // Mutation update cart product
+  const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
+
+  // Mutation update cart product --
 
   const renderItem = ({ item, index }) => (
     <OrderItem item={item} key={item.id + ''} shadow={false} onPress={updateCart} />
@@ -57,10 +63,26 @@ export const PopupOrderList = ({ visible, onToggle }) => {
 
   const updateCart = React.useCallback(
     async (item) => {
-      console.log('item', item)
-      // await dispatch(app.showLoading());
-      // await dispatch(cart.updateCartProduct(item, { dispatch }));
-      // await dispatch(app.hideLoading());
+      let input = {
+        "cart_id": cart_id,
+        "cart_item_id": item.id,
+        "quantity": item.quantity
+      }
+
+      await updateCartItems({
+        variables: input,
+        update: (store, { data: { updateCartItems } }) => {
+          const existingCarts = store.readQuery({ query: query.CART_DETAIL, variables: { cartId: cart_id } });
+          if (existingCarts.cart && updateCartItems.cart) {
+            existingCarts.cart['prices'] = updateCartItems.cart['prices']
+            store.writeQuery({
+              query: query.CART_DETAIL,
+              data: { cart: existingCarts.cart }
+            });
+          }
+
+        }
+      });
     },
     [dispatch],
   );
@@ -114,6 +136,8 @@ export const PopupOrderList = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
+
+      <Loading isLoading={response.loading} />
     </PopupLayout>
   );
 };
