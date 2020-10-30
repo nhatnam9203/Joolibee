@@ -8,13 +8,14 @@ import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { useQuery } from '@apollo/client';
+import { useQuery, useApolloClient } from '@apollo/client';
 import { query } from '@graphql';
 import { format } from "@utils";
 import { cart, app } from '@slices';
 
 export const PopupOrderList = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
+  const client = useApolloClient();
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
   const [refreshing, setRefreshing] = React.useState(false)
@@ -57,10 +58,16 @@ export const PopupOrderList = ({ visible, onToggle }) => {
 
   const updateCart = React.useCallback(
     async (item) => {
-      console.log('item', item)
-      // await dispatch(app.showLoading());
-      // await dispatch(cart.updateCartProduct(item, { dispatch }));
-      // await dispatch(app.hideLoading());
+      let input = {
+        "cart_id": cart_id,
+        "cart_items": [{
+          "cart_item_id": item.id,
+          "quantity": item.quantity
+        }]
+      }
+      await dispatch(app.showLoading());
+      await dispatch(cart.updateCartProduct(input,client));
+      await dispatch(app.hideLoading());
     },
     [dispatch],
   );

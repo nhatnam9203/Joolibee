@@ -7,104 +7,105 @@ import { useApolloClient } from '@apollo/client';
 const KEY_CONSTANT = 'cart';
 
 const initialState = {
-  cart_id: null,
-  cart_detail: null,
+    cart_id: null,
+    cart_detail: null,
 };
 
 // First, create the thunk
 const createEmptyCart = createAsyncThunk(
-  `${KEY_CONSTANT}/createEmptyCart`,
-  async () => {
-    const client = useApolloClient();
+    `${KEY_CONSTANT}/createEmptyCart`,
+    async () => {
+        const client = useApolloClient();
 
-    const response = await client.mutate({
-      mutation: mutation.CREATE_EMPTY_CART,
-    });
-    return response;
-  },
+        const response = await client.mutate({
+            mutation: mutation.CREATE_EMPTY_CART,
+        });
+        return response;
+    },
 );
 
 const updateCartProduct = createAsyncThunk(
-  `${KEY_CONSTANT}/updateCartProduct`,
-  async (input, { dispatch }) => {
-    const response = await graphQlClient.mutate({
-      mutation: mutation.UPDATE_CART_PRODUCT,
-      variables: input,
-    });
-    return response;
-  },
+    `${KEY_CONSTANT}/updateCartProduct`,
+    async (input,client) => {
+       
+        const response = await client.mutate({
+            mutation: mutation.UPDATE_CART_PRODUCT,
+            variables: input,
+        });
+        return response;
+    },
 );
 const cartDetail = createAsyncThunk(
-  `${KEY_CONSTANT}/cartDetail`,
-  async (cartId) => {
-    const client = useApolloClient();
+    `${KEY_CONSTANT}/cartDetail`,
+    async (cartId) => {
+        const client = useApolloClient();
 
-    const response = await client.query({
-      query: query.CART_DETAIL,
-      variables: { cartId },
-    });
-    return response;
-  },
+        const response = await client.query({
+            query: query.CART_DETAIL,
+            variables: { cartId },
+        });
+        return response;
+    },
 );
 
 const cartSlice = createSlice({
-  name: KEY_CONSTANT,
-  initialState: initialState,
-  reducers: {},
-  extraReducers: {
-    [createEmptyCart.pending]: (state, action) => {
-      Logger.info(action, 'createEmptyCart pending');
-    },
+    name: KEY_CONSTANT,
+    initialState: initialState,
+    reducers: {},
+    extraReducers: {
+        [createEmptyCart.pending]: (state, action) => {
+            Logger.info(action, 'createEmptyCart pending');
+        },
 
-    // Update Cart Product
-    [updateCartProduct.pending]: (state, action) => {
-      Logger.info(action, 'updateCartProduct pending');
-    },
+        // Update Cart Product
+        [updateCartProduct.pending]: (state, action) => {
+            Logger.info(action, 'updateCartProduct pending');
+        },
 
-    [updateCartProduct.fulfilled]: (state, action) => {
-      Logger.info(action, 'updateCartProduct fulfilled');
-    },
+        [updateCartProduct.fulfilled]: (state, action) => {
+            Logger.info(action, 'updateCartProduct fulfilled');
+        },
 
-    [updateCartProduct.rejected]: (state, action) => {
-      Logger.info(action, 'updateCartProduct rejected');
-    },
+        [updateCartProduct.rejected]: (state, action) => {
+            Logger.info(action, 'updateCartProduct rejected');
+        },
 
-    [createEmptyCart.fulfilled]: (state, action) => {
-      const { data } = action.payload;
-      const { createEmptyCart } = data;
-      if (createEmptyCart) state.cart_id = createEmptyCart;
+        [createEmptyCart.fulfilled]: (state, action) => {
+            const { data } = action.payload;
+            const { createEmptyCart } = data;
+            if (createEmptyCart) state.cart_id = createEmptyCart;
 
-      Logger.info(action, 'createEmptyCart fulfilled');
-    },
+            Logger.info(action, 'createEmptyCart fulfilled');
+        },
 
-    [createEmptyCart.rejected]: (state, action) => {
-      Logger.info(action, 'createEmptyCart rejected');
-    },
-    [createEmptyCart.rejected]: (state, action) => {
-      Logger.info(action, 'createEmptyCart rejected');
-    },
+        [createEmptyCart.rejected]: (state, action) => {
+            Logger.info(action, 'createEmptyCart rejected');
+        },
+        [createEmptyCart.rejected]: (state, action) => {
+            Logger.info(action, 'createEmptyCart rejected');
+        },
 
-    //Cart Detail
-    [cartDetail.pending]: (state, action) => {
-      Logger.info(action, 'cartDetail pending');
-    },
+        //Cart Detail
+        [cartDetail.pending]: (state, action) => {
+            Logger.info(action, 'cartDetail pending');
+        },
 
-    [cartDetail.fulfilled]: (state, action) => {
-      const { data, loading, error } = action.payload;
-      const { cart } = data;
-      if (cart) state.cart_detail = cart;
+        [cartDetail.fulfilled]: (state, action) => {
+            const { data, loading, error } = action.payload;
+            const { cart } = data;
+            if (cart) state.cart_detail = cart;
 
-      Logger.info(action, 'cartDetail fulfilled');
-    },
+            Logger.info(action, 'cartDetail fulfilled');
+        },
 
-    [cartDetail.rejected]: (state, action) => {
-      Logger.info(action, 'cartDetail rejected');
+        [cartDetail.rejected]: (state, action) => {
+            Logger.info(action, 'cartDetail rejected');
+        },
     },
-  },
 });
 
 const { actions, reducer } = cartSlice;
 module.exports = {
-  reducer,
-  actions: { createEmptyCart, updateCartProduct, ...actions },
+    reducer,
+    actions: { createEmptyCart, updateCartProduct, ...actions },
 };
