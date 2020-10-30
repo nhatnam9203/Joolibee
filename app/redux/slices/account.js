@@ -1,8 +1,7 @@
-import { graphQlClient, mutation } from '@graphql';
+import { mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
-import { cart } from './index';
 import { useApolloClient } from '@apollo/client';
 
 const KEY_CONSTANT = 'account';
@@ -17,35 +16,29 @@ const initialState = {
 };
 
 // First, create the thunk
-const signUp = createAsyncThunk(
-  `${KEY_CONSTANT}/signUp`,
-  async (input, { dispatch }) => {
-    const client = useApolloClient();
+const signUp = createAsyncThunk(`${KEY_CONSTANT}/signUp`, async (input, {}) => {
+  const client = useApolloClient();
 
-    const response = await client.mutate({
-      mutation: mutation.SIGN_UP,
-      variables: input,
-    });
-    return response;
-  },
-);
+  const response = await client.mutate({
+    mutation: mutation.SIGN_UP,
+    variables: input,
+  });
+  return response;
+});
 
-const signIn = createAsyncThunk(
-  `${KEY_CONSTANT}/signIn`,
-  async (input, { dispatch }) => {
-    const client = useApolloClient();
+// const signIn = createAsyncThunk(`${KEY_CONSTANT}/signIn`, async (input, {}) => {
+//   const client = useApolloClient();
 
-    const response = await client.mutate({
-      mutation: mutation.SIGN_IN,
-      variables: input,
-    });
-    return response;
-  },
-);
+//   const response = await client.mutate({
+//     mutation: mutation.SIGN_IN,
+//     variables: input,
+//   });
+//   return response;
+// });
 
 const feedBack = createAsyncThunk(
   `${KEY_CONSTANT}/feedBack`,
-  async (input, { dispatch }) => {
+  async (input, {}) => {
     const client = useApolloClient();
 
     const response = await client.mutate({
@@ -60,55 +53,26 @@ const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: initialState,
   reducers: {
-    signOutRequest: (state, action) => {
+    signOutRequest: (state) => {
       state.user = initialState.user;
     },
-    clearSignupState(state, action) {},
-    clearSignInState(state, action) {},
+    clearSignupState() {},
+    clearSignInState() {},
 
-    showQRCode(state, action) {
+    showQRCode(state) {
       state.isShowQRCode = true;
     },
 
-    dismissQRCode(state, action) {
+    dismissQRCode(state) {
       state.isShowQRCode = false;
     },
-  },
-  extraReducers: {
-    // Sign Up
-    [signUp.pending]: (state, action) => {
-      Logger.info(action, 'signUp pending');
 
-      state.user.tempCheckSignup = false;
-    },
-    [signUp.fulfilled]: (state, action) => {
-      Logger.info(action, 'signUp fulfilled');
-
-      const { error, data } = action.payload;
-      if (data?.registerCustomer?.customer) {
-        state.user.tempCheckSignup = true;
-      } else {
-        state.user.tempCheckSignup = false;
-      }
-    },
-    [signUp.rejected]: (state, action) => {
-      Logger.info(action, 'signUp rejected');
-      state.user.tempCheckSignup = false;
-    },
-
-    // Sign In
-    [signIn.pending]: (state, action) => {
-      Logger.info(action, 'signIn pending');
-    },
-    [signIn.fulfilled]: (state, action) => {
-      Logger.info(action, 'signIn fulfilled');
-      const { data } = action.payload;
-
-      const { generateCustomerToken } = data;
-
-      if (generateCustomerToken?.token) {
+    signInSucceed(state, action) {
+      const {
+        generateCustomerToken: { token },
+      } = action.payload;
+      if (token) {
         // received token from server
-        const token = generateCustomerToken?.token;
 
         // get token object save in store
         const storeTokenObj = get(StorageKey.Token) || {};
@@ -122,14 +86,34 @@ const accountSlice = createSlice({
         save(storeTokenObj, StorageKey.Token);
         // update state
         state.user.tokenKey = str;
-        Logger.info(state, 'tokenKey');
       } else {
-        state.tokenKey = null;
+        state.user.tokenKey = null;
       }
     },
-    [signIn.rejected]: (state, action) => {
-      Logger.info(action, 'signIn rejected');
+    signInError(state, action) {
       state.user.tokenKey = null;
+    },
+  },
+  extraReducers: {
+    // Sign Up
+    [signUp.pending]: (state, action) => {
+      Logger.info(action, 'signUp pending');
+
+      state.user.tempCheckSignup = false;
+    },
+    [signUp.fulfilled]: (state, action) => {
+      Logger.info(action, 'signUp fulfilled');
+
+      const { data } = action.payload;
+      if (data?.registerCustomer?.customer) {
+        state.user.tempCheckSignup = true;
+      } else {
+        state.user.tempCheckSignup = false;
+      }
+    },
+    [signUp.rejected]: (state, action) => {
+      Logger.info(action, 'signUp rejected');
+      state.user.tempCheckSignup = false;
     },
 
     //FeedBack
@@ -150,5 +134,5 @@ const accountSlice = createSlice({
 const { actions, reducer } = accountSlice;
 module.exports = {
   reducer,
-  actions: { signIn, signUp, feedBack, ...actions },
+  actions: { signUp, feedBack, ...actions },
 };
