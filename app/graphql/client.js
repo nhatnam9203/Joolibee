@@ -34,7 +34,6 @@ const authLink = new ApolloLink(async (operation, forward) => {
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response = {}, forward }) => {
     Logger.debug(graphQLErrors, 'graphQLErrors');
-    Logger.debug(operation, 'operation');
 
     /**
      * graphQLErrors
@@ -105,7 +104,7 @@ const logTimeLink = new ApolloLink((operation, forward) => {
 
     Logger.debug(
       `Complete in ${(time / 1000).toFixed(2)} s`,
-      `End Request -----> ${operation.operationName}`,
+      `End Request -----> ${operation.operationName ?? 'mutation'}`,
     );
 
     return data;
@@ -116,8 +115,8 @@ const link = ApolloLink.from([
   timeStartLink,
   authLink,
   logTimeLink,
-  httpLink,
   errorLink,
+  httpLink,
 ]);
 
 const defaultOptions = {

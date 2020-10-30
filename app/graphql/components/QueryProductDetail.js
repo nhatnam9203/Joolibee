@@ -10,6 +10,12 @@ import {
 import { CustomFlatList } from '@components';
 import { Loading } from '@components';
 import { AppStyles } from '@theme';
+import {
+  Placeholder,
+  PlaceholderMedia,
+  PlaceholderLine,
+  Fade,
+} from 'rn-placeholder';
 
 const PRODUCT = gql`
   query products($sku: String!) {
@@ -106,20 +112,20 @@ export const QueryProductDetail = ({
     }
 
     if (data) {
-      Logger.info(data, 'QueryProductDetail');
-
       const {
         products: {
           items: [first],
         },
       } = data;
 
-      let clone = { ...first };
+      if (first) {
+        let clone = { ...first };
 
-      let items = new Array(clone.items);
-      items?.sort((a, b) => a.position - b.position);
+        let items = new Array(clone.items);
+        items?.sort((a, b) => a.position - b.position);
 
-      setItemDetail(Object.assign({}, clone, items));
+        setItemDetail(Object.assign({}, clone, items));
+      }
     }
   }, [data, refreshing]);
 
@@ -140,16 +146,59 @@ export const QueryProductDetail = ({
   // if (error) return <></>;
   if (loading) {
     return (
-      <View style={styles.container}>
+      <>
+        <Placeholder style={styles.placeholderContainer}>
+          <View style={styles.placeholderHead}>
+            <PlaceholderMedia style={styles.placeholderImage} />
+            <View style={styles.placeholderHorizontal}>
+              <PlaceholderLine
+                width={'60%'}
+                height={20}
+                style={styles.placeholderLine}
+              />
+              <PlaceholderLine
+                width={30}
+                height={25}
+                style={styles.placeholderLine}
+              />
+            </View>
+            <View style={styles.placeholderHorizontal}>
+              <PlaceholderLine
+                width={'60%'}
+                height={20}
+                style={styles.placeholderLine}
+              />
+              <PlaceholderLine
+                width={20}
+                height={15}
+                style={styles.placeholderLine}
+              />
+            </View>
+            <PlaceholderLine
+              width={'60%'}
+              height={20}
+              style={styles.placeholderLine}
+            />
+          </View>
+          <View
+            style={[
+              styles.placeholderHead,
+              { backgroundColor: AppStyles.colors.button },
+            ]}>
+            <PlaceholderLine
+              width={50}
+              height={20}
+              style={styles.placeholderLine}
+            />
+          </View>
+        </Placeholder>
         <Loading isLoading={loading} transparent />
-      </View>
+      </>
     );
   }
 
   return (
     <KeyboardAvoidingView
-      // style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
-      // keyboardVerticalOffset={isIphoneX() ? 88 : 64}
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
       <StatusBar barStyle="dark-content" />
       <CustomFlatList
@@ -182,5 +231,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: AppStyles.colors.background,
+  },
+
+  placeholderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    backgroundColor: AppStyles.colors.background,
+  },
+  placeholderHead: {
+    backgroundColor: AppStyles.colors.white,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: 10,
+    flex: 0,
+    marginBottom: 20,
+  },
+  placeholderImage: { height: 300, width: '100%', marginBottom: 15 },
+  placeholderLine: { marginBottom: 15 },
+  placeholderHorizontal: {
+    ...AppStyles.styles.horizontalLayout,
+    width: '100%',
   },
 });

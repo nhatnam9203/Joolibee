@@ -1,9 +1,9 @@
-import React from 'react';
-import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { useFirebaseAuthentication } from '@firebase';
-import { validate } from '@utils';
 import { app } from '@slices';
+import { validate } from '@utils';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 
 const { normalizePhoneNumber } = validate;
 
@@ -26,8 +26,11 @@ const SignUpScreen = () => {
       // Verified
       setFormData(Object.assign({}, formData, { verified: status === 1 }));
     }
-    Logger.debug(message, 'SignUpScreen -> verifyCallback -> message');
-    Logger.debug(data, 'SignUpScreen -> verifyCallback -> data');
+
+    Logger.debug(
+      response,
+      'SignUpScreen -> Firebase verifyCallback -> response',
+    );
   };
 
   const { confirmCode, signInWithPhoneNumber } = useFirebaseAuthentication({

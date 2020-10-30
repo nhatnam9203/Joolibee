@@ -32,6 +32,7 @@ import { graphQlClient, cache } from './graphql';
 import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
 import { persistCache } from 'apollo3-cache-persist';
 import AsyncStorage from '@react-native-community/async-storage';
+import Config from 'react-native-config';
 
 const fontConfig = {
   default: {
@@ -82,8 +83,8 @@ let App = () => {
     persistCache({
       cache,
       storage: AsyncStorage,
-      //trigger: 'background',
-      debug: true
+      // trigger: 'background',
+      debug: Config.NODE_ENV === 'development',
     }).then(() => {
       setClient(graphQlClient(cache));
     });

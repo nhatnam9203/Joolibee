@@ -15,27 +15,6 @@ const initialState = {
   isShowQRCode: false,
 };
 
-// First, create the thunk
-const signUp = createAsyncThunk(`${KEY_CONSTANT}/signUp`, async (input, {}) => {
-  const client = useApolloClient();
-
-  const response = await client.mutate({
-    mutation: mutation.SIGN_UP,
-    variables: input,
-  });
-  return response;
-});
-
-// const signIn = createAsyncThunk(`${KEY_CONSTANT}/signIn`, async (input, {}) => {
-//   const client = useApolloClient();
-
-//   const response = await client.mutate({
-//     mutation: mutation.SIGN_IN,
-//     variables: input,
-//   });
-//   return response;
-// });
-
 const feedBack = createAsyncThunk(
   `${KEY_CONSTANT}/feedBack`,
   async (input, {}) => {
@@ -93,29 +72,21 @@ const accountSlice = createSlice({
     signInError(state, action) {
       state.user.tokenKey = null;
     },
-  },
-  extraReducers: {
-    // Sign Up
-    [signUp.pending]: (state, action) => {
-      Logger.info(action, 'signUp pending');
 
-      state.user.tempCheckSignup = false;
-    },
-    [signUp.fulfilled]: (state, action) => {
-      Logger.info(action, 'signUp fulfilled');
-
-      const { data } = action.payload;
-      if (data?.registerCustomer?.customer) {
+    signUpSucceeded(state, action) {
+      const { registerCustomer } = action.payload;
+      if (registerCustomer?.customer) {
         state.user.tempCheckSignup = true;
       } else {
         state.user.tempCheckSignup = false;
       }
     },
-    [signUp.rejected]: (state, action) => {
-      Logger.info(action, 'signUp rejected');
+
+    signUpError(state, action) {
       state.user.tempCheckSignup = false;
     },
-
+  },
+  extraReducers: {
     //FeedBack
     [feedBack.pending]: (state, action) => {
       Logger.info(action, 'feedBack pending');
@@ -134,5 +105,5 @@ const accountSlice = createSlice({
 const { actions, reducer } = accountSlice;
 module.exports = {
   reducer,
-  actions: { signUp, feedBack, ...actions },
+  actions: { feedBack, ...actions },
 };

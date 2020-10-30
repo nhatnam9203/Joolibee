@@ -118,7 +118,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
           allowFontScaling={true}
           numberOfLines={1}
           editable={false}
-          value={quantity.toString()}
+          value={quantity?.toString()}
           multiline={false}
           clearTextOnFocus={true}
           maxLength={3}
