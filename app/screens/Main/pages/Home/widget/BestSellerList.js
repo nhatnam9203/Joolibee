@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: scaleHeight(381),
     backgroundColor: AppStyles.colors.orange,
-    top: -50,
+    top: -80,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(10),
   },

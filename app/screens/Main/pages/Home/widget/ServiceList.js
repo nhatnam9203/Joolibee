@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: scaleWidth(10),
     paddingVertical: scaleHeight(30),
-    top: -50,
+    top: -80,
   },
 
   containerTop: {

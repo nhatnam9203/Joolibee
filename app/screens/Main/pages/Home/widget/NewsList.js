@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.cyan,
-    top: -50,
+    top: -80,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
 
@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
   imgLoading: {
     width: scaleWidth(281),
     height: scaleHeight(130),
+    marginBottom:15
   },
 
   txtSeeAll: {

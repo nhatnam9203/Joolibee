@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: AppStyles.colors.white,
     alignItems: 'center',
-    top: -50
+    top: -80,
+
   },
 
   wrapperItem: {
