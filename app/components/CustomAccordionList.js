@@ -54,16 +54,13 @@ const CustomAccordionList = ({
     switch (type) {
       case CustomAccordionListItemType.Multiline:
         if (index < 0) {
-          selectedListItem?.push(item);
-          setSelectedListItem(selectedListItem);
+          setSelectedListItem([item, ...selectedListItem]);
         }
         break;
       case CustomAccordionListItemType.Radio:
       default:
-        selectedListItem.splice(0, selectedListItem.length);
         if (index < 0) {
-          selectedListItem?.push(item);
-          setSelectedListItem(selectedListItem);
+          setSelectedListItem([item]);
         }
         break;
     }
@@ -71,8 +68,7 @@ const CustomAccordionList = ({
 
   const unSelectedItem = (item) => {
     const index = selectedListItem?.indexOf(item);
-    selectedListItem?.splice(index, 1);
-    setSelectedListItem(selectedListItem);
+    setSelectedListItem(selectedListItem?.splice(index, 1));
   };
 
   const onRenderItem = ({ item }, index) => {
@@ -104,11 +100,9 @@ const CustomAccordionList = ({
   };
 
   const onRenderSelectedItem = () => {
-    return typeof renderSelectItem === 'function' &&
-      selectedListItem?.length > 0 ? (
+    return (
+      typeof renderSelectItem === 'function' &&
       renderSelectItem(selectedListItem)
-    ) : (
-      <View />
     );
   };
 
@@ -154,7 +148,7 @@ const CustomAccordionList = ({
             <Text style={headerTextStyle}>{`${title}`.toUpperCase()}</Text>
           )}
           <View style={styles.horizontal}>
-            {selectedItem && !open && onRenderSelectedItem()}
+            {selectedListItem.length > 0 && !open && onRenderSelectedItem()}
             <ChevronIcon isOpen={open} />
           </View>
         </TouchableOpacity>

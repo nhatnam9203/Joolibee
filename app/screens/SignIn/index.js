@@ -46,13 +46,14 @@ const SignInScreen = () => {
   });
 
   const signInError = useSelector((state) => state.account?.signInError);
-  //const [generateCustomerToken, { data }] = useMutation(mutation.SIGN_IN);
+  const [registerCustomer, { loading, error, data }] = useMutation(
+    mutation.SIGN_IN,
+  );
+
   const signInSubmit = React.useCallback(
-    async (values) => {
+    async ({ username, ...values }) => {
       //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
-      const { username, ...data } = values;
-      Logger.debug(data, 'signInSubmit -> data');
-      let submitData = Object.assign({}, data, { email: username });
+      let submitData = Object.assign({}, values, { email: username });
 
       // let submitData = values;
       // if (validate.phoneNumber(username)) {
@@ -63,10 +64,9 @@ const SignInScreen = () => {
       //   submitData = Object.assign({}, data, { email: username });
       // }
       await dispatch(app.showLoading());
-      await dispatch(account.signIn(submitData, { dispatch }));
-      await dispatch(app.hideLoading());
+      registerCustomer({ variables: submitData });
     },
-    [dispatch],
+    [dispatch, registerCustomer],
   );
 
   const goSignUpPage = () => {
@@ -101,11 +101,16 @@ const SignInScreen = () => {
     }
   };
 
-  // React.useEffect(() => {
-  //   setTimeout(() => {
-  //     signinFB()
-  //   }, 2000);
-  // }, [])
+  React.useEffect(() => {
+    if (data) {
+      const onSignInSucceed = async (value) => {
+        await dispatch(app.hideLoading());
+        await dispatch(account.signInSucceed(data));
+      };
+
+      onSignInSucceed();
+    }
+  }, [data, dispatch]);
 
   return (
     <AppScrollViewIOSBounceColorsWrapper
