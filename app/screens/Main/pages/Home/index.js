@@ -10,6 +10,8 @@ import { scale } from '@utils';
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMutation, useQuery } from '@apollo/client';
+import { mutation, query } from '@graphql';
 import { cart } from '@slices';
 import {
   MenuPageName,
@@ -26,8 +28,6 @@ import {
   ProductPromotionList,
   ServiceList,
 } from './widget';
-import { useQuery } from '@apollo/client';
-import { query } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -37,7 +37,19 @@ const HomePage = () => {
   const cart_id = useSelector((state) => state.cart?.cart_id);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
-  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN,{
+
+  // Mutation create empty cart
+  const [createEmptyCart, response] = useMutation(mutation.CREATE_EMPTY_CART);
+  if (!cart_id) {
+    createEmptyCart();
+  }
+  React.useEffect(() => {
+    response.data && dispatch(cart.setCartId(response.data))
+  }, [response]);
+  // Mutation create empty cart --
+
+
+  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN, {
     fetchPolicy: 'cache-first'
   });
 
@@ -55,7 +67,6 @@ const HomePage = () => {
 
 
   React.useEffect(() => {
-    if (!cart_id) dispatch(cart.createEmptyCart());
     setTimeout(() => {
       setVisiblePopup(true);
     }, 1000);
@@ -99,7 +110,6 @@ const HomePage = () => {
               <View
                 style={{
                   paddingHorizontal: scaleWidth(10),
-                  paddingTop: scaleHeight(40),
                 }}>
                 <Text style={[AppStyles.fonts.title, styles.txtPromotion]}>
                   Nhận khuyến mãi mỗi ngày tại Jollibee

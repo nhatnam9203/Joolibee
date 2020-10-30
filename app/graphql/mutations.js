@@ -74,12 +74,18 @@ mutation {
 export const UPDATE_CART_PRODUCT = gql`
 mutation(
   $cart_id: String!
-  $cart_items: [CartItemInput]!
+  $cart_item_id:Int!
+  $quantity:Float!
   ) {
   updateCartItems(
     input: {
       cart_id: $cart_id,
-      cart_items: $cart_items
+      cart_items: [
+        {
+          cart_item_id: $cart_item_id
+          quantity: $quantity
+        }
+      ]
     }
   ){
     cart {
@@ -87,6 +93,26 @@ mutation(
         id
         product {
           name
+          sku
+          point
+          meta_description
+          price_range{
+              maximum_price{
+                  final_price {
+                      value
+                      currency
+                  }
+              }
+               minimum_price{
+                  final_price {
+                      value
+                      currency
+                  }
+              }
+  }
+          image {
+              url
+          }
         }
         quantity
       }

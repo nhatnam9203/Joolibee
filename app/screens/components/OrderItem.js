@@ -8,7 +8,7 @@ import { OrderCount } from './OrderCount';
 
 const IMAGE_SIZE = 69;
 
-export const OrderItem = ({ item, onPress, index, shadow }) => {
+export const OrderItem = ({ item, onPress, shadow }) => {
   const { product = {}, quantity } = item;
 
   const [qty, setQuantity] = React.useState(quantity);
@@ -48,6 +48,7 @@ export const OrderItem = ({ item, onPress, index, shadow }) => {
           <Image source={images.icons.ic_order_edit} />
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={handleUpdateProduct(0)}
           style={styles.buttonStyle}>
           <Image source={images.icons.ic_delete} />
         </TouchableOpacity>
