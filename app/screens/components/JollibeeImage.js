@@ -40,7 +40,7 @@ export const JollibeeImage = ({
     <View
       style={[styles.container, width && height ? { width, height } : style]}>
       <FastImage
-        source={source ?? defaultSource}
+        source={source}
         resizeMode={FastImage.resizeMode.contain}
         onLoadStart={onLoadStart}
         onProgress={onProgress}

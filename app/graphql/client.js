@@ -34,7 +34,6 @@ const authLink = new ApolloLink(async (operation, forward) => {
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response = {}, forward }) => {
     Logger.debug(graphQLErrors, 'graphQLErrors');
-    Logger.debug(operation, 'operation');
 
     /**
      * graphQLErrors
