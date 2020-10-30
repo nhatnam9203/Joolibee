@@ -151,10 +151,21 @@ query ($cartId : String!)
     applied_coupons {
       code
     }
+    total_quantity
     prices {
       grand_total {
         value
         currency
+      }
+      subtotal_excluding_tax{
+        value
+        currency
+      }
+      discounts {
+        amount{
+          value
+          currency
+        }
       }
     }
   }

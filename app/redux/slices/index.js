@@ -4,6 +4,8 @@ import order from './order';
 import setting from './setting';
 import store from './store';
 import cart from './cart';
+import address from "./address";
+
 const rootReducers = Object.assign(
   {},
   {
@@ -12,7 +14,8 @@ const rootReducers = Object.assign(
     order: order.reducer,
     setting: setting.reducer,
     store: store.reducer,
-    cart: cart.reducer
+    cart: cart.reducer,
+    address: address.reducer
   },
 );
 
@@ -23,5 +26,6 @@ module.exports = {
   order: order.actions,
   setting: setting.actions,
   store: store.actions,
-  cart : cart.actions
+  cart: cart.actions,
+  address: address.actions
 };

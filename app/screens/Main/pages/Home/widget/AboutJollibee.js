@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.button,
-    paddingTop: 30,
-    top: -80,
+    paddingTop: 10,
+    top: -90,
   },
   contentImage: {
     alignItems: 'center',

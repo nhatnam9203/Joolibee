@@ -2,27 +2,32 @@ import { AppStyles, images } from '@theme';
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { CustomButtonImage } from '@components';
-
-export const OrderItem = ({ item }) => (
-  <View style={styles.content}>
-    <View style={[AppStyles.styles.horizontalLayout, styles.subContent]}>
-      <Text style={styles.titleStyle} numberOfLines={2} ellipsizeMode="tail">
-        {item.title}
-      </Text>
-      <Text style={styles.amountStyle}>x {item.sl}</Text>
-      <Text style={styles.priceStyle}>{item.price} đ</Text>
+import { format } from "@utils";
+export const OrderItem = ({ item }) => {
+  const { product = {}, quantity } = item;
+  const { minimum_price } = product?.price_range || {};
+  const _price = format.jollibeeCurrency(minimum_price?.final_price);
+  return (
+    <View style={styles.content}>
+      <View style={[AppStyles.styles.horizontalLayout, styles.subContent]}>
+        <Text style={styles.titleStyle} numberOfLines={2} ellipsizeMode="tail">
+          {product.name}
+        </Text>
+        <Text style={styles.amountStyle}>x {quantity}</Text>
+        <Text style={styles.priceStyle}>{_price}</Text>
+      </View>
+      <View style={[AppStyles.styles.horizontalLayout, styles.subContent]}>
+        <Text
+          style={styles.descriptionStyle}
+          numberOfLines={2}
+          ellipsizeMode="tail">
+          {product.meta_description}
+        </Text>
+        <CustomButtonImage image={images.icons.ic_edit} />
+      </View>
     </View>
-    <View style={[AppStyles.styles.horizontalLayout, styles.subContent]}>
-      <Text
-        style={styles.descriptionStyle}
-        numberOfLines={2}
-        ellipsizeMode="tail">
-        {item.description}
-      </Text>
-      <CustomButtonImage image={images.icons.ic_edit} />
-    </View>
-  </View>
-);
+  )
+};
 
 const styles = StyleSheet.create({
   content: { flex: 1, padding: 10 },

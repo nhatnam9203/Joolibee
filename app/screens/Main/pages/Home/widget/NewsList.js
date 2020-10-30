@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: AppStyles.colors.cyan,
-    top: -80,
+    top: -90,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
 
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: scaleHeight(30),
+    marginVertical: scaleHeight(10),
   },
 
   wrapperItem: {

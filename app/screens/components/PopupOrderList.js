@@ -11,8 +11,11 @@ import ScreenName from '../ScreenName';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { format } from "@utils";
-
-
+import {
+  Placeholder,
+  PlaceholderLine,
+  Fade,
+} from 'rn-placeholder';
 
 export const PopupOrderList = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
@@ -27,7 +30,8 @@ export const PopupOrderList = ({ visible, onToggle }) => {
   });
   const { items, prices: { grand_total } } = data?.cart || { items: [], prices: { grand_total: {} } };
 
-  const total = format.jollibeeCurrency({ value: grand_total.value, currency: 'VND' });
+  const total = format.jollibeeCurrency(grand_total);
+
   // -------- handle fetch data cart -----------
 
   // Mutation update cart product
@@ -43,6 +47,17 @@ export const PopupOrderList = ({ visible, onToggle }) => {
       <Text style={styles.labelSum}>{error ? error : 'Không có sản phẩm'}</Text>
     </View>
   );
+
+  const renderTotalLoading = () => (
+    <Placeholder
+      Animation={Fade}
+      style={{width:100}}>
+      <View style={{alignItems:'flex-end',justifyContent:'center',marginTop:10}}>
+        <PlaceholderLine width={90} />
+        <PlaceholderLine width={50} />
+      </View>
+    </Placeholder>
+  )
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -117,10 +132,14 @@ export const PopupOrderList = ({ visible, onToggle }) => {
         <View style={styles.bottomContent}>
           <View style={AppStyles.styles.horizontalLayout}>
             <Text style={styles.labelSum}>{translate('txtSummary')} :</Text>
-            <View style={styles.priceContent}>
-              <Text style={styles.priceStyle}>{total}</Text>
-              <Text style={styles.pointStyle}>(+ 0 điểm)</Text>
-            </View>
+            {loading ?
+              renderTotalLoading()
+              :
+              <View style={styles.priceContent}>
+                <Text style={styles.priceStyle}>{total}</Text>
+                <Text style={styles.pointStyle}>(+ {format.caculatePoint(items)} điểm)</Text>
+              </View>
+            }
           </View>
           <View style={AppStyles.styles.horizontalLayout}>
             <ButtonCC.ButtonYellow
