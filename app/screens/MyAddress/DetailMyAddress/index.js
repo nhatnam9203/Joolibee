@@ -1,7 +1,7 @@
 
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
-import { AppStyles, metrics, images } from '@theme';
+import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
@@ -12,14 +12,15 @@ import { CustomInput, CustomButton } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { TextInputErrorMessage, } from '../../components';
 import ScreenName from '../../ScreenName';
-
+import { useSelector } from "react-redux";
 
 const LAYOUT_WIDTH = '95%';
 const { width } = Dimensions.get('window')
 const index = (props) => {
     const navigation = useNavigation();
     const { values } = props.route.params;
-
+    const refFormMilk = React.useRef(null);
+    const location_selected = useSelector((state) => state.address.location_selected);
     const goToCreateAddress = () => navigation.navigate(ScreenName.SearchAddress)
     const onHandleSubmit = React.useCallback(
         (values) => {
@@ -29,17 +30,20 @@ const index = (props) => {
         },
         [],
     );
-
     const isCheckValue = values ? true : false;
-    console.log('isCheckValue', isCheckValue)
 
     const initialValues = isCheckValue ? values : {
         phone: '',
         place: '',
         fullName: '',
         note: '',
-        address: ''
-    }
+        address: location_selected
+    };
+
+    React.useEffect(() => {
+        if (refFormMilk.current)
+            refFormMilk.current.setFieldValue('address', location_selected)
+    }, [location_selected])
 
     const AddressSchema = Yup.object().shape({
         phone: Yup.string()
@@ -55,6 +59,8 @@ const index = (props) => {
     return (
         <SinglePageLayout>
             <Formik
+
+                innerRef={refFormMilk}
                 initialValues={initialValues}
                 onSubmit={onHandleSubmit}
                 validationSchema={AddressSchema}
@@ -66,7 +72,6 @@ const index = (props) => {
                     values,
                     errors,
                     touched,
-                    setFieldValue,
                 }) => (
                         <View style={styles.container}>
                             <View style={styles.topContent}>

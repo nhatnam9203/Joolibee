@@ -19,34 +19,85 @@ import { address } from '@slices';
 const LAYOUT_WIDTH = '100%';
 
 const index = () => {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const locations = useSelector((state) => state.address.locations);
     const loading_location = useSelector((state) => state.address.loading_location);
     const [key, setKey] = React.useState(key);
 
-    const searchLocation = async () => {
-        let params = { input: key }
+    const searchLocation = async (input) => {
+        let params = { input }
         try {
             await dispatch(address.autoCompleteStart());
             let { status, data } = await autocomplete(params);
             if (status == 'OK') {
                 dispatch(address.autoCompleteSuccess(data));
-            } else
+            } else {
+                alert(status)
                 await dispatch(address.autoCompleteFail())
+            }
         } catch (error) {
             await dispatch(address.autoCompleteFail())
-            alert(error.message)
         }
     }
+    const delayedQuery = React.useRef(_.debounce((input) => searchLocation(input), 500)).current;
 
-    const handleChangeText = async (key) => {
-        await setKey(key);
-        await searchLocation()
+    const handleChangeText = (key) => {
+        setKey(key);
+        delayedQuery(key)
     }
 
+    const pickupLocation = ({ description }) => () => {
+        dispatch(address.selectedLocation(description));
+        navigation.goBack()
+    }
+
+    const renderItem = (item, index) => (
+        <TouchableOpacity
+            onPress={pickupLocation(item)}
+            key={index + ''}
+            style={styles.itemContainer}>
+            <Image source={images.icons.ic_location} resizeMode='contain' />
+
+            <Text
+                numberOfLines={3}
+                style={[AppStyles.fonts.text, styles.txtAddress]}>
+                {item.description}
+            </Text>
+        </TouchableOpacity>
+    )
+
+    const renderItemLoading = () => {
+        return (
+            <Placeholder
+                Animation={Fade}
+                style={[styles.itemContainer, { width: '92%' }]}
+                Left={() => <PlaceholderMedia style={{
+                    width: 34,
+                    height: 34,
+                    marginRight: 15
+                }} />}
+
+                Right={() => (
+                    <Placeholder Animation={Fade} >
+                        <PlaceholderLine width={80} height={10} />
+                        <PlaceholderLine width={80} height={10} />
+                        <PlaceholderLine width={80} height={10} />
+                    </Placeholder>
+                )}
+
+
+            />
+        );
+    };
+
+    const FilterAddressList = ({ data = [], loading }) => {
+        if (loading) return renderItemLoading();
+        if (data.length == 0) return (<Text style={{ padding: 15, textAlign: 'center' }}>Không có địa chỉ nào</Text>)
+        return data.map(renderItem)
+    }
 
     return (
-
         <View style={styles.container}>
             <View style={styles.topContent}>
                 <CustomInput
@@ -70,50 +121,7 @@ const index = () => {
     );
 };
 
-const renderItem = (item, index) => (
-    <TouchableOpacity
-        onPress={() => alert('áds')}
-        key={index + ''}
-        style={styles.itemContainer}>
-        <Image source={images.icons.ic_location} resizeMode='contain' />
 
-        <Text
-            numberOfLines={3}
-            style={[AppStyles.fonts.text, styles.txtAddress]}>
-            {item.description}
-    </Text>
-    </TouchableOpacity>
-)
-
-const renderItemLoading = () => {
-    return (
-        <Placeholder
-            Animation={Fade}
-            style={[styles.itemContainer, { width: '92%' }]}
-            Left={() => <PlaceholderMedia style={{
-                width: 34,
-                height: 34,
-                marginRight: 15
-            }} />}
-
-            Right={() => (
-                <Placeholder Animation={Fade} >
-                    <PlaceholderLine width={80} height={10} />
-                    <PlaceholderLine width={80} height={10} />
-                    <PlaceholderLine width={80} height={10} />
-                </Placeholder>
-            )}
-
-
-        />
-    );
-};
-
-const FilterAddressList = ({ data = [], loading }) => {
-    if (loading) return renderItemLoading();
-    if (data.length == 0) return (<Text style={{ padding: 15, textAlign: 'center' }}>Không có địa chỉ nào</Text>)
-    return data.map(renderItem)
-}
 
 
 
