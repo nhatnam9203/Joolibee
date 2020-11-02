@@ -17,7 +17,7 @@ export const MenuDetailItem = ({
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
-  const [radioChecked, setRadioChecked] = React.useState(false);
+  const [radioChecked, setRadioChecked] = React.useState(selected);
 
   const selectItem = (select) => {
     setRadioChecked(select);
