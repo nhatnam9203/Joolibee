@@ -1,11 +1,10 @@
-import { CustomFlatList } from '@components';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import { ButtonCC, OrderItem, LabelTitle } from '../components';
+import { ButtonCC, LabelTitle } from '../components';
 import QRCode from 'react-native-qrcode-svg';
 
 const QRCODE_SIZE = 180;

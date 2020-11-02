@@ -8,6 +8,7 @@ export const autocomplete = (params) =>
     try {
       const stringified = queryString.stringify(params);
       const url = Config.MAPS_ENDPOINT + default_url + stringified;
+      console.log('url', url);
       const response = await fetch(url);
       const resJson = await response.json();
       let newResponse = {

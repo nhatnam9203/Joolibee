@@ -26,20 +26,24 @@ const Index = () => {
   );
   const [key, setKey] = React.useState(key);
 
-  const searchLocation = async (input) => {
+  const searchLocation = async (input = '') => {
     let params = { input };
-    try {
-      await dispatch(address.autoCompleteStart());
-      let { status, data } = await autocomplete(params);
-      if (status === 'OK') {
-        dispatch(address.autoCompleteSuccess(data));
-      } else {
-        // eslint-disable-next-line no-alert
-        alert(status);
+    if (input !== '') {
+      try {
+        await dispatch(address.autoCompleteStart());
+        let { status, data } = await autocomplete(params);
+        if (status === 'OK') {
+          dispatch(address.autoCompleteSuccess(data));
+        } else {
+          // eslint-disable-next-line no-alert
+          alert(status);
+          await dispatch(address.autoCompleteFail());
+        }
+      } catch (error) {
         await dispatch(address.autoCompleteFail());
       }
-    } catch (error) {
-      await dispatch(address.autoCompleteFail());
+    } else {
+      dispatch(address.autoCompleteSuccess([]));
     }
   };
   const delayedQuery = React.useRef(
@@ -74,15 +78,7 @@ const Index = () => {
       <Placeholder
         Animation={Fade}
         style={[styles.itemContainer, { width: '92%' }]}
-        Left={() => (
-          <PlaceholderMedia
-            style={{
-              width: 34,
-              height: 34,
-              marginRight: 15,
-            }}
-          />
-        )}
+        Left={() => <PlaceholderMedia style={styles.leftLoadingContainer} />}
         Right={() => (
           <Placeholder Animation={Fade}>
             <PlaceholderLine width={80} height={10} />
@@ -160,6 +156,11 @@ const styles = StyleSheet.create({
   },
   txtAddress: {
     paddingHorizontal: 10,
+  },
+  leftLoadingContainer: {
+    width: 34,
+    height: 34,
+    marginRight: 15,
   },
 });
 export default Index;
