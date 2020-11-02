@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  Image
+  Image,
 } from 'react-native';
 import {
   Placeholder,
@@ -14,7 +14,6 @@ import {
 } from 'rn-placeholder';
 import { Text } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
-import { JollibeeImage } from "../../../../components";
 import { AppStyles } from '@theme';
 import { CustomButton, CustomHTML } from '@components';
 import { scale } from '@utils';
@@ -24,31 +23,26 @@ const { width } = Dimensions.get('window');
 const index = ({ openDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
-
       <View style={styles.containerTop}>
         <Text
           style={[
-
             AppStyles.fonts.title,
             { color: AppStyles.colors.text, fontSize: scaleWidth(32) },
           ]}>
           Tin Tức
         </Text>
 
-        <TouchableOpacity
-          onPress={onCHangeScreen}
-        >
-          <Text
-            style={styles.txtSeeAll}>
-            XEM TẤT CẢ
-        </Text>
+        <TouchableOpacity onPress={onCHangeScreen}>
+          <Text style={styles.txtSeeAll}>XEM TẤT CẢ</Text>
         </TouchableOpacity>
       </View>
 
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={loading ? [1, 2, 3] : data}
-        renderItem={(item, index) => loading ? renderItemLoading() : renderItem(item, index, openDetail)}
+        renderItem={(item, index) =>
+          loading ? renderItemLoading() : renderItem(item, index, openDetail)
+        }
         sliderWidth={width}
         itemWidth={width}
         hasParallaxImages={true}
@@ -68,15 +62,19 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
 };
 
 const renderItem = (item, index, onPress) => {
-  const { title, featured_image, short_content } = item?.item || {};
+  const { title, short_content } = item?.item || {};
   return (
     <View style={styles.wrapperItem}>
-      <View
-        style={[styles.containerItem, AppStyles.styles.shadow]}>
+      <View style={[styles.containerItem, AppStyles.styles.shadow]}>
         <View style={styles.imgLoading}>
-          <Image source={{ uri: "http://dev.jollibee.levincitest.com/media/mageplaza/bannerslider/banner/image/e/a/ea8ad72ff489c5-ba49262adc1c26427f0d_1.png" }} style={styles.imgProduct} />
+          <Image
+            source={{
+              uri:
+                'http://dev.jollibee.levincitest.com/media/mageplaza/bannerslider/banner/image/e/a/ea8ad72ff489c5-ba49262adc1c26427f0d_1.png',
+            }}
+            style={styles.imgProduct}
+          />
         </View>
-
 
         <View style={styles.content}>
           <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
@@ -94,8 +92,8 @@ const renderItem = (item, index, onPress) => {
                     numberOfLines={3}>
                     {props[3]?.rawChildren[0].data}
                   </Text>
-                )
-              }
+                );
+              },
             }}
           />
         </View>
@@ -115,23 +113,20 @@ const renderItem = (item, index, onPress) => {
 };
 
 const renderItemLoading = () => {
+  const flex_start_style = { alignSelf: 'flex-start' };
   return (
-    <Placeholder
-      Animation={Fade}
-      style={styles.wrapperItem}>
-
+    <Placeholder Animation={Fade} style={styles.wrapperItem}>
       <View style={styles.containerItem}>
         <View style={styles.imgLoading}>
           <PlaceholderMedia style={styles.imgProduct} />
         </View>
 
         <PlaceholderLine height={15} />
-        <PlaceholderLine height={10} style={{ alignSelf: 'flex-start' }} />
-        <PlaceholderLine height={10} width='70%' style={{ alignSelf: 'flex-start' }} />
-        <PlaceholderLine height={10} width='70%' style={{ alignSelf: 'flex-start' }} />
+        <PlaceholderLine height={10} style={flex_start_style} />
+        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
+        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
         <PlaceholderLine height={40} width={35} style={styles.btnLoading} />
       </View>
-
     </Placeholder>
   );
 };
@@ -143,7 +138,6 @@ const styles = StyleSheet.create({
     top: -90,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
-
   },
 
   containerTop: {
@@ -186,7 +180,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: scaleWidth(14),
     ...AppStyles.fonts.text,
-
   },
   imgProduct: {
     width: scaleWidth(281),
@@ -199,17 +192,17 @@ const styles = StyleSheet.create({
   btn: {
     position: 'absolute',
     bottom: 20,
-    left: 15
+    left: 15,
   },
   btnLoading: {
     alignSelf: 'flex-start',
     borderRadius: 20,
-    marginTop: 10
+    marginTop: 10,
   },
   imgLoading: {
     width: scaleWidth(281),
     height: scaleHeight(130),
-    marginBottom:15
+    marginBottom: 15,
   },
 
   txtSeeAll: {

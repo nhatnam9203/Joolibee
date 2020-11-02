@@ -44,17 +44,15 @@ const HomePage = () => {
     createEmptyCart();
   }
   React.useEffect(() => {
-    response.data && dispatch(cart.setCartId(response.data))
-  }, [response]);
+    response.data && dispatch(cart.setCartId(response.data));
+  }, [dispatch, response]);
   // Mutation create empty cart --
 
-
-  const { data, error, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first'
+  const { data, loading, refetch } = useQuery(query.HOME_SCREEN, {
+    fetchPolicy: 'cache-first',
   });
 
-
-  const _data = data ? data?.homeScreen : {}
+  const _data = data ? data?.homeScreen : {};
 
   const onTogglePopup = () => setVisiblePopup(true);
   const onToggleDetail = () => showDetail(!visible_detail);
@@ -64,23 +62,17 @@ const HomePage = () => {
     navigation.navigate(screen, params);
   };
 
-
-
   React.useEffect(() => {
     setTimeout(() => {
       setVisiblePopup(true);
     }, 1000);
   }, []);
 
-
-
   return (
     <AppScrollViewIOSBounceColorsWrapper
       style={styles.container}
       topBounceColor={AppStyles.colors.accent}
-      bottomBounceColor={AppStyles.colors.button}
-
-    >
+      bottomBounceColor={AppStyles.colors.button}>
       <TopBarScreenLayout
         style={{ backgroundColor: 'transparent' }}
         topBar={<TopBarComponent />}>
@@ -135,7 +127,8 @@ const HomePage = () => {
           <BestSellerList
             loading={loading}
             data={_data.best_sellers ? _data.best_sellers : []}
-            openMenu={onCHangeScreen(MenuPageName)} />
+            openMenu={onCHangeScreen(MenuPageName)}
+          />
 
           <NewsList
             loading={loading}
