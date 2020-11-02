@@ -105,7 +105,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         style={styles.listStyle}
         renderItem={renderOptionsItem}
         renderSelectItem={onRenderSelectedItem}
-        // onChangeOptionsItem={onChangeOptionsItem}
+        onChangeOptionsItem={onChangeOptionsItem}
         sku={sku}
         option_id={option_id}
       />
