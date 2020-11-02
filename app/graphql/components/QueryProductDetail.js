@@ -10,12 +10,8 @@ import {
 import { CustomFlatList } from '@components';
 import { Loading } from '@components';
 import { AppStyles } from '@theme';
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
+import { Placeholder, PlaceholderMedia, PlaceholderLine } from 'rn-placeholder';
+import { destructuring } from '@utils';
 
 const PRODUCT = gql`
   query products($sku: String!) {
@@ -66,6 +62,7 @@ const PRODUCT = gql`
             sku
             options {
               id
+              uid
               quantity
               position
               is_default
@@ -93,19 +90,20 @@ const PRODUCT = gql`
 export const QueryProductDetail = ({
   renderItem,
   renderItemLoading,
-  renderMainSection,
+  renderHeader,
   renderFooter,
   productItem: { sku },
-  onCalculatePrice,
+  updateProductPrice,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [itemDetail, setItemDetail] = React.useState(null);
 
-  const { loading, error, data, refetch } = useQuery(PRODUCT, {
+  const { loading, data, refetch } = useQuery(PRODUCT, {
     variables: { sku },
     fetchPolicy: 'cache-first',
   });
 
+  // When received new data, sort
   React.useEffect(() => {
     if (refreshing) {
       setRefreshing(false);
@@ -125,15 +123,14 @@ export const QueryProductDetail = ({
         items?.sort((a, b) => a.position - b.position);
 
         setItemDetail(Object.assign({}, clone, items));
+
+        // ! cùi chuối, call update from MenuDetail
+        const { price_range } = clone;
+        const { sellPrice } = destructuring.priceOfRange(price_range);
+        updateProductPrice(sellPrice);
       }
     }
-  }, [data, refreshing]);
-
-  React.useEffect(() => {
-    if (typeof onCalculatePrice === 'function' && itemDetail) {
-      onCalculatePrice(itemDetail);
-    }
-  }, [itemDetail, onCalculatePrice]);
+  }, [data, refreshing, updateProductPrice]);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -208,9 +205,11 @@ export const QueryProductDetail = ({
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() =>
-          itemDetail ? renderMainSection(itemDetail) : <View />
+          itemDetail ? renderHeader(itemDetail) : <View />
         }
-        ListFooterComponent={renderFooter}
+        ListFooterComponent={() =>
+          itemDetail ? renderFooter(itemDetail) : <View />
+        }
 
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />

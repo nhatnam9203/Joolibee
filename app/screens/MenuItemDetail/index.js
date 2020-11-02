@@ -16,17 +16,39 @@ import {
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
+
   const [quantity, setQuantity] = React.useState(1);
-  const [price, setPrice] = React.useState(0);
+  const [price, setPrice] = React.useState(null);
+  const [defaultPrice, setDefaultPrice] = React.useState(null);
+  const [optionItems, setOptionItems] = React.useState([]);
 
-  const onCalculatePrice = ({ price_range }) => {
-    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+  const onChangeOptionsItem = (item) => {
+    const { list, sku, option_id } = item;
+    // Logger.debug(list, `onChangeOptionsItem ${sku} ${option_id}`);
+    const findItem = optionItems?.findIndex((x) => x.sku === sku);
+    if (findItem >= 0) {
+      optionItems.splice(findItem, 1);
+    }
 
-    setPrice(sellPrice);
+    // setOptionItems([item, ...optionItems]);
   };
 
-  const renderMainSection = (itemProps) => {
-    const { image, name, point, price_range } = itemProps;
+  const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
+    <MenuDetailItem
+      item={item}
+      key={`${index}`}
+      type={type}
+      onPress={onPress}
+      selected={selected}
+    />
+  );
+
+  const onRenderSelectedItem = (item) => (
+    <MenuOptionSelectedItem item={item?.first} list={item} />
+  );
+
+  const renderHeader = (productDetailItem) => {
+    const { image, name, point, price_range } = productDetailItem;
     const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
     return (
@@ -66,23 +88,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
-    <MenuDetailItem
-      item={item}
-      key={`${index}`}
-      type={type}
-      onPress={onPress}
-      selected={selected}
-    />
-  );
-
-  const onRenderSelectedItem = ([first, ...arr]) => (
-    <MenuOptionSelectedItem item={first} list={[first, ...arr]} />
-  );
-
   const renderItem = (item, index) => {
     const {
-      item: { title, options, type, position, required },
+      item: { title, options, type, position, required, sku, option_id },
     } = item;
 
     return (
@@ -97,52 +105,78 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         style={styles.listStyle}
         renderItem={renderOptionsItem}
         renderSelectItem={onRenderSelectedItem}
+        // onChangeOptionsItem={onChangeOptionsItem}
+        sku={sku}
+        option_id={option_id}
       />
     );
   };
 
-  const renderFooter = () => (
-    <View style={styles.orderContentStyle}>
-      <View style={styles.orderAmountStyle}>
-        <CustomButton
-          style={styles.buttonOrderStyle}
-          onPress={() => setQuantity((prev) => prev - 1)}
-          disabled={quantity <= 1}
-          borderRadius={6}>
-          <Image source={images.icons.ic_sub} />
-        </CustomButton>
-        <CustomInput
-          style={styles.mulInputStyle}
-          inputStyle={styles.inputStyle}
-          keyboardType="numeric"
-          allowFontScaling={true}
-          numberOfLines={1}
-          editable={false}
-          value={quantity?.toString()}
-          multiline={false}
-          clearTextOnFocus={true}
-          maxLength={3}
-        />
-        <CustomButton
-          style={styles.buttonOrderStyle}
-          onPress={() => setQuantity((prev) => prev + 1)}
-          disabled={quantity > 255}
-          borderRadius={6}>
-          <Image source={images.icons.ic_plus} />
-        </CustomButton>
+  const renderFooter = (productDetailItem) => {
+    return (
+      <View style={styles.orderContentStyle}>
+        <View style={styles.orderAmountStyle}>
+          <CustomButton
+            style={styles.buttonOrderStyle}
+            onPress={() => setQuantity((prev) => prev - 1)}
+            disabled={quantity <= 1}
+            borderRadius={6}>
+            <Image source={images.icons.ic_sub} />
+          </CustomButton>
+          <CustomInput
+            style={styles.mulInputStyle}
+            inputStyle={styles.inputStyle}
+            keyboardType="numeric"
+            allowFontScaling={true}
+            numberOfLines={1}
+            editable={false}
+            value={quantity?.toString()}
+            multiline={false}
+            clearTextOnFocus={true}
+            maxLength={3}
+          />
+          <CustomButton
+            style={styles.buttonOrderStyle}
+            onPress={() => setQuantity((prev) => prev + 1)}
+            disabled={quantity > 255}
+            borderRadius={6}>
+            <Image source={images.icons.ic_plus} />
+          </CustomButton>
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
+
+  React.useEffect(() => {
+    if (!defaultPrice) return;
+
+    let { value } = defaultPrice;
+    Logger.debug(defaultPrice, 'defaultPrice');
+
+    // const addOptionValue = (options) =>
+    //   options.reducer((accumulator, currentValue) => {
+    //     accumulator + (currentValue?.price ?? 0);
+    //   }, 0);
+
+    if (optionItems?.length > 0) {
+      Logger.debug(optionItems, 'optionItems');
+      // optionItems?.reducer((accumulator, item) => {
+      //   Logger.info(item, 'item');
+      // });
+    }
+
+    setPrice(defaultPrice);
+  }, [optionItems, defaultPrice, quantity]);
 
   return (
     <>
       <View style={styles.container}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderMainSection={renderMainSection}
+          renderHeader={renderHeader}
           renderItem={renderItem}
           renderFooter={renderFooter}
-          onCalculatePrice={onCalculatePrice}
+          updateProductPrice={setDefaultPrice}
         />
       </View>
 
@@ -155,12 +189,16 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       </CustomButton>
 
       <View style={styles.confirmStyle}>
-        <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
-          <Text style={styles.txtPriceStyle}>
-            {format.jollibeeCurrency(price)}
-          </Text>
-        </View>
+        {price && (
+          <View style={styles.orderSumContent}>
+            <Text style={styles.txtStyle}>{`${translate(
+              'txtSummary',
+            )} : `}</Text>
+            <Text style={styles.txtPriceStyle}>
+              {format.jollibeeCurrency(price)}
+            </Text>
+          </View>
+        )}
         <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
     </>

@@ -42,6 +42,9 @@ const CustomAccordionList = ({
   renderSelectItem,
   style,
   required,
+  onChangeOptionsItem,
+  sku,
+  option_id,
   ...props
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -68,7 +71,8 @@ const CustomAccordionList = ({
 
   const unSelectedItem = (item) => {
     const index = selectedListItem?.indexOf(item);
-    setSelectedListItem(selectedListItem?.splice(index, 1));
+    selectedListItem?.splice(index, 1);
+    setSelectedListItem([...selectedListItem]);
   };
 
   const onRenderItem = ({ item }, index) => {
@@ -130,6 +134,17 @@ const CustomAccordionList = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+
+  React.useEffect(() => {
+    if (typeof onChangeOptionsItem === 'function') {
+      onChangeOptionsItem({
+        list: selectedListItem,
+        sku: sku,
+        option_id: option_id,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedListItem, onChangeOptionsItem]);
 
   return (
     <Transitioning.View
