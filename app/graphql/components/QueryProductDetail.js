@@ -94,6 +94,7 @@ export const QueryProductDetail = ({
   renderFooter,
   productItem: { sku },
   updateProductPrice,
+  updateProduct,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [itemDetail, setItemDetail] = React.useState(null);
@@ -122,15 +123,18 @@ export const QueryProductDetail = ({
         let items = new Array(clone.items);
         items?.sort((a, b) => a.position - b.position);
 
-        setItemDetail(Object.assign({}, clone, items));
+        const factoryItem = Object.assign({}, clone, items);
+        setItemDetail(factoryItem);
 
-        // ! cùi chuối, call update from MenuDetail
+        // ! call update to MenuDetail
         const { price_range } = clone;
         const { sellPrice } = destructuring.priceOfRange(price_range);
         updateProductPrice(sellPrice);
+        updateProduct(factoryItem);
       }
     }
-  }, [data, refreshing, updateProductPrice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -194,6 +198,14 @@ export const QueryProductDetail = ({
     );
   }
 
+  const onRenderHeader = () => {
+    return renderHeader();
+  };
+
+  const onRenderFooter = () => {
+    return renderFooter();
+  };
+
   return (
     <KeyboardAvoidingView
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
@@ -204,12 +216,8 @@ export const QueryProductDetail = ({
         keyExtractor={(item, index) => item.option_id.toString()}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() =>
-          itemDetail ? renderHeader(itemDetail) : <View />
-        }
-        ListFooterComponent={() =>
-          itemDetail ? renderFooter(itemDetail) : <View />
-        }
+        ListHeaderComponent={onRenderHeader}
+        ListFooterComponent={onRenderFooter}
 
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />

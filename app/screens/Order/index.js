@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ButtonCC,
   LabelTitle,
@@ -24,8 +24,13 @@ import {
 import ScreenName from '../ScreenName';
 import { OrderItems } from './LocalData';
 import { OrderItem } from './widget';
+import { useMutation, useQuery } from '@apollo/client';
+import { mutation, query } from '@graphql';
+import { format } from "@utils";
 
 const OrderSection = ({ title, children, buttonComponent }) => {
+
+
   return (
     <View>
       <View style={AppStyles.styles.horizontalLayout}>
@@ -61,10 +66,36 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const cart_id = useSelector((state) => state.cart?.cart_id);
 
-  const [shippingType, setShippingType] = React.useState(ShippingType.InShop);
+  const [shippingType, setShippingType] = React.useState(selected_payment_method);
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
+
+  // --------- handle fetch data cart -----------
+  const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
+    variables: { cartId: cart_id },
+    //  fetchPolicy: 'cache-first'
+  });
+  console.log('data', data)
+  const {
+    items,
+    shipping_addresses,
+    applied_coupons,
+    selected_payment_method,
+    prices: {
+      grand_total,
+      discounts,
+      subtotal_excluding_tax,
+    }
+  } = data?.cart || { items: [], prices: { grand_total: {} }, shipping_addresses: [] };
+
+  const total = format.jollibeeCurrency({ value: grand_total.value, currency: 'VND' });
+  const _discount = format.jollibeeCurrency(discounts ? discounts.amount : {});
+  const subTotal = format.jollibeeCurrency(subtotal_excluding_tax ? subtotal_excluding_tax : {});
+  const { firstname, lastname, city, region, street } = shipping_addresses[0] || {};
+  const addressFull = `${street[0] || ''} ${city} ${region.label}`
+  // -------- handle fetch data cart -----------
 
   const onTogglePopupNotice = () => {
     setShowNotice(false);
@@ -74,9 +105,16 @@ const OrderScreen = () => {
   };
 
   const onEdit = () => {
-    shippingType == ShippingType["InShop"]
+    shippingType?.code == ShippingType["InShop"]
       ? navigation.navigate(ScreenName.StorePickup)
       : () => { }
+  };
+
+  const onChangePaymentMethod = (code) => {
+    setShippingType({
+      code,
+      title: translate(code == 1 ? 'txtPlaceInShopOrder' : "txtShippingOrder")
+    })
   };
 
   React.useEffect(() => {
@@ -93,7 +131,7 @@ const OrderScreen = () => {
           <OrderSection key="ShippingType">
             <OrderSectionItem
               onPress={() => {
-                setShippingType(ShippingType.InPlace);
+                onChangePaymentMethod(ShippingType.InPlace);
               }}>
               <View style={AppStyles.styles.horizontalLayout}>
                 <Image
@@ -108,7 +146,7 @@ const OrderScreen = () => {
               <Image
                 style={styles.arrowStyle}
                 source={
-                  shippingType === ShippingType.InPlace
+                  shippingType?.code === ShippingType.InPlace
                     ? images.icons.ic_radio_active
                     : images.icons.ic_radio_inactive
                 }
@@ -116,7 +154,7 @@ const OrderScreen = () => {
             </OrderSectionItem>
             <OrderSectionItem
               onPress={() => {
-                setShippingType(ShippingType.InShop);
+                onChangePaymentMethod(ShippingType.InShop);
               }}>
               <View style={AppStyles.styles.horizontalLayout}>
                 <Image
@@ -131,7 +169,7 @@ const OrderScreen = () => {
               <Image
                 style={styles.arrowStyle}
                 source={
-                  shippingType === ShippingType.InShop
+                  shippingType?.code === ShippingType.InShop
                     ? images.icons.ic_radio_active
                     : images.icons.ic_radio_inactive
                 }
@@ -150,7 +188,7 @@ const OrderScreen = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.txtStyle}>hhahah</Text>
+                <Text style={styles.txtStyle}>{firstname}</Text>
               </View>
               <View
                 style={{
@@ -165,7 +203,7 @@ const OrderScreen = () => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.txtStyle}>dfdf</Text>
+                <Text style={styles.txtStyle}>{lastname}</Text>
               </View>
             </OrderSectionItem>
 
@@ -177,7 +215,7 @@ const OrderScreen = () => {
                   paddingHorizontal: 10,
                 }}>
                 <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
-                  {shippingType === ShippingType.InPlace
+                  {shippingType?.code === ShippingType.InPlace
                     ? translate('txtShippingTo')
                     : translate('txtToReceive')}
                   :
@@ -186,7 +224,7 @@ const OrderScreen = () => {
                   style={[styles.txtStyle, { flex: 1 }]}
                   ellipsizeMode="tail"
                   numberOfLines={1}>
-                  16 Trương Định, P. 6, Q. 3, Tp. Hồ Chí Minh
+                  {addressFull}
                 </Text>
               </View>
 
@@ -216,8 +254,8 @@ const OrderScreen = () => {
               />
             )}
             key="OrderItems">
-            {OrderItems.map((item) => (
-              <OrderSectionItem>
+            {items.map((item, index) => (
+              <OrderSectionItem key={index + ''}>
                 <OrderItem item={item} />
               </OrderSectionItem>
             ))}
@@ -227,7 +265,7 @@ const OrderScreen = () => {
                 <Text style={styles.txtTitleStyle}>
                   {translate('txtOrderCalculator')} :
                 </Text>
-                <Text style={styles.txtStyle}>25.000 đ</Text>
+                <Text style={styles.txtStyle}>{subTotal}</Text>
               </View>
             </OrderSectionItem>
             <OrderSectionItem>
@@ -266,7 +304,7 @@ const OrderScreen = () => {
             <OrderSectionItem>
               <View style={AppStyles.styles.horizontalLayout}>
                 <Image source={images.icons.ic_sticked} />
-                <Text style={styles.txtStyle}>Ưu đãi 40.000 đ</Text>
+                <Text style={styles.txtStyle}>Ưu đãi {_discount}</Text>
               </View>
               <CustomButtonImage
                 image={images.icons.ic_order_edit}
@@ -283,7 +321,7 @@ const OrderScreen = () => {
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>Tổng cộng : </Text>
-          <Text style={styles.txtPriceStyle}>0.00 đ</Text>
+          <Text style={styles.txtPriceStyle}>{total}</Text>
         </View>
 
         <ButtonCC.ButtonRed

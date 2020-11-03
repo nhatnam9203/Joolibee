@@ -19,7 +19,7 @@ const config = {
   key: 'root',
   // version: 1,
   storage: AsyncStorage,
-  blacklist: ['app'],
+  blacklist: ['app','address'],
   debug: Config.NODE_ENV !== 'production', //to get useful logging
 };
 const initialState = {};

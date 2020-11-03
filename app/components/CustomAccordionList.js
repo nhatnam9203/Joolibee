@@ -51,62 +51,58 @@ const CustomAccordionList = ({
   const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
 
-  const updateOptionItems = (arr) => {
-    setSelectedListItem(arr);
-    if (typeof onChangeOptionsItem === 'function') {
-      onChangeOptionsItem({
-        list: arr,
-        sku: sku,
-        option_id: option_id,
-      });
-    }
+  const updateOptionItems = async (arr) => {
+    await setSelectedListItem(arr);
   };
 
-  const selectedItem = (item) => {
+  const selectedItem = async (item) => {
     const index = selectedListItem?.indexOf(item);
 
     switch (type) {
       case CustomAccordionListItemType.Multiline:
         if (index < 0) {
-          updateOptionItems([item, ...selectedListItem]);
+          await updateOptionItems([item, ...selectedListItem]);
         }
         break;
       case CustomAccordionListItemType.Radio:
       default:
         if (index < 0) {
-          updateOptionItems([item]);
+          await updateOptionItems([item]);
         }
         break;
     }
   };
 
-  const unSelectedItem = (item) => {
+  const unSelectedItem = async (item) => {
     const index = selectedListItem?.indexOf(item);
     selectedListItem?.splice(index, 1);
-    updateOptionItems([...selectedListItem]);
+    await updateOptionItems([...selectedListItem]);
+  };
+
+  const onPress = (item) => {
+    const selected = selectedListItem?.indexOf(item) > -1;
+
+    switch (type) {
+      case CustomAccordionListItemType.Multiline:
+        selected ? unSelectedItem(item) : selectedItem(item);
+
+        break;
+      case CustomAccordionListItemType.Radio:
+      default:
+        selected && !required ? unSelectedItem(item) : selectedItem(item);
+        break;
+    }
   };
 
   const onRenderItem = ({ item }, index) => {
     const selected = selectedListItem?.indexOf(item) > -1;
-    const onPress = () => {
-      switch (type) {
-        case CustomAccordionListItemType.Multiline:
-          selected ? unSelectedItem(item) : selectedItem(item);
-
-          break;
-        case CustomAccordionListItemType.Radio:
-        default:
-          selected && !required ? unSelectedItem(item) : selectedItem(item);
-          break;
-      }
-    };
 
     return typeof renderItem === 'function' ? (
       renderItem({
         item,
         index,
         type,
-        onPress,
+        onPress: onPress,
         selected,
       })
     ) : (
@@ -145,6 +141,17 @@ const CustomAccordionList = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+
+  React.useEffect(() => {
+    if (typeof onChangeOptionsItem === 'function') {
+      onChangeOptionsItem({
+        list: selectedListItem,
+        sku: sku,
+        option_id: option_id,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedListItem]);
 
   return (
     <Transitioning.View

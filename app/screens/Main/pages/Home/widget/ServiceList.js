@@ -60,6 +60,7 @@ const index = ({ openDetail }) => {
         useScrollView={true}
         lockScrollWhileSnapping={true}
         loopClonesPerSide={2}
+        horizontal
       />
     </View>
   );
@@ -110,8 +111,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F1E6',
     alignItems: 'center',
     paddingHorizontal: scaleWidth(10),
-    paddingVertical: scaleHeight(30),
-    top: -50,
+    paddingVertical: scaleHeight(15),
+    top: -90,
   },
 
   containerTop: {
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingBottom: scaleHeight(20),
+    paddingBottom: scaleHeight(10),
   },
 
   containerItem: {

@@ -1,37 +1,49 @@
 
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
+import {
+    Placeholder,
+    PlaceholderLine,
+    PlaceholderMedia,
+    Fade,
+} from 'rn-placeholder';
+import { useDispatch, useSelector } from "react-redux";
 import { AppStyles, metrics, images } from '@theme';
 import React from 'react';
-import { StyleSheet, View, Image, Dimensions, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 import _ from 'lodash';
-import * as Yup from 'yup';
-import { regex } from '@utils';
-import { CustomInput, CustomButton } from '@components';
-import { SinglePageLayout } from '@layouts';
-
-
+import { CustomInput } from '@components';
+import { autocomplete } from '@location';
+import { address } from '@slices';
 
 const LAYOUT_WIDTH = '100%';
-const { width } = Dimensions.get('window')
+
 const index = () => {
-    const navigation = useNavigation();
-    const [key, setKey] = React.useState(key)
+    const dispatch = useDispatch();
+    const locations = useSelector((state) => state.address.locations);
+    const loading_location = useSelector((state) => state.address.loading_location);
+    const [key, setKey] = React.useState(key);
 
-    const handleChangeText = (key) => setKey(key);
+    const searchLocation = async () => {
+        let params = { input: key }
+        try {
+            await dispatch(address.autoCompleteStart());
+            let { status, data } = await autocomplete(params);
+            if (status == 'OK') {
+                dispatch(address.autoCompleteSuccess(data));
+            } else
+                await dispatch(address.autoCompleteFail())
+        } catch (error) {
+            await dispatch(address.autoCompleteFail())
+            alert(error.message)
+        }
+    }
 
-    const goToBack = React.useCallback(() => {
-        navigation.goBack();
-    }, [navigation]);
+    const handleChangeText = async (key) => {
+        await setKey(key);
+        await searchLocation()
+    }
 
-    const onHandleSubmit = React.useCallback(
-        (values) => {
-            console.log(values)
-            //   const action = signIn(values, { dispatch });
-            //   dispatch(action);
-        },
-        [],
-    );
 
     return (
 
@@ -44,31 +56,63 @@ const index = () => {
                     placeholder='Nhập địa chỉ'
                     style={{ margin: 0 }}
                     autoFocus={true}
+
                 />
             </View>
 
-            <FilterAddressList />
+            <FilterAddressList
+                loading={loading_location}
+                data={locations}
+            />
 
         </View>
 
     );
 };
 
-const FilterAddressList = ({ data = [1, 2, 3, 4] }) => {
-    return data.length > 0 && data.map((item, index) => (
-        <TouchableOpacity
-            onPress={()=>alert('áds')}
-            key={index + ''}
-            style={styles.itemContainer}>
-            <Image source={images.icons.ic_location} resizeMode='contain' />
+const renderItem = (item, index) => (
+    <TouchableOpacity
+        onPress={() => alert('áds')}
+        key={index + ''}
+        style={styles.itemContainer}>
+        <Image source={images.icons.ic_location} resizeMode='contain' />
 
-            <Text
-                numberOfLines={3}
-                style={[AppStyles.fonts.text, styles.txtAddress]}>
-                350 Lý Thường Kiệt, phường 12, Quận Tân Bình, Thành phố Hồ Chí Minh
-            </Text>
-        </TouchableOpacity>
-    ))
+        <Text
+            numberOfLines={3}
+            style={[AppStyles.fonts.text, styles.txtAddress]}>
+            {item.description}
+    </Text>
+    </TouchableOpacity>
+)
+
+const renderItemLoading = () => {
+    return (
+        <Placeholder
+            Animation={Fade}
+            style={[styles.itemContainer, { width: '92%' }]}
+            Left={() => <PlaceholderMedia style={{
+                width: 34,
+                height: 34,
+                marginRight: 15
+            }} />}
+
+            Right={() => (
+                <Placeholder Animation={Fade} >
+                    <PlaceholderLine width={80} height={10} />
+                    <PlaceholderLine width={80} height={10} />
+                    <PlaceholderLine width={80} height={10} />
+                </Placeholder>
+            )}
+
+
+        />
+    );
+};
+
+const FilterAddressList = ({ data = [], loading }) => {
+    if (loading) return renderItemLoading();
+    if (data.length == 0) return (<Text style={{ padding: 15, textAlign: 'center' }}>Không có địa chỉ nào</Text>)
+    return data.map(renderItem)
 }
 
 

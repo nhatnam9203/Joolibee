@@ -48,8 +48,7 @@ const index = ({ openMenu, data, loading }) => {
 
       <View
         style={{
-          position: 'absolute',
-          top: scaleHeight(110),
+          top: scaleHeight(10),
         }}>
         <Carousel
           data={loading ? [1, 2, 3, 4] : data}
@@ -134,9 +133,9 @@ const renderEmptyList = () => (
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: scaleHeight(381),
+    height: scaleHeight(320),
     backgroundColor: AppStyles.colors.orange,
-    top: -50,
+    top: -90,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(10),
   },
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: scaleHeight(30),
+    marginTop: scaleHeight(15),
   },
 
   containerItem: {
@@ -156,6 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: AppStyles.colors.white,
     borderRadius: scaleWidth(10),
+    paddingHorizontal:10
   },
 
   containerItemLoading: {
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+
   },
 
   txtMenu: {

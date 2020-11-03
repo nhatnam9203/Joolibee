@@ -12,6 +12,7 @@ import {
   MenuDetailItem,
   MenuOptionSelectedItem,
 } from '../components';
+import index from '../components/ItemStore';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
@@ -20,17 +21,21 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const [quantity, setQuantity] = React.useState(1);
   const [price, setPrice] = React.useState(null);
   const [defaultPrice, setDefaultPrice] = React.useState(null);
-  const [optionItems, setOptionItems] = React.useState([]);
+  const [optionItems, setOptionItems] = React.useState(null);
+  const [productDetailItem, setProductDetailItem] = React.useState(null);
 
   const onChangeOptionsItem = (item) => {
+    let arr = Array.from(optionItems || []);
+
     const { list, sku, option_id } = item;
-    // Logger.debug(list, `onChangeOptionsItem ${sku} ${option_id}`);
-    const findItem = optionItems?.findIndex((x) => x.sku === sku);
+    const findItem = arr?.findIndex((x) => x.sku === sku);
     if (findItem >= 0) {
-      optionItems.splice(findItem, 1);
+      arr.splice(findItem, 1);
     }
 
-    // setOptionItems([item, ...optionItems]);
+    arr.push(item);
+
+    setOptionItems(arr);
   };
 
   const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
@@ -177,6 +182,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
           renderItem={renderItem}
           renderFooter={renderFooter}
           updateProductPrice={setDefaultPrice}
+          updateProduct={setProductDetailItem}
         />
       </View>
 
