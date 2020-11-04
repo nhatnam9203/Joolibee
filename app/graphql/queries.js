@@ -114,6 +114,12 @@ export const CART_DETAIL = gql`
       }
       items {
         id
+        prices {
+          price {
+            value
+            currency
+          }
+        }
         product {
           name
           sku

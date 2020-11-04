@@ -26,11 +26,9 @@ import { OrderItems } from './LocalData';
 import { OrderItem } from './widget';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
-import { format } from "@utils";
+import { format } from '@utils';
 
 const OrderSection = ({ title, children, buttonComponent }) => {
-
-
   return (
     <View>
       <View style={AppStyles.styles.horizontalLayout}>
@@ -68,33 +66,41 @@ const OrderScreen = () => {
   const navigation = useNavigation();
   const cart_id = useSelector((state) => state.cart?.cart_id);
 
-  const [shippingType, setShippingType] = React.useState(selected_payment_method);
+  const [shippingType, setShippingType] = React.useState(
+    selected_payment_method,
+  );
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
 
   // --------- handle fetch data cart -----------
-  const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
+  const { data } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
     //  fetchPolicy: 'cache-first'
   });
-  console.log('data', data)
+  console.log('data', data);
   const {
     items,
     shipping_addresses,
     applied_coupons,
     selected_payment_method,
-    prices: {
-      grand_total,
-      discounts,
-      subtotal_excluding_tax,
-    }
-  } = data?.cart || { items: [], prices: { grand_total: {} }, shipping_addresses: [] };
+    prices: { grand_total, discounts, subtotal_excluding_tax },
+  } = data?.cart || {
+    items: [],
+    prices: { grand_total: {} },
+    shipping_addresses: [{}],
+  };
 
-  const total = format.jollibeeCurrency({ value: grand_total.value, currency: 'VND' });
+  const total = format.jollibeeCurrency({
+    value: grand_total.value,
+    currency: 'VND',
+  });
   const _discount = format.jollibeeCurrency(discounts ? discounts.amount : {});
-  const subTotal = format.jollibeeCurrency(subtotal_excluding_tax ? subtotal_excluding_tax : {});
-  const { firstname, lastname, city, region, street } = shipping_addresses[0] || {};
-  const addressFull = `${street[0] || ''} ${city} ${region.label}`
+  const subTotal = format.jollibeeCurrency(
+    subtotal_excluding_tax ? subtotal_excluding_tax : {},
+  );
+  const { firstname, lastname, city, region = {}, street = [{}] } =
+    shipping_addresses[0] || {};
+  const addressFull = `${street[0] || ''} ${city} ${region.label}`;
   // -------- handle fetch data cart -----------
 
   const onTogglePopupNotice = () => {
@@ -105,16 +111,16 @@ const OrderScreen = () => {
   };
 
   const onEdit = () => {
-    shippingType?.code == ShippingType["InShop"]
+    shippingType?.code == ShippingType.InShop
       ? navigation.navigate(ScreenName.StorePickup)
-      : () => { }
+      : () => {};
   };
 
   const onChangePaymentMethod = (code) => {
     setShippingType({
       code,
-      title: translate(code == 1 ? 'txtPlaceInShopOrder' : "txtShippingOrder")
-    })
+      title: translate(code === 1 ? 'txtPlaceInShopOrder' : 'txtShippingOrder'),
+    });
   };
 
   React.useEffect(() => {

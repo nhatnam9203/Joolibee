@@ -18,6 +18,7 @@ import ScreenName from '../ScreenName';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { format } from '@utils';
+import _ from 'lodash';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 
 export const PopupOrderList = ({ visible, onToggle }) => {
@@ -36,7 +37,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
 
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
-    fetchPolicy: 'cache-first',
+    // fetchPolicy: 'cache-first',
   });
   const {
     items,
@@ -174,6 +175,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
               label={translate('txtPayment')}
               style={styles.bottomButton}
               onPress={paymentPressed}
+              disabled={_.isEmpty(items)}
             />
           </View>
         </View>
