@@ -113,3 +113,87 @@ export const UPDATE_CART_PRODUCT = gql`
     }
   }
 `;
+
+// ADD ADDRESS CUSTOMER
+export const ADD_ADDRESS = gql`
+  mutation(
+    $company: String!
+    $region: String!
+    $country_code: CountryCodeEnum
+    $street: [String]
+    $telephone: String!
+    $postcode: String!
+    $city: String!
+    $firstname: String!
+    $lastname: String!
+    $default_shipping: Boolean
+    $default_billing: Boolean
+  ) {
+    createCustomerAddress(
+      input: {
+        company: $company
+        region: { region: $region, region_code: "VN" }
+        country_code: $country_code
+        street: [$street]
+        telephone: $telephone
+        postcode: $postcode
+        city: $city
+        firstname: $firstname
+        lastname: $lastname
+        default_shipping: $default_shipping
+        default_billing: $default_billing
+      }
+    ) {
+      id
+      region {
+        region
+        region_code
+      }
+      country_code
+      street
+      telephone
+      postcode
+      city
+      default_shipping
+      default_billing
+    }
+  }
+`;
+
+// UPDATE ADDRESS CUSTOMER
+export const UPDATE_ADDRESS = gql`
+  mutation(
+    $id: Int!
+    $company: String!
+    $region: String!
+    $street: [String]
+    $telephone: String!
+    $city: String!
+    $firstname: String!
+    $lastname: String!
+  ) {
+    updateCustomerAddress(
+      id: $id
+      input: {
+        company: $company
+        region: { region: $region, region_code: "VN" }
+        street: $street
+        telephone: $telephone
+        city: $city
+        firstname: $firstname
+        lastname: $lastname
+      }
+    ) {
+      id
+      city
+      postcode
+    }
+  }
+`;
+
+// DELETE ADDRESS CUSTOMER
+export const DELETE_ADDRESS = gql`
+  mutation($id: Int!) {
+    deleteCustomerAddress(id: $id)
+  }
+`;

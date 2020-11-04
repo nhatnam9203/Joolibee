@@ -16,38 +16,127 @@ import { CustomInput, CustomButton } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { TextInputErrorMessage } from '../../components';
 import ScreenName from '../../ScreenName';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useMutation } from '@apollo/client';
+import { mutation, query } from '@graphql';
+import { app } from '@slices';
+// ADDRESS_LIST
 const LAYOUT_WIDTH = '95%';
+const HALF_LAYOUT_WIDTH = '45%';
+
 const { width } = Dimensions.get('window');
 const Index = (props) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const { values } = props.route.params;
   const refFormMilk = React.useRef(null);
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );
-  const goToCreateAddress = () => navigation.navigate(ScreenName.SearchAddress);
-  const onHandleSubmit = React.useCallback((datas) => {
-    console.log(datas);
-    //   const action = signIn(values, { dispatch });
-    //   dispatch(action);
-  }, []);
-  const isCheckValue = values ? true : false;
+  //------------ Add address customer -----------------//
+  const [createCustomerAddress] = useMutation(mutation.ADD_ADDRESS);
 
+  const onHandleAdd = React.useCallback(
+    (datas) => {
+      let input = {
+        company: datas.place,
+        region: location_selected.region,
+        country_code: 'VN',
+        street: [location_selected.street],
+        telephone: datas.phone,
+        postcode: '700000',
+        city: location_selected.city,
+        firstname: datas.firstname,
+        lastname: datas.lastname,
+        default_shipping: false,
+        default_billing: false,
+        //full_address: location_selected.addressFull,
+      };
+      dispatch(app.showLoading());
+      createCustomerAddress({
+        variables: input,
+      });
+    },
+    [createCustomerAddress, dispatch, location_selected],
+  );
+
+  //------------ Update address customer -----------------//
+  const [updateCustomerAddress] = useMutation(mutation.UPDATE_ADDRESS);
+
+  const onHandleUpdate = React.useCallback(
+    (datas) => {
+      let input = {
+        id: datas.id,
+        company: datas.place,
+        region: location_selected.region,
+        street: location_selected.street,
+        telephone: datas.phone,
+        city: `${location_selected.district} ${location_selected.city}`,
+        firstname: datas.firstname,
+        lastname: datas.lastname,
+      };
+      dispatch(app.showLoading());
+
+      updateCustomerAddress({
+        variables: input,
+        awaitRefetchQueries: true,
+        refetchQueries: [{ query: query.ADDRESS_LIST }],
+      })
+        .then(() => {
+          dispatch(app.hideLoading());
+          navigation.goBack();
+        })
+        .catch(() => {
+          dispatch(app.hideLoading());
+        });
+    },
+    [dispatch, location_selected, navigation, updateCustomerAddress],
+  );
+
+  //------------ Update address customer -----------------//
+
+  //------------ DELETE address customer -----------------//
+  const [deleteCustomerAddress] = useMutation(mutation.DELETE_ADDRESS);
+
+  const onHandleDelete = React.useCallback(() => {
+    dispatch(app.showLoading());
+
+    deleteCustomerAddress({
+      variables: { id: values.id },
+      awaitRefetchQueries: true,
+      refetchQueries: [{ query: query.ADDRESS_LIST }],
+    })
+      .then(() => {
+        dispatch(app.hideLoading());
+        navigation.goBack();
+      })
+      .catch(() => {
+        dispatch(app.hideLoading());
+      });
+  }, [dispatch, deleteCustomerAddress, values, navigation]);
+
+  //------------ Update address customer -----------------//
+  const onHandleSubmit = isCheckValue ? onHandleAdd : onHandleUpdate;
+  const goToCreateAddress = () => navigation.navigate(ScreenName.SearchAddress);
+
+  const isCheckValue = values ? true : false;
   const initialValues = isCheckValue
     ? values
     : {
         phone: '',
         place: '',
-        fullName: '',
+        firstname: '',
+        lastname: '',
         note: '',
-        address: location_selected,
+        address: location_selected?.addressFull,
       };
 
   React.useEffect(() => {
     if (refFormMilk.current) {
-      refFormMilk.current.setFieldValue('address', location_selected);
+      refFormMilk.current.setFieldValue(
+        'address',
+        location_selected?.addressFull,
+      );
     }
   }, [location_selected]);
 
@@ -58,7 +147,8 @@ const Index = (props) => {
       .min(10, translate('txtTooShort'))
       .max(15, translate('txtTooLong')),
     place: Yup.string().required(translate('txtRequired')),
-    fullName: Yup.string().required(translate('txtRequired')),
+    firstname: Yup.string().required(translate('txtRequired')),
+    lastname: Yup.string().required(translate('txtRequired')),
     address: Yup.string().required(translate('txtRequired')),
   });
 
@@ -99,19 +189,35 @@ const Index = (props) => {
               )}
 
               {/**FULLNAME*/}
-              <CustomInput
-                style={{ width: LAYOUT_WIDTH }}
-                onChangeText={handleChange('fullName')}
-                onBlur={handleBlur('fullName')}
-                value={values.fullName}
-                placeholder="Họ & Tên người liên lạc"
-              />
+              <View style={AppStyles.styles.horizontalLayout}>
+                <CustomInput
+                  style={{
+                    width: HALF_LAYOUT_WIDTH,
+                  }}
+                  onChangeText={handleChange('firstname')}
+                  onBlur={handleBlur('firstname')}
+                  value={values.firstname}
+                  placeholder={translate('txtInputFirstName')}
+                  textContentType="name"
+                />
+
+                <CustomInput
+                  style={{
+                    width: HALF_LAYOUT_WIDTH,
+                  }}
+                  onChangeText={handleChange('lastname')}
+                  onBlur={handleBlur('lastname')}
+                  value={values.lastname}
+                  placeholder={translate('txtInputLastName')}
+                  textContentType="name"
+                />
+              </View>
 
               {/**FULLNAME input error */}
-              {errors.fullName && touched.fullName && (
+              {errors.firstname && touched.firstname && (
                 <TextInputErrorMessage
                   style={{ width: LAYOUT_WIDTH }}
-                  message={errors.fullName}
+                  message={errors.firstname}
                   color={AppStyles.colors.inputError}
                 />
               )}
@@ -187,9 +293,9 @@ const Index = (props) => {
                                     ))} */}
             </View>
 
-            {isCheckValue && (
+            {isCheckValue && !values.default_shipping && (
               <CustomButton
-                onPress={handleSubmit}
+                onPress={onHandleDelete}
                 label="XÓA ĐỊA CHỈ"
                 width={width * 0.9}
                 height={58}
@@ -201,7 +307,7 @@ const Index = (props) => {
 
             <View style={styles.btnContainer}>
               <CustomButton
-                //onPress={handleSubmit}
+                onPress={handleSubmit}
                 label="LƯU ĐỊA CHỈ NÀY"
                 width={width * 0.9}
                 height={58}

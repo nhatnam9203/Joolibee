@@ -6,7 +6,7 @@ const addressSlice = createSlice({
   initialState: {
     locations: [],
     loading_location: false,
-    location_selected: null
+    location_selected: null,
   },
   reducers: {
     autoCompleteStart(state) {
@@ -26,7 +26,6 @@ const addressSlice = createSlice({
       state.location_selected = action.payload;
       state.locations = [];
     },
-
   },
 });
 

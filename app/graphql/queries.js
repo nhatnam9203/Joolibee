@@ -235,3 +235,31 @@ export const HOME_SCREEN = gql`
     }
   }
 `;
+
+// ADDRESS_LIST
+export const ADDRESS_LIST = gql`
+  {
+    customer {
+      addresses {
+        id
+        city
+        street
+        company
+        country_code
+        default_billing
+        default_shipping
+        fax
+        postcode
+        firstname
+        lastname
+        region {
+          region
+          region_id
+          region_code
+        }
+        telephone
+        vat_id
+      }
+    }
+  }
+`;

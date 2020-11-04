@@ -1,75 +1,63 @@
-import { CustomFlatList } from '@components';
-// import { translate } from '@localize';
+import { GCC } from '@graphql';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import { AppStyles, metrics } from '@theme';
 import { CustomButton } from '@components';
+import { format } from '@utils';
+import { address } from '@slices';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { ItemAddress, AddressAdditionalList } from './pages';
-
-const defaultData = [
-  {
-    title: 'Nhà',
-    address: '16 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
-    id: 1,
-    phone: '123456789',
-    fullName: 'ABC',
-    note: 'a',
-  },
-  {
-    title: 'Nơi làm việc',
-    address: '17 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
-    id: 2,
-    phone: '987654321',
-    fullName: 'XYZ',
-    note: 'b',
-  },
-  {
-    title: 'Nơi làm việc',
-    address: '18 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
-    id: 3,
-    phone: '113114115116',
-    fullName: 'ABC',
-    note: 'c',
-  },
-];
+import { ItemAddress, AddressAdditionalList, AddressLoading } from './pages';
 
 const Index = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [data, setData] = React.useState([]);
-
   const renderItem = ({ item }) => (
     <ItemAddress item={item} onPress={goToDetail} />
   );
 
   const goToDetail = (item) => {
-    console.log(item);
+    dispatch(
+      address.selectedLocation(
+        item
+          ? {
+              region: item.region?.region,
+              city: item.city,
+              district: item.district,
+              ward: item.ward,
+              street: item.street,
+              addressFull: format.addressFull(item),
+            }
+          : {},
+      ),
+    );
+
     const values = item
       ? {
-          phone: item.phone,
-          place: item.title,
-          fullName: item.fullName,
-          note: item.note,
-          address: item.address,
+          phone: item.telephone,
+          place: item.company,
+          firstname: item.firstname,
+          lastname: item.lastname,
+          note: '',
+          id: item.id,
+          default_shipping: item.default_shipping,
         }
       : null;
     navigation.navigate(ScreenName.DetailMyAddress, { values });
   };
 
-  React.useEffect(() => {
-    setData(defaultData);
-  }, []);
+  // React.useEffect(() => {
+  //   setData(defaultData);
+  // }, []);
 
   return (
     <View style={styles.container}>
-      <CustomFlatList
-        data={data}
+      <GCC.QueryAddressList
         renderItem={renderItem}
-        horizontal={false}
-        keyExtractor={(item, index) => index + ''}
+        renderItemLoading={AddressLoading}
         contentContainerStyle={styles.contentContainerStyle}
-        showsVerticalScrollIndicator={false}
+        isDefault={true}
         ListHeaderComponent={() => (
           <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
             Địa chỉ mặc định
@@ -138,6 +126,10 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignSelf: 'center',
     marginVertical: 25,
+  },
+  txtAddress: {
+    fontSize: 14,
+    ...AppStyles.fonts.text,
   },
 });
 export default Index;

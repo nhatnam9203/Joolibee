@@ -1,37 +1,21 @@
-import { CustomFlatList } from '@components';
 import { AppStyles, metrics } from '@theme';
+import { GCC } from '@graphql';
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import ItemAddress from './ItemAddress';
-
-const defaultData = [
-  {
-    title: 'Nhà',
-    address: '16 Trương Định, Phường.6, Quận.3, Tp. Hồ Chí Minh',
-    id: 1,
-  },
-];
+import AddressLoading from './AddressLoading';
 
 const Index = ({ goToDetail }) => {
-  const [data, setData] = React.useState([]);
-
   const renderItem = ({ item }) => (
     <ItemAddress item={item} onPress={goToDetail} />
   );
 
-  React.useEffect(() => {
-    setData(defaultData);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <CustomFlatList
-        data={data}
+      <GCC.QueryAddressList
         renderItem={renderItem}
-        horizontal={false}
-        keyExtractor={(item, index) => index + ''}
+        renderItemLoading={AddressLoading}
         contentContainerStyle={styles.contentContainerStyle}
-        showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => (
           <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
             Địa chỉ bổ sung

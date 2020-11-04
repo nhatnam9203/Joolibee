@@ -14,7 +14,7 @@ import _ from 'lodash';
 import { CustomInput } from '@components';
 import { autocomplete } from '@location';
 import { address } from '@slices';
-
+import { format } from '@utils';
 const LAYOUT_WIDTH = '100%';
 
 const Index = () => {
@@ -32,6 +32,7 @@ const Index = () => {
       try {
         await dispatch(address.autoCompleteStart());
         let { status, data } = await autocomplete(params);
+        console.log('data', data);
         if (status === 'OK') {
           dispatch(address.autoCompleteSuccess(data));
         } else {
@@ -55,8 +56,16 @@ const Index = () => {
     delayedQuery(key);
   };
 
-  const pickupLocation = ({ description }) => () => {
-    dispatch(address.selectedLocation(description));
+  const pickupLocation = ({ description, structured_formatting }) => () => {
+    const { main_text, secondary_text } = structured_formatting;
+    let addresses = format.addresses_geocoding(secondary_text?.split(','));
+    dispatch(
+      address.selectedLocation({
+        ...addresses,
+        street: main_text,
+        addressFull: description,
+      }),
+    );
     navigation.goBack();
   };
 

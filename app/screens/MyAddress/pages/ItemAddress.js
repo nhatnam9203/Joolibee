@@ -1,7 +1,7 @@
 import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
-
+import { format } from '@utils';
 const index = ({ item, onPress }) => {
   const onHandlePress = () => {
     onPress(item);
@@ -13,12 +13,12 @@ const index = ({ item, onPress }) => {
       </View>
 
       <View style={styles.content}>
-        <Text style={AppStyles.fonts.medium}>{item.title}</Text>
+        <Text style={AppStyles.fonts.medium}>{item.company}</Text>
 
         <Text
-          numberOfLines={1}
+          numberOfLines={2}
           style={[AppStyles.fonts.mini, { fontSize: 14 }]}>
-          {item.address}
+          {format.addressFull(item)}
         </Text>
       </View>
 
