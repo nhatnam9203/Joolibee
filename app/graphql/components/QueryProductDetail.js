@@ -88,16 +88,15 @@ const PRODUCT = gql`
 `;
 
 export const QueryProductDetail = ({
-  renderItem,
   renderItemLoading,
+  renderItem,
   renderHeader,
   renderFooter,
   productItem: { sku },
-  updateProductPrice,
-  updateProduct,
+  updateProductItemDetail,
+  optionData,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [itemDetail, setItemDetail] = React.useState(null);
 
   const { loading, data, refetch } = useQuery(PRODUCT, {
     variables: { sku },
@@ -118,19 +117,12 @@ export const QueryProductDetail = ({
       } = data;
 
       if (first) {
-        let clone = { ...first };
+        const { items } = first;
+        const arr = [...items];
 
-        let items = new Array(clone.items);
-        items?.sort((a, b) => a.position - b.position);
-
-        const factoryItem = Object.assign({}, clone, items);
-        setItemDetail(factoryItem);
-
+        arr?.sort((a, b) => a.position - b.position);
         // ! call update to MenuDetail
-        const { price_range } = clone;
-        const { sellPrice } = destructuring.priceOfRange(price_range);
-        updateProductPrice(sellPrice);
-        updateProduct(factoryItem);
+        updateProductItemDetail(Object.assign({}, first, { items: arr }));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,11 +191,11 @@ export const QueryProductDetail = ({
   }
 
   const onRenderHeader = () => {
-    return renderHeader();
+    return typeof renderHeader === 'function' ? renderHeader() : <View />;
   };
 
   const onRenderFooter = () => {
-    return renderFooter();
+    return typeof renderHeader === 'function' ? renderFooter() : <View />;
   };
 
   return (
@@ -211,7 +203,7 @@ export const QueryProductDetail = ({
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
       <StatusBar barStyle="dark-content" />
       <CustomFlatList
-        data={itemDetail?.items}
+        data={optionData}
         renderItem={loading ? renderItemLoading : renderItem}
         keyExtractor={(item, index) => item.option_id.toString()}
         contentContainerStyle={styles.contentContainerStyle}

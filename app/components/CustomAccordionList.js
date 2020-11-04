@@ -33,26 +33,34 @@ export const CustomAccordionListItemType = {
 };
 
 const CustomAccordionList = ({
-  title,
-  data = [],
-  type,
+  item,
   headerTextStyle,
   headerStyle,
   renderItem,
   renderSelectItem,
   style,
-  required,
   onChangeOptionsItem,
-  sku,
-  option_id,
-  ...props
 }) => {
+  const { title, options, type, position, required, sku, option_id } = item;
+
   const [open, setOpen] = React.useState(false);
   const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
 
-  const updateOptionItems = async (arr) => {
-    await setSelectedListItem(arr);
+  const updateOptionItems = (arr) => {
+    setSelectedListItem(arr);
+
+    if (typeof onChangeOptionsItem === 'function') {
+      const mapArray = options.map((x) => {
+        if (arr.indexOf(x) > -1) {
+          return Object.assign({}, x, { is_default: true });
+        } else {
+          return Object.assign({}, x, { is_default: false });
+        }
+      });
+
+      onChangeOptionsItem(Object.assign({}, item, { options: mapArray }));
+    }
   };
 
   const selectedItem = async (item) => {
@@ -95,15 +103,12 @@ const CustomAccordionList = ({
   };
 
   const onRenderItem = ({ item }, index) => {
-    const selected = selectedListItem?.indexOf(item) > -1;
-
     return typeof renderItem === 'function' ? (
       renderItem({
         item,
         index,
         type,
         onPress: onPress,
-        selected,
       })
     ) : (
       <View />
@@ -117,41 +122,34 @@ const CustomAccordionList = ({
     );
   };
 
-  const renderListItem = () => (
-    <Animated.View style={styles.subListStyle}>
-      <CustomFlatList
-        data={data}
-        renderItem={onRenderItem}
-        keyExtractor={(item, index) => `${item.id}`}
-      />
-    </Animated.View>
-  );
+  const renderListItem = () => {
+    let cloneData = [...options];
+    cloneData.sort((a, b) => a.position - b.position);
+    return (
+      <Animated.View style={styles.subListStyle}>
+        <CustomFlatList
+          data={cloneData.filter((x) => x.product)}
+          renderItem={onRenderItem}
+          keyExtractor={(item, index) => `${item.id}`}
+        />
+      </Animated.View>
+    );
+  };
 
   React.useEffect(() => {
     setOpen(required);
   }, [required]);
 
   React.useEffect(() => {
-    if (data?.length > 0) {
-      data.sort((a, b) => a.position - b.position);
-      const result = data.find((x) => x.is_default === true);
-      if (result) {
-        selectedItem(result);
+    if (options?.length > 0) {
+      // options.sort((a, b) => a.position - b.position);
+      const result = options.filter((x) => x.is_default === true) || [];
+      if (result.length > 0) {
+        setSelectedListItem(result);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
-  React.useEffect(() => {
-    if (typeof onChangeOptionsItem === 'function') {
-      onChangeOptionsItem({
-        list: selectedListItem,
-        sku: sku,
-        option_id: option_id,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedListItem]);
+  }, [item]);
 
   return (
     <Transitioning.View

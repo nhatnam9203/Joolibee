@@ -12,39 +12,24 @@ import {
   MenuDetailItem,
   MenuOptionSelectedItem,
 } from '../components';
-import index from '../components/ItemStore';
+import { productReducer, setProduct, updateOption } from './ProductState';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
 
   const [quantity, setQuantity] = React.useState(1);
-  const [price, setPrice] = React.useState(null);
-  const [defaultPrice, setDefaultPrice] = React.useState(null);
-  const [optionItems, setOptionItems] = React.useState(null);
-  const [productDetailItem, setProductDetailItem] = React.useState(null);
+  const [productItemDetail, dispatchChangeProduct] = React.useReducer(
+    productReducer,
+    null,
+  );
 
-  const onChangeOptionsItem = (item) => {
-    let arr = Array.from(optionItems || []);
-
-    const { list, sku, option_id } = item;
-    const findItem = arr?.findIndex((x) => x.sku === sku);
-    if (findItem >= 0) {
-      arr.splice(findItem, 1);
-    }
-
-    arr.push(item);
-
-    setOptionItems(arr);
-  };
-
-  const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
+  const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem
       item={item}
       key={`${index}`}
       type={type}
       onPress={onPress}
-      selected={selected}
     />
   );
 
@@ -52,8 +37,12 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <MenuOptionSelectedItem item={item?.first} list={item} />
   );
 
-  const renderHeader = (productDetailItem) => {
-    const { image, name, point, price_range } = productDetailItem;
+  const renderHeader = () => {
+    if (!productItemDetail) {
+      return <></>;
+    }
+
+    const { image, name, point, price_range } = productItemDetail;
     const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
     return (
@@ -93,31 +82,26 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const renderItem = (item, index) => {
-    const {
-      item: { title, options, type, position, required, sku, option_id },
-    } = item;
+  const onChangeOptionsItem = (item) => {
+    // Logger.debug(productItemDetail, 'productItemDetail ');
+    dispatchChangeProduct(updateOption(item));
+  };
 
+  const renderItem = ({ item }, index) => {
     return (
       <CustomAccordionList
-        title={title}
-        data={options.filter((x) => x.product)}
-        type={type}
-        key={`${position}`}
-        required={required}
+        item={item}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}
         renderItem={renderOptionsItem}
         renderSelectItem={onRenderSelectedItem}
         onChangeOptionsItem={onChangeOptionsItem}
-        sku={sku}
-        option_id={option_id}
       />
     );
   };
 
-  const renderFooter = (productDetailItem) => {
+  const renderFooter = (itemDetail) => {
     return (
       <View style={styles.orderContentStyle}>
         <View style={styles.orderAmountStyle}>
@@ -152,26 +136,41 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  React.useEffect(() => {
-    if (!defaultPrice) return;
+  const onReceivedProduct = (item) => {
+    dispatchChangeProduct(setProduct(item));
+  };
 
-    let { value } = defaultPrice;
-    Logger.debug(defaultPrice, 'defaultPrice');
+  const renderSumaryPrice = () => {
+    let priceString = '0.0 đ';
+    if (productItemDetail) {
+      const { price_range, items } = productItemDetail;
+      const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
-    // const addOptionValue = (options) =>
-    //   options.reducer((accumulator, currentValue) => {
-    //     accumulator + (currentValue?.price ?? 0);
-    //   }, 0);
+      let { value } = sellPrice;
 
-    if (optionItems?.length > 0) {
-      Logger.debug(optionItems, 'optionItems');
-      // optionItems?.reducer((accumulator, item) => {
-      //   Logger.info(item, 'item');
-      // });
+      items.forEach((item) => {
+        const { options } = item;
+        const sumOptionPrice = options
+          .filter((x) => x.is_default === true && x.price)
+          .reduce((accumulator, current) => accumulator + current.price, 0);
+
+        value += sumOptionPrice;
+      });
+
+      value *= quantity;
+
+      priceString = format.jollibeeCurrency(
+        Object.assign({}, sellPrice, { value }),
+      );
     }
 
-    setPrice(defaultPrice);
-  }, [optionItems, defaultPrice, quantity]);
+    return (
+      <View style={styles.orderSumContent}>
+        <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
+        <Text style={styles.txtPriceStyle}>{priceString}</Text>
+      </View>
+    );
+  };
 
   return (
     <>
@@ -181,8 +180,8 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
           renderHeader={renderHeader}
           renderItem={renderItem}
           renderFooter={renderFooter}
-          updateProductPrice={setDefaultPrice}
-          updateProduct={setProductDetailItem}
+          updateProductItemDetail={onReceivedProduct}
+          optionData={productItemDetail?.items}
         />
       </View>
 
@@ -195,16 +194,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       </CustomButton>
 
       <View style={styles.confirmStyle}>
-        {price && (
-          <View style={styles.orderSumContent}>
-            <Text style={styles.txtStyle}>{`${translate(
-              'txtSummary',
-            )} : `}</Text>
-            <Text style={styles.txtPriceStyle}>
-              {format.jollibeeCurrency(price)}
-            </Text>
-          </View>
-        )}
+        {renderSumaryPrice()}
         <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
     </>

@@ -17,15 +17,15 @@ export const MenuDetailItem = ({
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
-  const [radioChecked, setRadioChecked] = React.useState(selected);
+  const [radioChecked, setRadioChecked] = React.useState(item.is_default);
 
   const selectItem = (select) => {
     setRadioChecked(select);
   };
 
   React.useEffect(() => {
-    setRadioChecked(selected);
-  }, [selected]);
+    setRadioChecked(item.is_default);
+  }, [item]);
 
   const onPressItem = () => {
     if (typeof onPress === 'function') {
