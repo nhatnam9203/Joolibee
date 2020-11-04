@@ -10,12 +10,8 @@ import {
 import { CustomFlatList } from '@components';
 import { Loading } from '@components';
 import { AppStyles } from '@theme';
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
+import { Placeholder, PlaceholderMedia, PlaceholderLine } from 'rn-placeholder';
+import { destructuring } from '@utils';
 
 const PRODUCT = gql`
   query products($sku: String!) {
@@ -66,6 +62,7 @@ const PRODUCT = gql`
             sku
             options {
               id
+              uid
               quantity
               position
               is_default
@@ -91,21 +88,22 @@ const PRODUCT = gql`
 `;
 
 export const QueryProductDetail = ({
-  renderItem,
   renderItemLoading,
-  renderMainSection,
+  renderItem,
+  renderHeader,
   renderFooter,
   productItem: { sku },
-  onCalculatePrice,
+  updateProductItemDetail,
+  optionData,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [itemDetail, setItemDetail] = React.useState(null);
 
-  const { loading, error, data, refetch } = useQuery(PRODUCT, {
+  const { loading, data, refetch } = useQuery(PRODUCT, {
     variables: { sku },
     fetchPolicy: 'cache-first',
   });
 
+  // When received new data, sort
   React.useEffect(() => {
     if (refreshing) {
       setRefreshing(false);
@@ -119,21 +117,16 @@ export const QueryProductDetail = ({
       } = data;
 
       if (first) {
-        let clone = { ...first };
+        const { items } = first;
+        const arr = [...items];
 
-        let items = new Array(clone.items);
-        items?.sort((a, b) => a.position - b.position);
-
-        setItemDetail(Object.assign({}, clone, items));
+        arr?.sort((a, b) => a.position - b.position);
+        // ! call update to MenuDetail
+        updateProductItemDetail(Object.assign({}, first, { items: arr }));
       }
     }
-  }, [data, refreshing]);
-
-  React.useEffect(() => {
-    if (typeof onCalculatePrice === 'function' && itemDetail) {
-      onCalculatePrice(itemDetail);
-    }
-  }, [itemDetail, onCalculatePrice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -197,20 +190,26 @@ export const QueryProductDetail = ({
     );
   }
 
+  const onRenderHeader = () => {
+    return typeof renderHeader === 'function' ? renderHeader() : <View />;
+  };
+
+  const onRenderFooter = () => {
+    return typeof renderHeader === 'function' ? renderFooter() : <View />;
+  };
+
   return (
     <KeyboardAvoidingView
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
       <StatusBar barStyle="dark-content" />
       <CustomFlatList
-        data={itemDetail?.items}
+        data={optionData}
         renderItem={loading ? renderItemLoading : renderItem}
         keyExtractor={(item, index) => item.option_id.toString()}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() =>
-          itemDetail ? renderMainSection(itemDetail) : <View />
-        }
-        ListFooterComponent={renderFooter}
+        ListHeaderComponent={onRenderHeader}
+        ListFooterComponent={onRenderFooter}
 
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />

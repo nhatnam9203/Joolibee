@@ -33,66 +33,82 @@ export const CustomAccordionListItemType = {
 };
 
 const CustomAccordionList = ({
-  title,
-  data = [],
-  type,
+  item,
   headerTextStyle,
   headerStyle,
   renderItem,
   renderSelectItem,
   style,
-  required,
-  ...props
+  onChangeOptionsItem,
 }) => {
+  const { title, options, type, position, required, sku, option_id } = item;
+
   const [open, setOpen] = React.useState(false);
   const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
 
-  const selectedItem = (item) => {
+  const updateOptionItems = (arr) => {
+    setSelectedListItem(arr);
+
+    if (typeof onChangeOptionsItem === 'function') {
+      const mapArray = options.map((x) => {
+        if (arr.indexOf(x) > -1) {
+          return Object.assign({}, x, { is_default: true });
+        } else {
+          return Object.assign({}, x, { is_default: false });
+        }
+      });
+
+      onChangeOptionsItem(Object.assign({}, item, { options: mapArray }));
+    }
+  };
+
+  const selectedItem = async (item) => {
     const index = selectedListItem?.indexOf(item);
 
     switch (type) {
       case CustomAccordionListItemType.Multiline:
         if (index < 0) {
-          setSelectedListItem([item, ...selectedListItem]);
+          await updateOptionItems([item, ...selectedListItem]);
         }
         break;
       case CustomAccordionListItemType.Radio:
       default:
         if (index < 0) {
-          setSelectedListItem([item]);
+          await updateOptionItems([item]);
         }
         break;
     }
   };
 
-  const unSelectedItem = (item) => {
+  const unSelectedItem = async (item) => {
     const index = selectedListItem?.indexOf(item);
-    setSelectedListItem(selectedListItem?.splice(index, 1));
+    selectedListItem?.splice(index, 1);
+    await updateOptionItems([...selectedListItem]);
+  };
+
+  const onPress = (item) => {
+    const selected = selectedListItem?.indexOf(item) > -1;
+
+    switch (type) {
+      case CustomAccordionListItemType.Multiline:
+        selected ? unSelectedItem(item) : selectedItem(item);
+
+        break;
+      case CustomAccordionListItemType.Radio:
+      default:
+        selected && !required ? unSelectedItem(item) : selectedItem(item);
+        break;
+    }
   };
 
   const onRenderItem = ({ item }, index) => {
-    const selected = selectedListItem?.indexOf(item) > -1;
-    const onPress = () => {
-      switch (type) {
-        case CustomAccordionListItemType.Multiline:
-          selected ? unSelectedItem(item) : selectedItem(item);
-
-          break;
-        case CustomAccordionListItemType.Radio:
-        default:
-          selected && !required ? unSelectedItem(item) : selectedItem(item);
-          break;
-      }
-    };
-
     return typeof renderItem === 'function' ? (
       renderItem({
         item,
         index,
         type,
-        onPress,
-        selected,
+        onPress: onPress,
       })
     ) : (
       <View />
@@ -106,30 +122,34 @@ const CustomAccordionList = ({
     );
   };
 
-  const renderListItem = () => (
-    <Animated.View style={styles.subListStyle}>
-      <CustomFlatList
-        data={data}
-        renderItem={onRenderItem}
-        keyExtractor={(item, index) => `${item.id}`}
-      />
-    </Animated.View>
-  );
+  const renderListItem = () => {
+    let cloneData = [...options];
+    cloneData.sort((a, b) => a.position - b.position);
+    return (
+      <Animated.View style={styles.subListStyle}>
+        <CustomFlatList
+          data={cloneData.filter((x) => x.product)}
+          renderItem={onRenderItem}
+          keyExtractor={(item, index) => `${item.id}`}
+        />
+      </Animated.View>
+    );
+  };
 
   React.useEffect(() => {
     setOpen(required);
   }, [required]);
 
   React.useEffect(() => {
-    if (data?.length > 0) {
-      data.sort((a, b) => a.position - b.position);
-      const result = data.find((x) => x.is_default === true);
-      if (result) {
-        selectedItem(result);
+    if (options?.length > 0) {
+      // options.sort((a, b) => a.position - b.position);
+      const result = options.filter((x) => x.is_default === true) || [];
+      if (result.length > 0) {
+        setSelectedListItem(result);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [item]);
 
   return (
     <Transitioning.View

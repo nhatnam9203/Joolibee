@@ -29,6 +29,11 @@ export const addressFull = (item) => {
 // export const
 export const jollibeeCurrency = ({ value = 0, currency = '' }) => {
   switch (currency) {
+    case 'USD':
+      return `${Number(value)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        .replace(/\.?0+$/, '')} $`;
     case 'VND':
     default:
       return `${Number(value)

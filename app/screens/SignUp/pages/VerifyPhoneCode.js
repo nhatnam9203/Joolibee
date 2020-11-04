@@ -13,8 +13,8 @@ import { ButtonCC, LabelTitle } from '../../components';
 const COUNTDOWN_SECONDS = 60;
 const TIME_WAITING = COUNTDOWN_SECONDS - 15;
 
-export const VerifyPhoneCode = ({ infos, next, resendCode, confirmCode }) => {
-  const { phone = 'undefine', verificationId, verified } = infos;
+export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
+  const { phone = 'undefine' } = infos;
   var interval;
   const dispatch = useDispatch();
   // count number get code call
@@ -77,10 +77,8 @@ export const VerifyPhoneCode = ({ infos, next, resendCode, confirmCode }) => {
   }, [phone]);
 
   React.useEffect(() => {
-    if (verificationId) {
-      setTiming(true);
-    }
-  }, [verificationId, dispatch]);
+    setTiming(true);
+  }, []);
 
   React.useEffect(() => {
     if (timing) {
@@ -99,12 +97,6 @@ export const VerifyPhoneCode = ({ infos, next, resendCode, confirmCode }) => {
     }
     return () => clearInterval(interval);
   }, [timing]);
-
-  React.useEffect(() => {
-    if (verified) {
-      next(infos);
-    }
-  }, [verified, infos, next]);
 
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>

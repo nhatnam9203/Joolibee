@@ -33,8 +33,10 @@ export const JollibeeImage = ({
         : `${Config.DOMAIN}${url}`;
       // Logger.info(fullPath, 'JollibeeImage -> url');
       setSource({ uri: fullPath, priority: FastImage.priority.normal });
+    } else {
+      setSource(defaultSource);
     }
-  }, [url]);
+  }, [url, defaultSource]);
 
   return (
     <View

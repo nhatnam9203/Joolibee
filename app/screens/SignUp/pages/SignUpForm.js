@@ -37,8 +37,7 @@ const PROCESS_STATUS = {
   FINISH: 3,
 };
 
-export const SignUpForm = ({ infos }) => {
-  const { phone } = infos;
+export const SignUpForm = ({ infos: { phone = '' } }) => {
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();

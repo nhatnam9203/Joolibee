@@ -12,21 +12,37 @@ import {
   MenuDetailItem,
   MenuOptionSelectedItem,
 } from '../components';
+import { productReducer, setProduct, updateOption } from './ProductState';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const { productItem } = route.params;
+
   const [quantity, setQuantity] = React.useState(1);
-  const [price, setPrice] = React.useState(0);
+  const [productItemDetail, dispatchChangeProduct] = React.useReducer(
+    productReducer,
+    null,
+  );
 
-  const onCalculatePrice = ({ price_range }) => {
-    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+  const renderOptionsItem = ({ item, index, type, onPress }) => (
+    <MenuDetailItem
+      item={item}
+      key={`${index}`}
+      type={type}
+      onPress={onPress}
+    />
+  );
 
-    setPrice(sellPrice);
-  };
+  const onRenderSelectedItem = (item) => (
+    <MenuOptionSelectedItem item={item?.first} list={item} />
+  );
 
-  const renderMainSection = (itemProps) => {
-    const { image, name, point, price_range } = itemProps;
+  const renderHeader = () => {
+    if (!productItemDetail) {
+      return <></>;
+    }
+
+    const { image, name, point, price_range } = productItemDetail;
     const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
     return (
@@ -66,83 +82,106 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const renderOptionsItem = ({ item, index, type, onPress, selected }) => (
-    <MenuDetailItem
-      item={item}
-      key={`${index}`}
-      type={type}
-      onPress={onPress}
-      selected={selected}
-    />
-  );
+  const onChangeOptionsItem = (item) => {
+    // Logger.debug(productItemDetail, 'productItemDetail ');
+    dispatchChangeProduct(updateOption(item));
+  };
 
-  const onRenderSelectedItem = ([first, ...arr]) => (
-    <MenuOptionSelectedItem item={first} list={[first, ...arr]} />
-  );
-
-  const renderItem = (item, index) => {
-    const {
-      item: { title, options, type, position, required },
-    } = item;
-
+  const renderItem = ({ item }, index) => {
     return (
       <CustomAccordionList
-        title={title}
-        data={options.filter((x) => x.product)}
-        type={type}
-        key={`${position}`}
-        required={required}
+        item={item}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}
         renderItem={renderOptionsItem}
         renderSelectItem={onRenderSelectedItem}
+        onChangeOptionsItem={onChangeOptionsItem}
       />
     );
   };
 
-  const renderFooter = () => (
-    <View style={styles.orderContentStyle}>
-      <View style={styles.orderAmountStyle}>
-        <CustomButton
-          style={styles.buttonOrderStyle}
-          onPress={() => setQuantity((prev) => prev - 1)}
-          disabled={quantity <= 1}
-          borderRadius={6}>
-          <Image source={images.icons.ic_sub} />
-        </CustomButton>
-        <CustomInput
-          style={styles.mulInputStyle}
-          inputStyle={styles.inputStyle}
-          keyboardType="numeric"
-          allowFontScaling={true}
-          numberOfLines={1}
-          editable={false}
-          value={quantity?.toString()}
-          multiline={false}
-          clearTextOnFocus={true}
-          maxLength={3}
-        />
-        <CustomButton
-          style={styles.buttonOrderStyle}
-          onPress={() => setQuantity((prev) => prev + 1)}
-          disabled={quantity > 255}
-          borderRadius={6}>
-          <Image source={images.icons.ic_plus} />
-        </CustomButton>
+  const renderFooter = (itemDetail) => {
+    return (
+      <View style={styles.orderContentStyle}>
+        <View style={styles.orderAmountStyle}>
+          <CustomButton
+            style={styles.buttonOrderStyle}
+            onPress={() => setQuantity((prev) => prev - 1)}
+            disabled={quantity <= 1}
+            borderRadius={6}>
+            <Image source={images.icons.ic_sub} />
+          </CustomButton>
+          <CustomInput
+            style={styles.mulInputStyle}
+            inputStyle={styles.inputStyle}
+            keyboardType="numeric"
+            allowFontScaling={true}
+            numberOfLines={1}
+            editable={false}
+            value={quantity?.toString()}
+            multiline={false}
+            clearTextOnFocus={true}
+            maxLength={3}
+          />
+          <CustomButton
+            style={styles.buttonOrderStyle}
+            onPress={() => setQuantity((prev) => prev + 1)}
+            disabled={quantity > 255}
+            borderRadius={6}>
+            <Image source={images.icons.ic_plus} />
+          </CustomButton>
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
+
+  const onReceivedProduct = (item) => {
+    dispatchChangeProduct(setProduct(item));
+  };
+
+  const renderSumaryPrice = () => {
+    let priceString = '0.0 đ';
+    if (productItemDetail) {
+      const { price_range, items } = productItemDetail;
+      const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+
+      let { value } = sellPrice;
+
+      items.forEach((item) => {
+        const { options } = item;
+        const sumOptionPrice = options
+          .filter((x) => x.is_default === true && x.price)
+          .reduce((accumulator, current) => accumulator + current.price, 0);
+
+        value += sumOptionPrice;
+      });
+
+      value *= quantity;
+
+      priceString = format.jollibeeCurrency(
+        Object.assign({}, sellPrice, { value }),
+      );
+    }
+
+    return (
+      <View style={styles.orderSumContent}>
+        <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
+        <Text style={styles.txtPriceStyle}>{priceString}</Text>
+      </View>
+    );
+  };
 
   return (
     <>
       <View style={styles.container}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderMainSection={renderMainSection}
+          renderHeader={renderHeader}
           renderItem={renderItem}
           renderFooter={renderFooter}
-          onCalculatePrice={onCalculatePrice}
+          updateProductItemDetail={onReceivedProduct}
+          optionData={productItemDetail?.items}
         />
       </View>
 
@@ -155,12 +194,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       </CustomButton>
 
       <View style={styles.confirmStyle}>
-        <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>{`${translate('txtSummary')} : `}</Text>
-          <Text style={styles.txtPriceStyle}>
-            {format.jollibeeCurrency(price)}
-          </Text>
-        </View>
+        {renderSumaryPrice()}
         <ButtonCC.ButtonRed label={translate('txtAddCart')} />
       </View>
     </>
