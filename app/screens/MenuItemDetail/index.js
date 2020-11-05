@@ -144,7 +144,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     dispatchChangeProduct(setProduct(item));
   };
 
-  const renderSumaryPrice = () => {
+  const renderSummaryPrice = () => {
     let priceString = '0.0 đ';
     if (productItemDetail) {
       const { price_range, items } = productItemDetail;
@@ -179,9 +179,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const addProductToCart = () => {
     const { sku } = productItemDetail;
 
-    Logger.debug(sku, 'sku');
-    Logger.debug(quantity, 'quantity');
-
     addSimpleProductsToCart({
       variables: {
         cart_id,
@@ -195,6 +192,8 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         ],
       },
     });
+
+    navigation.goBack();
   };
 
   return (
@@ -219,7 +218,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       </CustomButton>
 
       <View style={styles.confirmStyle}>
-        {renderSumaryPrice()}
+        {renderSummaryPrice()}
         <ButtonCC.ButtonRed
           label={translate('txtAddCart')}
           onPress={addProductToCart}

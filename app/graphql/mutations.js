@@ -76,9 +76,14 @@ export const UPDATE_CART_PRODUCT = gql`
       }
     ) {
       cart {
+        id
+        __typename
         items {
           id
+          __typename
           product {
+            id
+            __typename
             name
             sku
             point
@@ -114,20 +119,20 @@ export const UPDATE_CART_PRODUCT = gql`
   }
 `;
 
-// type Card {
-// "data": { quantity: 1,
-//   "sku": "1810001"}
-// }
-
 export const ADD_PRODUCT_TO_CART = gql`
   mutation($cart_id: String!, $cart_items: [SimpleProductCartItemInput!]!) {
     addSimpleProductsToCart(
       input: { cart_id: $cart_id, cart_items: $cart_items }
     ) {
       cart {
+        id
+        __typename
         items {
           id
+          __typename
           product {
+            id
+            __typename
             name
             sku
           }

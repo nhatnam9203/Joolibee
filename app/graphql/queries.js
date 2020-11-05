@@ -4,6 +4,7 @@ export const ORDER_LIST = gql`
   {
     customerOrders {
       items {
+        __typename
         order_number
         id
         created_at
@@ -22,6 +23,7 @@ export const MENU_DETAIL = gql`
   {
     products(filter: { category_id: { eq: "3" } }) {
       items {
+        __typename
         id
         name
         image {
@@ -48,191 +50,193 @@ export const MENU_DETAIL = gql`
 
 // CART DETAIL
 export const CART_DETAIL = gql`
-query ($cartId : String!)
-{
-  cart(cart_id: $cartId) {
-    email
-    billing_address {
-      city
-      country {
-        code
-        label
-      }
-      firstname
-      lastname
-      postcode
-      region {
-        code
-        label
-      }
-      street
-      telephone
-    }
-    shipping_addresses {
-      firstname
-      lastname
-      street
-      city
-      region {
-        code
-        label
-      }
-      country {
-        code
-        label
-      }
-      telephone
-      available_shipping_methods {
-        amount {
-          currency
-          value
+  query($cartId: String!) {
+    cart(cart_id: $cartId) {
+      email
+      billing_address {
+        city
+        country {
+          code
+          label
         }
-        available
-        carrier_code
-        carrier_title
-        error_message
-        method_code
-        method_title
-        price_excl_tax {
-          value
-          currency
+        firstname
+        lastname
+        postcode
+        region {
+          code
+          label
         }
-        price_incl_tax {
-          value
-          currency
+        street
+        telephone
+      }
+      shipping_addresses {
+        firstname
+        lastname
+        street
+        city
+        region {
+          code
+          label
+        }
+        country {
+          code
+          label
+        }
+        telephone
+        available_shipping_methods {
+          amount {
+            currency
+            value
+          }
+          available
+          carrier_code
+          carrier_title
+          error_message
+          method_code
+          method_title
+          price_excl_tax {
+            value
+            currency
+          }
+          price_incl_tax {
+            value
+            currency
+          }
+        }
+        selected_shipping_method {
+          amount {
+            value
+            currency
+          }
+          carrier_code
+          carrier_title
+          method_code
+          method_title
         }
       }
-      selected_shipping_method {
-        amount {
-          value
-          currency
-        }
-        carrier_code
-        carrier_title
-        method_code
-        method_title
-      }
-    }
-    items {
-      id
-      product {
-        name
-        sku
-        point
-        meta_description
-        price_range{
-            maximum_price{
-                final_price {
-                    value
-                    currency
-                }
+      items {
+        __typename
+        id
+        product {
+          __typename
+          id
+          name
+          sku
+          point
+          meta_description
+          price_range {
+            maximum_price {
+              final_price {
+                value
+                currency
+              }
             }
-             minimum_price{
-                final_price {
-                    value
-                    currency
-                }
+            minimum_price {
+              final_price {
+                value
+                currency
+              }
             }
-}
-        image {
+          }
+          image {
             url
+          }
         }
-    }
-      quantity
-    }
-    available_payment_methods {
-      code
-      title
-    }
-    selected_payment_method {
-      code
-      title
-    }
-    applied_coupons {
-      code
-    }
-    total_quantity
-    prices {
-      grand_total {
-        value
-        currency
+        quantity
       }
-      subtotal_excluding_tax{
-        value
-        currency
+      available_payment_methods {
+        code
+        title
       }
-      discounts {
-        amount{
+      selected_payment_method {
+        code
+        title
+      }
+      applied_coupons {
+        code
+      }
+      total_quantity
+      prices {
+        grand_total {
           value
           currency
+        }
+        subtotal_excluding_tax {
+          value
+          currency
+        }
+        discounts {
+          amount {
+            value
+            currency
+          }
         }
       }
     }
   }
-}
-`
+`;
 
 // HOME_SCREEN
 export const HOME_SCREEN = gql`
-{
-  homeScreen{
-banners
-best_sellers {
-id
-name
-point
-price_range{
-    maximum_price{
-        final_price {
-            value
-            currency
-        }
-    }
-    minimum_price{
-        final_price {
-            value
-            currency
-        }
-    }
-}
-image {
-    url
-}
-}
-news {
-content
-featured_image
-post_id
-short_content
-title
-}
-promotions{
-  id
-  name
-  point
-  price_range{
-      maximum_price{
-          final_price {
+  {
+    homeScreen {
+      banners
+      best_sellers {
+        id
+        name
+        point
+        price_range {
+          maximum_price {
+            final_price {
               value
               currency
+            }
           }
-      }
-      minimum_price{
-          final_price {
+          minimum_price {
+            final_price {
               value
               currency
+            }
           }
+        }
+        image {
+          url
+        }
       }
+      news {
+        content
+        featured_image
+        post_id
+        short_content
+        title
+      }
+      promotions {
+        id
+        name
+        point
+        price_range {
+          maximum_price {
+            final_price {
+              value
+              currency
+            }
+          }
+          minimum_price {
+            final_price {
+              value
+              currency
+            }
+          }
+        }
+        image {
+          url
+        }
+      }
+      static_content {
+        description
+        short_description
+        title
+      }
+    }
   }
-  image {
-      url
-  }
-}
-static_content {
-description
-short_description
-title
-}
-}
-}
-`
+`;
