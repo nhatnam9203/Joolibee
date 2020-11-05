@@ -27,6 +27,8 @@ import DeitalOrdersScreen from './MyOrders/DeitalOrders';
 import OrderScreen from './Order';
 import StorePickupScreen from './StorePickup';
 import NewsScreen from './News';
+import ProductCart from './ProductCart';
+
 module.exports = {
   ScreenName,
   WelcomeScreen,
@@ -56,5 +58,6 @@ module.exports = {
   OrderScreen,
   MyRewardScreen,
   StorePickupScreen,
-  NewsScreen
+  NewsScreen,
+  ProductCart,
 };

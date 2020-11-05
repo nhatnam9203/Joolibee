@@ -12,7 +12,6 @@ export * from './PopupSelectAreaComponent';
 export * from './SettingItem';
 export * from './TopBarComponent';
 export * from './MenuDetailItem';
-export * from './PopupOrderList';
 export * from './OrderItem';
 export * from './PriceAndPoint';
 export * from './OrderCount';

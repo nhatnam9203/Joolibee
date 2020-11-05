@@ -129,5 +129,7 @@
   "txtVerifyCodeTime": "Authentication code will expire in",
   "txtSecondUnit": "s",
   "txtContactSupport": "Help",
-  "txtAddCart": "Add to card"
+  "txtAddCart": "Add to card",
+  "txtProductCart": "Cart Product Order",
+  "txtNotfoundProduct": "No products"
 }

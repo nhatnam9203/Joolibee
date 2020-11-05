@@ -131,5 +131,7 @@
   "txtSecondUnit": "giây",
   "txtContactSupport": "Trợ giúp",
   "txtNews": "Tin tức",
-  "txtAddCart": "Thêm vào giỏ"
+  "txtAddCart": "Thêm vào giỏ",
+  "txtProductCart": "Phần ăn đã chọn",
+  "txtNotfoundProduct": "Không có sản phẩm"
 }

@@ -20,7 +20,7 @@ import { mutation, query } from '@graphql';
 import { format } from '@utils';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 
-export const PopupOrderList = ({ visible, onToggle }) => {
+const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -60,9 +60,12 @@ export const PopupOrderList = ({ visible, onToggle }) => {
       onPress={updateCart}
     />
   );
+
   const renderEmptyList = () => (
     <View style={{ padding: 15, alignItems: 'center' }}>
-      <Text style={styles.labelSum}>{error ? error : 'Không có sản phẩm'}</Text>
+      <Text style={styles.labelSum}>
+        {error ? error : translate('txtNotFoundProduct')}
+      </Text>
     </View>
   );
 
@@ -128,7 +131,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
             onPress={() => popupRef.current.forceQuit()}>
             <Image source={images.icons.ic_close_blur} />
           </TouchableOpacity>
-          <Text style={styles.txtHeader}>Phần ăn đã chọn</Text>
+          <Text style={styles.txtHeader}>{translate('txtProductCart')}</Text>
         </View>
         <View style={styles.bodyList}>
           {
@@ -274,3 +277,5 @@ const styles = StyleSheet.create({
 
   contentContainerStyle: { paddingBottom: 20 },
 });
+
+export default ProductCart;
