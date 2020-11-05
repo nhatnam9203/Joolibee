@@ -203,7 +203,6 @@ export const DELETE_ADDRESS = gql`
   }
 `;
 
-
 export const ADD_PRODUCT_TO_CART = gql`
   mutation($cart_id: String!, $cart_items: [SimpleProductCartItemInput!]!) {
     addSimpleProductsToCart(
@@ -225,3 +224,5 @@ export const ADD_PRODUCT_TO_CART = gql`
         }
       }
     }
+  }
+`;
