@@ -117,9 +117,8 @@ export const QueryProductDetail = ({
       } = data;
 
       if (first) {
-        const { items } = first;
+        const { items = [] } = first;
         const arr = [...items];
-
         arr?.sort((a, b) => a.position - b.position);
         // ! call update to MenuDetail
         updateProductItemDetail(Object.assign({}, first, { items: arr }));
