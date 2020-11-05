@@ -1,13 +1,13 @@
 import React from 'react';
 import { AppStyles } from '@theme';
 import { View, Text, StyleSheet } from 'react-native';
-import { destructuring, format } from '@utils';
+import { format } from '@utils';
 
-export const PriceAndPoint = ({ prices, point }) => {
+export const PriceAndPoint = ({ point, prices }) => {
   return (
     <View style={styles.priceContent}>
       <Text style={styles.priceStyle}>
-        {format.jollibeeCurrency(prices.price)}
+        {format.jollibeeCurrency(prices?.price)}
       </Text>
       <Text style={styles.pointStyle}>+ {`${point}`} điểm</Text>
     </View>

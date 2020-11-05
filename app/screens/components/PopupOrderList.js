@@ -37,7 +37,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
 
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
-    // fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-first',
   });
   const {
     items,

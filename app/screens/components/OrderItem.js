@@ -9,7 +9,7 @@ import { OrderCount } from './OrderCount';
 const IMAGE_SIZE = 69;
 
 export const OrderItem = ({ item, onPress, shadow }) => {
-  const { product = {}, quantity } = item;
+  const { product = {}, quantity, prices } = item;
 
   const [qty, setQuantity] = React.useState(quantity);
 
@@ -23,7 +23,7 @@ export const OrderItem = ({ item, onPress, shadow }) => {
     <FlatListItemWithImgHorizontal
       imgStyle={styles.imageStyle}
       contentStyle={styles.itemStyle}
-      image={images.jollibee_combo}
+      image={{ uri: product?.image?.url }}
       onPress={() => {}}
       imgPosition="left"
       imgWidth={IMAGE_SIZE}
@@ -39,7 +39,11 @@ export const OrderItem = ({ item, onPress, shadow }) => {
           />
           <Text style={styles.txtDescStyle}>{product.meta_description}</Text>
         </View>
-        <PriceAndPoint style={styles.priceStyle} {...product} />
+        <PriceAndPoint
+          style={styles.priceStyle}
+          point={product.point}
+          prices={prices}
+        />
       </View>
       <View style={styles.bottomStyle}>
         <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />

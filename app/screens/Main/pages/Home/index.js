@@ -34,15 +34,17 @@ const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const cart_id = useSelector((state) => state.cart?.cart_id);
+  const tokenKey = useSelector((state) => state.account?.user?.tokenKey);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
 
   // Mutation create empty cart
   const [createEmptyCart, response] = useMutation(mutation.CREATE_EMPTY_CART);
-  if (!cart_id) {
+
+  React.useEffect(() => {
     createEmptyCart();
-  }
+  }, [createEmptyCart, tokenKey]);
+
   React.useEffect(() => {
     response.data && dispatch(cart.setCartId(response.data));
   }, [dispatch, response]);
