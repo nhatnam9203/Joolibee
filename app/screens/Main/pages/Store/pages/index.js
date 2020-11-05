@@ -1,4 +1,4 @@
-import Markers from "./Markers";
+import Markers from './Markers';
 module.exports = {
-    Markers
-}
+  Markers,
+};

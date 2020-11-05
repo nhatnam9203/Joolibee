@@ -1,6 +1,8 @@
-import ItemAddress from "./ItemAddress";
-import AddressAdditionalList from "./AddressAdditionalList";
+import ItemAddress from './ItemAddress';
+import AddressAdditionalList from './AddressAdditionalList';
+import AddressLoading from './AddressLoading';
 module.exports = {
-    ItemAddress,
-    AddressAdditionalList
-}
+  ItemAddress,
+  AddressAdditionalList,
+  AddressLoading,
+};

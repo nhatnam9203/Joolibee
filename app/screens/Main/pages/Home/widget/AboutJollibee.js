@@ -4,7 +4,7 @@ import { Text } from 'react-native-paper';
 import { AppStyles, images } from '@theme';
 import { CustomButton } from '@components';
 import { scale } from '@utils';
-const { scaleWidth, scaleHeight } = scale;
+const { scaleWidth } = scale;
 
 const index = ({ openDetail }) => {
   return (

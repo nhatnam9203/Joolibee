@@ -3,7 +3,8 @@ import {
   StyleSheet,
   View,
   Image,
-  Dimensions, ImageBackground
+  Dimensions,
+  ImageBackground,
 } from 'react-native';
 import { Text } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
@@ -17,17 +18,19 @@ const data = [
   {
     id: 1,
     title: 'ĐẶT TIỆC SINH NHẬT',
-    content: 'Bạn đang tìm ý tưởng cho một buổi tiệc sinh nhật thật đặc biệt dành cho con của bạn? Hãy chọn những...',
+    content:
+      'Bạn đang tìm ý tưởng cho một buổi tiệc sinh nhật thật đặc biệt dành cho con của bạn? Hãy chọn những...',
     url: images.jollibee_bubble,
-    color: AppStyles.colors.green
+    color: AppStyles.colors.green,
   },
   {
     id: 2,
     title: 'ĐƠN HÀNG LỚN',
-    content: 'Bạn đang tìm ý tưởng cho một buổi tiệc sinh nhật thật đặc biệt dành cho con của bạn? Hãy chọn những...',
+    content:
+      'Bạn đang tìm ý tưởng cho một buổi tiệc sinh nhật thật đặc biệt dành cho con của bạn? Hãy chọn những...',
     url: images.jollibee_bigorder,
-    color: AppStyles.colors.orange
-  }
+    color: AppStyles.colors.orange,
+  },
 ];
 
 const index = ({ openDetail }) => {
@@ -72,7 +75,6 @@ const renderItem = (item, index, onPress) => {
       source={images.bg_services}
       key={index + ''}
       style={[styles.containerItem, { backgroundColor: item.color }]}>
-
       <View style={styles.content}>
         <Text style={[AppStyles.fonts.medium_SVN, styles.txttitle]}>
           {item.title}
@@ -94,13 +96,8 @@ const renderItem = (item, index, onPress) => {
       </View>
 
       <View style={styles.content}>
-        <Image
-          source={item.url}
-          style={styles.imgProduct}
-        />
+        <Image source={item.url} style={styles.imgProduct} />
       </View>
-
-
     </ImageBackground>
   );
 };
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    ...AppStyles.styles.shadow
+    ...AppStyles.styles.shadow,
   },
 
   content: {
@@ -141,7 +138,7 @@ const styles = StyleSheet.create({
   txttitle: {
     color: AppStyles.colors.white,
     fontSize: scaleWidth(16),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 
   txtContent: {
@@ -151,7 +148,7 @@ const styles = StyleSheet.create({
 
   imgProduct: {
     width: scaleWidth(182),
-    height: scaleHeight(200)
+    height: scaleHeight(200),
   },
 
   btn: {

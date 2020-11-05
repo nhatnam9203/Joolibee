@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image, View, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Image, View, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 import { CustomPickerSelect, CustomButton } from '@components';
 import { AppStyles, images } from '@theme';
@@ -24,31 +24,40 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   React.useEffect(() => {
     setCity(init_location?.default_city);
     setDistrict(init_location?.default_district);
-  }, []);
+  }, [init_location.default_city, init_location.default_district]);
 
-  const onHandleChangeCity = (value) => {
-    let indexCity = cities.findIndex((item) => item.value === value);
-    setCity(indexCity);
-    dispatch(store.filterDistrictByCity({ key: cities[indexCity]?.label }));
-  };
+  const onHandleChangeCity = React.useCallback(
+    (value) => {
+      let indexCity = cities.findIndex((item) => item.value === value);
+      setCity(indexCity);
+      dispatch(store.filterDistrictByCity({ key: cities[indexCity]?.label }));
+    },
+    [cities, dispatch],
+  );
 
-  const onHandleChangeDistrict = (value) => {
-    let indexDistrict = districts.findIndex((item) => item.value === value);
-    setDistrict(indexDistrict);
-  };
+  const onHandleChangeDistrict = React.useCallback(
+    (value) => {
+      let indexDistrict = districts.findIndex((item) => item.value === value);
+      setDistrict(indexDistrict);
+    },
+    [districts],
+  );
 
-  const onChangeItem = React.useCallback((type, value) => {
-    console.log('value', value);
-    switch (type) {
-      case 'city':
-        onHandleChangeCity(value);
-        break;
+  const onChangeItem = React.useCallback(
+    (type, value) => {
+      console.log('value', value);
+      switch (type) {
+        case 'city':
+          onHandleChangeCity(value);
+          break;
 
-      default:
-        onHandleChangeDistrict(value);
-        break;
-    }
-  }, []);
+        default:
+          onHandleChangeDistrict(value);
+          break;
+      }
+    },
+    [onHandleChangeCity, onHandleChangeDistrict],
+  );
 
   const onHandleSubmit = () => {
     let _city = cities[city]?.label;
@@ -97,13 +106,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
                 {translate('txtMiniMumOrder')}
               </Text>
 
-              <Text
-                style={[
-                  AppStyles.fonts.title,
-                  { color: AppStyles.colors.text, marginLeft: 15 },
-                ]}>
-                60.000 đ
-              </Text>
+              <Text style={styles.txtPrice}>60.000 đ</Text>
             </View>
 
             <CustomButton
@@ -183,5 +186,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: scaleWidth(126),
     height: scaleHeight(126),
+  },
+  txtPrice: {
+    color: AppStyles.colors.text,
+    marginLeft: 15,
+    ...AppStyles.fonts.title,
   },
 });

@@ -4,7 +4,8 @@ import {
   View,
   Text,
   FlatList,
-  Dimensions, Image
+  Dimensions,
+  Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CustomPopupMenu, CustomMapView, ItemStore } from '../components';
@@ -91,33 +92,35 @@ const StorePage = () => {
   const [store_pickuped, pickupStore] = React.useState(null);
   const [visible, showModal] = React.useState([false, false]);
 
-  const store_name = store_pickuped ? store_pickuped.store_name : 'Vui lòng chọn 1 cửa hàng'
+  const store_name = store_pickuped
+    ? store_pickuped.store_name
+    : 'Vui lòng chọn 1 cửa hàng';
 
   const openModal = (i) => () => {
-    let _visible = [...visible]
-    _visible[i] = !_visible[i]
-    showModal(_visible)
-  }
+    let _visible = [...visible];
+    _visible[i] = !_visible[i];
+    showModal(_visible);
+  };
 
   const closeModal = () => {
-    showModal([false, false])
-  }
+    showModal([false, false]);
+  };
 
   const onChangeItemCity = (item) => {
-    setCity(item)
-  }
+    setCity(item);
+  };
 
   const onChangeItemDistrict = (item) => {
-    setDistricts(item)
-  }
+    setDistricts(item);
+  };
 
   const onChangeStore = (item) => () => {
-    pickupStore(item)
-  }
+    pickupStore(item);
+  };
 
   const onBack = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
   const fitAllMarkers = () => {
     refMap.current?.fitToCoordinates(STORES, {
@@ -128,11 +131,15 @@ const StorePage = () => {
 
   const renderFooter = () => {
     return (
-      <View style={[styles.footerContainer, { opacity: store_pickuped ? 1 : 0.4 }]}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-          {store_pickuped && <Image
-            source={images.icons.ic_checked}
-          />}
+      <View
+        style={[styles.footerContainer, { opacity: store_pickuped ? 1 : 0.4 }]}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}>
+          {store_pickuped && <Image source={images.icons.ic_checked} />}
 
           <Text style={styles.txtTitle}>{store_name}</Text>
         </View>
@@ -141,39 +148,35 @@ const StorePage = () => {
           disabled={store_pickuped ? false : true}
           width={'95%'}
           height={58}
-          label='XÁC NHẬN'
+          label="XÁC NHẬN"
           onPress={onBack}
           textColor={AppStyles.colors.text}
           bgColor={AppStyles.colors.button}
         />
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
       {/* ------------ Select city and districts --------------------- */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
-          placeHolders='Chọn tỉnh thành'
+          placeHolders="Chọn tỉnh thành"
           visible={visible[0]}
           menus={citys}
           onChangeItem={onChangeItemCity}
-
           openMenu={openModal(0)}
           closeMenu={closeModal}
-
         />
 
         <CustomPopupMenu
-          placeHolders='Chọn quận huyện'
+          placeHolders="Chọn quận huyện"
           visible={visible[1]}
           menus={districs}
-
           onChangeItem={onChangeItemDistrict}
           openMenu={openModal(1)}
           closeMenu={closeModal}
-
         />
       </View>
       {/* ------------ Select city and districts --------------------- */}
@@ -186,26 +189,24 @@ const StorePage = () => {
             <CustomMapView
               ref={refMap}
               initialRegion={INITIAL_REGION}
-              onMapReady={fitAllMarkers}
-            >
+              onMapReady={fitAllMarkers}>
               <Markers data={STORES} mapView={refMap} />
-
             </CustomMapView>
           </View>
         )}
         keyExtractor={(_, index) => index + ''}
-        renderItem={({ item, index }) => <ItemStore
-          item={item}
-          onPress={onChangeStore(item)}
-          isChecked={item == store_pickuped}
-        />}
+        renderItem={({ item, index }) => (
+          <ItemStore
+            item={item}
+            onPress={onChangeStore(item)}
+            isChecked={item == store_pickuped}
+          />
+        )}
         data={STORES}
-
       />
       {renderFooter()}
-
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -236,14 +237,14 @@ const styles = StyleSheet.create({
   txtTitle: {
     ...AppStyles.fonts.textBold,
     fontSize: 14,
-    marginLeft: 10
+    marginLeft: 10,
   },
   footerContainer: {
     width: '100%',
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 20,
-    backgroundColor: AppStyles.colors.white
-  }
+    backgroundColor: AppStyles.colors.white,
+  },
 });
 export default StorePage;

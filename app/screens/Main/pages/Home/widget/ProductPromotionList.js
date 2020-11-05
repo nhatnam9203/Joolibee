@@ -6,22 +6,16 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import {
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-  Fade,
-} from 'rn-placeholder';
+import { Placeholder, PlaceholderMedia, Fade } from 'rn-placeholder';
 import Carousel from 'react-native-snap-carousel';
-import { JollibeeImage } from "../../../../components";
+import { JollibeeImage } from '../../../../components';
 import { AppStyles, images } from '@theme';
 import { CustomButton } from '@components';
-import { format, scale } from "@utils";
+import { format, scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
 const index = ({ data, loading }) => {
-
   const renderItem = ({ item, index }) => {
     const { price_range, image } = item;
     const { minimum_price } = price_range || {};
@@ -30,7 +24,7 @@ const index = ({ data, loading }) => {
       <View style={styles.wrapperItem}>
         <ImageBackground
           style={styles.price}
-          source={images['jollibee_price']}
+          source={images.jollibee_price}
           resizeMode="stretch">
           <Text
             style={[
@@ -42,6 +36,7 @@ const index = ({ data, loading }) => {
         </ImageBackground>
 
         <CustomButton
+          // eslint-disable-next-line no-alert
           onPress={() => alert('ads')}
           key={index + ''}
           style={styles.containerItem}>
@@ -53,17 +48,14 @@ const index = ({ data, loading }) => {
 
   const renderItemLoading = () => {
     return (
-      <Placeholder
-        Animation={Fade}
-        style={[styles.wrapperItem]}>
-
-        <View style={[
-          styles.containerItem,
-          loading && { borderColor: AppStyles.colors.disabled }
-        ]}>
+      <Placeholder Animation={Fade} style={[styles.wrapperItem]}>
+        <View
+          style={[
+            styles.containerItem,
+            loading && { borderColor: AppStyles.colors.disabled },
+          ]}>
           <PlaceholderMedia style={styles.imageLoading} />
         </View>
-
       </Placeholder>
     );
   };
@@ -102,7 +94,6 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.colors.white,
     alignItems: 'center',
     top: -90,
-
   },
 
   wrapperItem: {
@@ -138,8 +129,8 @@ const styles = StyleSheet.create({
   },
   imageLoading: {
     width: '90%',
-    height: '90%'
-  }
+    height: '90%',
+  },
 });
 
 export default index;

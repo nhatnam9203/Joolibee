@@ -29,12 +29,6 @@ const suggests = [
 ];
 
 export const PopupChat = ({ visible, onToggle }) => {
-  const popupRef = React.createRef(null);
-
-  const onClose = React.useCallback(() => {
-    popupRef.current.forceQuit();
-  }, [visible]);
-
   const [messages, setMessages] = React.useState([]);
   const [height, setHeight] = React.useState('75%');
   React.useEffect(() => {
@@ -168,7 +162,7 @@ export const PopupChat = ({ visible, onToggle }) => {
           renderBubble={renderBubble}
           renderAvatar={null}
           multiline={true}
-          minInputToolbarHeight={Platform.OS == 'android' ? 44 : 60}
+          minInputToolbarHeight={Platform.OS === 'android' ? 44 : 60}
           user={{
             _id: 1,
           }}

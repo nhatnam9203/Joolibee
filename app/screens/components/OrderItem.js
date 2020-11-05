@@ -15,16 +15,16 @@ export const OrderItem = ({ item, onPress, shadow }) => {
 
   const handleUpdateProduct = (value) => () => {
     let newItem = { ...item };
-    setQuantity(value)
-    newItem['quantity'] = value;
-    onPress(newItem)
-  }
+    setQuantity(value);
+    newItem.quantity = value;
+    onPress(newItem);
+  };
   return (
     <FlatListItemWithImgHorizontal
       imgStyle={styles.imageStyle}
       contentStyle={styles.itemStyle}
       image={images.jollibee_combo}
-      onPress={() => { }}
+      onPress={() => {}}
       imgPosition="left"
       imgWidth={IMAGE_SIZE}
       imgHeight={IMAGE_SIZE}
@@ -43,8 +43,7 @@ export const OrderItem = ({ item, onPress, shadow }) => {
       </View>
       <View style={styles.bottomStyle}>
         <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />
-        <TouchableOpacity
-          style={styles.buttonStyle}>
+        <TouchableOpacity style={styles.buttonStyle}>
           <Image source={images.icons.ic_order_edit} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -54,7 +53,7 @@ export const OrderItem = ({ item, onPress, shadow }) => {
         </TouchableOpacity>
       </View>
     </FlatListItemWithImgHorizontal>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

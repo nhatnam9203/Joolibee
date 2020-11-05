@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Dimensions,
-  Platform,
-  PixelRatio,
-} from 'react-native';
+import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
 import _ from 'lodash';
 import { TopBarScreenLayout } from '@layouts';
 import { useDispatch, useSelector } from 'react-redux';

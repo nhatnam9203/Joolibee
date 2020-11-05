@@ -12,15 +12,14 @@ import {
   PlaceholderMedia,
   Fade,
 } from 'rn-placeholder';
-import { JollibeeImage } from "../../../../components";
+import { JollibeeImage } from '../../../../components';
 import Carousel from 'react-native-snap-carousel';
-import { format, scale } from "@utils";
+import { format, scale } from '@utils';
 import { AppStyles } from '@theme';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
 const index = ({ openMenu, data, loading }) => {
-
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
@@ -32,9 +31,7 @@ const index = ({ openMenu, data, loading }) => {
           Bán Chạy
         </Text>
 
-        <TouchableOpacity
-          onPress={openMenu}
-        >
+        <TouchableOpacity onPress={openMenu}>
           <Text
             style={[
               AppStyles.fonts.medium,
@@ -42,7 +39,7 @@ const index = ({ openMenu, data, loading }) => {
               { color: AppStyles.colors.text },
             ]}>
             XEM THỰC ĐƠN
-        </Text>
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -71,8 +68,6 @@ const index = ({ openMenu, data, loading }) => {
   );
 };
 
-
-
 const renderItem = ({ item, index }) => {
   const { price_range, point, image, name } = item;
   const { maximum_price } = price_range || {};
@@ -80,13 +75,11 @@ const renderItem = ({ item, index }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
+      // eslint-disable-next-line no-alert
       onPress={() => alert('ads')}
       key={index + ''}
       style={[styles.containerItem, AppStyles.styles.shadow]}>
-      <JollibeeImage
-        url={image?.url}
-        style={styles.imgProduct}
-      />
+      <JollibeeImage url={image?.url} style={styles.imgProduct} />
       <Text
         numberOfLines={2}
         style={[
@@ -108,15 +101,12 @@ const renderItem = ({ item, index }) => {
 };
 
 const renderItemLoading = () => {
-
   return (
-    <Placeholder
-      Animation={Fade}
-      style={styles.containerItemLoading}>
+    <Placeholder Animation={Fade} style={styles.containerItemLoading}>
       <View style={styles.topLoading}>
         <PlaceholderMedia style={styles.imgProduct} />
         <PlaceholderLine width={100} />
-      </View >
+      </View>
 
       <View style={styles.bottomLoading}>
         <PlaceholderLine width={40} />
@@ -127,8 +117,10 @@ const renderItemLoading = () => {
 };
 
 const renderEmptyList = () => (
-  <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>Không có sản phẩm</Text>
-)
+  <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+    Không có sản phẩm
+  </Text>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -155,11 +147,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: AppStyles.colors.white,
     borderRadius: scaleWidth(10),
-    paddingHorizontal:10
+    paddingHorizontal: 10,
   },
 
   containerItemLoading: {
-    width: scaleWidth(180),
     width: scaleWidth(180),
     height: scaleHeight(218),
     backgroundColor: AppStyles.colors.white,
@@ -170,14 +161,13 @@ const styles = StyleSheet.create({
   topLoading: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '92%'
+    height: '92%',
   },
 
   bottomLoading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-
   },
   txtPrice: {
     color: AppStyles.colors.accent,
@@ -188,7 +178,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-
   },
 
   txtMenu: {

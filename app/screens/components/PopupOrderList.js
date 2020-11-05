@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
@@ -21,15 +21,22 @@ import { format } from '@utils';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 
 export const PopupOrderList = ({ visible, onToggle }) => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
   const [refreshing, setRefreshing] = React.useState(false);
   const cart_id = useSelector((state) => state.cart?.cart_id);
   // --------- handle fetch data cart -----------
+
+  const queryCart = React.useMemo(() => {
+    return {
+      query: query.CART_DETAIL,
+      variables: { cartId: cart_id },
+    };
+  }, [cart_id]);
+
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
-    //  fetchPolicy: 'cache-first'
+    fetchPolicy: 'cache-first',
   });
   const {
     items,
@@ -61,12 +68,7 @@ export const PopupOrderList = ({ visible, onToggle }) => {
 
   const renderTotalLoading = () => (
     <Placeholder Animation={Fade} style={{ width: 100 }}>
-      <View
-        style={{
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          marginTop: 10,
-        }}>
+      <View style={styles.containerLoading}>
         <PlaceholderLine width={90} />
         <PlaceholderLine width={50} />
       </View>
@@ -100,22 +102,21 @@ export const PopupOrderList = ({ visible, onToggle }) => {
 
       await updateCartItems({
         variables: input,
+        awaitRefetchQueries: true,
         update: (store, { data: { updateCartItems } }) => {
-          const existingCarts = store.readQuery({
-            query: query.CART_DETAIL,
-            variables: { cartId: cart_id },
-          });
+          const existingCarts = store.readQuery(queryCart);
           if (existingCarts.cart && updateCartItems.cart) {
-            existingCarts.cart['prices'] = updateCartItems.cart['prices'];
+            existingCarts.cart.prices = updateCartItems.cart.prices;
             store.writeQuery({
-              query: query.CART_DETAIL,
+              ...queryCart,
               data: { cart: existingCarts.cart },
             });
           }
         },
+        refetchQueries: [queryCart],
       });
     },
-    [cart_id, updateCartItems],
+    [cart_id, queryCart, updateCartItems],
   );
 
   return (
@@ -263,6 +264,12 @@ const styles = StyleSheet.create({
   priceContent: {
     justifyContent: 'center',
     alignItems: 'flex-end',
+  },
+
+  containerLoading: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginTop: 10,
   },
 
   contentContainerStyle: { paddingBottom: 20 },
