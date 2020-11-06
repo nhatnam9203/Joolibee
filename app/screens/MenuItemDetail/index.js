@@ -15,10 +15,13 @@ import {
 import { productReducer, setProduct, updateOption } from './ProductState';
 import { useMutation } from '@apollo/client';
 import { mutation } from '@graphql';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { app } from '@slices';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const { productItem } = route.params;
 
   const [quantity, setQuantity] = React.useState(1);
@@ -194,6 +197,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     });
 
     navigation.goBack();
+    dispatch(app.showOrderList());
   };
 
   return (

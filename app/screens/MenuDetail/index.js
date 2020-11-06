@@ -1,19 +1,19 @@
-import React from 'react';
-import { TopBarScreenLayout } from '@layouts';
-import {
-  TopBarComponent,
-  MenuProductItem,
-  MenuItemLoading,
-} from '../components';
-import { CustomFlatList, CustomButtonImage } from '@components';
-import { images, AppStyles } from '@theme';
-import { View, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { translate } from '@localize';
-import ScreenName from '../ScreenName';
+import { CustomButtonImage } from '@components';
 import { GCC } from '@graphql';
+import { TopBarScreenLayout } from '@layouts';
+import { translate } from '@localize';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images } from '@theme';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import {
+  MenuItemLoading,
+  MenuProductItem,
+  TopBarComponent,
+} from '../components';
+import ScreenName from '../ScreenName';
 
-const MenuDetailScreen = ({ route = { params: {} }, ...props }) => {
+const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
     menuItem: { products = { items: [] }, id, name },
   } = route.params;

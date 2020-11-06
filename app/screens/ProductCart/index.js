@@ -18,13 +18,15 @@ import ScreenName from '../ScreenName';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { format } from '@utils';
-import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
+import * as Widget from './widget';
+import { useComponentSize } from '@hooks';
 
 const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
   const [refreshing, setRefreshing] = React.useState(false);
   const cart_id = useSelector((state) => state.cart?.cart_id);
+  const [footerSize, onLayoutFooter] = useComponentSize();
   // --------- handle fetch data cart -----------
 
   const queryCart = React.useMemo(() => {
@@ -38,6 +40,7 @@ const ProductCart = ({ visible, onToggle }) => {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-first',
   });
+
   const {
     items,
     prices: { grand_total },
@@ -57,25 +60,11 @@ const ProductCart = ({ visible, onToggle }) => {
       item={item}
       key={item.id + ''}
       shadow={false}
-      onPress={updateCart}
+      updateQty={updateCart}
+      onPress={() => {
+        onShowCartItem(item);
+      }}
     />
-  );
-
-  const renderEmptyList = () => (
-    <View style={{ padding: 15, alignItems: 'center' }}>
-      <Text style={styles.labelSum}>
-        {error ? error : translate('txtNotFoundProduct')}
-      </Text>
-    </View>
-  );
-
-  const renderTotalLoading = () => (
-    <Placeholder Animation={Fade} style={{ width: 100 }}>
-      <View style={styles.containerLoading}>
-        <PlaceholderLine width={90} />
-        <PlaceholderLine width={50} />
-      </View>
-    </Placeholder>
   );
 
   const handleRefresh = () => {
@@ -86,11 +75,13 @@ const ProductCart = ({ visible, onToggle }) => {
     }, 1000);
   };
 
-  const orderPressed = () => {
+  // ========= ORDER PROCESS
+  const orderButtonPressed = () => {
     popupRef.current.forceQuit();
   };
 
-  const paymentPressed = () => {
+  // ========= PAYMENT PROCESS
+  const paymentButtonPressed = () => {
     navigation.navigate(ScreenName.Order);
     popupRef.current.forceQuit();
   };
@@ -122,66 +113,79 @@ const ProductCart = ({ visible, onToggle }) => {
     [cart_id, queryCart, updateCartItems],
   );
 
+  const onShowCartItem = (item) => {
+    popupRef.current.forceQuit();
+
+    navigation.navigate(ScreenName.MenuItemDetail, {
+      productItem: item?.product,
+    });
+  };
+
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
+        {/**Header */}
         <View style={styles.header}>
           <TouchableOpacity
-            style={styles.closeButtonStyle}
+            style={styles.btnClose}
             onPress={() => popupRef.current.forceQuit()}>
-            <Image source={images.icons.ic_close_blur} />
+            <Image source={images.icons.ic_close_blur} resizeMode="center" />
           </TouchableOpacity>
-          <Text style={styles.txtHeader}>{translate('txtProductCart')}</Text>
+          <Text style={styles.txtHeader}>{`${translate(
+            'txtProductCart',
+          ).toUpperCase()}`}</Text>
         </View>
-        <View style={styles.bodyList}>
-          {
-            <CustomFlatList
-              data={loading ? [1, 2, 3, 4] : items}
-              renderItem={loading ? OrderItemLoading : renderItem}
-              keyExtractor={(item, index) => index + ''}
-              ItemSeparatorComponent={() => (
-                <View style={AppStyles.styles.rowSeparator} />
-              )}
-              contentContainerStyle={styles.contentContainerStyle}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={handleRefresh}
-                />
-              }
-              ListEmptyComponent={renderEmptyList}
-            />
+        {/**Content List */}
+        <CustomFlatList
+          style={styles.bodyList}
+          data={loading ? [1, 2, 3, 4] : items}
+          renderItem={loading ? <OrderItemLoading /> : renderItem}
+          keyExtractor={(item, index) => index + ''}
+          contentContainerStyle={{ paddingBottom: footerSize.height }}
+          ItemSeparatorComponent={() => (
+            <View style={AppStyles.styles.rowSeparator} />
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
-        </View>
-        <View style={styles.bottomContent}>
+          ListEmptyComponent={<Widget.EmptyCartList error={error} />}
+        />
+
+        {/**Footer */}
+        <View style={styles.footer} onLayout={onLayoutFooter}>
+          {/**Price Summary*/}
           <View style={AppStyles.styles.horizontalLayout}>
-            <Text style={styles.labelSum}>{translate('txtSummary')} :</Text>
+            <Text style={styles.txtSummary}>{translate('txtSummary')} :</Text>
             {loading ? (
-              renderTotalLoading()
+              <Widget.SummaryLoading />
             ) : (
               <View style={styles.priceContent}>
                 <Text style={styles.priceStyle}>{total}</Text>
                 <Text style={styles.pointStyle}>
-                  (+ {format.caculatePoint(items)} điểm)
+                  (+ {format.caculatePoint(items)} {translate('txtPoint')})
                 </Text>
               </View>
             )}
           </View>
-          <View style={AppStyles.styles.horizontalLayout}>
+
+          {/**Button Actions */}
+          <View style={[AppStyles.styles.horizontalLayout, styles.btnActions]}>
+            {/**Order */}
             <ButtonCC.ButtonYellow
               label={translate('txtOrderMore')}
-              style={styles.bottomButton}
-              onPress={orderPressed}
+              style={styles.btnProceeds}
+              onPress={orderButtonPressed}
             />
+
+            {/**Payment */}
             <ButtonCC.ButtonRed
               label={translate('txtPayment')}
-              style={styles.bottomButton}
-              onPress={paymentPressed}
+              style={styles.btnProceeds}
+              onPress={paymentButtonPressed}
             />
           </View>
         </View>
       </View>
-
       <Loading isLoading={response.loading} />
     </PopupLayout>
   );
@@ -191,25 +195,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 0,
     width: '90%',
-    maxHeight: '90%',
-    backgroundColor: '#fff',
-    paddingBottom: 150,
+    maxHeight: '80%',
+    backgroundColor: 'red',
   },
 
   header: {
     width: '100%',
-    height: 50,
+    height: 67,
     backgroundColor: AppStyles.colors.button,
     ...AppStyles.styles.horizontalLayout,
     flex: 0,
   },
 
-  closeButtonStyle: {
+  btnClose: {
     width: 40,
     height: 40,
     borderRadius: 20,
     borderColor: '#fff',
-    borderWidth: 2,
+    borderWidth: 1,
     backgroundColor: AppStyles.colors.accent,
     marginLeft: 10,
     flex: 0,
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
   },
 
   txtHeader: {
-    ...AppStyles.fonts.header,
+    ...AppStyles.fonts.SVN_Merge_Bold,
     fontSize: 24,
     flex: 1,
     textAlign: 'center',
@@ -226,10 +229,9 @@ const styles = StyleSheet.create({
 
   bodyList: {
     backgroundColor: '#fff',
-    minHeight: 300,
   },
 
-  bottomContent: {
+  footer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -239,14 +241,16 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#707070',
     paddingHorizontal: 10,
+    paddingTop: 10,
   },
 
-  bottomButton: {
-    width: '48%',
-    height: 44,
+  btnProceeds: {
+    width: '45%',
+    height: 54,
+    padding: 5,
   },
 
-  labelSum: {
+  txtSummary: {
     ...AppStyles.fonts.text,
     fontSize: 16,
     color: '#1B1B1B',
@@ -275,7 +279,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  contentContainerStyle: { paddingBottom: 20 },
+  btnActions: {
+    width: '100%',
+    marginTop: 10,
+  },
 });
 
 export default ProductCart;

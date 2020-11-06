@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles } from '@theme';
+import { JollibeeImage } from './JollibeeImage';
 
 const DEFAULT_HEIGHT = 154;
 
@@ -18,13 +19,13 @@ export const FlatListItemWithImgHorizontal = ({
   shadow = true,
 }) => {
   const renderImage = () => (
-    <Image
+    <JollibeeImage
       style={[
         styles.imageStyle,
         imgStyle,
         { width: imgWidth, height: imgHeight },
       ]}
-      source={image}
+      url={image}
     />
   );
 
@@ -41,12 +42,11 @@ export const FlatListItemWithImgHorizontal = ({
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
-    backgroundColor: '#fff',
-    borderRadius: 8,
+    // backgroundColor: '#fff',
     ...AppStyles.styles.horizontalLayout,
     overflow: 'hidden',
     flex: 0,
+    padding: 5,
   },
 
   imageStyle: {
