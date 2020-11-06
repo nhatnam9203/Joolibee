@@ -12,7 +12,7 @@ import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
-import { cart } from '@slices';
+import { cart, account } from '@slices';
 import {
   MenuPageName,
   PopupSelectAreaComponent,
@@ -37,6 +37,18 @@ const HomePage = () => {
   const tokenKey = useSelector((state) => state.account?.user?.tokenKey);
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
+
+  // Query get user info
+  const responeUser = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'cache-first',
+    onCompleted: () => {
+      dispatch(account.saveUserInfo(responeUser.data));
+    },
+    onError: () => {
+      dispatch(account.signOutRequest());
+    },
+  });
+  // Query get user info
 
   // Mutation create empty cart
   const [createEmptyCart, response] = useMutation(mutation.CREATE_EMPTY_CART);

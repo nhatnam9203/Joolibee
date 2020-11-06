@@ -118,30 +118,30 @@ export const UPDATE_CART_PRODUCT = gql`
 export const ADD_ADDRESS = gql`
   mutation(
     $company: String!
-    $region: String!
+    $region: CustomerAddressRegionInput
     $country_code: CountryCodeEnum
     $street: [String]
     $telephone: String!
-    $postcode: String!
     $city: String!
     $firstname: String!
     $lastname: String!
     $default_shipping: Boolean
     $default_billing: Boolean
+    $full_address: String!
   ) {
     createCustomerAddress(
       input: {
         company: $company
-        region: { region: $region, region_code: "VN" }
+        region: $region
         country_code: $country_code
-        street: [$street]
+        street: $street
         telephone: $telephone
-        postcode: $postcode
         city: $city
         firstname: $firstname
         lastname: $lastname
         default_shipping: $default_shipping
         default_billing: $default_billing
+        full_address: $full_address
       }
     ) {
       id
@@ -165,23 +165,29 @@ export const UPDATE_ADDRESS = gql`
   mutation(
     $id: Int!
     $company: String!
-    $region: String!
+    $region: CustomerAddressRegionInput
     $street: [String]
     $telephone: String!
     $city: String!
     $firstname: String!
     $lastname: String!
+    $default_shipping: Boolean
+    $default_billing: Boolean
+    $full_address: String!
   ) {
     updateCustomerAddress(
       id: $id
       input: {
         company: $company
-        region: { region: $region, region_code: "VN" }
+        region: $region
         street: $street
         telephone: $telephone
         city: $city
         firstname: $firstname
         lastname: $lastname
+        default_shipping: $default_shipping
+        default_billing: $default_billing
+        full_address: $full_address
       }
     ) {
       id
@@ -195,5 +201,34 @@ export const UPDATE_ADDRESS = gql`
 export const DELETE_ADDRESS = gql`
   mutation($id: Int!) {
     deleteCustomerAddress(id: $id)
+  }
+`;
+
+// UPDATE CUSTOMER INFO
+export const UPDATE_CUSTOMER = gql`
+  mutation(
+    $date_of_birth: String
+    $gender: Int
+    $firstname: String!
+    $lastname: String!
+    $email: String!
+  ) {
+    updateCustomerInfo(
+      input: {
+        date_of_birth: $date_of_birth
+        gender: $gender
+        firstname: $firstname
+        lastname: $lastname
+        email: $email
+      }
+    ) {
+      customer {
+        email
+        date_of_birth
+        gender
+        firstname
+        lastname
+      }
+    }
   }
 `;
