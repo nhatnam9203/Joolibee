@@ -40,7 +40,6 @@ const HomePage = () => {
 
   // Query get user info
   const responeUser = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'cache-first',
     onCompleted: () => {
       dispatch(account.saveUserInfo(responeUser.data));
     },

@@ -122,6 +122,11 @@ const Index = (props) => {
       updateCustomerAddress({
         ...OPTIONS_MUTATION,
         variables: input,
+        // update: (cache) => {
+        //   cache.modify({
+        //     id:cache.identify
+        //   });
+        // },
       })
         .then(() => {
           dispatch(app.hideLoading());

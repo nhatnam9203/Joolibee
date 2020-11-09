@@ -220,6 +220,7 @@ export const UPDATE_CUSTOMER = gql`
         firstname: $firstname
         lastname: $lastname
         email: $email
+        password: "Admin123456"
       }
     ) {
       customer {
@@ -229,6 +230,18 @@ export const UPDATE_CUSTOMER = gql`
         firstname
         lastname
       }
+    }
+  }
+`;
+
+//CHANGE CUSTOMER PASSWORD
+export const CHANGE_PASSWORD = gql`
+  mutation($currentPassword: String!, $newPassword: String!) {
+    changeCustomerPassword(
+      currentPassword: $currentPassword
+      newPassword: $newPassword
+    ) {
+      email
     }
   }
 `;

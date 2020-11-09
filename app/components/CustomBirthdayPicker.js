@@ -47,6 +47,7 @@ const CustomBirthdayPicker = ({
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hidePicker}
+        date={new Date(defaultValue) ?? date}
         maximumDate={new Date()}
         minimumDate={new Date(1900, 0, 1)}
         value={defaultValue ?? date}

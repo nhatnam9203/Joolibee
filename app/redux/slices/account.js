@@ -48,8 +48,7 @@ const accountSlice = createSlice({
 
     saveUserInfo(state, action) {
       const { customer } = action.payload;
-      console.log('action.payload', action.payload);
-      state.user = { ...state.user, ...customer };
+      state.user = { ...state.user, profile: customer };
     },
 
     signInSucceed(state, action) {

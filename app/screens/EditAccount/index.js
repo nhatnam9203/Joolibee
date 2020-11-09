@@ -8,21 +8,22 @@ import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import { useMutation } from '@apollo/client';
 import { mutation } from '@graphql';
+import { app, account } from '@slices';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ButtonCC, TextInputErrorMessage } from '../components';
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
 const HALF_LAYOUT_WIDTH = '42.5%';
 const EditAccountScreen = () => {
-  const user = useSelector((state) => state.account?.user);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.account?.user?.profile);
   const { email, firstname, lastname, phone_number, gender, date_of_birth } =
     user || {};
-
-  const [updateCustomerInfo, response] = useMutation(mutation.UPDATE_CUSTOMER);
+  const [updateCustomerInfo] = useMutation(mutation.UPDATE_CUSTOMER);
 
   const EditSchema = Yup.object().shape({
     firstname: Yup.string()
@@ -31,8 +32,23 @@ const EditAccountScreen = () => {
     lastname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
-    email: Yup.string().email(translate('txtInvalidEmail')),
   });
+
+  const onHandleSubmit = React.useCallback(
+    (values) => {
+      dispatch(app.showLoading());
+      updateCustomerInfo({ variables: values })
+        .then((data) => {
+          dispatch(account.saveUserInfo(data?.data?.updateCustomerInfo));
+          dispatch(app.hideLoading());
+          // navigation.goBack();
+        })
+        .catch(() => {
+          dispatch(app.hideLoading());
+        });
+    },
+    [dispatch, updateCustomerInfo],
+  );
   const {
     values,
     errors,
@@ -52,7 +68,7 @@ const EditAccountScreen = () => {
     },
     validationSchema: EditSchema,
     isValidating: true,
-    onSubmit: () => {},
+    onSubmit: onHandleSubmit,
   });
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.background}>
@@ -66,6 +82,7 @@ const EditAccountScreen = () => {
               value={values.firstname}
               onChangeText={handleChange('firstname')}
               onBlur={handleBlur('firstname')}
+              border
             />
 
             <CustomInput
@@ -75,6 +92,7 @@ const EditAccountScreen = () => {
               value={values.lastname}
               onChangeText={handleChange('lastname')}
               onBlur={handleBlur('lastname')}
+              border
             />
           </View>
 
@@ -89,7 +107,7 @@ const EditAccountScreen = () => {
           )}
 
           <CustomInput
-            style={{ width: LAYOUT_WIDTH }}
+            style={{ width: LAYOUT_WIDTH, opacity: 0.4 }}
             placeholder={translate('txtInputPhone')}
             border
             editable={false}
@@ -98,12 +116,14 @@ const EditAccountScreen = () => {
           />
 
           <CustomInput
-            style={{ width: LAYOUT_WIDTH }}
+            style={{ width: LAYOUT_WIDTH, opacity: 0.4 }}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
             value={values.email}
             placeholder={translate('txtInputEmail')}
             textContentType="emailAddress"
+            border
+            editable={false}
           />
           {/**Email input error */}
           {errors.email && touched.email && (
@@ -124,6 +144,7 @@ const EditAccountScreen = () => {
                   //   onBlur={handleBlur('birthday')}
                   value={values.date_of_birth}
                   placeholder={translate('txtPickerDate')}
+                  border
                   pointerEvents="none">
                   <View style={styles.btnIcon}>
                     <Image
@@ -137,13 +158,16 @@ const EditAccountScreen = () => {
 
             <CustomPickerSelect
               style={{ width: FULL_WIDTH }}
+              border
               items={[
                 { label: translate('txtMale'), value: 1 },
                 { label: translate('txtFemale'), value: 2 },
               ]}
               placeholder={translate('txtPickerGender')}
-              defaultValue={values.gender}
-              onChangeItem={(item) => setFieldValue('gender', item.value)}
+              value={values.gender}
+              onChangeItem={(item) => {
+                setFieldValue('gender', item);
+              }}
             />
           </View>
 

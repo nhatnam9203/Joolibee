@@ -13,18 +13,18 @@ import {
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { Avatar } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
 import { useChangeLanguage } from '@hooks';
 
 const MyAccountScreen = () => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
-
+  const user = useSelector((state) => state.account?.user?.profile);
+  const { firstname, lastname } = user || {};
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
     setSettingList(localData(navigation));
@@ -43,7 +43,7 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            <Text style={styles.nameStyle}>{'LEVINCI'}</Text>
+            <Text style={styles.nameStyle}>{firstname + ' ' + lastname}</Text>
             <Text
               style={styles.editTextStyle}
               onPress={() => {
