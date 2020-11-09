@@ -9,7 +9,7 @@ import { PriceAndPoint } from './PriceAndPoint';
 const IMAGE_SIZE = 69;
 
 export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
-  const { product = {}, quantity } = item;
+  const { product = {}, quantity, prices } = item;
 
   const [qty, setQuantity] = React.useState(quantity);
 

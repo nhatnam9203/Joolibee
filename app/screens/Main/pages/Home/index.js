@@ -35,9 +35,9 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const tokenKey = useSelector((state) => state.account?.user?.tokenKey);
+
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
-
   // Query get user info
   const responeUser = useQuery(query.CUSTOMER_INFO, {
     onCompleted: () => {
