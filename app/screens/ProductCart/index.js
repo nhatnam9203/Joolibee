@@ -24,17 +24,12 @@ import { useComponentSize } from '@hooks';
 const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
-  const [refreshing, setRefreshing] = React.useState(false);
+
   const cart_id = useSelector((state) => state.cart?.cart_id);
+
+  const [refreshing, setRefreshing] = React.useState(false);
   const [footerSize, onLayoutFooter] = useComponentSize();
   // --------- handle fetch data cart -----------
-
-  const queryCart = React.useMemo(() => {
-    return {
-      query: query.CART_DETAIL,
-      variables: { cartId: cart_id },
-    };
-  }, [cart_id]);
 
   const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
