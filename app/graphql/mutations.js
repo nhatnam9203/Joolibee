@@ -29,6 +29,7 @@ export const SIGN_UP = gql`
       fcmToken: $fcmToken
     ) {
       customer {
+        __typename
         firstname
         lastname
         email

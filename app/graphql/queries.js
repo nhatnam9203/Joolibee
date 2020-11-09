@@ -189,30 +189,39 @@ export const CART_DETAIL = gql`
 export const HOME_SCREEN = gql`
   {
     homeScreen {
+      __typename
       banners
       best_sellers {
+        __typename
         id
         name
         point
         price_range {
+          __typename
           maximum_price {
+            __typename
             final_price {
+              __typename
               value
               currency
             }
           }
           minimum_price {
+            __typename
             final_price {
+              __typename
               value
               currency
             }
           }
         }
         image {
+          __typename
           url
         }
       }
       news {
+        __typename
         content
         featured_image
         post_id
@@ -220,28 +229,36 @@ export const HOME_SCREEN = gql`
         title
       }
       promotions {
+        __typename
         id
         name
         point
         price_range {
+          __typename
           maximum_price {
+            __typename
             final_price {
+              __typename
               value
               currency
             }
           }
           minimum_price {
+            __typename
             final_price {
+              __typename
               value
               currency
             }
           }
         }
         image {
+          __typename
           url
         }
       }
       static_content {
+        __typename
         description
         short_description
         title
@@ -255,6 +272,7 @@ export const ADDRESS_LIST = gql`
   {
     customer {
       addresses {
+        __typename
         id
         city
         street
@@ -268,6 +286,7 @@ export const ADDRESS_LIST = gql`
         lastname
         full_address
         region {
+          __typename
           region
           region_id
           region_code
@@ -282,6 +301,7 @@ export const ADDRESS_LIST = gql`
 export const CUSTOMER_INFO = gql`
   {
     customer {
+      __typename
       email
       firstname
       lastname
