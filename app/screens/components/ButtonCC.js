@@ -14,6 +14,7 @@ export const ButtonRed = ({
   height = BUTTON_HEIGHT,
   label,
   onPress,
+  disabled,
   style,
 }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export const ButtonRed = ({
       borderColor={AppStyles.colors.accent}
       textColor="#fff"
       bgColor={AppStyles.colors.accent}
+      disabled={disabled}
     />
   );
 };

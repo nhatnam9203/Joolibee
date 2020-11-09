@@ -32,7 +32,6 @@ const Index = () => {
       try {
         await dispatch(address.autoCompleteStart());
         let { status, data } = await autocomplete(params);
-        console.log('data', data);
         if (status === 'OK') {
           dispatch(address.autoCompleteSuccess(data));
         } else {
@@ -62,7 +61,7 @@ const Index = () => {
     dispatch(
       address.selectedLocation({
         ...addresses,
-        street: main_text,
+        street: [main_text],
         addressFull: description,
       }),
     );

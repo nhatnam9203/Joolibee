@@ -46,6 +46,11 @@ const accountSlice = createSlice({
       state.isShowQRCode = false;
     },
 
+    saveUserInfo(state, action) {
+      const { customer } = action.payload;
+      state.user = { ...state.user, profile: customer };
+    },
+
     signInSucceed(state, action) {
       const {
         generateCustomerToken: { token },

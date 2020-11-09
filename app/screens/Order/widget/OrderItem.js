@@ -2,11 +2,10 @@ import { AppStyles, images } from '@theme';
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { CustomButtonImage } from '@components';
-import { format } from "@utils";
+import { format } from '@utils';
 export const OrderItem = ({ item }) => {
-  const { product = {}, quantity } = item;
-  const { minimum_price } = product?.price_range || {};
-  const _price = format.jollibeeCurrency(minimum_price?.final_price);
+  const { product = {}, quantity, prices } = item;
+  const _price = format.jollibeeCurrency(prices.price);
   return (
     <View style={styles.content}>
       <View style={[AppStyles.styles.horizontalLayout, styles.subContent]}>
@@ -26,7 +25,7 @@ export const OrderItem = ({ item }) => {
         <CustomButtonImage image={images.icons.ic_edit} />
       </View>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({

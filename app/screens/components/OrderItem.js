@@ -40,7 +40,11 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
           />
           <Text style={styles.txtDescStyle}>{product.meta_description}</Text>
         </View>
-        <PriceAndPoint style={styles.priceStyle} {...product} />
+        <PriceAndPoint
+          style={styles.priceStyle}
+          point={product.point}
+          prices={prices}
+        />
       </View>
 
       <View style={styles.bottomStyle}>

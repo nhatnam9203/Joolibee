@@ -119,6 +119,12 @@ export const CART_DETAIL = gql`
       items {
         __typename
         id
+        prices {
+          price {
+            value
+            currency
+          }
+        }
         product {
           __typename
           id
@@ -260,6 +266,7 @@ export const ADDRESS_LIST = gql`
         postcode
         firstname
         lastname
+        full_address
         region {
           region
           region_id
@@ -268,6 +275,19 @@ export const ADDRESS_LIST = gql`
         telephone
         vat_id
       }
+    }
+  }
+`;
+
+export const CUSTOMER_INFO = gql`
+  {
+    customer {
+      email
+      firstname
+      lastname
+      phone_number
+      gender
+      date_of_birth
     }
   }
 `;

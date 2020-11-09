@@ -27,7 +27,7 @@ const Index = () => {
               district: item.district,
               ward: item.ward,
               street: item.street,
-              addressFull: format.addressFull(item),
+              addressFull: item.full_address,
             }
           : {},
       ),
@@ -42,6 +42,7 @@ const Index = () => {
           note: '',
           id: item.id,
           default_shipping: item.default_shipping,
+          default_billing: item.default_billing,
         }
       : null;
     navigation.navigate(ScreenName.DetailMyAddress, { values });

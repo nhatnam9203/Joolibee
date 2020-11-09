@@ -21,13 +21,18 @@ export const QueryAddressList = ({
   isDefault = false,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { loading, error, data, refetch } = useQuery(ADDRESS_LIST);
+  const { loading, error, data, refetch } = useQuery(ADDRESS_LIST, {
+    fetchPolicy: 'cache-first',
+  });
 
   let _data = data?.customer ? data?.customer?.addresses : defaultData;
 
-  let addresses = _data.filter(
-    (address) => address.default_shipping === isDefault,
-  );
+  let addresses = _data.filter((address) => {
+    if (isDefault) {
+      return address.default_shipping || address.default_billing;
+    }
+    return !address.default_shipping && !address.default_billing;
+  });
 
   if (error) {
     return <></>;
@@ -44,7 +49,7 @@ export const QueryAddressList = ({
       data={addresses}
       renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
-      keyExtractor={(item, index) => item.id.toString()}
+      keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
       refreshControl={

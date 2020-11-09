@@ -11,6 +11,10 @@ export const TextCheckBox = ({
   normalColor,
   selectedColor,
   fillColor,
+  tintColor,
+  onCheckColor,
+  onTintColor,
+  disabled,
 }) => (
   <View style={[styles.container, style]}>
     <CustomCheckBox
@@ -19,6 +23,10 @@ export const TextCheckBox = ({
       value={value}
       onValueChange={onValueChange}
       fillColor={fillColor}
+      tintColor={tintColor}
+      onTintColor={onTintColor}
+      onCheckColor={onCheckColor}
+      disabled={disabled}
     />
     <Text style={[styles.txtStyle, { color: normalColor }]}>{label}</Text>
   </View>
