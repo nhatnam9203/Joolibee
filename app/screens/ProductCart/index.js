@@ -96,21 +96,24 @@ const ProductCart = ({ visible, onToggle }) => {
 
       await updateCartItems({
         variables: input,
-        awaitRefetchQueries: true,
-        update: (store, { data: { updateCartItems } }) => {
-          const existingCarts = store.readQuery(queryCart);
-          if (existingCarts.cart && updateCartItems.cart) {
-            existingCarts.cart.prices = updateCartItems.cart.prices;
-            store.writeQuery({
-              ...queryCart,
-              data: { cart: existingCarts.cart },
-            });
-          }
+        // awaitRefetchQueries: true,
+        update: (cache, { data: { updateCartItems } }) => {
+          cache.modify({
+            id: cache.identify(updateCartItems),
+            fields: {
+              cart(existingCart = []) {
+                // Logger.debug(updateCartItems, 'updateCartItems');
+                // Logger.debug(existingCart, 'existingCart');
+
+                return existingCart;
+              },
+            },
+          });
         },
-        refetchQueries: [queryCart],
+        // refetchQueries: [queryCart],
       });
     },
-    [cart_id, queryCart, updateCartItems],
+    [cart_id, updateCartItems],
   );
 
   const onShowCartItem = (item) => {
@@ -141,7 +144,7 @@ const ProductCart = ({ visible, onToggle }) => {
           data={loading ? [1, 2, 3, 4] : items}
           renderItem={loading ? <OrderItemLoading /> : renderItem}
           keyExtractor={(item, index) => index + ''}
-          contentContainerStyle={{ paddingBottom: footerSize.height }}
+          contentContainerStyle={{ paddingBottom: footerSize?.height }}
           ItemSeparatorComponent={() => (
             <View style={AppStyles.styles.rowSeparator} />
           )}
@@ -186,7 +189,7 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading isLoading={response.loading} />
+      {/* <Loading isLoading={response.loading} /> */}
     </PopupLayout>
   );
 };
@@ -196,6 +199,7 @@ const styles = StyleSheet.create({
     flex: 0,
     width: '90%',
     maxHeight: '80%',
+    minHeight: '50%',
     backgroundColor: 'red',
   },
 

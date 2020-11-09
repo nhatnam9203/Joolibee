@@ -109,6 +109,7 @@ export const UPDATE_CART_PRODUCT = gql`
           quantity
         }
         prices {
+          __typename
           grand_total {
             value
             currency
@@ -219,8 +220,34 @@ export const ADD_PRODUCT_TO_CART = gql`
             __typename
             name
             sku
+            point
+            meta_description
+            price_range {
+              maximum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+              minimum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+            }
+            image {
+              url
+            }
           }
           quantity
+        }
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
         }
       }
     }

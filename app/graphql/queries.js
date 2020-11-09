@@ -52,6 +52,8 @@ export const MENU_DETAIL = gql`
 export const CART_DETAIL = gql`
   query($cartId: String!) {
     cart(cart_id: $cartId) {
+      id
+      __typename
       email
       billing_address {
         city
@@ -157,6 +159,7 @@ export const CART_DETAIL = gql`
       }
       total_quantity
       prices {
+        __typename
         grand_total {
           value
           currency

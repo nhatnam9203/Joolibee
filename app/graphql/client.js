@@ -1,13 +1,28 @@
 import Config from 'react-native-config';
 import NavigationService from '../navigation/NavigationService';
 import { get, StorageKey, remove } from '@storage';
-import { ApolloClient, ApolloLink, HttpLink } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  defaultDataIdFromObject,
+} from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 // import { setContext } from '@apollo/client/link/context';
 import { InMemoryCache } from '@apollo/client/core';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
-export const cache = new InMemoryCache();
+export const cache = new InMemoryCache({
+  dataIdFromObject(responseObject) {
+    switch (responseObject.__typename) {
+      // case 'CartPrices':
+      //   Logger.info(responseObject, 'responseObject');
+      //   return `CartPrices:`;
+      default:
+        return defaultDataIdFromObject(responseObject);
+    }
+  },
+});
 
 const authLink = new ApolloLink(async (operation, forward) => {
   // get auth token

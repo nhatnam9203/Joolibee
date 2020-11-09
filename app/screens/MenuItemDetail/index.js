@@ -29,7 +29,22 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     productReducer,
     null,
   );
-  const [addSimpleProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART);
+  const [addSimpleProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
+    update(cache, { data: { addSimpleProductsToCart } }) {
+      cache.modify({
+        id: cache.identify(addSimpleProductsToCart),
+        fields: {
+          cart(existingCart = []) {
+            // Logger.debug(addSimpleProductsToCart, 'addSimpleProductsToCart');
+
+            // Logger.debug(existingCart, 'existingCart');
+
+            return existingCart;
+          },
+        },
+      });
+    },
+  });
   const cart_id = useSelector((state) => state.cart?.cart_id);
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
@@ -181,7 +196,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
   const addProductToCart = () => {
     const { sku } = productItemDetail;
-
     addSimpleProductsToCart({
       variables: {
         cart_id,

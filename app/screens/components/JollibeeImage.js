@@ -27,7 +27,7 @@ export const JollibeeImage = ({
   };
 
   React.useEffect(() => {
-    if (url) {
+    if (url && typeof url === 'string') {
       const fullPath = url.includes(Config.DOMAIN)
         ? url
         : `${Config.DOMAIN}${url}`;
