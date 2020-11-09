@@ -11,6 +11,7 @@ export const OrderCount = ({ defaultValue = 0, onPress }) => {
         style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_sub} />
       </TouchableOpacity>
+
       <CustomInput
         style={styles.mulInputStyle}
         inputStyle={styles.inputStyle}
@@ -21,7 +22,9 @@ export const OrderCount = ({ defaultValue = 0, onPress }) => {
         multiline={false}
         clearTextOnFocus={true}
         maxLength={3}
+        editable={false}
       />
+
       <TouchableOpacity
         onPress={onPress(+defaultValue + 1)}
         style={styles.buttonOrderStyle}>
@@ -34,15 +37,14 @@ export const OrderCount = ({ defaultValue = 0, onPress }) => {
 const styles = StyleSheet.create({
   orderContentStyle: {
     flexDirection: 'row',
-    height: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    flex: 0,
   },
 
   buttonOrderStyle: {
-    width: 30,
-    height: 30,
+    width: 37,
+    height: 37,
     backgroundColor: AppStyles.colors.accent,
     borderRadius: 6,
     justifyContent: 'center',
@@ -50,12 +52,11 @@ const styles = StyleSheet.create({
   },
 
   mulInputStyle: {
-    height: 35,
+    height: 37,
     width: 60,
     borderColor: '#707070',
+    borderWidth: 1,
     justifyContent: 'center',
-    paddingHorizontal: 2,
-    paddingVertical: 2,
   },
 
   inputStyle: {

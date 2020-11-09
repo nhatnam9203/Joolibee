@@ -4,6 +4,7 @@ export const ORDER_LIST = gql`
   {
     customerOrders {
       items {
+        __typename
         order_number
         id
         created_at
@@ -22,6 +23,7 @@ export const MENU_DETAIL = gql`
   {
     products(filter: { category_id: { eq: "3" } }) {
       items {
+        __typename
         id
         name
         image {
@@ -50,6 +52,8 @@ export const MENU_DETAIL = gql`
 export const CART_DETAIL = gql`
   query($cartId: String!) {
     cart(cart_id: $cartId) {
+      id
+      __typename
       email
       billing_address {
         city
@@ -113,6 +117,7 @@ export const CART_DETAIL = gql`
         }
       }
       items {
+        __typename
         id
         prices {
           price {
@@ -121,6 +126,8 @@ export const CART_DETAIL = gql`
           }
         }
         product {
+          __typename
+          id
           name
           sku
           point
@@ -158,6 +165,7 @@ export const CART_DETAIL = gql`
       }
       total_quantity
       prices {
+        __typename
         grand_total {
           value
           currency

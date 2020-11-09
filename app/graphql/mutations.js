@@ -76,9 +76,14 @@ export const UPDATE_CART_PRODUCT = gql`
       }
     ) {
       cart {
+        id
+        __typename
         items {
           id
+          __typename
           product {
+            id
+            __typename
             name
             sku
             point
@@ -104,6 +109,7 @@ export const UPDATE_CART_PRODUCT = gql`
           quantity
         }
         prices {
+          __typename
           grand_total {
             value
             currency
@@ -204,6 +210,51 @@ export const DELETE_ADDRESS = gql`
   }
 `;
 
+export const ADD_PRODUCT_TO_CART = gql`
+  mutation($cart_id: String!, $cart_items: [SimpleProductCartItemInput!]!) {
+    addSimpleProductsToCart(
+      input: { cart_id: $cart_id, cart_items: $cart_items }
+    ) {
+      cart {
+        id
+        __typename
+        items {
+          id
+          __typename
+          product {
+            id
+            __typename
+            name
+            sku
+            point
+            meta_description
+            price_range {
+              maximum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+              minimum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+            }
+            image {
+              url
+            }
+          }
+          quantity
+        }
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
+        }
 // UPDATE CUSTOMER INFO
 export const UPDATE_CUSTOMER = gql`
   mutation(

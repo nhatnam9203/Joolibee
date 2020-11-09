@@ -3,9 +3,9 @@ import { GCC } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
-import { format, destructuring } from '@utils';
+import { destructuring, format } from '@utils';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import {
   ButtonCC,
   JollibeeImage,
@@ -13,9 +13,15 @@ import {
   MenuOptionSelectedItem,
 } from '../components';
 import { productReducer, setProduct, updateOption } from './ProductState';
+import { useMutation } from '@apollo/client';
+import { mutation } from '@graphql';
+import { useSelector, useDispatch } from 'react-redux';
+import { app } from '@slices';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const { productItem } = route.params;
 
   const [quantity, setQuantity] = React.useState(1);
@@ -23,6 +29,23 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     productReducer,
     null,
   );
+  const [addSimpleProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
+    update(cache, { data: { addSimpleProductsToCart } }) {
+      cache.modify({
+        id: cache.identify(addSimpleProductsToCart),
+        fields: {
+          cart(existingCart = []) {
+            // Logger.debug(addSimpleProductsToCart, 'addSimpleProductsToCart');
+
+            // Logger.debug(existingCart, 'existingCart');
+
+            return existingCart;
+          },
+        },
+      });
+    },
+  });
+  const cart_id = useSelector((state) => state.cart?.cart_id);
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem
@@ -83,11 +106,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const onChangeOptionsItem = (item) => {
-    // Logger.debug(productItemDetail, 'productItemDetail ');
     dispatchChangeProduct(updateOption(item));
   };
 
-  const renderItem = ({ item }, index) => {
+  const renderItem = ({ item }) => {
     return (
       <CustomAccordionList
         item={item}
@@ -101,7 +123,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const renderFooter = (itemDetail) => {
+  const renderFooter = () => {
     return (
       <View style={styles.orderContentStyle}>
         <View style={styles.orderAmountStyle}>
@@ -140,11 +162,11 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     dispatchChangeProduct(setProduct(item));
   };
 
-  const renderSumaryPrice = () => {
+  const renderSummaryPrice = () => {
     let priceString = '0.0 đ';
     if (productItemDetail) {
       const { price_range, items } = productItemDetail;
-      const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+      const { sellPrice } = destructuring.priceOfRange(price_range);
 
       let { value } = sellPrice;
 
@@ -172,6 +194,26 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
+  const addProductToCart = () => {
+    const { sku } = productItemDetail;
+    addSimpleProductsToCart({
+      variables: {
+        cart_id,
+        cart_items: [
+          {
+            data: {
+              quantity: quantity,
+              sku: sku,
+            },
+          },
+        ],
+      },
+    });
+
+    navigation.goBack();
+    dispatch(app.showOrderList());
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -194,8 +236,11 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       </CustomButton>
 
       <View style={styles.confirmStyle}>
-        {renderSumaryPrice()}
-        <ButtonCC.ButtonRed label={translate('txtAddCart')} />
+        {renderSummaryPrice()}
+        <ButtonCC.ButtonRed
+          label={translate('txtAddCart')}
+          onPress={addProductToCart}
+        />
       </View>
     </>
   );

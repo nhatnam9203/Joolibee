@@ -1,15 +1,15 @@
-import React from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
 import { LabelTitle } from './LabelTitle';
-import { PriceAndPoint } from './PriceAndPoint';
 import { OrderCount } from './OrderCount';
+import { PriceAndPoint } from './PriceAndPoint';
 
 const IMAGE_SIZE = 69;
 
-export const OrderItem = ({ item, onPress, shadow }) => {
-  const { product = {}, quantity, prices } = item;
+export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
+  const { product = {}, quantity } = item;
 
   const [qty, setQuantity] = React.useState(quantity);
 
@@ -17,14 +17,15 @@ export const OrderItem = ({ item, onPress, shadow }) => {
     let newItem = { ...item };
     setQuantity(value);
     newItem.quantity = value;
-    onPress(newItem);
+    updateQty(newItem);
   };
+
   return (
     <FlatListItemWithImgHorizontal
       imgStyle={styles.imageStyle}
       contentStyle={styles.itemStyle}
-      image={{ uri: product?.image?.url }}
-      onPress={() => {}}
+      image={product?.image?.url || images.jollibee_combo}
+      onPress={onPress}
       imgPosition="left"
       imgWidth={IMAGE_SIZE}
       imgHeight={IMAGE_SIZE}
@@ -45,6 +46,7 @@ export const OrderItem = ({ item, onPress, shadow }) => {
           prices={prices}
         />
       </View>
+
       <View style={styles.bottomStyle}>
         <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />
         <TouchableOpacity style={styles.buttonStyle}>
@@ -61,21 +63,25 @@ export const OrderItem = ({ item, onPress, shadow }) => {
 };
 
 const styles = StyleSheet.create({
-  imageStyle: { alignSelf: 'flex-start', marginTop: 20 },
+  imageStyle: { alignSelf: 'flex-start' },
   itemStyle: {},
 
-  content: { alignItems: 'flex-start' },
+  content: {
+    alignItems: 'flex-start',
+    marginTop: 10,
+  },
 
   txtContent: {
     flex: 1,
-    marginHorizontal: 5,
+    justifyContent: 'center',
+    padding: 5,
   },
 
   priceStyle: {
     flex: 0,
   },
 
-  titleStyle: { marginVertical: 5 },
+  titleStyle: { marginVertical: 0, marginBottom: 10 },
 
   txtDescStyle: {
     ...AppStyles.fonts.text,

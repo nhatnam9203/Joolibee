@@ -8,12 +8,12 @@ import {
   HomePageName,
   MenuPageName,
   PopupComingSoon,
-  PopupOrderList,
   PopupQRCode,
   PromotionPageName,
   StorePageName,
 } from '../components';
 import { HomePage, MenuPage, PromotionPage, StorePage } from './pages';
+import ProductCart from '../ProductCart';
 
 const MainTab = createBottomTabNavigator();
 
@@ -33,7 +33,7 @@ function MainTabScreen() {
       </MainTab.Navigator>
 
       {/**Popup Order List Items */}
-      <PopupOrderList
+      <ProductCart
         visible={showOrderList}
         onToggle={() => dispatch(app.dismissOrderList())}
       />
