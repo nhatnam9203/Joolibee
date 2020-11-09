@@ -3,7 +3,7 @@ import { translate } from '@localize';
 import React from 'react';
 import { AppStyles } from '@theme';
 
-export const EmptyCartList = (error) => (
+export const EmptyCartList = ({ error }) => (
   <View style={styles.container}>
     <Text style={styles.labelSum}>
       {error ? error : translate('txtNotFoundProduct')}
