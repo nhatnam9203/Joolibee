@@ -255,6 +255,10 @@ export const ADD_PRODUCT_TO_CART = gql`
             currency
           }
         }
+      }
+    }
+  }
+`;
 // UPDATE CUSTOMER INFO
 export const UPDATE_CUSTOMER = gql`
   mutation(

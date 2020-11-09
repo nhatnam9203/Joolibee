@@ -25,7 +25,7 @@ import {
   OrderScreen,
   MyRewardScreen,
   StorePickupScreen,
-  NewsScreen
+  NewsScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';

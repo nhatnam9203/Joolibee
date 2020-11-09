@@ -116,7 +116,6 @@ const Index = (props) => {
         default_billing: default_billing,
         full_address: location_selected.addressFull,
       };
-      console.log('input', input);
       dispatch(app.showLoading());
 
       updateCustomerAddress({
