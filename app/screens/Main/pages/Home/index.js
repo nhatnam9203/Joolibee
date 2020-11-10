@@ -34,10 +34,11 @@ const { scaleWidth, scaleHeight } = scale;
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const tokenKey = useSelector((state) => state.account?.user?.tokenKey);
 
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detail, showDetail] = React.useState(false);
+  const tokenKey = useSelector((state) => state.account.user.tokenKey);
+
   // Query get user info
   const responeUser = useQuery(query.CUSTOMER_INFO, {
     onCompleted: () => {
@@ -49,16 +50,27 @@ const HomePage = () => {
   });
   // Query get user info
 
+  // get customer cart id
+  const customerCartData = useQuery(query.CUSTOMER_CART_QUERY);
+
   // Mutation create empty cart
   const [createEmptyCart, response] = useMutation(mutation.CREATE_EMPTY_CART);
 
   React.useEffect(() => {
-    createEmptyCart();
-  }, [createEmptyCart, tokenKey]);
+    if (customerCartData?.data) {
+      const { customerCart } = customerCartData?.data;
+      dispatch(cart.setCartId(customerCart?.id));
+    } else {
+      createEmptyCart();
+    }
+  }, [createEmptyCart, customerCartData?.data, dispatch]);
 
   React.useEffect(() => {
-    response.data && dispatch(cart.setCartId(response.data));
-  }, [dispatch, response]);
+    if (response?.data) {
+      Logger.info(response?.data, 'response >> createEmptyCart');
+      dispatch(cart.setCartId(response.data.createEmptyCart));
+    }
+  }, [dispatch, response?.data]);
   // Mutation create empty cart --
 
   const { data, loading, refetch } = useQuery(query.HOME_SCREEN, {

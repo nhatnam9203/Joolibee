@@ -311,3 +311,12 @@ export const CUSTOMER_INFO = gql`
     }
   }
 `;
+
+export const CUSTOMER_CART_QUERY = gql`
+  {
+    customerCart {
+      id
+      __typename
+    }
+  }
+`;

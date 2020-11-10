@@ -6,6 +6,7 @@ import {
   ApolloLink,
   HttpLink,
   defaultDataIdFromObject,
+  parse,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 // import { setContext } from '@apollo/client/link/context';
@@ -13,14 +14,17 @@ import { InMemoryCache } from '@apollo/client/core';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 export const cache = new InMemoryCache({
-  dataIdFromObject(responseObject) {
-    switch (responseObject.__typename) {
-      // case 'CartPrices':
-      //   Logger.info(responseObject, 'responseObject');
-      //   return `CartPrices:`;
-      default:
-        return defaultDataIdFromObject(responseObject);
-    }
+  typePolicies: {
+    Cart: {
+      fields: {
+        prices: {
+          merge(existing, incoming, { mergeObjects }) {
+            // Correct, thanks to invoking nested merge functions.
+            return mergeObjects(existing, incoming);
+          },
+        },
+      },
+    },
   },
 });
 
@@ -119,7 +123,9 @@ const logTimeLink = new ApolloLink((operation, forward) => {
 
     Logger.debug(
       `Complete in ${(time / 1000).toFixed(2)} s`,
-      `End Request -----> ${operation.operationName ?? 'mutation'}`,
+      `End Request -----> ${
+        operation.operationName ?? 'JSON.stringify(operation.query)'
+      }`,
     );
 
     return data;

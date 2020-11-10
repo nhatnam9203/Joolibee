@@ -40,8 +40,7 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     setCartId: (state, action) => {
-      const { createEmptyCart } = action.payload;
-      state.cart_id = createEmptyCart;
+      state.cart_id = action.payload;
     },
   },
   extraReducers: {

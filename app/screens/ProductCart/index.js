@@ -15,7 +15,7 @@ import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { format } from '@utils';
 import * as Widget from './widget';
@@ -29,19 +29,16 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
   const [footerSize, onLayoutFooter] = useComponentSize();
+  const [cartDetail, setCartDetail] = React.useState(null);
   // --------- handle fetch data cart -----------
 
-  const { data, error, loading, refetch } = useQuery(query.CART_DETAIL, {
-    variables: { cartId: cart_id },
-    fetchPolicy: 'cache-first',
-  });
-
-  const {
-    items,
-    prices: { grand_total },
-  } = data?.cart || { items: [], prices: { grand_total: {} } };
-
-  const total = format.jollibeeCurrency(grand_total);
+  const [loadCartDetail, { data, error, loading }] = useLazyQuery(
+    query.CART_DETAIL,
+    {
+      variables: { cartId: cart_id },
+      // fetchPolicy: 'cache-first',
+    },
+  );
 
   // -------- handle fetch data cart -----------
 
@@ -50,21 +47,27 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // Mutation update cart product --
 
-  const renderItem = ({ item, index }) => (
-    <OrderItem
-      item={item}
-      key={item.id + ''}
-      shadow={false}
-      updateQty={updateCart}
-      onPress={() => {
-        onShowCartItem(item);
-      }}
-    />
-  );
+  const onRenderItem = ({ item }, index) => {
+    // loading || !cartDetail?.items ? <OrderItemLoading /> :
+
+    return (
+      <OrderItem
+        item={item}
+        key={item.id + ''}
+        shadow={false}
+        updateQty={updateCart}
+        onPress={() => {
+          onShowCartItem(item);
+        }}
+      />
+    );
+  };
 
   const handleRefresh = () => {
     setRefreshing(true);
-    refetch();
+    // refetch();
+    loadCartDetail();
+
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -119,6 +122,25 @@ const ProductCart = ({ visible, onToggle }) => {
     });
   };
 
+  React.useEffect(() => {
+    if (visible && cart_id) {
+      loadCartDetail();
+    }
+  }, [loadCartDetail, visible, cart_id]);
+
+  React.useEffect(() => {
+    if (data?.cart) {
+      const {
+        items = [],
+        prices: { grand_total },
+      } = data?.cart;
+
+      const total = format.jollibeeCurrency(grand_total);
+
+      setCartDetail({ items, total });
+    }
+  }, [data?.cart]);
+
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
@@ -136,8 +158,8 @@ const ProductCart = ({ visible, onToggle }) => {
         {/**Content List */}
         <CustomFlatList
           style={styles.bodyList}
-          data={loading ? [1, 2, 3, 4] : items}
-          renderItem={loading ? <OrderItemLoading /> : renderItem}
+          data={cartDetail?.items}
+          renderItem={onRenderItem}
           keyExtractor={(item, index) => index + ''}
           contentContainerStyle={{ paddingBottom: footerSize?.height }}
           ItemSeparatorComponent={() => (
@@ -148,7 +170,6 @@ const ProductCart = ({ visible, onToggle }) => {
           }
           ListEmptyComponent={<Widget.EmptyCartList error={error} />}
         />
-
         {/**Footer */}
         <View style={styles.footer} onLayout={onLayoutFooter}>
           {/**Price Summary*/}
@@ -158,9 +179,10 @@ const ProductCart = ({ visible, onToggle }) => {
               <Widget.SummaryLoading />
             ) : (
               <View style={styles.priceContent}>
-                <Text style={styles.priceStyle}>{total}</Text>
+                <Text style={styles.priceStyle}>{cartDetail?.total}</Text>
                 <Text style={styles.pointStyle}>
-                  (+ {format.caculatePoint(items)} {translate('txtPoint')})
+                  (+ {format.caculatePoint(cartDetail?.items)}{' '}
+                  {translate('txtPoint')})
                 </Text>
               </View>
             )}

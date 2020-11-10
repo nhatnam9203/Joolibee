@@ -6,9 +6,11 @@ import { format } from '@utils';
 export const PriceAndPoint = ({ point, prices }) => {
   return (
     <View style={styles.priceContent}>
-      <Text style={styles.priceStyle}>
-        {format.jollibeeCurrency(prices?.price)}
-      </Text>
+      {prices?.price && (
+        <Text style={styles.priceStyle}>
+          {format.jollibeeCurrency(prices?.price)}
+        </Text>
+      )}
       <Text style={styles.pointStyle}>+ {`${point}`} điểm</Text>
     </View>
   );

@@ -42,7 +42,7 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
         </View>
         <PriceAndPoint
           style={styles.priceStyle}
-          point={product.point}
+          point={product?.point}
           prices={prices}
         />
       </View>

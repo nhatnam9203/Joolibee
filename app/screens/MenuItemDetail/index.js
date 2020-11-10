@@ -29,6 +29,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     productReducer,
     null,
   );
+
   const [addSimpleProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
     update(cache, { data: { addSimpleProductsToCart } }) {
       cache.modify({
