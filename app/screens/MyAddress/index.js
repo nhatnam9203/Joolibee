@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { AppStyles, metrics } from '@theme';
 import { CustomButton } from '@components';
-import { format } from '@utils';
 import { address } from '@slices';
 import ScreenName from '../ScreenName';
 import React from 'react';

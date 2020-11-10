@@ -105,6 +105,11 @@ const images = {
   jollibee_shop_intro: require('../assets/images/jollibee-shop.png'),
   jollibee_light_intro: require('../assets/images/jollibee-light-intro.png'),
   jollibee_gift_intro: require('../assets/images/jollibee-gift-intro.png'),
+  jollibee_head: require('../assets/images/jollibee-head.png'),
+  jollibee_menu_mockup: require('../assets/images/Menu-Mockup.png'),
+  jollibee_double_arrow: require('../assets/images/jollibee-double-arrow.png'),
+  jollibee_arrow: require('../assets/images/jollibee-arrow.png'),
+  loading_welcome: require('../assets/images/loading-welcome.gif'),
 };
 
 export default images;

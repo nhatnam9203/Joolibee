@@ -32,30 +32,23 @@ const SplashScreen = () => {
   }, [progress, dispatch]);
 
   return (
-    <AppScrollViewIOSBounceColorsWrapper
-      style={styles.container}
-      topBounceColor={AppStyles.colors.accent}
-      bottomBounceColor="#BA0404">
-      <Image source={images['bee_man']} style={styles.ic_bee_man} />
-
+    <View style={styles.container}>
+      <Image source={images.loading_welcome} style={styles.ic_bee_man} />
+      <Image
+        source={images.icons.ic_text_jollibee}
+        style={styles.ic_text}
+        resizeMode="center"
+      />
       <View style={styles.container_footer}>
-        <Image
-          source={images.icons['ic_text_jollibee']}
-          style={styles.ic_text}
-          resizeMode="center"
-        />
-
         {progress > 0 ? (
           <Text style={styles.textDownloadProgress}>
             {Math.min(progress, 100) + '%'}
           </Text>
         ) : (
-          <Text style={styles.textDownloadProgress}>
-            {translate('txtWelcome')}
-          </Text>
+          <></>
         )}
       </View>
-    </AppScrollViewIOSBounceColorsWrapper>
+    </View>
   );
 };
 
@@ -64,6 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: AppStyles.colors.accent,
   },
 
   container_footer: {
@@ -74,8 +68,10 @@ const styles = StyleSheet.create({
 
   ic_bee_man: {
     resizeMode: 'contain',
-    flex: 1,
-    marginBottom: scaleHeight(100),
+    flex: 0,
+    width: 200,
+    height: 200,
+    marginBottom: scaleHeight(25),
   },
 
   ic_text: {

@@ -40,7 +40,6 @@ const ProductCart = ({ visible, onToggle }) => {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-first',
   });
-
   const {
     items,
     prices: { grand_total },
@@ -97,19 +96,19 @@ const ProductCart = ({ visible, onToggle }) => {
       await updateCartItems({
         variables: input,
         // awaitRefetchQueries: true,
-        update: (cache, { data: { updateCartItems } }) => {
-          cache.modify({
-            id: cache.identify(updateCartItems),
-            fields: {
-              cart(existingCart = []) {
-                // Logger.debug(updateCartItems, 'updateCartItems');
-                // Logger.debug(existingCart, 'existingCart');
+        // update: (cache, { data: { updateCartItems } }) => {
+        //   cache.modify({
+        //     id: cache.identify(updateCartItems),
+        //     fields: {
+        //       cart(existingCart = []) {
+        //         // Logger.debug(updateCartItems, 'updateCartItems');
+        //         // Logger.debug(existingCart, 'existingCart');
 
-                return existingCart;
-              },
-            },
-          });
-        },
+        //         return existingCart;
+        //       },
+        //     },
+        //   });
+        // },
         // refetchQueries: [queryCart],
       });
     },

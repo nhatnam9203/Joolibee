@@ -17,7 +17,7 @@ const CustomButton = ({
   style,
   styleText,
   disabled,
-  borderRadius,
+  borderRadius = 14,
   ...props
 }) => (
   <TouchableOpacity

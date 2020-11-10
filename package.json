@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --scheme='loyalty-develop' --simulator='iPhone 11' ",
+    "ios": "react-native run-ios --scheme='loyalty-develop' --simulator='iPhone 6' ",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",

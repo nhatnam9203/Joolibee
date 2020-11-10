@@ -151,18 +151,27 @@ export const ADD_ADDRESS = gql`
         full_address: $full_address
       }
     ) {
+      __typename
       id
+      city
+      street
+      company
+      country_code
+      default_billing
+      default_shipping
+      fax
+      postcode
+      firstname
+      lastname
+      full_address
       region {
+        __typename
         region
+        region_id
         region_code
       }
-      country_code
-      street
       telephone
-      postcode
-      city
-      default_shipping
-      default_billing
+      vat_id
     }
   }
 `;
