@@ -30,10 +30,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     null,
   );
 
-  const [addSimpleProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
-    update(cache, { data: { addSimpleProductsToCart } }) {
+  const [addProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
+    update(cache, { data: { addProductsToCart } }) {
       cache.modify({
-        id: cache.identify(addSimpleProductsToCart),
+        id: cache.identify(addProductsToCart),
         fields: {
           cart(existingCart = []) {
             // Logger.debug(addSimpleProductsToCart, 'addSimpleProductsToCart');
@@ -196,16 +196,28 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const addProductToCart = () => {
-    const { sku } = productItemDetail;
-    addSimpleProductsToCart({
+    const { sku, items = [] } = productItemDetail;
+    const optionsMap = [];
+
+    items.forEach((item) => {
+      const { options = [] } = item;
+      const mapArr = options
+        .filter((x) => x.is_default === true)
+        .map((x) => x.uid);
+
+      optionsMap.push(...mapArr);
+    });
+
+    Logger.debug(optionsMap, 'optionsMap');
+
+    addProductsToCart({
       variables: {
         cart_id,
         cart_items: [
           {
-            data: {
-              quantity: quantity,
-              sku: sku,
-            },
+            quantity: quantity,
+            sku: sku,
+            selected_options: optionsMap,
           },
         ],
       },

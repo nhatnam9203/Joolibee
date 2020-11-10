@@ -212,10 +212,8 @@ export const DELETE_ADDRESS = gql`
 `;
 
 export const ADD_PRODUCT_TO_CART = gql`
-  mutation($cart_id: String!, $cart_items: [SimpleProductCartItemInput!]!) {
-    addSimpleProductsToCart(
-      input: { cart_id: $cart_id, cart_items: $cart_items }
-    ) {
+  mutation($cart_id: String!, $cart_items: [CartItemInput!]!) {
+    addProductsToCart(cartId: $cart_id, cartItems: $cart_items) {
       cart {
         id
         __typename
