@@ -61,7 +61,7 @@ const forFade = ({ current }) => ({
 function MainStack() {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenName.Main}
+      initialRouteName={ScreenName.NewHome}
       headerMode="screen"
       screenOptions={{
         ...AppStyles.navigation.default,
@@ -77,7 +77,7 @@ function MainStack() {
       <Stack.Screen
         component={NewHomeScreen}
         name={ScreenName.NewHome}
-        options={{ headerShown: false }}
+        options={{ headerShown: true, headerTitle: '' }}
       />
 
       <Stack.Screen
