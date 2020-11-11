@@ -12,6 +12,7 @@ import {
 } from '../../components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
+import ScreenName from '../../ScreenName';
 
 export default function Tabs() {
   const navigation = useNavigation();
@@ -24,7 +25,7 @@ export default function Tabs() {
     {
       title: translate('tabMenu'),
       icon: images.icons.tab_new_menu,
-      screen: MenuPageName,
+      screen: ScreenName.Menu,
     },
     {
       title: translate('tabOrder'),

@@ -9,7 +9,9 @@ import {
   TopBarLeft,
   TopBarRight,
 } from '../components';
+
 import ScreenName from '../ScreenName';
+import { translate } from '@localize';
 
 const { QueryMenuList } = GCC;
 
@@ -19,9 +21,8 @@ const MenuScreen = () => {
 
   React.useEffect(() => {
     navigation.setOptions({
-      //   headerTitle: translate('txtMenu'),
+      headerTitle: translate('txtMenu'),
       headerRight: () => <TopBarRight />,
-      headerLeft: () => <TopBarLeft />,
     });
   }, [language, navigation]);
 

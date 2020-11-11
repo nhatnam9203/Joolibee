@@ -298,8 +298,8 @@ function MainStack() {
         name={ScreenName.Menu}
         options={{
           headerShown: true,
-          headerTitle: '', //translate('txtMenu'),
-          // headerBackground: () => <View style={styles.container} />,
+          headerTitle: translate('txtMenu'),
+          headerBackground: () => <View style={styles.container} />,
           headerBackImage: () => (
             <HeaderImage src={images.icons.ic_close_blur} />
           ),
