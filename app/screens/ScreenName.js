@@ -28,6 +28,7 @@ const ScreenName = {
   StorePickup: 'StorePickup',
   News: 'News',
   Menu: 'Menu',
+  NewHome: 'NewHome',
 };
 
 export default ScreenName;

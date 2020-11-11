@@ -17,7 +17,8 @@ const CustomButton = ({
   style,
   styleText,
   disabled,
-  borderRadius,
+  borderRadius = 14,
+  styleContent = {},
   ...props
 }) => (
   <TouchableOpacity
@@ -41,6 +42,7 @@ const CustomButton = ({
       <View
         style={[
           styles.content,
+          styleContent,
           {
             backgroundColor: bgColor,
             borderRadius: borderRadius ?? height / 2,

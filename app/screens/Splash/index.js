@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, ImageBackground } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Text } from 'react-native-paper';
 import { AppStyles, images } from '@theme';
-
 import { app } from '@slices';
-import { scale } from '@utils';
 import { translate } from '@localize';
 import { useCodePushUpdate } from '@hooks';
 import {
@@ -13,6 +11,7 @@ import {
   SinglePageLayout,
   AppScrollViewIOSBounceColorsWrapper,
 } from '@layouts';
+import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 
 const SplashScreen = () => {
@@ -20,42 +19,39 @@ const SplashScreen = () => {
   const [progress] = useCodePushUpdate();
 
   React.useEffect(() => {
-    // if (progress >= 100) {
-    //   setTimeout(() => {
-    //     dispatch(app.loadingSuccess());
-    //   }, 1500);
-    // }
-
+    if (progress >= 100) {
+      setTimeout(() => {
+        dispatch(app.loadingSuccess());
+      }, 1500);
+    }
     setTimeout(() => {
       dispatch(app.loadingSuccess());
     }, 3000);
   }, [progress, dispatch]);
 
   return (
-    <AppScrollViewIOSBounceColorsWrapper
-      style={styles.container}
-      topBounceColor={AppStyles.colors.accent}
-      bottomBounceColor="#BA0404">
-      <Image source={images['bee_man']} style={styles.ic_bee_man} />
-
-      <View style={styles.container_footer}>
+    <View style={styles.container}>
+      <ImageBackground
+        source={images.watermark_background_transparent}
+        style={styles.imgBackgroundContainer}
+        resizeMode="stretch">
+        <Image source={images.loading_welcome} style={styles.ic_bee_man} />
         <Image
-          source={images.icons['ic_text_jollibee']}
+          source={images.icons.ic_text_jollibee}
           style={styles.ic_text}
           resizeMode="center"
         />
-
-        {progress > 0 ? (
-          <Text style={styles.textDownloadProgress}>
-            {Math.min(progress, 100) + '%'}
-          </Text>
-        ) : (
-          <Text style={styles.textDownloadProgress}>
-            {translate('txtWelcome')}
-          </Text>
-        )}
-      </View>
-    </AppScrollViewIOSBounceColorsWrapper>
+        <View style={styles.container_footer}>
+          {progress > 0 ? (
+            <Text style={styles.textDownloadProgress}>
+              {Math.min(progress, 100) + '%'}
+            </Text>
+          ) : (
+            <></>
+          )}
+        </View>
+      </ImageBackground>
+    </View>
   );
 };
 
@@ -64,6 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: AppStyles.colors.accent,
   },
 
   container_footer: {
@@ -74,8 +71,10 @@ const styles = StyleSheet.create({
 
   ic_bee_man: {
     resizeMode: 'contain',
-    flex: 1,
-    marginBottom: scaleHeight(100),
+    flex: 0,
+    width: 200,
+    height: 200,
+    marginBottom: scaleHeight(25),
   },
 
   ic_text: {
@@ -87,6 +86,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: AppStyles.colors.background,
     marginTop: scaleHeight(5),
+  },
+  imgBackgroundContainer: {
+    flex: 1,
+    ...StyleSheet.absoluteFill,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

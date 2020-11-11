@@ -9,7 +9,7 @@ import { PriceAndPoint } from './PriceAndPoint';
 const IMAGE_SIZE = 69;
 
 export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
-  const { product = {}, quantity, prices } = item;
+  const { product = {}, quantity, prices = {} } = item;
 
   const [qty, setQuantity] = React.useState(quantity);
 
@@ -40,11 +40,11 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
           />
           <Text style={styles.txtDescStyle}>{product.meta_description}</Text>
         </View>
-        <PriceAndPoint
+        {/* <PriceAndPoint
           style={styles.priceStyle}
           point={product?.point}
           prices={prices}
-        />
+        /> */}
       </View>
 
       <View style={styles.bottomStyle}>

@@ -79,6 +79,21 @@ const Index = (props) => {
       createCustomerAddress({
         ...OPTIONS_MUTATION,
         variables: input,
+        // update: (cache, { data }) => {
+        //   let existingAddresses = cache.readQuery({
+        //     query: query.ADDRESS_LIST,
+        //   });
+        //   let newAddress = data ? data.createCustomerAddress : {};
+        //   let { addresses } = existingAddresses?.customer;
+        //   let newList = [...addresses, newAddress];
+
+        //   cache.writeQuery({
+        //     query: query.ADDRESS_LIST,
+        //     data: {
+        //       customer: { addresses: newList },
+        //     },
+        //   });
+        // },
       })
         .then(() => {
           dispatch(app.hideLoading());

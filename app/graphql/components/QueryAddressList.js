@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { CustomFlatList } from '@components';
 import React from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
@@ -21,10 +21,15 @@ export const QueryAddressList = ({
   isDefault = false,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { loading, error, data, refetch } = useQuery(ADDRESS_LIST, {
-    fetchPolicy: 'cache-first',
-  });
-
+  const [getAddress, { loading, data, refetch, error }] = useLazyQuery(
+    ADDRESS_LIST,
+    {
+      fetchPolicy: 'cache-first',
+    },
+  );
+  React.useEffect(() => {
+    getAddress();
+  }, [getAddress]);
   let _data = data?.customer ? data?.customer?.addresses : defaultData;
 
   let addresses = _data.filter((address) => {

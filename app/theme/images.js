@@ -73,6 +73,11 @@ const images = {
     ic_send_chat: require('../assets/icons/ic-send-chat.png'),
     ic_popup_close_red: require('../assets/images/ic-popup-close-red.png'),
     ic_checked: require('../assets/icons/ic-checked.png'),
+
+    tab_new_promotion: require('../assets/icons/tab-new-promotion.png'),
+    tab_new_store: require('../assets/icons/tab-new-store.png'),
+    tab_new_order: require('../assets/icons/tab-new-order.png'),
+    tab_new_menu: require('../assets/icons/tab-new-menu.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),
@@ -108,6 +113,15 @@ const images = {
   jollibee_light_intro: require('../assets/images/jollibee-light-intro.png'),
   jollibee_gift_intro: require('../assets/images/jollibee-gift-intro.png'),
   watermark_background_2: require('../assets/images/watermark-background-2.png'),
+  jollibee_head: require('../assets/images/jollibee-head.png'),
+  jollibee_menu_mockup: require('../assets/images/Menu-Mockup.png'),
+  jollibee_double_arrow: require('../assets/images/jollibee-double-arrow.png'),
+  jollibee_arrow: require('../assets/images/jollibee-arrow.png'),
+  loading_welcome: require('../assets/images/loading-welcome.gif'),
+  watermark_background_transparent: require('../assets/images/watermark-background-transparent.png'),
+  jollibee_background_new_home: require('../assets/images/jollibee-background-new-home.png'),
+  jollibee_banners: require('../assets/images/jollibee-banners.png.png'),
+  box_layout_tabs: require('../assets/images/box-layout-tabs.png'),
 };
 
 export default images;
