@@ -26,6 +26,7 @@ import {
   MyRewardScreen,
   StorePickupScreen,
   NewsScreen,
+  NewHomeScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -69,6 +70,12 @@ function MainStack() {
       <Stack.Screen
         component={MainTabScreen}
         name={ScreenName.Main}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        component={NewHomeScreen}
+        name={ScreenName.NewHome}
         options={{ headerShown: false }}
       />
 

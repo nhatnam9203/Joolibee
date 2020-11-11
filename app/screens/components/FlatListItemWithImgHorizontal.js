@@ -42,7 +42,7 @@ export const FlatListItemWithImgHorizontal = ({
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#fff',
+    backgroundColor: '#fff',
     ...AppStyles.styles.horizontalLayout,
     overflow: 'hidden',
     flex: 0,
