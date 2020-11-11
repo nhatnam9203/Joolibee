@@ -208,8 +208,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       optionsMap.push(...mapArr);
     });
 
-    Logger.debug(optionsMap, 'optionsMap');
-
     addProductsToCart({
       variables: {
         cart_id,

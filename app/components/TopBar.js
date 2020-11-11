@@ -1,6 +1,8 @@
 import React from 'react';
-import { Appbar } from 'react-native-paper';
+import { Appbar, Badge } from 'react-native-paper';
 import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
+
+const BADGE_SIZE = 20;
 
 export const Bar = ({ leftComponents, rightComponents, children, style }) => {
   return (
@@ -18,21 +20,38 @@ export const Logo = ({ source }) => (
   <Image style={styles.logoStyle} source={source} />
 );
 
-export const Action = ({ source, onPress }) =>
+export const Avatar = ({ source }) => (
+  <View style={styles.avatar}>
+    <Image style={styles.avatarImg} source={source} />
+  </View>
+);
+
+export const Action = ({ source, onPress, notifyNumber }) =>
   source ? (
     <TouchableOpacity onPress={onPress} style={styles.actionStyle}>
       <Image source={source} style={styles.iconStyle} />
+      {notifyNumber > 0 && (
+        <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
+          {notifyNumber}
+        </Badge>
+      )}
     </TouchableOpacity>
   ) : (
     <Appbar.actionStyle style={styles.actionStyle} onPress={onPress} />
   );
 
-export const Space = ({}) => <View style={styles.space} />;
+export const Space = () => <View style={styles.space} />;
 
 const styles = StyleSheet.create({
   container: { justifyContent: 'center', alignItems: 'center' },
 
-  logoStyle: { width: 50, height: '100%' },
+  logoStyle: {
+    width: 50,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'center',
+  },
 
   leftPanel: {
     position: 'absolute',
@@ -44,6 +63,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
+
   rightPanel: {
     position: 'absolute',
     right: 10,
@@ -54,6 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
+
   midPanel: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -66,10 +87,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   iconStyle: { flex: 1, resizeMode: 'center' },
 
   space: {
     width: 8,
     height: '100%',
+  },
+
+  badgeStyle: {
+    backgroundColor: '#FFC522',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    fontFamily: 'Roboto-Bold',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+
+  avatar: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 4,
+  },
+
+  avatarImg: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
   },
 });

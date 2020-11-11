@@ -10,6 +10,8 @@ const images = {
     nav_notify: require('../assets/icons/nav-notify.png'),
     nav_order: require('../assets/icons/nav-order.png'),
     nav_qrcode: require('../assets/icons/nav-qrcode.png'),
+    nav_cart: require('../assets/icons/nav-cart.png'),
+
     tab_home: require('../assets/icons/tab-home.png'),
     tab_menu: require('../assets/icons/tab-menu.png'),
     tab_promotion: require('../assets/icons/tab-promotion.png'),
@@ -105,6 +107,7 @@ const images = {
   jollibee_shop_intro: require('../assets/images/jollibee-shop.png'),
   jollibee_light_intro: require('../assets/images/jollibee-light-intro.png'),
   jollibee_gift_intro: require('../assets/images/jollibee-gift-intro.png'),
+  watermark_background_2: require('../assets/images/watermark-background-2.png'),
 };
 
 export default images;

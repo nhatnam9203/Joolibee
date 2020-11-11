@@ -26,6 +26,7 @@ import {
   MyRewardScreen,
   StorePickupScreen,
   NewsScreen,
+  MenuScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -284,6 +285,19 @@ function MainStack() {
           headerTitle: translate('txtNews'),
         }}
       />
+
+      <Stack.Screen
+        component={MenuScreen}
+        name={ScreenName.Menu}
+        options={{
+          headerShown: true,
+          headerTitle: '', //translate('txtMenu'),
+          // headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -293,6 +307,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppStyles.colors.accent,
   },
+
   icon: {
     backgroundColor: '#FFC522',
     height: 30,
