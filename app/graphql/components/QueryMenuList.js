@@ -9,6 +9,7 @@ const MENU_LIST = gql`
       id
       thumbnail_image
       name
+      position
       products(pageSize: 5, currentPage: 1) {
         items {
           id
@@ -49,12 +50,9 @@ const defaultData = [
 
 export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const {
-    loading,
-    error,
-    data = { categoryList: defaultData },
-    refetch,
-  } = useQuery(MENU_LIST, { fetchPolicy: 'cache-first' });
+  const { loading, error, data, refetch } = useQuery(MENU_LIST, {
+    fetchPolicy: 'cache-first',
+  });
 
   React.useEffect(() => {
     if (refreshing) {
@@ -70,12 +68,19 @@ export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
     }, 3000);
   };
 
-  if (error) return <></>;
+  if (error) {
+    return <></>;
+  }
 
   return (
     <CustomFlatList
-      data={data.categoryList}
-      renderItem={loading ? renderItemLoading : renderItem}
+      data={
+        [...data?.categoryList].sort((a, b) => a.position - b.position) ||
+        defaultData
+      }
+      renderItem={
+        loading || !data?.categoryList ? renderItemLoading : renderItem
+      }
       horizontal={false}
       numColumns={2}
       keyExtractor={(item, index) => item.id.toString()}
@@ -89,5 +94,9 @@ export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { paddingVertical: 15 },
+  contentContainerStyle: {
+    paddingBottom: 30,
+    paddingTop: 10,
+    paddingHorizontal: 5,
+  },
 });
