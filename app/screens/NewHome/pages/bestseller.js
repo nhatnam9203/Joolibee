@@ -13,12 +13,12 @@ import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Bestseller = ({ openDetail, onCHangeScreen, data, loading = false }) => {
+const Bestseller = ({ openDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
       <Carousel
         keyExtractor={(item, index) => index + ''}
-        data={[1, 2, 3]}
+        data={loading ? [1, 2, 3] : data}
         renderItem={(item, index) => renderItem(item, index, openDetail)}
         sliderWidth={width}
         itemWidth={scaleWidth(345)}

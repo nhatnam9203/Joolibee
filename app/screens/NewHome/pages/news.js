@@ -16,6 +16,7 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import { AppStyles, images } from '@theme';
 import { CustomHTML } from '@components';
+import { JollibeeImage } from '../../components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
@@ -36,7 +37,7 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
 
       <Carousel
         keyExtractor={(item, index) => index + ''}
-        data={loading ? [1, 2, 3] : [1, 2, 3]}
+        data={loading ? [1, 2, 3] : data}
         renderItem={(item, index) =>
           loading ? renderItemLoading() : renderItem(item, index, openDetail)
         }
@@ -59,42 +60,30 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
 };
 
 const renderItem = (item, index, onPress) => {
-  const { title, short_content } = item?.item || {};
+  const { title, short_content, featured_image } = item?.item || {};
   return (
-    <TouchableOpacity activeOpacity={0.7}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
       <View style={styles.containerItem}>
         <View style={styles.topContent}>
-          <Image
-            source={{
-              uri:
-                'http://dev.jollibee.levincitest.com/media/mageplaza/bannerslider/banner/image/e/a/ea8ad72ff489c5-ba49262adc1c26427f0d_1.png',
-            }}
-            style={styles.imgProduct}
-          />
+          <JollibeeImage style={styles.imgProduct} url={featured_image} />
         </View>
         <View style={styles.bottomContent}>
-          <Text style={styles.txttitle}>
-            Jollibee tưng bừng chào đón cửa hàng thứ 100 tại Việt Nam
-          </Text>
-          {/* <CustomHTML
-          html={short_content}
-          renderers={{
-            div: (...props) => {
-              return (
-                <Text
-                  key={props[3].key}
-                  style={styles.txtContent}
-                  numberOfLines={3}>
-                  {props[3]?.rawChildren[0].data}
-                </Text>
-              );
-            },
-          }}
-        /> */}
-          <Text style={styles.txtContent} numberOfLines={1}>
-            {/* {props[3]?.rawChildren[0].data} */}
-            Đã bao giờ bạn thử cắn một miếng Đã bao giờ bạn thử cắn một miếng...
-          </Text>
+          <Text style={styles.txttitle}>{title}</Text>
+          <CustomHTML
+            html={short_content}
+            renderers={{
+              div: (...props) => {
+                return (
+                  <Text
+                    key={props[3].index + ''}
+                    style={styles.txtContent}
+                    numberOfLines={1}>
+                    {props[3]?.rawChildren[0].data}
+                  </Text>
+                );
+              },
+            }}
+          />
         </View>
       </View>
     </TouchableOpacity>
@@ -156,6 +145,7 @@ const styles = StyleSheet.create({
   },
   bottomContent: {
     padding: 10,
+    justifyContent: 'center',
   },
 
   txttitle: {
