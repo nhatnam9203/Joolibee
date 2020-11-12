@@ -25,15 +25,14 @@ const Bestseller = ({ openDetail, onCHangeScreen, data, loading = false }) => {
         hasParallaxImages={true}
         enableSnap={true}
         loop={true}
-        autoplay={!loading}
-        autoplayInterval={5000}
-        autoplayDelay={3000}
+        // autoplay={!loading}
+        // autoplayInterval={5000}
+        // autoplayDelay={3000}
         removeClippedSubviews={false}
         useScrollView={true}
         lockScrollWhileSnapping={true}
         horizontal
         loopClonesPerSide={2}
-        activeSlideAlignment="start"
       />
     </View>
   );
@@ -72,8 +71,7 @@ const renderItemLoading = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: metrics.padding,
-    paddingLeft: metrics.padding,
+    marginVertical: scaleHeight(30),
     flex: 0,
     // alignSelf: 'flex-start',
   },

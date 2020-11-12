@@ -135,5 +135,7 @@
   "txtNews": "Tin tức",
   "txtAddCart": "Thêm vào giỏ",
   "txtProductCart": "Phần ăn đã chọn",
-  "txtNotFoundProduct": "Không có sản phẩm"
+  "txtNotFoundProduct": "Không có sản phẩm",
+  "txtBirthDayOrder": "Đặt tiệc sinh nhật",
+  "txtBigOrder": "Đơn hàng lớn"
 }

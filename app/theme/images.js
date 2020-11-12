@@ -78,6 +78,8 @@ const images = {
     tab_new_store: require('../assets/icons/tab-new-store.png'),
     tab_new_order: require('../assets/icons/tab-new-order.png'),
     tab_new_menu: require('../assets/icons/tab-new-menu.png'),
+
+    ic_forward_red: require('../assets/icons/ic-forward-red.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

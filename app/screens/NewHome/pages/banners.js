@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 10000,
-    paddingTop: metrics.padding,
+    // paddingTop: metrics.padding,
+    top: 0,
   },
 
   containerItem: {
