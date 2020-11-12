@@ -77,7 +77,11 @@ function MainStack() {
       <Stack.Screen
         component={NewHomeScreen}
         name={ScreenName.NewHome}
-        options={{ headerShown: true, headerTitle: '' }}
+        options={{
+          headerShown: true,
+          headerTitle: '',
+          headerBackground: () => <View style={styles.container} />,
+        }}
       />
 
       <Stack.Screen

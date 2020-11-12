@@ -122,6 +122,8 @@ const images = {
   jollibee_background_new_home: require('../assets/images/jollibee-background-new-home.png'),
   jollibee_banners: require('../assets/images/jollibee-banners.png.png'),
   box_layout_tabs: require('../assets/images/box-layout-tabs.png'),
+  jollibee_big_order: require('../assets/images/jollibee-big-order.png'),
+  jollibee_birthday_order: require('../assets/images/jollibee-birthday-order.png'),
 };
 
 export default images;

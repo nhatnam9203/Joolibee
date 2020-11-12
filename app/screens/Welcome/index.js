@@ -292,10 +292,11 @@ const styles = StyleSheet.create({
   },
 
   contentBottom: {
-    bottom: scaleHeight(180),
+    top: scaleHeight(480),
     width: '100%',
     height: '100%',
     alignItems: 'center',
+    position: 'absolute',
   },
 
   txtContentBottom: {
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
     marginTop: '15%',
   },
   title_content: {
-    fontSize: 28,
+    fontSize: 24,
     color: AppStyles.colors.white,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -319,7 +320,7 @@ const styles = StyleSheet.create({
   text_content: {
     fontSize: scaleWidth(14),
     color: AppStyles.colors.white,
-    lineHeight: scaleHeight(21),
+    lineHeight: scaleHeight(30),
     paddingTop: 5,
     textAlign: 'center',
   },

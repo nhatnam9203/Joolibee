@@ -9,6 +9,7 @@ import {
   MenuPageName,
   PromotionPageName,
   StorePageName,
+  CardView,
 } from '../../components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
@@ -40,16 +41,15 @@ export default function Tabs() {
   ];
 
   const renderItem = ({ item, index }) => (
-    <CustomButton
+    <CardView
       onPress={() => navigation.navigate(item?.screen)}
       borderRadius={16}
       width={scaleWidth(185)}
       height={scaleHeight(94)}
-      style={styles.cardContainer}
-      styleContent={styles.cardContent}>
-      <Image source={item.icon} style={styles.img} />
-      <Text style={styles.txtTitle}>{item.title?.toUpperCase()}</Text>
-    </CustomButton>
+      url={item.icon}
+      title={item.title?.toUpperCase()}
+      bgColor={AppStyles.colors.accent}
+    />
   );
   return (
     <View>
@@ -70,33 +70,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: metrics.padding,
     alignItems: 'center',
     marginTop: scaleHeight(170),
-  },
-  cardContainer: {
-    margin: 7,
-    shadowColor: '#00000090',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.44,
-    shadowRadius: 6,
-    elevation: 10,
-    backgroundColor: AppStyles.colors.accent,
-  },
-  cardContent: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    paddingVertical: scaleHeight(15),
-    paddingHorizontal: 5,
-  },
-  txtTitle: {
-    fontSize: scaleHeight(14),
-    color: AppStyles.colors.primary,
-    ...AppStyles.fonts.SVN_Merge_Bold,
-  },
-  img: {
-    width: scaleWidth(50),
-    height: scaleHeight(39),
-    resizeMode: 'contain',
   },
 });

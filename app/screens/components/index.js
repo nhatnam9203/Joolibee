@@ -31,3 +31,4 @@ import PopupWebView from './PopupWebView';
 export { CustomPopupMenu, CustomMapView, ItemStore, PopupWebView };
 export * from './OrderItemLoading';
 export * from './OrderNewItem';
+export * from './CardView';

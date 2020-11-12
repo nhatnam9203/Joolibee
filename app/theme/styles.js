@@ -29,6 +29,7 @@ const AppStyles = {
     confirmed: '#3FB4C3',
     complete: '#BCBCBC',
     green: '#A9B91A',
+    dark_aqua: '#0A8D87',
   },
   fonts: {
     text: {

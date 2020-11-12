@@ -53,8 +53,8 @@ export const OrderNewItem = ({ item, onPress, shadow, updateQty }) => {
 
       <ButtonRed
         style={{ marginVertical: 0 }}
-        height={48}
-        width="100%"
+        height={45}
+        width={scaleWidth(147)}
         label="MUA NGAY"
         onPress={() => {}}
       />

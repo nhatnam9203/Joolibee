@@ -8,7 +8,7 @@ import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
-import { TopBarLeft, TopBarRight } from '../components';
+import { TopBarLeft, TopBarRight, CardView } from '../components';
 import { Banners, Bestseller, Tabs } from './pages';
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
@@ -26,7 +26,7 @@ export default function Index() {
   }, [language, navigation]);
 
   return (
-    <SinglePageLayout>
+    <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <View style={styles.topContainer} />
       <Banners />
       <ImageBackground
@@ -34,6 +34,37 @@ export default function Index() {
         style={{ width, height }}>
         <Tabs />
         <Bestseller />
+        <ImageBackground
+          source={images.watermark_background_2}
+          style={{
+            width,
+            height,
+            marginTop: scaleHeight(32),
+          }}>
+          <CardView
+            onPress={() => {}}
+            borderRadius={16}
+            width={scaleWidth(181)}
+            height={scaleHeight(170)}
+            url={images.jollibee_birthday_order}
+            title={'ĐẶT TIỆC SINH NHẬT'}
+            bgColor={AppStyles.colors.orange}
+            styleIcon={{ width: scaleWidth(78), height: scaleHeight(71) }}
+            styleTitle={{ fontSize: 18, textAlign: 'center' }}
+          />
+
+          <CardView
+            onPress={() => {}}
+            borderRadius={16}
+            width={scaleWidth(181)}
+            height={scaleHeight(170)}
+            url={images.jollibee_big_order}
+            title={'ĐƠN HÀNG LỚN'}
+            bgColor={AppStyles.colors.dark_aqua}
+            styleIcon={{ width: scaleWidth(78), height: scaleHeight(71) }}
+            styleTitle={{ fontSize: 18, textAlign: 'center' }}
+          />
+        </ImageBackground>
       </ImageBackground>
     </SinglePageLayout>
   );
