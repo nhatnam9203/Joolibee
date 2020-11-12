@@ -1,19 +1,65 @@
 import { GCC } from '@graphql';
 import { useChangeLanguage } from '@hooks';
+import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import {
-  MenuItem,
-  MenuItemLoading,
-  TopBarLeft,
-  TopBarRight,
-} from '../components';
-
+import { MenuItem, MenuItemLoading, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
-import { translate } from '@localize';
+import { images } from '@theme';
+import { Dimensions } from 'react-native';
+import { CustomImageBackground } from '@components';
 
 const { QueryMenuList } = GCC;
+
+const COLORS_PALLETS = ['#FFC522', '#F1DDC5'];
+const COLD_COLOR_PALLETS = ['#0A8D87', '#3FB4C3'];
+const HOT_COLOR_PALLETS = ['#F0810D', '#E31837'];
+
+const getLayoutColor = ({ item, index = 0 }) => {
+  let backgroundColor;
+  let txtColor = 'white';
+
+  switch (index) {
+    case 0:
+      backgroundColor = HOT_COLOR_PALLETS[index];
+      break;
+    case 1:
+      backgroundColor = HOT_COLOR_PALLETS[index];
+      break;
+
+    default:
+      if (item?.id === 9) {
+        backgroundColor = COLD_COLOR_PALLETS[1];
+        break;
+      }
+
+      // Mi Y
+      if (item?.id === 6) {
+        backgroundColor = COLORS_PALLETS[1];
+        txtColor = 'black';
+        break;
+      }
+
+      if (item?.id === 7) {
+        backgroundColor = HOT_COLOR_PALLETS[0];
+        break;
+      }
+
+      // ga gion vui ve
+      if (item?.id === 3) {
+        backgroundColor = HOT_COLOR_PALLETS[1];
+        break;
+      }
+
+      backgroundColor = COLORS_PALLETS[index % COLORS_PALLETS.length];
+      txtColor = 'black';
+
+      break;
+  }
+
+  return Object.create({ background: backgroundColor, textColor: txtColor });
+};
 
 const MenuScreen = () => {
   const navigation = useNavigation();
@@ -30,33 +76,42 @@ const MenuScreen = () => {
     navigation.navigate(ScreenName.MenuDetail, { menuItem });
   };
 
-  const renderItem = ({ item }) => (
-    <MenuItem
-      key={item.id.toString()}
-      item={item}
-      onPress={() => goToMenuDetail(item)}
-    />
-  );
+  const renderItem = (object) => {
+    const { item } = object;
+    return (
+      <MenuItem
+        color={getLayoutColor(object)}
+        key={item.id.toString()}
+        item={item}
+        onPress={() => goToMenuDetail(item)}
+      />
+    );
+  };
 
   const renderLoading = ({ item }) => (
     <MenuItemLoading key={item.id.toString()} />
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={styles.background}>
       <View style={styles.container}>
         <QueryMenuList
           renderItem={renderItem}
           renderItemLoading={renderLoading}
         />
       </View>
-    </SafeAreaView>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 5 },
-  contentContainerStyle: { paddingVertical: 15 },
+  background: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  container: { flex: 1, backgroundColor: 'transparent' },
 });
 
 export default MenuScreen;

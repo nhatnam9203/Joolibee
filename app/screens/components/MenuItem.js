@@ -28,16 +28,23 @@ export const MenuItemLoading = () => (
   </Placeholder>
 );
 
-export const MenuItem = ({ item, onPress }) => (
+export const MenuItem = ({ item, onPress, color }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
-    <View style={styles.content}>
+    <View style={[styles.content, { backgroundColor: color.background }]}>
       <JollibeeImage
         style={styles.imageStyle}
         url={item.thumbnail_image}
         defaultSource={images.menu_3}
+        resizeMode="contain"
       />
       <View style={styles.textContentStyle}>
-        {!!item?.name && <Text style={styles.textStyle}>{`${item.name}`}</Text>}
+        {!!item?.name && (
+          <Text
+            style={[
+              styles.textStyle,
+              { color: color.textColor },
+            ]}>{`${item.name}`}</Text>
+        )}
       </View>
     </View>
   </TouchableOpacity>
@@ -82,7 +89,7 @@ export const MenuProductItem = ({
   </TouchableOpacity>
 );
 
-const MENU_HEIGHT = 198;
+const MENU_HEIGHT = 179;
 const TEXT_HEIGHT = 45;
 const BOTTOM_HEIGHT = 55;
 
@@ -90,14 +97,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 0.5,
     height: MENU_HEIGHT,
-    margin: 10,
+    margin: 5,
     ...AppStyles.styles.shadow,
   },
 
   content: {
     flex: 1,
     overflow: 'hidden',
-    borderRadius: 6,
+    borderRadius: 14,
     backgroundColor: '#fff',
   },
 
@@ -113,7 +120,6 @@ const styles = StyleSheet.create({
 
   textContentStyle: {
     height: TEXT_HEIGHT,
-    backgroundColor: AppStyles.colors.accent,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 0,
@@ -124,7 +130,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     ...AppStyles.fonts.bold,
     color: '#fff',
-    fontSize: 14,
+    fontSize: 18,
   },
 
   bottomStyle: {

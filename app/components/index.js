@@ -17,3 +17,4 @@ export { default as Loading } from './Loading';
 export { default as RootPermission } from './RootPermission';
 export * from './TopBar';
 export { default as Accordian } from './Accordian';
+export * from './CustomImageBackground';
