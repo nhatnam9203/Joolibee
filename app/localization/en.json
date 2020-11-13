@@ -133,5 +133,7 @@
   "txtContactSupport": "Help",
   "txtAddCart": "Add to card",
   "txtProductCart": "Cart Product Order",
-  "txtNotFoundProduct": "No products"
+  "txtNotFoundProduct": "No products",
+  "txtBirthDayOrder": "Birthday party order",
+  "txtBigOrder": "Big service order"
 }

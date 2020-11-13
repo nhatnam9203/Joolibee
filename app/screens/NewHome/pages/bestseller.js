@@ -13,27 +13,26 @@ import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Bestseller = ({ openDetail, onCHangeScreen, data, loading = false }) => {
+const Bestseller = ({ openDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
       <Carousel
         keyExtractor={(item, index) => index + ''}
-        data={[1, 2, 3]}
+        data={loading ? [1, 2, 3] : data}
         renderItem={(item, index) => renderItem(item, index, openDetail)}
         sliderWidth={width}
         itemWidth={scaleWidth(345)}
         hasParallaxImages={true}
         enableSnap={true}
         loop={true}
-        autoplay={!loading}
-        autoplayInterval={5000}
-        autoplayDelay={3000}
+        // autoplay={!loading}
+        // autoplayInterval={5000}
+        // autoplayDelay={3000}
         removeClippedSubviews={false}
         useScrollView={true}
         lockScrollWhileSnapping={true}
         horizontal
         loopClonesPerSide={2}
-        activeSlideAlignment="start"
       />
     </View>
   );
@@ -72,8 +71,7 @@ const renderItemLoading = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: metrics.padding,
-    paddingLeft: metrics.padding,
+    marginVertical: scaleHeight(30),
     flex: 0,
     // alignSelf: 'flex-start',
   },

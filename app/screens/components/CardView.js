@@ -32,11 +32,6 @@ export const CardView = ({
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: metrics.padding,
-    alignItems: 'center',
-    marginTop: scaleHeight(170),
-  },
   cardContainer: {
     margin: 7,
     shadowColor: '#00000090',
@@ -50,14 +45,14 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    paddingVertical: scaleHeight(15),
-    paddingHorizontal: 5,
+    justifyContent: 'center',
+    paddingHorizontal: scaleWidth(25),
   },
   txtTitle: {
     fontSize: scaleHeight(14),
     color: AppStyles.colors.primary,
     ...AppStyles.fonts.SVN_Merge_Bold,
+    paddingTop: scaleHeight(5),
   },
   img: {
     width: scaleWidth(50),

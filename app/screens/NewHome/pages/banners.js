@@ -13,17 +13,17 @@ import {
   Fade,
 } from 'rn-placeholder';
 import Carousel from 'react-native-snap-carousel';
-import { metrics, images } from '@theme';
+import { images, AppStyles } from '@theme';
 import { scale } from '@utils';
-const { scaleWidth, scaleHeight } = scale;
+const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Banners = ({ openDetail, onCHangeScreen, data, loading = false }) => {
+const Banners = ({ openDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
       <Carousel
         keyExtractor={(item, index) => index + ''}
-        data={[1, 2, 3]}
+        data={!loading ? data : [1, 2, 3]}
         renderItem={(item, index) => renderItem(item, index, openDetail)}
         sliderWidth={width}
         itemWidth={width}
@@ -45,8 +45,11 @@ const Banners = ({ openDetail, onCHangeScreen, data, loading = false }) => {
 
 const renderItem = (item, index, onPress) => {
   return (
-    <TouchableOpacity activeOpacity={0.7}>
-      <Image source={images.jollibee_banners} style={styles.containerItem} />
+    <TouchableOpacity>
+      <Image
+        source={{ uri: item?.item?.image?.url }}
+        style={styles.containerItem}
+      />
     </TouchableOpacity>
   );
 };
@@ -74,13 +77,21 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 10000,
-    paddingTop: metrics.padding,
+    // paddingTop: metrics.padding,
+    top: 0,
   },
 
   containerItem: {
     width,
     height: scaleHeight(361),
     resizeMode: 'contain',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 14,
+      height: 10,
+    },
+    shadowOpacity: 0.7,
+    shadowRadius: 12,
   },
 });
 
