@@ -1,14 +1,14 @@
-import { images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Config } from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import Spinner from 'react-native-spinkit';
+import { PlaceholderMedia, Placeholder } from 'rn-placeholder';
 
 export const JollibeeImage = ({
   url,
   style,
-  defaultSource = images.menu_3,
+  defaultSource,
   width,
   height,
   ...props
@@ -16,6 +16,7 @@ export const JollibeeImage = ({
   const [source, setSource] = React.useState(null);
   const [download, setDownload] = React.useState(-1);
 
+  // Callback functions
   const onLoadStart = () => setDownload(0);
   const onProgress = ({ nativeEvent: { loaded, total } }) => {
     setDownload((loaded / total).toFixed(2) * 100);
@@ -33,12 +34,12 @@ export const JollibeeImage = ({
         : `${Config.DOMAIN}${url}`;
       // Logger.info(fullPath, 'JollibeeImage -> url');
       setSource({ uri: fullPath, priority: FastImage.priority.normal });
-    } else {
+    } else if (defaultSource) {
       setSource(defaultSource);
     }
   }, [url, defaultSource]);
 
-  return (
+  return source ? (
     <View
       style={[styles.container, width && height ? { width, height } : style]}>
       <FastImage
@@ -58,6 +59,15 @@ export const JollibeeImage = ({
         </View>
       )}
     </View>
+  ) : (
+    <Placeholder
+      style={[
+        styles.container,
+        width && height ? { width, height } : style,
+        styles.placeholderContent,
+      ]}>
+      <PlaceholderMedia style={styles.imgPlaceholder} />
+    </Placeholder>
   );
 };
 
@@ -83,4 +93,15 @@ const styles = StyleSheet.create({
   },
 
   imgContent: {},
+
+  placeholderContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  imgPlaceholder: {
+    width: '80%',
+    height: '80%',
+    alignSelf: 'center',
+  },
 });

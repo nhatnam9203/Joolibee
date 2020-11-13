@@ -1,4 +1,4 @@
-import { CustomButtonImage } from '@components';
+import { CustomButtonImage, CustomImageBackground } from '@components';
 import { GCC } from '@graphql';
 import { TopBarScreenLayout } from '@layouts';
 import { translate } from '@localize';
@@ -6,11 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {
-  MenuItemLoading,
-  MenuProductItem,
-  TopBarComponent,
-} from '../components';
+import { OrderNewItem, TopBarComponent } from '../components';
 import ScreenName from '../ScreenName';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
@@ -20,16 +16,18 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   const navigation = useNavigation();
 
-  const renderItem = ({ item }) => (
-    <MenuProductItem
-      item={item}
-      onPress={() => {
-        navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
-      }}
-    />
-  );
-
-  const renderLoading = () => <MenuItemLoading />;
+  const renderItem = ({ item }, loading) => {
+    return (
+      <OrderNewItem
+        shadow={true}
+        loading={loading}
+        item={item}
+        onPress={() => {
+          navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
+        }}
+      />
+    );
+  };
 
   const goToBack = React.useCallback(() => {
     navigation.goBack();
@@ -60,20 +58,21 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
           style={styles.btnHeaderStyle}
         />
       </View>
-      <View style={styles.container}>
+      <CustomImageBackground
+        style={styles.container}
+        source={images.watermark_background_2}>
         <GCC.QueryMenuDetailList
           input={products.items}
           categoryId={id}
           renderItem={renderItem}
-          renderItemLoading={renderLoading}
         />
-      </View>
+      </CustomImageBackground>
     </TopBarScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 5 },
+  container: { flex: 1, paddingHorizontal: 10 },
 
   addressStyle: {
     height: 40,

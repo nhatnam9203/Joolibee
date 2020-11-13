@@ -2,6 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles } from '@theme';
 import { JollibeeImage } from './JollibeeImage';
+import { scale } from '@utils';
+
+const { scaleWidth, scaleHeight } = scale;
 
 const DEFAULT_HEIGHT = 154;
 
@@ -30,23 +33,26 @@ export const FlatListItemWithImgHorizontal = ({
   );
 
   return (
-    <TouchableOpacity
-      style={[styles.container, style, shadow && AppStyles.styles.shadow]}
-      onPress={onPress}>
-      {imgPosition === 'left' && renderImage()}
-      <View style={[styles.content, contentStyle]}>{children}</View>
-      {imgPosition === 'right' && renderImage()}
+    <TouchableOpacity style={[style, styles.container]} onPress={onPress}>
+      <View
+        style={[styles.background, shadow && AppStyles.styles.shadowStrong]}>
+        {imgPosition === 'left' && renderImage()}
+        <View style={[styles.content, contentStyle]}>{children}</View>
+        {imgPosition === 'right' && renderImage()}
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    padding: 5,
+  },
+
+  background: {
     backgroundColor: '#fff',
     ...AppStyles.styles.horizontalLayout,
-    overflow: 'hidden',
-    flex: 0,
-    padding: 5,
+    borderRadius: scaleHeight(14),
   },
 
   imageStyle: {
@@ -55,8 +61,9 @@ const styles = StyleSheet.create({
 
   content: {
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: 5,
+    alignItems: 'center',
+    padding: 10,
     flex: 1,
+    borderRadius: 14,
   },
 });

@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
     height: MENU_HEIGHT,
     margin: 5,
-    ...AppStyles.styles.shadow,
+    ...AppStyles.styles.shadowStrong,
   },
 
   content: {

@@ -87,14 +87,26 @@ const AppStyles = {
     },
 
     shadow: {
-      shadowColor: '#0004',
+      shadowColor: '#000A',
       shadowOffset: {
         width: 2,
         height: 2,
       },
-      shadowOpacity: 0.25,
+      shadowOpacity: 0.18,
       shadowRadius: 4,
       elevation: 3,
+    },
+
+    shadowStrong: {
+      shadowColor: '#000D',
+      shadowOffset: {
+        width: 0,
+        height: 6,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 4,
+
+      elevation: 4,
     },
 
     absolute: {

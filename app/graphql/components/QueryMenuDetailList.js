@@ -33,44 +33,47 @@ const MENU_DETAIL_LIST = gql`
   }
 `;
 
-export const QueryMenuDetailList = ({
-  renderItem = () => <View />,
-  renderItemLoading = () => <View />,
-  categoryId,
-  input,
-}) => {
-  const {
-    loading,
-    error,
-    data = {
-      products: { items: input },
-    },
-    fetchMore,
-  } = useQuery(MENU_DETAIL_LIST, {
+const EMPTY_LIST_HEIGHT = 15;
+
+export const QueryMenuDetailList = ({ renderItem, categoryId, input }) => {
+  // call graphql
+  const { loading, error, data, fetchMore } = useQuery(MENU_DETAIL_LIST, {
     variables: { categoryId },
   });
 
-  if (error) {
-    return (
-      <>
-        <Text>{error}</Text>
-      </>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <>
+  //       <Text>{error}</Text>
+  //     </>
+  //   );
+  // }
+
+  // Call Render Item
+  const onRenderItem = (item) => {
+    if (typeof renderItem === 'function') {
+      return renderItem(item, loading || !data || error);
+    }
+  };
 
   return (
     <CustomFlatList
-      data={data.products?.items}
-      renderItem={renderItem}
-      horizontal={false}
-      numColumns={2}
+      data={data?.products?.items || input}
+      renderItem={onRenderItem}
       keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
       showsVerticalScrollIndicator={false}
+      ItemSeparatorComponent={() => (
+        <View style={{ height: EMPTY_LIST_HEIGHT }} />
+      )}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { paddingVertical: 15 },
+  contentContainerStyle: {
+    paddingTop: 15,
+    paddingBottom: 30,
+    paddingHorizontal: 0,
+  },
 });

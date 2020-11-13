@@ -16,6 +16,8 @@ export const ButtonRed = ({
   onPress,
   disabled,
   style,
+  borderRadius,
+  textStyle,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(app.showComingSoon());
@@ -23,6 +25,7 @@ export const ButtonRed = ({
   return (
     <CustomButton
       style={[styles.btnStyle, AppStyles.styles.shadow, style]}
+      styleText={textStyle}
       onPress={onPress ?? showPopup}
       width={width}
       height={height}
@@ -31,6 +34,7 @@ export const ButtonRed = ({
       textColor="#fff"
       bgColor={AppStyles.colors.accent}
       disabled={disabled}
+      borderRadius={borderRadius}
     />
   );
 };

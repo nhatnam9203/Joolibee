@@ -26,9 +26,9 @@ export const CustomImageBackground = React.memo(
     return (
       <View style={style} accessibilityIgnoresInvertColors={true}>
         <View style={[StyleSheet.absoluteFill, styles.container]}>
-          {verticalViews.map(() => (
-            <View style={styles.horizontalLayout}>
-              {horizontalViews.map(() => (
+          {verticalViews.map((vItem, vIndex) => (
+            <View style={styles.horizontalLayout} key={`${vIndex}`}>
+              {horizontalViews.map((item, index) => (
                 <Image
                   {...props}
                   style={[
@@ -39,6 +39,7 @@ export const CustomImageBackground = React.memo(
                     },
                   ]}
                   resizeMode="contain"
+                  key={`${index}`}
                 />
               ))}
             </View>

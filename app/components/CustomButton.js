@@ -17,7 +17,7 @@ const CustomButton = ({
   style,
   styleText,
   disabled,
-  borderRadius = 14,
+  borderRadius = 12,
   styleContent = {},
   ...props
 }) => (
@@ -33,7 +33,7 @@ const CustomButton = ({
       absolute && styles.btnAbsoluteStyle,
       style,
     ]}
-    activeOpacity={0.6}
+    activeOpacity={0.8}
     underlayColor={bgColor}
     onPress={onPress}
     disabled={disabled}

@@ -124,6 +124,7 @@ const images = {
   box_layout_tabs: require('../assets/images/box-layout-tabs.png'),
   jollibee_big_order: require('../assets/images/jollibee-big-order.png'),
   jollibee_birthday_order: require('../assets/images/jollibee-birthday-order.png'),
+  bg_product_item: require('../assets/images/bg-product.png'),
 };
 
 export default images;

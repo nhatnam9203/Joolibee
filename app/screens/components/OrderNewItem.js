@@ -5,65 +5,115 @@ import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
 import { LabelTitle } from './LabelTitle';
 import { ButtonRed } from './ButtonCC';
 import { scale } from '@utils';
+import { translate } from '@localize';
+import { format, destructuring } from '@utils';
+import {
+  Placeholder,
+  PlaceholderMedia,
+  PlaceholderLine,
+  Fade,
+} from 'rn-placeholder';
+
 const { scaleWidth, scaleHeight } = scale;
 const IMAGE_SIZE = scaleHeight(177);
 
-export const OrderNewItem = ({ item, onPress, shadow, updateQty }) => {
-  const { product = {}, quantity, prices = {} } = item;
+const OrderItemLoading = () => (
+  <FlatListItemWithImgHorizontal
+    style={styles.container}
+    imgStyle={styles.imageStyle}
+    contentStyle={styles.itemStyle}
+    imgPosition="left"
+    imgWidth={IMAGE_SIZE}
+    imgHeight={IMAGE_SIZE}
+    shadow={true}>
+    <Placeholder>
+      <PlaceholderLine width={'100%'} height={15} />
+      <PlaceholderLine width={'100%'} height={15} />
+      <PlaceholderLine width={'30%'} height={15} />
+      <PlaceholderMedia style={styles.mediaPlaceholder} />
+    </Placeholder>
+  </FlatListItemWithImgHorizontal>
+);
 
-  const [qty, setQuantity] = React.useState(quantity);
-
+export const OrderNewItem = ({
+  item,
+  onPress,
+  shadow,
+  updateQty,
+  loading = false,
+}) => {
   const handleUpdateProduct = (value) => () => {
     let newItem = { ...item };
-    setQuantity(value);
+    // setQuantity(value);
     newItem.quantity = value;
     updateQty(newItem);
   };
 
-  const PriceAndPoint = ({ point, prices }) => {
+  const PriceAndPoint = ({ point, price_range }) => {
+    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+
     return (
       <View style={styles.priceContent}>
         <Text style={styles.priceStyle}>
-          {/* {format.jollibeeCurrency(prices?.price)} */}
-          10.000
+          {format.jollibeeCurrency(sellPrice)}
         </Text>
         <Text style={styles.pointStyle}>(+ {`${point}`} điểm)</Text>
       </View>
     );
   };
 
-  return (
-    <FlatListItemWithImgHorizontal
-      style={styles.container}
-      imgStyle={styles.imageStyle}
-      contentStyle={styles.itemStyle}
-      image={product?.image?.url || images.jollibee_combo}
-      onPress={onPress}
-      imgPosition="left"
-      imgWidth={IMAGE_SIZE}
-      imgHeight={IMAGE_SIZE}
-      shadow={shadow}>
-      <LabelTitle
-        label="zxczcsadsadsad zxczcsadsadsad"
-        numberOfLines={2}
-        fontSize={scaleHeight(15)}
-        style={styles.titleStyle}
-      />
-      <PriceAndPoint point={10} prices={prices} />
+  const ListItem = (value) => {
+    const { image, id, sku, name, price_range, point } = value?.item;
 
-      <ButtonRed
-        style={{ marginVertical: 0 }}
-        height={45}
-        width={scaleWidth(147)}
-        label="MUA NGAY"
-        onPress={() => {}}
-      />
-    </FlatListItemWithImgHorizontal>
-  );
+    return (
+      <FlatListItemWithImgHorizontal
+        style={styles.container}
+        imgStyle={styles.imageStyle}
+        contentStyle={styles.itemStyle}
+        image={image?.url || images.jollibee_combo}
+        onPress={onPress}
+        imgPosition="left"
+        imgWidth={IMAGE_SIZE}
+        imgHeight={IMAGE_SIZE}
+        shadow={shadow}
+        key={`${id}`}>
+        <LabelTitle
+          label={name}
+          numberOfLines={2}
+          fontSize={scaleHeight(16)}
+          style={styles.titleStyle}
+        />
+
+        {price_range && (
+          <PriceAndPoint price_range={price_range} point={point} />
+        )}
+
+        <ButtonRed
+          height={scaleHeight(50)}
+          width={scaleHeight(145)}
+          borderRadius={10}
+          label={translate('txtBuyNow')}
+          textStyle={styles.buttonTextStyle}
+          onPress={() => {}}
+        />
+      </FlatListItemWithImgHorizontal>
+    );
+  };
+
+  return loading ? <OrderItemLoading /> : <ListItem item={item} />;
 };
 
 const styles = StyleSheet.create({
-  imageStyle: { alignSelf: 'flex-start' },
+  container: {
+    width: '100%',
+    height: scaleHeight(180),
+  },
+
+  imageStyle: {
+    alignSelf: 'flex-start',
+    borderRadius: 14,
+  },
+
   itemStyle: {
     alignItems: 'flex-start',
     justifyContent: 'space-around',
@@ -71,13 +121,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  container: {
-    width: scaleWidth(345),
-    height: scaleHeight(171),
-    borderRadius: 14,
-  },
-
-  titleStyle: { marginVertical: 0, marginBottom: 0 },
+  titleStyle: {},
 
   txtDescStyle: {
     ...AppStyles.fonts.text,
@@ -90,25 +134,20 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  buttonStyle: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#E9E9E9',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
+  buttonTextStyle: {
+    ...AppStyles.fonts.bold,
+    fontSize: scaleHeight(14),
   },
 
   priceStyle: {
     ...AppStyles.fonts.title,
     color: AppStyles.colors.accent,
-    fontSize: 16,
+    fontSize: scaleHeight(16),
   },
 
   pointStyle: {
     ...AppStyles.fonts.medium,
-    fontSize: 14,
+    fontSize: scaleHeight(16),
     color: '#484848',
   },
 
@@ -117,5 +156,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
+    marginVertical: 10,
+  },
+
+  mediaPlaceholder: {
+    width: 120,
+    height: 30,
   },
 });
