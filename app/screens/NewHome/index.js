@@ -70,6 +70,7 @@ export default function HomeScreen() {
               <Image
                 source={images.jollibee_background_new_home}
                 style={styles.imgLayoutYellow}
+                resizeMethod="resize"
               />
               {/* --------- Yellow Background ------------ */}
 
@@ -172,8 +173,9 @@ const styles = StyleSheet.create({
 
   imgLayoutYellow: {
     position: 'absolute',
-    resizeMode: 'contain',
-    flex: 1,
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
   },
 
   iconStyle: { width: scaleWidth(78), height: scaleHeight(71) },
