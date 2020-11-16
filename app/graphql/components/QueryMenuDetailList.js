@@ -39,6 +39,7 @@ export const QueryMenuDetailList = ({ renderItem, categoryId, input }) => {
   // call graphql
   const { loading, error, data, fetchMore } = useQuery(MENU_DETAIL_LIST, {
     variables: { categoryId },
+    fetchPolicy: 'cache-first',
   });
 
   // if (error) {

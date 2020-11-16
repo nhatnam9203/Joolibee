@@ -74,7 +74,7 @@ const HomePage = () => {
   // Mutation create empty cart --
 
   const { data, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    // fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-first',
   });
 
   const _data = data ? data?.homeScreen : {};

@@ -143,7 +143,7 @@ const link = ApolloLink.from([
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'cache-and-network',
-    errorPolicy: 'ignore',
+    errorPolicy: 'all',
   },
   query: {
     fetchPolicy: 'cache-and-network',
@@ -158,5 +158,6 @@ export const graphQlClient = (persistCache) =>
   new ApolloClient({
     link,
     cache: persistCache ?? cache,
+    // connectToDevTools: ,
     defaultOptions,
   });

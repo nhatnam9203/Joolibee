@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
 import { query } from '@graphql';
 import { useChangeLanguage } from '@hooks';
@@ -36,19 +36,18 @@ export default function HomeScreen() {
 
   const customerCartData = useCustomerCart();
 
-  const [getHome, { data, loading }] = useLazyQuery(query.HOME_SCREEN, {
-    // fetchPolicy: 'cache-first',
+  const { data, loading } = useQuery(query.HOME_SCREEN, {
+    fetchPolicy: 'cache-first',
   });
 
   const { homeScreen } = data || {};
 
   React.useEffect(() => {
-    getHome();
     navigation.setOptions({
       headerRight: () => <TopBarRight />,
       headerLeft: () => <TopBarLeft />,
     });
-  }, [language, navigation, getHome]);
+  }, [language, navigation]);
 
   return (
     <>
