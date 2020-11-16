@@ -11,7 +11,7 @@ import { AppStyles } from '@theme';
 import Navigator from 'app/navigation';
 import { persistor, store } from 'app/redux/store';
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, LogBox } from 'react-native';
 import codePush from 'react-native-code-push';
 import DropdownAlert from 'react-native-dropdownalert';
 import {
@@ -70,6 +70,10 @@ const theme = {
 };
 
 enableScreens();
+
+LogBox.ignoreWarnings([
+  'VirtualizedLists should never be nested', // TODO: Remove when fixed
+]);
 
 let codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,

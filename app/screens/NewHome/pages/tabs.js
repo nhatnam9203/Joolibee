@@ -52,6 +52,7 @@ export default function Tabs({}) {
 
   return (
     <View style={styles.container}>
+      {/** !TODO: Remove when fixed, VirtualizedLists should never be nested */}
       <FlatList
         contentContainerStyle={styles.contentContainer}
         scrollEnabled={false}

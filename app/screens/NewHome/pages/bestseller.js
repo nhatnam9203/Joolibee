@@ -24,7 +24,7 @@ const Bestseller = ({ openDetail, onCHangeScreen, data, loading }) => {
     <View style={styles.container}>
       <Carousel
         sliderWidth={width}
-        itemWidth={width * 0.9}
+        itemWidth={width * 0.94}
         keyExtractor={(_, index) => index + ''}
         data={loading ? [1, 2, 3] : data}
         renderItem={onRenderItem}
@@ -36,8 +36,8 @@ const Bestseller = ({ openDetail, onCHangeScreen, data, loading }) => {
         horizontal
         loopClonesPerSide={3}
         removeClippedSubviews={false}
-        inactiveSlideOpacity={0.8}
-        inactiveSlideScale={0.95}
+        inactiveSlideOpacity={0.7}
+        inactiveSlideScale={1}
       />
     </View>
   );
