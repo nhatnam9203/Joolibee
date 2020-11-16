@@ -67,7 +67,7 @@ const MenuScreen = () => {
 
   React.useEffect(() => {
     navigation.setOptions({
-      headerTitle: translate('txtMenu'),
+      headerTitle: translate('txtMenu').toUpperCase(),
       headerRight: () => <TopBarRight />,
     });
   }, [language, navigation]);

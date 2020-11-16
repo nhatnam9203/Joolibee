@@ -7,7 +7,7 @@ const HeaderImage = ({ src }) => {
 
 const styles = StyleSheet.create({
   container: {
-    tintColor: '#fff',
+    // tintColor: '#fff',
     width: 45,
     height: 45,
     margin: 10,

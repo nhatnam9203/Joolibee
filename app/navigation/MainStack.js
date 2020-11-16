@@ -33,6 +33,9 @@ import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { translate } from '@localize';
 import { HeaderImage } from '@components';
+import { scale } from '@utils';
+
+const { scaleHeight } = scale;
 
 // import { TransitionSpecs } from '@react-navigation/stack';
 // import { CardStyleInterpolators } from '@react-navigation/stack';
@@ -65,6 +68,15 @@ function MainStack() {
       headerMode="screen"
       screenOptions={{
         ...AppStyles.navigation.default,
+        headerStyle: {
+          backgroundColor: AppStyles.colors.accent,
+          height: scaleHeight(100),
+        },
+        headerTitleStyle: {
+          fontFamily: 'SVN-Merge',
+          fontSize: scaleHeight(18),
+          color: AppStyles.colors.primary,
+        },
         headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
       }}>
