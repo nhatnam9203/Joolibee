@@ -6,7 +6,7 @@ import { scale } from '@utils';
 
 const { scaleWidth, scaleHeight } = scale;
 
-const DEFAULT_HEIGHT = 154;
+const DEFAULT_HEIGHT = scaleHeight(160);
 
 export const FlatListItemWithImgHorizontal = ({
   children,
@@ -45,14 +45,13 @@ export const FlatListItemWithImgHorizontal = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 5,
-  },
+  container: { padding: 5 },
 
   background: {
     backgroundColor: '#fff',
     ...AppStyles.styles.horizontalLayout,
     borderRadius: scaleHeight(14),
+    flex: 0,
   },
 
   imageStyle: {
@@ -61,8 +60,7 @@ const styles = StyleSheet.create({
 
   content: {
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
+    alignItems: 'flex-start',
     flex: 1,
     borderRadius: 14,
   },

@@ -33,7 +33,7 @@ const MENU_DETAIL_LIST = gql`
   }
 `;
 
-const EMPTY_LIST_HEIGHT = 15;
+const EMPTY_LIST_HEIGHT = 5;
 
 export const QueryMenuDetailList = ({ renderItem, categoryId, input }) => {
   // call graphql

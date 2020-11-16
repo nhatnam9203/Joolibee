@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   txtStyle: {
     ...AppStyles.fonts.title,
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginVertical: 5,
     lineHeight: 21,
   },
 });

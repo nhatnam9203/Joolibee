@@ -31,13 +31,13 @@ const Banners = ({ openDetail, onCHangeScreen, data, loading }) => {
         enableSnap={true}
         loop={true}
         autoplay={!loading}
-        autoplayInterval={5000}
-        autoplayDelay={3000}
+        autoplayInterval={30000}
+        autoplayDelay={1500}
         removeClippedSubviews={false}
         useScrollView={true}
         lockScrollWhileSnapping={true}
         horizontal
-        loopClonesPerSide={2}
+        loopClonesPerSide={3}
       />
     </View>
   );
@@ -54,44 +54,23 @@ const renderItem = (item, index, onPress) => {
   );
 };
 
-const renderItemLoading = () => {
-  const flex_start_style = { alignSelf: 'flex-start' };
-  return (
-    <Placeholder Animation={Fade} style={styles.wrapperItem}>
-      <View style={styles.containerItem}>
-        <View style={styles.imgLoading}>
-          <PlaceholderMedia style={styles.imgProduct} />
-        </View>
-
-        <PlaceholderLine height={15} />
-        <PlaceholderLine height={10} style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={40} width={35} style={styles.btnLoading} />
-      </View>
-    </Placeholder>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 10000,
-    // paddingTop: metrics.padding,
     top: 0,
+    shadowOffset: {
+      width: 6,
+      height: 10,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
   },
 
   containerItem: {
     width,
     height: scaleHeight(361),
     resizeMode: 'contain',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 14,
-      height: 10,
-    },
-    shadowOpacity: 0.7,
-    shadowRadius: 12,
   },
 });
 

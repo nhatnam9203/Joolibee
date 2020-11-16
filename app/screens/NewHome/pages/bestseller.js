@@ -14,72 +14,54 @@ const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
 const Bestseller = ({ openDetail, onCHangeScreen, data, loading }) => {
+  const onRenderItem = (item) => {
+    if (typeof renderItem === 'function') {
+      return renderItem(item, loading || !data);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Carousel
-        keyExtractor={(item, index) => index + ''}
-        data={loading ? [1, 2, 3] : data}
-        renderItem={(item, index) => renderItem(item, index, openDetail)}
         sliderWidth={width}
-        itemWidth={scaleWidth(345)}
+        itemWidth={width * 0.9}
+        keyExtractor={(_, index) => index + ''}
+        data={loading ? [1, 2, 3] : data}
+        renderItem={onRenderItem}
         hasParallaxImages={true}
         enableSnap={true}
         loop={true}
-        // autoplay={!loading}
-        // autoplayInterval={5000}
-        // autoplayDelay={3000}
-        removeClippedSubviews={false}
         useScrollView={true}
         lockScrollWhileSnapping={true}
         horizontal
-        loopClonesPerSide={2}
+        loopClonesPerSide={3}
+        removeClippedSubviews={false}
+        inactiveSlideOpacity={0.8}
+        inactiveSlideScale={0.95}
       />
     </View>
   );
 };
 
-const renderItem = (item, index, onPress) => {
+const renderItem = ({ item, index }, loading) => {
   return (
     <OrderNewItem
-      item={item}
-      key={item.id + ''}
-      updateQty={() => {}}
-      onPress={() => {}}
+      key={index + ''}
       shadow={true}
+      loading={loading}
+      item={item}
+      onPress={() => {
+        // navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
+      }}
     />
-  );
-};
-
-const renderItemLoading = () => {
-  const flex_start_style = { alignSelf: 'flex-start' };
-  return (
-    <Placeholder Animation={Fade} style={styles.wrapperItem}>
-      <View style={styles.containerItem}>
-        <View style={styles.imgLoading}>
-          <PlaceholderMedia style={styles.imgProduct} />
-        </View>
-
-        <PlaceholderLine height={15} />
-        <PlaceholderLine height={10} style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={40} width={35} style={styles.btnLoading} />
-      </View>
-    </Placeholder>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: scaleHeight(30),
-    flex: 0,
-    // alignSelf: 'flex-start',
-  },
-
-  containerItem: {
-    width,
-    height: scaleHeight(361),
-    resizeMode: 'contain',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 5,
   },
 });
 

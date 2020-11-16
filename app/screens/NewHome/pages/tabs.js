@@ -43,7 +43,7 @@ export default function Tabs() {
   const renderItem = ({ item, index }) => (
     <CardView
       onPress={() => navigation.navigate(item?.screen)}
-      borderRadius={16}
+      borderRadius={scaleHeight(16)}
       width={scaleWidth(185)}
       height={scaleHeight(94)}
       url={item.icon}
@@ -51,12 +51,14 @@ export default function Tabs() {
       bgColor={AppStyles.colors.accent}
     />
   );
+
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         contentContainerStyle={styles.contentContainer}
         scrollEnabled={false}
         data={TABS}
+        horizontal={false}
         numColumns={2}
         renderItem={renderItem}
         keyExtractor={(_, index) => index + ''}
@@ -66,9 +68,15 @@ export default function Tabs() {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: metrics.padding,
-    alignItems: 'center',
+  container: {
+    flex: 0,
     marginTop: scaleHeight(170),
+    marginBottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  contentContainer: {
+    padding: 5,
   },
 });

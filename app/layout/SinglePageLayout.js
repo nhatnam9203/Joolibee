@@ -6,7 +6,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  View,
   StatusBar,
 } from 'react-native';
 
@@ -18,7 +17,6 @@ const SinglePageLayout = ({ children, backgroundColor, bounces }) => {
     <>
       <KeyboardAvoidingView
         style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
-        // keyboardVerticalOffset={isIphoneX() ? 88 : 64}
         {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
         <StatusBar barStyle="light-content" />
 

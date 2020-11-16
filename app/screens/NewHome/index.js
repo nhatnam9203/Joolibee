@@ -18,14 +18,16 @@ import { TopBarLeft, TopBarRight, CardView } from '../components';
 import { Banners, Bestseller, Tabs, News } from './pages';
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
+import { useHeaderHeight } from '@react-navigation/stack';
 
 export default function Index() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
+  const headerHeight = useHeaderHeight();
 
   const [getHome, { data, loading }] = useLazyQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first',
+    // fetchPolicy: 'cache-first',
   });
 
   const { homeScreen } = data || {};
@@ -54,10 +56,14 @@ export default function Index() {
           />
 
           {/* --------- Background Yellow ------------ */}
-          <View style={styles.wrapperContainerLayoutYellow}>
+          <View style={[styles.wrapperContainerLayoutYellow]}>
             <View style={styles.topContainer} />
 
-            <View style={styles.containerLayoutYellow}>
+            <View
+              style={[
+                styles.containerLayoutYellow,
+                { height: height - scaleHeight(187) - headerHeight },
+              ]}>
               <Image
                 source={images.jollibee_background_new_home}
                 style={styles.imgLayoutYellow}
@@ -123,33 +129,38 @@ const styles = StyleSheet.create({
     height: scaleHeight(187),
     backgroundColor: AppStyles.colors.accent,
   },
+
   container: {
     alignItems: 'center',
     flex: 1,
   },
+
   layoutHorizontal: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
   },
+
   waterMarkContainer: {
     paddingVertical: scaleHeight(41),
     width,
     flex: 1,
   },
+
   customImageBackground: {
     width,
     flex: 1,
   },
+
   wrapperContainerLayoutYellow: {
-    flex: 0,
     backgroundColor: AppStyles.colors.accent,
-  },
-  containerLayoutYellow: {
     flex: 0,
-    overflow: 'hidden',
-    height: height - 187,
   },
+
+  containerLayoutYellow: {
+    overflow: 'hidden',
+  },
+
   imgLayoutYellow: { width, position: 'absolute' },
   iconStyle: { width: scaleWidth(78), height: scaleHeight(71) },
   titleStyle: { fontSize: 18, textAlign: 'center' },

@@ -33,27 +33,30 @@ export const CardView = ({
 
 const styles = StyleSheet.create({
   cardContainer: {
-    margin: 7,
-    shadowColor: '#00000090',
+    margin: 5,
+    shadowColor: '#0009',
     shadowOffset: {
       width: 0,
-      height: 8,
+      height: 4,
     },
-    shadowOpacity: 0.44,
-    shadowRadius: 6,
-    elevation: 10,
+    shadowOpacity: 0.28,
+    shadowRadius: 4,
+    elevation: 4,
   },
+
   cardContent: {
     flexDirection: 'column',
     justifyContent: 'center',
     paddingHorizontal: scaleWidth(25),
   },
+
   txtTitle: {
     fontSize: scaleHeight(14),
     color: AppStyles.colors.primary,
     ...AppStyles.fonts.SVN_Merge_Bold,
     paddingTop: scaleHeight(5),
   },
+
   img: {
     width: scaleWidth(50),
     height: scaleHeight(39),

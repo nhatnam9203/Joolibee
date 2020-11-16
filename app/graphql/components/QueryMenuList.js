@@ -68,16 +68,16 @@ export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
     }, 3000);
   };
 
-  if (error) {
-    return <></>;
-  }
+  const getData = React.useCallback(() => {
+    if (data?.categoryList?.length > 0 && !error) {
+      return [...data?.categoryList].sort((a, b) => a.position - b.position);
+    }
+    return defaultData;
+  }, [data?.categoryList, error]);
 
   return (
     <CustomFlatList
-      data={
-        [...data?.categoryList].sort((a, b) => a.position - b.position) ||
-        defaultData
-      }
+      data={getData()}
       renderItem={
         loading || !data?.categoryList ? renderItemLoading : renderItem
       }

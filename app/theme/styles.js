@@ -101,9 +101,9 @@ const AppStyles = {
       shadowColor: '#000D',
       shadowOffset: {
         width: 0,
-        height: 6,
+        height: 4,
       },
-      shadowOpacity: 0.18,
+      shadowOpacity: 0.16,
       shadowRadius: 4,
 
       elevation: 4,

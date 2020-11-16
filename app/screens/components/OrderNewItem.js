@@ -1,21 +1,15 @@
+import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
+import { destructuring, format, scale } from '@utils';
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Placeholder, PlaceholderLine, PlaceholderMedia } from 'rn-placeholder';
+import { ButtonRed } from './ButtonCC';
 import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
 import { LabelTitle } from './LabelTitle';
-import { ButtonRed } from './ButtonCC';
-import { scale } from '@utils';
-import { translate } from '@localize';
-import { format, destructuring } from '@utils';
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
 
-const { scaleWidth, scaleHeight } = scale;
-const IMAGE_SIZE = scaleHeight(177);
+const { scaleHeight } = scale;
+const IMAGE_SIZE = scaleHeight(160);
 
 const OrderItemLoading = () => (
   <FlatListItemWithImgHorizontal
@@ -42,15 +36,8 @@ export const OrderNewItem = ({
   updateQty,
   loading = false,
 }) => {
-  const handleUpdateProduct = (value) => () => {
-    let newItem = { ...item };
-    // setQuantity(value);
-    newItem.quantity = value;
-    updateQty(newItem);
-  };
-
   const PriceAndPoint = ({ point, price_range }) => {
-    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+    const { sellPrice } = destructuring.priceOfRange(price_range);
 
     return (
       <View style={styles.priceContent}>
@@ -63,7 +50,7 @@ export const OrderNewItem = ({
   };
 
   const ListItem = (value) => {
-    const { image, id, sku, name, price_range, point } = value?.item;
+    const { image, id, name, price_range, point } = value?.item;
 
     return (
       <FlatListItemWithImgHorizontal
@@ -106,7 +93,6 @@ export const OrderNewItem = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: scaleHeight(180),
   },
 
   imageStyle: {
@@ -117,8 +103,8 @@ const styles = StyleSheet.create({
   itemStyle: {
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    padding: 10,
-    height: '100%',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
 
   titleStyle: {},
@@ -156,7 +142,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    marginVertical: 10,
   },
 
   mediaPlaceholder: {
