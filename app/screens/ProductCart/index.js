@@ -149,7 +149,7 @@ const ProductCart = ({ visible, onToggle }) => {
           <TouchableOpacity
             style={styles.btnClose}
             onPress={() => popupRef.current.forceQuit()}>
-            <Image source={images.icons.ic_close_blur} resizeMode="center" />
+            <Image source={images.icons.ic_popup_close} resizeMode="center" />
           </TouchableOpacity>
           <Text style={styles.txtHeader}>{`${translate(
             'txtProductCart',
@@ -217,7 +217,8 @@ const styles = StyleSheet.create({
     width: '90%',
     maxHeight: '80%',
     minHeight: '50%',
-    backgroundColor: 'red',
+    borderRadius: 14,
+    overflow: 'hidden',
   },
 
   header: {
@@ -232,9 +233,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    borderColor: '#fff',
-    borderWidth: 1,
-    backgroundColor: AppStyles.colors.accent,
     marginLeft: 10,
     flex: 0,
     justifyContent: 'center',
