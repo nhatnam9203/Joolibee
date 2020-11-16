@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { OrderNewItem, TopBarComponent } from '../components';
+import { OrderNewItem, TopBarComponent, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
+import { useChangeLanguage } from '@hooks';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
@@ -15,6 +16,14 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   } = route.params;
 
   const navigation = useNavigation();
+  const [language] = useChangeLanguage();
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerTitle: translate('txtOrderMenu').toUpperCase(),
+      headerRight: () => <TopBarRight />,
+    });
+  }, [language, navigation]);
 
   const renderItem = ({ item }, loading) => {
     return (
@@ -34,7 +43,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   }, [navigation]);
 
   return (
-    <TopBarScreenLayout topBar={<TopBarComponent />}>
+    <TopBarScreenLayout>
       <View style={styles.addressStyle}>
         <Text style={styles.txtAddressTitleStyle}>
           {translate('txtAddressTo')}
@@ -53,7 +62,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.headerStyle}>
         {!!name && <Text style={styles.txtHeaderStyle}>{name}</Text>}
         <CustomButtonImage
-          image={images.icons.ic_header_back}
+          image={images.icons.ic_menu}
           onPress={goToBack}
           style={styles.btnHeaderStyle}
         />

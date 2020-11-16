@@ -108,7 +108,14 @@ function MainStack() {
       <Stack.Screen
         component={MenuDetailScreen}
         name={ScreenName.MenuDetail}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtOrderMenu'),
+          headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_header_back} />
+          ),
+        }}
       />
 
       <Stack.Screen

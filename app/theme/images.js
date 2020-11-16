@@ -80,6 +80,7 @@ const images = {
     tab_new_menu: require('../assets/icons/tab-new-menu.png'),
 
     ic_forward_red: require('../assets/icons/ic-forward-red.png'),
+    ic_menu: require('../assets/icons/ic_menu.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

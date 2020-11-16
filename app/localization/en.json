@@ -135,5 +135,6 @@
   "txtProductCart": "Cart Product Order",
   "txtNotFoundProduct": "No products",
   "txtBirthDayOrder": "Birthday party order",
-  "txtBigOrder": "Big service order"
+  "txtBigOrder": "Big service order",
+  "txtOrderMenu": "Select Order"
 }
