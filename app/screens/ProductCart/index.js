@@ -17,9 +17,11 @@ import { useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
-import { format } from '@utils';
+import { format, scale } from '@utils';
 import * as Widget from './widget';
 import { useComponentSize } from '@hooks';
+
+const { scaleHeight } = scale;
 
 const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     ...AppStyles.fonts.SVN_Merge_Bold,
-    fontSize: 24,
+    fontSize: scaleHeight(24),
     flex: 1,
     textAlign: 'center',
   },

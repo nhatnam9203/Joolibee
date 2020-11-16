@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
 import { AppStyles, images } from '@theme';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Badge } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import ScreenName from '../ScreenName';
@@ -93,32 +93,39 @@ export const TopBarRight = React.memo(() => {
 });
 
 export const TopBarLeft = React.memo(() => {
+  const navigation = useNavigation();
+
   const { data } = useQuery(query.CUSTOMER_INFO, {
     // fetchPolicy: 'cache-first',
   });
 
   return (
-    <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
-      <Avatar source={images.icons.ic_qr_logo} size={AVATAR_SIZE} />
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate(ScreenName.Account);
+      }}>
+      <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
+        <Avatar source={images.icons.ic_qr_logo} size={AVATAR_SIZE} />
 
-      <Space />
-      {/* <Action
+        <Space />
+        {/* <Action
         source={images.icons.nav_qrcode}
         onPress={() => {
           dispatch(account.showQRCode());
         }}
       /> */}
-      {data?.customer && (
-        <View style={styles.userInfo}>
-          <Text style={styles.userName}>
-            {data?.customer.firstname + ' ' + data?.customer.lastname}
-          </Text>
-          <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
-            {`${0} ${translate('txtPoint')}`}
-          </Badge>
-        </View>
-      )}
-    </View>
+        {data?.customer && (
+          <View style={styles.userInfo}>
+            <Text style={styles.userName}>
+              {data?.customer.firstname + ' ' + data?.customer.lastname}
+            </Text>
+            <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
+              {`${0} ${translate('txtPoint')}`}
+            </Badge>
+          </View>
+        )}
+      </View>
+    </TouchableOpacity>
   );
 });
 

@@ -18,6 +18,7 @@ import { Banners, Bestseller, News, Tabs } from './pages';
 import ProductCart from '../ProductCart';
 import { useSelector, useDispatch } from 'react-redux';
 import { app } from '@slices';
+import { useCustomerCart } from '@hooks';
 
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
@@ -32,6 +33,8 @@ export default function HomeScreen() {
   const headerHeight = useHeaderHeight();
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const dispatch = useDispatch();
+
+  const customerCartData = useCustomerCart();
 
   const [getHome, { data, loading }] = useLazyQuery(query.HOME_SCREEN, {
     // fetchPolicy: 'cache-first',
