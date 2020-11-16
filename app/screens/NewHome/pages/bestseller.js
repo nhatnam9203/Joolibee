@@ -1,19 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
-import {
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-  Fade,
-} from 'rn-placeholder';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { metrics } from '@theme';
 import { OrderNewItem } from '../../components';
-import { scale } from '@utils';
-const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Bestseller = ({ openDetail, onCHangeScreen, data, loading }) => {
+const Bestseller = ({ data, loading }) => {
   const onRenderItem = (item) => {
     if (typeof renderItem === 'function') {
       return renderItem(item, loading || !data);

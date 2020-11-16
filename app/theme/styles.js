@@ -3,6 +3,10 @@
  * Provides universal fonts used in the app.
  */
 
+import { scale } from '@utils';
+
+const { scaleHeight } = scale;
+
 const primaryColor = '#FFFFFF';
 const secondaryColor = '#E31837';
 const buttonColor = '#FFC522';
@@ -139,7 +143,10 @@ const AppStyles = {
     default: {
       headerBackTitleVisible: false,
       headerTitleAlign: 'center',
-      headerStyle: { backgroundColor: secondaryColor },
+      headerStyle: {
+        backgroundColor: secondaryColor,
+        height: scaleHeight(100),
+      },
       headerTitleStyle: {
         fontFamily: 'SVN-Merge',
         fontSize: 18,

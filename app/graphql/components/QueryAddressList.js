@@ -24,7 +24,7 @@ export const QueryAddressList = ({
   const [getAddress, { loading, data, refetch, error }] = useLazyQuery(
     ADDRESS_LIST,
     {
-      fetchPolicy: 'cache-first',
+      // fetchPolicy: 'cache-first',
     },
   );
   React.useEffect(() => {

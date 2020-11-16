@@ -10,8 +10,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Badge } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import ScreenName from '../ScreenName';
+import { scale } from '@utils';
 
-const BADGE_SIZE = 20;
+const { scaleHeight } = scale;
+
+const BADGE_SIZE = scaleHeight(20);
+const AVATAR_SIZE = scaleHeight(50);
 
 export const TopBarComponent = React.memo(() => {
   const navigation = useNavigation();
@@ -71,6 +75,8 @@ export const TopBarRight = React.memo(() => {
           navigation.navigate(ScreenName.Notification);
         }}
         notifyNumber={3}
+        bagSize={BADGE_SIZE}
+        bagStyle={styles.badgeStyle}
       />
       <Space />
       <Action
@@ -79,6 +85,8 @@ export const TopBarRight = React.memo(() => {
           dispatch(app.showOrderList());
         }}
         notifyNumber={2}
+        bagSize={BADGE_SIZE}
+        bagStyle={styles.badgeStyle}
       />
     </View>
   );
@@ -86,12 +94,12 @@ export const TopBarRight = React.memo(() => {
 
 export const TopBarLeft = React.memo(() => {
   const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'cache-first',
+    // fetchPolicy: 'cache-first',
   });
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
-      <Avatar source={images.icons.ic_qr_logo} />
+      <Avatar source={images.icons.ic_qr_logo} size={AVATAR_SIZE} />
 
       <Space />
       {/* <Action
@@ -115,21 +123,30 @@ export const TopBarLeft = React.memo(() => {
 });
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 10 },
+  container: {
+    flex: 1,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
   userInfo: {
     height: '100%',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
     alignItems: 'flex-start',
   },
 
-  userName: { ...AppStyles.fonts.bold, fontSize: 15, color: 'white' },
+  userName: {
+    ...AppStyles.fonts.bold,
+    fontSize: scaleHeight(18),
+    color: 'white',
+  },
 
   badgeStyle: {
     backgroundColor: '#FFC522',
     fontFamily: 'Roboto-Bold',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: scaleHeight(12),
     alignSelf: 'flex-start',
   },
 });

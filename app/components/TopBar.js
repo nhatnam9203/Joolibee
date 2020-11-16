@@ -20,18 +20,24 @@ export const Logo = ({ source }) => (
   <Image style={styles.logoStyle} source={source} />
 );
 
-export const Avatar = ({ source }) => (
-  <View style={styles.avatar}>
+export const Avatar = ({ source, size }) => (
+  <View
+    style={[
+      styles.avatar,
+      { width: size, height: size, borderRadius: size / 2 },
+    ]}>
     <Image style={styles.avatarImg} source={source} />
   </View>
 );
 
-export const Action = ({ source, onPress, notifyNumber }) =>
+export const Action = ({ source, onPress, notifyNumber, bagSize, bagStyle }) =>
   source ? (
     <TouchableOpacity onPress={onPress} style={styles.actionStyle}>
       <Image source={source} style={styles.iconStyle} />
       {notifyNumber > 0 && (
-        <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
+        <Badge
+          size={bagSize ?? BADGE_SIZE}
+          style={[styles.badgeStyle, bagStyle]}>
           {notifyNumber}
         </Badge>
       )}
@@ -106,9 +112,6 @@ const styles = StyleSheet.create({
   },
 
   avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
@@ -116,8 +119,7 @@ const styles = StyleSheet.create({
   },
 
   avatarImg: {
-    width: 30,
-    height: 30,
+    width: '86%',
     resizeMode: 'contain',
   },
 });

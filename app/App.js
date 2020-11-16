@@ -71,9 +71,7 @@ const theme = {
 
 enableScreens();
 
-LogBox.ignoreWarnings([
-  'VirtualizedLists should never be nested', // TODO: Remove when fixed
-]);
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 
 let codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,

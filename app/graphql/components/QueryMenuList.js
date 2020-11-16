@@ -51,7 +51,7 @@ const defaultData = [
 export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const { loading, error, data, refetch } = useQuery(MENU_LIST, {
-    fetchPolicy: 'cache-first',
+    // fetchPolicy: 'cache-first',
   });
 
   React.useEffect(() => {

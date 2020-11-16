@@ -1,36 +1,23 @@
+import { scale } from '@utils';
 import React from 'react';
 import {
-  StyleSheet,
-  View,
   Dimensions,
   Image,
+  StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import {
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-  Fade,
-} from 'rn-placeholder';
 import Carousel from 'react-native-snap-carousel';
-import { images, AppStyles } from '@theme';
-import { scale } from '@utils';
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Banners = ({
-  openDetail,
-  onCHangeScreen,
-  data,
-  loading,
-  height = scaleHeight(336),
-}) => {
+const Banners = ({ openDetail, data, loading, height = scaleHeight(336) }) => {
   return (
     <View style={[styles.container, { height: height }]}>
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={!loading ? data : [1, 2, 3]}
-        renderItem={(item, index) => renderItem(item, index, openDetail)}
+        renderItem={(item, index) => renderItem(item)}
         sliderWidth={width}
         itemWidth={width}
         hasParallaxImages={true}
@@ -49,7 +36,7 @@ const Banners = ({
   );
 };
 
-const renderItem = (item, index, onPress) => {
+const renderItem = (item) => {
   return (
     <TouchableOpacity style={styles.content}>
       <Image
