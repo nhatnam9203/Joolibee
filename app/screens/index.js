@@ -30,7 +30,7 @@ import NewsScreen from './News';
 import ProductCart from './ProductCart';
 import MenuScreen from './Menu';
 
-import NewHomeScreen from './NewHome';
+import HomeScreen from './NewHome';
 module.exports = {
   ScreenName,
   WelcomeScreen,
@@ -63,5 +63,5 @@ module.exports = {
   NewsScreen,
   ProductCart,
   MenuScreen,
-  NewHomeScreen,
+  HomeScreen,
 };

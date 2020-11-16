@@ -18,9 +18,15 @@ import { scale } from '@utils';
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Banners = ({ openDetail, onCHangeScreen, data, loading }) => {
+const Banners = ({
+  openDetail,
+  onCHangeScreen,
+  data,
+  loading,
+  height = scaleHeight(336),
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: height }]}>
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={!loading ? data : [1, 2, 3]}
@@ -45,7 +51,7 @@ const Banners = ({ openDetail, onCHangeScreen, data, loading }) => {
 
 const renderItem = (item, index, onPress) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity style={styles.content}>
       <Image
         source={{ uri: item?.item?.image?.url }}
         style={styles.containerItem}
@@ -67,10 +73,14 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
 
+  content: {
+    width: '100%',
+    height: '100%',
+  },
+
   containerItem: {
-    width,
-    height: scaleHeight(361),
     resizeMode: 'contain',
+    flex: 1,
   },
 });
 

@@ -1,27 +1,29 @@
+import { useLazyQuery } from '@apollo/client';
+import { CustomImageBackground } from '@components';
+import { query } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import {
   AppScrollViewIOSBounceColorsWrapper,
   SinglePageLayout,
 } from '@layouts';
-import { useNavigation } from '@react-navigation/native';
-import { AppStyles, images } from '@theme';
-import { CustomImageBackground } from '@components';
-import { scale } from '@utils';
 import { translate } from '@localize';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useLazyQuery } from '@apollo/client';
-import { mutation, query } from '@graphql';
-import { cart, account } from '@slices';
+import { useNavigation } from '@react-navigation/native';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { AppStyles, images } from '@theme';
+import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
-import { TopBarLeft, TopBarRight, CardView } from '../components';
-import { Banners, Bestseller, Tabs, News } from './pages';
+import { CardView, TopBarLeft, TopBarRight } from '../components';
+import { Banners, Bestseller, News, Tabs } from './pages';
+
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
-import { useHeaderHeight } from '@react-navigation/stack';
 
-export default function Index() {
-  const dispatch = useDispatch();
+const BANNER_HEIGHT = height * 0.4;
+const BANNER_PADDING = height * 0.2;
+const MENU_TOP_MARGIN = height * 0.2;
+
+export default function HomeScreen() {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
@@ -31,7 +33,6 @@ export default function Index() {
   });
 
   const { homeScreen } = data || {};
-  console.log('homeScreen', homeScreen);
 
   React.useEffect(() => {
     getHome();
@@ -53,32 +54,41 @@ export default function Index() {
           <Banners
             loading={loading}
             data={homeScreen?.promotions ? homeScreen?.promotions : []}
+            height={BANNER_HEIGHT}
           />
 
-          {/* --------- Background Yellow ------------ */}
+          {/* ---------START TOP CONTENT  ------------ */}
           <View style={[styles.wrapperContainerLayoutYellow]}>
-            <View style={styles.topContainer} />
+            <View style={[styles.topContainer, { height: BANNER_PADDING }]} />
 
             <View
               style={[
                 styles.containerLayoutYellow,
-                { height: height - scaleHeight(187) - headerHeight },
+                { height: height - BANNER_PADDING - headerHeight },
               ]}>
+              {/* --------- Yellow Background ------------ */}
               <Image
                 source={images.jollibee_background_new_home}
                 style={styles.imgLayoutYellow}
               />
-              {/* --------- Tabs Menu ------------ */}
-              <Tabs />
-              {/* --------- Bestseller list ------------ */}
-              <Bestseller
-                loading={loading}
-                data={homeScreen?.best_sellers ? homeScreen?.best_sellers : []}
-              />
+              {/* --------- Yellow Background ------------ */}
+
+              <View
+                style={[styles.topContentView, { marginTop: MENU_TOP_MARGIN }]}>
+                {/* --------- Tabs Menu ------------ */}
+                <Tabs />
+                {/* --------- Bestseller list ------------ */}
+                <Bestseller
+                  loading={loading}
+                  data={
+                    homeScreen?.best_sellers ? homeScreen?.best_sellers : []
+                  }
+                />
+              </View>
             </View>
           </View>
 
-          {/* --------- </Background Yellow>------------ */}
+          {/* ---------END TOP CONTENT  ------------ */}
 
           {/* --------- Background WaterMark ------------ */}
           <CustomImageBackground
@@ -126,7 +136,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   topContainer: {
     width,
-    height: scaleHeight(187),
     backgroundColor: AppStyles.colors.accent,
   },
 
@@ -161,7 +170,18 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 
-  imgLayoutYellow: { width, position: 'absolute' },
+  imgLayoutYellow: {
+    position: 'absolute',
+    resizeMode: 'contain',
+    flex: 1,
+  },
+
   iconStyle: { width: scaleWidth(78), height: scaleHeight(71) },
   titleStyle: { fontSize: 18, textAlign: 'center' },
+
+  topContentView: {
+    flex: 1,
+    paddingBottom: 20,
+    justifyContent: 'space-around',
+  },
 });

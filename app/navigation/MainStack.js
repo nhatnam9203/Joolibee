@@ -27,7 +27,7 @@ import {
   StorePickupScreen,
   NewsScreen,
   MenuScreen,
-  NewHomeScreen,
+  HomeScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -75,7 +75,7 @@ function MainStack() {
       />
 
       <Stack.Screen
-        component={NewHomeScreen}
+        component={HomeScreen}
         name={ScreenName.NewHome}
         options={{
           headerShown: true,

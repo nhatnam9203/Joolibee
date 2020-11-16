@@ -1,21 +1,19 @@
-import React from 'react';
-import { StyleSheet, Image, Text, FlatList, View } from 'react-native';
-import { CustomButton } from '@components';
-import { AppStyles, images, metrics } from '@theme';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images } from '@theme';
+import { scale } from '@utils';
+import React from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 import {
+  CardView,
   HomePageName,
-  MenuPageName,
   PromotionPageName,
   StorePageName,
-  CardView,
 } from '../../components';
-import { scale } from '@utils';
-const { scaleWidth, scaleHeight } = scale;
 import ScreenName from '../../ScreenName';
+const { scaleWidth, scaleHeight } = scale;
 
-export default function Tabs() {
+export default function Tabs({}) {
   const navigation = useNavigation();
   const TABS = [
     {
@@ -40,7 +38,7 @@ export default function Tabs() {
     },
   ];
 
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({ item }) => (
     <CardView
       onPress={() => navigation.navigate(item?.screen)}
       borderRadius={scaleHeight(16)}
@@ -70,7 +68,6 @@ export default function Tabs() {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    marginTop: scaleHeight(170),
     marginBottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
