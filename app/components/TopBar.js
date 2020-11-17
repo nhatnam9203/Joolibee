@@ -1,8 +1,9 @@
 import React from 'react';
 import { Appbar, Badge } from 'react-native-paper';
 import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { scale } from '@utils';
 
-const BADGE_SIZE = 20;
+const BADGE_SIZE = scale.scaleHeight(20);
 
 export const Bar = ({ leftComponents, rightComponents, children, style }) => {
   return (
@@ -33,14 +34,16 @@ export const Avatar = ({ source, size }) => (
 export const Action = ({ source, onPress, notifyNumber, bagSize, bagStyle }) =>
   source ? (
     <TouchableOpacity onPress={onPress} style={styles.actionStyle}>
-      <Image source={source} style={styles.iconStyle} />
-      {notifyNumber > 0 && (
-        <Badge
-          size={bagSize ?? BADGE_SIZE}
-          style={[styles.badgeStyle, bagStyle]}>
-          {notifyNumber}
-        </Badge>
-      )}
+      <View style={styles.actionContent}>
+        <Image source={source} style={styles.iconStyle} />
+        {notifyNumber > 0 && (
+          <Badge
+            size={bagSize ?? BADGE_SIZE}
+            style={[styles.badgeStyle, bagStyle]}>
+            {notifyNumber}
+          </Badge>
+        )}
+      </View>
     </TouchableOpacity>
   ) : (
     <Appbar.actionStyle style={styles.actionStyle} onPress={onPress} />
@@ -89,12 +92,12 @@ const styles = StyleSheet.create({
 
   actionStyle: {
     height: '100%',
-    width: 50,
+    width: scale.scaleWidth(50),
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  iconStyle: { flex: 1, resizeMode: 'center' },
+  iconStyle: { resizeMode: 'center' },
 
   space: {
     width: 8,
@@ -104,11 +107,11 @@ const styles = StyleSheet.create({
   badgeStyle: {
     backgroundColor: '#FFC522',
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: -scale.scaleHeight(5),
+    right: -scale.scaleHeight(5),
     fontFamily: 'Roboto-Bold',
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: scale.scaleHeight(14),
   },
 
   avatar: {
@@ -121,5 +124,12 @@ const styles = StyleSheet.create({
   avatarImg: {
     width: '86%',
     resizeMode: 'contain',
+  },
+
+  actionContent: {
+    height: scale.scaleHeight(40),
+    width: scale.scaleHeight(45),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

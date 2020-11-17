@@ -75,7 +75,7 @@ const OrderScreen = () => {
   // --------- handle fetch data cart -----------
   const { data } = useQuery(query.CART_DETAIL, {
     variables: { cartId: cart_id },
-    //  fetchPolicy: 'cache-first'
+    fetchPolicy: 'cache-first',
   });
   console.log('data', data);
   const {

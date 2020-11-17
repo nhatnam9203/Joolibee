@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
 import { useApolloClient } from '@apollo/client';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const KEY_CONSTANT = 'account';
 
@@ -28,13 +29,24 @@ const feedBack = createAsyncThunk(
   },
 );
 
+const signOutRequest = createAsyncThunk(
+  `${KEY_CONSTANT}/signOutRequest`,
+  async (input, {}) => {
+    try {
+      // const client = useApolloClient();
+      // client.resetStore();
+      await AsyncStorage.clear();
+    } catch (e) {
+      throw e;
+    }
+    return initialState.user;
+  },
+);
+
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: initialState,
   reducers: {
-    signOutRequest: (state) => {
-      state.user = initialState.user;
-    },
     clearSignupState() {},
     clearSignInState() {},
 
@@ -104,11 +116,15 @@ const accountSlice = createSlice({
     [feedBack.rejected]: (state, action) => {
       Logger.info(action, 'feedBack rejected');
     },
+
+    [signOutRequest.fulfilled]: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
 const { actions, reducer } = accountSlice;
 module.exports = {
   reducer,
-  actions: { feedBack, ...actions },
+  actions: { feedBack, signOutRequest, ...actions },
 };

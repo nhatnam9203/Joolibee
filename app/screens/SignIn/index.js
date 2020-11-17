@@ -142,7 +142,11 @@ const SignInScreen = () => {
                 <JollibeeLogo />
 
                 {/**TITLE */}
-                <LabelTitle label={translate('txtPleaseSignIn')} color="#fff" />
+                <LabelTitle
+                  label={translate('txtPleaseSignIn')}
+                  color="#fff"
+                  style={styles.titleStyle}
+                />
 
                 {/**PHONE*/}
                 <CustomInput
@@ -314,6 +318,8 @@ const styles = StyleSheet.create({
   txtForgotPass: { ...AppStyles.fonts.bold, color: '#fff', fontSize: 16 },
 
   txtSignIn: { ...AppStyles.fonts.bold, color: '#1B1B1B' },
+
+  titleStyle: { marginTop: 15, marginBottom: 10 },
 });
 
 export default SignInScreen;

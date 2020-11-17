@@ -96,7 +96,7 @@ export const TopBarLeft = React.memo(() => {
   const navigation = useNavigation();
 
   const { data } = useQuery(query.CUSTOMER_INFO, {
-    // fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-first',
   });
 
   return (
