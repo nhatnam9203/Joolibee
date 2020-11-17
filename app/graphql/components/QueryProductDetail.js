@@ -136,7 +136,7 @@ export const QueryProductDetail = ({
   };
 
   // if (error) return <></>;
-  if (loading) {
+  if (true) {
     return (
       <>
         <Placeholder style={styles.placeholderContainer}>
@@ -184,7 +184,7 @@ export const QueryProductDetail = ({
             />
           </View>
         </Placeholder>
-        <Loading isLoading={loading} transparent />
+        <Loading isLoading={true} border />
       </>
     );
   }
