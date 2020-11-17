@@ -11,6 +11,7 @@ import { Badge } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import ScreenName from '../ScreenName';
 import { scale } from '@utils';
+import { useCustomer, useCustomerCart } from '@hooks';
 
 const { scaleHeight } = scale;
 
@@ -67,6 +68,8 @@ export const TopBarRight = React.memo(() => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const { data } = useCustomerCart();
+  Logger.debug(data, 'TopBarRight');
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
       <Action
@@ -94,10 +97,8 @@ export const TopBarRight = React.memo(() => {
 
 export const TopBarLeft = React.memo(() => {
   const navigation = useNavigation();
-
-  const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'cache-first',
-  });
+  const dispatch = useDispatch();
+  const { user } = useCustomer();
 
   return (
     <TouchableOpacity
@@ -114,10 +115,10 @@ export const TopBarLeft = React.memo(() => {
           dispatch(account.showQRCode());
         }}
       /> */}
-        {data?.customer && (
+        {user && (
           <View style={styles.userInfo}>
             <Text style={styles.userName}>
-              {data?.customer.firstname + ' ' + data?.customer.lastname}
+              {user.firstname + ' ' + user.lastname}
             </Text>
             <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
               {`${0} ${translate('txtPoint')}`}

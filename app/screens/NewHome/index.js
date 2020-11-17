@@ -30,14 +30,9 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
-  const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const dispatch = useDispatch();
 
-  const { data, loading } = useQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first',
-  });
-
-  const { homeScreen } = data || {};
+  const showOrderList = useSelector((state) => state.app.isShowOrderList);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -45,6 +40,12 @@ export default function HomeScreen() {
       headerLeft: () => <TopBarLeft />,
     });
   }, [language, navigation]);
+
+  const { data = {}, loading } = useQuery(query.HOME_SCREEN, {
+    fetchPolicy: 'cache-first',
+  });
+
+  const { homeScreen } = data;
 
   return (
     <>

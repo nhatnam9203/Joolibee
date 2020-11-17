@@ -9,7 +9,7 @@ import { account } from '@slices';
 import { localData } from './localData';
 import { useNavigation } from '@react-navigation/native';
 import { logoutFb, logoutGoogle } from '@social';
-import { useChangeLanguage } from '@hooks';
+import { useChangeLanguage, useCustomer } from '@hooks';
 
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();
@@ -17,12 +17,15 @@ const SettingAccountScreen = () => {
 
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
+  const { signOut } = useCustomer();
 
   /**functions */
   const btnLogoutPressed = async () => {
     // logoutFb();
     // await logoutGoogle();
-    dispatch(account.signOutRequest());
+    // dispatch(account.signOutRequest());
+
+    signOut();
   };
 
   // LOGOUT BUTTON

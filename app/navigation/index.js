@@ -19,21 +19,24 @@ function SplashStack() {
 }
 
 function App() {
-  const tokenKey = useSelector((state) => state.account?.user?.tokenKey);
+  // !TODO: xử lí login chưa đc
+
+  const isLogin = useSelector((state) => state.account?.user?.isLogin);
   const loading = useSelector((state) => state.app.loading_app);
   const [token, setToken] = React.useState(null);
 
   React.useEffect(() => {
     const loadToken = async () => {
-      if (tokenKey) {
-        const tokenObject = await get(StorageKey.Token);
-        setToken(tokenObject[tokenKey]);
+      Logger.debug(StorageKey.User, 'StorageKey.User > App');
+      if (isLogin) {
+        const user = await get(StorageKey.User);
+        setToken(user?.token);
       } else {
         setToken(null);
       }
     };
     loadToken();
-  }, [tokenKey]);
+  }, [isLogin]);
 
   return (
     <NavigationContainer ref={navigationRef}>

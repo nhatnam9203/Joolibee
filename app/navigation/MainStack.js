@@ -80,11 +80,11 @@ function MainStack() {
         headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
       }}>
-      <Stack.Screen
+      {/* <Stack.Screen
         component={MainTabScreen}
         name={ScreenName.Main}
         options={{ headerShown: false }}
-      />
+      /> */}
 
       <Stack.Screen
         component={HomeScreen}

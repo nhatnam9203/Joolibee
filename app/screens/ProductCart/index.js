@@ -77,6 +77,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // ========= ORDER PROCESS
   const orderButtonPressed = () => {
+    navigation.navigate(ScreenName.Menu);
     popupRef.current.forceQuit();
   };
 

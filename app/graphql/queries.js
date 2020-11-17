@@ -308,6 +308,9 @@ export const CUSTOMER_INFO = gql`
       phone_number
       gender
       date_of_birth
+      addresses {
+        full_address
+      }
     }
   }
 `;
