@@ -29,7 +29,7 @@ import StorePickupScreen from './StorePickup';
 import NewsScreen from './News';
 import ProductCart from './ProductCart';
 import MenuScreen from './Menu';
-
+import StoreScreen from './Main/pages/Store';
 import HomeScreen from './NewHome';
 module.exports = {
   ScreenName,
@@ -64,4 +64,5 @@ module.exports = {
   ProductCart,
   MenuScreen,
   HomeScreen,
+  StoreScreen,
 };

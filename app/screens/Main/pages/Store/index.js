@@ -1,16 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
 import _ from 'lodash';
-import { TopBarScreenLayout } from '@layouts';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  TopBarComponent,
-  CustomPopupMenu,
-  CustomMapView,
-  ItemStore,
-} from '../../../components';
-import { AppStyles } from '@theme';
+import { CustomPopupMenu, CustomMapView, ItemStore } from '../../../components';
+import { AppStyles, images } from '@theme';
 import { useStore } from '@hooks';
+import { CustomImageBackground } from '@components';
 import { Markers } from './pages';
 import { store } from '@slices';
 
@@ -75,7 +70,9 @@ const StorePage = () => {
   // -------------------- Filter Stores --------------------------//
 
   return (
-    <TopBarScreenLayout topBar={<TopBarComponent />}>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={styles.waterMarkContainer}>
       {/* ------------ Select city and districts --------------------- */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
@@ -119,11 +116,12 @@ const StorePage = () => {
         )}
         data={stores}
       />
-    </TopBarScreenLayout>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  waterMarkContainer: { flex: 1, backgroundColor: 'transparent' },
   container: {
     height: 400,
     width: '100%',

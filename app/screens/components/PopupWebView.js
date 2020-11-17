@@ -27,7 +27,10 @@ const Index = ({ visible, onToggle }) => {
           renderLoading={() => <ActivityIndicator animating color="red" />}
           startInLoadingState={true}
           scrollEnabled={true}
-          source={{ uri: 'https://jollibee.com.vn/dich-vu/kid-party' }}
+          source={{
+            uri:
+              'https://jollibee.com.vn/tin-tuc/kham-pha-nha-may-dat-chuan-iso-22000-2018-cua-jollibee',
+          }}
         />
       </View>
     </Modal>

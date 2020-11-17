@@ -32,3 +32,4 @@ export { CustomPopupMenu, CustomMapView, ItemStore, PopupWebView };
 export * from './OrderItemLoading';
 export * from './OrderNewItem';
 export * from './CardView';
+export * from './NewsItem';

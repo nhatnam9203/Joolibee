@@ -1,4 +1,5 @@
 import { scale } from '@utils';
+import { Loading } from '@components';
 import React from 'react';
 import {
   Dimensions,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import Carousel from 'react-native-snap-carousel';
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
@@ -17,7 +19,9 @@ const Banners = ({ openDetail, data, loading, height = scaleHeight(336) }) => {
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={!loading ? data : [1, 2, 3]}
-        renderItem={(item, index) => renderItem(item)}
+        renderItem={(item, index) =>
+          loading ? renderLoading(loading) : renderItem(item)
+        }
         sliderWidth={width}
         itemWidth={width}
         hasParallaxImages={true}
@@ -47,6 +51,14 @@ const renderItem = (item) => {
   );
 };
 
+const renderLoading = (loading) => {
+  return (
+    <View style={styles.contentLoading}>
+      <Loading isLoading={loading} />
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -68,6 +80,11 @@ const styles = StyleSheet.create({
   containerItem: {
     resizeMode: 'contain',
     flex: 1,
+  },
+  contentLoading: {
+    width: '90%',
+    height: '80%',
+    alignSelf: 'center',
   },
 });
 

@@ -15,8 +15,8 @@ import {
 } from 'rn-placeholder';
 import Carousel from 'react-native-snap-carousel';
 import { AppStyles, images } from '@theme';
-import { CustomHTML } from '@components';
-import { JollibeeImage } from '../../components';
+
+import { NewsItem } from '../../components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
@@ -38,8 +38,12 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={loading ? [1, 2, 3] : data}
-        renderItem={(item, index) =>
-          loading ? renderItemLoading() : renderItem(item, index, openDetail)
+        renderItem={(item) =>
+          loading ? (
+            renderItemLoading()
+          ) : (
+            <NewsItem item={item?.item} onPress={openDetail} />
+          )
         }
         sliderWidth={width}
         itemWidth={scaleWidth(265)}
@@ -59,51 +63,17 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
   );
 };
 
-const renderItem = (item, index, onPress) => {
-  const { title, short_content, featured_image } = item?.item || {};
-  return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-      <View style={styles.containerItem}>
-        <View style={styles.topContent}>
-          <JollibeeImage style={styles.imgProduct} url={featured_image} />
-        </View>
-        <View style={styles.bottomContent}>
-          <Text style={styles.txttitle}>{title}</Text>
-          <CustomHTML
-            html={short_content}
-            renderers={{
-              div: (...props) => {
-                return (
-                  <Text
-                    key={props[3].index + ''}
-                    style={styles.txtContent}
-                    numberOfLines={1}>
-                    {props[3]?.rawChildren[0].data}
-                  </Text>
-                );
-              },
-            }}
-          />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
-
 const renderItemLoading = () => {
   const flex_start_style = { alignSelf: 'flex-start' };
   return (
-    <Placeholder Animation={Fade} style={styles.wrapperItem}>
-      <View style={styles.containerItem}>
-        <View style={styles.imgLoading}>
-          <PlaceholderMedia style={styles.imgProduct} />
+    <Placeholder Animation={Fade}>
+      <View style={styles.containerLoading}>
+        <PlaceholderMedia style={styles.imgLoading} />
+        <View style={{ paddingHorizontal: 10 }}>
+          <PlaceholderLine height={13} style={flex_start_style} />
+          <PlaceholderLine height={13} style={flex_start_style} />
+          <PlaceholderLine height={10} width="70%" style={flex_start_style} />
         </View>
-
-        <PlaceholderLine height={15} />
-        <PlaceholderLine height={10} style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={40} width={35} style={styles.btnLoading} />
       </View>
     </Placeholder>
   );
@@ -124,51 +94,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: scaleHeight(15),
   },
-
-  containerItem: {
-    width: scaleWidth(265),
-    height: scaleHeight(264),
-    backgroundColor: AppStyles.colors.white,
-    borderRadius: 16,
-    shadowColor: '#00000090',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.44,
-    shadowRadius: 6,
-    elevation: 10,
-    overflow: 'hidden',
-  },
-  topContent: {
-    height: '62%',
-  },
-  bottomContent: {
-    padding: 10,
-    justifyContent: 'center',
-  },
-
-  txttitle: {
-    ...AppStyles.fonts.bold,
-    fontWeight: '500',
-    fontSize: scaleWidth(16),
-  },
-  txtContent: {
-    ...AppStyles.fonts.mini,
-    color: AppStyles.colors.text,
-    paddingTop: 2,
-  },
-  imgProduct: {
-    flex: 1,
-    resizeMode: 'stretch',
-  },
-  btnLoading: {
-    alignSelf: 'flex-start',
-    borderRadius: 20,
-    marginTop: 10,
-  },
   imgLoading: {
-    width: scaleWidth(281),
+    width: '100%',
     height: scaleHeight(130),
     marginBottom: 15,
   },
@@ -182,6 +109,14 @@ const styles = StyleSheet.create({
     ...AppStyles.fonts.SVN_Merge_Bold,
     // color: AppStyles.colors.text,
     fontSize: scaleWidth(24),
+  },
+  containerLoading: {
+    backgroundColor: AppStyles.colors.white,
+    borderRadius: 16,
+    elevation: 10,
+    overflow: 'hidden',
+    width: scaleWidth(265),
+    height: scaleHeight(264),
   },
 });
 

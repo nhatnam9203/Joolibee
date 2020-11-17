@@ -14,6 +14,7 @@ import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { CardView, TopBarLeft, TopBarRight } from '../components';
+import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';
 import ProductCart from '../ProductCart';
 import { useSelector, useDispatch } from 'react-redux';
@@ -49,6 +50,15 @@ export default function HomeScreen() {
       headerLeft: () => <TopBarLeft />,
     });
   }, [language, navigation, getHome]);
+
+  const onCHangeScreen = (screen) => () => {
+    let params = {
+      data: homeScreen.news ? homeScreen.news : [],
+      loading,
+      refetch: getHome,
+    };
+    navigation.navigate(screen, params);
+  };
 
   return (
     <>
@@ -137,6 +147,7 @@ export default function HomeScreen() {
               <News
                 loading={loading}
                 data={homeScreen?.news ? homeScreen?.news : []}
+                onCHangeScreen={onCHangeScreen(ScreenName.News)}
               />
             </CustomImageBackground>
             {/* --------- </Background WaterMark> ------------ */}

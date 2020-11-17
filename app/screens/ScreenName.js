@@ -29,6 +29,7 @@ const ScreenName = {
   News: 'News',
   Menu: 'Menu',
   NewHome: 'NewHome',
+  Store: 'Store',
 };
 
 export default ScreenName;

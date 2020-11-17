@@ -28,6 +28,7 @@ import {
   NewsScreen,
   MenuScreen,
   HomeScreen,
+  StoreScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -312,7 +313,10 @@ function MainStack() {
         name={ScreenName.News}
         options={{
           headerShown: true,
-          headerTitle: translate('txtNews'),
+          headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
 
@@ -322,6 +326,18 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtMenu'),
+          headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        component={StoreScreen}
+        name={ScreenName.Store}
+        options={{
+          headerShown: true,
           headerBackground: () => <View style={styles.container} />,
           headerBackImage: () => (
             <HeaderImage src={images.icons.ic_close_blur} />
