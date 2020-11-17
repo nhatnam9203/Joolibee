@@ -4,7 +4,12 @@ import { View, StyleSheet, Image } from 'react-native';
 
 const LOADING_TIME_OUT = 30000;
 let timer;
-const Loading = ({ isLoading, onCancelLoading, transparent = false }) => {
+const Loading = ({
+  isLoading,
+  onCancelLoading,
+  transparent = false,
+  imageSize = '20%',
+}) => {
   const [showLoading, setShowLoading] = React.useState(false);
 
   React.useEffect(() => {
@@ -26,11 +31,11 @@ const Loading = ({ isLoading, onCancelLoading, transparent = false }) => {
       style={[
         styles.container,
         // eslint-disable-next-line react-native/no-inline-styles
-        { backgroundColor: transparent ? 'transparent' : '#00000080' },
+        { backgroundColor: transparent ? 'transparent' : '#0008' },
       ]}>
       {/* <Spinner style={styles.spinner} size={30} type="Circle" color="#E31837" /> */}
       <Image
-        style={styles.imageStyle}
+        style={[styles.imageStyle, { height: imageSize, width: imageSize }]}
         source={require('../assets/images/jollibee-wellcome-gift.gif')}
       />
     </View>
@@ -55,8 +60,6 @@ const styles = StyleSheet.create({
 
   imageStyle: {
     resizeMode: 'contain',
-    height: '20%',
-    width: '20%',
   },
 });
 export default Loading;
