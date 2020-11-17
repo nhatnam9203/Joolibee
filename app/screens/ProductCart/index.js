@@ -38,7 +38,7 @@ const ProductCart = ({ visible, onToggle }) => {
     query.CART_DETAIL,
     {
       variables: { cartId: cart_id },
-      // fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-first',
     },
   );
 
