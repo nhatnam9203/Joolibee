@@ -9,16 +9,15 @@ import {
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/stack';
+import { app } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { CardView, TopBarLeft, TopBarRight } from '../components';
-import { Banners, Bestseller, News, Tabs } from './pages';
 import ProductCart from '../ProductCart';
-import { useSelector, useDispatch } from 'react-redux';
-import { app } from '@slices';
-import { useCustomerCart } from '@hooks';
+import { Banners, Bestseller, News, Tabs } from './pages';
 
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
@@ -33,8 +32,6 @@ export default function HomeScreen() {
   const headerHeight = useHeaderHeight();
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const dispatch = useDispatch();
-
-  const customerCartData = useCustomerCart();
 
   const { data, loading } = useQuery(query.HOME_SCREEN, {
     fetchPolicy: 'cache-first',

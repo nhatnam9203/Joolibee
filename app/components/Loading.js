@@ -1,6 +1,6 @@
 import React from 'react';
 import Spinner from 'react-native-spinkit';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 
 const LOADING_TIME_OUT = 30000;
 let timer;
@@ -26,9 +26,13 @@ const Loading = ({ isLoading, onCancelLoading, transparent = false }) => {
       style={[
         styles.container,
         // eslint-disable-next-line react-native/no-inline-styles
-        { backgroundColor: transparent ? 'transparent' : '#00000060' },
+        { backgroundColor: transparent ? 'transparent' : '#00000080' },
       ]}>
-      <Spinner style={styles.spinner} size={30} type="Circle" color="#E31837" />
+      {/* <Spinner style={styles.spinner} size={30} type="Circle" color="#E31837" /> */}
+      <Image
+        style={styles.imageStyle}
+        source={require('../assets/images/jollibee-wellcome-gift.gif')}
+      />
     </View>
   ) : (
     []
@@ -47,6 +51,12 @@ const styles = StyleSheet.create({
   },
   spinner: {
     marginBottom: 50,
+  },
+
+  imageStyle: {
+    resizeMode: 'contain',
+    height: '20%',
+    width: '20%',
   },
 });
 export default Loading;
