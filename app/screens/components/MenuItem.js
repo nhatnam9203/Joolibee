@@ -22,7 +22,6 @@ export const MenuItemLoading = () => (
       </View>
       <View style={[styles.textPlaceholderStyle, styles.centerStyle]}>
         <PlaceholderLine width={'60%'} height={10} />
-        <PlaceholderLine width={'60%'} height={10} />
       </View>
     </View>
   </Placeholder>
@@ -113,8 +112,8 @@ const styles = StyleSheet.create({
   },
 
   imagePlaceholderStyle: {
-    width: '80%',
-    height: '80%',
+    width: '90%',
+    height: '90%',
     alignSelf: 'center',
   },
 
@@ -167,7 +166,6 @@ const styles = StyleSheet.create({
 
   textPlaceholderStyle: {
     height: TEXT_HEIGHT,
-    backgroundColor: AppStyles.colors.accent,
     paddingTop: 10,
   },
 });
