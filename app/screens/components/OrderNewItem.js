@@ -81,7 +81,7 @@ export const OrderNewItem = ({
           borderRadius={10}
           label={translate('txtBuyNow')}
           textStyle={styles.buttonTextStyle}
-          onPress={() => {}}
+          onPress={onPress}
         />
       </FlatListItemWithImgHorizontal>
     );

@@ -113,6 +113,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderItem = ({ item }) => {
     return (
       <CustomAccordionList
+        key={item.id}
         item={item}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
@@ -125,6 +126,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const renderFooter = () => {
+    if (!productItemDetail) {
+      return <></>;
+    }
+
     return (
       <View style={styles.orderContentStyle}>
         <View style={styles.orderAmountStyle}>
