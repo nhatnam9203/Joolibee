@@ -3,6 +3,7 @@ import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, View, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useChangeLanguage } from '@hooks';
 import {
   Placeholder,
   PlaceholderLine,
@@ -10,7 +11,7 @@ import {
   Fade,
 } from 'rn-placeholder';
 import { scale } from '@utils';
-import { useChangeLanguage } from '@hooks';
+
 import { translate } from '@localize';
 import { PopupWebView, NewsItem, TopBarRight } from '../components';
 const { scaleWidth, scaleHeight } = scale;

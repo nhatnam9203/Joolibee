@@ -2,12 +2,20 @@ import React from 'react';
 import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
 import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomPopupMenu, CustomMapView, ItemStore } from '../../../components';
+import {
+  CustomPopupMenu,
+  CustomMapView,
+  ItemStore,
+  TopBarRight,
+} from '../components';
 import { AppStyles, images } from '@theme';
 import { useStore } from '@hooks';
 import { CustomImageBackground } from '@components';
 import { Markers } from './pages';
 import { store } from '@slices';
+import { useNavigation } from '@react-navigation/native';
+import { useChangeLanguage } from '@hooks';
+import { translate } from '@localize';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = {
@@ -19,6 +27,8 @@ const DEFAULT_PADDING = {
 
 const StorePage = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const [language] = useChangeLanguage();
   const init_location = useSelector((state) => state.store.init_location);
   const cities = useSelector((state) => state.store.cities);
   const districts = useSelector((state) => state.store.districts);
@@ -61,11 +71,15 @@ const StorePage = () => {
   const onChangeItemDistrict = (item) => {
     setParams({ ...params, district: item.label });
   };
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerTitle: translate('txtStore').toUpperCase(),
+      headerRight: () => <TopBarRight />,
+    });
+  }, [language, navigation]);
 
   React.useEffect(() => {
     dispatch(store.filterStore(params));
-
-    //return () => setParams({})
   }, [params, dispatch]);
   // -------------------- Filter Stores --------------------------//
 

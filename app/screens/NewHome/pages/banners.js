@@ -54,7 +54,7 @@ const renderItem = (item) => {
 const renderLoading = (loading) => {
   return (
     <View style={styles.contentLoading}>
-      <Loading isLoading={loading} />
+      <Loading isLoading={loading} transparent={true} />
     </View>
   );
 };
