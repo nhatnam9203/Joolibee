@@ -7,10 +7,14 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
-import { CustomFlatList } from '@components';
-import { Loading } from '@components';
+import { CustomFlatList, Loading } from '@components';
 import { AppStyles } from '@theme';
-import { Placeholder, PlaceholderMedia, PlaceholderLine } from 'rn-placeholder';
+import {
+  Placeholder,
+  PlaceholderMedia,
+  PlaceholderLine,
+  Fade,
+} from 'rn-placeholder';
 import { destructuring } from '@utils';
 
 const PRODUCT = gql`
@@ -136,10 +140,10 @@ export const QueryProductDetail = ({
   };
 
   // if (error) return <></>;
-  if (true) {
+  if (loading) {
     return (
       <>
-        <Placeholder style={styles.placeholderContainer}>
+        <Placeholder Animation={Fade} style={styles.placeholderContainer}>
           <View style={styles.placeholderHead}>
             <PlaceholderMedia style={styles.placeholderImage} />
             <View style={styles.placeholderHorizontal}>
@@ -174,7 +178,7 @@ export const QueryProductDetail = ({
           </View>
           <View
             style={[
-              styles.placeholderHead,
+              styles.placeholderContent,
               { backgroundColor: AppStyles.colors.button },
             ]}>
             <PlaceholderLine
@@ -183,8 +187,32 @@ export const QueryProductDetail = ({
               style={styles.placeholderLine}
             />
           </View>
+          <View style={styles.placeholderContent}>
+            <PlaceholderLine
+              width={40}
+              height={10}
+              style={styles.placeholderLine}
+            />
+            <PlaceholderLine
+              width={80}
+              height={10}
+              style={styles.placeholderLine}
+            />
+          </View>
+          <View style={styles.placeholderContent}>
+            <PlaceholderLine
+              width={40}
+              height={10}
+              style={styles.placeholderLine}
+            />
+            <PlaceholderLine
+              width={100}
+              height={10}
+              style={styles.placeholderLine}
+            />
+          </View>
         </Placeholder>
-        <Loading isLoading={true} border />
+        <Loading isLoading={loading} transparent />
       </>
     );
   }
@@ -242,10 +270,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     padding: 10,
+    paddingTop: 80,
     flex: 0,
     marginBottom: 20,
   },
-  placeholderImage: { height: 300, width: '100%', marginBottom: 15 },
+  placeholderContent: {
+    backgroundColor: AppStyles.colors.white,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: 10,
+    flex: 0,
+  },
+  placeholderImage: { height: 250, width: '100%', marginBottom: 15 },
   placeholderLine: { marginBottom: 15 },
   placeholderHorizontal: {
     ...AppStyles.styles.horizontalLayout,

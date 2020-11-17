@@ -258,7 +258,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 };
 
 const MIN_HEIGHT = 289;
-const TOTAL_HEIGHT = 125;
+const TOTAL_HEIGHT = 145;
 const ORDER_AMOUNT_HEIGHT = 120;
 
 const styles = StyleSheet.create({
@@ -285,6 +285,7 @@ const styles = StyleSheet.create({
 
   imageHeaderStyle: {
     marginBottom: 10,
+    marginTop: 20,
     minHeight: MIN_HEIGHT,
     width: '100%',
   },
@@ -324,7 +325,7 @@ const styles = StyleSheet.create({
   },
 
   closeButtonStyle: {
-    top: 30,
+    top: 45,
   },
 
   orderContentStyle: {
@@ -384,6 +385,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingTop: 20,
+    paddingBottom: 20,
     borderTopWidth: 1,
     borderColor: AppStyles.colors.accent,
     height: TOTAL_HEIGHT,
