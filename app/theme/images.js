@@ -82,6 +82,7 @@ const images = {
     ic_forward_red: require('../assets/icons/ic-forward-red.png'),
     ic_menu: require('../assets/icons/ic_menu.png'),
     ic_popup_close: require('../assets/icons/ic-popup-close.png'),
+    ic_arrow_right_white: require('../assets/icons/ic-arrow-right-white.png'),
   },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),

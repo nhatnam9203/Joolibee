@@ -1,12 +1,12 @@
 import { GCC } from '@graphql';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { AppStyles, metrics } from '@theme';
-import { CustomButton } from '@components';
+import { AppStyles, metrics, images } from '@theme';
+import { CustomButton, CustomImageBackground } from '@components';
 import { address } from '@slices';
 import ScreenName from '../ScreenName';
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { ItemAddress, AddressAdditionalList, AddressLoading } from './pages';
 
 const Index = () => {
@@ -52,7 +52,9 @@ const Index = () => {
   // }, []);
 
   return (
-    <View style={styles.container}>
+    <CustomImageBackground
+      style={styles.container}
+      source={images.watermark_background_2}>
       <GCC.QueryAddressList
         renderItem={renderItem}
         renderItemLoading={AddressLoading}
@@ -78,7 +80,7 @@ const Index = () => {
           </>
         )}
       />
-    </View>
+    </CustomImageBackground>
   );
 };
 
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 5,
-    backgroundColor: AppStyles.colors.background,
+    backgroundColor: 'transparent',
   },
   contentContainerStyle: { paddingVertical: 15 },
   //

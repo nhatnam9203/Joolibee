@@ -8,11 +8,12 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { regex } from '@utils';
-import { CustomInput, CustomButton } from '@components';
+import { CustomInput, CustomButton, CustomImageBackground } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { TextInputErrorMessage, TextCheckBox } from '../../components';
 import ScreenName from '../../ScreenName';
@@ -207,8 +208,10 @@ const Index = (props) => {
   });
 
   return (
-    <View style={{ flex: 1 }}>
-      <SinglePageLayout backgroundColor={AppStyles.colors.background}>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={{ flex: 1, backgroundColor: 'transparent' }}>
+      <SinglePageLayout>
         <Formik
           innerRef={refFormMilk}
           initialValues={initialValues}
@@ -296,16 +299,13 @@ const Index = (props) => {
                 )}
 
                 {/**Address*/}
-                <TouchableOpacity onPress={goToCreateAddress}>
-                  <CustomInput
-                    onChangeText={handleChange('address')}
-                    onBlur={handleBlur('address')}
-                    editable={false}
-                    value={values.address}
-                    placeholder="Vui lòng nhập địa chỉ"
-                    style={{ flexDirection: 'row', width: LAYOUT_WIDTH }}>
-                    <Image source={images.icons.ic_arrow} />
-                  </CustomInput>
+                <TouchableOpacity
+                  style={styles.inputContainer}
+                  onPress={goToCreateAddress}>
+                  <Text style={styles.txtInput} numberOfLines={1}>
+                    {values.address ? values.address : 'Vui lòng nhập địa chỉ'}
+                  </Text>
+                  <Image source={images.icons.ic_arrow} />
                 </TouchableOpacity>
 
                 {/**Address input error */}
@@ -394,7 +394,7 @@ const Index = (props) => {
           bgColor={AppStyles.colors.button}
         />
       </View>
-    </View>
+    </CustomImageBackground>
   );
 };
 
@@ -427,5 +427,22 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   checkboxStyle: { paddingHorizontal: 13 },
+  inputContainer: {
+    flexDirection: 'row',
+    width: LAYOUT_WIDTH,
+    height: 54,
+    backgroundColor: AppStyles.colors.white,
+    alignItems: 'center',
+    borderRadius: 10,
+    margin: 10,
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+  },
+  txtInput: {
+    ...AppStyles.fonts.text,
+    paddingLeft: 6,
+    padding: 0,
+    color: '#484848',
+  },
 });
 export default Index;

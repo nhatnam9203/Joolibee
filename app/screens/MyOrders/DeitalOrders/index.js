@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
-import { AppStyles } from '@theme';
-import { CustomButton } from '@components';
+import { AppStyles, images } from '@theme';
+import { CustomButton, CustomImageBackground } from '@components';
 import { PopupRating } from '../../components';
 import { statusOrder, scale, format } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
@@ -85,7 +85,9 @@ export default function Index({ navigation, route }) {
   );
 
   return (
-    <View style={styles.container}>
+    <CustomImageBackground
+      style={styles.container}
+      source={images.watermark_background_2}>
       <ScrollView
         //scrollEnabled={false}
         contentContainerStyle={styles.contentContainerStyle}
@@ -145,15 +147,14 @@ export default function Index({ navigation, route }) {
           )}
         </View>
       </ScrollView>
-    </View>
+    </CustomImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    backgroundColor: AppStyles.colors.background,
+    backgroundColor: 'transparent',
   },
   contentContainerStyle: {
     paddingBottom: 20,

@@ -7,7 +7,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Fade, Placeholder, PlaceholderLine } from 'rn-placeholder';
 import ScreenName from '../ScreenName';
-
+import { CustomImageBackground } from '@components';
 const Index = () => {
   const navigation = useNavigation();
 
@@ -95,12 +95,14 @@ const Index = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <CustomImageBackground
+      style={styles.container}
+      source={images.watermark_background_2}>
       <GCC.QueryOrderList
         renderItem={renderItem}
         renderItemLoading={renderItemLoading}
       />
-    </View>
+    </CustomImageBackground>
   );
 };
 
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 5,
-    backgroundColor: AppStyles.colors.background,
+    backgroundColor: 'transparent',
   },
   contentContainerStyle: { paddingVertical: 15 },
   statusContainer: {

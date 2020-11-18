@@ -11,7 +11,7 @@ import { AppStyles, metrics, images } from '@theme';
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 import _ from 'lodash';
-import { CustomInput } from '@components';
+import { CustomInput, CustomImageBackground } from '@components';
 import { autocomplete } from '@location';
 import { address } from '@slices';
 import { format } from '@utils';
@@ -113,7 +113,9 @@ const Index = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={styles.container}>
       <View style={styles.topContent}>
         <CustomInput
           onChangeText={handleChangeText}
@@ -125,12 +127,12 @@ const Index = () => {
       </View>
 
       <FilterAddressList loading={loading_location} data={locations} />
-    </View>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: AppStyles.colors.background },
+  container: { flex: 1, backgroundColor: 'transparent' },
   topContent: {
     alignItems: 'center',
   },

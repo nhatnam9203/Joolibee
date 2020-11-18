@@ -29,6 +29,7 @@ import {
   MenuScreen,
   HomeScreen,
   StoreScreen,
+  PromotionScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -265,6 +266,9 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtMyOrders'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
       <Stack.Screen
@@ -336,6 +340,17 @@ function MainStack() {
       <Stack.Screen
         component={StoreScreen}
         name={ScreenName.Store}
+        options={{
+          headerShown: true,
+          headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
+        }}
+      />
+      <Stack.Screen
+        component={PromotionScreen}
+        name={ScreenName.Promotion}
         options={{
           headerShown: true,
           headerBackground: () => <View style={styles.container} />,

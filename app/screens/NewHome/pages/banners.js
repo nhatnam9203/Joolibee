@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import { JollibeeImage } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
@@ -43,8 +43,8 @@ const Banners = ({ openDetail, data, loading, height = scaleHeight(336) }) => {
 const renderItem = (item) => {
   return (
     <TouchableOpacity style={styles.content}>
-      <Image
-        source={{ uri: item?.item?.image?.url }}
+      <JollibeeImage
+        url={item?.item?.image?.url}
         style={styles.containerItem}
       />
     </TouchableOpacity>
@@ -54,7 +54,7 @@ const renderItem = (item) => {
 const renderLoading = (loading) => {
   return (
     <View style={styles.contentLoading}>
-      <Loading isLoading={loading} transparent={true} />
+      <Loading isLoading={loading} transparent={true} imageSize={'100%'} />
     </View>
   );
 };

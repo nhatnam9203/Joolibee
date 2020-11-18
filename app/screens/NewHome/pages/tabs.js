@@ -19,7 +19,7 @@ export default function Tabs({}) {
     {
       title: translate('tabPromotion'),
       icon: images.icons.tab_new_promotion,
-      screen: HomePageName,
+      screen: ScreenName.Promotion,
     },
     {
       title: translate('tabMenu'),
@@ -29,7 +29,7 @@ export default function Tabs({}) {
     {
       title: translate('tabOrder'),
       icon: images.icons.tab_new_order,
-      screen: PromotionPageName,
+      screen: ScreenName.MyOrders,
     },
     {
       title: translate('tabStore'),

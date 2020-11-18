@@ -18,6 +18,8 @@ import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
 import { useChangeLanguage } from '@hooks';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import index from '../components/ItemStore';
 
 const MyAccountScreen = () => {
   const navigation = useNavigation();
@@ -29,6 +31,23 @@ const MyAccountScreen = () => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
     setSettingList(localData(navigation));
   }, [language, navigation]);
+
+  const buttonComponent = () => {
+    return (
+      <View
+        style={{
+          width: 79,
+          height: 29,
+          // padding: 20,
+          backgroundColor: AppStyles.colors.button,
+          borderRadius: 8,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text>0d</Text>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,13 +63,16 @@ const MyAccountScreen = () => {
             />
 
             <Text style={styles.nameStyle}>{firstname + ' ' + lastname}</Text>
-            <Text
-              style={styles.editTextStyle}
+            <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ScreenName.EditAccount);
-              }}>
-              {translate('txtEditAccount')}
-            </Text>
+              }}
+              style={styles.editStyle}>
+              <Text style={styles.editTextStyle}>
+                {translate('txtEditAccount')}
+              </Text>
+              <Image source={images.icons.ic_arrow_right_white} />
+            </TouchableOpacity>
           </View>
 
           {/**Close Button */}
@@ -64,8 +86,13 @@ const MyAccountScreen = () => {
           <FlatList
             bounces={false}
             data={settingList}
-            renderItem={({ item }) => (
-              <SettingItem item={item} key={item.key} onPress={item?.onPress} />
+            renderItem={({ item, index }) => (
+              <SettingItem
+                item={item}
+                key={item.key}
+                onPress={item?.onPress}
+                buttonComponent={index === 0 && buttonComponent}
+              />
             )}
             ItemSeparatorComponent={() => (
               <View style={AppStyles.styles.rowSeparator} />
@@ -119,11 +146,16 @@ const styles = StyleSheet.create({
   },
 
   editTextStyle: {
-    padding: metrics.padding,
-    fontFamily: 'Roboto-Medium',
+    paddingRight: 5,
+    fontFamily: 'Roboto-Bold',
     color: '#fff',
-    textDecorationLine: 'underline',
     fontSize: 14,
+  },
+  editStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    paddingBottom: metrics.padding * 2,
   },
 
   //list styles
