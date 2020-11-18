@@ -17,6 +17,7 @@ export const useCustomer = () => {
 
   const [revokeCustomerToken, response] = useMutation(mutation.SIGN_OUT);
 
+  // ! TODO: chỗ này có cần không ? wtf men ?
   if (data?.customer) {
     dispatch(account.saveUserInfo(data));
   }

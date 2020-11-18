@@ -1,15 +1,14 @@
 import { CustomButtonImage, CustomImageBackground } from '@components';
 import { GCC } from '@graphql';
+import { useChangeLanguage, useCustomer } from '@hooks';
 import { TopBarScreenLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { OrderNewItem, TopBarComponent, TopBarRight } from '../components';
+import { OrderNewItem, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
-import { useChangeLanguage } from '@hooks';
-import { useSelector } from 'react-redux';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
@@ -18,9 +17,8 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
-  const user = useSelector((state) => state.account?.user);
+  const { user } = useCustomer();
 
-  Logger.debug(user, 'user');
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtOrderMenu').toUpperCase(),
@@ -47,21 +45,23 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   return (
     <TopBarScreenLayout>
-      <View style={styles.addressStyle}>
-        <Text style={styles.txtAddressTitleStyle}>
-          {translate('txtAddressTo')}
-        </Text>
-        <Text
-          style={styles.txtAddressStyle}
-          ellipsizeMode="tail"
-          numberOfLines={1}>
-          16 Trương Định, P. 6, Q. 3, Tp. Hồ Chí Minh
-        </Text>
-        <CustomButtonImage
-          image={images.icons.ic_edit}
-          style={styles.btnEditStyle}
-        />
-      </View>
+      {user?.addresses?.length > 0 && (
+        <View style={styles.addressStyle}>
+          <Text style={styles.txtAddressTitleStyle}>
+            {translate('txtAddressTo')}
+          </Text>
+          <Text
+            style={styles.txtAddressStyle}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
+            {user?.addresses.find((x) => x.default_shipping).full_address}
+          </Text>
+          <CustomButtonImage
+            image={images.icons.ic_edit}
+            style={styles.btnEditStyle}
+          />
+        </View>
+      )}
       <View style={styles.headerStyle}>
         {!!name && <Text style={styles.txtHeaderStyle}>{name}</Text>}
         <CustomButtonImage
