@@ -5,8 +5,11 @@ import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
 import { LabelTitle } from './LabelTitle';
 import { OrderCount } from './OrderCount';
 import { PriceAndPoint } from './PriceAndPoint';
+import { scale } from '@utils';
 
-const IMAGE_SIZE = 69;
+const { scaleHeight, scaleWidth } = scale;
+
+const IMAGE_SIZE = scaleWidth(69);
 
 export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
   const { product = {}, quantity, prices = {} } = item;
@@ -35,16 +38,16 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
           <LabelTitle
             label={product.name}
             numberOfLines={2}
-            fontSize={15}
+            fontSize={scaleWidth(15)}
             style={styles.titleStyle}
           />
           <Text style={styles.txtDescStyle}>{product.meta_description}</Text>
         </View>
-        {/* <PriceAndPoint
+        <PriceAndPoint
           style={styles.priceStyle}
           point={product?.point}
           prices={prices}
-        /> */}
+        />
       </View>
 
       <View style={styles.bottomStyle}>
@@ -64,7 +67,7 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
 
 const styles = StyleSheet.create({
   imageStyle: { alignSelf: 'flex-start' },
-  itemStyle: {},
+  itemStyle: { paddingHorizontal: 5 },
 
   content: {
     alignItems: 'flex-start',
@@ -74,18 +77,17 @@ const styles = StyleSheet.create({
   txtContent: {
     flex: 1,
     justifyContent: 'center',
-    padding: 5,
   },
 
   priceStyle: {
     flex: 0,
   },
 
-  titleStyle: { marginVertical: 0, marginBottom: 10 },
+  titleStyle: { marginVertical: 0, marginBottom: 10, fontSize: scaleWidth(15) },
 
   txtDescStyle: {
     ...AppStyles.fonts.text,
-    fontSize: 12,
+    fontSize: scaleWidth(12),
     color: '#000000',
   },
 
@@ -98,12 +100,12 @@ const styles = StyleSheet.create({
   },
 
   buttonStyle: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: '#E9E9E9',
+    width: scaleWidth(38),
+    height: scaleWidth(38),
+    borderRadius: scaleWidth(38) / 2,
+    backgroundColor: AppStyles.colors.button,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: scaleWidth(10),
   },
 });

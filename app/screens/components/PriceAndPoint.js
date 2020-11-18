@@ -1,7 +1,10 @@
 import React from 'react';
 import { AppStyles } from '@theme';
 import { View, Text, StyleSheet } from 'react-native';
-import { format } from '@utils';
+import { format, scale } from '@utils';
+import { translate } from '@localize';
+
+const { scaleWidth, scaleHeight } = scale;
 
 export const PriceAndPoint = ({ point, prices }) => {
   return (
@@ -11,7 +14,9 @@ export const PriceAndPoint = ({ point, prices }) => {
           {format.jollibeeCurrency(prices?.price)}
         </Text>
       )}
-      <Text style={styles.pointStyle}>+ {`${point}`} điểm</Text>
+      <Text style={styles.pointStyle}>
+        + {`${point} ${translate('txtPoint')}`}{' '}
+      </Text>
     </View>
   );
 };
@@ -20,12 +25,12 @@ const styles = StyleSheet.create({
   priceStyle: {
     ...AppStyles.fonts.title,
     color: AppStyles.colors.accent,
-    fontSize: 21,
+    fontSize: scaleWidth(18),
   },
 
   pointStyle: {
     ...AppStyles.fonts.medium,
-    fontSize: 12,
+    fontSize: scaleWidth(12),
     color: '#484848',
   },
 
