@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
 import { query } from '@graphql';
 import { useChangeLanguage } from '@hooks';
@@ -34,32 +34,24 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
 
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
-  const [getHome, { data, loading }] = useLazyQuery(query.HOME_SCREEN, {
+  const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
     // fetchPolicy: 'cache-first',
   });
-
-  const { homeScreen } = data || {};
-
   React.useEffect(() => {
-    getHome();
     navigation.setOptions({
       headerRight: () => <TopBarRight />,
       headerLeft: () => <TopBarLeft />,
     });
-  }, [getHome, language, navigation]);
+  }, [language, navigation]);
 
   const onCHangeScreen = (screen) => () => {
     let params = {
       data: homeScreen.news ? homeScreen.news : [],
       loading,
-      refetch: getHome,
+      refetch,
     };
     navigation.navigate(screen, params);
   };
-
-  const { data = {}, loading } = useQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first',
-  });
 
   const { homeScreen } = data;
 
