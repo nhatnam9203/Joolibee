@@ -320,6 +320,15 @@ export const CUSTOMER_CART_QUERY = gql`
     customerCart {
       id
       __typename
+      items {
+        id
+        __typename
+        product {
+          name
+          sku
+        }
+        quantity
+      }
     }
   }
 `;

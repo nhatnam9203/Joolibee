@@ -4,7 +4,7 @@
  */
 import { ApolloProvider } from '@apollo/client';
 import { Loading, RootPermission } from '@components';
-import { useChangeLanguage } from '@hooks';
+import { useChangeLanguage, useGraphqlClient } from '@hooks';
 import { setI18nConfig } from '@localize';
 import { app } from '@slices';
 import { AppStyles } from '@theme';
@@ -79,29 +79,18 @@ let codePushOptions = {
 };
 
 let App = () => {
-  const [client, setClient] = React.useState(null);
-
-  React.useEffect(() => {
-    persistCache({
-      cache,
-      storage: AsyncStorage,
-      // trigger: 'background',
-      debug: Config.NODE_ENV === 'development',
-    }).then(() => {
-      setClient(graphQlClient(cache));
-    });
-  }, []);
+  const { graphqlClient } = useGraphqlClient();
 
   React.useEffect(() => {
     SplashScreen.hide();
-  }, [client]);
+  }, [graphqlClient]);
 
-  if (!client) {
+  if (!graphqlClient) {
     return <></>;
   }
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={graphqlClient}>
       <StoreProvider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <LangProvider>

@@ -6,3 +6,4 @@ export * from './useStore';
 export * from './useComponentSize';
 export * from './useCustomerCart';
 export * from './useCustomer';
+export * from './useGraphqlClient';

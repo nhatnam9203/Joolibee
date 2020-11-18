@@ -5,13 +5,14 @@ import { useDispatch } from 'react-redux';
 import { account, app } from '@slices';
 import { remove, StorageKey, clearForKey } from '@storage';
 import AsyncStorage from '@react-native-community/async-storage';
+import { useGraphqlClient } from './useGraphqlClient';
 
 export const useCustomer = () => {
   const dispatch = useDispatch();
-  const client = useApolloClient();
+  const { persistor } = useGraphqlClient();
 
   const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'no-cache',
   });
 
   const [revokeCustomerToken, response] = useMutation(mutation.SIGN_OUT);
@@ -27,8 +28,7 @@ export const useCustomer = () => {
     // reset redux
     await dispatch(account.signOutRequest());
     await remove(StorageKey.User);
-
-    await client.clearStore();
+    persistor.restore();
     await AsyncStorage.clear();
   };
 
