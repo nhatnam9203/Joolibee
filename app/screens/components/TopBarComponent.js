@@ -64,12 +64,12 @@ export const TopBarComponent = React.memo(() => {
   );
 });
 
-export const TopBarRight = React.memo(() => {
+export const TopBarRight = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { data } = useCustomerCart();
-  Logger.debug(data, 'TopBarRight');
+  const { cart } = useCustomerCart();
+
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
       <Action
@@ -87,13 +87,13 @@ export const TopBarRight = React.memo(() => {
         onPress={() => {
           dispatch(app.showOrderList());
         }}
-        notifyNumber={2}
+        notifyNumber={cart?.customerCart?.items?.length}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />
     </View>
   );
-});
+};
 
 export const TopBarLeft = React.memo(() => {
   const navigation = useNavigation();

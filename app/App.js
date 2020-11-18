@@ -28,11 +28,7 @@ import {
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import GraphErrorHandler from './GraphErrorHandler';
-import { graphQlClient, cache } from './graphql';
 import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
-import { persistCache } from 'apollo3-cache-persist';
-import AsyncStorage from '@react-native-community/async-storage';
-import Config from 'react-native-config';
 
 const fontConfig = {
   default: {
