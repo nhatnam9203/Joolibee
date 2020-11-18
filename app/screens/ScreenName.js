@@ -31,6 +31,8 @@ const ScreenName = {
   NewHome: 'NewHome',
   Store: 'Store',
   Promotion: 'Promotion',
+  JollibeeVN: 'JollibeeVN',
+  SupportDetail: 'SupportDetail',
 };
 
 export default ScreenName;

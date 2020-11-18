@@ -35,7 +35,7 @@ export default function HomeScreen() {
 
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    // fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-first',
   });
   React.useEffect(() => {
     navigation.setOptions({

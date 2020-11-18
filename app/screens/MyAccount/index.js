@@ -10,22 +10,20 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { Avatar } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
-import { useChangeLanguage } from '@hooks';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import index from '../components/ItemStore';
+import { useChangeLanguage, useCustomer } from '@hooks';
 
 const MyAccountScreen = () => {
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
-  const user = useSelector((state) => state.account?.user?.profile);
+  const { user } = useCustomer() || {};
   const { firstname, lastname } = user || {};
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
@@ -34,17 +32,8 @@ const MyAccountScreen = () => {
 
   const buttonComponent = () => {
     return (
-      <View
-        style={{
-          width: 79,
-          height: 29,
-          // padding: 20,
-          backgroundColor: AppStyles.colors.button,
-          borderRadius: 8,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text>0d</Text>
+      <View style={styles.pointContainer}>
+        <Text>120 điểm</Text>
       </View>
     );
   };
@@ -170,6 +159,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     padding: metrics.padding,
+  },
+  pointContainer: {
+    paddingHorizontal: metrics.padding,
+    paddingVertical: 6,
+    backgroundColor: AppStyles.colors.button,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 export default MyAccountScreen;

@@ -136,5 +136,10 @@
   "txtNotFoundProduct": "No products",
   "txtBirthDayOrder": "Birthday party order",
   "txtBigOrder": "Big service order",
-  "txtOrderMenu": "Select Order"
+  "txtOrderMenu": "Select Order",
+  "txtJollibeeVN": "Jollibee Việt Nam",
+
+  "txtOrderGuide": "Ordering guide",
+  "txtUseVoucherGuide": "Use voucher guide",
+  "txtPointAccumulateGuide": "Accumulate point guide"
 }
