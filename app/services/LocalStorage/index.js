@@ -7,14 +7,14 @@ export * from './StorageKey';
  * @param {*} key Key Storage
  * @param {*} expires Time Expired
  */
-export const saveValueWithExpires = (value, key, expires = null) =>
+export const saveValueWithExpires = (key, value, expires = null) =>
   storage.save({
     key: key,
     data: value,
     expires: expires,
   });
 
-export const save = (value, key) =>
+export const save = (key, value) =>
   storage.save({
     key: key,
     data: value,
@@ -66,3 +66,7 @@ export const get = async (key, options) =>
         resolve({});
       }),
   );
+
+export const clearForKey = (key) => {
+  storage.clearMapForKey(key);
+};

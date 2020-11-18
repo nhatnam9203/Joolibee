@@ -308,6 +308,9 @@ export const CUSTOMER_INFO = gql`
       phone_number
       gender
       date_of_birth
+      addresses {
+        full_address
+      }
     }
   }
 `;
@@ -317,6 +320,15 @@ export const CUSTOMER_CART_QUERY = gql`
     customerCart {
       id
       __typename
+      items {
+        id
+        __typename
+        product {
+          name
+          sku
+        }
+        quantity
+      }
     }
   }
 `;

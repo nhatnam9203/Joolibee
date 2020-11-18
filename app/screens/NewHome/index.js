@@ -31,9 +31,9 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
-  const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const dispatch = useDispatch();
 
+  const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const [getHome, { data, loading }] = useLazyQuery(query.HOME_SCREEN, {
     // fetchPolicy: 'cache-first',
   });
@@ -56,6 +56,12 @@ export default function HomeScreen() {
     };
     navigation.navigate(screen, params);
   };
+
+  const { data = {}, loading } = useQuery(query.HOME_SCREEN, {
+    fetchPolicy: 'cache-first',
+  });
+
+  const { homeScreen } = data;
 
   return (
     <>

@@ -30,16 +30,10 @@ export const cache = new InMemoryCache({
 
 const authLink = new ApolloLink(async (operation, forward) => {
   // get auth token
-  let jwt;
-  const jwtObject = await get(StorageKey.Token);
-  if (jwtObject) {
-    const key = jwtObject[StorageKey.Token];
-    jwt = jwtObject[key];
-  }
-
+  const { token } = await get(StorageKey.User);
   operation.setContext(({ headers }) => ({
     headers: {
-      authorization: jwt ? `Bearer ${jwt}` : '',
+      authorization: token ? `Bearer ${token}` : '',
       // Store: 'en',
       ...headers,
     },

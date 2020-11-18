@@ -1,7 +1,18 @@
 import * as React from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from 'react-native-picker-select'; //ref: https://github.com/lawnstarter/react-native-picker-select
 import Icon from 'react-native-vector-icons/Entypo';
+
+/**
+ *
+ * npm install react-native-picker-select
+  # if you see a `Invariant Violation: requireNativeComponent "RNCPicker" was not found in the UIManager` error:
+  # React Native users
+    npm install @react-native-community/picker
+    npx pod-install
+  # Expo
+    expo install @react-native-community/picker
+ */
 
 const CustomPickerSelect = ({
   style,

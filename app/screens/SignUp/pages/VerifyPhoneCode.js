@@ -49,11 +49,10 @@ export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
       updateGetCodeCount(sendCodeCount);
       // storage resend code request times
       saveValueWithExpires(
-        sendCodeCount,
         StorageKey.FirebaseCodeSendCount + phone,
+        sendCodeCount,
         Config.RESEND_FIREBASE_CODE_TIME_BLOCK,
       );
-      Logger.info(sendCodeCount, 'resendCodeRequest');
       // call send code
       if (resendCode) {
         resendCode();

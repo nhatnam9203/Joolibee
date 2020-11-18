@@ -4,11 +4,15 @@ import { mutation, query } from '@graphql';
 import { cart } from '@slices';
 import { useDispatch } from 'react-redux';
 
+// !TODO: trường hợp đang có đơn hàng chưa hoàn thành thì không cho tạo  cart
 export const useCustomerCart = () => {
   const dispatch = useDispatch();
   // get customer cart id
-  const customerCartData = useQuery(query.CUSTOMER_CART_QUERY);
+  const customerCartData = useQuery(query.CUSTOMER_CART_QUERY, {
+    // fetchPolicy: 'cache-first',
+  });
 
+  console.log(customerCartData?.data);
   // Mutation create empty cart
   const [createEmptyCart, response] = useMutation(mutation.CREATE_EMPTY_CART);
 
@@ -28,5 +32,5 @@ export const useCustomerCart = () => {
     }
   }, [dispatch, response?.data]);
   // Mutation create empty cart --
-  return customerCartData;
+  return { cart: customerCartData?.data };
 };

@@ -9,7 +9,7 @@ const LAYOUT_WIDTH = '100%';
 const CustomBirthdayPicker = ({
   renderBase,
   onChangeDate,
-  defaultValue,
+  defaultValue = new Date(),
   style,
 }) => {
   const [visible, setVisible] = React.useState(false);

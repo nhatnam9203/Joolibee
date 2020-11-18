@@ -5,9 +5,7 @@ import { AppStyles } from '@theme';
 
 export const EmptyCartList = ({ error }) => (
   <View style={styles.container}>
-    <Text style={styles.labelSum}>
-      {error ? error : translate('txtNotFoundProduct')}
-    </Text>
+    <Text style={styles.labelSum}>{translate('txtNotFoundProduct')}</Text>
   </View>
 );
 

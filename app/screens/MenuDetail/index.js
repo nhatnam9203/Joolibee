@@ -9,6 +9,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { OrderNewItem, TopBarComponent, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
 import { useChangeLanguage } from '@hooks';
+import { useSelector } from 'react-redux';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
@@ -17,7 +18,9 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
+  const user = useSelector((state) => state.account?.user);
 
+  Logger.debug(user, 'user');
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtOrderMenu').toUpperCase(),

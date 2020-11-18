@@ -47,6 +47,16 @@ export const SIGN_IN = gql`
     }
   }
 `;
+
+// SIGNOUT
+export const SIGN_OUT = gql`
+  mutation {
+    revokeCustomerToken {
+      result
+    }
+  }
+`;
+
 // FEED BACK CUSTOMER
 export const FEED_BACK = gql`
   mutation($orderId: String!, $rating: Int!, $comment: String) {

@@ -10,7 +10,7 @@ const KEY_CONSTANT = 'account';
 const initialState = {
   user: {
     isRemember: false,
-    tokenKey: null,
+    isLogin: false,
     tempCheckSignup: false,
   },
   isShowQRCode: false,
@@ -31,14 +31,7 @@ const feedBack = createAsyncThunk(
 
 const signOutRequest = createAsyncThunk(
   `${KEY_CONSTANT}/signOutRequest`,
-  async (input, {}) => {
-    try {
-      // const client = useApolloClient();
-      // client.resetStore();
-      await AsyncStorage.clear();
-    } catch (e) {
-      throw e;
-    }
+  async () => {
     return initialState.user;
   },
 );
@@ -71,23 +64,23 @@ const accountSlice = createSlice({
         // received token from server
 
         // get token object save in store
-        const storeTokenObj = get(StorageKey.Token) || {};
-
-        // gen new key at time
-        const str = generate.timeInMilliseconds();
-
+        let uStorage = get(StorageKey.User);
         // store token to local store
-        storeTokenObj[str] = token;
-        storeTokenObj[StorageKey.Token] = str;
-        save(storeTokenObj, StorageKey.Token);
+        save(
+          StorageKey.User,
+          Object.assign({}, uStorage, {
+            token,
+            modifyAt: generate.timeInMilliseconds(),
+          }),
+        );
         // update state
-        state.user.tokenKey = str;
+        state.user.isLogin = true;
       } else {
-        state.user.tokenKey = null;
+        state.user.isLogin = true;
       }
     },
     signInError(state, action) {
-      state.user.tokenKey = null;
+      state.user.isLogin = false;
     },
 
     signUpSucceeded(state, action) {
