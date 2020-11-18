@@ -138,7 +138,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    height: '85%',
+    height: scaleHeight(606),
     backgroundColor: AppStyles.colors.button,
     borderRadius: 8,
     overflow: 'hidden',

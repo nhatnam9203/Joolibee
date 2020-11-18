@@ -141,5 +141,6 @@
 
   "txtOrderGuide": "Ordering guide",
   "txtUseVoucherGuide": "Use voucher guide",
-  "txtPointAccumulateGuide": "Accumulate point guide"
+  "txtPointAccumulateGuide": "Accumulate point guide",
+  "txtExpirePoint":"Points will expire on"
 }

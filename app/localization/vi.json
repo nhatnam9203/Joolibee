@@ -79,7 +79,7 @@
   "txtSavedPointHistory": "Lịch sử tích điểm",
   "txtReceivedPoint": "Điểm đã nhận",
   "txtUsedPoint": "Điểm đã dùng",
-  "txtMySavedPoint": "Điểm tích luỹ đang có",
+  "txtMySavedPoint": "Điểm đang có",
   "txtMyRewardPoint": "Điểm thưởng",
   "txtViewAll": "Xem tất cả",
   "txtSupportCenter": "Tổng đài hỗ trợ",
@@ -142,5 +142,6 @@
   "txtJollibeeVN": "Jollibee Việt Nam",
   "txtOrderGuide": "Hướng dẫn đặt hàng",
   "txtUseVoucherGuide": "Hướng dẫn sử dụng ưu đãi",
-  "txtPointAccumulateGuide": "Hướng dẫn tích điểm"
+  "txtPointAccumulateGuide": "Hướng dẫn tích điểm",
+  "txtExpirePoint":"Điểm Sẽ hết hạn vào ngày"
 }

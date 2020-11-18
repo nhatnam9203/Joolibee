@@ -165,6 +165,9 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtSavedPointHistory'),
           headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
 
@@ -175,6 +178,9 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtMyRewardPoint'),
           headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_header_back} />
+          ),
         }}
       />
 

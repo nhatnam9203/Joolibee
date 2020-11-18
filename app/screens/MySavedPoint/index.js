@@ -1,69 +1,58 @@
-import { CustomFlatList, CustomTextLink } from '@components';
+import { CustomFlatList, CustomImageBackground } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
+import { scale } from '@utils';
+import _ from 'lodash';
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { SettingItem, FlatListItemWithImgHorizontal } from '../components';
-import ScreenName from '../ScreenName';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
+import { useDispatch } from 'react-redux';
+import { SettingItem } from '../components';
+import ScreenName from '../ScreenName';
+const { scaleHeight } = scale;
 const newRewards = [
   {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
+    title: 'Đơn hàng #0000012',
+    points: '+18 điểm',
+    date: '26/08/2020',
     id: 1,
+    color_point: AppStyles.colors.accent,
   },
   {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
+    title: 'Đơn hàng #0000012',
+    points: '+18 điểm',
+    date: '26/08/2020',
     id: 2,
+    color_point: AppStyles.colors.accent,
   },
   {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
+    title: 'Đổi 25 điểm nhận 25.000đ',
+    points: '- 25 điểm',
+    date: '26/08/2020',
     id: 3,
+    color_point: '#484848',
   },
   {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
+    title: 'Đổi 10 điểm nhận 10.000đ',
+    points: '+18 điểm',
+    date: '26/08/2020',
     id: 4,
+    color_point: AppStyles.colors.accent,
   },
   {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
+    title: 'Đơn hàng #0000012',
+    points: '-10 điểm',
+    date: '26/08/2020',
     id: 5,
-  },
-  {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
-    id: 6,
-  },
-  {
-    image: images.promotion_list_thumb,
-    title: '01 MIẾNG GÀ GIÒN VUI VẺ + 01 MỲ Ý SỐT BÒ BẰM + 01 NƯỚC NGỌT (VỪA)',
-    price: 160000,
-    discount: 139000,
-    bonusPoint: 14,
-    id: 7,
+    color_point: '#484848',
   },
 ];
 
@@ -72,12 +61,13 @@ const MySavedPointScreen = () => {
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
   const [data, setData] = React.useState([]);
+  const onViewAllHistory = () =>
+    navigation.navigate(ScreenName.HistorySavedPoint);
 
   React.useEffect(() => {
     setSettingList([
       {
         key: 'key_point',
-        icon: images.icons.ic_jollibee,
         title: translate('txtSettingPoint'),
         isArrow: true,
         onPress: () => {
@@ -85,21 +75,13 @@ const MySavedPointScreen = () => {
         },
       },
       {
-        key: 'key_notify',
-        icon: images.icons.ic_notify,
-        title: translate('txtSettingNotify'),
+        key: 'key_guide_save_reward',
+        title: translate('txtPointAccumulateGuide'),
         isArrow: true,
         onPress: () => {
-          navigation.navigate(ScreenName.HistorySavedPoint);
-        },
-      },
-      {
-        key: 'key_setting',
-        icon: images.icons.ic_setting,
-        title: translate('txtSetting'),
-        isArrow: true,
-        onPress: () => {
-          navigation.navigate(ScreenName.SettingAccount);
+          navigation.navigate(ScreenName.SupportDetail, {
+            title: translate('txtPointAccumulateGuide'),
+          });
         },
       },
     ]);
@@ -114,17 +96,23 @@ const MySavedPointScreen = () => {
       case 'key_point':
         return (
           <View style={styles.pointContainer}>
+            <Text style={styles.txtPointDesc}>
+              {translate('txtMySavedPoint')}
+            </Text>
             <View style={styles.pointContent}>
               <View style={styles.pointImage}>
                 <Image source={images.icons.ic_jollibee} resizeMode="stretch" />
               </View>
-              <Text style={styles.txtPoint}>250</Text>
+              <Text style={styles.txtPoint}>120</Text>
             </View>
-            <CustomTextLink
-              label={translate('txtMySavedPoint')}
-              style={styles.txtPointDesc}
-              onPress={() => {}}
-            />
+            <Text style={styles.txtPointExpire}>
+              {translate('txtExpirePoint')} 11/17/2020
+            </Text>
+
+            <Text style={styles.txtNoteExpire}>
+              Chỉ cần thực hiện 1 giao dịch trước ngày hết hạn để gia hạn hiệu
+              lực điểm thưởng.
+            </Text>
           </View>
         );
       default:
@@ -134,42 +122,58 @@ const MySavedPointScreen = () => {
     }
   };
 
-  const renderNewRewardItem = ({ item }) => (
-    <FlatListItemWithImgHorizontal
-      imgStyle={styles.imageStyle}
-      contentStyle={styles.itemStyle}
-      image={item.image}
-      item={item}
-      onPress={() => {}}>
-      <Text style={styles.txtTitle} numberOfLines={4} ellipsizeMode="tail">
-        {item.title}
-      </Text>
-      <View style={styles.bottomStyle}>
-        <Text style={styles.beforePrice}>{item.price}</Text>
-        <View style={styles.priceContentStyle}>
-          <Text style={styles.pricePay}>{item.discount}</Text>
-          <Text style={styles.bonusPoint}>
-            {`(+${item.bonusPoint} ${translate('txtPoint')})`}
+  const renderNewRewardItem = ({ item, index }) => {
+    const lastIndex = newRewards?.length - 1;
+    const borderRadiusTop = { borderTopEndRadius: 6, borderTopStartRadius: 6 };
+    const borderRadiusBottom = {
+      borderBottomEndRadius: 6,
+      borderBottomStartRadius: 6,
+    };
+    const borderRadiusStyle =
+      index === 0
+        ? borderRadiusTop
+        : index === lastIndex
+        ? borderRadiusBottom
+        : {};
+    return (
+      <View style={[styles.itemContainer, borderRadiusStyle]}>
+        <View style={styles.pointImage}>
+          <Image source={images.icons.ic_jollibee} resizeMode="stretch" />
+        </View>
+        <View style={styles.itemSubContainer}>
+          <Text style={[styles.txtPoints, { color: item.color_point }]}>
+            {item.points}
+          </Text>
+
+          <Text style={AppStyles.fonts.bold}>{item.title}</Text>
+
+          <Text numberOfLines={1} style={[AppStyles.fonts.mini, {}]}>
+            {item.date}
           </Text>
         </View>
       </View>
-    </FlatListItemWithImgHorizontal>
-  );
+    );
+  };
 
   const renderNewRewardHeader = () => (
     <View style={styles.headerContent}>
-      <Text style={styles.txtHeader}>{translate('txtNewReward')}</Text>
-      <CustomTextLink
-        label={`${translate('txtViewAll')}`.toUpperCase()}
-        style={styles.txtViewAll}
-        onPress={() => {}}
-      />
+      <Text style={styles.txtHeader}>{translate('txtSavedPointHistory')}</Text>
+      <TouchableOpacity
+        style={{ flexDirection: 'row' }}
+        onPress={onViewAllHistory}>
+        <Text onPress={onViewAllHistory} style={styles.txtViewAll}>
+          {translate('txtViewAll').toUpperCase()}
+        </Text>
+        <Image source={images.icons.ic_forward_red} />
+      </TouchableOpacity>
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+      <CustomImageBackground
+        source={images.watermark_background_2}
+        style={styles.container}>
         {/**My Saved Point */}
         <View style={styles.savedPointContainer}>
           <CustomFlatList
@@ -179,7 +183,6 @@ const MySavedPointScreen = () => {
             ItemSeparatorComponent={() => (
               <View style={AppStyles.styles.rowSeparator} />
             )}
-            contentContainerStyle={styles.contentContainerStyle}
           />
         </View>
 
@@ -187,21 +190,23 @@ const MySavedPointScreen = () => {
         <View style={styles.myRewardContainer}>
           <CustomFlatList
             data={newRewards}
+            bounces={false}
             renderItem={renderNewRewardItem}
             horizontal={false}
             keyExtractor={(item, index) => item.id.toString()}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={renderNewRewardHeader}
             stickyHeaderIndices={[0]}
+            ItemSeparatorComponent={() => <View style={styles.seperator} />}
           />
         </View>
-      </View>
+      </CustomImageBackground>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: AppStyles.colors.background },
+  container: { flex: 1, backgroundColor: 'transparent' },
   itemStyle: { padding: 10 },
   txtTitle: {
     ...AppStyles.fonts.header,
@@ -259,10 +264,11 @@ const styles = StyleSheet.create({
   },
 
   pointContainer: {
-    height: 154,
+    height: scaleHeight(261),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+    paddingHorizontal: 20,
   },
 
   pointContent: {
@@ -282,44 +288,85 @@ const styles = StyleSheet.create({
   },
 
   txtPoint: {
-    ...AppStyles.fonts.header,
+    ...AppStyles.fonts.SVN_Merge_Bold,
     color: AppStyles.colors.text,
     fontSize: 54,
   },
 
   txtPointDesc: {
-    ...AppStyles.fonts.text,
+    ...AppStyles.fonts.SVN_Merge_Bold,
     color: AppStyles.colors.accent,
-    fontSize: 18,
+    fontSize: 24,
+  },
+
+  txtPointExpire: {
+    ...AppStyles.fonts.text,
+    color: AppStyles.colors.text,
+    fontWeight: 'bold',
+  },
+
+  txtNoteExpire: {
+    ...AppStyles.fonts.mini,
+    color: AppStyles.colors.text,
+    fontSize: 14,
+    textAlign: 'center',
+    lineHeight: 20,
+    marginTop: 15,
+  },
+
+  txtPoints: {
+    ...AppStyles.fonts.bold,
+    color: AppStyles.colors.accent,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 
   contentContainerStyle: {
     backgroundColor: '#fff',
   },
 
+  itemContainer: {
+    backgroundColor: '#fff',
+    height: scaleHeight(70),
+    flex: 0,
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+
+    ...AppStyles.styles.shadow,
+  },
+
   myRewardContainer: {
-    paddingHorizontal: 15,
-    backgroundColor: AppStyles.styles.background,
+    paddingHorizontal: 20,
     flex: 1,
+  },
+
+  itemSubContainer: {
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+    width: '80%',
   },
 
   headerContent: {
     flexDirection: 'row',
     height: 50,
     backgroundColor: AppStyles.colors.background,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 7,
     alignItems: 'center',
     justifyContent: 'space-between',
   },
 
   txtHeader: {
-    ...AppStyles.fonts.title,
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    fontSize: 18,
   },
 
   txtViewAll: {
-    ...AppStyles.fonts.bold,
-    color: AppStyles.colors.text,
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    color: AppStyles.colors.accent,
     fontSize: 14,
   },
+  seperator: { height: 1, backgroundColor: '#E1E1E1' },
 });
 export default MySavedPointScreen;
