@@ -1,11 +1,26 @@
+import { useMutation } from '@apollo/client';
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
-import { GCC } from '@graphql';
+import { GCC, mutation } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import { destructuring, format, scale } from '@utils';
 import React from 'react';
-import { Image, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+import {
+  Fade,
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+} from 'rn-placeholder';
 import {
   ButtonCC,
   JollibeeImage,
@@ -13,36 +28,15 @@ import {
   MenuOptionSelectedItem,
 } from '../components';
 import { productReducer, setProduct, updateOption } from './ProductState';
-import { useMutation } from '@apollo/client';
-import { mutation } from '@graphql';
-import { useSelector, useDispatch } from 'react-redux';
-import { app } from '@slices';
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
-import * as Animatable from 'react-native-animatable';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  withSpring,
-  withSequence,
-  withDelay,
-  Easing,
-} from 'react-native-reanimated';
 
 const { scaleHeight, scaleWidth } = scale;
 const { width, height } = Dimensions.get('window');
-const ANIMATION_DURATION = 1200;
+const ANIMATION_DURATION = 800;
 const CART_ICON_X = scaleWidth(25);
 const CART_ICON_Y = scaleHeight(65);
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const viewScale = useSharedValue(1);
 
@@ -88,7 +82,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderHeader = (isLoading) => {
     if (isLoading || !productItemDetail) {
       return (
-        <View style={styles.placeholderHead}>
+        <Placeholder style={styles.placeholderHead} Animation={Fade}>
           <PlaceholderMedia style={styles.placeholderImage} />
           <View style={styles.placeholderHorizontal}>
             <PlaceholderLine
@@ -119,7 +113,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
             height={20}
             style={styles.placeholderLine}
           />
-        </View>
+        </Placeholder>
       );
     }
 
