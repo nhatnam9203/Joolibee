@@ -15,7 +15,12 @@ import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { CardView, TopBarLeft, TopBarRight } from '../components';
+import {
+  CardView,
+  TopBarLeft,
+  TopBarRight,
+  PopupSelectAreaComponent,
+} from '../components';
 import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';
 import ProductCart from '../ProductCart';
@@ -32,8 +37,11 @@ export default function HomeScreen() {
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
   const dispatch = useDispatch();
+  const [isVisible, setVisiblePopup] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
-
+  const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
+    fetchPolicy: 'cache-first',
+  });
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,
@@ -41,6 +49,13 @@ export default function HomeScreen() {
     });
   }, [language, navigation]);
 
+  React.useEffect(() => {
+    setTimeout(() => {
+      setVisiblePopup(true);
+    }, 1000);
+  }, []);
+
+  const onTogglePopup = () => setVisiblePopup(true);
   const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
     fetchPolicy: 'cache-first',
   });
@@ -158,6 +173,8 @@ export default function HomeScreen() {
         visible={showOrderList}
         onToggle={() => dispatch(app.dismissOrderList())}
       />
+
+      <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
     </>
   );
 }

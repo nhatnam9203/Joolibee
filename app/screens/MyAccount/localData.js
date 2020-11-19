@@ -12,15 +12,16 @@ export const localData = (navigation) => [
       navigation.navigate(ScreenName.MySavedPoint);
     },
   },
-  {
-    key: 'key_promotion',
-    icon: images.icons.ic_promotion,
-    title: translate('txtSettingPromotion'),
-    isArrow: true,
-    onPress: () => {
-      navigation.navigate(ScreenName.Reward);
-    },
-  },
+  // {
+  //   key: 'key_promotion',
+  //   icon: images.icons.ic_promotion,
+  //   title: translate('txtSettingPromotion'),
+  //   isArrow: true,
+  //   onPress: () => {
+  //     navigation.navigate(ScreenName.Reward);
+  //   },
+  // },
+
   {
     key: 'key_order_list',
     icon: images.icons.ic_order_list,
@@ -30,15 +31,7 @@ export const localData = (navigation) => [
       navigation.navigate(ScreenName.MyOrders);
     },
   },
-  {
-    key: 'key_notify',
-    icon: images.icons.ic_notify,
-    title: translate('txtSettingNotify'),
-    isArrow: true,
-    onPress: () => {
-      navigation.navigate(ScreenName.HistorySavedPoint);
-    },
-  },
+
   {
     key: 'key_address',
     icon: images.icons.ic_address,
@@ -48,6 +41,24 @@ export const localData = (navigation) => [
       navigation.navigate(ScreenName.MyAddress);
     },
   },
+  {
+    key: 'key_jollibee_vn',
+    icon: images.icons.ic_jollibee_vn,
+    title: translate('txtJollibeeVN'),
+    isArrow: true,
+    onPress: () => {
+      navigation.navigate(ScreenName.JollibeeVN);
+    },
+  },
+  // {
+  //   key: 'key_notify',
+  //   icon: images.icons.ic_notify,
+  //   title: translate('txtSettingNotify'),
+  //   isArrow: true,
+  //   onPress: () => {
+  //     navigation.navigate(ScreenName.HistorySavedPoint);
+  //   },
+  // },
   {
     key: 'key_support',
     icon: images.icons.ic_support,

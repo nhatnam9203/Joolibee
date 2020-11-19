@@ -1,4 +1,4 @@
-import { CustomFlatList, CustomTextLink } from '@components';
+import { CustomFlatList, CustomImageBackground } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
@@ -7,18 +7,18 @@ import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SettingItem, ButtonCC } from '../components';
 import ScreenName from '../ScreenName';
-
+import { scale, makeAPhoneCall } from '@utils';
+const { scaleHeight, scaleWidth } = scale;
 const SupportScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
-
+  const onCall = () => makeAPhoneCall.makeAPhoneCall('19001533');
   React.useEffect(() => {
     setSettingList([
       {
         key: 'key_support',
-        icon: images.icons.ic_jollibee,
-        title: translate('txtSettingPoint'),
+        title: '',
         isArrow: true,
         onPress: () => {
           navigation.navigate(ScreenName.MySavedPoint);
@@ -26,29 +26,34 @@ const SupportScreen = () => {
       },
       {
         key: 'key_guide_order',
-        icon: images.icons.ic_notify,
-        title: translate('txtSettingNotify'),
+
+        title: translate('txtOrderGuide'),
         isArrow: true,
         onPress: () => {
-          navigation.navigate(ScreenName.HistorySavedPoint);
+          navigation.navigate(ScreenName.SupportDetail, {
+            title: translate('txtOrderGuide'),
+          });
         },
       },
       {
         key: 'key_guide_save_point',
-        icon: images.icons.ic_setting,
-        title: translate('txtSetting'),
+
+        title: translate('txtUseVoucherGuide'),
         isArrow: true,
         onPress: () => {
-          navigation.navigate(ScreenName.SettingAccount);
+          navigation.navigate(ScreenName.SupportDetail, {
+            title: translate('txtUseVoucherGuide'),
+          });
         },
       },
       {
         key: 'key_guide_save_reward',
-        icon: images.icons.ic_setting,
-        title: translate('txtSetting'),
+        title: translate('txtPointAccumulateGuide'),
         isArrow: true,
         onPress: () => {
-          navigation.navigate(ScreenName.SettingAccount);
+          navigation.navigate(ScreenName.SupportDetail, {
+            title: translate('txtPointAccumulateGuide'),
+          });
         },
       },
     ]);
@@ -59,14 +64,14 @@ const SupportScreen = () => {
       case 'key_support':
         return (
           <View style={styles.supportContainer}>
-            <Text style={AppStyles.fonts.text}>
-              {translate('txtSupportCenter')}
-            </Text>
-            <Text style={styles.phoneStyle}>09757855</Text>
+            <Image source={images.icons.ic_call_now} />
+            <Text style={styles.phoneStyle}>1900 1533</Text>
             <ButtonCC.ButtonYellow
+              onPress={onCall}
               label={translate('txtCallNow')}
-              width={166}
-              height={58}
+              width={scaleWidth(159)}
+              height={scaleHeight(61)}
+              style={styles.shadowButton}
             />
           </View>
         );
@@ -79,7 +84,9 @@ const SupportScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+      <CustomImageBackground
+        style={styles.container}
+        source={images.watermark_background_2}>
         <CustomFlatList
           bounces={false}
           data={settingList}
@@ -89,16 +96,15 @@ const SupportScreen = () => {
           )}
           contentContainerStyle={styles.contentContainerStyle}
         />
-      </View>
+      </CustomImageBackground>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: AppStyles.colors.background },
+  container: { flex: 1 },
 
   supportContainer: {
-    height: 220,
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -110,7 +116,17 @@ const styles = StyleSheet.create({
     color: AppStyles.colors.accent,
     fontSize: 49,
   },
+  shadowButton: {
+    shadowColor: '#00000090',
+    shadowOffset: {
+      width: 3,
+      height: 10,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 8.3,
 
+    elevation: 10,
+  },
   contentContainerStyle: {
     backgroundColor: '#fff',
   },

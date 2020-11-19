@@ -30,6 +30,8 @@ import {
   HomeScreen,
   StoreScreen,
   PromotionScreen,
+  JollibeeVNScreen,
+  SupportDetailScreen,
 } from '../screens';
 import { StyleSheet, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
@@ -164,6 +166,9 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtSavedPointHistory'),
           headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
         }}
       />
 
@@ -174,6 +179,9 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtMyRewardPoint'),
           headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_header_back} />
+          ),
         }}
       />
 
@@ -183,6 +191,9 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSupport'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
           headerBackground: () => <View style={styles.container} />,
         }}
       />
@@ -354,6 +365,32 @@ function MainStack() {
         name={ScreenName.Promotion}
         options={{
           headerShown: true,
+          headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        component={JollibeeVNScreen}
+        name={ScreenName.JollibeeVN}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtJollibeeVN'),
+          headerBackground: () => <View style={styles.container} />,
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_close_blur} />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        component={SupportDetailScreen}
+        name={ScreenName.SupportDetail}
+        options={{
+          headerShown: true,
+          // headerTitle: translate('txtJollibeeVN'),
           headerBackground: () => <View style={styles.container} />,
           headerBackImage: () => (
             <HeaderImage src={images.icons.ic_close_blur} />
