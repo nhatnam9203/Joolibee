@@ -8,6 +8,7 @@ import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { ItemAddress, AddressAdditionalList, AddressLoading } from './pages';
+import { translate } from '@localize';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const Index = () => {
       ),
     );
 
-    const values = item
+    const val_address = item
       ? {
           phone: item.telephone,
           place: item.company,
@@ -41,10 +42,15 @@ const Index = () => {
           note: '',
           id: item.id,
           default_shipping: item.default_shipping,
-          default_billing: item.default_billing,
         }
       : null;
-    navigation.navigate(ScreenName.DetailMyAddress, { values });
+    const titleHeader = !item
+      ? translate('txtMyAddressDetail')
+      : translate('txtEditAddress');
+    navigation.navigate(ScreenName.DetailMyAddress, {
+      val_address,
+      titleHeader,
+    });
   };
 
   // React.useEffect(() => {
@@ -61,20 +67,18 @@ const Index = () => {
         contentContainerStyle={styles.contentContainerStyle}
         isDefault={true}
         ListHeaderComponent={() => (
-          <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
-            Địa chỉ mặc định
-          </Text>
+          <Text style={styles.txtTitle}>{translate('txtAddressList')}</Text>
         )}
         ListFooterComponent={() => (
           <>
-            <AddressAdditionalList goToDetail={goToDetail} />
             <CustomButton
               onPress={() => goToDetail(null)}
-              label={'THÊM ĐỊA CHỈ MỚI'}
-              width={246}
-              height={58}
-              bgColor={AppStyles.colors.button}
-              styleText={{ fontSize: 16 }}
+              label={translate('txtAddNewAddress')}
+              width={379}
+              height={61}
+              borderRadius={14}
+              bgColor={AppStyles.colors.accent}
+              styleText={styles.txtButton}
               style={styles.btnContainer}
             />
           </>
@@ -87,7 +91,6 @@ const Index = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 5,
     backgroundColor: 'transparent',
   },
   contentContainerStyle: { paddingVertical: 15 },
@@ -123,15 +126,27 @@ const styles = StyleSheet.create({
   txtTitle: {
     fontSize: 21,
     marginHorizontal: 15,
-    marginVertical: 5,
+    marginVertical: 15,
+    color: AppStyles.colors.accent,
+    ...AppStyles.fonts.SVN_Merge_Bold,
   },
   btnContainer: {
     alignSelf: 'center',
     marginVertical: 25,
+    shadowColor: '#00000090',
+    shadowOffset: {
+      width: 3,
+      height: 10,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 8.3,
+
+    elevation: 10,
   },
   txtAddress: {
     fontSize: 14,
     ...AppStyles.fonts.text,
   },
+  txtButton: { fontSize: 16, color: AppStyles.colors.white },
 });
 export default Index;

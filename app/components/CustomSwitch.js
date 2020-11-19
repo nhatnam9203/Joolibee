@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch } from 'react-native';
 
-const CustomSwitch = ({ toggleSwitch }) => {
-  const [isEnabled, setIsEnabled] = React.useState(false);
+const CustomSwitch = ({ toggleSwitch, defautlValue }) => {
+  const [isEnabled, setIsEnabled] = React.useState(defautlValue);
 
   const onValueChange = (val) => {
     setIsEnabled(val);

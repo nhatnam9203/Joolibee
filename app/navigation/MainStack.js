@@ -247,6 +247,9 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtMyAddress'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_header_back} />
+          ),
         }}
       />
 
@@ -257,7 +260,7 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtMyAddressDetail'),
           headerBackImage: () => (
-            <HeaderImage src={images.icons.ic_close_blur} />
+            <HeaderImage src={images.icons.ic_header_back} />
           ),
         }}
       />
@@ -268,6 +271,9 @@ function MainStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSearchAddress'),
+          headerBackImage: () => (
+            <HeaderImage src={images.icons.ic_header_back} />
+          ),
         }}
       />
 

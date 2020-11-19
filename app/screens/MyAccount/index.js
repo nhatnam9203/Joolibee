@@ -23,8 +23,7 @@ const MyAccountScreen = () => {
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
-  const { user } = useCustomer() || {};
-  const { firstname, lastname } = user || {};
+  const { user } = useCustomer();
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
     setSettingList(localData(navigation));
@@ -51,7 +50,11 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            <Text style={styles.nameStyle}>{firstname + ' ' + lastname}</Text>
+            {user && (
+              <Text style={styles.nameStyle}>
+                {user?.firstname + ' ' + user?.lastname}
+              </Text>
+            )}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ScreenName.EditAccount);

@@ -143,5 +143,13 @@
   "txtOrderGuide": "Hướng dẫn đặt hàng",
   "txtUseVoucherGuide": "Hướng dẫn sử dụng ưu đãi",
   "txtPointAccumulateGuide": "Hướng dẫn tích điểm",
-  "txtExpirePoint":"Điểm Sẽ hết hạn vào ngày"
+  "txtExpirePoint":"Điểm Sẽ hết hạn vào ngày",
+  "txtDefaultAddress":"Địa chỉ mặc định",
+  "txtAddNewAddress":"THÊM ĐỊA CHỈ MỚI",
+  "txtEditAddress":"Chỉnh sửa địa chỉ",
+  "txtAddressList":"Danh sách địa chỉ",
+  "txtSaveAddress":"LƯU ĐỊA CHỈ NÀY",
+  "txtSaveChange":"LƯU THAY ĐỔI",
+  "txtSetDefaultAddress":"Đặt làm địa chỉ mặc định"
+
 }

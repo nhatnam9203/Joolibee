@@ -32,13 +32,6 @@ export const QueryAddressList = ({
   }, [getAddress]);
   let _data = data?.customer ? data?.customer?.addresses : defaultData;
 
-  let addresses = _data.filter((address) => {
-    if (isDefault) {
-      return address.default_shipping || address.default_billing;
-    }
-    return !address.default_shipping && !address.default_billing;
-  });
-
   if (error) {
     return <></>;
   }
@@ -51,7 +44,7 @@ export const QueryAddressList = ({
 
   return (
     <CustomFlatList
-      data={addresses}
+      data={_data}
       renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
       keyExtractor={(item) => item.id.toString()}
