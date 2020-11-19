@@ -19,7 +19,7 @@ export const JollibeeImage = ({
   // Callback functions
   const onLoadStart = () => setDownload(0);
   const onProgress = ({ nativeEvent: { loaded, total } }) => {
-    setDownload((loaded / total).toFixed(2) * 100);
+    setDownload(Math.round((loaded / total).toFixed(2) * 100));
   };
   const onLoadEnd = () => setDownload(-1);
   const onError = () => {
@@ -52,7 +52,7 @@ export const JollibeeImage = ({
         style={[styles.imgContent, style]}
         {...props}
       />
-      {download > 0 && (
+      {typeof download === 'number' && download > 0 && (
         <View style={styles.spinnerContent}>
           <Spinner size={15} type="Circle" color="#2B2B2B" />
           <Text style={styles.textDownload}>{download + '%'}</Text>

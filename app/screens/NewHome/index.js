@@ -32,17 +32,20 @@ export default function HomeScreen() {
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
   const dispatch = useDispatch();
-
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
-  const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    // fetchPolicy: 'cache-first',
-  });
+
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,
       headerLeft: () => <TopBarLeft />,
     });
   }, [language, navigation]);
+
+  const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
+    fetchPolicy: 'cache-first',
+  });
+
+  const { homeScreen } = data;
 
   const onCHangeScreen = (screen) => () => {
     let params = {
@@ -52,8 +55,6 @@ export default function HomeScreen() {
     };
     navigation.navigate(screen, params);
   };
-
-  const { homeScreen } = data;
 
   return (
     <>
@@ -65,11 +66,13 @@ export default function HomeScreen() {
           topBounceColor={AppStyles.colors.accent}
           bottomBounceColor="transparent">
           <SinglePageLayout>
+            {/* BANNERS */}
             <Banners
               loading={loading}
-              data={homeScreen?.promotions ? homeScreen?.promotions : []}
+              data={homeScreen?.promotions ?? []}
               height={BANNER_HEIGHT}
             />
+            {/* END BANNERS */}
 
             {/* ---------START TOP CONTENT  ------------ */}
             <View style={[styles.wrapperContainerLayoutYellow]}>

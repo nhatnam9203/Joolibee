@@ -23,6 +23,7 @@ export const useCustomer = () => {
   }
 
   const signOut = async () => {
+    Logger.debug('', 'SignOut >>> customer >>> hook');
     // call server signOut
     await revokeCustomerToken();
 

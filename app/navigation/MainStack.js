@@ -81,6 +81,7 @@ function MainStack() {
         },
         headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
+        cardStyle: { backgroundColor: 'transparent' },
       }}>
       {/* <Stack.Screen
         component={MainTabScreen}
