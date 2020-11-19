@@ -310,6 +310,7 @@ export const CUSTOMER_INFO = gql`
       date_of_birth
       addresses {
         full_address
+        default_shipping
       }
     }
   }
@@ -329,6 +330,7 @@ export const CUSTOMER_CART_QUERY = gql`
         }
         quantity
       }
+      total_quantity
     }
   }
 `;

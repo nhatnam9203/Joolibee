@@ -37,6 +37,7 @@ target 'loyalty' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
+
   end
 
   target 'loyalty-develop' do

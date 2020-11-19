@@ -1,7 +1,23 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View,
+  Pressable,
+} from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  withSpring,
+} from 'react-native-reanimated';
 
 const DISABLE_COLOR = '#4448';
+const ANIMATION_DURATION = 250;
+const ZOOM_IN = 1.2;
+const ZOOM_OUT = 1;
 
 const CustomButton = ({
   onPress,
@@ -19,61 +35,82 @@ const CustomButton = ({
   disabled,
   borderRadius = 12,
   styleContent = {},
+  animation = true,
   ...props
-}) => (
-  <TouchableOpacity
-    style={[
-      {
-        width: width,
-        height: height,
-        borderRadius: borderRadius ?? height / 2,
-        backgroundColor: bgColor,
-        // ...(borderColor && { borderWidth: 1, borderColor: borderColor }),
-      },
-      absolute && styles.btnAbsoluteStyle,
-      style,
-    ]}
-    activeOpacity={0.8}
-    underlayColor={bgColor}
-    onPress={onPress}
-    disabled={disabled}
-    {...props}>
-    <>
-      <View
-        style={[
-          styles.content,
-          styleContent,
-          {
-            backgroundColor: bgColor,
-            borderRadius: borderRadius ?? height / 2,
-            ...(borderColor &&
-              !disabled && {
-                borderWidth: borderWidth,
-                borderColor: borderColor,
-              }),
-          },
-        ]}>
-        {children}
-        {!!label && (
-          <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
-            {label?.toUpperCase()}
-          </Text>
-        )}
-      </View>
-      {disabled && (
-        <View
+}) => {
+  const viewScale = useSharedValue(1);
+
+  const customSpringStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: animation ? viewScale.value : 1 }],
+    };
+  });
+
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        {
+          width: width,
+          height: height,
+          borderRadius: borderRadius ?? height / 2,
+          backgroundColor: bgColor,
+        },
+        absolute && styles.btnAbsoluteStyle,
+        style,
+      ]}
+      onPress={onPress}
+      onPressIn={() => {
+        viewScale.value = withTiming(ZOOM_IN, {
+          duration: ANIMATION_DURATION,
+          easing: Easing.bezier(0, 1.2, 0.76, 0.98),
+        });
+      }}
+      onPressOut={() => {
+        viewScale.value = withTiming(ZOOM_OUT, {
+          duration: ANIMATION_DURATION,
+          easing: Easing.bezier(0.14, 0.44, 0.44, 1.08),
+        });
+      }}
+      disabled={disabled}
+      {...props}>
+      <>
+        <Animated.View
           style={[
-            styles.absolute,
+            styles.content,
+            styleContent,
             {
+              backgroundColor: bgColor,
               borderRadius: borderRadius ?? height / 2,
-              backgroundColor: DISABLE_COLOR,
+              ...(borderColor &&
+                !disabled && {
+                  borderWidth: borderWidth,
+                  borderColor: borderColor,
+                }),
             },
-          ]}
-        />
-      )}
-    </>
-  </TouchableOpacity>
-);
+            customSpringStyles,
+          ]}>
+          {children}
+          {!!label && (
+            <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
+              {label?.toUpperCase()}
+            </Text>
+          )}
+        </Animated.View>
+        {disabled && (
+          <View
+            style={[
+              styles.absolute,
+              {
+                borderRadius: borderRadius ?? height / 2,
+                backgroundColor: DISABLE_COLOR,
+              },
+            ]}
+          />
+        )}
+      </>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
   content: {

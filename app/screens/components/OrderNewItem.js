@@ -31,7 +31,7 @@ const OrderItemLoading = () => (
 
 export const OrderNewItem = ({
   item,
-  onPress,
+  onPress = () => {},
   shadow,
   updateQty,
   loading = false,

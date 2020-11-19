@@ -1,11 +1,25 @@
+import { useMutation } from '@apollo/client';
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
-import { GCC } from '@graphql';
+import { GCC, mutation } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
-import { destructuring, format } from '@utils';
+import { destructuring, format, scale } from '@utils';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+import {
+  Fade,
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+} from 'rn-placeholder';
 import {
   ButtonCC,
   JollibeeImage,
@@ -13,14 +27,17 @@ import {
   MenuOptionSelectedItem,
 } from '../components';
 import { productReducer, setProduct, updateOption } from './ProductState';
-import { useMutation } from '@apollo/client';
-import { mutation } from '@graphql';
-import { useSelector, useDispatch } from 'react-redux';
-import { app } from '@slices';
+
+const { scaleHeight, scaleWidth } = scale;
+const { width, height } = Dimensions.get('window');
+const ANIMATION_DURATION = 800;
+const CART_ICON_X = scaleWidth(25);
+const CART_ICON_Y = scaleHeight(65);
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+
+  const viewScale = useSharedValue(1);
 
   const { productItem } = route.params;
 
@@ -61,9 +78,42 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <MenuOptionSelectedItem item={item?.first} list={item} />
   );
 
-  const renderHeader = () => {
-    if (!productItemDetail) {
-      return <></>;
+  const renderHeader = (isLoading) => {
+    if (isLoading || !productItemDetail) {
+      return (
+        <Placeholder style={styles.placeholderHead} Animation={Fade}>
+          <PlaceholderMedia style={styles.placeholderImage} />
+          <View style={styles.placeholderHorizontal}>
+            <PlaceholderLine
+              width={'60%'}
+              height={20}
+              style={styles.placeholderLine}
+            />
+            <PlaceholderLine
+              width={30}
+              height={25}
+              style={styles.placeholderLine}
+            />
+          </View>
+          <View style={styles.placeholderHorizontal}>
+            <PlaceholderLine
+              width={'60%'}
+              height={20}
+              style={styles.placeholderLine}
+            />
+            <PlaceholderLine
+              width={20}
+              height={15}
+              style={styles.placeholderLine}
+            />
+          </View>
+          <PlaceholderLine
+            width={'60%'}
+            height={20}
+            style={styles.placeholderLine}
+          />
+        </Placeholder>
+      );
     }
 
     const { image, name, point, price_range } = productItemDetail;
@@ -71,11 +121,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
     return (
       <View style={styles.header}>
-        <JollibeeImage
-          style={styles.imageHeaderStyle}
-          url={image?.url}
-          defaultSource={images.menu_3}
-        />
+        <JollibeeImage style={styles.imageHeaderStyle} url={image?.url} />
 
         <View style={styles.headerContent}>
           <Text
@@ -200,6 +246,24 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
+  const customSpringStyles = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX:
+            (width * (1 - viewScale.value)) / 2 -
+            (1 - viewScale.value) * CART_ICON_X,
+        },
+        {
+          translateY:
+            -(height - height * viewScale.value) / 2 +
+            (1 - viewScale.value) * CART_ICON_Y,
+        },
+        { scale: viewScale.value },
+      ],
+    };
+  });
+
   const addProductToCart = () => {
     const { sku, items = [] } = productItemDetail;
     const optionsMap = [];
@@ -226,16 +290,23 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       },
     });
 
-    navigation.goBack();
-    dispatch(app.showOrderList());
+    viewScale.value = withTiming(0, {
+      duration: ANIMATION_DURATION,
+      easing: Easing.bezier(0.45, 0.45, 0.2, 0.75),
+    });
+
+    setTimeout(() => {
+      navigation.goBack();
+    }, ANIMATION_DURATION);
+    // dispatch(app.showOrderList());
   };
 
   return (
-    <>
-      <View style={styles.container}>
+    <Animated.View style={[styles.container, customSpringStyles]}>
+      <View style={styles.content}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderHeader={renderHeader}
+          renderHeader={() => renderHeader()}
           renderItem={renderItem}
           renderFooter={renderFooter}
           updateProductItemDetail={onReceivedProduct}
@@ -243,7 +314,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         />
       </View>
 
-      {/**Close Button */}
       <CustomButton
         onPress={() => navigation.goBack()}
         absolute={true}
@@ -258,7 +328,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
           onPress={addProductToCart}
         />
       </View>
-    </>
+    </Animated.View>
   );
 };
 
@@ -268,6 +338,10 @@ const ORDER_AMOUNT_HEIGHT = 120;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+
+  content: {
     flex: 1,
     backgroundColor: '#fff',
   },
@@ -404,6 +478,34 @@ const styles = StyleSheet.create({
   },
 
   txtStyle: { ...AppStyles.fonts.text },
+
+  placeholderHead: {
+    backgroundColor: AppStyles.colors.white,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: 10,
+    paddingTop: scaleHeight(100),
+    flex: 0,
+    marginBottom: scaleHeight(20),
+  },
+  placeholderContent: {
+    backgroundColor: AppStyles.colors.white,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: 10,
+    flex: 0,
+  },
+  placeholderImage: {
+    height: 250,
+    width: '100%',
+    marginBottom: 15,
+    borderRadius: scaleWidth(14),
+  },
+  placeholderLine: { marginBottom: 15 },
+  placeholderHorizontal: {
+    ...AppStyles.styles.horizontalLayout,
+    width: '100%',
+  },
 });
 
 export default MenuItemDetailScreen;

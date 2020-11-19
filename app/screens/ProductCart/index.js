@@ -21,7 +21,7 @@ import { format, scale } from '@utils';
 import * as Widget from './widget';
 import { useComponentSize } from '@hooks';
 
-const { scaleHeight } = scale;
+const { scaleWidth } = scale;
 
 const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
@@ -30,14 +30,16 @@ const ProductCart = ({ visible, onToggle }) => {
   const cart_id = useSelector((state) => state.cart?.cart_id);
 
   const [refreshing, setRefreshing] = React.useState(false);
-  const [footerSize, onLayoutFooter] = useComponentSize();
   const [cartDetail, setCartDetail] = React.useState(null);
+
+  const [footerSize, onLayoutFooter] = useComponentSize();
   // --------- handle fetch data cart -----------
 
   const [loadCartDetail, { data, error, loading }] = useLazyQuery(
     query.CART_DETAIL,
     {
       variables: { cartId: cart_id },
+      // fetchPolicy: 'no-cache',
       fetchPolicy: 'cache-first',
     },
   );
@@ -50,8 +52,6 @@ const ProductCart = ({ visible, onToggle }) => {
   // Mutation update cart product --
 
   const onRenderItem = ({ item }, index) => {
-    // loading || !cartDetail?.items ? <OrderItemLoading /> :
-
     return (
       <OrderItem
         item={item}
@@ -209,7 +209,7 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      {/* <Loading isLoading={response.loading} /> */}
+      <Loading isLoading={loading} />
     </PopupLayout>
   );
 };
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     flex: 0,
     width: '90%',
     maxHeight: '80%',
-    minHeight: '50%',
+    minHeight: '60%',
     borderRadius: 14,
     overflow: 'hidden',
   },
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     ...AppStyles.fonts.SVN_Merge_Bold,
-    fontSize: scaleHeight(24),
+    fontSize: scaleWidth(24),
     flex: 1,
     textAlign: 'center',
   },

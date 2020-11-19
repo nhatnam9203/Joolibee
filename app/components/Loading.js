@@ -9,6 +9,7 @@ const Loading = ({
   onCancelLoading,
   transparent = false,
   imageSize = '10%',
+  spinKit = false,
 }) => {
   const [showLoading, setShowLoading] = React.useState(false);
 
@@ -33,14 +34,25 @@ const Loading = ({
         // eslint-disable-next-line react-native/no-inline-styles
         { backgroundColor: transparent ? 'transparent' : '#0009' },
       ]}>
-      {/* <Spinner style={styles.spinner} size={30} type="Circle" color="#E31837" /> */}
-      <View
-        style={[styles.imageBgStyle, { height: imageSize, width: imageSize }]}>
-        <Image
-          style={styles.imageStyle}
-          source={require('../assets/images/jollibee-wellcome-gift.gif')}
+      {spinKit ? (
+        <Spinner
+          style={styles.spinner}
+          size={imageSize}
+          type="CircleFlip"
+          color="#fff"
         />
-      </View>
+      ) : (
+        <View
+          style={[
+            styles.imageBgStyle,
+            { height: imageSize, width: imageSize },
+          ]}>
+          <Image
+            style={styles.imageStyle}
+            source={require('../assets/images/jollibee-wellcome-gift.gif')}
+          />
+        </View>
+      )}
     </View>
   ) : (
     []
@@ -49,17 +61,17 @@ const Loading = ({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
     position: 'absolute',
     top: 0,
     bottom: 0,
     right: 0,
     left: 0,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  spinner: {
-    marginBottom: 50,
-  },
+
+  spinner: { flex: 0 },
 
   imageStyle: {
     resizeMode: 'contain',

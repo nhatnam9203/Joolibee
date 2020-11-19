@@ -57,6 +57,8 @@ export default function HomeScreen() {
 
   const onTogglePopup = () => setVisiblePopup(true);
 
+  const { homeScreen } = data;
+
   const onCHangeScreen = (screen) => () => {
     let params = {
       data: homeScreen.news ? homeScreen.news : [],
@@ -65,8 +67,6 @@ export default function HomeScreen() {
     };
     navigation.navigate(screen, params);
   };
-
-  const { homeScreen } = data;
 
   return (
     <>
@@ -78,11 +78,13 @@ export default function HomeScreen() {
           topBounceColor={AppStyles.colors.accent}
           bottomBounceColor="transparent">
           <SinglePageLayout>
+            {/* BANNERS */}
             <Banners
               loading={loading}
-              data={homeScreen?.promotions ? homeScreen?.promotions : []}
+              data={homeScreen?.promotions ?? []}
               height={BANNER_HEIGHT}
             />
+            {/* END BANNERS */}
 
             {/* ---------START TOP CONTENT  ------------ */}
             <View style={[styles.wrapperContainerLayoutYellow]}>

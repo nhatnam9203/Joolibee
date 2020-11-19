@@ -1,25 +1,19 @@
 import { scale } from '@utils';
 import { Loading } from '@components';
 import React from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { JollibeeImage } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const Banners = ({ openDetail, data, loading, height = scaleHeight(336) }) => {
+const Banners = ({ data, loading, height = scaleHeight(336) }) => {
   return (
     <View style={[styles.container, { height: height }]}>
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={!loading ? data : [1, 2, 3]}
-        renderItem={(item, index) =>
+        renderItem={(item) =>
           loading ? renderLoading(loading) : renderItem(item)
         }
         sliderWidth={width}
@@ -54,7 +48,12 @@ const renderItem = (item) => {
 const renderLoading = (loading) => {
   return (
     <View style={styles.contentLoading}>
-      <Loading isLoading={loading} transparent={true} imageSize={'100%'} />
+      <Loading
+        isLoading={loading}
+        transparent={true}
+        imageSize={'92%'}
+        // spinKit={true}
+      />
     </View>
   );
 };

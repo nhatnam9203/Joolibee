@@ -140,7 +140,7 @@ export const QueryProductDetail = ({
   };
 
   // if (error) return <></>;
-  if (loading) {
+  if (false) {
     return (
       <>
         <Placeholder Animation={Fade} style={styles.placeholderContainer}>
@@ -218,11 +218,19 @@ export const QueryProductDetail = ({
   }
 
   const onRenderHeader = () => {
-    return typeof renderHeader === 'function' ? renderHeader() : <View />;
+    return typeof renderHeader === 'function' ? (
+      renderHeader(loading)
+    ) : (
+      <View />
+    );
   };
 
   const onRenderFooter = () => {
-    return typeof renderHeader === 'function' ? renderFooter() : <View />;
+    return typeof renderHeader === 'function' && !loading ? (
+      renderFooter()
+    ) : (
+      <View />
+    );
   };
 
   return (

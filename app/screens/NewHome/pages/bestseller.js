@@ -3,12 +3,24 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { OrderNewItem } from '../../components';
 const { width } = Dimensions.get('window');
+import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../../ScreenName';
 
 const Bestseller = ({ data, loading }) => {
-  const onRenderItem = (item) => {
-    if (typeof renderItem === 'function') {
-      return renderItem(item, loading || !data);
-    }
+  const navigation = useNavigation();
+
+  const onRenderItem = ({ item, index }) => {
+    return (
+      <OrderNewItem
+        key={index + ''}
+        shadow={true}
+        loading={loading || !data}
+        item={item}
+        onPress={() => {
+          navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
+        }}
+      />
+    );
   };
 
   return (
@@ -31,20 +43,6 @@ const Bestseller = ({ data, loading }) => {
         inactiveSlideScale={1}
       />
     </View>
-  );
-};
-
-const renderItem = ({ item, index }, loading) => {
-  return (
-    <OrderNewItem
-      key={index + ''}
-      shadow={true}
-      loading={loading}
-      item={item}
-      onPress={() => {
-        // navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
-      }}
-    />
   );
 };
 

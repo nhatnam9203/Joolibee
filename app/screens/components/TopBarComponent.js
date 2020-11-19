@@ -1,17 +1,15 @@
-import { useQuery } from '@apollo/client';
 import { Action, Avatar, Bar, Logo, Space } from '@components';
-import { query } from '@graphql';
+import { useCustomer, useCustomerCart } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
 import { AppStyles, images } from '@theme';
+import { scale } from '@utils';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { scale } from '@utils';
-import { useCustomer, useCustomerCart } from '@hooks';
 
 const { scaleHeight } = scale;
 
@@ -64,12 +62,12 @@ export const TopBarComponent = React.memo(() => {
   );
 });
 
-export const TopBarRight = React.memo(() => {
+export const TopBarRight = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { data } = useCustomerCart();
-  Logger.debug(data, 'TopBarRight');
+  const { cart } = useCustomerCart();
+
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
       <Action
@@ -77,7 +75,7 @@ export const TopBarRight = React.memo(() => {
         onPress={() => {
           navigation.navigate(ScreenName.Notification);
         }}
-        notifyNumber={3}
+        notifyNumber={0}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />
@@ -87,17 +85,16 @@ export const TopBarRight = React.memo(() => {
         onPress={() => {
           dispatch(app.showOrderList());
         }}
-        notifyNumber={2}
+        notifyNumber={cart?.customerCart?.total_quantity}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />
     </View>
   );
-});
+};
 
 export const TopBarLeft = React.memo(() => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const { user } = useCustomer();
 
   return (
