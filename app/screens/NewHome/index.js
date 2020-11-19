@@ -56,9 +56,6 @@ export default function HomeScreen() {
   }, []);
 
   const onTogglePopup = () => setVisiblePopup(true);
-  const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first',
-  });
 
   const { homeScreen } = data;
 

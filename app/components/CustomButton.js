@@ -16,7 +16,7 @@ import Animated, {
 
 const DISABLE_COLOR = '#4448';
 const ANIMATION_DURATION = 250;
-const ZOOM_IN = 1.1;
+const ZOOM_IN = 1.2;
 const ZOOM_OUT = 1;
 
 const CustomButton = ({
@@ -35,13 +35,14 @@ const CustomButton = ({
   disabled,
   borderRadius = 12,
   styleContent = {},
+  animation = true,
   ...props
 }) => {
   const viewScale = useSharedValue(1);
 
   const customSpringStyles = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: viewScale.value }],
+      transform: [{ scale: animation ? viewScale.value : 1 }],
     };
   });
 

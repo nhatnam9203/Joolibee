@@ -24,7 +24,8 @@ export const CardView = ({
       height={height}
       bgColor={bgColor}
       style={styles.cardContainer}
-      styleContent={styles.cardContent}>
+      styleContent={styles.cardContent}
+      animation={false}>
       <Image source={url} style={[styles.img, styleIcon]} />
       <Text style={[styles.txtTitle, styleTitle]}>{title}</Text>
     </CustomButton>
