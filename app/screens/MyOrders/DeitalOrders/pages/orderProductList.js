@@ -6,7 +6,7 @@ export default function orderProductList({ data = [] }) {
   const renderItem = (item, index) => (
     <View key={index + ''} style={styles.container}>
       <View style={styles.leftContainer}>
-        <Text style={[AppStyles.fonts.textBold, styles.txtContent]}>
+        <Text style={[AppStyles.fonts.bold, styles.txtContent]}>
           {item.options}
         </Text>
         <Text style={[AppStyles.fonts.text, styles.txtContent]}>
@@ -19,7 +19,7 @@ export default function orderProductList({ data = [] }) {
 
       <View style={styles.rightContainer}>
         <BlockQuantity qty={item.qty} />
-        <Text style={AppStyles.fonts.textBold}>{item.price} đ</Text>
+        <Text style={AppStyles.fonts.bold}>{item.price} đ</Text>
       </View>
     </View>
   );
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     flex: 0,
     justifyContent: 'space-between',
     paddingHorizontal: metrics.padding + 5,
-    paddingVertical: metrics.padding + 10,
-    marginBottom: 15,
+    paddingVertical: metrics.padding + 15,
+    marginBottom: 2,
     borderRadius: 6,
     ...AppStyles.styles.shadow,
   },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 
   txtContent: {
     fontSize: 14,
-    marginTop: 3,
+    marginTop: 5,
   },
   blockQuantity: {
     width: 30,

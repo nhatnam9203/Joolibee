@@ -5,7 +5,7 @@ import { CustomButton, CustomImageBackground } from '@components';
 import { PopupRating } from '../../components';
 import { statusOrder, scale, format } from '@utils';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
-const { scaleHeight } = scale;
+const { scaleHeight, scaleWidth } = scale;
 
 const defaultData = [
   {
@@ -66,15 +66,13 @@ export default function Index({ navigation, route }) {
   );
 
   const OrderTitle = ({ title, style }) => (
-    <View style={[{ marginVertical: 20 }, style]}>
-      <Text style={(AppStyles.fonts.medium_SVN, styles.orderTitle)}>
-        {title}
-      </Text>
+    <View style={[{ marginVertical: 20, marginLeft: 15 }, style]}>
+      <Text style={styles.orderTitle}>{title}</Text>
     </View>
   );
 
   const ExpectedTime = () => (
-    <View style={{ padding: 20 }}>
+    <View style={{ marginLeft: 15 }}>
       <Text style={(AppStyles.fonts.bold, { fontSize: 14 })}>
         Nhận hàng dự kiến:
         <Text style={(AppStyles.fonts.medium_SVN, { fontSize: 18 })}>
@@ -104,9 +102,9 @@ export default function Index({ navigation, route }) {
             </View>
           )}
 
-          {status === 'Đang giao hàng' && <ExpectedTime />}
+          <ExpectedTime />
 
-          {/* {order_complete && <OrderTitle title='TRẠNG THÁI ĐƠN HÀNG' style={{ paddingHorizontal: 15 }} />} */}
+          {<OrderTitle title="TRẠNG THÁI ĐƠN HÀNG" />}
           <OrderStatus status={status} />
         </View>
 
@@ -120,17 +118,16 @@ export default function Index({ navigation, route }) {
 
           {/* -------------- SAN PHAM DA CHON  -------------- */}
 
-          <View style={styles.headerPreOrder}>
-            <OrderTitle title="MÓN ĂN ĐÃ CHỌN" />
-            <CustomButton
+          {/* <CustomButton
               // onPress={onToggle}
               label={'ĐẶT LẠI'}
               width={140}
               height={42}
               bgColor={AppStyles.colors.button}
               styleText={{ fontSize: 14 }}
-            />
-          </View>
+            /> */}
+
+          <OrderTitle title="MÓN ĂN ĐÃ CHỌN" />
           <OrderProductList data={data} />
           {/* --------------  SAN PHAM DA CHON  -------------- */}
 
@@ -169,9 +166,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: '100%',
-    height: scaleHeight(350),
-    // resizeMode:'stretch'
+    width: scaleWidth(267),
+    height: scaleHeight(253),
+    resizeMode: 'contain',
   },
   headerTitle: {
     fontSize: 18,
@@ -186,7 +183,9 @@ const styles = StyleSheet.create({
   },
 
   orderTitle: {
+    ...AppStyles.fonts.SVN_Merge_Bold,
     fontSize: 18,
+    //fontWeight: 'bold',
     color: AppStyles.colors.accent,
   },
   headerSubTitle: {
@@ -195,6 +194,5 @@ const styles = StyleSheet.create({
   },
   statusContainer: {
     flex: 1,
-    paddingHorizontal: 15,
   },
 });
