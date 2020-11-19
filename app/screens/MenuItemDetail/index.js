@@ -36,7 +36,9 @@ import Animated, {
 
 const { scaleHeight, scaleWidth } = scale;
 const { width, height } = Dimensions.get('window');
-const ANIMATION_DURATION = 800;
+const ANIMATION_DURATION = 1200;
+const CART_ICON_X = scaleWidth(25);
+const CART_ICON_Y = scaleHeight(65);
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
@@ -260,12 +262,13 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       transform: [
         {
           translateX:
-            (width * (1 - viewScale.value)) / 2 - (1 - viewScale.value) * 25,
+            (width * (1 - viewScale.value)) / 2 -
+            (1 - viewScale.value) * CART_ICON_X,
         },
         {
           translateY:
             -(height - height * viewScale.value) / 2 +
-            (1 - viewScale.value) * 65,
+            (1 - viewScale.value) * CART_ICON_Y,
         },
         { scale: viewScale.value },
       ],
