@@ -4,6 +4,7 @@ import { Config } from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import Spinner from 'react-native-spinkit';
 import { PlaceholderMedia, Placeholder } from 'rn-placeholder';
+import * as Animatable from 'react-native-animatable';
 
 export const JollibeeImage = ({
   url,
@@ -40,7 +41,9 @@ export const JollibeeImage = ({
   }, [url, defaultSource]);
 
   return source ? (
-    <View
+    <Animatable.View
+      animation="fadeIn"
+      duration={1}
       style={[styles.container, width && height ? { width, height } : style]}>
       <FastImage
         source={source}
@@ -58,7 +61,7 @@ export const JollibeeImage = ({
           <Text style={styles.textDownload}>{download + '%'}</Text>
         </View>
       )}
-    </View>
+    </Animatable.View>
   ) : (
     <Placeholder
       style={[

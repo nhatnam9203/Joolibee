@@ -7,7 +7,6 @@ import { AppStyles, images } from '@theme';
 import { destructuring, format, scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -121,12 +120,8 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
     return (
-      <Animatable.View style={styles.header} animation="fadeIn" duration={2000}>
-        <JollibeeImage
-          style={styles.imageHeaderStyle}
-          url={image?.url}
-          defaultSource={images.menu_3}
-        />
+      <View style={styles.header}>
+        <JollibeeImage style={styles.imageHeaderStyle} url={image?.url} />
 
         <View style={styles.headerContent}>
           <Text
@@ -153,7 +148,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
             )}
           </View>
         </View>
-      </Animatable.View>
+      </View>
     );
   };
 
@@ -311,7 +306,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.content}>
         <GCC.QueryProductDetail
           productItem={productItem}
-          renderHeader={renderHeader}
+          renderHeader={() => renderHeader()}
           renderItem={renderItem}
           renderFooter={renderFooter}
           updateProductItemDetail={onReceivedProduct}
