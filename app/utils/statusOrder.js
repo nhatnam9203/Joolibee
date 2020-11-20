@@ -39,17 +39,20 @@ export function getImage(status = '') {
 
 export function convertStatusOrder(status = '') {
   console.log('status', status);
+  // pending, received, cooking, ready, shipping, complete;
   switch (status.toLowerCase()) {
-    case 'đang giao hàng':
+    case 'pending':
+      return 'Đang chờ xác nhận';
+    case 'shipping':
       return 'Đang giao hàng';
 
     case 'received':
       return 'Đã xác nhận';
 
-    case 'đã đến nơi':
+    case 'ready':
       return 'Đã đến nơi';
     case 'complete':
-      return 'H oàn thành';
+      return 'Hoàn thành';
 
     default:
       return '';

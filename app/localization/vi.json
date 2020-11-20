@@ -113,10 +113,10 @@
   "txtShippingOrder": "Giao hàng tận nơi",
   "txtShippingInfo": "Thông tin giao hàng",
   "txtShippingTo": "Giao đến",
-  "txtItemSelect": "Món đã chọn",
+  "txtItemSelect": "Món ăn đã chọn",
   "txtPaymentMethod": "Phương thức thanh toán",
-  "txtPromotionApply": "Áp dụng ưu đãi",
-  "txtNote": "Ghi chú",
+  "txtPromotionApply": "Áp dụng khuyết mãi",
+  "txtNote": "Thêm ghi chú...",
   "txtToReceive": "Đến nhận",
   "txtInComingSoon": "Tinh năng đang phát triển ...\\n ---------------- \\n Vui lòng thử lại sau!",
   "txtOrderCalculator": "Tạm tính",
@@ -150,6 +150,8 @@
   "txtAddressList":"Danh sách địa chỉ",
   "txtSaveAddress":"LƯU ĐỊA CHỈ NÀY",
   "txtSaveChange":"LƯU THAY ĐỔI",
-  "txtSetDefaultAddress":"Đặt làm địa chỉ mặc định"
-
+  "txtSetDefaultAddress":"Đặt làm địa chỉ mặc định",
+  "txtEdit":"Chỉnh sửa",
+  "txtExtraProduct":"Ngon hơn khi ăn kèm với",
+  "txtOrderMethod":"Hình thức đặt hàng"
 }

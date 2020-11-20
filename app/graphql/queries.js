@@ -334,3 +334,33 @@ export const CUSTOMER_CART_QUERY = gql`
     }
   }
 `;
+
+export const MENU_DETAIL_LIST = gql`
+  query products($categoryId: String!) {
+    products(filter: { category_id: { eq: $categoryId } }) {
+      items {
+        id
+        sku
+        name
+        point
+        image {
+          url
+        }
+        price_range {
+          maximum_price {
+            final_price {
+              value
+              currency
+            }
+          }
+          minimum_price {
+            final_price {
+              value
+              currency
+            }
+          }
+        }
+      }
+    }
+  }
+`;

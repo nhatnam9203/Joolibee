@@ -36,15 +36,21 @@ const Index = () => {
     <Placeholder
       Animation={Fade}
       style={styles.containerLoading}
-      Left={() => <PlaceholderLine style={styles.avatarPlaceholder} />}>
+      Left={() => <PlaceholderLine style={styles.avatarPlaceholder} />}
+      Right={() => (
+        <View style={styles.rightContainerLoading}>
+          <PlaceholderLine />
+
+          <PlaceholderLine width={50} />
+        </View>
+      )}>
       <View style={styles.contentLoading}>
-        <PlaceholderLine width={18} style={styles.txtDate} />
+        <PlaceholderLine width={60} />
+        <PlaceholderLine width={30} style={styles.txtDate} />
 
-        <PlaceholderLine width={50} />
+        <PlaceholderLine />
 
-        <PlaceholderLine width={90} />
-
-        <PlaceholderLine style={styles.statusPlaceHolder} />
+        <PlaceholderLine width={30} />
       </View>
     </Placeholder>
   );
@@ -199,6 +205,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 6,
     width: '95%',
+  },
+  rightContainerLoading: {
+    width: 50,
+    alignItems: 'flex-end',
   },
 });
 export default Index;

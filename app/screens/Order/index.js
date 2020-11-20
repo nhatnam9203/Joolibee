@@ -20,24 +20,27 @@ import {
   LabelTitle,
   PopupNoticeEnvironment,
   PopupOrderSuccess,
+  OrderNewItem,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { OrderItems } from './LocalData';
 import { OrderItem } from './widget';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
-import { format } from '@utils';
+import { format, scale } from '@utils';
+import { ScrollView } from 'react-native-gesture-handler';
+const { scaleWidth, scaleHeight } = scale;
 
-const OrderSection = ({ title, children, buttonComponent }) => {
+const OrderSection = ({
+  titleColor = AppStyles.colors.accent,
+  title,
+  children,
+  buttonComponent,
+}) => {
   return (
     <View>
-      <View style={AppStyles.styles.horizontalLayout}>
+      <View style={[AppStyles.styles.horizontalLayout, { padding: 17 }]}>
         {!!title && (
-          <LabelTitle
-            label={title}
-            color={AppStyles.colors.accent}
-            fontSize={18}
-          />
+          <LabelTitle label={title} color={titleColor} fontSize={18} />
         )}
         {buttonComponent && buttonComponent()}
       </View>
@@ -46,11 +49,61 @@ const OrderSection = ({ title, children, buttonComponent }) => {
   );
 };
 
-const OrderSectionItem = ({ children, onPress }) => {
+const OrderSectionItem = ({ children, onPress, height = 66 }) => {
   return (
-    <TouchableOpacity style={styles.itemStyle} onPress={onPress}>
+    <TouchableOpacity
+      style={[
+        styles.itemStyle,
+        {
+          minHeight: height,
+        },
+      ]}
+      onPress={onPress}
+      disabled={!onPress}>
       {children}
     </TouchableOpacity>
+  );
+};
+
+const OrderButtonInput = ({
+  children,
+  onPress,
+  title,
+  icon,
+  bgColor,
+  btnWidth,
+  height = 52,
+}) => {
+  return (
+    <View
+      style={[
+        styles.buttonInputContainer,
+        {
+          height: scaleHeight(height),
+        },
+      ]}
+      onPress={onPress}
+      disabled={!onPress}>
+      {children}
+      <TouchableOpacity
+        style={[
+          styles.rightBtnInput,
+          {
+            backgroundColor: bgColor,
+            width: btnWidth,
+          },
+        ]}
+        onPress={onPress}>
+        {!!title && (
+          <LabelTitle
+            label={title}
+            color={AppStyles.colors.white}
+            fontSize={15}
+          />
+        )}
+        {!!icon && <Image />}
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -77,7 +130,10 @@ const OrderScreen = () => {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-first',
   });
-  console.log('data', data);
+  const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
+    variables: { categoryId: 4 },
+    fetchPolicy: 'cache-first',
+  });
   const {
     items,
     shipping_addresses,
@@ -98,7 +154,7 @@ const OrderScreen = () => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
-  const { firstname, lastname, city, region = {}, street = [{}] } =
+  const { firstname, lastname, telephone, city, region = {}, street = [{}] } =
     shipping_addresses[0] || {};
   const addressFull = `${street[0] || ''} ${city} ${region.label}`;
   // -------- handle fetch data cart -----------
@@ -111,7 +167,7 @@ const OrderScreen = () => {
   };
 
   const onEdit = () => {
-    shippingType?.code == ShippingType.InShop
+    shippingType?.code === ShippingType.InShop
       ? navigation.navigate(ScreenName.StorePickup)
       : () => {};
   };
@@ -134,7 +190,9 @@ const OrderScreen = () => {
       <SinglePageLayout backgroundColor={AppStyles.colors.background}>
         <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
-          <OrderSection key="ShippingType">
+          <OrderSection
+            key="ShippingType"
+            title={`${translate('txtOrderMethod')}`.toUpperCase()}>
             <OrderSectionItem
               onPress={() => {
                 onChangePaymentMethod(ShippingType.InPlace);
@@ -186,15 +244,24 @@ const OrderScreen = () => {
           {/**Shipping Info */}
           <OrderSection
             title={`${translate('txtShippingInfo')}`.toUpperCase()}
-            key="ShippingInfo">
+            key="ShippingInfo"
+            buttonComponent={() => (
+              <ButtonCC.ButtonYellow
+                label={translate('txtEdit')}
+                style={styles.buttonHeaderStyle}
+                textStyle={styles.headerButtonTextStyle}
+                onPress={onEdit}
+              />
+            )}>
             <OrderSectionItem>
               <View
                 style={{
                   flex: 1,
                   justifyContent: 'center',
-                  alignItems: 'center',
                 }}>
-                <Text style={styles.txtStyle}>{firstname}</Text>
+                <Text style={styles.txtStyle}>
+                  {firstname + ' ' + lastname}
+                </Text>
               </View>
               <View
                 style={{
@@ -207,9 +274,9 @@ const OrderScreen = () => {
                 style={{
                   flex: 1,
                   justifyContent: 'center',
-                  alignItems: 'center',
+                  paddingLeft: 17,
                 }}>
-                <Text style={styles.txtStyle}>{lastname}</Text>
+                <Text style={styles.txtStyle}>{telephone}</Text>
               </View>
             </OrderSectionItem>
 
@@ -218,7 +285,6 @@ const OrderScreen = () => {
                 style={{
                   flex: 1,
                   flexDirection: 'row',
-                  paddingHorizontal: 10,
                 }}>
                 <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
                   {shippingType?.code === ShippingType.InPlace
@@ -233,14 +299,8 @@ const OrderScreen = () => {
                   {addressFull}
                 </Text>
               </View>
-
-              <CustomButtonImage
-                onPress={onEdit}
-                image={images.icons.ic_order_edit}
-                style={styles.editOrderStyle}
-              />
             </OrderSectionItem>
-            <OrderSectionItem>
+            <OrderSectionItem height={78}>
               <TextInput
                 placeholder={translate('txtNote')}
                 multiline={true}
@@ -265,7 +325,7 @@ const OrderScreen = () => {
                 <OrderItem item={item} />
               </OrderSectionItem>
             ))}
-
+            {/* 
             <OrderSectionItem>
               <View style={styles.orderSumContent}>
                 <Text style={styles.txtTitleStyle}>
@@ -273,6 +333,43 @@ const OrderScreen = () => {
                 </Text>
                 <Text style={styles.txtStyle}>{subTotal}</Text>
               </View>
+            </OrderSectionItem> */}
+          </OrderSection>
+
+          {/**Order Extra List*/}
+          <OrderSection
+            title={translate('txtExtraProduct')}
+            titleColor={AppStyles.colors.text}
+            key="ExtraItems">
+            <ScrollView
+              contentContainerStyle={{
+                paddingHorizontal: 10,
+                paddingBottom: 10,
+              }}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              {responseMenu.data?.products?.items.map((item, index) => (
+                <View key={index + ''} style={{ flex: 1 }}>
+                  <OrderNewItem
+                    shadow={true}
+                    loading={responseMenu.loading}
+                    item={item}
+                    onPress={() => {
+                      navigation.navigate(ScreenName.MenuItemDetail, {
+                        productItem: item,
+                      });
+                    }}
+                  />
+                </View>
+              ))}
+            </ScrollView>
+
+            <OrderSectionItem height={84}>
+              <TextInput
+                placeholder={'Thêm ghi chú (vd: không cay...)'}
+                multiline={true}
+                style={styles.txtNoteStyle}
+              />
             </OrderSectionItem>
             <OrderSectionItem>
               <View style={styles.orderSumContent}>
@@ -308,7 +405,16 @@ const OrderScreen = () => {
             title={translate('txtPromotionApply')}
             key="OrderPromotion">
             <OrderSectionItem>
-              <View style={AppStyles.styles.horizontalLayout}>
+              <OrderButtonInput
+                title="ÁP DỤNG"
+                btnWidth={126}
+                bgColor={AppStyles.colors.accent}>
+                <TextInput
+                  placeholder={'Nhập mã khuyến mãi'}
+                  style={{ paddingHorizontal: 10, flex: 1 }}
+                />
+              </OrderButtonInput>
+              {/* <View style={AppStyles.styles.horizontalLayout}>
                 <Image source={images.icons.ic_sticked} />
                 <Text style={styles.txtStyle}>Ưu đãi {_discount}</Text>
               </View>
@@ -318,7 +424,7 @@ const OrderScreen = () => {
                 onPress={() => {
                   navigation.navigate(ScreenName.MyReward);
                 }}
-              />
+              /> */}
             </OrderSectionItem>
           </OrderSection>
         </SafeAreaView>
@@ -357,7 +463,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: {
     flex: 1,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     marginTop: 20,
     marginBottom: CONFIRM_HEIGHT * 2,
   },
@@ -394,15 +500,12 @@ const styles = StyleSheet.create({
   },
 
   itemStyle: {
-    ...AppStyles.styles.shadow,
     backgroundColor: '#fff',
-    minHeight: 50,
-    marginVertical: 5,
-    borderRadius: 8,
+    marginVertical: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    paddingHorizontal: 17,
   },
 
   imgShippingStyle: {
@@ -422,11 +525,26 @@ const styles = StyleSheet.create({
 
   txtNoteStyle: {},
 
-  buttonHeaderStyle: { width: '40%', height: '60%' },
+  buttonHeaderStyle: { width: scaleWidth(122), height: scaleHeight(55) },
 
   headerButtonTextStyle: {
     fontSize: 14,
     color: '#1B1B1B',
+  },
+  buttonInputContainer: {
+    width: '100%',
+    borderRadius: 8,
+    borderWidth: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    overflow: 'hidden',
+    borderColor: AppStyles.colors.placeholder,
+  },
+  rightBtnInput: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
   },
 });
 
