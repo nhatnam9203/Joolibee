@@ -86,6 +86,10 @@ const images = {
     ic_jollibee_vn: require('../assets/icons/ic-jollibee-vn.png'),
     ic_call_now: require('../assets/icons/ic-call-now.png'),
   },
+  animations: {
+    fade: require('../assets/animations/animation_fade.json'),
+    test: require('../assets/animations/animation_test.json'),
+  },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),
   menu_2: require('../assets/images/menu-ga-gion-vv.png'),

@@ -12,7 +12,7 @@ export const useCustomer = () => {
   const { persistor } = useGraphqlClient();
 
   const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'cache-first',
   });
 
   const [revokeCustomerToken, response] = useMutation(mutation.SIGN_OUT);
