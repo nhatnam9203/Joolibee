@@ -7,21 +7,21 @@ export default function orderTotal() {
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={AppStyles.fonts.text}>Tạm tính:</Text>
-        <Text style={AppStyles.fonts.text}>255.000 đ</Text>
+        <Text style={AppStyles.fonts.bold}>255.000 đ</Text>
       </View>
 
       <View style={styles.content}>
         <Text style={AppStyles.fonts.text}>Khuyến mãi (Ưu đãi 40.000đ)</Text>
-        <Text style={AppStyles.fonts.text}>-40.000 đ</Text>
+        <Text style={AppStyles.fonts.bold}>-40.000 đ</Text>
       </View>
 
       <View style={styles.seperator} />
 
       <View style={styles.content}>
-        <Text style={[AppStyles.fonts.textBold, styles.txtFontSize]}>
+        <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
           Tổng cộng:
         </Text>
-        <Text style={[AppStyles.fonts.textBold, styles.txtFontSize]}>
+        <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
           215.000 đ
         </Text>
       </View>
@@ -33,7 +33,7 @@ export default function orderTotal() {
 
 const PaymentMethod = () => (
   <View
-    style={[styles.content, { justifyContent: 'flex-end', marginBottom: 25 }]}>
+    style={[styles.content, { justifyContent: 'flex-end', marginBottom: 50 }]}>
     <View style={styles.block}>
       <Text style={AppStyles.fonts.text}>đ</Text>
     </View>
@@ -61,8 +61,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1,
     backgroundColor: '#E1E1E1',
-    marginVertical: 10,
+    marginTop: 30,
+    marginBottom: 10,
   },
+
   txtFontSize: {
     fontSize: 18,
   },

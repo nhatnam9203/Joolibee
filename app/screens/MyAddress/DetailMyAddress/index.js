@@ -10,12 +10,17 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import { Formik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { regex } from '@utils';
-import { CustomInput, CustomButton, CustomImageBackground } from '@components';
+import {
+  CustomInput,
+  CustomButton,
+  CustomImageBackground,
+  CustomSwitch,
+} from '@components';
 import { SinglePageLayout } from '@layouts';
-import { TextInputErrorMessage, TextCheckBox } from '../../components';
+import { TextInputErrorMessage } from '../../components';
 import ScreenName from '../../ScreenName';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
@@ -33,23 +38,22 @@ const OPTIONS_MUTATION = {
 const Index = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { values } = props.route.params;
+  const { val_address, titleHeader } = props.route.params;
   const refFormMilk = React.useRef(null);
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );
 
-  const [default_shipping, setDefaultShippong] = React.useState(
-    Boolean(values?.default_shipping),
+  const [default_shipping, setDefaultShipping] = React.useState(
+    Boolean(val_address?.default_shipping),
   );
-
-  const [default_billing, setDefaultBilling] = React.useState(
-    Boolean(values?.default_billing),
+  const onChangeValue = React.useCallback(
+    () => setDefaultShipping(!default_shipping),
+    [default_shipping],
   );
-
-  const isCheckValue = values ? true : false;
+  const isCheckValue = val_address ? true : false;
   const initialValues = isCheckValue
-    ? values
+    ? val_address
     : {
         phone: '',
         place: '',
@@ -58,6 +62,9 @@ const Index = (props) => {
         note: '',
         address: location_selected?.addressFull,
       };
+  const txtButton = !isCheckValue
+    ? translate('txtSaveAddress')
+    : translate('txtSaveChange');
   //------------ Add address customer -----------------//
   const [createCustomerAddress] = useMutation(mutation.ADD_ADDRESS);
 
@@ -73,7 +80,7 @@ const Index = (props) => {
         firstname: datas.firstname,
         lastname: datas.lastname,
         default_shipping: default_shipping,
-        default_billing: default_billing,
+        default_billing: false,
         full_address: location_selected.addressFull,
       };
       dispatch(app.showLoading());
@@ -107,7 +114,7 @@ const Index = (props) => {
     [
       location_selected,
       default_shipping,
-      default_billing,
+
       dispatch,
       createCustomerAddress,
       navigation,
@@ -129,7 +136,7 @@ const Index = (props) => {
         firstname: datas.firstname,
         lastname: datas.lastname,
         default_shipping: default_shipping,
-        default_billing: default_billing,
+        default_billing: false,
         full_address: location_selected.addressFull,
       };
       dispatch(app.showLoading());
@@ -153,7 +160,7 @@ const Index = (props) => {
     },
     [
       default_shipping,
-      default_billing,
+
       dispatch,
       location_selected,
       navigation,
@@ -171,7 +178,7 @@ const Index = (props) => {
 
     deleteCustomerAddress({
       ...OPTIONS_MUTATION,
-      variables: { id: values.id },
+      variables: { id: val_address.id },
     })
       .then(() => {
         dispatch(app.hideLoading());
@@ -180,20 +187,17 @@ const Index = (props) => {
       .catch(() => {
         dispatch(app.hideLoading());
       });
-  }, [dispatch, deleteCustomerAddress, values, navigation]);
+  }, [dispatch, deleteCustomerAddress, val_address, navigation]);
 
   //------------ Update address customer -----------------//
   const onHandleSubmit = isCheckValue ? onHandleUpdate : onHandleAdd;
   const goToCreateAddress = () => navigation.navigate(ScreenName.SearchAddress);
 
   React.useEffect(() => {
-    if (refFormMilk.current) {
-      refFormMilk.current.setFieldValue(
-        'address',
-        location_selected?.addressFull,
-      );
-    }
-  }, [location_selected]);
+    navigation.setOptions({
+      headerTitle: titleHeader,
+    });
+  }, [navigation, titleHeader]);
 
   const AddressSchema = Yup.object().shape({
     phone: Yup.string()
@@ -207,191 +211,182 @@ const Index = (props) => {
     address: Yup.string().required(translate('txtRequired')),
   });
 
+  const DefaultShippingComponents = () => (
+    <View style={styles.switchContainer}>
+      <Text style={AppStyles.fonts.bold} numberOfLines={1}>
+        {translate('txtSetDefaultAddress')}
+      </Text>
+      <CustomSwitch
+        toggleSwitch={onChangeValue}
+        defautlValue={default_shipping}
+      />
+    </View>
+  );
+  const color_placehoder = {
+    color: location_selected?.addressFull ? '#484848' : '#9E9E9E',
+  };
+  const {
+    handleChange,
+    handleBlur,
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    handleSubmit,
+  } = useFormik({
+    initialValues: initialValues,
+    onSubmit: onHandleSubmit,
+    validationSchema: AddressSchema,
+    isValidating: true,
+  });
+
+  React.useEffect(() => {
+    setFieldValue('address', location_selected?.addressFull);
+  }, [location_selected, setFieldValue]);
   return (
     <CustomImageBackground
       source={images.watermark_background_2}
       style={{ flex: 1, backgroundColor: 'transparent' }}>
       <SinglePageLayout>
-        <Formik
-          innerRef={refFormMilk}
-          initialValues={initialValues}
-          onSubmit={onHandleSubmit}
-          validationSchema={AddressSchema}
-          isValidating={true}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
-            <View style={styles.container}>
-              <View style={styles.topContent}>
-                {/**PLACE*/}
-                <CustomInput
-                  style={{ width: LAYOUT_WIDTH }}
-                  onChangeText={handleChange('place')}
-                  onBlur={handleBlur('place')}
-                  value={values.place}
-                  placeholder="Tên địa điểm vd: Nhà, Công ty... *"
-                />
+        <View style={styles.container}>
+          <View style={styles.topContent}>
+            {/**PLACE*/}
+            <CustomInput
+              style={{ ...styles.inputShadow, width: LAYOUT_WIDTH }}
+              onChangeText={handleChange('place')}
+              onBlur={handleBlur('place')}
+              value={values.place}
+              placeholder="Tên địa điểm vd: Nhà, Công ty... *"
+            />
 
-                {/**Phone input error */}
-                {errors.place && touched.place && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.place}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
+            {/**Phone input error */}
+            {errors.place && touched.place && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.place}
+                color={AppStyles.colors.inputError}
+              />
+            )}
 
-                {/**FULLNAME*/}
-                <View style={AppStyles.styles.horizontalLayout}>
-                  <CustomInput
-                    style={{
-                      width: HALF_LAYOUT_WIDTH,
-                    }}
-                    onChangeText={handleChange('firstname')}
-                    onBlur={handleBlur('firstname')}
-                    value={values.firstname}
-                    placeholder={translate('txtInputFirstName')}
-                    textContentType="name"
-                  />
-
-                  <CustomInput
-                    style={{
-                      width: HALF_LAYOUT_WIDTH,
-                    }}
-                    onChangeText={handleChange('lastname')}
-                    onBlur={handleBlur('lastname')}
-                    value={values.lastname}
-                    placeholder={translate('txtInputLastName')}
-                    textContentType="name"
-                  />
-                </View>
-
-                {/**FULLNAME input error */}
-                {errors.firstname && touched.firstname && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.firstname}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
-
-                {/**PHONE*/}
-                <CustomInput
-                  style={{ width: LAYOUT_WIDTH }}
-                  onChangeText={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  value={values.phone}
-                  placeholder="Số điện thoại"
-                />
-
-                {/**Phone input error */}
-                {errors.phone && touched.phone && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.phone}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
-
-                {/**Address*/}
-                <TouchableOpacity
-                  style={styles.inputContainer}
-                  onPress={goToCreateAddress}>
-                  <Text style={styles.txtInput} numberOfLines={1}>
-                    {values.address ? values.address : 'Vui lòng nhập địa chỉ'}
-                  </Text>
-                  <Image source={images.icons.ic_arrow} />
-                </TouchableOpacity>
-
-                {/**Address input error */}
-                {errors.address && touched.address && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.address}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
-
-                {/**note input error */}
-                <CustomInput
-                  onChangeText={handleChange('note')}
-                  onBlur={handleBlur('note')}
-                  value={values.note}
-                  placeholder="Ghi chú cho địa chỉ"
-                  multiline={true}
-                  style={styles.noteInput}
-                />
-
-                {/**Phone input error */}
-                {errors.note && touched.note && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.note}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
-              </View>
-
-              {/**Default shipping */}
-              <TextCheckBox
-                label={
-                  values.default_billing
-                    ? 'Đây là địa chỉ giao hàng mặc định'
-                    : 'Dùng làm địa chỉ giao hàng mặc định'
-                }
-                value={default_shipping}
-                onValueChange={(value) => setDefaultShippong(value)}
-                tintColor={AppStyles.colors.accent}
-                onCheckColor={AppStyles.colors.accent}
-                onTintColor={AppStyles.colors.accent}
-                style={styles.checkboxStyle}
-                disabled={values.default_billing}
+            {/**FULLNAME*/}
+            <View style={AppStyles.styles.horizontalLayout}>
+              <CustomInput
+                style={{
+                  ...styles.inputShadow,
+                  width: HALF_LAYOUT_WIDTH,
+                }}
+                onChangeText={handleChange('firstname')}
+                onBlur={handleBlur('firstname')}
+                value={values.firstname}
+                placeholder={translate('txtInputFirstName')}
+                textContentType="name"
               />
 
-              {/**Default billing */}
-              <TextCheckBox
-                label={
-                  values.default_billing
-                    ? 'Đây là địa chỉ thanh toán mặc định'
-                    : 'Dùng làm địa chỉ thanh toán mặc định'
-                }
-                value={default_billing}
-                onValueChange={(value) => setDefaultBilling(value)}
-                tintColor={AppStyles.colors.accent}
-                onCheckColor={AppStyles.colors.accent}
-                onTintColor={AppStyles.colors.accent}
-                style={styles.checkboxStyle}
-                disabled={values.default_billing}
+              <CustomInput
+                style={{
+                  ...styles.inputShadow,
+                  width: HALF_LAYOUT_WIDTH,
+                }}
+                onChangeText={handleChange('lastname')}
+                onBlur={handleBlur('lastname')}
+                value={values.lastname}
+                placeholder={translate('txtInputLastName')}
+                textContentType="name"
               />
-
-              {!values.default_billing && !values.default_shipping && (
-                <CustomButton
-                  onPress={onHandleDelete}
-                  label="XÓA ĐỊA CHỈ"
-                  width={width * 0.9}
-                  height={58}
-                  bgColor="transparent"
-                  textColor={AppStyles.colors.accent}
-                  style={styles.btnRemove}
-                />
-              )}
             </View>
+
+            {/**FULLNAME input error */}
+            {errors.firstname && touched.firstname && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.firstname}
+                color={AppStyles.colors.inputError}
+              />
+            )}
+
+            {/**PHONE*/}
+            <CustomInput
+              style={{ ...styles.inputShadow, width: LAYOUT_WIDTH }}
+              onChangeText={handleChange('phone')}
+              onBlur={handleBlur('phone')}
+              value={values.phone}
+              placeholder="Số điện thoại"
+            />
+
+            {/**Phone input error */}
+            {errors.phone && touched.phone && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.phone}
+                color={AppStyles.colors.inputError}
+              />
+            )}
+
+            {/**Address*/}
+            <TouchableOpacity
+              style={[styles.inputContainer, styles.inputShadow]}
+              onPress={goToCreateAddress}>
+              <Text
+                style={[styles.txtInput, color_placehoder]}
+                numberOfLines={1}>
+                {values.address ? values.address : 'Vui lòng nhập địa chỉ'}
+              </Text>
+              <Image source={images.icons.ic_arrow} />
+            </TouchableOpacity>
+
+            {/**Address input error */}
+            {errors.address && touched.address && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.address}
+                color={AppStyles.colors.inputError}
+              />
+            )}
+
+            {/**note input error */}
+            <CustomInput
+              onChangeText={handleChange('note')}
+              onBlur={handleBlur('note')}
+              value={values.note}
+              placeholder="Ghi chú cho địa chỉ"
+              multiline={true}
+              style={[styles.noteInput, styles.inputShadow]}
+            />
+
+            {/**Phone input error */}
+            {errors.note && touched.note && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.note}
+                color={AppStyles.colors.inputError}
+              />
+            )}
+          </View>
+
+          {!values.default_shipping && isCheckValue && (
+            <CustomButton
+              onPress={onHandleDelete}
+              label="XÓA ĐỊA CHỈ"
+              width={width * 0.9}
+              height={58}
+              bgColor={AppStyles.colors.white}
+              textColor={AppStyles.colors.accent}
+              style={styles.btnRemove}
+            />
           )}
-        </Formik>
+        </View>
       </SinglePageLayout>
 
       <View style={styles.btnContainer}>
+        <DefaultShippingComponents />
         <CustomButton
-          onPress={refFormMilk.current?.handleSubmit}
-          label="LƯU ĐỊA CHỈ NÀY"
+          onPress={handleSubmit}
+          label={txtButton}
           width={width * 0.9}
-          height={58}
-          bgColor={AppStyles.colors.button}
+          height={61}
+          borderRadius={14}
+          bgColor={AppStyles.colors.accent}
+          textColor={AppStyles.colors.white}
         />
       </View>
     </CustomImageBackground>
@@ -409,10 +404,11 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: '100%',
-    height: 90,
-    justifyContent: 'center',
+    height: 134,
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: AppStyles.colors.white,
+    paddingVertical: 15,
   },
   noteInput: {
     height: 117,
@@ -443,6 +439,22 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     padding: 0,
     color: '#484848',
+  },
+  inputShadow: {
+    shadowColor: '#00000070',
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 8.3,
+    elevation: 10,
+  },
+  switchContainer: {
+    width: width * 0.88,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });
 export default Index;

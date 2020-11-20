@@ -57,7 +57,11 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            <Text style={styles.nameStyle}>{firstname + ' ' + lastname}</Text>
+            {user && (
+              <Text style={styles.nameStyle}>
+                {user?.firstname + ' ' + user?.lastname}
+              </Text>
+            )}
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ScreenName.EditAccount);

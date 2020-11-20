@@ -5,33 +5,32 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView,
   Animated,
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
-import { Accordian } from '@components';
 import { AppStyles, metrics, images } from '@theme';
 import { PopupChat } from '../../../components';
 import { makeAPhoneCall } from '@utils';
 
 const data = [
   {
+    title: 'Đang chờ xác nhận',
+    description:
+      'Đơn hàng của bạn đã được gửi và đang chờ xác nhận từ nhà hàng',
+  },
+  {
     title: 'Đã xác nhận & chuẩn bị đơn hàng',
     description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn',
-    y: 0,
   },
-  { title: 'Đang giao hàng', description: 'Trần văn C (0778010203)', y: 50 },
+  { title: 'Đang giao hàng', description: 'Trần văn C (0778010203)' },
   {
     title: 'Đã đến nơi',
     description: 'Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.',
-    y: 140,
   },
   {
     title: 'Hoàn thành',
     description: 'Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng',
-    y: 200,
   },
-  { title: 'Đã hủy', description: 'Đơn hàng của bạn đã huỷ', y: 300 },
 ];
 
 const stepIndicatorStyles = {
@@ -43,14 +42,14 @@ const stepIndicatorStyles = {
   stepStrokeWidth: 2,
   separatorStrokeFinishedWidth: 0,
   stepStrokeFinishedColor: AppStyles.colors.accent,
-  stepStrokeUnFinishedColor: AppStyles.colors.complete,
+  stepStrokeUnFinishedColor: AppStyles.colors.inactive,
   separatorFinishedColor: AppStyles.colors.accent,
-  separatorUnFinishedColor: AppStyles.colors.complete,
+  separatorUnFinishedColor: AppStyles.colors.inactive,
   stepIndicatorFinishedColor: AppStyles.colors.accent,
-  stepIndicatorLabelUnFinishedColor: AppStyles.colors.complete,
+  stepIndicatorLabelUnFinishedColor: AppStyles.colors.inactive,
+  labelAlign: 'flex-start',
 };
 export default function OrderStatus({ status }) {
-  const refScrollView = React.useRef(null);
   const scale = React.useRef(new Animated.Value(15)).current;
   const [visible, showPopup] = React.useState(false);
 
@@ -64,17 +63,9 @@ export default function OrderStatus({ status }) {
     </TouchableOpacity>
   );
 
-  const onScrollTo = React.useCallback(() => {
-    if (refScrollView.current) {
-      setTimeout(() => {
-        refScrollView.current.scrollTo({
-          x: 0,
-          y: data[indexStatus].y,
-          animate: true,
-        });
-      }, 200);
-    }
-  }, [indexStatus]);
+  const onTogglePopup = () => showPopup(!visible);
+
+  const onCall = () => makeAPhoneCall.makeAPhoneCall('0921234567');
 
   const loopAnimateFade = React.useCallback(
     () =>
@@ -100,44 +91,35 @@ export default function OrderStatus({ status }) {
   );
 
   React.useEffect(() => {
-    onScrollTo();
     setTimeout(() => {
       loopAnimateFade();
     }, 500);
-  }, [loopAnimateFade, onScrollTo]);
-
-  const onTogglePopup = () => showPopup(!visible);
-
-  const onCall = () => makeAPhoneCall.makeAPhoneCall('0921234567');
-
+  }, [loopAnimateFade]);
   const renderLabel = ({ position, label, currentPosition }) => {
-    const nextPosition = currentPosition + 1;
     const description = data[position].description;
-    const active = position < nextPosition ? 1 : 0.4;
-    const description_style = {
-      width: 170,
-      opacity: active,
-    };
     return (
       <View style={[styles.labelContainer, { height: 50 }]}>
         <View style={styles.labelLeft}>
-          <Text style={[AppStyles.fonts.textBold, { opacity: active }]}>
-            {label}
-          </Text>
-          <Text style={[AppStyles.fonts.mini, description_style]}>
-            {description}
-          </Text>
+          <Text style={AppStyles.fonts.bold}>{label}</Text>
+          <Text style={styles.txtDescription}>{description}</Text>
         </View>
 
-        {position === 1 && currentPosition === 1 && (
+        {
           <View style={styles.labelRight}>
-            <ImageLink
-              source={images.icons.ic_order_text}
-              onPress={onTogglePopup}
-            />
-            <ImageLink source={images.icons.ic_order_phone} onPress={onCall} />
+            {position === 2 && currentPosition === 2 && (
+              <View style={styles.contentRight}>
+                <ImageLink
+                  source={images.icons.ic_order_phone}
+                  onPress={onCall}
+                />
+                <ImageLink
+                  source={images.icons.ic_order_text}
+                  onPress={onTogglePopup}
+                />
+              </View>
+            )}
           </View>
-        )}
+        }
       </View>
     );
   };
@@ -146,11 +128,11 @@ export default function OrderStatus({ status }) {
     const activeBg = {
       backgroundColor:
         stepStatus === 'unfinished'
-          ? AppStyles.colors.complete
+          ? AppStyles.colors.inactive
           : AppStyles.colors.accent,
     };
-    const bgWarpper = stepStatus == 'unfinished' && {
-      backgroundColor: AppStyles.colors.complete,
+    const bgWarpper = stepStatus === 'unfinished' && {
+      backgroundColor: AppStyles.colors.inactive,
     };
     const scaleIndicator = stepStatus !== 'unfinished' && {
       transform: [{ scale }],
@@ -182,39 +164,16 @@ export default function OrderStatus({ status }) {
       customStyles={stepIndicatorStyles}
       stepCount={data.length}
       direction="vertical"
-      currentPosition={indexStatus}
+      currentPosition={1}
       labels={data.map((item) => item.title)}
       renderLabel={renderLabel}
       renderStepIndicator={renderStepIndicator}
     />
   );
 
-  const renderHeader = () => (
-    <View style={styles.headerContainer}>
-      <ScrollView ref={refScrollView} showsVerticalScrollIndicator={false}>
-        <StepIndicator
-          customStyles={stepIndicatorStyles}
-          stepCount={data.length}
-          direction="vertical"
-          currentPosition={indexStatus}
-          labels={data.map((item) => item.title)}
-          renderLabel={renderLabel}
-          renderStepIndicator={renderStepIndicator}
-        />
-      </ScrollView>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
-      <Accordian
-        styleTitle={(AppStyles.fonts.medium_SVN, styles.orderTitle)}
-        title="TRẠNG THÁI ĐƠN HÀNG"
-        renderHeader={renderHeader}
-        renderContent={renderContent}
-        callBack={onScrollTo}
-      />
-
+      {renderContent()}
       <PopupChat visible={visible} onToggle={onTogglePopup} />
     </View>
   );
@@ -227,8 +186,9 @@ const styles = StyleSheet.create({
   },
 
   labelContainer: {
-    width: 280,
+    flex: 1,
     marginVertical: 10,
+    paddingRight: 15,
     alignItems: 'center',
     flexDirection: 'row',
   },
@@ -238,10 +198,12 @@ const styles = StyleSheet.create({
   },
 
   labelRight: {
+    width: '30%',
+  },
+  contentRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '30%',
+    justifyContent: 'space-around',
   },
   fadeStepIndicator: {
     width: 20,
@@ -277,5 +239,9 @@ const styles = StyleSheet.create({
     height: 90,
     alignItems: 'flex-start',
     justifyContent: 'center',
+  },
+  txtDescription: {
+    // width: 170,
+    ...AppStyles.fonts.text,
   },
 });

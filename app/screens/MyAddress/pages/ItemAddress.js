@@ -1,7 +1,9 @@
 import { AppStyles, images, metrics } from '@theme';
+import { translate } from '@localize';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
-
+import { scale } from '@utils';
+const { scaleWidth, scaleHeight } = scale;
 const index = ({ item, onPress }) => {
   const onHandlePress = () => {
     onPress(item);
@@ -13,11 +15,17 @@ const index = ({ item, onPress }) => {
       </View>
 
       <View style={styles.content}>
-        <Text style={AppStyles.fonts.medium}>{item.company}</Text>
-
-        <Text
-          numberOfLines={2}
-          style={[AppStyles.fonts.mini, { fontSize: 14 }]}>
+        <View style={styles.placeContainer}>
+          <Text style={AppStyles.fonts.medium}>{item.company}</Text>
+          {item?.default_shipping && (
+            <View style={styles.defaultShippingContainer}>
+              <Text style={styles.txtDefaultShipping}>
+                {translate('txtDefaultAddress')}
+              </Text>
+            </View>
+          )}
+        </View>
+        <Text numberOfLines={1} style={styles.txtFullAddress}>
           {item.full_address}
         </Text>
       </View>
@@ -40,25 +48,43 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     backgroundColor: '#fff',
-    height: 75,
+    height: scaleHeight(75),
     flex: 0,
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    padding: metrics.padding,
-    marginHorizontal: 15,
-    marginVertical: 10,
-    borderRadius: 6,
-    ...AppStyles.styles.shadow,
+    padding: metrics.padding + 5,
+    marginVertical: scaleHeight(2),
   },
   content: {
-    paddingHorizontal: 10,
+    paddingHorizontal: scaleWidth(10),
     width: '85%',
+  },
+  txtFullAddress: {
+    ...AppStyles.fonts.mini,
+    fontSize: 14,
   },
   txtTitle: {
     fontSize: 21,
     marginHorizontal: 15,
     marginVertical: 5,
+  },
+  txtDefaultShipping: {
+    ...AppStyles.fonts.medium,
+    fontSize: 12,
+  },
+  placeContainer: {
+    flexDirection: 'row',
+    marginBottom: 5,
+  },
+  defaultShippingContainer: {
+    backgroundColor: AppStyles.colors.button,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: scaleWidth(102),
+    height: scaleHeight(19),
+    marginLeft: 5,
   },
 });
 export default index;

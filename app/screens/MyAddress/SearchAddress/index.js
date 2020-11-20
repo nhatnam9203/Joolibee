@@ -14,7 +14,8 @@ import _ from 'lodash';
 import { CustomInput, CustomImageBackground } from '@components';
 import { autocomplete } from '@location';
 import { address } from '@slices';
-import { format } from '@utils';
+import { format, scale } from '@utils';
+const { scaleHeight } = scale;
 const LAYOUT_WIDTH = '100%';
 
 const Index = () => {
@@ -121,7 +122,7 @@ const Index = () => {
           onChangeText={handleChangeText}
           value={key}
           placeholder="Nhập địa chỉ"
-          style={{ margin: 0, width: LAYOUT_WIDTH }}
+          style={styles.inputStyle}
           autoFocus={true}
         />
       </View>
@@ -155,13 +156,13 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     backgroundColor: '#fff',
-    height: 84,
+    height: scaleHeight(84),
     flex: 0,
     flexDirection: 'row',
     padding: metrics.padding,
     marginHorizontal: 15,
     marginVertical: 10,
-    borderRadius: 6,
+    borderRadius: 14,
     ...AppStyles.styles.shadow,
   },
   txtAddress: {
@@ -172,5 +173,6 @@ const styles = StyleSheet.create({
     height: 34,
     marginRight: 15,
   },
+  inputStyle: { margin: 0, width: LAYOUT_WIDTH, ...AppStyles.styles.shadow },
 });
 export default Index;

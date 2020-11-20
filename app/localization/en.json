@@ -142,5 +142,12 @@
   "txtOrderGuide": "Ordering guide",
   "txtUseVoucherGuide": "Use voucher guide",
   "txtPointAccumulateGuide": "Accumulate point guide",
-  "txtExpirePoint":"Points will expire on"
+  "txtExpirePoint":"Points will expire on",
+  "txtDefaultAddress":"Default address",
+  "txtAddNewAddress":"ADD NEW A ADDRESS",
+  "txtEditAddress":"Edit address",
+  "txtAddressList":"Addresses",
+  "txtSaveAddress":"Save this address",
+  "txtSaveChange":"Save change",
+  "txtSetDefaultAddress":"Set default address"
 }

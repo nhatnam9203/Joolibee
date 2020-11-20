@@ -1,13 +1,15 @@
 import { GCC } from '@graphql';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images, metrics } from '@theme';
-import { format, statusOrder } from '@utils';
+import { format, statusOrder, scale } from '@utils';
 import moment from 'moment';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Fade, Placeholder, PlaceholderLine } from 'rn-placeholder';
 import ScreenName from '../ScreenName';
 import { CustomImageBackground } from '@components';
+import { ButtonCC } from '../components';
+const { scaleWidth, scaleHeight } = scale;
 const Index = () => {
   const navigation = useNavigation();
 
@@ -49,46 +51,46 @@ const Index = () => {
 
   const renderItem = ({ item }) => {
     const status_text = statusOrder.convertStatusOrder(item.status);
-    const txt_color = status_text === 'Hoàn thành' ? '#1B1B1B' : '#FFFFFF';
-    const status_style = { color: txt_color, fontWeight: '700' };
+    const status_style = {
+      ...AppStyles.fonts.bold,
+      color: statusOrder.getColor(status_text),
+      fontSize: 14,
+    };
     return (
       <TouchableOpacity onPress={goToDetail(item)} style={styles.itemContainer}>
         <Image source={images.icons.ic_order} />
         <View style={styles.itemSubContainer}>
-          <Text style={[AppStyles.fonts.text, styles.txtDate]}>
-            {getDateStatus(item.created_at)}
-          </Text>
+          <View style={styles.grandTotalContainer}>
+            <Text style={styles.txtPrice}>{'215.000đ'}</Text>
+            <Text style={AppStyles.fonts.mini}>2 món</Text>
+          </View>
 
           <Text style={AppStyles.fonts.medium}>
             Đơn hàng #{item.order_number}
           </Text>
-
+          <Text style={styles.txtDate}>{getDateStatus(item.created_at)}</Text>
           <Text numberOfLines={1} style={styles.txtAddress}>
-            {getShippingMethod(item.shipping_method)}: {item.address}
+            <Text style={{ fontWeight: 'bold' }}>
+              {getShippingMethod(item.shipping_method)}
+            </Text>
+            :{' ' + item.address}
           </Text>
-          <View
-            style={[
-              styles.statusContainer,
-              { backgroundColor: statusOrder.getColor(status_text) },
-            ]}>
-            <Text
-              numberOfLines={1}
-              style={[AppStyles.fonts.mini, status_style]}>
+
+          <View style={styles.bottomContainer}>
+            <Text numberOfLines={1} style={status_style}>
               {status_text}
             </Text>
-          </View>
 
-          {/* ----- BUTTON ĐAT LAI -----  */}
-          {status_text === 'Hoàn thành' && (
-            <TouchableOpacity style={styles.btnPreOrder}>
-              <Text
-                numberOfLines={1}
-                style={[AppStyles.fonts.medium, styles.txtPreOrder]}>
-                Đặt lại
-              </Text>
-            </TouchableOpacity>
-          )}
-          {/* ----- BUTTON ĐAT LAI -----  */}
+            {/* ----- BUTTON ĐAT LAI -----  */}
+            {status_text === 'Hoàn thành' && (
+              <ButtonCC.ButtonBorderRed
+                label="Đặt lại"
+                width={scaleWidth(127)}
+                height={scaleHeight(44)}
+              />
+            )}
+            {/* ----- BUTTON ĐAT LAI -----  */}
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -123,20 +125,33 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     backgroundColor: '#fff',
-    height: 108,
     flex: 0,
     flexDirection: 'row',
-    padding: metrics.padding + 5,
+    paddingVertical: scaleHeight(20),
+    paddingHorizontal: metrics.padding + 5,
     marginHorizontal: 10,
     marginVertical: 10,
-    borderRadius: 6,
+    borderRadius: 14,
     ...AppStyles.styles.shadow,
   },
-  txtDate: {
-    fontSize: 14,
+  grandTotalContainer: {
+    alignItems: 'flex-end',
     position: 'absolute',
     top: 0,
     right: 5,
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  txtDate: {
+    ...AppStyles.fonts.text,
+    fontSize: 14,
+  },
+  txtPrice: {
+    ...AppStyles.fonts.bold,
   },
   txtPreOrder: {
     fontSize: 14,
@@ -169,6 +184,8 @@ const styles = StyleSheet.create({
   },
   txtAddress: {
     fontSize: 14,
+    fontWeight: 'normal',
+    paddingVertical: 4,
     ...AppStyles.fonts.text,
   },
 
