@@ -30,13 +30,6 @@ const feedBack = createAsyncThunk(
   },
 );
 
-const signOutRequest = createAsyncThunk(
-  `${KEY_CONSTANT}/signOutRequest`,
-  async () => {
-    return initialState.user;
-  },
-);
-
 const accountSlice = createSlice({
   name: KEY_CONSTANT,
   initialState: initialState,
@@ -99,8 +92,12 @@ const accountSlice = createSlice({
       state.user.tempCheckSignup = false;
     },
 
+    signOutRequest(state, action) {
+      state.isLogout = true;
+    },
     signOutComplete(state, action) {
       state.isLogout = false;
+      state.user = initialState.user;
     },
   },
   extraReducers: {
@@ -116,16 +113,11 @@ const accountSlice = createSlice({
     [feedBack.rejected]: (state, action) => {
       Logger.info(action, 'feedBack rejected');
     },
-
-    [signOutRequest.fulfilled]: (state, action) => {
-      state.isLogout = true;
-      state.user = action.payload;
-    },
   },
 });
 
 const { actions, reducer } = accountSlice;
 module.exports = {
   reducer,
-  actions: { feedBack, signOutRequest, ...actions },
+  actions: { feedBack, ...actions },
 };

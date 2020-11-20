@@ -1,15 +1,14 @@
-import { CustomFlatList, CustomSwitch } from '@components';
+import { CustomFlatList } from '@components';
+import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
+import { useNavigation } from '@react-navigation/native';
+import { account } from '@slices';
 import { AppStyles } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { SettingItem, ButtonCC, LanguageFlag } from '../components';
 import { useDispatch } from 'react-redux';
-import { account } from '@slices';
+import { ButtonCC, SettingItem } from '../components';
 import { localData } from './localData';
-import { useNavigation } from '@react-navigation/native';
-import { logoutFb, logoutGoogle } from '@social';
-import { useChangeLanguage, useCustomer } from '@hooks';
 
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();

@@ -29,6 +29,7 @@ function App() {
   const isLogin = useSelector((state) => state.account?.user?.isLogin);
   const isLogout = useSelector((state) => state.account?.isLogout);
   const loading = useSelector((state) => state.app.loading_app);
+
   const [token, setToken] = React.useState(null);
 
   const [revokeCustomerToken, { client }] = useMutation(mutation.SIGN_OUT);
@@ -47,7 +48,6 @@ function App() {
 
   React.useEffect(() => {
     const onSignOut = async () => {
-      // call server signOut
       await revokeCustomerToken();
       await client.cache.reset();
 
@@ -56,8 +56,8 @@ function App() {
     };
 
     if (isLogout) {
-      dispatch(account.signOutComplete());
       onSignOut();
+      dispatch(account.signOutComplete());
     }
   }, [client, dispatch, isLogout, revokeCustomerToken]);
 

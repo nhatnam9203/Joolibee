@@ -1,4 +1,7 @@
+import { useQuery } from '@apollo/client';
 import { CustomButton } from '@components';
+import { query } from '@graphql';
+import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images, metrics } from '@theme';
@@ -9,17 +12,14 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { Avatar } from 'react-native-paper';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
-import { useChangeLanguage, useCustomer } from '@hooks';
-import { useQuery } from '@apollo/client';
-import { query } from '@graphql';
 
 const MyAccountScreen = () => {
   const navigation = useNavigation();
@@ -29,7 +29,6 @@ const MyAccountScreen = () => {
   const { data } = useQuery(query.CUSTOMER_INFO, {
     fetchPolicy: 'only-cache',
   });
-  const { firstname, lastname } = data?.customer || {};
 
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
@@ -57,9 +56,9 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            {user && (
+            {data?.customer && (
               <Text style={styles.nameStyle}>
-                {user?.firstname + ' ' + user?.lastname}
+                {data?.customer?.firstname + ' ' + data?.customer?.lastname}
               </Text>
             )}
             <TouchableOpacity

@@ -1,5 +1,6 @@
+import { useQuery } from '@apollo/client';
 import { Action, Avatar, Bar, Logo, Space } from '@components';
-import { useCustomer, useCustomerCart } from '@hooks';
+import { query } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
@@ -10,8 +11,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { useQuery } from '@apollo/client';
-import { query } from '@graphql';
 
 const { scaleHeight } = scale;
 
