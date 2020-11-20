@@ -17,15 +17,13 @@ const SettingAccountScreen = () => {
 
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
-  const { signOut } = useCustomer();
 
   /**functions */
   const btnLogoutPressed = async () => {
     // logoutFb();
     // await logoutGoogle();
     // dispatch(account.signOutRequest());
-
-    signOut();
+    await dispatch(account.signOutRequest());
   };
 
   // LOGOUT BUTTON

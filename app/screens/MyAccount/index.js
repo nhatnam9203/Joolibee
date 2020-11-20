@@ -18,13 +18,19 @@ import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
 import { useChangeLanguage, useCustomer } from '@hooks';
+import { useQuery } from '@apollo/client';
+import { query } from '@graphql';
 
 const MyAccountScreen = () => {
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
-  const { user } = useCustomer() || {};
-  const { firstname, lastname } = user || {};
+
+  const { data } = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'only-cache',
+  });
+  const { firstname, lastname } = data?.customer || {};
+
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
     setSettingList(localData(navigation));

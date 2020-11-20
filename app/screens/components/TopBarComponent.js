@@ -10,6 +10,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
+import { useQuery } from '@apollo/client';
+import { query } from '@graphql';
 
 const { scaleHeight } = scale;
 
@@ -93,11 +95,14 @@ export const TopBarRight = () => {
   );
 };
 
-export const TopBarLeft = React.memo(() => {
+export const TopBarLeft = () => {
   const navigation = useNavigation();
-  const { user } = useCustomer();
 
-  return (
+  const { data } = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  return data?.customer ? (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate(ScreenName.Account);
@@ -112,20 +117,20 @@ export const TopBarLeft = React.memo(() => {
           dispatch(account.showQRCode());
         }}
       /> */}
-        {user && (
-          <View style={styles.userInfo}>
-            <Text style={styles.userName}>
-              {user.firstname + ' ' + user.lastname}
-            </Text>
-            <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
-              {`${0} ${translate('txtPoint')}`}
-            </Badge>
-          </View>
-        )}
+        <View style={styles.userInfo}>
+          <Text style={styles.userName}>
+            {data?.customer.firstname + ' ' + data?.customer.lastname}
+          </Text>
+          <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
+            {`${0} ${translate('txtPoint')}`}
+          </Badge>
+        </View>
       </View>
     </TouchableOpacity>
+  ) : (
+    <></>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

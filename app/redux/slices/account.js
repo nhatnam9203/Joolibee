@@ -14,6 +14,7 @@ const initialState = {
     tempCheckSignup: false,
   },
   isShowQRCode: false,
+  isLogout: false,
 };
 
 const feedBack = createAsyncThunk(
@@ -75,10 +76,12 @@ const accountSlice = createSlice({
         );
         // update state
         state.user.isLogin = true;
+        state.isLogout = false;
       } else {
         state.user.isLogin = true;
       }
     },
+
     signInError(state, action) {
       state.user.isLogin = false;
     },
@@ -94,6 +97,10 @@ const accountSlice = createSlice({
 
     signUpError(state, action) {
       state.user.tempCheckSignup = false;
+    },
+
+    signOutComplete(state, action) {
+      state.isLogout = false;
     },
   },
   extraReducers: {
@@ -111,6 +118,7 @@ const accountSlice = createSlice({
     },
 
     [signOutRequest.fulfilled]: (state, action) => {
+      state.isLogout = true;
       state.user = action.payload;
     },
   },
