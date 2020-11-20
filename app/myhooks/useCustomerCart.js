@@ -2,12 +2,14 @@ import React from 'react';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { cart } from '@slices';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // !TODO: trường hợp đang có đơn hàng chưa hoàn thành thì không cho tạo  cart
-export const useCustomerCart = () => {
+
+export const useCustomerCart = (reload) => {
   const dispatch = useDispatch();
 
+  const cartId = useSelector((state) => state.cart?.cart_id);
   // Query customer carts
   const [queryCartItems, cartQueryResp] = useLazyQuery(
     query.CUSTOMER_CART_QUERY,
@@ -46,37 +48,30 @@ export const useCustomerCart = () => {
   const updateAddProductsToCartCache = (
     cache,
     { data: { addProductsToCart } },
-  ) => {
-    cache.modify({
-      id: cache.identify(addProductsToCart),
-      fields: {
-        cart(existingCart = []) {
-          // Logger.debug(addSimpleProductsToCart, 'addSimpleProductsToCart');
-
-          // Logger.debug(existingCart, 'existingCart');
-
-          return existingCart;
-        },
-      },
-    });
-  };
+  ) => {};
 
   // Mutation add to cart
-  const [addProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
-    update: updateAddProductsToCartCache,
-  });
+  const [addProductsToCart, addProductsToCartResp] = useMutation(
+    mutation.ADD_PRODUCT_TO_CART,
+    {
+      update: updateAddProductsToCartCache,
+    },
+  );
 
   // Query customer cart
   // + nếu có sẽ dispatch cart id to redux,
   // + không có sẽ mutation create empty cart rồi dispatch cart id to redux
   React.useEffect(() => {
+    // ! check to block request empty card
+    if (cartId) return;
+
     if (cartQueryResp?.data) {
       const { customerCart } = cartQueryResp?.data;
       dispatch(cart.setCartId(customerCart?.id));
     } else {
       createEmptyCart();
     }
-  }, [createEmptyCart, cartQueryResp?.data, dispatch]);
+  }, [createEmptyCart, cartQueryResp?.data, dispatch, cartId]);
 
   // Mutation create empty cart --
   React.useEffect(() => {
@@ -86,13 +81,14 @@ export const useCustomerCart = () => {
   }, [dispatch, createEmptyCartResp?.data]);
 
   React.useEffect(() => {
-    queryCartItems();
-  }, [queryCartItems]);
+    if (reload) queryCartItems();
+  }, [queryCartItems, reload]);
 
   return {
     cart: cartQueryResp?.data,
     updateCart: updateCartItems,
     updateCartResp,
     addProductsToCart,
+    addProductsToCartResp,
   };
 };

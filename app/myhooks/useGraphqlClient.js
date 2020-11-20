@@ -10,6 +10,7 @@ export const useGraphqlClient = () => {
   const persistor = new CachePersistor({
     cache,
     storage: AsyncStorage,
+    debounce: 3000,
     debug: Config.NODE_ENV === 'development',
   });
 

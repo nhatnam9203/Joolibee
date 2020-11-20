@@ -8,7 +8,7 @@ import { scale } from '@utils';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 
 const { scaleHeight } = scale;
@@ -65,8 +65,8 @@ export const TopBarComponent = React.memo(() => {
 export const TopBarRight = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const { cart } = useCustomerCart();
+  const cartQuantity = useSelector((state) => state.cart?.cartQuantity);
+  // const { cart } = useCustomerCart(true);
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
@@ -85,7 +85,7 @@ export const TopBarRight = () => {
         onPress={() => {
           dispatch(app.showOrderList());
         }}
-        notifyNumber={cart?.customerCart?.total_quantity}
+        notifyNumber={cartQuantity}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />

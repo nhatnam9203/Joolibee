@@ -117,8 +117,10 @@ const logTimeLink = new ApolloLink((operation, forward) => {
 
     Logger.debug(
       `Complete in ${(time / 1000).toFixed(2)} s`,
-      `End Request -----> ${
-        operation.operationName ?? 'JSON.stringify(operation.query)'
+      `End Request -----> ${operation?.query?.definitions[0]?.operation} - ${
+        operation.operationName ??
+        operation?.query?.definitions[0]?.selectionSet?.selections[0]?.name
+          ?.value
       }`,
     );
 

@@ -253,7 +253,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   });
 
   const addProductToCart = () => {
-    if (!productItemDetail) return;
+    // if (!productItemDetail) return;
 
     const { sku, items = [] } = productItemDetail;
     const optionsMap = [];

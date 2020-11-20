@@ -57,10 +57,10 @@ const storeSlice = createSlice({
   },
   extraReducers: {
     [getPosition.pending]: (state, action) => {
-      Logger.info(action, 'getPosition pending');
+      // Logger.info(action, 'getPosition pending');
     },
     [getPosition.fulfilled]: (state, action) => {
-      Logger.info(action.payload, 'getPosition fulfilled');
+      // Logger.info(action.payload, 'getPosition fulfilled');
       const { payload } = action;
       if (payload) {
         const location = payload[0];
@@ -95,7 +95,7 @@ const storeSlice = createSlice({
       }
     },
     [getPosition.rejected]: (state, action) => {
-      Logger.info(action, 'getPosition rejected');
+      // Logger.info(action, 'getPosition rejected');
     },
   },
 });

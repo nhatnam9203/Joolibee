@@ -68,6 +68,9 @@ const theme = {
 enableScreens();
 
 LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
 
 let codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
