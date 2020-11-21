@@ -117,13 +117,18 @@ const link = ApolloLink.from([
   httpLink,
 ]);
 
+// https://www.apollographql.com/docs/react/data/queries/#supported-fetch-policies
 const defaultOptions = {
+  /**
+   * This watches the cache store of the query according to the options specified and returns an ObservableQuery.
+   * We can subscribe to this ObservableQuery and receive updated results through a GraphQL observer when the cache store changes.
+   */
   watchQuery: {
     fetchPolicy: 'cache-and-network',
-    errorPolicy: 'all',
+    errorPolicy: 'ignore',
   },
   query: {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     errorPolicy: 'all',
   },
   mutate: {
@@ -131,6 +136,7 @@ const defaultOptions = {
   },
 };
 
+// Apollo Cache
 const apolloCache = new InMemoryCache({
   typePolicies: {
     Cart: {
@@ -146,6 +152,7 @@ const apolloCache = new InMemoryCache({
   },
 });
 
+// Persistor graphql cache
 export const setupCachePersistor = () =>
   new CachePersistor({
     cache: apolloCache,
@@ -153,6 +160,7 @@ export const setupCachePersistor = () =>
     debug: Config.NODE_ENV === 'development',
   });
 
+// Graphql Client
 export const setupGraphQlClient = () =>
   new ApolloClient({
     link,

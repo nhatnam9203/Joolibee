@@ -13,7 +13,6 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import { rootReducers } from '../slices'; // where reducers is a object of reducers
-import logger from 'redux-logger';
 
 const config = {
   key: 'root',

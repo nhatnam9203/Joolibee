@@ -67,7 +67,6 @@ export const TopBarRight = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const cartQuantity = useSelector((state) => state.cart?.cartQuantity);
-  // const { cart } = useCustomerCart(true);
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>

@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
 import { useApolloClient } from '@apollo/client';
-import AsyncStorage from '@react-native-community/async-storage';
 
 const KEY_CONSTANT = 'account';
 
@@ -51,9 +50,7 @@ const accountSlice = createSlice({
     },
 
     signInSucceed(state, action) {
-      const {
-        generateCustomerToken: { token },
-      } = action.payload;
+      const token = action.payload;
       if (token) {
         // received token from server
 
@@ -95,6 +92,7 @@ const accountSlice = createSlice({
     signOutRequest(state, action) {
       state.isLogout = true;
     },
+
     signOutComplete(state, action) {
       state.isLogout = false;
       state.user = initialState.user;

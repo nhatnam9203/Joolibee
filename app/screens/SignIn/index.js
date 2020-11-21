@@ -26,7 +26,7 @@ import {
 } from '../components';
 import ScreenName from '../ScreenName';
 import { useMutation } from '@apollo/client';
-import { mutation } from '@graphql';
+import { GEX } from '@graphql';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -46,9 +46,7 @@ const SignInScreen = () => {
   });
 
   const signInError = useSelector((state) => state.account?.signInError);
-  const [generateCustomerToken, { loading, error, data }] = useMutation(
-    mutation.SIGN_IN,
-  );
+  const { signIn, token } = GEX.useGenerateToken();
 
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
@@ -64,9 +62,9 @@ const SignInScreen = () => {
       //   submitData = Object.assign({}, data, { email: username });
       // }
       await dispatch(app.showLoading());
-      generateCustomerToken({ variables: submitData });
+      signIn({ variables: submitData });
     },
-    [dispatch, generateCustomerToken],
+    [dispatch, signIn],
   );
 
   const goSignUpPage = () => {
@@ -102,15 +100,15 @@ const SignInScreen = () => {
   };
 
   React.useEffect(() => {
-    if (data) {
+    if (token) {
       const onSignInSucceed = async (value) => {
         await dispatch(app.hideLoading());
-        await dispatch(account.signInSucceed(data));
+        await dispatch(account.signInSucceed(token));
       };
 
       onSignInSucceed();
     }
-  }, [data, dispatch]);
+  }, [token, dispatch]);
 
   return (
     <AppScrollViewIOSBounceColorsWrapper
