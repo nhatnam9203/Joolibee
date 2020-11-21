@@ -3,7 +3,11 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { CustomInput } from '@components';
 import { images, AppStyles } from '@theme';
 
-export const OrderCount = ({ defaultValue = 0, onPress, inputCustomStyle }) => {
+export const OrderCount = ({
+  defaultValue = 0,
+  onPress,
+  inputCustomStyle = {},
+}) => {
   return (
     <View style={styles.orderContentStyle}>
       <TouchableOpacity
@@ -13,7 +17,7 @@ export const OrderCount = ({ defaultValue = 0, onPress, inputCustomStyle }) => {
       </TouchableOpacity>
 
       <CustomInput
-        style={(styles.mulInputStyle, inputCustomStyle)}
+        style={[styles.mulInputStyle, inputCustomStyle]}
         inputStyle={styles.inputStyle}
         keyboardType="numeric"
         allowFontScaling={true}

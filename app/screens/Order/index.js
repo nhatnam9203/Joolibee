@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { CustomButtonImage, CustomSwitch } from '@components';
+import { CustomImageBackground, CustomSwitch } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -23,11 +23,12 @@ import {
   OrderNewItem,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { OrderItem } from './widget';
+import { OrderItem, CustomScrollViewHorizontal } from './widget';
 import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { format, scale } from '@utils';
-import { ScrollView } from 'react-native-gesture-handler';
+import { vouchers } from '@mocks';
+
 const { scaleWidth, scaleHeight } = scale;
 
 const OrderSection = ({
@@ -72,7 +73,10 @@ const OrderButtonInput = ({
   icon,
   bgColor,
   btnWidth,
+  width = '100%',
   height = 52,
+  borderColor = AppStyles.colors.placeholder,
+  style,
 }) => {
   return (
     <View
@@ -80,7 +84,10 @@ const OrderButtonInput = ({
         styles.buttonInputContainer,
         {
           height: scaleHeight(height),
+          width,
+          borderColor,
         },
+        style,
       ]}
       onPress={onPress}
       disabled={!onPress}>
@@ -101,7 +108,7 @@ const OrderButtonInput = ({
             fontSize={15}
           />
         )}
-        {!!icon && <Image />}
+        {!!icon && <Image source={icon} />}
       </TouchableOpacity>
     </View>
   );
@@ -185,9 +192,52 @@ const OrderScreen = () => {
     }, 1500);
   }, []);
 
+  const renderItemExtra = (item, index) => (
+    <View key={index + ''} style={{ flex: 1 }}>
+      <OrderNewItem
+        shadow={true}
+        loading={responseMenu.loading}
+        item={item}
+        onPress={() => {
+          navigation.navigate(ScreenName.MenuItemDetail, {
+            productItem: item,
+          });
+        }}
+      />
+    </View>
+  );
+
+  const renderItemVoucher = (item, index) => {
+    const color =
+      item.status === 'error'
+        ? AppStyles.colors.accent
+        : AppStyles.colors.moderate_cyan;
+    const icon =
+      item.status === 'error'
+        ? images.icons.ic_warning
+        : images.icons.ic_sticked;
+    return (
+      <OrderButtonInput
+        key={index + ''}
+        icon={images.icons.ic_delete}
+        btnWidth={scaleWidth(43)}
+        height={43}
+        width={scaleWidth(230)}
+        borderColor={color}
+        bgColor={color}
+        style={{ marginRight: 5 }}>
+        <View style={styles.voucherContainer}>
+          <Image style={styles.voucherIcon} source={icon} />
+          <Text style={[styles.voucherText, { color }]}>{item.name}</Text>
+        </View>
+      </OrderButtonInput>
+    );
+  };
   return (
-    <>
-      <SinglePageLayout backgroundColor={AppStyles.colors.background}>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={styles.container}>
+      <SinglePageLayout>
         <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
           <OrderSection
@@ -341,29 +391,14 @@ const OrderScreen = () => {
             title={translate('txtExtraProduct')}
             titleColor={AppStyles.colors.text}
             key="ExtraItems">
-            <ScrollView
+            <CustomScrollViewHorizontal
+              data={responseMenu.data?.products?.items || []}
               contentContainerStyle={{
                 paddingHorizontal: 10,
                 paddingBottom: 10,
               }}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}>
-              {responseMenu.data?.products?.items.map((item, index) => (
-                <View key={index + ''} style={{ flex: 1 }}>
-                  <OrderNewItem
-                    shadow={true}
-                    loading={responseMenu.loading}
-                    item={item}
-                    onPress={() => {
-                      navigation.navigate(ScreenName.MenuItemDetail, {
-                        productItem: item,
-                      });
-                    }}
-                  />
-                </View>
-              ))}
-            </ScrollView>
-
+              renderItem={renderItemExtra}
+            />
             <OrderSectionItem height={84}>
               <TextInput
                 placeholder={'Thêm ghi chú (vd: không cay...)'}
@@ -404,27 +439,62 @@ const OrderScreen = () => {
           <OrderSection
             title={translate('txtPromotionApply')}
             key="OrderPromotion">
-            <OrderSectionItem>
+            <OrderSectionItem height={160}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                }}>
+                <OrderButtonInput
+                  title={translate('txtApply')}
+                  btnWidth={126}
+                  bgColor={AppStyles.colors.accent}>
+                  <TextInput
+                    placeholder={translate('txtInputVoucher')}
+                    style={{ paddingHorizontal: 10, flex: 1 }}
+                  />
+                </OrderButtonInput>
+
+                <View
+                  style={{
+                    height: 45,
+                    marginTop: 19,
+                    justifyContent: 'center',
+                  }}>
+                  <CustomScrollViewHorizontal
+                    data={vouchers}
+                    renderItem={renderItemVoucher}
+                  />
+                </View>
+              </View>
+            </OrderSectionItem>
+          </OrderSection>
+
+          {/**Points */}
+          <OrderSection
+            title={translate('txtRedeemPoints')}
+            key="OrderCumulativePoints"
+            buttonComponent={() => (
+              <View style={AppStyles.styles.horizontalLayout}>
+                <Text style={styles.txtPoint}>
+                  {translate('txtMySavedPoint')}:
+                </Text>
+                <View style={styles.pointContainer}>
+                  <Text style={styles.txtPoint}>120 điểm</Text>
+                </View>
+              </View>
+            )}>
+            <OrderSectionItem height={117}>
               <OrderButtonInput
-                title="ÁP DỤNG"
+                title={translate('txtApply')}
                 btnWidth={126}
                 bgColor={AppStyles.colors.accent}>
                 <TextInput
-                  placeholder={'Nhập mã khuyến mãi'}
+                  placeholder={'Vd: 5, 10, 15, 20, 25, 30.....'}
                   style={{ paddingHorizontal: 10, flex: 1 }}
+                  keyboardType="numeric"
                 />
               </OrderButtonInput>
-              {/* <View style={AppStyles.styles.horizontalLayout}>
-                <Image source={images.icons.ic_sticked} />
-                <Text style={styles.txtStyle}>Ưu đãi {_discount}</Text>
-              </View>
-              <CustomButtonImage
-                image={images.icons.ic_order_edit}
-                style={styles.editOrderStyle}
-                onPress={() => {
-                  navigation.navigate(ScreenName.MyReward);
-                }}
-              /> */}
             </OrderSectionItem>
           </OrderSection>
         </SafeAreaView>
@@ -455,7 +525,7 @@ const OrderScreen = () => {
         visible={showPopupSuccess}
         onToggle={onTogglePopupSuccess}
       />
-    </>
+    </CustomImageBackground>
   );
 };
 
@@ -532,19 +602,47 @@ const styles = StyleSheet.create({
     color: '#1B1B1B',
   },
   buttonInputContainer: {
-    width: '100%',
     borderRadius: 8,
     borderWidth: 1,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     overflow: 'hidden',
-    borderColor: AppStyles.colors.placeholder,
   },
   rightBtnInput: {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
+  },
+  voucherContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    flex: 1,
+  },
+  voucherIcon: {
+    width: scaleWidth(17),
+    height: scaleHeight(17),
+    resizeMode: 'contain',
+  },
+  voucherText: {
+    ...AppStyles.fonts.text,
+    color: AppStyles.colors.moderate_cyan,
+    marginLeft: 3,
+    fontSize: scaleWidth(16),
+  },
+  pointContainer: {
+    paddingHorizontal: 5,
+    paddingVertical: 6,
+    backgroundColor: AppStyles.colors.button,
+    marginLeft: 5,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  txtPoint: {
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    fontSize: scaleWidth(14),
   },
 });
 

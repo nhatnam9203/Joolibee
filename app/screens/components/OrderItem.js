@@ -53,12 +53,18 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
       <View style={styles.bottomStyle}>
         <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />
         <TouchableOpacity style={styles.buttonStyle}>
-          <Image source={images.icons.ic_order_edit} />
+          <Image
+            style={{ tintColor: AppStyles.colors.text }}
+            source={images.icons.ic_order_edit}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleUpdateProduct(0)}
           style={styles.buttonStyle}>
-          <Image source={images.icons.ic_delete} />
+          <Image
+            style={{ tintColor: AppStyles.colors.text }}
+            source={images.icons.ic_delete}
+          />
         </TouchableOpacity>
       </View>
     </FlatListItemWithImgHorizontal>

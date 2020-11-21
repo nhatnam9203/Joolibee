@@ -152,5 +152,8 @@
   "txtSetDefaultAddress":"Set default address",
   "txtEdit":"Edit",
   "txtExtraProduct":"More delicious when eaten with",
-  "txtOrderMethod":"Shipping method"
+  "txtOrderMethod":"Shipping method",
+  "txtInputVoucher":"Input the voucher",
+  "txtRedeemPoints":"REDEEM ACCUMULATED POINTS",
+  "txtApply":"Apply"
 }
