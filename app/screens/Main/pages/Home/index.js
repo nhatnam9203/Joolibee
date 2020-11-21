@@ -39,17 +39,6 @@ const HomePage = () => {
   const [visible_detail, showDetail] = React.useState(false);
   const tokenKey = useSelector((state) => state.account.user.tokenKey);
 
-  // Query get user info
-  const responeUser = useQuery(query.CUSTOMER_INFO, {
-    onCompleted: () => {
-      dispatch(account.saveUserInfo(responeUser.data));
-    },
-    onError: () => {
-      dispatch(account.signOutRequest());
-    },
-  });
-  // Query get user info
-
   // get customer cart id
   const customerCartData = useQuery(query.CUSTOMER_CART_QUERY);
 

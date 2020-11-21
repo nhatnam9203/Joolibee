@@ -1,0 +1,51 @@
+import { useLazyQuery } from '@apollo/client';
+import { GQL } from '@graphql';
+import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { account } from '@slices';
+
+export const useCustomer = () => {
+  const dispatch = useDispatch();
+  const [getCustomerInfo, { loading, data, refetch, error }] = useLazyQuery(
+    GQL.CUSTOMER_INFO,
+    {
+      fetchPolicy: 'only-network',
+      //   onCompleted: (data) => {
+      //     Logger.debug(data, 'get customer info complete');
+      //   },
+    },
+  );
+
+  /**
+   * {"customer":{"__typename":"Customer",
+   * "email":"luc@gmail.com",
+   * "firstname":"Lil",
+   * "lastname":"Moi",
+   * "phone_number":"0921251798",
+   * "gender":2,
+   * "date_of_birth":"2008-09-11",
+   * "addresses":[
+   * {"__typename":"CustomerAddress","full_address":"61 Cao Thắng, phường 3, Quận 3, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":true},
+   * {"__typename":"CustomerAddress","full_address":"33 Lê Duẩn, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":false},
+   * {"__typename":"CustomerAddress","full_address":"29/31 Hoàng Hoa Thám, phường 6, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":false}]}}
+   */
+
+  const user = useSelector((state) => state.account.user?.profile);
+
+  React.useEffect(() => {
+    if (data?.customer) {
+      dispatch(account.saveUserInfo(data));
+    }
+  }, [data, dispatch]);
+
+  React.useEffect(() => {
+    if (!user) {
+      getCustomerInfo();
+    }
+  }, [getCustomerInfo, user]);
+
+  return {
+    getCustomerInfo,
+    customer: user,
+  };
+};

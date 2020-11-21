@@ -1,6 +1,5 @@
-import { useQuery } from '@apollo/client';
 import { Action, Avatar, Bar, Logo, Space } from '@components';
-import { query } from '@graphql';
+import { GEX } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
@@ -96,11 +95,9 @@ export const TopBarRight = () => {
 export const TopBarLeft = () => {
   const navigation = useNavigation();
 
-  const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const { customer } = GEX.useCustomer();
 
-  return data?.customer ? (
+  return customer ? (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate(ScreenName.Account);
@@ -117,7 +114,7 @@ export const TopBarLeft = () => {
       /> */}
         <View style={styles.userInfo}>
           <Text style={styles.userName}>
-            {data?.customer.firstname + ' ' + data?.customer.lastname}
+            {customer.firstname + ' ' + customer.lastname}
           </Text>
           <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
             {`${0} ${translate('txtPoint')}`}

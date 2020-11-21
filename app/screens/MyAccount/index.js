@@ -20,15 +20,14 @@ import { Avatar } from 'react-native-paper';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
 import { localData } from './localData';
+import { GEX } from '@graphql';
 
 const MyAccountScreen = () => {
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
 
-  const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'only-cache',
-  });
+  const { customer } = GEX.useCustomer();
 
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
@@ -56,9 +55,9 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            {data?.customer && (
+            {customer && (
               <Text style={styles.nameStyle}>
-                {data?.customer?.firstname + ' ' + data?.customer?.lastname}
+                {customer?.firstname + ' ' + customer?.lastname}
               </Text>
             )}
             <TouchableOpacity
