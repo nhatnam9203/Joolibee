@@ -1,13 +1,13 @@
 import { useLazyQuery } from '@apollo/client';
-import { GQL } from '@graphql';
-import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+import { CUSTOMER_INFO } from '../gql';
 import { account } from '@slices';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const useCustomer = () => {
   const dispatch = useDispatch();
   const [getCustomerInfo, { loading, data, refetch, error }] = useLazyQuery(
-    GQL.CUSTOMER_INFO,
+    CUSTOMER_INFO,
     {
       fetchPolicy: 'only-network',
       //   onCompleted: (data) => {
@@ -34,7 +34,7 @@ export const useCustomer = () => {
 
   React.useEffect(() => {
     if (data?.customer) {
-      dispatch(account.saveUserInfo(data));
+      dispatch(account?.saveUserInfo(data));
     }
   }, [data, dispatch]);
 

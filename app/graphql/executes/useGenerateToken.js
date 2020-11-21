@@ -1,8 +1,9 @@
 import { useMutation } from '@apollo/client';
-import { GQL } from '@graphql';
+import { GENERATE_CUSTOMER_TOKEN } from '../gql';
+
 export const useGenerateToken = () => {
   const [generateCustomerToken, { loading, error, data, called }] = useMutation(
-    GQL.GENERATE_CUSTOMER_TOKEN,
+    GENERATE_CUSTOMER_TOKEN,
     {
       // onCompleted: (data) => {
       //   Logger.debug(data, 'sign in complete');

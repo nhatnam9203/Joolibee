@@ -1,8 +1,8 @@
-import { mutation } from '@graphql';
+// import { mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
-import { useApolloClient } from '@apollo/client';
+// import { useApolloClient } from '@apollo/client';
 
 const KEY_CONSTANT = 'account';
 
@@ -19,13 +19,14 @@ const initialState = {
 const feedBack = createAsyncThunk(
   `${KEY_CONSTANT}/feedBack`,
   async (input, {}) => {
-    const client = useApolloClient();
+    // const client = useApolloClient();
 
-    const response = await client.mutate({
-      mutation: mutation.FEED_BACK,
-      variables: input,
-    });
-    return response;
+    // const response = await client.mutate({
+    //   mutation: mutation.FEED_BACK,
+    //   variables: input,
+    // });
+    return {};
+    // return response ;
   },
 );
 
