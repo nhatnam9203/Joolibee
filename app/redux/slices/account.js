@@ -104,6 +104,12 @@ const accountSlice = createSlice({
     updateCustomerCart: (state, action) => {
       state.cart = Object.assign({}, state.cart, action.payload);
     },
+
+    addCustomerCartQuantity: (state, action) => {
+      state.cart = Object.assign({}, state.cart, {
+        total_quantity: state.cart.total_quantity + action.payload,
+      });
+    },
   },
   extraReducers: {
     //FeedBack

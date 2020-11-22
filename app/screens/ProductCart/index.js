@@ -26,16 +26,15 @@ const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
 
-  const cart_id = useSelector((state) => state.account?.user?.cart_id);
-
   const [refreshing, setRefreshing] = React.useState(false);
   const [cartDetail, setCartDetail] = React.useState(null);
 
   const [footerSize, onLayoutFooter] = useComponentSize();
+
+  // Get Customer Cart
   const customerCart = useSelector((state) => state.account?.cart);
 
   // Mutation update cart product
-  // const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   // Mutation update cart product --
@@ -77,7 +76,6 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const updateMyCart = async (item) => {
     let input = {
-      cart_id: cart_id,
       cart_item_id: item.id,
       quantity: item.quantity,
     };

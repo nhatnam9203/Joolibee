@@ -212,13 +212,12 @@ export const UPDATE_CART_PRODUCT = gql`
       cart {
         id
         __typename
-        total_quantity
         items {
-          id
           __typename
+          id
           product {
-            id
             __typename
+            id
             name
             sku
             point
@@ -243,11 +242,22 @@ export const UPDATE_CART_PRODUCT = gql`
           }
           quantity
         }
+        total_quantity
         prices {
           __typename
           grand_total {
             value
             currency
+          }
+          subtotal_excluding_tax {
+            value
+            currency
+          }
+          discounts {
+            amount {
+              value
+              currency
+            }
           }
         }
       }

@@ -16,6 +16,7 @@ export const useAddProductsToCart = () => {
   const [addProductsToCart, addProductsToCartResp] = useMutation(
     ADD_PRODUCT_TO_CART,
     {
+      // !! có nên lưu cart lại không, hay chỉ lưu số lượng rồi load lại mỗi lần view, hiện đang lưu
       onCompleted: (data) => {
         if (data?.addProductsToCart) {
           dispatch(account.updateCustomerCart(data?.addProductsToCart?.cart));
@@ -29,6 +30,11 @@ export const useAddProductsToCart = () => {
 
     let { variables } = params;
     variables = Object.assign({}, variables, { cart_id: customerCart.id });
+    setTimeout(() => {
+      dispatch(
+        account.addCustomerCartQuantity(variables.cart_items[0]?.quantity),
+      );
+    }, 800);
 
     addProductsToCart({
       variables,
