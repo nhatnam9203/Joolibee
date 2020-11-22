@@ -15,7 +15,7 @@ import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { GEX, query } from '@graphql';
 import { format, scale } from '@utils';
 import * as Widget from './widget';
@@ -33,18 +33,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const [cartDetail, setCartDetail] = React.useState(null);
 
   const [footerSize, onLayoutFooter] = useComponentSize();
-  // --------- handle fetch data cart -----------
-
-  const [loadCartDetail, { data, error, loading }] = useLazyQuery(
-    query.CART_DETAIL,
-    {
-      variables: { cartId: cart_id },
-      // fetchPolicy: 'no-cache',
-      fetchPolicy: 'cache-first',
-    },
-  );
-
-  // -------- handle fetch data cart -----------
+  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
 
   // Mutation update cart product
   // const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
@@ -68,7 +57,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const handleRefresh = () => {
     setRefreshing(true);
     // refetch();
-    loadCartDetail();
+    // getCheckOutCart();
 
     setTimeout(() => {
       setRefreshing(false);
@@ -108,23 +97,24 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   React.useEffect(() => {
-    if (visible && cart_id) {
-      loadCartDetail();
+    if (visible) {
+      getCheckOutCart();
     }
-  }, [loadCartDetail, visible, cart_id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   React.useEffect(() => {
-    if (data?.cart) {
+    if (getCheckOutCartResp.data?.cart) {
       const {
         items = [],
         prices: { grand_total },
-      } = data?.cart;
+      } = getCheckOutCartResp.data?.cart;
 
       const total = format.jollibeeCurrency(grand_total);
 
       setCartDetail({ items, total });
     }
-  }, [data?.cart]);
+  }, [getCheckOutCartResp.data?.cart]);
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -153,14 +143,16 @@ const ProductCart = ({ visible, onToggle }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
-          ListEmptyComponent={<Widget.EmptyCartList error={error} />}
+          ListEmptyComponent={
+            <Widget.EmptyCartList error={getCheckOutCartResp?.error} />
+          }
         />
         {/**Footer */}
         <View style={styles.footer} onLayout={onLayoutFooter}>
           {/**Price Summary*/}
           <View style={AppStyles.styles.horizontalLayout}>
             <Text style={styles.txtSummary}>{translate('txtSummary')} :</Text>
-            {loading ? (
+            {getCheckOutCartResp?.loading ? (
               <Widget.SummaryLoading />
             ) : (
               <View style={styles.priceContent}>
@@ -191,7 +183,9 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading isLoading={loading || updateCartResp?.loading} />
+      <Loading
+        isLoading={getCheckOutCartResp?.loading || updateCartResp?.loading}
+      />
     </PopupLayout>
   );
 };

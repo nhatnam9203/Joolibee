@@ -4,11 +4,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_CART_QUERY } from '../gql';
 
-/**
- * !! nếu không có cardId sẽ query tìm customer cart, nếu ko tìm thấy sẽ tạo empty cart
- *
- */
-
 export const useGetCustomerCart = () => {
   const dispatch = useDispatch();
 
@@ -16,7 +11,7 @@ export const useGetCustomerCart = () => {
   // const [createEmptyCart, createEmptyCartResp] = useMutation(CREATE_EMPTY_CART);
 
   // GET CUSTOMER CARTS
-  const [getCustomerCart, customerCartResp] = useLazyQuery(
+  const [getCustomerCart, getCustomerCartResp] = useLazyQuery(
     CUSTOMER_CART_QUERY,
     {
       fetchPolicy: 'only-network',
@@ -32,15 +27,19 @@ export const useGetCustomerCart = () => {
     if (!customerCart) {
       getCustomerCart();
     }
-  }, [customerCart, getCustomerCart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerCart]);
 
   React.useEffect(() => {
-    if (customerCartResp.data?.customerCart) {
-      dispatch(account.updateCustomerCart(customerCartResp.data?.customerCart));
+    if (getCustomerCartResp.data?.customerCart) {
+      dispatch(
+        account.updateCustomerCart(getCustomerCartResp.data?.customerCart),
+      );
     }
-  }, [customerCartResp, dispatch]);
+  }, [getCustomerCartResp, dispatch]);
 
   return {
     cart: customerCart,
+    getCustomerCartResp,
   };
 };

@@ -98,6 +98,7 @@ const accountSlice = createSlice({
     signOutComplete(state, action) {
       state.isLogout = false;
       state.user = initialState.user;
+      state.cart = null;
     },
 
     updateCustomerCart: (state, action) => {

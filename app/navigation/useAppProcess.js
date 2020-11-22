@@ -27,6 +27,7 @@ export const useAppProcess = () => {
       // await client.cache.reset();
       // Evict and garbage-collect the cached user object
       graphQlClient.cache.evict({ fieldName: 'customer' });
+      graphQlClient.cache.evict({ fieldName: 'customerCart' });
       graphQlClient.cache.gc();
 
       // remove token
