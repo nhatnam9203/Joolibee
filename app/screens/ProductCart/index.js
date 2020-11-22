@@ -90,6 +90,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
     navigation.navigate(ScreenName.MenuItemDetail, {
       productItem: item?.product,
+      detailItem: item,
     });
   };
 

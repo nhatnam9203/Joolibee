@@ -36,6 +36,7 @@ export const CUSTOMER_CART_QUERY = gql`
           name
           sku
           point
+          options_container
           meta_description
           price_range {
             maximum_price {
@@ -53,6 +54,16 @@ export const CUSTOMER_CART_QUERY = gql`
           }
           image {
             url
+          }
+        }
+        ... on BundleCartItem {
+          bundle_options {
+            id
+            values {
+              id
+              label
+              quantity
+            }
           }
         }
         quantity

@@ -224,54 +224,6 @@ export const DELETE_ADDRESS = gql`
   }
 `;
 
-export const ADD_PRODUCT_TO_CART = gql`
-  mutation($cart_id: String!, $cart_items: [CartItemInput!]!) {
-    addProductsToCart(cartId: $cart_id, cartItems: $cart_items) {
-      cart {
-        id
-        __typename
-        total_quantity
-        items {
-          id
-          __typename
-          product {
-            id
-            __typename
-            name
-            sku
-            point
-            meta_description
-            price_range {
-              maximum_price {
-                final_price {
-                  value
-                  currency
-                }
-              }
-              minimum_price {
-                final_price {
-                  value
-                  currency
-                }
-              }
-            }
-            image {
-              url
-            }
-          }
-          quantity
-        }
-        prices {
-          __typename
-          grand_total {
-            value
-            currency
-          }
-        }
-      }
-    }
-  }
-`;
 // UPDATE CUSTOMER INFO
 export const UPDATE_CUSTOMER = gql`
   mutation(

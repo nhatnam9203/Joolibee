@@ -158,6 +158,7 @@ export const ADD_PRODUCT_TO_CART = gql`
             sku
             point
             meta_description
+            options_container
             price_range {
               maximum_price {
                 final_price {
@@ -174,6 +175,23 @@ export const ADD_PRODUCT_TO_CART = gql`
             }
             image {
               url
+            }
+          }
+          ... on BundleCartItem {
+            bundle_options {
+              id
+              values {
+                id
+                label
+                quantity
+              }
+            }
+            customizable_options {
+              id
+              values {
+                id
+                label
+              }
             }
           }
           quantity
@@ -221,6 +239,7 @@ export const UPDATE_CART_PRODUCT = gql`
             name
             sku
             point
+            options_container
             meta_description
             price_range {
               maximum_price {
@@ -238,6 +257,16 @@ export const UPDATE_CART_PRODUCT = gql`
             }
             image {
               url
+            }
+          }
+          ... on BundleCartItem {
+            bundle_options {
+              id
+              values {
+                id
+                label
+                quantity
+              }
             }
           }
           quantity

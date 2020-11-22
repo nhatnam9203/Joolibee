@@ -41,7 +41,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const offsetX = useSharedValue(0);
   const aref = useAnimatedRef();
 
-  const { productItem } = route.params;
+  const { productItem, detailItem } = route.params;
 
   const [quantity, setQuantity] = React.useState(1);
   const [productItemDetail, dispatchChangeProduct] = React.useReducer(
@@ -197,7 +197,44 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const onReceivedProduct = (item) => {
-    dispatchChangeProduct(setProduct(item));
+    Logger.debug(detailItem, 'onReceivedProduct');
+
+    if (detailItem?.bundle_options.length > 0) {
+      const { items } = item;
+      const list = items.map((x) => {
+        const { option_id, options } = x;
+
+        const needUpdateOption = detailItem?.bundle_options.find(
+          (option) => option.id === option_id,
+        );
+
+        if (needUpdateOption) {
+          const { values } = needUpdateOption;
+          const renewOptions = options.map((opt) => {
+            const needUpdateOptItem = values.find(
+              (optItem) => optItem.id === opt.id,
+            );
+
+            if (needUpdateOptItem) {
+              return Object.assign({}, opt, { is_default: true });
+            } else {
+              return Object.assign({}, opt, { is_default: false });
+            }
+          });
+
+          return Object.assign({}, x, { options: renewOptions });
+        } else {
+          return x;
+        }
+      });
+
+      Logger.debug(list, 'lít');
+      dispatchChangeProduct(
+        setProduct(Object.assign({}, item, { items: list })),
+      );
+    } else {
+      dispatchChangeProduct(setProduct(item));
+    }
   };
 
   const renderSummaryPrice = () => {
@@ -260,7 +297,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
       optionsMap.push(...mapArr);
     });
-
+    Logger.debug(optionsMap, 'options');
     addProductsToCart({
       variables: {
         cart_items: [

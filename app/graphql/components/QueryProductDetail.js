@@ -114,6 +114,7 @@ export const QueryProductDetail = ({
     }
 
     if (data?.products?.items) {
+      // Logger.debug(data, 'QueryProductDetail');
       const {
         products: {
           items: [first],
