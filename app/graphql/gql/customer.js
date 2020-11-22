@@ -30,12 +30,6 @@ export const CUSTOMER_CART_QUERY = gql`
       items {
         __typename
         id
-        prices {
-          price {
-            value
-            currency
-          }
-        }
         product {
           __typename
           id
@@ -64,6 +58,23 @@ export const CUSTOMER_CART_QUERY = gql`
         quantity
       }
       total_quantity
+      prices {
+        __typename
+        grand_total {
+          value
+          currency
+        }
+        subtotal_excluding_tax {
+          value
+          currency
+        }
+        discounts {
+          amount {
+            value
+            currency
+          }
+        }
+      }
     }
   }
 `;

@@ -33,7 +33,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const [cartDetail, setCartDetail] = React.useState(null);
 
   const [footerSize, onLayoutFooter] = useComponentSize();
-  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
+  const customerCart = useSelector((state) => state.account?.cart);
 
   // Mutation update cart product
   // const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
@@ -97,24 +97,17 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   React.useEffect(() => {
-    if (visible) {
-      getCheckOutCart();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
-
-  React.useEffect(() => {
-    if (getCheckOutCartResp.data?.cart) {
+    if (customerCart) {
       const {
         items = [],
         prices: { grand_total },
-      } = getCheckOutCartResp.data?.cart;
+      } = customerCart;
 
       const total = format.jollibeeCurrency(grand_total);
 
       setCartDetail({ items, total });
     }
-  }, [getCheckOutCartResp.data?.cart]);
+  }, [customerCart]);
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
@@ -144,7 +137,7 @@ const ProductCart = ({ visible, onToggle }) => {
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
           }
           ListEmptyComponent={
-            <Widget.EmptyCartList error={getCheckOutCartResp?.error} />
+            <Widget.EmptyCartList error={translate('txtEmptyCartList')} />
           }
         />
         {/**Footer */}
@@ -152,17 +145,13 @@ const ProductCart = ({ visible, onToggle }) => {
           {/**Price Summary*/}
           <View style={AppStyles.styles.horizontalLayout}>
             <Text style={styles.txtSummary}>{translate('txtSummary')} :</Text>
-            {getCheckOutCartResp?.loading ? (
-              <Widget.SummaryLoading />
-            ) : (
-              <View style={styles.priceContent}>
-                <Text style={styles.priceStyle}>{cartDetail?.total}</Text>
-                <Text style={styles.pointStyle}>
-                  (+ {format.caculatePoint(cartDetail?.items)}{' '}
-                  {translate('txtPoint')})
-                </Text>
-              </View>
-            )}
+            <View style={styles.priceContent}>
+              <Text style={styles.priceStyle}>{cartDetail?.total}</Text>
+              <Text style={styles.pointStyle}>
+                (+ {format.caculatePoint(cartDetail?.items)}{' '}
+                {translate('txtPoint')})
+              </Text>
+            </View>
           </View>
 
           {/**Button Actions */}
@@ -183,9 +172,7 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading
-        isLoading={getCheckOutCartResp?.loading || updateCartResp?.loading}
-      />
+      <Loading isLoading={updateCartResp?.loading} />
     </PopupLayout>
   );
 };
