@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window');
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../../ScreenName';
 
-const Bestseller = ({ data, loading }) => {
+const Bestseller = React.memo(({ data, loading }) => {
   const navigation = useNavigation();
 
   const onRenderItem = ({ item, index }) => {
@@ -44,7 +44,7 @@ const Bestseller = ({ data, loading }) => {
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

@@ -1,9 +1,17 @@
-import React from 'react';
-import { Appbar, Badge } from 'react-native-paper';
-import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { scale } from '@utils';
+import React from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Appbar, Badge } from 'react-native-paper';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 
 const BADGE_SIZE = scale.scaleHeight(20);
+const ANIMATION_DURATION = 250;
 
 export const Bar = ({ leftComponents, rightComponents, children, style }) => {
   return (
@@ -38,10 +46,34 @@ export const Action = ({
   bagSize,
   bagStyle,
   children,
-}) =>
-  source || children ? (
+}) => {
+  const viewScale = useSharedValue(1);
+
+  const customScaleStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: viewScale.value }],
+    };
+  });
+
+  React.useEffect(() => {
+    if (notifyNumber > 0) {
+      viewScale.value = withSequence(
+        withTiming(1.3, {
+          duration: ANIMATION_DURATION,
+          easing: Easing.in,
+        }),
+        withTiming(1, {
+          duration: ANIMATION_DURATION,
+          easing: Easing.ease,
+        }),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [notifyNumber]);
+
+  return source || children ? (
     <TouchableOpacity onPress={onPress} style={styles.actionStyle}>
-      <View style={styles.actionContent}>
+      <Animated.View style={[styles.actionContent, customScaleStyles]}>
         {children ?? <Image source={source} style={styles.iconStyle} />}
         {notifyNumber > 0 && (
           <Badge
@@ -50,11 +82,12 @@ export const Action = ({
             {notifyNumber}
           </Badge>
         )}
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   ) : (
     <Appbar.Action style={styles.actionStyle} onPress={onPress} />
   );
+};
 
 export const Space = () => <View style={styles.space} />;
 

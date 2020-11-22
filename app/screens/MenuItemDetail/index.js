@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
 import { GCC, GEX } from '@graphql';
 import { translate } from '@localize';
@@ -9,15 +8,12 @@ import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
+  useAnimatedRef,
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
-  withSpring,
   withDelay,
-  useAnimatedRef,
-  measure,
+  withTiming,
 } from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
 import {
   Fade,
   Placeholder,
@@ -53,7 +49,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     null,
   );
 
-  const { addProductsToCart } = GEX.addProductToCart();
+  const { addProductsToCart } = GEX.useAddProductsToCart();
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem

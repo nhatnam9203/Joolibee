@@ -1,25 +1,24 @@
 import { CustomFlatList, Loading } from '@components';
+import { GEX } from '@graphql';
+import { useComponentSize } from '@hooks';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
+import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
+import { format, scale } from '@utils';
 import React from 'react';
 import {
   Image,
+  RefreshControl,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
-  RefreshControl,
-  Text,
 } from 'react-native';
-import { ButtonCC, OrderItem, OrderItemLoading } from '../components';
-import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
-import { useMutation } from '@apollo/client';
-import { GEX, query } from '@graphql';
-import { format, scale } from '@utils';
 import * as Widget from './widget';
-import { useComponentSize } from '@hooks';
 
 const { scaleWidth } = scale;
 
@@ -40,7 +39,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   // Mutation update cart product --
-  const onRenderItem = ({ item }, index) => {
+  const onRenderItem = ({ item }) => {
     return (
       <OrderItem
         item={item}

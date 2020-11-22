@@ -102,7 +102,7 @@ const accountSlice = createSlice({
     },
 
     updateCustomerCart: (state, action) => {
-      state.cart = action.payload;
+      state.cart = Object.assign({}, state.cart, action.payload);
     },
   },
   extraReducers: {

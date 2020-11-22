@@ -1,4 +1,4 @@
-import { gql, useQuery, useApolloClient } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import React from 'react';
 import { StyleSheet, RefreshControl } from 'react-native';
 import { CustomFlatList } from '@components';
@@ -46,6 +46,8 @@ const defaultData = [
   { id: 4 },
   { id: 5 },
   { id: 6 },
+  { id: 7 },
+  { id: 8 },
 ];
 
 export const QueryMenuList = ({ renderItem, renderItemLoading }) => {

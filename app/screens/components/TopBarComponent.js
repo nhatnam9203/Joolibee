@@ -8,7 +8,7 @@ import { scale } from '@utils';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ScreenName from '../ScreenName';
 
 const { scaleHeight } = scale;
