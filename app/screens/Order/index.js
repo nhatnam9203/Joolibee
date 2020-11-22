@@ -64,7 +64,7 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const cart_id = useSelector((state) => state.cart?.cart_id);
+  const cart_id = useSelector((state) => state.account?.user?.cart_id);
 
   const [shippingType, setShippingType] = React.useState(
     selected_payment_method,

@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
-import { GCC, mutation } from '@graphql';
+import { GCC, GEX } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
@@ -31,7 +31,6 @@ import {
   MenuOptionSelectedItem,
 } from '../components';
 import { productReducer, setProduct, updateOption } from './ProductState';
-import { useCustomerCart } from '@hooks';
 
 const { scaleHeight, scaleWidth } = scale;
 const { width, height } = Dimensions.get('window');
@@ -47,7 +46,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const aref = useAnimatedRef();
 
   const { productItem } = route.params;
-  const cart_id = useSelector((state) => state.cart?.cart_id);
 
   const [quantity, setQuantity] = React.useState(1);
   const [productItemDetail, dispatchChangeProduct] = React.useReducer(
@@ -55,7 +53,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     null,
   );
 
-  const { addProductsToCart } = useCustomerCart();
+  const { addProductsToCart } = GEX.useCustomerCart();
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem
@@ -269,7 +267,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
     addProductsToCart({
       variables: {
-        cart_id,
         cart_items: [
           {
             quantity: quantity,

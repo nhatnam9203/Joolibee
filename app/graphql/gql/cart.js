@@ -135,3 +135,112 @@ export const CART_DETAIL = gql`
     }
   }
 `;
+
+export const CREATE_EMPTY_CART = gql`
+  mutation {
+    createEmptyCart
+  }
+`;
+
+export const ADD_PRODUCT_TO_CART = gql`
+  mutation($cart_id: String!, $cart_items: [CartItemInput!]!) {
+    addProductsToCart(cartId: $cart_id, cartItems: $cart_items) {
+      cart {
+        id
+        __typename
+        total_quantity
+        items {
+          id
+          __typename
+          product {
+            id
+            __typename
+            name
+            sku
+            point
+            meta_description
+            price_range {
+              maximum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+              minimum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+            }
+            image {
+              url
+            }
+          }
+          quantity
+        }
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const UPDATE_CART_PRODUCT = gql`
+  mutation($cart_id: String!, $cart_item_id: Int!, $quantity: Float!) {
+    updateCartItems(
+      input: {
+        cart_id: $cart_id
+        cart_items: [{ cart_item_id: $cart_item_id, quantity: $quantity }]
+      }
+    ) {
+      cart {
+        id
+        __typename
+        total_quantity
+        items {
+          id
+          __typename
+          product {
+            id
+            __typename
+            name
+            sku
+            point
+            meta_description
+            price_range {
+              maximum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+              minimum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+            }
+            image {
+              url
+            }
+          }
+          quantity
+        }
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
+        }
+      }
+    }
+  }
+`;

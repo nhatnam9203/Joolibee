@@ -71,13 +71,6 @@ export const FEED_BACK = gql`
 `;
 //
 
-// CREATE EMPTY CART
-export const CREATE_EMPTY_CART = gql`
-  mutation {
-    createEmptyCart
-  }
-`;
-
 export const UPDATE_CART_PRODUCT = gql`
   mutation($cart_id: String!, $cart_item_id: Int!, $quantity: Float!) {
     updateCartItems(

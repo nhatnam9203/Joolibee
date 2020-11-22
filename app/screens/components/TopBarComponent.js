@@ -65,7 +65,8 @@ export const TopBarComponent = React.memo(() => {
 export const TopBarRight = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const cartQuantity = useSelector((state) => state.cart?.cartQuantity);
+
+  const { cart } = GEX.useCustomerCart(true);
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
@@ -84,7 +85,7 @@ export const TopBarRight = () => {
         onPress={() => {
           dispatch(app.showOrderList());
         }}
-        notifyNumber={cartQuantity}
+        notifyNumber={cart?.total_quantity}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />

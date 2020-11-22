@@ -11,6 +11,7 @@ const initialState = {
     isRemember: false,
     isLogin: false,
     tempCheckSignup: false,
+    cartId: null,
   },
   isShowQRCode: false,
   isLogout: false,
@@ -97,6 +98,10 @@ const accountSlice = createSlice({
     signOutComplete(state, action) {
       state.isLogout = false;
       state.user = initialState.user;
+    },
+
+    updateCustomerCartId: (state, action) => {
+      state.user = { ...state.user, cartId: action.payload?.createEmptyCart };
     },
   },
   extraReducers: {

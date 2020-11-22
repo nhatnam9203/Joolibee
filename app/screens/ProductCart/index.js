@@ -16,10 +16,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 import { useMutation, useLazyQuery } from '@apollo/client';
-import { mutation, query } from '@graphql';
+import { GEX, query } from '@graphql';
 import { format, scale } from '@utils';
 import * as Widget from './widget';
-import { useComponentSize, useCustomerCart } from '@hooks';
+import { useComponentSize } from '@hooks';
 
 const { scaleWidth } = scale;
 
@@ -27,7 +27,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
   const popupRef = React.createRef(null);
 
-  const cart_id = useSelector((state) => state.cart?.cart_id);
+  const cart_id = useSelector((state) => state.account?.user?.cart_id);
 
   const [refreshing, setRefreshing] = React.useState(false);
   const [cartDetail, setCartDetail] = React.useState(null);
@@ -48,7 +48,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // Mutation update cart product
   // const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
-  const { updateCart, updateCartResp } = useCustomerCart();
+  const { updateCartItems, updateCartResp } = GEX.useCustomerCart();
 
   // Mutation update cart product --
   const onRenderItem = ({ item }, index) => {
@@ -94,7 +94,7 @@ const ProductCart = ({ visible, onToggle }) => {
       quantity: item.quantity,
     };
 
-    await updateCart({
+    await updateCartItems({
       variables: input,
     });
   };
@@ -191,7 +191,7 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading isLoading={loading || updateCartResp.loading} />
+      <Loading isLoading={loading || updateCartResp?.loading} />
     </PopupLayout>
   );
 };
