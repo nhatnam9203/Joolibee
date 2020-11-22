@@ -39,9 +39,6 @@ const HomePage = () => {
   const [visible_detail, showDetail] = React.useState(false);
   const tokenKey = useSelector((state) => state.account.user.tokenKey);
 
-  // get customer cart id
-  const customerCartData = useQuery(query.CUSTOMER_CART_QUERY);
-
   const { data, loading, refetch } = useQuery(query.HOME_SCREEN, {
     fetchPolicy: 'cache-first',
   });

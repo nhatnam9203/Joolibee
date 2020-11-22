@@ -62,11 +62,11 @@ export const TopBarComponent = React.memo(() => {
   );
 });
 
-export const TopBarRight = () => {
+export const TopBarRight = React.memo(() => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { cart } = GEX.useCustomerCart(true);
+  const { cart } = GEX.useGetCustomerCart();
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
@@ -91,7 +91,7 @@ export const TopBarRight = () => {
       />
     </View>
   );
-};
+});
 
 export const TopBarLeft = () => {
   const navigation = useNavigation();

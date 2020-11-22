@@ -53,7 +53,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     null,
   );
 
-  const { addProductsToCart } = GEX.useCustomerCart();
+  const { addProductsToCart } = GEX.addProductToCart();
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem

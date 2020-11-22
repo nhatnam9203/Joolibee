@@ -48,7 +48,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // Mutation update cart product
   // const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
-  const { updateCartItems, updateCartResp } = GEX.useCustomerCart();
+  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   // Mutation update cart product --
   const onRenderItem = ({ item }, index) => {

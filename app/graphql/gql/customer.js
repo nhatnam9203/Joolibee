@@ -28,11 +28,38 @@ export const CUSTOMER_CART_QUERY = gql`
       id
       __typename
       items {
-        id
         __typename
+        id
+        prices {
+          price {
+            value
+            currency
+          }
+        }
         product {
+          __typename
+          id
           name
           sku
+          point
+          meta_description
+          price_range {
+            maximum_price {
+              final_price {
+                value
+                currency
+              }
+            }
+            minimum_price {
+              final_price {
+                value
+                currency
+              }
+            }
+          }
+          image {
+            url
+          }
         }
         quantity
       }

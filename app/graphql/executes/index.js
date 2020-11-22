@@ -1,3 +1,5 @@
 export * from './useGenerateToken';
 export * from './useCustomer';
-export * from './useCustomerCart';
+export * from './useGetCustomerCart';
+export * from './useUpdateCustomerCart';
+export * from './useAddProductsToCart';
