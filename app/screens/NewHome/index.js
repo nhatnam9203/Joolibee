@@ -1,6 +1,6 @@
 import { useQuery, useLazyQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
-import { query } from '@graphql';
+import { GQL } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import {
   AppScrollViewIOSBounceColorsWrapper,
@@ -41,7 +41,7 @@ export default function HomeScreen() {
   const [isVisible, setVisiblePopup] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
 
-  const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
+  const { data = {}, loading, refetch } = useQuery(GQL.HOME_SCREEN, {
     fetchPolicy: 'cache-and-network',
   });
 

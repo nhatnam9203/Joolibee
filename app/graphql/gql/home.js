@@ -11,6 +11,7 @@ export const HOME_SCREEN = gql`
         id
         name
         point
+        sku
         price_range {
           __typename
           maximum_price {
