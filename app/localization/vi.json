@@ -156,5 +156,6 @@
   "txtOrderMethod":"Hình thức đặt hàng",
   "txtInputVoucher":"Nhập mã khuyến mãi",
   "txtRedeemPoints":"ĐỔI ĐIỂM TÍCH LŨY",
-  "txtApply":"Áp dụng"
+  "txtApply":"Áp dụng",
+  "txtUpdateCart": "Cập nhật sản phẩm"
 }

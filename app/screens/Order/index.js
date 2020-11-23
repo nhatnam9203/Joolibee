@@ -200,7 +200,7 @@ const OrderScreen = () => {
         item={item}
         onPress={() => {
           navigation.navigate(ScreenName.MenuItemDetail, {
-            productItem: item,
+            productSku: item?.sku,
           });
         }}
       />
@@ -375,7 +375,7 @@ const OrderScreen = () => {
                 <OrderItem item={item} />
               </OrderSectionItem>
             ))}
-            {/* 
+            {/*
             <OrderSectionItem>
               <View style={styles.orderSumContent}>
                 <Text style={styles.txtTitleStyle}>

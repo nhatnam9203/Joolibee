@@ -11,7 +11,7 @@ import { LabelTitle } from './LabelTitle';
 const { scaleHeight } = scale;
 const IMAGE_SIZE = scaleHeight(160);
 
-const OrderItemLoading = () => (
+export const OrderNewItemLoading = React.memo(() => (
   <FlatListItemWithImgHorizontal
     style={styles.container}
     imgStyle={styles.imageStyle}
@@ -27,7 +27,7 @@ const OrderItemLoading = () => (
       <PlaceholderMedia style={styles.mediaPlaceholder} />
     </Placeholder>
   </FlatListItemWithImgHorizontal>
-);
+));
 
 export const OrderNewItem = ({
   item,
@@ -87,7 +87,7 @@ export const OrderNewItem = ({
     );
   };
 
-  return loading ? <OrderItemLoading /> : <ListItem item={item} />;
+  return loading ? <OrderNewItemLoading /> : <ListItem item={item} />;
 };
 
 const styles = StyleSheet.create({

@@ -96,7 +96,7 @@ export const QueryProductDetail = ({
   renderItem,
   renderHeader,
   renderFooter,
-  productItem: { sku },
+  sku,
   updateProductItemDetail,
   optionData,
 }) => {

@@ -41,7 +41,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const offsetX = useSharedValue(0);
   const aref = useAnimatedRef();
 
-  const { productItem, detailItem } = route.params;
+  const { productSku, detailItem } = route.params;
 
   const [quantity, setQuantity] = React.useState(1);
   const [productItemDetail, dispatchChangeProduct] = React.useReducer(
@@ -197,7 +197,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const onReceivedProduct = (item) => {
-    Logger.debug(detailItem, 'onReceivedProduct');
+    // Logger.debug(detailItem, 'onReceivedProduct');
 
     if (detailItem?.bundle_options.length > 0) {
       const { items } = item;
@@ -228,7 +228,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         }
       });
 
-      Logger.debug(list, 'lít');
       dispatchChangeProduct(
         setProduct(Object.assign({}, item, { items: list })),
       );
@@ -297,7 +296,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
       optionsMap.push(...mapArr);
     });
-    Logger.debug(optionsMap, 'options');
+    // Logger.debug(optionsMap, 'options');
     addProductsToCart({
       variables: {
         cart_items: [
@@ -305,6 +304,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
             quantity: quantity,
             sku: sku,
             selected_options: optionsMap,
+            // entered_options: [
+
+            // ]
           },
         ],
       },
@@ -333,7 +335,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <GCC.QueryProductDetail
-          productItem={productItem}
+          sku={productSku}
           renderHeader={() => renderHeader()}
           renderItem={renderItem}
           renderFooter={renderFooter}
@@ -352,7 +354,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.confirmStyle}>
         {renderSummaryPrice()}
         <ButtonCC.ButtonRed
-          label={translate('txtAddCart')}
+          label={
+            detailItem ? translate('txtUpdateCart') : translate('txtAddCart')
+          }
           onPress={addProductToCart}
         />
       </View>
