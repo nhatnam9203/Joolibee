@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { AppStyles, metrics } from '@theme';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { AppStyles, metrics, images } from '@theme';
 
 export default function orderTotal() {
   return (
@@ -11,7 +11,10 @@ export default function orderTotal() {
       </View>
 
       <View style={styles.content}>
-        <Text style={AppStyles.fonts.text}>Khuyến mãi (Ưu đãi 40.000đ)</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Image source={images.icons.ic_sticked} />
+          <Text style={AppStyles.fonts.text}> Khuyến mãi (Ưu đãi 40.000đ)</Text>
+        </View>
         <Text style={AppStyles.fonts.bold}>-40.000 đ</Text>
       </View>
 
@@ -33,7 +36,7 @@ export default function orderTotal() {
 
 const PaymentMethod = () => (
   <View
-    style={[styles.content, { justifyContent: 'flex-end', marginBottom: 50 }]}>
+    style={[styles.content, { justifyContent: 'flex-end', marginBottom: 30 }]}>
     <View style={styles.block}>
       <Text style={AppStyles.fonts.text}>đ</Text>
     </View>

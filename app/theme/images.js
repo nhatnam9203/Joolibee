@@ -85,6 +85,8 @@ const images = {
     ic_arrow_right_white: require('../assets/icons/ic-arrow-right-white.png'),
     ic_jollibee_vn: require('../assets/icons/ic-jollibee-vn.png'),
     ic_call_now: require('../assets/icons/ic-call-now.png'),
+    ic_delete_bg: require('../assets/icons/ic-delete-bg.png'),
+    ic_warning: require('../assets/icons/ic-warning.png'),
   },
   animations: {
     fade: require('../assets/animations/animation_fade.json'),

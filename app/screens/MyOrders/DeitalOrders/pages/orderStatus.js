@@ -17,19 +17,28 @@ const data = [
     title: 'Đang chờ xác nhận',
     description:
       'Đơn hàng của bạn đã được gửi và đang chờ xác nhận từ nhà hàng',
+    type: 'pending',
   },
   {
     title: 'Đã xác nhận & chuẩn bị đơn hàng',
     description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn',
+    type: 'received',
   },
-  { title: 'Đang giao hàng', description: 'Trần văn C (0778010203)' },
+
+  {
+    title: 'Đang giao hàng',
+    description: 'Trần văn C (0778010203)',
+    type: 'shipping',
+  },
   {
     title: 'Đã đến nơi',
     description: 'Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.',
+    type: 'ready',
   },
   {
     title: 'Hoàn thành',
     description: 'Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng',
+    type: 'complete',
   },
 ];
 
@@ -53,9 +62,7 @@ export default function OrderStatus({ status }) {
   const scale = React.useRef(new Animated.Value(15)).current;
   const [visible, showPopup] = React.useState(false);
 
-  let indexStatus = data.findIndex((item) =>
-    item.title.toLowerCase().includes(status),
-  );
+  let indexStatus = data.findIndex((item) => item.type === status);
 
   const ImageLink = ({ source, onPress }) => (
     <TouchableOpacity onPress={onPress}>
@@ -97,6 +104,9 @@ export default function OrderStatus({ status }) {
   }, [loopAnimateFade]);
   const renderLabel = ({ position, label, currentPosition }) => {
     const description = data[position].description;
+    const activeAction =
+      (currentPosition === 2 || currentPosition === 3) &&
+      currentPosition === position;
     return (
       <View style={[styles.labelContainer, { height: 50 }]}>
         <View style={styles.labelLeft}>
@@ -106,7 +116,7 @@ export default function OrderStatus({ status }) {
 
         {
           <View style={styles.labelRight}>
-            {position === 2 && currentPosition === 2 && (
+            {activeAction && (
               <View style={styles.contentRight}>
                 <ImageLink
                   source={images.icons.ic_order_phone}
@@ -164,7 +174,7 @@ export default function OrderStatus({ status }) {
       customStyles={stepIndicatorStyles}
       stepCount={data.length}
       direction="vertical"
-      currentPosition={1}
+      currentPosition={indexStatus}
       labels={data.map((item) => item.title)}
       renderLabel={renderLabel}
       renderStepIndicator={renderStepIndicator}
@@ -182,12 +192,12 @@ export default function OrderStatus({ status }) {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    padding: metrics.padding + 5,
+    paddingHorizontal: metrics.padding + 5,
   },
 
   labelContainer: {
     flex: 1,
-    marginVertical: 10,
+    marginTop: 10,
     paddingRight: 15,
     alignItems: 'center',
     flexDirection: 'row',
@@ -242,6 +252,6 @@ const styles = StyleSheet.create({
   },
   txtDescription: {
     // width: 170,
-    ...AppStyles.fonts.text,
+    ...AppStyles.fonts.mini,
   },
 });

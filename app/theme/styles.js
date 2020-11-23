@@ -36,6 +36,7 @@ const AppStyles = {
     dark_aqua: '#0A8D87',
     delivery: '#00B77F',
     inactive: '#BCBCBC',
+    moderate_cyan: '#4AC1CF',
   },
   fonts: {
     text: {

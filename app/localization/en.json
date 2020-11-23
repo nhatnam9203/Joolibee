@@ -149,5 +149,11 @@
   "txtAddressList":"Addresses",
   "txtSaveAddress":"Save this address",
   "txtSaveChange":"Save change",
-  "txtSetDefaultAddress":"Set default address"
+  "txtSetDefaultAddress":"Set default address",
+  "txtEdit":"Edit",
+  "txtExtraProduct":"More delicious when eaten with",
+  "txtOrderMethod":"Shipping method",
+  "txtInputVoucher":"Input the voucher",
+  "txtRedeemPoints":"REDEEM ACCUMULATED POINTS",
+  "txtApply":"Apply"
 }
