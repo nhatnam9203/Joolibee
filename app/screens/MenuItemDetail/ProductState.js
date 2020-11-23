@@ -5,6 +5,12 @@ export const PRODUCT_UPDATE_OPTIONS = 'detail-product-update-options';
 export const productReducer = (state, action) => {
   switch (action.type) {
     case PRODUCT_SET:
+      if (action.payload) {
+        const { items } = action.payload;
+        const arr = [...items];
+        arr?.sort((a, b) => a.position - b.position);
+        return Object.assign({}, action.payload, { items: arr });
+      }
       return action.payload;
     case PRODUCT_UPDATE:
       return Object.assign({}, state, action.item);
