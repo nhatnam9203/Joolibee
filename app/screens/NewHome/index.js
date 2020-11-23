@@ -45,8 +45,9 @@ const HomeScreen = () => {
   const [getHomeScreen, { data, loading, refetch }] = useLazyQuery(
     GQL.HOME_SCREEN,
     {
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'network-only',
       onCompleted: () => {
+        dispatch(app.hideLoading());
         setVisiblePopup(true);
       },
     },
@@ -62,7 +63,9 @@ const HomeScreen = () => {
   }, [language, navigation]);
 
   React.useEffect(() => {
+    Logger.debug('getHomeScreen', 'useEffect');
     getHomeScreen();
+    dispatch(app.showLoading());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

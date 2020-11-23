@@ -11,7 +11,7 @@ export const useGetCheckOutCart = () => {
 
   // GET CUSTOMER CARTS
   const [getCheckOutCart, getCheckOutCartResp] = useLazyQuery(CART_DETAIL, {
-    fetchPolicy: 'only-network',
+    fetchPolicy: 'network-only',
     //   onCompleted: (data) => {
     //     Logger.debug(data, 'get customer info complete');
     //   },

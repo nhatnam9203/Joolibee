@@ -9,7 +9,7 @@ export const useCustomer = () => {
   const [getCustomerInfo, { loading, data, refetch, error }] = useLazyQuery(
     CUSTOMER_INFO,
     {
-      fetchPolicy: 'only-network',
+      fetchPolicy: 'network-only',
       //   onCompleted: (data) => {
       //     Logger.debug(data, 'get customer info complete');
       //   },
