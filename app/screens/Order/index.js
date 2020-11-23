@@ -25,7 +25,7 @@ import {
 import ScreenName from '../ScreenName';
 import { OrderItem, CustomScrollViewHorizontal } from './widget';
 import { useMutation, useQuery } from '@apollo/client';
-import { mutation, query } from '@graphql';
+import { mutation, query, GQL } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
 
@@ -124,7 +124,7 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const cart_id = useSelector((state) => state.account?.user?.cart_id);
+  const cart_id = useSelector((state) => state.account?.cart?.id);
 
   const [shippingType, setShippingType] = React.useState(
     selected_payment_method,
@@ -133,7 +133,7 @@ const OrderScreen = () => {
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
 
   // --------- handle fetch data cart -----------
-  const { data } = useQuery(query.CART_DETAIL, {
+  const { data } = useQuery(GQL.CART_DETAIL, {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-first',
   });
@@ -207,6 +207,18 @@ const OrderScreen = () => {
     </View>
   );
 
+  const VoucherContent = ({
+    style,
+    content,
+    colorText = AppStyles.colors.moderate_cyan,
+    icon = images.icons.ic_sticked,
+  }) => (
+    <View style={[styles.voucherContainer, style]}>
+      <Image style={styles.voucherIcon} source={icon} />
+      <Text style={[styles.voucherText, { color: colorText }]}>{content}</Text>
+    </View>
+  );
+
   const renderItemVoucher = (item, index) => {
     const color =
       item.status === 'error'
@@ -226,13 +238,11 @@ const OrderScreen = () => {
         borderColor={color}
         bgColor={color}
         style={{ marginRight: 5 }}>
-        <View style={styles.voucherContainer}>
-          <Image style={styles.voucherIcon} source={icon} />
-          <Text style={[styles.voucherText, { color }]}>{item.name}</Text>
-        </View>
+        <VoucherContent content={item.name} colorText={color} icon={icon} />
       </OrderButtonInput>
     );
   };
+
   return (
     <CustomImageBackground
       source={images.watermark_background_2}
@@ -375,15 +385,6 @@ const OrderScreen = () => {
                 <OrderItem item={item} />
               </OrderSectionItem>
             ))}
-            {/* 
-            <OrderSectionItem>
-              <View style={styles.orderSumContent}>
-                <Text style={styles.txtTitleStyle}>
-                  {translate('txtOrderCalculator')} :
-                </Text>
-                <Text style={styles.txtStyle}>{subTotal}</Text>
-              </View>
-            </OrderSectionItem> */}
           </OrderSection>
 
           {/**Order Extra List*/}
@@ -502,8 +503,46 @@ const OrderScreen = () => {
 
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>Tổng cộng : </Text>
-          <Text style={styles.txtPriceStyle}>{total}</Text>
+          <Text style={styles.txtStyle}>
+            {translate('txtOrderCalculator')}:
+          </Text>
+          <Text style={styles.txtSubPriceStyle}>{total}</Text>
+        </View>
+
+        <View style={styles.orderSumContent}>
+          <Text style={styles.txtStyle}>Khuyến mãi : </Text>
+          <VoucherContent
+            content="Voucher ưu đãi 30K"
+            style={{
+              paddingHorizontal: 0,
+            }}
+          />
+          <Text style={styles.txtSubPriceStyle}>{total}</Text>
+        </View>
+
+        <View style={styles.orderSumContent}>
+          <VoucherContent
+            content="Đổi 20 điểm nhận 20.000đ."
+            style={{
+              paddingHorizontal: 0,
+              justifyContent: 'flex-end',
+              marginRight: scaleWidth(17),
+            }}
+          />
+
+          <Text style={styles.txtSubPriceStyle}>{total}</Text>
+        </View>
+
+        <View style={styles.orderSumContent}>
+          <Text style={styles.txtTitleStyle}>Tổng cộng : </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.txtPointStyle}>(+ 20 điểm)</Text>
+            <Text style={styles.txtPriceStyle}>{total}</Text>
+          </View>
         </View>
 
         <ButtonCC.ButtonRed
@@ -535,7 +574,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // paddingHorizontal: 10,
     marginTop: 20,
-    marginBottom: CONFIRM_HEIGHT * 2,
+    marginBottom: CONFIRM_HEIGHT * 1.7,
   },
 
   confirmStyle: {
@@ -546,27 +585,49 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderColor: AppStyles.colors.accent,
-    height: CONFIRM_HEIGHT,
+    paddingHorizontal: 17,
+    paddingTop: 24,
+    shadowColor: '#00000070',
+    shadowOffset: {
+      width: 3,
+      height: 5,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 8.3,
+    elevation: 10,
   },
 
   orderSumContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    padding: 10,
+    // padding: 10,
+    alignItems: 'center',
   },
 
-  txtTitleStyle: { ...AppStyles.fonts.medium, fontSize: 16, margin: 5 },
-  txtStyle: { ...AppStyles.fonts.text, fontSize: 16, margin: 5 },
+  txtTitleStyle: {
+    ...AppStyles.fonts.medium,
+    fontSize: scaleWidth(16),
+    margin: 5,
+  },
+  txtStyle: { ...AppStyles.fonts.text, fontSize: scaleWidth(16), margin: 5 },
 
   txtPriceStyle: {
     ...AppStyles.fonts.title,
-    fontSize: 21,
+    fontSize: scaleWidth(21),
     color: AppStyles.colors.accent,
+  },
+
+  txtSubPriceStyle: {
+    ...AppStyles.fonts.bold,
+    fontSize: 16,
+    // color: AppStyles.colors.accent,
+  },
+
+  txtPointStyle: {
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    fontSize: scaleWidth(14),
+    marginRight: scaleWidth(17),
   },
 
   itemStyle: {
