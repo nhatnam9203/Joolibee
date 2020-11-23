@@ -24,7 +24,6 @@ export * from './PopupRating';
 export * from './PopupChat';
 export * from './LanguageFlag';
 export * from './JollibeeImage';
-
 import CustomMapView from './MapView';
 import ItemStore from './ItemStore';
 import PopupWebView from './PopupWebView';
@@ -33,3 +32,4 @@ export * from './OrderItemLoading';
 export * from './OrderNewItem';
 export * from './CardView';
 export * from './NewsItem';
+export * from './CustomRaiting';

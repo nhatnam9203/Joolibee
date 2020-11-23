@@ -48,12 +48,6 @@ export default function Index({ navigation, route }) {
     setData(defaultData);
   }, [HeaderTitle, navigation]);
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      setVisible(true);
-    }, 3000);
-  }, []);
-
   const HeaderTitle = React.useCallback(
     () => (
       <View style={styles.headerTitleContainer}>
@@ -120,7 +114,7 @@ export default function Index({ navigation, route }) {
     return (
       <View style={styles.bottomContainer}>
         <ButtonCC.ButtonYellow
-          // onPress={onToggle}
+          onPress={() => setVisible(true)}
           label={'ĐÁNH GIÁ'}
           width={scaleWidth(185)}
           height={scaleHeight(61)}
@@ -171,7 +165,7 @@ export default function Index({ navigation, route }) {
               />
             </View>
           )}
-          {order_complete && (
+          {true && (
             <PopupRating
               visible={visible}
               onToggle={onClose}
@@ -180,7 +174,7 @@ export default function Index({ navigation, route }) {
           )}
         </View>
       </ScrollView>
-      {order_complete && renderBottomComponent()}
+      {true && renderBottomComponent()}
     </CustomImageBackground>
   );
 }
