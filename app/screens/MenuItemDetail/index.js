@@ -33,10 +33,12 @@ const { width, height } = Dimensions.get('window');
 const ANIMATION_DURATION = 800;
 const CART_ICON_X = scaleWidth(25);
 const CART_ICON_Y = scaleHeight(65);
+const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
 
+  // animations
   const viewScale = useSharedValue(1);
   const offsetX = useSharedValue(0);
   const aref = useAnimatedRef();
@@ -48,7 +50,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     productReducer,
     null,
   );
-
   const { addProductsToCart } = GEX.useAddProductsToCart();
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
@@ -197,8 +198,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const onReceivedProduct = (item) => {
-    // Logger.debug(detailItem, 'onReceivedProduct');
-
     if (detailItem?.bundle_options.length > 0) {
       const { items } = item;
       const list = items.map((x) => {
@@ -237,7 +236,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const renderSummaryPrice = () => {
-    let priceString = '0.0 đ';
+    let priceString = DEFAULT_CURRENCY_VALUE;
     if (productItemDetail) {
       const { price_range, items } = productItemDetail;
       const { sellPrice } = destructuring.priceOfRange(price_range);
@@ -283,8 +282,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   });
 
   const addProductToCart = () => {
-    // if (!productItemDetail) return;
-
     const { sku, items = [] } = productItemDetail;
     const optionsMap = [];
 
