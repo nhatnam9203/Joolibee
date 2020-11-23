@@ -67,81 +67,84 @@ const ProductItemInfoLoading = () => {
   );
 };
 
-export const ProductItemDetailHeader = (item) => {
-  const { image, name, point, price_range } = item;
-  const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+export const ProductItemDetailHeader = React.memo(
+  ({ image, name, point, price_range }) => {
+    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
 
-  return (
-    <View style={styles.header}>
-      <JollibeeImage style={styles.imageHeaderStyle} url={image?.url} />
+    return (
+      <View style={styles.header}>
+        <JollibeeImage
+          url={image?.url}
+          width={width}
+          height={scaleHeight(348)}
+        />
 
-      <View style={styles.headerContent}>
-        <Text
-          style={AppStyles.styles.itemTitle}
-          numberOfLines={0}
-          ellipsizeMode="tail">
-          {name}
-        </Text>
-        <View style={styles.priceContent}>
-          {showPrice && (
-            <Text style={styles.txtFrontDiscountStyle}>
-              {format.jollibeeCurrency(showPrice)}
-            </Text>
-          )}
-          {sellPrice && (
-            <Text style={styles.txtPriceStyle}>
-              {format.jollibeeCurrency(sellPrice)}
-            </Text>
-          )}
-          {point > 0 && (
-            <Text style={styles.txtPointStyle}>
-              {`(+${point} ${translate('txtPoint')})`}
-            </Text>
-          )}
+        <View style={styles.headerContent}>
+          <Text
+            style={AppStyles.styles.itemTitle}
+            numberOfLines={0}
+            ellipsizeMode="tail">
+            {name}
+          </Text>
+          <View style={styles.priceContent}>
+            {showPrice && (
+              <Text style={styles.txtFrontDiscountStyle}>
+                {format.jollibeeCurrency(showPrice)}
+              </Text>
+            )}
+            {sellPrice && (
+              <Text style={styles.txtPriceStyle}>
+                {format.jollibeeCurrency(sellPrice)}
+              </Text>
+            )}
+            {point > 0 && (
+              <Text style={styles.txtPointStyle}>
+                {`(+${point} ${translate('txtPoint')})`}
+              </Text>
+            )}
+          </View>
         </View>
       </View>
-    </View>
-  );
-};
+    );
+  },
+);
 
-export const ProductItemDetailFooter = ({
-  quantity = 1,
-  increase,
-  decrease,
-}) => {
-  return (
-    <View style={styles.orderContentStyle}>
-      <View style={styles.orderAmountStyle}>
-        <CustomButton
-          style={styles.buttonOrderStyle}
-          onPress={decrease}
-          disabled={quantity <= 1}
-          borderRadius={6}>
-          <Image source={images.icons.ic_sub} />
-        </CustomButton>
-        <CustomInput
-          style={styles.mulInputStyle}
-          inputStyle={styles.inputStyle}
-          keyboardType="numeric"
-          allowFontScaling={true}
-          numberOfLines={1}
-          editable={false}
-          value={quantity?.toString()}
-          multiline={false}
-          clearTextOnFocus={true}
-          maxLength={3}
-        />
-        <CustomButton
-          style={styles.buttonOrderStyle}
-          onPress={increase}
-          disabled={quantity > 255}
-          borderRadius={6}>
-          <Image source={images.icons.ic_plus} />
-        </CustomButton>
+export const ProductItemDetailFooter = React.memo(
+  ({ quantity = 1, increase, decrease }) => {
+    return (
+      <View style={styles.orderContentStyle}>
+        <View style={styles.orderAmountStyle}>
+          <CustomButton
+            style={styles.buttonOrderStyle}
+            onPress={decrease}
+            disabled={quantity <= 1}
+            borderRadius={6}>
+            <Image source={images.icons.ic_sub} />
+          </CustomButton>
+          <CustomInput
+            style={styles.mulInputStyle}
+            inputStyle={styles.inputStyle}
+            keyboardType="numeric"
+            allowFontScaling={true}
+            numberOfLines={1}
+            editable={false}
+            value={quantity?.toString()}
+            multiline={false}
+            clearTextOnFocus={true}
+            maxLength={3}
+          />
+          <CustomButton
+            style={styles.buttonOrderStyle}
+            onPress={increase}
+            disabled={quantity > 255}
+            borderRadius={6}>
+            <Image source={images.icons.ic_plus} />
+          </CustomButton>
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  },
+);
 
 const MIN_HEIGHT = 289;
 const TOTAL_HEIGHT = 145;
@@ -179,6 +182,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 0,
     backgroundColor: '#fff',
+    paddingTop: 50,
     paddingBottom: 20,
     marginBottom: 10,
     ...AppStyles.styles.shadow,
@@ -188,13 +192,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-
-  imageHeaderStyle: {
-    marginBottom: 10,
-    marginTop: 20,
-    minHeight: MIN_HEIGHT,
-    width: '100%',
   },
 
   priceContent: {

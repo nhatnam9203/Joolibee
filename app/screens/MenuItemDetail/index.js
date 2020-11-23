@@ -25,6 +25,7 @@ import {
 import {
   productReducer,
   setProduct,
+  updateProduct,
   updateOption,
   increaseQuantity,
   decreaseQuantity,
@@ -43,7 +44,7 @@ const CART_ICON_Y = scaleHeight(65);
 const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
-  const { productSku, detailItem } = route.params;
+  const { product, detailItem } = route.params;
 
   const navigation = useNavigation();
   // animations
@@ -55,12 +56,12 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   //
   const [productItem, dispatchChangeProduct] = React.useReducer(
     productReducer,
-    null,
+    product,
   );
 
   const { addProductsToCart } = GEX.useAddProductsToCart();
   const [getProductDetail] = useLazyQuery(GQL.PRODUCT_DETAIL, {
-    variables: { sku: productSku },
+    variables: { sku: product?.sku },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       const item = data.products?.items[0];
@@ -94,10 +95,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         });
 
         dispatchChangeProduct(
-          setProduct(Object.assign({}, item, { items: list })),
+          updateProduct(Object.assign({}, item, { items: list })),
         );
       } else {
-        dispatchChangeProduct(setProduct(item));
+        dispatchChangeProduct(updateProduct(item));
       }
     },
   });
@@ -234,9 +235,17 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     );
   };
 
-  const onRenderHeader = (headerProps) => (
-    <ProductItemDetailHeader {...headerProps} />
-  );
+  const onRenderHeader = React.useCallback(() => {
+    const { image, name, point, price_range } = productItem || {};
+    return (
+      <ProductItemDetailHeader
+        image={image}
+        name={name}
+        point={point}
+        price_range={price_range}
+      />
+    );
+  }, [productItem]);
 
   const onIncreaseQuantity = () => {
     setQyt((prev) => prev + 1);
@@ -259,11 +268,12 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { items } = productItem || {};
   return (
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <ProductDetailFlatList
-          data={productItem}
+          data={items}
           renderItem={onRenderItem}
           renderHeader={onRenderHeader}
           renderFooter={onRenderFooter}

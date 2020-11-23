@@ -1,44 +1,30 @@
-import { gql, useQuery } from '@apollo/client';
+import { CustomFlatList } from '@components';
+import { AppStyles } from '@theme';
 import React from 'react';
 import {
-  StyleSheet,
-  View,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
+  StyleSheet,
 } from 'react-native';
-import { CustomFlatList, Loading } from '@components';
-import { AppStyles } from '@theme';
-import {
-  Placeholder,
-  PlaceholderMedia,
-  PlaceholderLine,
-  Fade,
-} from 'rn-placeholder';
-import { destructuring } from '@utils';
-import {
-  ProductItemDetailHeader,
-  ProductItemDetailFooter,
-} from './ProductItemDetail';
 
 export const ProductDetailFlatList = ({
   data,
   renderItem,
-  renderHeader = () => {},
+  renderHeader,
   renderFooter,
 }) => {
-  const { items = [], ...props } = data || {};
   return (
     <KeyboardAvoidingView
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
       <StatusBar barStyle="dark-content" />
       <CustomFlatList
-        data={items}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.option_id.toString()}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => renderHeader(props)}
+        ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
 
         // refreshControl={

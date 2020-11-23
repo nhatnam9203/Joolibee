@@ -16,7 +16,7 @@ export const productReducer = (state, action) => {
       }
       return action.payload;
     case PRODUCT_UPDATE:
-      return Object.assign({}, state, action.item);
+      return Object.assign({}, state, action.payload);
     case PRODUCT_UPDATE_OPTIONS:
       const optionsItem = action.payload;
       const mapArray = state.items.map((x) => {
@@ -36,6 +36,13 @@ export const productReducer = (state, action) => {
 export const setProduct = (item) => {
   return {
     type: PRODUCT_SET,
+    payload: item,
+  };
+};
+
+export const updateProduct = (item) => {
+  return {
+    type: PRODUCT_UPDATE,
     payload: item,
   };
 };

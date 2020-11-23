@@ -49,7 +49,7 @@ const BestsellerItem = React.memo(({ item }) => {
       item={item}
       onPress={() => {
         navigation.navigate(ScreenName.MenuItemDetail, {
-          productSku: item?.sku,
+          product: item,
         });
       }}
     />

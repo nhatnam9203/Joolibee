@@ -40,8 +40,9 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
         loading={loading}
         item={item}
         onPress={() => {
+          Logger.debug(item, 'ScreenName.MenuItemDetail > item');
           navigation.navigate(ScreenName.MenuItemDetail, {
-            productSku: item?.sku,
+            product: item,
           });
         }}
       />

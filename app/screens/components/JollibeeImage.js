@@ -3,18 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Config } from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import Spinner from 'react-native-spinkit';
-import { PlaceholderMedia, Placeholder } from 'rn-placeholder';
+import { PlaceholderMedia, Placeholder, Fade } from 'rn-placeholder';
 import * as Animatable from 'react-native-animatable';
 
-export const JollibeeImage = ({
-  url,
-  style,
-  defaultSource,
-  width,
-  height,
-  ...props
-}) => {
-  const [source, setSource] = React.useState(null);
+export const JollibeeImage = React.memo(({ url, width, height }) => {
   const [download, setDownload] = React.useState(-1);
 
   // Callback functions
@@ -25,36 +17,28 @@ export const JollibeeImage = ({
   const onLoadEnd = () => setDownload(-1);
   const onError = () => {
     setDownload(-1);
-    setSource(defaultSource);
   };
+  Logger.debug(fullPath, 'fullPath');
+  let fullPath = url;
+  if (url && typeof url === 'string') {
+    fullPath = url.includes(Config.DOMAIN) ? url : `${Config.DOMAIN}${url}`;
+  }
 
-  React.useEffect(() => {
-    if (url && typeof url === 'string') {
-      const fullPath = url.includes(Config.DOMAIN)
-        ? url
-        : `${Config.DOMAIN}${url}`;
-      // Logger.info(fullPath, 'JollibeeImage -> url');
-      setSource({ uri: fullPath, priority: FastImage.priority.normal });
-    } else if (defaultSource) {
-      setSource(defaultSource);
-    }
-  }, [url, defaultSource]);
-
-  return source ? (
+  return fullPath ? (
     <Animatable.View
       animation="fadeIn"
-      duration={1}
-      style={[styles.container, width && height ? { width, height } : style]}>
+      duration={800}
+      style={[styles.container, { width: width, height: height }]}>
       <FastImage
-        source={source}
+        source={{ uri: fullPath, priority: FastImage.priority.normal }}
         resizeMode={FastImage.resizeMode.contain}
         onLoadStart={onLoadStart}
         onProgress={onProgress}
         onLoadEnd={onLoadEnd}
         onError={onError}
-        style={[styles.imgContent, style]}
-        {...props}
+        style={styles.imgContent}
       />
+
       {typeof download === 'number' && download > 0 && (
         <View style={styles.spinnerContent}>
           <Spinner size={15} type="Circle" color="#2B2B2B" />
@@ -63,19 +47,17 @@ export const JollibeeImage = ({
       )}
     </Animatable.View>
   ) : (
-    <Placeholder
-      style={[
-        styles.container,
-        width && height ? { width, height } : style,
-        styles.placeholderContent,
-      ]}>
+    <View style={[styles.container, { width: width, height: height }]}>
       <PlaceholderMedia style={styles.imgPlaceholder} />
-    </Placeholder>
+    </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  container: { flex: 0 },
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   spinnerContent: {
     position: 'absolute',
@@ -95,16 +77,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
-  imgContent: {},
-
-  placeholderContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  imgContent: { flex: 1, width: '100%', height: '100%' },
 
   imgPlaceholder: {
-    width: '80%',
-    height: '80%',
+    width: '90%',
+    height: '90%',
     alignSelf: 'center',
   },
 });

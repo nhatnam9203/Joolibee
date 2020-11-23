@@ -22,14 +22,7 @@ export const FlatListItemWithImgHorizontal = ({
   shadow = true,
 }) => {
   const renderImage = () => (
-    <JollibeeImage
-      style={[
-        styles.imageStyle,
-        imgStyle,
-        { width: imgWidth, height: imgHeight },
-      ]}
-      url={image}
-    />
+    <JollibeeImage url={image} width={imgWidth} height={imgHeight} />
   );
 
   return (
@@ -51,10 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     ...AppStyles.styles.horizontalLayout,
     borderRadius: scaleHeight(14),
-    flex: 0,
-  },
-
-  imageStyle: {
     flex: 0,
   },
 

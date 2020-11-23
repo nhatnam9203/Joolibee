@@ -30,12 +30,7 @@ export const MenuItemLoading = () => (
 export const MenuItem = ({ item, onPress, color }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
     <View style={[styles.content, { backgroundColor: color.background }]}>
-      <JollibeeImage
-        style={styles.imageStyle}
-        url={item.thumbnail_image}
-        defaultSource={images.menu_3}
-        resizeMode="contain"
-      />
+      <JollibeeImage url={item.thumbnail_image} width="100%" height="80%" />
       <View style={styles.textContentStyle}>
         {!!item?.name && (
           <Text
@@ -107,10 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  imageStyle: {
-    flex: 1,
-  },
-
   imagePlaceholderStyle: {
     width: '90%',
     height: '90%',
@@ -118,10 +109,9 @@ const styles = StyleSheet.create({
   },
 
   textContentStyle: {
-    height: TEXT_HEIGHT,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 0,
   },
 
   textStyle: {
