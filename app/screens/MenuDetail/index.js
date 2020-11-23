@@ -32,7 +32,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   }, [language, navigation]);
 
   const renderItem = ({ item }, loading) => {
-    Logger.debug(item, 'MenuDetailScreen');
+    // Logger.debug(item, 'MenuDetailScreen');
 
     return (
       <OrderNewItem
