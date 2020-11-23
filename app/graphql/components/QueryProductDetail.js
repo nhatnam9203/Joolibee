@@ -104,7 +104,7 @@ export const QueryProductDetail = ({
 
   const { loading, data, refetch } = useQuery(PRODUCT, {
     variables: { sku },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'cache-first',
   });
 
   // When received new data, sort

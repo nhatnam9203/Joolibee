@@ -45,7 +45,7 @@ const HomeScreen = () => {
   const [getHomeScreen, { data, loading, refetch }] = useLazyQuery(
     GQL.HOME_SCREEN,
     {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
       onCompleted: () => {
         dispatch(app.hideLoading());
         setVisiblePopup(true);
