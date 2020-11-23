@@ -31,11 +31,18 @@ export const Avatar = ({ source, size }) => (
   </View>
 );
 
-export const Action = ({ source, onPress, notifyNumber, bagSize, bagStyle }) =>
-  source ? (
+export const Action = ({
+  source,
+  onPress,
+  notifyNumber,
+  bagSize,
+  bagStyle,
+  children,
+}) =>
+  source || children ? (
     <TouchableOpacity onPress={onPress} style={styles.actionStyle}>
       <View style={styles.actionContent}>
-        <Image source={source} style={styles.iconStyle} />
+        {children ?? <Image source={source} style={styles.iconStyle} />}
         {notifyNumber > 0 && (
           <Badge
             size={bagSize ?? BADGE_SIZE}
@@ -46,7 +53,7 @@ export const Action = ({ source, onPress, notifyNumber, bagSize, bagStyle }) =>
       </View>
     </TouchableOpacity>
   ) : (
-    <Appbar.actionStyle style={styles.actionStyle} onPress={onPress} />
+    <Appbar.Action style={styles.actionStyle} onPress={onPress} />
   );
 
 export const Space = () => <View style={styles.space} />;

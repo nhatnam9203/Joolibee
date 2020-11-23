@@ -19,7 +19,7 @@ import { useMutation, useLazyQuery } from '@apollo/client';
 import { mutation, query } from '@graphql';
 import { format, scale } from '@utils';
 import * as Widget from './widget';
-import { useComponentSize } from '@hooks';
+import { useComponentSize, useCustomerCart } from '@hooks';
 
 const { scaleWidth } = scale;
 
@@ -47,17 +47,17 @@ const ProductCart = ({ visible, onToggle }) => {
   // -------- handle fetch data cart -----------
 
   // Mutation update cart product
-  const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
+  // const [updateCartItems, response] = useMutation(mutation.UPDATE_CART_PRODUCT);
+  const { updateCart, updateCartResp } = useCustomerCart();
 
   // Mutation update cart product --
-
   const onRenderItem = ({ item }, index) => {
     return (
       <OrderItem
         item={item}
         key={item.id + ''}
         shadow={false}
-        updateQty={updateCart}
+        updateQty={updateMyCart}
         onPress={() => {
           onShowCartItem(item);
         }}
@@ -87,35 +87,17 @@ const ProductCart = ({ visible, onToggle }) => {
     popupRef.current.forceQuit();
   };
 
-  const updateCart = React.useCallback(
-    async (item) => {
-      let input = {
-        cart_id: cart_id,
-        cart_item_id: item.id,
-        quantity: item.quantity,
-      };
+  const updateMyCart = async (item) => {
+    let input = {
+      cart_id: cart_id,
+      cart_item_id: item.id,
+      quantity: item.quantity,
+    };
 
-      await updateCartItems({
-        variables: input,
-        // awaitRefetchQueries: true,
-        // update: (cache, { data: { updateCartItems } }) => {
-        //   cache.modify({
-        //     id: cache.identify(updateCartItems),
-        //     fields: {
-        //       cart(existingCart = []) {
-        //         // Logger.debug(updateCartItems, 'updateCartItems');
-        //         // Logger.debug(existingCart, 'existingCart');
-
-        //         return existingCart;
-        //       },
-        //     },
-        //   });
-        // },
-        // refetchQueries: [queryCart],
-      });
-    },
-    [cart_id, updateCartItems],
-  );
+    await updateCart({
+      variables: input,
+    });
+  };
 
   const onShowCartItem = (item) => {
     popupRef.current.forceQuit();
@@ -209,7 +191,7 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading isLoading={loading} />
+      <Loading isLoading={loading || updateCartResp.loading} />
     </PopupLayout>
   );
 };

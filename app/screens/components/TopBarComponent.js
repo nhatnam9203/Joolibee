@@ -1,5 +1,6 @@
+import { useQuery } from '@apollo/client';
 import { Action, Avatar, Bar, Logo, Space } from '@components';
-import { useCustomer, useCustomerCart } from '@hooks';
+import { query } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
@@ -8,7 +9,7 @@ import { scale } from '@utils';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 
 const { scaleHeight } = scale;
@@ -65,8 +66,8 @@ export const TopBarComponent = React.memo(() => {
 export const TopBarRight = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const { cart } = useCustomerCart();
+  const cartQuantity = useSelector((state) => state.cart?.cartQuantity);
+  // const { cart } = useCustomerCart(true);
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
@@ -85,7 +86,7 @@ export const TopBarRight = () => {
         onPress={() => {
           dispatch(app.showOrderList());
         }}
-        notifyNumber={cart?.customerCart?.total_quantity}
+        notifyNumber={cartQuantity}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />
@@ -93,11 +94,14 @@ export const TopBarRight = () => {
   );
 };
 
-export const TopBarLeft = React.memo(() => {
+export const TopBarLeft = () => {
   const navigation = useNavigation();
-  const { user } = useCustomer();
 
-  return (
+  const { data } = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  return data?.customer ? (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate(ScreenName.Account);
@@ -112,20 +116,20 @@ export const TopBarLeft = React.memo(() => {
           dispatch(account.showQRCode());
         }}
       /> */}
-        {user && (
-          <View style={styles.userInfo}>
-            <Text style={styles.userName}>
-              {user.firstname + ' ' + user.lastname}
-            </Text>
-            <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
-              {`${0} ${translate('txtPoint')}`}
-            </Badge>
-          </View>
-        )}
+        <View style={styles.userInfo}>
+          <Text style={styles.userName}>
+            {data?.customer.firstname + ' ' + data?.customer.lastname}
+          </Text>
+          <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
+            {`${0} ${translate('txtPoint')}`}
+          </Badge>
+        </View>
       </View>
     </TouchableOpacity>
+  ) : (
+    <></>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

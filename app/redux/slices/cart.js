@@ -1,4 +1,4 @@
-import { graphQlClient, mutation } from '@graphql';
+import { mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';

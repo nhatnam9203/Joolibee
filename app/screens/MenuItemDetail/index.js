@@ -12,6 +12,10 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
+  withSpring,
+  withDelay,
+  useAnimatedRef,
+  measure,
 } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 import {
@@ -27,6 +31,7 @@ import {
   MenuOptionSelectedItem,
 } from '../components';
 import { productReducer, setProduct, updateOption } from './ProductState';
+import { useCustomerCart } from '@hooks';
 
 const { scaleHeight, scaleWidth } = scale;
 const { width, height } = Dimensions.get('window');
@@ -38,8 +43,11 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
 
   const viewScale = useSharedValue(1);
+  const offsetX = useSharedValue(0);
+  const aref = useAnimatedRef();
 
   const { productItem } = route.params;
+  const cart_id = useSelector((state) => state.cart?.cart_id);
 
   const [quantity, setQuantity] = React.useState(1);
   const [productItemDetail, dispatchChangeProduct] = React.useReducer(
@@ -47,23 +55,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     null,
   );
 
-  const [addProductsToCart] = useMutation(mutation.ADD_PRODUCT_TO_CART, {
-    update(cache, { data: { addProductsToCart } }) {
-      cache.modify({
-        id: cache.identify(addProductsToCart),
-        fields: {
-          cart(existingCart = []) {
-            // Logger.debug(addSimpleProductsToCart, 'addSimpleProductsToCart');
-
-            // Logger.debug(existingCart, 'existingCart');
-
-            return existingCart;
-          },
-        },
-      });
-    },
-  });
-  const cart_id = useSelector((state) => state.cart?.cart_id);
+  const { addProductsToCart } = useCustomerCart();
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem
@@ -249,11 +241,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const customSpringStyles = useAnimatedStyle(() => {
     return {
       transform: [
-        {
-          translateX:
-            (width * (1 - viewScale.value)) / 2 -
-            (1 - viewScale.value) * CART_ICON_X,
-        },
+        { translateX: offsetX.value },
         {
           translateY:
             -(height - height * viewScale.value) / 2 +
@@ -265,6 +253,8 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   });
 
   const addProductToCart = () => {
+    // if (!productItemDetail) return;
+
     const { sku, items = [] } = productItemDetail;
     const optionsMap = [];
 
@@ -295,6 +285,14 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       easing: Easing.bezier(0.45, 0.45, 0.2, 0.75),
     });
 
+    offsetX.value = withDelay(
+      ANIMATION_DURATION / 2,
+      withTiming((width * viewScale.value) / 2 - CART_ICON_X, {
+        duration: ANIMATION_DURATION / 2,
+        easing: Easing.in,
+      }),
+    );
+
     setTimeout(() => {
       navigation.goBack();
     }, ANIMATION_DURATION);
@@ -302,7 +300,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   return (
-    <Animated.View style={[styles.container, customSpringStyles]}>
+    <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <GCC.QueryProductDetail
           productItem={productItem}

@@ -89,6 +89,7 @@ export const UPDATE_CART_PRODUCT = gql`
       cart {
         id
         __typename
+        total_quantity
         items {
           id
           __typename
@@ -236,6 +237,7 @@ export const ADD_PRODUCT_TO_CART = gql`
       cart {
         id
         __typename
+        total_quantity
         items {
           id
           __typename

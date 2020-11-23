@@ -4,7 +4,7 @@
  */
 import { ApolloProvider } from '@apollo/client';
 import { Loading, RootPermission } from '@components';
-import { useChangeLanguage, useGraphqlClient } from '@hooks';
+import { useChangeLanguage } from '@hooks';
 import { setI18nConfig } from '@localize';
 import { app } from '@slices';
 import { AppStyles } from '@theme';
@@ -29,6 +29,7 @@ import {
 import { PersistGate } from 'redux-persist/es/integration/react';
 import GraphErrorHandler from './GraphErrorHandler';
 import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
+import { useGraphQLClient } from '@graphql';
 
 const fontConfig = {
   default: {
@@ -68,6 +69,9 @@ const theme = {
 enableScreens();
 
 LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+if (__DEV__) {
+  import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
+}
 
 let codePushOptions = {
   checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
@@ -75,18 +79,18 @@ let codePushOptions = {
 };
 
 let App = () => {
-  const { graphqlClient } = useGraphqlClient();
+  const graphQlClient = useGraphQLClient();
 
   React.useEffect(() => {
     SplashScreen.hide();
-  }, [graphqlClient]);
+  }, [graphQlClient]);
 
-  if (!graphqlClient) {
-    return <></>;
+  if (!graphQlClient) {
+    return <Loading />;
   }
 
   return (
-    <ApolloProvider client={graphqlClient}>
+    <ApolloProvider client={graphQlClient}>
       <StoreProvider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <LangProvider>

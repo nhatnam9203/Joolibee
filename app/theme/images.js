@@ -88,6 +88,10 @@ const images = {
     ic_delete_bg: require('../assets/icons/ic-delete-bg.png'),
     ic_warning: require('../assets/icons/ic-warning.png'),
   },
+  animations: {
+    fade: require('../assets/animations/animation_fade.json'),
+    test: require('../assets/animations/animation_test.json'),
+  },
   login_polygon: require('../assets/images/login-polygon.png'),
   menu_1: require('../assets/images/menu-gasot-chuacay.png'),
   menu_2: require('../assets/images/menu-ga-gion-vv.png'),

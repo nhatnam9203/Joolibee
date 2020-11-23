@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
 import { query } from '@graphql';
 import { useChangeLanguage } from '@hooks';
@@ -37,11 +37,14 @@ export default function HomeScreen() {
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
   const dispatch = useDispatch();
+
   const [isVisible, setVisiblePopup] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
+
   const { data = {}, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
   });
+
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,

@@ -1,32 +1,13 @@
 import Config from 'react-native-config';
 import NavigationService from '../navigation/NavigationService';
 import { get, StorageKey, remove } from '@storage';
-import {
-  ApolloClient,
-  ApolloLink,
-  HttpLink,
-  defaultDataIdFromObject,
-  parse,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-// import { setContext } from '@apollo/client/link/context';
 import { InMemoryCache } from '@apollo/client/core';
+import { CachePersistor } from 'apollo3-cache-persist';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
-export const cache = new InMemoryCache({
-  typePolicies: {
-    Cart: {
-      fields: {
-        prices: {
-          merge(existing, incoming, { mergeObjects }) {
-            // Correct, thanks to invoking nested merge functions.
-            return mergeObjects(existing, incoming);
-          },
-        },
-      },
-    },
-  },
-});
 
 const authLink = new ApolloLink(async (operation, forward) => {
   // get auth token
@@ -117,8 +98,10 @@ const logTimeLink = new ApolloLink((operation, forward) => {
 
     Logger.debug(
       `Complete in ${(time / 1000).toFixed(2)} s`,
-      `End Request -----> ${
-        operation.operationName ?? 'JSON.stringify(operation.query)'
+      `End Request -----> ${operation?.query?.definitions[0]?.operation} - ${
+        operation.operationName ??
+        operation?.query?.definitions[0]?.selectionSet?.selections[0]?.name
+          ?.value
       }`,
     );
 
@@ -148,10 +131,31 @@ const defaultOptions = {
   },
 };
 
-export const graphQlClient = (persistCache) =>
+const apolloCache = new InMemoryCache({
+  typePolicies: {
+    Cart: {
+      fields: {
+        prices: {
+          merge(existing, incoming, { mergeObjects }) {
+            // Correct, thanks to invoking nested merge functions.
+            return mergeObjects(existing, incoming);
+          },
+        },
+      },
+    },
+  },
+});
+
+export const setupCachePersistor = () =>
+  new CachePersistor({
+    cache: apolloCache,
+    storage: AsyncStorage,
+    debug: Config.NODE_ENV === 'development',
+  });
+
+export const setupGraphQlClient = () =>
   new ApolloClient({
     link,
-    cache: persistCache ?? cache,
-    // connectToDevTools: ,
     defaultOptions,
+    cache: apolloCache,
   });

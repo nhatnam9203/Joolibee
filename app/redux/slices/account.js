@@ -14,6 +14,7 @@ const initialState = {
     tempCheckSignup: false,
   },
   isShowQRCode: false,
+  isLogout: false,
 };
 
 const feedBack = createAsyncThunk(
@@ -26,13 +27,6 @@ const feedBack = createAsyncThunk(
       variables: input,
     });
     return response;
-  },
-);
-
-const signOutRequest = createAsyncThunk(
-  `${KEY_CONSTANT}/signOutRequest`,
-  async () => {
-    return initialState.user;
   },
 );
 
@@ -75,10 +69,12 @@ const accountSlice = createSlice({
         );
         // update state
         state.user.isLogin = true;
+        state.isLogout = false;
       } else {
         state.user.isLogin = true;
       }
     },
+
     signInError(state, action) {
       state.user.isLogin = false;
     },
@@ -95,6 +91,14 @@ const accountSlice = createSlice({
     signUpError(state, action) {
       state.user.tempCheckSignup = false;
     },
+
+    signOutRequest(state, action) {
+      state.isLogout = true;
+    },
+    signOutComplete(state, action) {
+      state.isLogout = false;
+      state.user = initialState.user;
+    },
   },
   extraReducers: {
     //FeedBack
@@ -109,15 +113,11 @@ const accountSlice = createSlice({
     [feedBack.rejected]: (state, action) => {
       Logger.info(action, 'feedBack rejected');
     },
-
-    [signOutRequest.fulfilled]: (state, action) => {
-      state.user = action.payload;
-    },
   },
 });
 
 const { actions, reducer } = accountSlice;
 module.exports = {
   reducer,
-  actions: { feedBack, signOutRequest, ...actions },
+  actions: { feedBack, ...actions },
 };

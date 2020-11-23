@@ -1,6 +1,6 @@
 import { CustomButtonImage, CustomImageBackground } from '@components';
 import { GCC } from '@graphql';
-import { useChangeLanguage, useCustomer } from '@hooks';
+import { useChangeLanguage } from '@hooks';
 import { TopBarScreenLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { OrderNewItem, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
+import { useQuery } from '@apollo/client';
+import { query } from '@graphql';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
@@ -17,7 +19,10 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
-  const { user } = useCustomer();
+
+  const { data } = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'only-cache',
+  });
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -45,7 +50,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   return (
     <TopBarScreenLayout>
-      {user?.addresses?.length > 0 && (
+      {data?.customer?.addresses?.length > 0 && (
         <View style={styles.addressStyle}>
           <Text style={styles.txtAddressTitleStyle}>
             {translate('txtAddressTo')}
@@ -54,7 +59,10 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
             style={styles.txtAddressStyle}
             ellipsizeMode="tail"
             numberOfLines={1}>
-            {user?.addresses.find((x) => x.default_shipping).full_address}
+            {
+              data?.customer?.addresses.find((x) => x.default_shipping)
+                .full_address
+            }
           </Text>
           <CustomButtonImage
             image={images.icons.ic_edit}
