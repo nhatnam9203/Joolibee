@@ -4,16 +4,11 @@ import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import {
-  CardView,
-  HomePageName,
-  PromotionPageName,
-  StorePageName,
-} from '../../components';
+import { CardView, StorePageName } from '../../components';
 import ScreenName from '../../ScreenName';
 const { scaleWidth, scaleHeight } = scale;
 
-export default function Tabs({}) {
+const Tabs = React.memo(() => {
   const navigation = useNavigation();
   const TABS = [
     {
@@ -40,6 +35,7 @@ export default function Tabs({}) {
 
   const renderItem = ({ item }) => (
     <CardView
+      key={item.title}
       onPress={() => navigation.navigate(item?.screen)}
       borderRadius={scaleHeight(16)}
       width={scaleWidth(185)}
@@ -60,11 +56,11 @@ export default function Tabs({}) {
         horizontal={false}
         numColumns={2}
         renderItem={renderItem}
-        keyExtractor={(_, index) => index + ''}
+        keyExtractor={(_) => _.title}
       />
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -78,3 +74,5 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
+
+export default Tabs;

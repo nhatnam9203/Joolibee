@@ -200,7 +200,7 @@ const OrderScreen = () => {
         item={item}
         onPress={() => {
           navigation.navigate(ScreenName.MenuItemDetail, {
-            productItem: item,
+            productSku: item?.sku,
           });
         }}
       />

@@ -32,13 +32,17 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   }, [language, navigation]);
 
   const renderItem = ({ item }, loading) => {
+    Logger.debug(item, 'MenuDetailScreen');
+
     return (
       <OrderNewItem
         shadow={true}
         loading={loading}
         item={item}
         onPress={() => {
-          navigation.navigate(ScreenName.MenuItemDetail, { productItem: item });
+          navigation.navigate(ScreenName.MenuItemDetail, {
+            productSku: item?.sku,
+          });
         }}
       />
     );

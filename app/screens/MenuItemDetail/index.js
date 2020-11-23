@@ -33,22 +33,23 @@ const { width, height } = Dimensions.get('window');
 const ANIMATION_DURATION = 800;
 const CART_ICON_X = scaleWidth(25);
 const CART_ICON_Y = scaleHeight(65);
+const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
 
+  // animations
   const viewScale = useSharedValue(1);
   const offsetX = useSharedValue(0);
   const aref = useAnimatedRef();
 
-  const { productItem, detailItem } = route.params;
+  const { productSku, detailItem } = route.params;
 
   const [quantity, setQuantity] = React.useState(1);
   const [productItemDetail, dispatchChangeProduct] = React.useReducer(
     productReducer,
     null,
   );
-
   const { addProductsToCart } = GEX.useAddProductsToCart();
 
   const renderOptionsItem = ({ item, index, type, onPress }) => (
@@ -197,8 +198,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const onReceivedProduct = (item) => {
-    Logger.debug(detailItem, 'onReceivedProduct');
-
     if (detailItem?.bundle_options.length > 0) {
       const { items } = item;
       const list = items.map((x) => {
@@ -228,7 +227,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         }
       });
 
-      Logger.debug(list, 'lít');
       dispatchChangeProduct(
         setProduct(Object.assign({}, item, { items: list })),
       );
@@ -238,7 +236,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const renderSummaryPrice = () => {
-    let priceString = '0.0 đ';
+    let priceString = DEFAULT_CURRENCY_VALUE;
     if (productItemDetail) {
       const { price_range, items } = productItemDetail;
       const { sellPrice } = destructuring.priceOfRange(price_range);
@@ -284,8 +282,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   });
 
   const addProductToCart = () => {
-    // if (!productItemDetail) return;
-
     const { sku, items = [] } = productItemDetail;
     const optionsMap = [];
 
@@ -297,7 +293,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
       optionsMap.push(...mapArr);
     });
-    Logger.debug(optionsMap, 'options');
+    // Logger.debug(optionsMap, 'options');
     addProductsToCart({
       variables: {
         cart_items: [
@@ -305,6 +301,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
             quantity: quantity,
             sku: sku,
             selected_options: optionsMap,
+            // entered_options: [
+
+            // ]
           },
         ],
       },
@@ -333,7 +332,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <GCC.QueryProductDetail
-          productItem={productItem}
+          sku={productSku}
           renderHeader={() => renderHeader()}
           renderItem={renderItem}
           renderFooter={renderFooter}
@@ -352,7 +351,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       <View style={styles.confirmStyle}>
         {renderSummaryPrice()}
         <ButtonCC.ButtonRed
-          label={translate('txtAddCart')}
+          label={
+            detailItem ? translate('txtUpdateCart') : translate('txtAddCart')
+          }
           onPress={addProductToCart}
         />
       </View>

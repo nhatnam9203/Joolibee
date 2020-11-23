@@ -32,18 +32,28 @@ const BANNER_HEIGHT = height * 0.4;
 const BANNER_PADDING = height * 0.2;
 const MENU_TOP_MARGIN = height * 0.2;
 
-export default function HomeScreen() {
+const HomeScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
-  const dispatch = useDispatch();
 
   const [isVisible, setVisiblePopup] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
 
-  const { data = {}, loading, refetch } = useQuery(GQL.HOME_SCREEN, {
-    fetchPolicy: 'cache-and-network',
-  });
+  const [getHomeScreen, { data, loading, refetch }] = useLazyQuery(
+    GQL.HOME_SCREEN,
+    {
+      fetchPolicy: 'no-cache',
+      onCompleted: () => {
+        dispatch(app.hideLoading());
+        setVisiblePopup(true);
+      },
+    },
+  );
+
+  const { homeScreen } = data || {};
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -53,14 +63,11 @@ export default function HomeScreen() {
   }, [language, navigation]);
 
   React.useEffect(() => {
-    setTimeout(() => {
-      setVisiblePopup(true);
-    }, 1000);
+    Logger.debug('getHomeScreen', 'useEffect');
+    getHomeScreen();
+    dispatch(app.showLoading());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onTogglePopup = () => setVisiblePopup(true);
-
-  const { homeScreen } = data;
 
   const onCHangeScreen = (screen) => () => {
     let params = {
@@ -72,19 +79,19 @@ export default function HomeScreen() {
   };
 
   return (
-    <>
+    <View style={styles.container}>
       <CustomImageBackground
         source={images.watermark_background_2}
         style={styles.customImageBackground}>
         <AppScrollViewIOSBounceColorsWrapper
-          style={styles.container}
+          style={styles.content}
           topBounceColor={AppStyles.colors.accent}
           bottomBounceColor="transparent">
           <SinglePageLayout>
             {/* BANNERS */}
             <Banners
               loading={loading}
-              data={homeScreen?.promotions ?? []}
+              data={homeScreen?.promotions}
               height={BANNER_HEIGHT}
             />
             {/* END BANNERS */}
@@ -116,9 +123,7 @@ export default function HomeScreen() {
                   {/* --------- Bestseller list ------------ */}
                   <Bestseller
                     loading={loading}
-                    data={
-                      homeScreen?.best_sellers ? homeScreen?.best_sellers : []
-                    }
+                    data={homeScreen?.best_sellers}
                   />
                 </View>
               </View>
@@ -159,7 +164,7 @@ export default function HomeScreen() {
 
               <News
                 loading={loading}
-                data={homeScreen?.news ? homeScreen?.news : []}
+                data={homeScreen?.news ?? []}
                 onCHangeScreen={onCHangeScreen(ScreenName.News)}
               />
             </CustomImageBackground>
@@ -174,20 +179,24 @@ export default function HomeScreen() {
         onToggle={() => dispatch(app.dismissOrderList())}
       />
 
-      <PopupSelectAreaComponent visible={isVisible} onToggle={onTogglePopup} />
-    </>
+      <PopupSelectAreaComponent visible={isVisible} />
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
+  content: {
+    alignItems: 'center',
+    flex: 1,
+  },
+
   topContainer: {
     width,
     backgroundColor: AppStyles.colors.accent,
-  },
-
-  container: {
-    alignItems: 'center',
-    flex: 1,
   },
 
   layoutHorizontal: {
@@ -232,3 +241,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 });
+
+export default HomeScreen;
