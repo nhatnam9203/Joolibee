@@ -4,3 +4,4 @@ export * from './useGetCustomerCart';
 export * from './useUpdateCustomerCart';
 export * from './useAddProductsToCart';
 export * from './useGetCheckOutCart';
+export * from './useLoadHomeScreen';

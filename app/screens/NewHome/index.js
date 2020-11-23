@@ -1,4 +1,4 @@
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
 import { GQL } from '@graphql';
 import { useChangeLanguage } from '@hooks';
@@ -42,16 +42,9 @@ const HomeScreen = () => {
   const [isVisible, setVisiblePopup] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
 
-  const [getHomeScreen, { data, loading, refetch }] = useLazyQuery(
-    GQL.HOME_SCREEN,
-    {
-      fetchPolicy: 'no-cache',
-      onCompleted: () => {
-        dispatch(app.hideLoading());
-        setVisiblePopup(true);
-      },
-    },
-  );
+  const { data, loading, refetch } = useQuery(GQL.HOME_SCREEN, {
+    fetchPolicy: 'only-cache',
+  });
 
   const { homeScreen } = data || {};
 
@@ -63,9 +56,9 @@ const HomeScreen = () => {
   }, [language, navigation]);
 
   React.useEffect(() => {
-    Logger.debug('getHomeScreen', 'useEffect');
-    getHomeScreen();
-    dispatch(app.showLoading());
+    setTimeout(() => {
+      setVisiblePopup(true);
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

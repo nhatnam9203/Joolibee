@@ -59,51 +59,48 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   );
 
   const { addProductsToCart } = GEX.useAddProductsToCart();
-  const [getProductDetail, { loading, data, refetch }] = useLazyQuery(
-    GQL.PRODUCT_DETAIL,
-    {
-      variables: { sku: productSku },
-      fetchPolicy: 'cache-and-network',
-      onCompleted: () => {
-        const item = data.products?.items[0];
-        if (detailItem?.bundle_options.length > 0) {
-          const { items } = item;
-          const list = items.map((x) => {
-            const { option_id, options } = x;
+  const [getProductDetail] = useLazyQuery(GQL.PRODUCT_DETAIL, {
+    variables: { sku: productSku },
+    fetchPolicy: 'no-cache',
+    onCompleted: (data) => {
+      const item = data.products?.items[0];
+      if (detailItem?.bundle_options.length > 0) {
+        const { items } = item;
+        const list = items.map((x) => {
+          const { option_id, options } = x;
 
-            const needUpdateOption = detailItem?.bundle_options.find(
-              (option) => option.id === option_id,
-            );
-
-            if (needUpdateOption) {
-              const { values } = needUpdateOption;
-              const renewOptions = options.map((opt) => {
-                const needUpdateOptItem = values.find(
-                  (optItem) => optItem.id === opt.id,
-                );
-
-                if (needUpdateOptItem) {
-                  return Object.assign({}, opt, { is_default: true });
-                } else {
-                  return Object.assign({}, opt, { is_default: false });
-                }
-              });
-
-              return Object.assign({}, x, { options: renewOptions });
-            } else {
-              return x;
-            }
-          });
-
-          dispatchChangeProduct(
-            setProduct(Object.assign({}, item, { items: list })),
+          const needUpdateOption = detailItem?.bundle_options.find(
+            (option) => option.id === option_id,
           );
-        } else {
-          dispatchChangeProduct(setProduct(item));
-        }
-      },
+
+          if (needUpdateOption) {
+            const { values } = needUpdateOption;
+            const renewOptions = options.map((opt) => {
+              const needUpdateOptItem = values.find(
+                (optItem) => optItem.id === opt.id,
+              );
+
+              if (needUpdateOptItem) {
+                return Object.assign({}, opt, { is_default: true });
+              } else {
+                return Object.assign({}, opt, { is_default: false });
+              }
+            });
+
+            return Object.assign({}, x, { options: renewOptions });
+          } else {
+            return x;
+          }
+        });
+
+        dispatchChangeProduct(
+          setProduct(Object.assign({}, item, { items: list })),
+        );
+      } else {
+        dispatchChangeProduct(setProduct(item));
+      }
     },
-  );
+  });
 
   const onChangeOptionsItem = (item) => {
     dispatchChangeProduct(updateOption(item));

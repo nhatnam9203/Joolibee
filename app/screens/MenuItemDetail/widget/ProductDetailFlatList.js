@@ -27,26 +27,24 @@ export const ProductDetailFlatList = ({
   renderHeader = () => {},
   renderFooter,
 }) => {
-  const { items, ...props } = data || {};
+  const { items = [], ...props } = data || {};
   return (
     <KeyboardAvoidingView
       {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
       <StatusBar barStyle="dark-content" />
-      {items && (
-        <CustomFlatList
-          data={items}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.option_id.toString()}
-          contentContainerStyle={styles.contentContainerStyle}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => renderHeader(props)}
-          ListFooterComponent={renderFooter}
+      <CustomFlatList
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.option_id.toString()}
+        contentContainerStyle={styles.contentContainerStyle}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() => renderHeader(props)}
+        ListFooterComponent={renderFooter}
 
-          // refreshControl={
-          //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          // }
-        />
-      )}
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        // }
+      />
     </KeyboardAvoidingView>
   );
 };

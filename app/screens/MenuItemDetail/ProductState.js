@@ -7,9 +7,12 @@ export const productReducer = (state, action) => {
     case PRODUCT_SET:
       if (action.payload) {
         const { items } = action.payload;
-        const arr = [...items];
-        arr?.sort((a, b) => a.position - b.position);
-        return Object.assign({}, action.payload, { items: arr });
+        if (items) {
+          const arr = [...items];
+          arr?.sort((a, b) => a.position - b.position);
+          return Object.assign({}, action.payload, { items: arr });
+        }
+        return action.payload;
       }
       return action.payload;
     case PRODUCT_UPDATE:
