@@ -60,7 +60,7 @@ export const convertString = (str = '') => {
 
 export const caculatePoint = (data = []) => {
   const totalPoint = data.reduce((previous, current) => {
-    return previous + current?.product?.point || 0;
+    return previous + current?.product?.point * current?.quantity || 0;
   }, 0);
   return totalPoint;
 };
