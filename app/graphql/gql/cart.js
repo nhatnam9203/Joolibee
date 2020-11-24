@@ -68,12 +68,34 @@ export const CART_DETAIL = gql`
         }
       }
       items {
-        __typename
         id
-        prices {
-          price {
-            value
-            currency
+        __typename
+        sku
+        name
+        point
+        image {
+          url
+        }
+        price_range {
+          maximum_price {
+            regular_price {
+              value
+              currency
+            }
+            final_price {
+              value
+              currency
+            }
+          }
+          minimum_price {
+            regular_price {
+              value
+              currency
+            }
+            final_price {
+              value
+              currency
+            }
           }
         }
         product {

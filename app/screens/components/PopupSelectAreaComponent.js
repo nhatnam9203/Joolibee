@@ -1,18 +1,14 @@
-import React from 'react';
-import { StyleSheet, Image, View, ScrollView } from 'react-native';
-import { Text } from 'react-native-paper';
-import { CustomPickerSelect, CustomButton } from '@components';
+import { CustomButton, CustomPickerSelect } from '@components';
+import { AppScrollViewIOSBounceColorsWrapper, PopupLayout } from '@layouts';
+import { translate } from '@localize';
+import { store } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
-import { translate } from '@localize';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import { JollibeeLogo } from '../components';
-import {
-  PopupLayout,
-  AppScrollViewIOSBounceColorsWrapper,
-  SinglePageLayout,
-} from '@layouts';
-import { useSelector, useDispatch } from 'react-redux';
-import { store } from '@slices';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
@@ -94,6 +90,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
               value={city}
               onChangeItem={(item) => onChangeItem('city', item)}
             />
+
             <CustomPickerSelect
               items={districts}
               placeholder={translate('txtSelectWard')}
