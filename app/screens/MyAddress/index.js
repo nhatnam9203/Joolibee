@@ -9,6 +9,9 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { ItemAddress, AddressLoading } from './pages';
 import { translate } from '@localize';
+import { scale } from '@utils';
+
+const { scaleWidth, scaleHeight } = scale;
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -74,8 +77,8 @@ const Index = () => {
             <CustomButton
               onPress={() => goToDetail(null)}
               label={translate('txtAddNewAddress')}
-              width={'90%'}
-              height={61}
+              width={scaleWidth(379)}
+              height={scaleHeight(61)}
               borderRadius={14}
               bgColor={AppStyles.colors.accent}
               styleText={styles.txtButton}
