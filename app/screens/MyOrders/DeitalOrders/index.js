@@ -165,7 +165,7 @@ export default function Index({ navigation, route }) {
               />
             </View>
           )}
-          {true && (
+          {order_complete && (
             <PopupRating
               visible={visible}
               onToggle={onClose}
@@ -174,7 +174,7 @@ export default function Index({ navigation, route }) {
           )}
         </View>
       </ScrollView>
-      {true && renderBottomComponent()}
+      {order_complete && renderBottomComponent()}
     </CustomImageBackground>
   );
 }

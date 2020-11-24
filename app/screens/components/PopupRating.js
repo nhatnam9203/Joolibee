@@ -2,7 +2,7 @@ import { CustomInput, CustomButton } from '@components';
 import { PopupLayout, AppScrollViewIOSBounceColorsWrapper } from '@layouts';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
-
+import { translate } from '@localize';
 import React from 'react';
 import {
   Image,
@@ -68,7 +68,7 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
           <View style={styles.logoContainer}>
             <JollibeeLogo style={styles.logoStyle} />
             <LabelTitle
-              label="ĐÁNH GIÁ PHẢN HỒI"
+              label={translate('txtReviewFeeback').toUpperCase()}
               color={AppStyles.colors.white}
               style={{ marginVertical: 10 }}
               fontSize={scaleWidth(28)}
@@ -91,14 +91,14 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
 
           <View style={styles.cardContainer}>
             <Text style={styles.txtContent}>
-              Cảm nhận của bạn về đơn hàng này như thế nào?
+              {translate('txtReviewYourOrder')}
             </Text>
             <CustomRaiting onPress={ratingCompleted} />
 
             <CustomInput
               onChangeText={onChangeText}
               value={content}
-              placeholder="Nội dung góp ý của bạn"
+              placeholder={translate('txtInputFeeback')}
               multiline={true}
               style={styles.input}
               border
@@ -109,6 +109,7 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
               label="GỬI"
               width={229}
               height={61}
+              disabled={rating > 0 ? false : true}
               bgColor={AppStyles.colors.accent}
               textColor={AppStyles.colors.white}
             />

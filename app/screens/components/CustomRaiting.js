@@ -46,14 +46,17 @@ const defaultData = [
 
 export const CustomRaiting = ({ onPress }) => {
   const [isSelected, onSelected] = React.useState(-1);
-
+  const onHandlePress = (idx) => () => {
+    onPress(defaultData[idx].id);
+    onSelected(idx);
+  };
   return (
     <View style={styles.container}>
       {defaultData.map((item, index) => (
         <RaitingItem
           item={item}
           selected={isSelected === index}
-          onPress={() => onSelected(index)}
+          onPress={onHandlePress(index)}
           selectedColor={item.color}
         />
       ))}
@@ -84,9 +87,8 @@ const RaitingItem = ({ item, selected, onPress, selectedColor }) => {
     outputRange: [1, 2],
   });
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={1}>
+    <TouchableOpacity key={item.id + ''} onPress={onPress} activeOpacity={1}>
       <Animated.View
-        key={item.id + ''}
         style={[
           styles.itemContainer,
           {
