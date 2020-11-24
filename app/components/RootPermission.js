@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { getCurrentPosition } from '@location';
 import { store } from '@slices';
 import { useDispatch } from 'react-redux';
+import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 const RootPermission = () => {
   const dispatch = useDispatch();
@@ -11,13 +12,15 @@ const RootPermission = () => {
     const requestCurrentLocation = async () => {
       try {
         let result = await getCurrentPosition();
-        let latlng = {
+        console.log(result, 'asdasdjashdgjashdgash');
+        const myLocations = {
           lat: result.coords.latitude,
           lng: result.coords.longitude,
         };
-        dispatch(store.getPosition(latlng, { dispatch }));
+        dispatch(store.getPosition(myLocations, { dispatch }));
       } catch (error) {}
     };
+
     requestCurrentLocation();
   }, [dispatch]);
 

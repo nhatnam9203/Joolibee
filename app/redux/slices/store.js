@@ -34,14 +34,21 @@ const storeSlice = createSlice({
         const { city, region } = item;
         let _city = city.toLowerCase();
         let _region = region.toLowerCase();
-        if (payload.city && !payload.district)
+
+        if (payload.city && !payload.district) {
           return _city.includes(payload.city?.toLowerCase());
-        if (payload.city && payload.district)
+        }
+
+        if (payload.city && payload.district) {
           return (
             _city.includes(payload.city?.toLowerCase()) &&
             _region.includes(payload.district?.toLowerCase())
           );
-        if (!payload.city && !payload.district) return item;
+        }
+
+        if (!payload.city && !payload.district) {
+          return item;
+        }
       };
       state.stores = initStores.filter((item) => query(item));
     },
@@ -56,11 +63,7 @@ const storeSlice = createSlice({
     },
   },
   extraReducers: {
-    [getPosition.pending]: (state, action) => {
-      // Logger.info(action, 'getPosition pending');
-    },
     [getPosition.fulfilled]: (state, action) => {
-      // Logger.info(action.payload, 'getPosition fulfilled');
       const { payload } = action;
       if (payload) {
         const location = payload[0];
@@ -91,11 +94,7 @@ const storeSlice = createSlice({
           default_district: default_district,
           ...location.position,
         };
-      } else {
       }
-    },
-    [getPosition.rejected]: (state, action) => {
-      // Logger.info(action, 'getPosition rejected');
     },
   },
 });
