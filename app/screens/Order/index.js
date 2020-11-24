@@ -28,7 +28,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { mutation, query, GQL, GEX } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
-
 const { scaleWidth, scaleHeight } = scale;
 
 const OrderSection = ({
@@ -141,9 +140,10 @@ const OrderScreen = () => {
     variables: { categoryId: 4 },
     fetchPolicy: 'cache-first',
   });
+
+  const [setShippingMethodsOnCart] = useMutation(GQL.SET_ORDER_SHIPPING_METHOD);
   const {
     items,
-    shipping_addresses,
     applied_coupons,
     selected_payment_method,
     prices: { grand_total, discounts, subtotal_excluding_tax },
@@ -182,6 +182,23 @@ const OrderScreen = () => {
   };
 
   const onChangePaymentMethod = (code) => {
+    // setShippingMethodsOnCart()
+    // setShippingMethodsOnCart({
+    //   ...OPTIONS_MUTATION,
+    //   variables: input,
+    //   // update: (cache) => {
+    //   //   cache.modify({
+    //   //     id:cache.identify
+    //   //   });
+    //   // },
+    // })
+    //   .then(() => {
+    //     dispatch(app.hideLoading());
+    //     navigation.goBack();
+    //   })
+    //   .catch(() => {
+    //     dispatch(app.hideLoading());
+    //   });
     setShippingType({
       code,
       title: translate(code === 1 ? 'txtPlaceInShopOrder' : 'txtShippingOrder'),

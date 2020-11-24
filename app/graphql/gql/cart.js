@@ -293,3 +293,26 @@ export const UPDATE_CART_PRODUCT = gql`
     }
   }
 `;
+
+export const SET_ORDER_SHIPPING_METHOD = gql`
+  mutation($cart_id: String!, $shipping_methods: [ShippingMethodInput!]) {
+    setShippingMethodsOnCart(
+      input: { cart_id: $cart_id, shipping_methods: $shipping_methods }
+    ) {
+      cart {
+        shipping_addresses {
+          selected_shipping_method {
+            carrier_code
+            carrier_title
+            method_code
+            method_title
+            amount {
+              value
+              currency
+            }
+          }
+        }
+      }
+    }
+  }
+`;

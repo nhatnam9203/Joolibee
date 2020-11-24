@@ -39,7 +39,6 @@ const Index = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { val_address, titleHeader } = props.route.params;
-  const refFormMilk = React.useRef(null);
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );
