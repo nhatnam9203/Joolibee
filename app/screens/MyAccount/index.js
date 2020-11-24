@@ -48,10 +48,9 @@ const MyAccountScreen = () => {
         {/**Edit Profile */}
         <View style={styles.headerStyle}>
           <View style={styles.profileStyle}>
-            <Avatar.Text
+            <Avatar.Image
               size={114}
-              label="NT"
-              color={'blue'}
+              source={images.icons.jollibee_avatar}
               style={styles.avatarStyle}
             />
 
@@ -128,8 +127,6 @@ const styles = StyleSheet.create({
   },
 
   avatarStyle: {
-    backgroundColor: 'grey',
-    borderWidth: 4,
     borderColor: '#fff',
     margin: metrics.margin,
   },
