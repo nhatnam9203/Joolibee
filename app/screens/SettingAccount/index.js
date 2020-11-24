@@ -29,7 +29,7 @@ const SettingAccountScreen = () => {
   const renderLogoutButton = () => (
     <View style={styles.logoutContent}>
       <ButtonCC.ButtonBorderRed
-        width={'90%'}
+        width={'80%'}
         height={60}
         label={translate('txtSignOut')}
         onPress={btnLogoutPressed}

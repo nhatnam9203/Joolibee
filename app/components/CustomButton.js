@@ -16,7 +16,7 @@ import Animated, {
 
 const DISABLE_COLOR = '#4448';
 const ANIMATION_DURATION = 250;
-const ZOOM_IN = 1.2;
+const ZOOM_IN = 1.05;
 const ZOOM_OUT = 1;
 
 const CustomButton = ({
