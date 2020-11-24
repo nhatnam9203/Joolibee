@@ -23,9 +23,9 @@ export const MENU_DETAIL = gql`
   {
     products(filter: { category_id: { eq: "3" } }) {
       items {
-        sku
-        __typename
         id
+        __typename
+        sku
         name
         point
         image {

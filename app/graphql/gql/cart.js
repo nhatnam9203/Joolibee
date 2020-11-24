@@ -68,12 +68,34 @@ export const CART_DETAIL = gql`
         }
       }
       items {
-        __typename
         id
-        prices {
-          price {
-            value
-            currency
+        __typename
+        sku
+        name
+        point
+        image {
+          url
+        }
+        price_range {
+          maximum_price {
+            regular_price {
+              value
+              currency
+            }
+            final_price {
+              value
+              currency
+            }
+          }
+          minimum_price {
+            regular_price {
+              value
+              currency
+            }
+            final_price {
+              value
+              currency
+            }
           }
         }
         product {
@@ -99,6 +121,12 @@ export const CART_DETAIL = gql`
           }
           image {
             url
+          }
+        }
+        prices {
+          price {
+            value
+            currency
           }
         }
         quantity
@@ -194,6 +222,12 @@ export const ADD_PRODUCT_TO_CART = gql`
               }
             }
           }
+          prices {
+            price {
+              value
+              currency
+            }
+          }
           quantity
         }
         total_quantity
@@ -267,6 +301,12 @@ export const UPDATE_CART_PRODUCT = gql`
                 label
                 quantity
               }
+            }
+          }
+          prices {
+            price {
+              value
+              currency
             }
           }
           quantity

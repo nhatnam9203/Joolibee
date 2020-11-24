@@ -1,4 +1,3 @@
-
 export const imageURLOfItem = (item) => {
   if (!item) {
     return '';

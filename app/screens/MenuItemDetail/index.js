@@ -65,7 +65,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       const item = data.products?.items[0];
-      if (detailItem?.bundle_options.length > 0) {
+      if (detailItem?.bundle_options?.length > 0) {
         const { items } = item;
         const list = items.map((x) => {
           const { option_id, options } = x;

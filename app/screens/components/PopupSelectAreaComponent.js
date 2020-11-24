@@ -1,23 +1,20 @@
-import React from 'react';
-import { StyleSheet, Image, View, ScrollView } from 'react-native';
-import { Text } from 'react-native-paper';
-import { CustomPickerSelect, CustomButton } from '@components';
+import { CustomButton, CustomPickerSelect } from '@components';
+import { AppScrollViewIOSBounceColorsWrapper, PopupLayout } from '@layouts';
+import { translate } from '@localize';
+import { store } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
-import { translate } from '@localize';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import { JollibeeLogo } from '../components';
-import {
-  PopupLayout,
-  AppScrollViewIOSBounceColorsWrapper,
-  SinglePageLayout,
-} from '@layouts';
-import { useSelector, useDispatch } from 'react-redux';
-import { store } from '@slices';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
   const popupRef = React.createRef(null);
+
   const init_location = useSelector((state) => state.store.init_location);
   const cities = useSelector((state) => state.store.cities);
   const districts = useSelector((state) => state.store.districts);
@@ -93,6 +90,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
               value={city}
               onChangeItem={(item) => onChangeItem('city', item)}
             />
+
             <CustomPickerSelect
               items={districts}
               placeholder={translate('txtSelectWard')}
@@ -127,9 +125,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
             />
 
             <Text numberOfLines={3} style={styles.txtNote}>
-              {
-                '*Chúng tôi chưa phục vụ giao hàng tận nơi tại những khu vực nằm ngoài danh sách trên, mong quý khách thông cảm'
-              }
+              {translate('txtAttention')}
             </Text>
           </View>
         </ScrollView>
@@ -141,26 +137,29 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    backgroundColor: AppStyles.colors.button,
+    // backgroundColor: AppStyles.colors.button,
     borderRadius: 8,
     overflow: 'hidden',
-    paddingVertical: scaleHeight(25),
+    paddingVertical: scaleHeight(5),
   },
+
   content_top: {
     width: '100%',
-    // height: '60%',
-    //backgroundColor: AppStyles.colors.accent,
+    backgroundColor: AppStyles.colors.accent,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
+    zIndex: 1,
   },
+
   content_bottom: {
     lineHeight: 21,
-    paddingHorizontal: scaleWidth(22),
-    paddingTop: scaleHeight(25),
     alignItems: 'center',
-    marginTop: 20,
-    height: scaleHeight(245),
+    backgroundColor: AppStyles.colors.button,
+    padding: scaleHeight(20),
+    paddingTop: scaleHeight(50),
+    flex: 0,
   },
+
   polygonStyle: {
     position: 'absolute',
     bottom: -32,
@@ -169,6 +168,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
   },
+
   content_price: {
     flexDirection: 'row',
     justifyContent: 'center',

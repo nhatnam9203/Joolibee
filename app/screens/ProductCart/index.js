@@ -87,10 +87,9 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const onShowCartItem = (item) => {
     popupRef.current.forceQuit();
-    Logger.debug(item, 'ProductCart');
 
     navigation.navigate(ScreenName.MenuItemDetail, {
-      productSku: item?.product?.sku,
+      product: item?.product,
       detailItem: item,
     });
   };

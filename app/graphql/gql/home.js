@@ -7,33 +7,35 @@ export const HOME_SCREEN = gql`
       __typename
       banners
       best_sellers {
-        __typename
         id
+        __typename
+        sku
         name
         point
-        sku
+        image {
+          url
+        }
         price_range {
-          __typename
           maximum_price {
-            __typename
+            regular_price {
+              value
+              currency
+            }
             final_price {
-              __typename
               value
               currency
             }
           }
           minimum_price {
-            __typename
+            regular_price {
+              value
+              currency
+            }
             final_price {
-              __typename
               value
               currency
             }
           }
-        }
-        image {
-          __typename
-          url
         }
       }
       news {
@@ -45,32 +47,35 @@ export const HOME_SCREEN = gql`
         title
       }
       promotions {
-        __typename
         id
+        __typename
+        sku
         name
         point
+        image {
+          url
+        }
         price_range {
-          __typename
           maximum_price {
-            __typename
+            regular_price {
+              value
+              currency
+            }
             final_price {
-              __typename
               value
               currency
             }
           }
           minimum_price {
-            __typename
+            regular_price {
+              value
+              currency
+            }
             final_price {
-              __typename
               value
               currency
             }
           }
-        }
-        image {
-          __typename
-          url
         }
       }
       static_content {

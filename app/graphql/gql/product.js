@@ -4,9 +4,9 @@ export const PRODUCT_DETAIL = gql`
   query products($sku: String!) {
     products(filter: { sku: { eq: $sku } }) {
       items {
-        sku
         __typename
         id
+        sku
         name
         point
         image {

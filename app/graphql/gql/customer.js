@@ -53,12 +53,20 @@ export const CUSTOMER_CART_QUERY = gql`
           meta_description
           price_range {
             maximum_price {
+              regular_price {
+                value
+                currency
+              }
               final_price {
                 value
                 currency
               }
             }
             minimum_price {
+              regular_price {
+                value
+                currency
+              }
               final_price {
                 value
                 currency
@@ -80,10 +88,15 @@ export const CUSTOMER_CART_QUERY = gql`
           }
         }
         quantity
+        prices {
+          price {
+            value
+            currency
+          }
+        }
       }
       total_quantity
       prices {
-        __typename
         grand_total {
           value
           currency
@@ -93,6 +106,7 @@ export const CUSTOMER_CART_QUERY = gql`
           currency
         }
         discounts {
+          label
           amount {
             value
             currency
