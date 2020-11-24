@@ -157,5 +157,8 @@
   "txtInputVoucher":"Nhập mã khuyến mãi",
   "txtRedeemPoints":"ĐỔI ĐIỂM TÍCH LŨY",
   "txtApply":"Áp dụng",
-  "txtUpdateCart": "Cập nhật sản phẩm"
+  "txtUpdateCart": "Cập nhật sản phẩm",
+  "txtReviewYourOrder":"Cảm nhận của bạn về đơn hàng này như thế nào?",
+  "txtReviewFeeback":"Đánh giá phản hồi",
+  "txtInputFeeback":"Nội dung góp ý của bạn"
 }

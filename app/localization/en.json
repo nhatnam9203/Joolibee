@@ -156,5 +156,8 @@
   "txtInputVoucher": "Input the voucher",
   "txtRedeemPoints": "REDEEM ACCUMULATED POINTS",
   "txtApply": "Apply",
-  "txtUpdateCart": "Update cart product"
+  "txtUpdateCart": "Update cart product",
+  "txtReviewYourOrder":"How do you feel about your order?",
+  "txtReviewFeeback":"Reviews feeback",
+  "txtInputFeeback":"Content of your review"
 }

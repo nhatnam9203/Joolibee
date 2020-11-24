@@ -1,8 +1,8 @@
 import { CustomInput, CustomButton } from '@components';
-import { SinglePageLayout, PopupLayout } from '@layouts';
+import { PopupLayout, AppScrollViewIOSBounceColorsWrapper } from '@layouts';
 import { AppStyles, images } from '@theme';
-
-import { Rating } from 'react-native-ratings';
+import { scale } from '@utils';
+import { translate } from '@localize';
 import React from 'react';
 import {
   Image,
@@ -10,17 +10,26 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  View,
+  Dimensions,
 } from 'react-native';
+import { useHeaderHeight } from '@react-navigation/stack';
 import { account, app } from '@slices';
 import { useDispatch } from 'react-redux';
 import { JollibeeLogo } from './JollibeeLogo';
 import { LabelTitle } from './LabelTitle';
+import { CustomRaiting } from './CustomRaiting';
+const { width, height } = Dimensions.get('window');
+const { scaleWidth, scaleHeight } = scale;
+
+const BANNER_PADDING = height * 0.12;
 
 export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
   const dispatch = useDispatch();
   const popupRef = React.createRef(null);
   const [content, setContent] = React.useState('');
   const [rating, setRating] = React.useState(0);
+  const headerHeight = useHeaderHeight();
   const onChangeText = (content) => {
     setContent(content);
   };
@@ -47,49 +56,66 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
-      <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
+      <AppScrollViewIOSBounceColorsWrapper
+        topBounceColor={AppStyles.colors.accent}
+        bottomBounceColor="transparent"
+        style={styles.container}>
         <SafeAreaView style={styles.safeContainer}>
           <TouchableOpacity onPress={onClose} style={styles.closeContainer}>
             <Image source={images.icons.popup_close} />
           </TouchableOpacity>
 
-          <JollibeeLogo />
-          <LabelTitle
-            label="ĐÁNH GIÁ PHẢN HỒI"
-            color={AppStyles.colors.white}
-            style={{ marginVertical: 10 }}
-          />
-          <Text style={[AppStyles.fonts.text, styles.txtContent]}>
-            Cảm nhận của bạn về ứng dung Jollibee như thế nào?
-          </Text>
+          <View style={styles.logoContainer}>
+            <JollibeeLogo style={styles.logoStyle} />
+            <LabelTitle
+              label={translate('txtReviewFeeback').toUpperCase()}
+              color={AppStyles.colors.white}
+              style={{ marginVertical: 10 }}
+              fontSize={scaleWidth(28)}
+            />
+          </View>
 
-          <Rating
-            showRating={false}
-            onFinishRating={ratingCompleted}
-            style={{ paddingTop: 10 }}
-            ratingCount={5}
-            tintColor={AppStyles.colors.accent}
-            imageSize={50}
-            ratingColor={AppStyles.colors.button}
-          />
+          <View style={[styles.wrapperContainerLayoutYellow]}>
+            <View style={[styles.topContainer, { height: BANNER_PADDING }]} />
 
-          <CustomInput
-            onChangeText={onChangeText}
-            value={content}
-            placeholder="Nội dung góp ý của bạn"
-            multiline={true}
-            style={[styles.input, { marginVertical: 15 }]}
-          />
+            <View style={{ height: height - BANNER_PADDING - headerHeight }}>
+              {/* --------- Yellow Background ------------ */}
+              <Image
+                source={images.jollibee_background_new_home}
+                style={styles.imgLayoutYellow}
+                resizeMethod="resize"
+              />
+              {/* --------- Yellow Background ------------ */}
+            </View>
+          </View>
 
-          <CustomButton
-            onPress={onHandleSubmit}
-            label="GỬI"
-            width={238}
-            height={58}
-            bgColor={AppStyles.colors.button}
-          />
+          <View style={styles.cardContainer}>
+            <Text style={styles.txtContent}>
+              {translate('txtReviewYourOrder')}
+            </Text>
+            <CustomRaiting onPress={ratingCompleted} />
+
+            <CustomInput
+              onChangeText={onChangeText}
+              value={content}
+              placeholder={translate('txtInputFeeback')}
+              multiline={true}
+              style={styles.input}
+              border
+            />
+
+            <CustomButton
+              onPress={onHandleSubmit}
+              label="GỬI"
+              width={229}
+              height={61}
+              disabled={rating > 0 ? false : true}
+              bgColor={AppStyles.colors.accent}
+              textColor={AppStyles.colors.white}
+            />
+          </View>
         </SafeAreaView>
-      </SinglePageLayout>
+      </AppScrollViewIOSBounceColorsWrapper>
     </PopupLayout>
   );
 };
@@ -102,25 +128,57 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.colors.accent,
   },
 
+  cardContainer: {
+    width: scaleWidth(390),
+    height: scaleHeight(538),
+    backgroundColor: AppStyles.colors.white,
+    position: 'absolute',
+    bottom: scaleHeight(70),
+    alignItems: 'center',
+    borderRadius: 32,
+  },
+
   safeContainer: { flex: 1, alignItems: 'center' },
 
   input: {
-    height: 127,
+    height: scaleHeight(119),
     alignItems: 'flex-start',
-    marginVertical: 20,
     width: '90%',
+    marginBottom: scaleHeight(24),
   },
 
   txtContent: {
-    color: AppStyles.colors.white,
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    fontSize: scaleWidth(21),
     textAlign: 'center',
-    paddingHorizontal: 40,
+    paddingTop: scaleHeight(40),
+    paddingHorizontal: scaleHeight(40),
   },
 
   closeContainer: {
-    alignSelf: 'flex-start',
-    paddingLeft: 15,
-    paddingTop: 15,
+    position: 'absolute',
+    left: 15,
+    top: scaleHeight(51),
   },
+  imgLayoutYellow: {
+    position: 'absolute',
+    resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
+  },
+  wrapperContainerLayoutYellow: {
+    backgroundColor: AppStyles.colors.accent,
+    flex: 0,
+  },
+  topContainer: {
+    width,
+    backgroundColor: AppStyles.colors.accent,
+  },
+  logoStyle: {
+    width: scaleWidth(151),
+    height: scaleHeight(148),
+    resizeMode: 'contain',
+  },
+  logoContainer: { marginTop: 10, alignItems: 'center' },
   contentContainerStyle: { paddingBottom: 20 },
 });

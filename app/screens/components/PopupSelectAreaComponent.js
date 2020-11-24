@@ -6,7 +6,7 @@ import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import { translate } from '@localize';
 import { JollibeeLogo } from '../components';
-import { PopupLayout } from '@layouts';
+import { PopupLayout, AppScrollViewIOSBounceColorsWrapper,SinglePageLayout } from '@layouts';
 import { useSelector, useDispatch } from 'react-redux';
 import { store } from '@slices';
 
@@ -73,14 +73,15 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
-      <View style={styles.container}>
+      <AppScrollViewIOSBounceColorsWrapper
+        topBounceColor={AppStyles.colors.accent}
+        bottomBounceColor={AppStyles.colors.button}
+        style={styles.container}>
         <ScrollView>
           <View style={styles.content_top}>
             <JollibeeLogo style={styles.icon_jollibee} />
 
-            <Text style={[AppStyles.fonts.title, styles.txtTitle]}>
-              {translate('txtSelectCity')}
-            </Text>
+            <Text style={styles.txtTitle}>{translate('txtSelectCity')}</Text>
 
             <CustomPickerSelect
               items={cities}
@@ -121,16 +122,14 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
               }}
             />
 
-            <Text
-              numberOfLines={3}
-              style={[AppStyles.fonts.text, styles.txtNote]}>
+            <Text numberOfLines={3} style={styles.txtNote}>
               {
                 '*Chúng tôi chưa phục vụ giao hàng tận nơi tại những khu vực nằm ngoài danh sách trên, mong quý khách thông cảm'
               }
             </Text>
           </View>
         </ScrollView>
-      </View>
+      </AppScrollViewIOSBounceColorsWrapper>
     </PopupLayout>
   );
 };
@@ -138,18 +137,17 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    height: scaleHeight(606),
     backgroundColor: AppStyles.colors.button,
     borderRadius: 8,
     overflow: 'hidden',
+    paddingVertical: scaleHeight(25),
   },
   content_top: {
     width: '100%',
     // height: '60%',
-    backgroundColor: AppStyles.colors.accent,
+    //backgroundColor: AppStyles.colors.accent,
     alignItems: 'center',
     paddingHorizontal: scaleWidth(15),
-    paddingTop: scaleHeight(25),
   },
   content_bottom: {
     lineHeight: 21,
@@ -157,7 +155,7 @@ const styles = StyleSheet.create({
     paddingTop: scaleHeight(25),
     alignItems: 'center',
     marginTop: 20,
-    height: '25%',
+    height: scaleHeight(245),
   },
   polygonStyle: {
     position: 'absolute',
@@ -173,10 +171,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   txtNote: {
+    ...AppStyles.fonts.text,
+    fontSize: scaleWidth(16),
     textAlign: 'center',
     lineHeight: 21,
   },
   txtTitle: {
+    ...AppStyles.fonts.title,
     fontSize: scaleWidth(24),
     marginTop: scaleHeight(15),
     color: AppStyles.colors.white,
@@ -188,8 +189,9 @@ const styles = StyleSheet.create({
     height: scaleHeight(126),
   },
   txtPrice: {
+    ...AppStyles.fonts.title,
+    fontSize: scaleWidth(28),
     color: AppStyles.colors.text,
     marginLeft: 15,
-    ...AppStyles.fonts.title,
   },
 });

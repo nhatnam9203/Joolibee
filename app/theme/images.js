@@ -87,6 +87,18 @@ const images = {
     ic_call_now: require('../assets/icons/ic-call-now.png'),
     ic_delete_bg: require('../assets/icons/ic-delete-bg.png'),
     ic_warning: require('../assets/icons/ic-warning.png'),
+    //  ------------------------ Icon Raiting --------------------------------------- //
+    ic_good_raiting: require('../assets/icons/ic-good-raiting.png'),
+    ic_sad_raiting: require('../assets/icons/ic-sad-raiting.png'),
+    ic_terrible_raiting: require('../assets/icons/ic-terrible-raiting.png'),
+    ic_bad_raiting: require('../assets/icons/ic-bad-raiting.png'),
+    ic_verygood_raiting: require('../assets/icons/ic-verygood-raiting.png'),
+
+    ic_star_one: require('../assets/icons/ic-start-one.png'),
+    ic_star_two: require('../assets/icons/ic-star-two.png'),
+    ic_star_three: require('../assets/icons/ic-star-three.png'),
+    ic_star_four: require('../assets/icons/ic-star-four.png'),
+    ic_star_five: require('../assets/icons/ic-star-five.png'),
     jollibee_avatar: require('../assets/icons/jollibee_avatar.png'),
   },
   animations: {
