@@ -7,7 +7,7 @@ import { address } from '@slices';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { ItemAddress, AddressAdditionalList, AddressLoading } from './pages';
+import { ItemAddress, AddressLoading } from './pages';
 import { translate } from '@localize';
 
 const Index = () => {
@@ -18,6 +18,7 @@ const Index = () => {
   );
 
   const goToDetail = (item) => {
+    console.log('item', item);
     dispatch(
       address.selectedLocation(
         item
@@ -25,7 +26,6 @@ const Index = () => {
               region: item.region?.region,
               city: item.city,
               district: item.district,
-              ward: item.ward,
               street: item.street,
               addressFull: item.full_address,
             }
@@ -74,7 +74,7 @@ const Index = () => {
             <CustomButton
               onPress={() => goToDetail(null)}
               label={translate('txtAddNewAddress')}
-              width={379}
+              width={'90%'}
               height={61}
               borderRadius={14}
               bgColor={AppStyles.colors.accent}

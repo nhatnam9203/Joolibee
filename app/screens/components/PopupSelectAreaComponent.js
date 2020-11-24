@@ -6,7 +6,11 @@ import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import { translate } from '@localize';
 import { JollibeeLogo } from '../components';
-import { PopupLayout, AppScrollViewIOSBounceColorsWrapper,SinglePageLayout } from '@layouts';
+import {
+  PopupLayout,
+  AppScrollViewIOSBounceColorsWrapper,
+  SinglePageLayout,
+} from '@layouts';
 import { useSelector, useDispatch } from 'react-redux';
 import { store } from '@slices';
 

@@ -5,19 +5,12 @@ import { images, AppStyles } from '@theme';
 import { scale } from '@utils';
 import _ from 'lodash';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
-const { scaleHeight } = scale;
+const { scaleHeight, scaleWidth } = scale;
 const newRewards = [
   {
     title: 'Đơn hàng #0000012',
@@ -145,7 +138,9 @@ const MySavedPointScreen = () => {
             {item.points}
           </Text>
 
-          <Text style={AppStyles.fonts.bold}>{item.title}</Text>
+          <Text style={{ ...AppStyles.fonts.bold, fontSize: scaleWidth(16) }}>
+            {item.title}
+          </Text>
 
           <Text numberOfLines={1} style={[AppStyles.fonts.mini, {}]}>
             {item.date}
@@ -156,7 +151,7 @@ const MySavedPointScreen = () => {
   };
 
   const renderNewRewardHeader = () => (
-    <View style={styles.headerContent}>
+    <View style={[styles.headerContent, styles.headerSeeAll]}>
       <Text style={styles.txtHeader}>{translate('txtSavedPointHistory')}</Text>
       <TouchableOpacity
         style={{ flexDirection: 'row' }}
@@ -170,38 +165,33 @@ const MySavedPointScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <CustomImageBackground
-        source={images.watermark_background_2}
-        style={styles.container}>
-        {/**My Saved Point */}
-        <View style={styles.savedPointContainer}>
-          <CustomFlatList
-            bounces={false}
-            data={settingList}
-            renderItem={renderMyPointItem}
-            ItemSeparatorComponent={() => (
-              <View style={AppStyles.styles.rowSeparator} />
-            )}
-          />
-        </View>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={styles.container}>
+      {/**My Saved Point */}
+      <View style={styles.savedPointContainer}>
+        <CustomFlatList
+          data={settingList}
+          scrollEnabled={false}
+          renderItem={renderMyPointItem}
+          ItemSeparatorComponent={() => (
+            <View style={AppStyles.styles.rowSeparator} />
+          )}
+        />
+      </View>
 
-        {/**My Reward  */}
-        <View style={styles.myRewardContainer}>
-          <CustomFlatList
-            data={newRewards}
-            bounces={false}
-            renderItem={renderNewRewardItem}
-            horizontal={false}
-            keyExtractor={(item, index) => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={renderNewRewardHeader}
-            stickyHeaderIndices={[0]}
-            ItemSeparatorComponent={() => <View style={styles.seperator} />}
-          />
-        </View>
-      </CustomImageBackground>
-    </SafeAreaView>
+      {/**My Reward  */}
+      {renderNewRewardHeader()}
+      <CustomFlatList
+        data={newRewards}
+        renderItem={renderNewRewardItem}
+        contentContainerStyle={styles.myRewardContainer}
+        horizontal={false}
+        keyExtractor={(item, index) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={styles.seperator} />}
+      />
+    </CustomImageBackground>
   );
 };
 
@@ -260,7 +250,6 @@ const styles = StyleSheet.create({
 
   savedPointContainer: {
     flex: 0,
-    marginBottom: 20,
   },
 
   pointContainer: {
@@ -279,12 +268,12 @@ const styles = StyleSheet.create({
 
   pointImage: {
     backgroundColor: '#E31837',
-    width: 46,
-    height: 46,
+    width: scaleWidth(46),
+    height: scaleHeight(46),
     borderRadius: 23,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    margin: 5,
   },
 
   txtPoint: {
@@ -339,13 +328,14 @@ const styles = StyleSheet.create({
 
   myRewardContainer: {
     paddingHorizontal: 20,
-    flex: 1,
+    paddingBottom: 10,
+    // flex: 1,
   },
 
   itemSubContainer: {
     paddingHorizontal: 10,
     justifyContent: 'space-between',
-    width: '80%',
+    width: '83%',
   },
 
   headerContent: {
@@ -356,7 +346,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
+  headerSeeAll: {
+    marginVertical: scaleHeight(10),
+    paddingHorizontal: scaleWidth(20),
+  },
   txtHeader: {
     ...AppStyles.fonts.SVN_Merge_Bold,
     fontSize: 18,

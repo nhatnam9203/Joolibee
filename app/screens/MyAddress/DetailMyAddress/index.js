@@ -72,11 +72,10 @@ const Index = (props) => {
     (datas) => {
       let input = {
         company: datas.place,
-        region: { region: location_selected.region, region_code: 'VN' },
         country_code: 'VN',
         street: location_selected.street,
         telephone: datas.phone,
-        city: location_selected.city,
+        city: location_selected.city || '',
         firstname: datas.firstname,
         lastname: datas.lastname,
         default_shipping: default_shipping,
@@ -87,21 +86,6 @@ const Index = (props) => {
       createCustomerAddress({
         ...OPTIONS_MUTATION,
         variables: input,
-        // update: (cache, { data }) => {
-        //   let existingAddresses = cache.readQuery({
-        //     query: query.ADDRESS_LIST,
-        //   });
-        //   let newAddress = data ? data.createCustomerAddress : {};
-        //   let { addresses } = existingAddresses?.customer;
-        //   let newList = [...addresses, newAddress];
-
-        //   cache.writeQuery({
-        //     query: query.ADDRESS_LIST,
-        //     data: {
-        //       customer: { addresses: newList },
-        //     },
-        //   });
-        // },
       })
         .then(() => {
           dispatch(app.hideLoading());
@@ -129,7 +113,6 @@ const Index = (props) => {
       let input = {
         id: datas.id,
         company: datas.place,
-        region: { region: location_selected.region, region_code: 'VN' },
         street: location_selected.street,
         telephone: datas.phone,
         city: `${location_selected.city}`,
