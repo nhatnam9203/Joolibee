@@ -18,25 +18,27 @@ export const JollibeeImage = React.memo(({ url, width, height }) => {
   const onError = () => {
     setDownload(-1);
   };
-  Logger.debug(fullPath, 'fullPath');
-  let fullPath = url;
-  if (url && typeof url === 'string') {
-    fullPath = url.includes(Config.DOMAIN) ? url : `${Config.DOMAIN}${url}`;
-  }
+
+  let fullPath = React.useMemo(() => {
+    if (url && typeof url === 'string') {
+      fullPath = url.includes(Config.DOMAIN) ? url : `${Config.DOMAIN}${url}`;
+      return fullPath;
+    }
+
+    return url;
+  }, [url]);
 
   return fullPath ? (
     <Animatable.View
-      animation="fadeIn"
-      duration={800}
       style={[styles.container, { width: width, height: height }]}>
       <FastImage
+        style={{ width: width, height: height }}
         source={{ uri: fullPath, priority: FastImage.priority.normal }}
         resizeMode={FastImage.resizeMode.contain}
         onLoadStart={onLoadStart}
         onProgress={onProgress}
         onLoadEnd={onLoadEnd}
         onError={onError}
-        style={styles.imgContent}
       />
 
       {typeof download === 'number' && download > 0 && (
@@ -76,8 +78,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 5,
   },
-
-  imgContent: { flex: 1, width: '100%', height: '100%' },
 
   imgPlaceholder: {
     width: '90%',

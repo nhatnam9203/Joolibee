@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     ...AppStyles.styles.horizontalLayout,
     borderRadius: scaleHeight(14),
     flex: 0,
+    overflow: 'hidden',
   },
 
   content: {

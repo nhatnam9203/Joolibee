@@ -237,6 +237,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
   const onRenderHeader = React.useCallback(() => {
     const { image, name, point, price_range } = productItem || {};
+    Logger.debug(image, 'onRenderHeader');
     return (
       <ProductItemDetailHeader
         image={image}
