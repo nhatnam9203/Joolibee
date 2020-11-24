@@ -30,7 +30,12 @@ export const MenuItemLoading = () => (
 export const MenuItem = ({ item, onPress, color }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
     <View style={[styles.content, { backgroundColor: color.background }]}>
-      <JollibeeImage url={item.thumbnail_image} width="100%" height="80%" />
+      <JollibeeImage
+        url={item.thumbnail_image}
+        width="100%"
+        height="80%"
+        defaultSource={images.menu_3}
+      />
       <View style={styles.textContentStyle}>
         {!!item?.name && (
           <Text
