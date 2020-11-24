@@ -11,12 +11,14 @@ import { OrderNewItem, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
 import { useQuery } from '@apollo/client';
 import { query } from '@graphql';
+import { useDispatch } from 'react-redux';
+import { address } from '@slices';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
     menuItem: { products = { items: [] }, id, name },
   } = route.params;
-
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
 
@@ -24,6 +26,9 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
     fetchPolicy: 'only-cache',
   });
 
+  const addresses_default = data?.customer?.addresses?.find(
+    (x) => x.default_shipping,
+  );
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtOrderMenu').toUpperCase(),
@@ -31,6 +36,45 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
     });
   }, [language, navigation]);
 
+  const editAddress = () => {
+    const {
+      full_address,
+      lastname,
+      firstname,
+      telephone,
+      company,
+      id,
+      default_shipping,
+      region,
+      city,
+      street,
+    } = addresses_default || {};
+    if (addresses_default) {
+      dispatch(
+        address.selectedLocation({
+          region: region?.region,
+          city: city,
+          street: street,
+          addressFull: full_address,
+        }),
+      );
+      const val_address = {
+        phone: telephone,
+        place: company,
+        firstname: firstname,
+        lastname: lastname,
+        note: '',
+        id,
+        default_shipping: default_shipping,
+      };
+      navigation.navigate(ScreenName.DetailMyAddress, {
+        val_address,
+        titleHeader: translate('txtEditAddress'),
+      });
+    } else {
+      navigation.navigate(ScreenName.MyAddress);
+    }
+  };
   const renderItem = ({ item }, loading) => {
     // Logger.debug(item, 'MenuDetailScreen');
 
@@ -64,12 +108,12 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
             style={styles.txtAddressStyle}
             ellipsizeMode="tail"
             numberOfLines={1}>
-            {
-              data?.customer?.addresses.find((x) => x.default_shipping)
-                .full_address
-            }
+            {addresses_default
+              ? addresses_default.full_address
+              : 'Vui lòng chọn địa chỉ'}
           </Text>
           <CustomButtonImage
+            onPress={editAddress}
             image={images.icons.ic_edit}
             style={styles.btnEditStyle}
           />

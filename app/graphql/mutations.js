@@ -129,7 +129,6 @@ export const UPDATE_CART_PRODUCT = gql`
 export const ADD_ADDRESS = gql`
   mutation(
     $company: String!
-    $region: CustomerAddressRegionInput
     $country_code: CountryCodeEnum
     $street: [String]
     $telephone: String!
@@ -143,7 +142,6 @@ export const ADD_ADDRESS = gql`
     createCustomerAddress(
       input: {
         company: $company
-        region: $region
         country_code: $country_code
         street: $street
         telephone: $telephone
@@ -185,7 +183,6 @@ export const UPDATE_ADDRESS = gql`
   mutation(
     $id: Int!
     $company: String!
-    $region: CustomerAddressRegionInput
     $street: [String]
     $telephone: String!
     $city: String!
@@ -199,7 +196,6 @@ export const UPDATE_ADDRESS = gql`
       id: $id
       input: {
         company: $company
-        region: $region
         street: $street
         telephone: $telephone
         city: $city

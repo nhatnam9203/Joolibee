@@ -36,8 +36,6 @@ const Index = () => {
         if (status === 'OK') {
           dispatch(address.autoCompleteSuccess(data));
         } else {
-          // eslint-disable-next-line no-alert
-          alert(status);
           await dispatch(address.autoCompleteFail());
         }
       } catch (error) {

@@ -15,8 +15,21 @@ export const CUSTOMER_INFO = gql`
       gender
       date_of_birth
       addresses {
+        id
+        city
         full_address
         default_shipping
+        firstname
+        lastname
+        telephone
+        street
+        company
+        region {
+          __typename
+          region
+          region_id
+          region_code
+        }
       }
     }
   }

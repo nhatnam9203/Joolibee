@@ -25,7 +25,7 @@ import {
 import ScreenName from '../ScreenName';
 import { OrderItem, CustomScrollViewHorizontal } from './widget';
 import { useMutation, useQuery } from '@apollo/client';
-import { mutation, query, GQL } from '@graphql';
+import { mutation, query, GQL, GEX } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
 
@@ -125,7 +125,7 @@ const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const cart_id = useSelector((state) => state.account?.cart?.id);
-
+  const { customer } = GEX.useCustomer();
   const [shippingType, setShippingType] = React.useState(
     selected_payment_method,
   );
@@ -135,7 +135,7 @@ const OrderScreen = () => {
   // --------- handle fetch data cart -----------
   const { data } = useQuery(GQL.CART_DETAIL, {
     variables: { cartId: cart_id },
-    fetchPolicy: 'cache-first',
+    // fetchPolicy: 'cache-first',
   });
   const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
     variables: { categoryId: 4 },
@@ -150,20 +150,22 @@ const OrderScreen = () => {
   } = data?.cart || {
     items: [],
     prices: { grand_total: {} },
-    shipping_addresses: [{}],
   };
 
   const total = format.jollibeeCurrency({
     value: grand_total.value,
     currency: 'VND',
   });
+
   const _discount = format.jollibeeCurrency(discounts ? discounts.amount : {});
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
-  const { firstname, lastname, telephone, city, region = {}, street = [{}] } =
-    shipping_addresses[0] || {};
-  const addressFull = `${street[0] || ''} ${city} ${region.label}`;
+  const shipping_address =
+    customer?.addresses?.length > 0
+      ? customer?.addresses.find((x) => x.default_shipping)
+      : {};
+  const { full_address, lastname, firstname, telephone } = shipping_address;
   // -------- handle fetch data cart -----------
 
   const onTogglePopupNotice = () => {
@@ -356,7 +358,7 @@ const OrderScreen = () => {
                   style={[styles.txtStyle, { flex: 1 }]}
                   ellipsizeMode="tail"
                   numberOfLines={1}>
-                  {addressFull}
+                  {full_address}
                 </Text>
               </View>
             </OrderSectionItem>
@@ -506,7 +508,7 @@ const OrderScreen = () => {
           <Text style={styles.txtStyle}>
             {translate('txtOrderCalculator')}:
           </Text>
-          <Text style={styles.txtSubPriceStyle}>{total}</Text>
+          <Text style={styles.txtSubPriceStyle}>{subTotal}</Text>
         </View>
 
         <View style={styles.orderSumContent}>
@@ -517,7 +519,7 @@ const OrderScreen = () => {
               paddingHorizontal: 0,
             }}
           />
-          <Text style={styles.txtSubPriceStyle}>{total}</Text>
+          <Text style={styles.txtSubPriceStyle}>{_discount}</Text>
         </View>
 
         <View style={styles.orderSumContent}>
