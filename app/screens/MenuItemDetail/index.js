@@ -1,5 +1,5 @@
 import { CustomAccordionList, CustomButton, CustomInput } from '@components';
-import { GCC, GEX } from '@graphql';
+import { GCC, GEX, GQL } from '@graphql';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
@@ -14,19 +14,27 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import {
-  Fade,
-  Placeholder,
-  PlaceholderLine,
-  PlaceholderMedia,
-} from 'rn-placeholder';
+import { useLazyQuery } from '@apollo/client';
+
 import {
   ButtonCC,
   JollibeeImage,
   MenuDetailItem,
   MenuOptionSelectedItem,
 } from '../components';
-import { productReducer, setProduct, updateOption } from './ProductState';
+import {
+  productReducer,
+  setProduct,
+  updateProduct,
+  updateOption,
+  increaseQuantity,
+  decreaseQuantity,
+} from './ProductState';
+import {
+  ProductItemDetailHeader,
+  ProductDetailFlatList,
+  ProductItemDetailFooter,
+} from './widget';
 
 const { scaleHeight, scaleWidth } = scale;
 const { width, height } = Dimensions.get('window');
@@ -36,214 +44,78 @@ const CART_ICON_Y = scaleHeight(65);
 const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
-  const navigation = useNavigation();
+  const { product, detailItem } = route.params;
 
+  const navigation = useNavigation();
   // animations
   const viewScale = useSharedValue(1);
   const offsetX = useSharedValue(0);
   const aref = useAnimatedRef();
 
-  const { productSku, detailItem } = route.params;
-
-  const [quantity, setQuantity] = React.useState(1);
-  const [productItemDetail, dispatchChangeProduct] = React.useReducer(
+  const [qty, setQyt] = React.useState(1);
+  //
+  const [productItem, dispatchChangeProduct] = React.useReducer(
     productReducer,
-    null,
+    product,
   );
+
   const { addProductsToCart } = GEX.useAddProductsToCart();
+  const [getProductDetail] = useLazyQuery(GQL.PRODUCT_DETAIL, {
+    variables: { sku: product?.sku },
+    fetchPolicy: 'no-cache',
+    onCompleted: (data) => {
+      const item = data.products?.items[0];
+      if (detailItem?.bundle_options.length > 0) {
+        const { items } = item;
+        const list = items.map((x) => {
+          const { option_id, options } = x;
 
-  const renderOptionsItem = ({ item, index, type, onPress }) => (
-    <MenuDetailItem
-      item={item}
-      key={`${index}`}
-      type={type}
-      onPress={onPress}
-    />
-  );
+          const needUpdateOption = detailItem?.bundle_options.find(
+            (option) => option.id === option_id,
+          );
 
-  const onRenderSelectedItem = (item) => (
-    <MenuOptionSelectedItem item={item?.first} list={item} />
-  );
+          if (needUpdateOption) {
+            const { values } = needUpdateOption;
+            const renewOptions = options.map((opt) => {
+              const needUpdateOptItem = values.find(
+                (optItem) => optItem.id === opt.id,
+              );
 
-  const renderHeader = (isLoading) => {
-    if (isLoading || !productItemDetail) {
-      return (
-        <Placeholder style={styles.placeholderHead} Animation={Fade}>
-          <PlaceholderMedia style={styles.placeholderImage} />
-          <View style={styles.placeholderHorizontal}>
-            <PlaceholderLine
-              width={'60%'}
-              height={20}
-              style={styles.placeholderLine}
-            />
-            <PlaceholderLine
-              width={30}
-              height={25}
-              style={styles.placeholderLine}
-            />
-          </View>
-          <View style={styles.placeholderHorizontal}>
-            <PlaceholderLine
-              width={'60%'}
-              height={20}
-              style={styles.placeholderLine}
-            />
-            <PlaceholderLine
-              width={20}
-              height={15}
-              style={styles.placeholderLine}
-            />
-          </View>
-          <PlaceholderLine
-            width={'60%'}
-            height={20}
-            style={styles.placeholderLine}
-          />
-        </Placeholder>
-      );
-    }
+              if (needUpdateOptItem) {
+                return Object.assign({}, opt, { is_default: true });
+              } else {
+                return Object.assign({}, opt, { is_default: false });
+              }
+            });
 
-    const { image, name, point, price_range } = productItemDetail;
-    const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
+            return Object.assign({}, x, { options: renewOptions });
+          } else {
+            return x;
+          }
+        });
 
-    return (
-      <View style={styles.header}>
-        <JollibeeImage style={styles.imageHeaderStyle} url={image?.url} />
-
-        <View style={styles.headerContent}>
-          <Text
-            style={AppStyles.styles.itemTitle}
-            numberOfLines={0}
-            ellipsizeMode="tail">
-            {name}
-          </Text>
-          <View style={styles.priceContent}>
-            {showPrice && (
-              <Text style={styles.txtFrontDiscountStyle}>
-                {format.jollibeeCurrency(showPrice)}
-              </Text>
-            )}
-            {sellPrice && (
-              <Text style={styles.txtPriceStyle}>
-                {format.jollibeeCurrency(sellPrice)}
-              </Text>
-            )}
-            {point > 0 && (
-              <Text style={styles.txtPointStyle}>
-                {`(+${point} ${translate('txtPoint')})`}
-              </Text>
-            )}
-          </View>
-        </View>
-      </View>
-    );
-  };
+        dispatchChangeProduct(
+          updateProduct(Object.assign({}, item, { items: list })),
+        );
+      } else {
+        dispatchChangeProduct(updateProduct(item));
+      }
+    },
+  });
 
   const onChangeOptionsItem = (item) => {
     dispatchChangeProduct(updateOption(item));
   };
 
-  const renderItem = ({ item }) => {
-    return (
-      <CustomAccordionList
-        key={item.id}
-        item={item}
-        headerTextStyle={styles.listHeaderTextStyle}
-        headerStyle={styles.listHeaderStyle}
-        style={styles.listStyle}
-        renderItem={renderOptionsItem}
-        renderSelectItem={onRenderSelectedItem}
-        onChangeOptionsItem={onChangeOptionsItem}
-      />
-    );
-  };
-
-  const renderFooter = () => {
-    if (!productItemDetail) {
-      return <></>;
-    }
-
-    return (
-      <View style={styles.orderContentStyle}>
-        <View style={styles.orderAmountStyle}>
-          <CustomButton
-            style={styles.buttonOrderStyle}
-            onPress={() => setQuantity((prev) => prev - 1)}
-            disabled={quantity <= 1}
-            borderRadius={6}>
-            <Image source={images.icons.ic_sub} />
-          </CustomButton>
-          <CustomInput
-            style={styles.mulInputStyle}
-            inputStyle={styles.inputStyle}
-            keyboardType="numeric"
-            allowFontScaling={true}
-            numberOfLines={1}
-            editable={false}
-            value={quantity?.toString()}
-            multiline={false}
-            clearTextOnFocus={true}
-            maxLength={3}
-          />
-          <CustomButton
-            style={styles.buttonOrderStyle}
-            onPress={() => setQuantity((prev) => prev + 1)}
-            disabled={quantity > 255}
-            borderRadius={6}>
-            <Image source={images.icons.ic_plus} />
-          </CustomButton>
-        </View>
-      </View>
-    );
-  };
-
-  const onReceivedProduct = (item) => {
-    if (detailItem?.bundle_options.length > 0) {
-      const { items } = item;
-      const list = items.map((x) => {
-        const { option_id, options } = x;
-
-        const needUpdateOption = detailItem?.bundle_options.find(
-          (option) => option.id === option_id,
-        );
-
-        if (needUpdateOption) {
-          const { values } = needUpdateOption;
-          const renewOptions = options.map((opt) => {
-            const needUpdateOptItem = values.find(
-              (optItem) => optItem.id === opt.id,
-            );
-
-            if (needUpdateOptItem) {
-              return Object.assign({}, opt, { is_default: true });
-            } else {
-              return Object.assign({}, opt, { is_default: false });
-            }
-          });
-
-          return Object.assign({}, x, { options: renewOptions });
-        } else {
-          return x;
-        }
-      });
-
-      dispatchChangeProduct(
-        setProduct(Object.assign({}, item, { items: list })),
-      );
-    } else {
-      dispatchChangeProduct(setProduct(item));
-    }
-  };
-
   const renderSummaryPrice = () => {
     let priceString = DEFAULT_CURRENCY_VALUE;
-    if (productItemDetail) {
-      const { price_range, items } = productItemDetail;
+    if (productItem) {
+      const { price_range, items } = productItem;
       const { sellPrice } = destructuring.priceOfRange(price_range);
 
       let { value } = sellPrice;
 
-      items.forEach((item) => {
+      items?.forEach((item) => {
         const { options } = item;
         const sumOptionPrice = options
           .filter((x) => x.is_default === true && x.price)
@@ -252,7 +124,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         value += sumOptionPrice;
       });
 
-      value *= quantity;
+      value *= qty;
 
       priceString = format.jollibeeCurrency(
         Object.assign({}, sellPrice, { value }),
@@ -282,7 +154,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   });
 
   const addProductToCart = () => {
-    const { sku, items = [] } = productItemDetail;
+    const { sku, items = [] } = productItem;
     const optionsMap = [];
 
     items.forEach((item) => {
@@ -298,7 +170,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       variables: {
         cart_items: [
           {
-            quantity: quantity,
+            quantity: qty,
             sku: sku,
             selected_options: optionsMap,
             // entered_options: [
@@ -328,16 +200,83 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     // dispatch(app.showOrderList());
   };
 
+  /**
+   * ================================================================
+   *
+   * EDIT
+   *
+   * ================================================================
+   */
+  const onRenderSelectedItem = (item) => (
+    <MenuOptionSelectedItem item={item?.first} list={item} />
+  );
+
+  const renderOptionsItem = ({ item, index, type, onPress }) => (
+    <MenuDetailItem
+      item={item}
+      key={`${index}`}
+      type={type}
+      onPress={onPress}
+    />
+  );
+
+  const onRenderItem = ({ item }) => {
+    return (
+      <CustomAccordionList
+        key={item.option_id.toString()}
+        item={item}
+        headerTextStyle={styles.listHeaderTextStyle}
+        headerStyle={styles.listHeaderStyle}
+        style={styles.listStyle}
+        renderItem={renderOptionsItem}
+        renderSelectItem={onRenderSelectedItem}
+        onChangeOptionsItem={onChangeOptionsItem}
+      />
+    );
+  };
+
+  const onRenderHeader = React.useCallback(() => {
+    const { image, name, point, price_range } = productItem || {};
+    return (
+      <ProductItemDetailHeader
+        image={image}
+        name={name}
+        point={point}
+        price_range={price_range}
+      />
+    );
+  }, [productItem]);
+
+  const onIncreaseQuantity = () => {
+    setQyt((prev) => prev + 1);
+  };
+
+  const onDecreaseQuantity = () => {
+    setQyt((prev) => prev - 1);
+  };
+
+  const onRenderFooter = () => (
+    <ProductItemDetailFooter
+      quantity={qty}
+      increase={onIncreaseQuantity}
+      decrease={onDecreaseQuantity}
+    />
+  );
+
+  React.useEffect(() => {
+    getProductDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { items } = productItem || {};
   return (
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
-        <GCC.QueryProductDetail
-          sku={productSku}
-          renderHeader={() => renderHeader()}
-          renderItem={renderItem}
-          renderFooter={renderFooter}
-          updateProductItemDetail={onReceivedProduct}
-          optionData={productItemDetail?.items}
+        <ProductDetailFlatList
+          data={items}
+          renderItem={onRenderItem}
+          renderHeader={onRenderHeader}
+          renderFooter={onRenderFooter}
         />
       </View>
 

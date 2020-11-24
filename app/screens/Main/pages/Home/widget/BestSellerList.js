@@ -79,7 +79,11 @@ const renderItem = ({ item, index }) => {
       onPress={() => alert('ads')}
       key={index + ''}
       style={[styles.containerItem, AppStyles.styles.shadow]}>
-      <JollibeeImage url={image?.url} style={styles.imgProduct} />
+      <JollibeeImage
+        url={image?.url}
+        width={scaleWidth(124)}
+        height={scaleHeight(124)}
+      />
       <Text
         numberOfLines={2}
         style={[
@@ -183,11 +187,6 @@ const styles = StyleSheet.create({
   txtMenu: {
     textDecorationLine: 'underline',
     fontWeight: 'bold',
-  },
-  imgProduct: {
-    width: scaleWidth(124),
-    height: scaleHeight(124),
-    resizeMode: 'contain',
   },
 });
 

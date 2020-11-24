@@ -23,20 +23,30 @@ export const MENU_DETAIL = gql`
   {
     products(filter: { category_id: { eq: "3" } }) {
       items {
+        sku
         __typename
         id
         name
+        point
         image {
           url
         }
         price_range {
           maximum_price {
+            regular_price {
+              value
+              currency
+            }
             final_price {
               value
               currency
             }
           }
           minimum_price {
+            regular_price {
+              value
+              currency
+            }
             final_price {
               value
               currency

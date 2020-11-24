@@ -99,6 +99,7 @@ export const QueryProductDetail = ({
   sku,
   updateProductItemDetail,
   optionData,
+  renderProductHeader,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -126,7 +127,7 @@ export const QueryProductDetail = ({
         const arr = [...items];
         arr?.sort((a, b) => a.position - b.position);
         // ! call update to MenuDetail
-        updateProductItemDetail(Object.assign({}, first, { items: arr }));
+        // updateProductItemDetail();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -220,7 +221,7 @@ export const QueryProductDetail = ({
 
   const onRenderHeader = () => {
     return typeof renderHeader === 'function' ? (
-      renderHeader(loading)
+      renderProductHeader()
     ) : (
       <View />
     );

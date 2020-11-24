@@ -6,6 +6,7 @@ import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
 import { useAppProcess } from './useAppProcess';
+import { GEX } from '@graphql';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,15 @@ function SplashStack() {
 // Process Start App
 function App() {
   const { startApp, isSignIn } = useAppProcess();
+  const { loadHomeScreen } = GEX.useLoadHomeScreen();
+
+  React.useEffect(() => {
+    if (isSignIn) {
+      Logger.debug(isSignIn, 'isSignIn');
+      loadHomeScreen();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignIn]);
 
   return (
     <NavigationContainer ref={navigationRef}>

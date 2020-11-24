@@ -18,7 +18,7 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
         <Carousel
           keyExtractor={(item, index) => index + ''}
           data={data}
-          renderItem={({ item }) => <BannerItem item={item} />}
+          renderItem={({ item }) => <BannerItem item={item} height={height} />}
           sliderWidth={width}
           itemWidth={width}
           hasParallaxImages={true}
@@ -40,10 +40,10 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
   return <View style={[styles.container, { height: height }]} />;
 };
 
-const BannerItem = ({ item }) => {
+const BannerItem = ({ item, height }) => {
   return (
     <TouchableOpacity style={styles.content}>
-      <JollibeeImage url={item?.image?.url} style={styles.containerItem} />
+      <JollibeeImage url={item?.image?.url} height={height} width={width} />
     </TouchableOpacity>
   );
 };
@@ -79,11 +79,6 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
     height: '100%',
-  },
-
-  containerItem: {
-    resizeMode: 'contain',
-    flex: 1,
   },
 });
 
