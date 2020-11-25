@@ -22,6 +22,7 @@ const CustomPopupMenu = ({
   onChangeItem,
 }) => {
   const [layout, setLayout] = React.useState({});
+
   const setOnLayout = React.useCallback(
     (i) => {
       if (i.nativeEvent) setLayout(i.nativeEvent.layout);
@@ -52,7 +53,7 @@ const CustomPopupMenu = ({
         onLayout={setOnLayout}
         onPress={openMenu}
         style={styles.btnContainer}>
-        <Text style={[AppStyles.fonts.bold]}>
+        <Text style={[AppStyles.fonts.text]}>
           {value ? value : placeHolders}
         </Text>
 
@@ -93,6 +94,7 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
+
   container: {
     width: '50%',
     height: '40%',
@@ -101,8 +103,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: metrics.padding,
     marginLeft: 10,
-    // justifyContent: 'center',
+    marginTop: 61,
   },
+
   btnContainer: {
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -110,11 +113,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     color: '#484848',
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
+    borderBottomWidth: 1,
+    borderLeftWidth: 0.5,
+    borderRightWidth: 0.5,
+    borderColor: '#D6D6D6',
     height: 61,
     width: '50%',
   },
+
   itemContainer: {
     width: '100%',
     justifyContent: 'center',

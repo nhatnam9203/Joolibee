@@ -29,11 +29,14 @@ const StorePage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
+
   const init_location = useSelector((state) => state.store.init_location);
   const cities = useSelector((state) => state.store.cities);
   const districts = useSelector((state) => state.store.districts);
+
   const initCities = _.uniqBy(cities, 'label');
   const stores = useStore();
+
   const INITIAL_REGION = {
     latitude: init_location?.lat,
     longitude: init_location?.lng,
@@ -43,7 +46,9 @@ const StorePage = () => {
 
   const [visible, showModal] = React.useState([false, false]);
   const [params, setParams] = React.useState(init_location);
+
   const refMap = React.useRef(null);
+
   const openModal = (i) => () => {
     let _visible = [...visible];
     _visible[i] = !_visible[i];
@@ -71,6 +76,7 @@ const StorePage = () => {
   const onChangeItemDistrict = (item) => {
     setParams({ ...params, district: item.label });
   };
+
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtStore').toUpperCase(),
@@ -90,7 +96,7 @@ const StorePage = () => {
       {/* ------------ Select city and districts --------------------- */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
-          placeHolders="Chọn tỉnh thành"
+          placeHolders={translate('txtSelectDistrict')}
           visible={visible[0]}
           menus={initCities}
           onChangeItem={onChangeItemCity}
@@ -100,7 +106,7 @@ const StorePage = () => {
         />
 
         <CustomPopupMenu
-          placeHolders="Chọn quận huyện"
+          placeHolders={translate('txtSelectWard')}
           visible={visible[1]}
           menus={districts}
           value={params?.district}

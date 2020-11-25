@@ -20,7 +20,8 @@ export const getPosition = createAsyncThunk(
 const storeSlice = createSlice({
   name: 'store',
   initialState: {
-    stores: initStores,
+    stores: initStores, // ! Nạp từ json file ko nên đổi
+    filterStores: [],
     cities,
     districts: [],
     init_location: {},
@@ -51,7 +52,7 @@ const storeSlice = createSlice({
           return item;
         }
       };
-      state.stores = initStores.filter((item) => query(item));
+      state.filterStores = initStores.filter((item) => query(item));
     },
 
     filterDistrictByCity(state, action) {
