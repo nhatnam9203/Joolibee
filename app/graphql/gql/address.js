@@ -32,8 +32,8 @@ export const ADDRESS_LIST = gql`
 `;
 
 export const STORE_PICKUP = gql`
-  query($cityId: String!, $districtId: String!) {
-    shippingMethod(cityId: cityId, districtId: districtId) {
+  query($cityId: Int!, $districtId: Int!) {
+    shippingMethod(cityId: $cityId, districtId: $districtId) {
       results {
         carrier
         method

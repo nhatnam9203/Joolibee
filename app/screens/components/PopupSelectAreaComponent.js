@@ -17,7 +17,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
   const init_location = useSelector((state) => state.store.init_location);
-  const storesList = useSelector((state) => state.store.stores);
+  const storesList = useSelector((state) => state.store.default.stores);
 
   const cities = appUtil.getCitiesList(storesList);
 

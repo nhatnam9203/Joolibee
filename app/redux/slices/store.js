@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { stores, cities, districts } from '../../mocks';
 import { reverseGeocoding } from '@location';
-import { format } from '@utils';
+import { format, appUtil } from '@utils';
 import _ from 'lodash';
-
-const initStores = Object.values(stores);
 
 export const getPosition = createAsyncThunk(
   `store/reverseGeocoding`,
@@ -20,10 +17,12 @@ export const getPosition = createAsyncThunk(
 const storeSlice = createSlice({
   name: 'store',
   initialState: {
-    stores: initStores, // ! Nạp từ json file ko nên đổi
+    default: {
+      stores: [], // ! Nạp từ json file ko nên đổi
+      cities: [],
+      districts: [],
+    },
     filterStores: [],
-    cities,
-    districts: [],
     init_location: {},
     my_location: {
       cityId: 0,
@@ -34,9 +33,11 @@ const storeSlice = createSlice({
     updateStore(state, action) {
       state.stores = Object.values(action.payload);
     },
+
     pickMyLocations(state, action) {
       state.my_location = action.payload;
     },
+
     filterStore(state, action) {
       const { payload } = action;
       let query = (item) => {
@@ -59,16 +60,23 @@ const storeSlice = createSlice({
           return item;
         }
       };
-      state.filterStores = initStores.filter((item) => query(item));
-    },
-
-    filterDistrictByCity(state, action) {
-      const { payload } = action;
-      state.districts = districts.filter((item) => item.key == payload.key);
+      state.filterStores = state.default.stores.filter((item) => query(item));
     },
 
     setInitLocation(state, action) {
       state.init_location = action.payload;
+    },
+
+    updateCities: (state, action) => {
+      state.cities = action.payload;
+    },
+
+    updateDistricts: (state, action) => {
+      state.districts = action.payload;
+    },
+
+    setStorePickup: (state, action) => {
+      state.default = action.payload;
     },
   },
   extraReducers: {
@@ -80,29 +88,24 @@ const storeSlice = createSlice({
         let city = format.convertString(location?.adminArea);
         let district = format.convertString(location?.subAdminArea);
 
-        let default_district = -1;
-        let default_city = cities.findIndex((item) => {
+        const { cities, districts } = state.default;
+
+        const findCity = cities.find((item) => {
           let label = format.convertString(item.label);
           if (city.includes(label)) return city.includes(label);
         });
 
-        if (default_city > -1) {
-          state.districts = districts.filter(
-            (item) => item.key == cities[default_city].label,
-          );
-          default_district = state.districts.findIndex((item) => {
-            let label = format.convertString(item.label);
-            if (district.includes(label)) return district.includes(label);
-          });
-        }
+        const findDistrict = districts.find((item) => {
+          let label = format.convertString(item.label);
 
-        state.init_location = {
-          district: location.subAdminArea,
-          city: location.adminArea,
-          default_city: default_city,
-          default_district: default_district,
-          ...location.position,
-        };
+          if (district.includes(label)) return district.includes(label);
+        });
+
+        state.my_location = Object.assign({}, state.my_location, {
+          cityId: findCity.id,
+          districtId: findDistrict.id,
+          ...location,
+        });
       }
     },
   },

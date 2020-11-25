@@ -12,12 +12,12 @@ export const useStorePickup = () => {
     onCompleted: () => {},
   });
 
-  const onStorePickup = () => {
-    storePickup();
+  const onStorePickup = (input) => {
+    storePickup(input);
   };
 
   return {
     storePickup: onStorePickup,
-    stores: data,
+    storeData: data,
   };
 };

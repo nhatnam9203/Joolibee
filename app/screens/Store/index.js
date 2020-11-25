@@ -16,7 +16,7 @@ import { store } from '@slices';
 import { useNavigation } from '@react-navigation/native';
 import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
-import { scale } from '@utils';
+import { scale, appUtil } from '@utils';
 import { GEX } from '@graphql';
 
 const { width, height } = Dimensions.get('window');
@@ -32,21 +32,25 @@ const StorePage = () => {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
 
-  const init_location = useSelector((state) => state.store.init_location);
+  const my_location = useSelector((state) => state.store.my_location);
+  const storesList = useSelector((state) => state.store.default.stores);
 
   const INITIAL_REGION = {
-    latitude: init_location?.lat,
-    longitude: init_location?.lng,
+    latitude: my_location?.lat,
+    longitude: my_location?.lng,
     latitudeDelta: 0.5,
     longitudeDelta: (0.5 * width) / height,
   };
 
   const [visible, showModal] = React.useState([false, false]);
-  const [params, setParams] = React.useState(init_location);
+  const [params, setParams] = React.useState(my_location);
 
-  const { storePickup, stores } = GEX.useStorePickup();
+  const { storePickup, storeData } = GEX.useStorePickup();
+  const cities = appUtil.getCitiesList(storesList);
 
   const refMap = React.useRef(null);
+  const stores = [];
+  Logger.debug(storeData, 'storeData');
 
   const openModal = (i) => () => {
     let _visible = [...visible];
@@ -65,15 +69,22 @@ const StorePage = () => {
     });
   };
 
+  const filterDistrict = React.useCallback(() => {
+    let list = [];
+
+    if (params?.city !== null) {
+      list = appUtil.getDistrictInCity(storesList, params?.city?.id);
+    }
+    return list;
+  }, [params?.city, storesList]);
+
   // -------------------- Filter Stores --------------------------//
   const onChangeItemCity = (item) => {
-    let newParams = { city: item.label };
-    setParams(newParams);
-    dispatch(store.filterDistrictByCity({ key: item.label }));
+    setParams({ city: item });
   };
 
   const onChangeItemDistrict = (item) => {
-    setParams({ ...params, district: item.label });
+    setParams({ ...params, district: item });
   };
 
   React.useEffect(() => {
@@ -84,11 +95,11 @@ const StorePage = () => {
   }, [language, navigation]);
 
   React.useEffect(() => {
-    dispatch(store.filterStore(params));
+    // dispatch(store.filterStore(params));
   }, [params, dispatch]);
 
   React.useEffect(() => {
-    storePickup({ varibles: { cityId: 1, districtId: 15 } });
+    storePickup({ variables: { cityId: 1, districtId: 15 } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,9 +114,9 @@ const StorePage = () => {
         <CustomPopupMenu
           placeHolders={translate('txtSelectDistrict')}
           visible={visible[0]}
-          menus={initCities}
+          menus={cities}
           onChangeItem={onChangeItemCity}
-          value={params?.city}
+          value={params?.city?.label}
           openMenu={openModal(0)}
           closeMenu={closeModal}
         />
@@ -113,8 +124,8 @@ const StorePage = () => {
         <CustomPopupMenu
           placeHolders={translate('txtSelectWard')}
           visible={visible[1]}
-          menus={districts}
-          value={params?.district}
+          menus={filterDistrict()}
+          value={params?.district?.label}
           onChangeItem={onChangeItemDistrict}
           openMenu={openModal(1)}
           closeMenu={closeModal}

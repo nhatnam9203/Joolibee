@@ -1,33 +1,36 @@
-import React from 'react';
-import { View, Image, StyleSheet, ImageBackground } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { Text } from 'react-native-paper';
+import { useCodePushUpdate, useStorePickup } from '@hooks';
+import { app, store } from '@slices';
 import { AppStyles, images } from '@theme';
-import { app } from '@slices';
-import { translate } from '@localize';
-import { useCodePushUpdate } from '@hooks';
-import {
-  TopBarScreenLayout,
-  SinglePageLayout,
-  AppScrollViewIOSBounceColorsWrapper,
-} from '@layouts';
 import { scale } from '@utils';
+import React from 'react';
+import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
 const { scaleWidth, scaleHeight } = scale;
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
   const [progress] = useCodePushUpdate();
 
+  // !! check version file store chỗ này, nếu có thay đổi cập nhật ở dây luôn
+  const [cities, districts, initStores] = useStorePickup();
+
   React.useEffect(() => {
     if (progress >= 100) {
       setTimeout(() => {
         dispatch(app.loadingSuccess());
       }, 1500);
+    } else {
+      setTimeout(() => {
+        dispatch(app.loadingSuccess());
+      }, 3000);
     }
-    setTimeout(() => {
-      dispatch(app.loadingSuccess());
-    }, 3000);
   }, [progress, dispatch]);
+
+  React.useEffect(() => {
+    dispatch(store.setStorePickup({ stores: initStores, cities, districts }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
