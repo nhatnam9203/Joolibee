@@ -24,11 +24,11 @@ import {
 } from '../components';
 import ScreenName from '../ScreenName';
 import { OrderItem, CustomScrollViewHorizontal } from './widget';
-import { useMutation, useQuery } from '@apollo/client';
-import { mutation, query, GQL, GEX } from '@graphql';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { query, GQL, GEX } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
-
+import { app, address } from '@slices';
 const { scaleWidth, scaleHeight } = scale;
 
 const OrderSection = ({
@@ -115,8 +115,8 @@ const OrderButtonInput = ({
 };
 
 const ShippingType = {
-  InShop: 1,
-  InPlace: 2,
+  InShop: 'storepickup',
+  InPlace: 'freeshipping',
 };
 
 const CONFIRM_HEIGHT = 150;
@@ -125,13 +125,11 @@ const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const cart_id = useSelector((state) => state.account?.cart?.id);
-  const { customer } = GEX.useCustomer();
-  const [shippingType, setShippingType] = React.useState(
-    selected_payment_method,
-  );
+  // const { customer } = GEX.useCustomer();
+
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
-
+  const [coupon_code, setCouponCode] = React.useState('');
   // --------- handle fetch data cart -----------
   const { data } = useQuery(GQL.CART_DETAIL, {
     variables: { cartId: cart_id },
@@ -141,17 +139,26 @@ const OrderScreen = () => {
     variables: { categoryId: 4 },
     fetchPolicy: 'cache-first',
   });
+
+  const resCustomer = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'only-cache',
+  });
+
+  const [setShippingMethodsOnCart] = useMutation(GQL.SET_ORDER_SHIPPING_METHOD);
+  const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
+
   const {
     items,
-    shipping_addresses,
     applied_coupons,
-    selected_payment_method,
     prices: { grand_total, discounts, subtotal_excluding_tax },
+    shipping_addresses,
   } = data?.cart || {
     items: [],
     prices: { grand_total: {} },
   };
 
+  const { method_code } = shipping_addresses[0]?.selected_shipping_method || {};
+  const [shippingType, setShippingType] = React.useState(method_code);
   const total = format.jollibeeCurrency({
     value: grand_total.value,
     currency: 'VND',
@@ -161,12 +168,53 @@ const OrderScreen = () => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
+  const addresses = resCustomer?.data.customer?.addresses || [];
   const shipping_address =
-    customer?.addresses?.length > 0
-      ? customer?.addresses.find((x) => x.default_shipping)
-      : {};
-  const { full_address, lastname, firstname, telephone } = shipping_address;
+    addresses.length > 0 ? addresses.find((x) => x.default_shipping) : {};
+
+  const {
+    full_address,
+    lastname,
+    firstname,
+    telephone,
+    company,
+    id,
+    default_shipping,
+    region,
+    city,
+    street,
+  } = shipping_address;
   // -------- handle fetch data cart -----------
+
+  const editAddress = () => {
+    if (shipping_address) {
+      dispatch(
+        address.selectedLocation({
+          region: region?.region,
+          city: city,
+          street: street,
+          addressFull: full_address,
+        }),
+      );
+      const val_address = {
+        phone: telephone,
+        place: company,
+        firstname: firstname,
+        lastname: lastname,
+        note: '',
+        id,
+        default_shipping,
+      };
+      navigation.navigate(ScreenName.DetailMyAddress, {
+        val_address,
+        titleHeader: translate('txtEditAddress'),
+      });
+    } else {
+      navigation.navigate(ScreenName.MyAddress);
+    }
+  };
+
+  const onChangeCouponCode = (val) => setCouponCode(val);
 
   const onTogglePopupNotice = () => {
     setShowNotice(false);
@@ -176,16 +224,50 @@ const OrderScreen = () => {
   };
 
   const onEdit = () => {
-    shippingType?.code === ShippingType.InShop
+    shippingType === ShippingType.InShop
       ? navigation.navigate(ScreenName.StorePickup)
-      : () => {};
+      : editAddress();
   };
 
   const onChangePaymentMethod = (code) => {
-    setShippingType({
-      code,
-      title: translate(code === 1 ? 'txtPlaceInShopOrder' : 'txtShippingOrder'),
-    });
+    dispatch(app.showLoading());
+    setShippingMethodsOnCart({
+      variables: {
+        cart_id: cart_id,
+        shipping_methods: [
+          {
+            carrier_code: code,
+            method_code: code,
+          },
+        ],
+      },
+    })
+      .then(() => {
+        setShippingType(code);
+        dispatch(app.hideLoading());
+      })
+      .catch(() => {
+        dispatch(app.hideLoading());
+      });
+  };
+
+  const onApplyCoupon = () => {
+    dispatch(app.showLoading());
+    applyCouponToCart({
+      variables: {
+        cart_id: cart_id,
+        coupon_code,
+      },
+    })
+      .then((res) => {
+        if (res?.data?.applyCouponToCart) {
+          setCouponCode('');
+        }
+        dispatch(app.hideLoading());
+      })
+      .catch(() => {
+        dispatch(app.hideLoading());
+      });
   };
 
   React.useEffect(() => {
@@ -272,7 +354,7 @@ const OrderScreen = () => {
               <Image
                 style={styles.arrowStyle}
                 source={
-                  shippingType?.code === ShippingType.InPlace
+                  shippingType === ShippingType.InPlace
                     ? images.icons.ic_radio_active
                     : images.icons.ic_radio_inactive
                 }
@@ -295,7 +377,7 @@ const OrderScreen = () => {
               <Image
                 style={styles.arrowStyle}
                 source={
-                  shippingType?.code === ShippingType.InShop
+                  shippingType === ShippingType.InShop
                     ? images.icons.ic_radio_active
                     : images.icons.ic_radio_inactive
                 }
@@ -349,7 +431,7 @@ const OrderScreen = () => {
                   flexDirection: 'row',
                 }}>
                 <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
-                  {shippingType?.code === ShippingType.InPlace
+                  {shippingType === ShippingType.InPlace
                     ? translate('txtShippingTo')
                     : translate('txtToReceive')}
                   :
@@ -449,12 +531,15 @@ const OrderScreen = () => {
                   alignItems: 'center',
                 }}>
                 <OrderButtonInput
+                  onPress={onApplyCoupon}
                   title={translate('txtApply')}
                   btnWidth={126}
                   bgColor={AppStyles.colors.accent}>
                   <TextInput
                     placeholder={translate('txtInputVoucher')}
                     style={{ paddingHorizontal: 10, flex: 1 }}
+                    value={coupon_code}
+                    onChangeText={onChangeCouponCode}
                   />
                 </OrderButtonInput>
 
