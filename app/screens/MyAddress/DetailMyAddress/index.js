@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { regex } from '@utils';
 import {

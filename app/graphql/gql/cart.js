@@ -70,34 +70,6 @@ export const CART_DETAIL = gql`
       items {
         id
         __typename
-        sku
-        name
-        point
-        image {
-          url
-        }
-        price_range {
-          maximum_price {
-            regular_price {
-              value
-              currency
-            }
-            final_price {
-              value
-              currency
-            }
-          }
-          minimum_price {
-            regular_price {
-              value
-              currency
-            }
-            final_price {
-              value
-              currency
-            }
-          }
-        }
         product {
           __typename
           id
@@ -335,7 +307,7 @@ export const UPDATE_CART_PRODUCT = gql`
 `;
 
 export const SET_ORDER_SHIPPING_METHOD = gql`
-  mutation($cart_id: String!, $shipping_methods: [ShippingMethodInput!]) {
+  mutation($cart_id: String!, $shipping_methods: [ShippingMethodInput!]!) {
     setShippingMethodsOnCart(
       input: { cart_id: $cart_id, shipping_methods: $shipping_methods }
     ) {
@@ -351,6 +323,18 @@ export const SET_ORDER_SHIPPING_METHOD = gql`
               currency
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+export const APPLY_COUPON_TO_CART = gql`
+  mutation($cart_id: String!, $coupon_code: String!) {
+    applyCouponToCart(input: { cart_id: $cart_id, coupon_code: $coupon_code }) {
+      cart {
+        applied_coupons {
+          code
         }
       }
     }
