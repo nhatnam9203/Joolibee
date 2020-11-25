@@ -6,9 +6,9 @@ const CustomMapView = React.forwardRef((props, ref) => {
   return (
     <MapView
       // provider='google'
+      style={styles.map}
       {...props}
       ref={ref}
-      style={styles.map}
       showsUserLocation={true}>
       {props.children}
     </MapView>

@@ -4,7 +4,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { STORE_PICKUP } from '../gql';
 
-export const useLoadHomeScreen = () => {
+export const useStorePickup = () => {
   const dispatch = useDispatch();
 
   const [storePickup, { data, loading, refetch }] = useLazyQuery(STORE_PICKUP, {

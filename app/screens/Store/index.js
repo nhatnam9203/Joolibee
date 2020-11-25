@@ -16,6 +16,8 @@ import { store } from '@slices';
 import { useNavigation } from '@react-navigation/native';
 import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
+import { scale } from '@utils';
+import { GEX } from '@graphql';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = {
@@ -31,11 +33,6 @@ const StorePage = () => {
   const [language] = useChangeLanguage();
 
   const init_location = useSelector((state) => state.store.init_location);
-  const cities = useSelector((state) => state.store.cities);
-  const districts = useSelector((state) => state.store.districts);
-
-  const initCities = _.uniqBy(cities, 'label');
-  const stores = useStore();
 
   const INITIAL_REGION = {
     latitude: init_location?.lat,
@@ -46,6 +43,8 @@ const StorePage = () => {
 
   const [visible, showModal] = React.useState([false, false]);
   const [params, setParams] = React.useState(init_location);
+
+  const { storePickup, stores } = GEX.useStorePickup();
 
   const refMap = React.useRef(null);
 
@@ -87,6 +86,12 @@ const StorePage = () => {
   React.useEffect(() => {
     dispatch(store.filterStore(params));
   }, [params, dispatch]);
+
+  React.useEffect(() => {
+    storePickup({ varibles: { cityId: 1, districtId: 15 } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // -------------------- Filter Stores --------------------------//
 
   return (
@@ -115,42 +120,43 @@ const StorePage = () => {
           closeMenu={closeModal}
         />
       </View>
-      {/* ------------ Select city and districts --------------------- */}
+      <View style={styles.container}>
+        <View style={styles.listStoreStyle}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(_, index) => index + ''}
+            renderItem={({ item, index }) => (
+              <ItemStore item={item} index={index} />
+            )}
+            data={stores}
+          />
+        </View>
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => (
-          <View style={styles.container}>
-            <CustomMapView
-              ref={refMap}
-              style={styles.map}
-              initialRegion={INITIAL_REGION}
-              onMapReady={fitAllMarkers}>
-              <Markers data={stores} mapView={refMap} />
-            </CustomMapView>
-          </View>
-        )}
-        keyExtractor={(_, index) => index + ''}
-        renderItem={({ item, index }) => (
-          <ItemStore item={item} index={index} />
-        )}
-        data={stores}
-      />
+        <CustomMapView
+          ref={refMap}
+          style={styles.map}
+          initialRegion={INITIAL_REGION}
+          onMapReady={fitAllMarkers}>
+          <Markers data={stores} mapView={refMap} />
+        </CustomMapView>
+      </View>
     </CustomImageBackground>
   );
 };
 
+const MAP_HEIGHT = scale.scaleHeight(410);
+
 const styles = StyleSheet.create({
   waterMarkContainer: { flex: 1, backgroundColor: 'transparent' },
+
   container: {
-    height: 400,
-    width: '100%',
-    alignItems: 'center',
-    top: -20,
+    flex: 1,
   },
+
   map: {
     ...StyleSheet.absoluteFillObject,
     top: 0,
+    height: MAP_HEIGHT,
   },
 
   pickerContainer: {
@@ -158,6 +164,7 @@ const styles = StyleSheet.create({
     margin: 0,
     width: '50%',
   },
+
   itemContainer: {
     width: '100%',
     justifyContent: 'center',
@@ -165,6 +172,13 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     marginVertical: 5,
     borderBottomColor: AppStyles.colors.disabled,
+  },
+
+  listStoreStyle: {
+    marginTop: MAP_HEIGHT,
+    paddingBottom: scale.scaleHeight(20),
+    width: '100%',
+    flex: 1,
   },
 });
 export default StorePage;

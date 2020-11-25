@@ -18,6 +18,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 
   const init_location = useSelector((state) => state.store.init_location);
   const storesList = useSelector((state) => state.store.stores);
+
   const cities = appUtil.getCitiesList(storesList);
 
   const [city, setCity] = React.useState(init_location.default_city);
@@ -28,9 +29,8 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const filterDistrict = React.useCallback(() => {
     let list = [];
     if (city !== null) {
-      list = appUtil.getDistrictInStoreAtIndex(storesList, city);
+      list = appUtil.getDistrictInCity(storesList, city);
     }
-
     return list;
   }, [city, storesList]);
 
@@ -50,16 +50,13 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   };
 
   const onHandleSubmit = () => {
-    if (_.isNumber(city) && _.isNumber(district)) {
-      let _city = cities[city]?.label;
-      let _district = filterDistrict()[district]?.label;
-
+    if (city && district) {
       let update_location = {
         ...init_location,
-        city: _city,
-        district: _district,
+        cityId: city,
+        districtId: district,
       };
-      dispatch(store.setInitLocation(update_location));
+      dispatch(store.pickMyLocations(update_location));
       popupRef.current.forceQuit();
     } else {
       // !!show dialog yeu cau chon khu vuc, hoac turn on allow location
@@ -139,12 +136,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     paddingVertical: scaleHeight(5),
   },
-
   content_top: {
     width: '100%',
     backgroundColor: AppStyles.colors.accent,
     alignItems: 'center',
-    paddingHorizontal: scaleWidth(15),
+    padding: scaleWidth(20),
     zIndex: 1,
   },
 

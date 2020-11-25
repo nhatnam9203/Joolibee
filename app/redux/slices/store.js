@@ -25,10 +25,17 @@ const storeSlice = createSlice({
     cities,
     districts: [],
     init_location: {},
+    my_location: {
+      cityId: 0,
+      districtId: 0,
+    },
   },
   reducers: {
     updateStore(state, action) {
       state.stores = Object.values(action.payload);
+    },
+    pickMyLocations(state, action) {
+      state.my_location = action.payload;
     },
     filterStore(state, action) {
       const { payload } = action;
