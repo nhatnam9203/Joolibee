@@ -50,7 +50,7 @@ const StorePage = () => {
 
   const refMap = React.useRef(null);
   const stores = [];
-  Logger.debug(storeData, 'storeData');
+  Logger.debug(storeData, 'storeData'); // !! cai cho nay dung cho been trang checkout
 
   const openModal = (i) => () => {
     let _visible = [...visible];

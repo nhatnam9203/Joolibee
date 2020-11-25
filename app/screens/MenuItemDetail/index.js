@@ -52,7 +52,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const offsetX = useSharedValue(0);
   const aref = useAnimatedRef();
 
-  const [qty, setQyt] = React.useState(1);
+  const [qty, setQyt] = React.useState(detailItem?.quantity ?? 1);
   //
   const [productItem, dispatchChangeProduct] = React.useReducer(
     productReducer,
@@ -60,6 +60,8 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   );
 
   const { addProductsToCart } = GEX.useAddProductsToCart();
+  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
+
   const [getProductDetail] = useLazyQuery(GQL.PRODUCT_DETAIL, {
     variables: { sku: product?.sku },
     fetchPolicy: 'no-cache',
@@ -181,6 +183,25 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       },
     });
 
+    animationOnQuit();
+    // dispatch(app.showOrderList());
+  };
+
+  // !! chuaw update options
+  const updateCartProduct = async () => {
+    let input = {
+      cart_item_id: detailItem.id,
+      quantity: qty,
+    };
+
+    updateCartItems({
+      variables: input,
+    });
+
+    animationOnQuit();
+  };
+
+  const animationOnQuit = () => {
     viewScale.value = withTiming(0, {
       duration: ANIMATION_DURATION,
       easing: Easing.bezier(0.45, 0.45, 0.2, 0.75),
@@ -197,9 +218,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     setTimeout(() => {
       navigation.goBack();
     }, ANIMATION_DURATION);
-    // dispatch(app.showOrderList());
   };
-
   /**
    * ================================================================
    *
@@ -293,7 +312,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
           label={
             detailItem ? translate('txtUpdateCart') : translate('txtAddCart')
           }
-          onPress={addProductToCart}
+          onPress={detailItem ? updateCartProduct : addProductToCart}
         />
       </View>
     </Animated.View>
