@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { showLoading, hideLoading } from './app';
 import { stores, cities, districts } from '../../mocks';
 import { reverseGeocoding } from '@location';
 import { format } from '@utils';
+import _ from 'lodash';
+
 const initStores = Object.values(stores);
 
 export const getPosition = createAsyncThunk(

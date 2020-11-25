@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 const CustomPickerSelect = ({
   style,
   onChangeItem = () => {},
+  placeholderObject,
   placeholder,
   border,
   ...props
@@ -25,10 +26,12 @@ const CustomPickerSelect = ({
     <View style={[styles.wrapperPicker, style, border && styles.border]}>
       <RNPickerSelect
         style={pickerSelectStyles}
-        placeholder={{
-          label: placeholder || 'Select ...',
-          value: null,
-        }}
+        placeholder={
+          placeholderObject ?? {
+            label: placeholder || 'Select ...',
+            value: null,
+          }
+        }
         {...props}
         //useNativeAndroidPickerStyle={false}
         onValueChange={onChangeItem}

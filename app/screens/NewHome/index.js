@@ -24,6 +24,7 @@ import {
 import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';
 import ProductCart from '../ProductCart';
+import { RESULTS } from 'react-native-permissions';
 
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
@@ -41,6 +42,9 @@ const HomeScreen = () => {
 
   const [isVisible, setVisiblePopup] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
+  const isAllowLocations = useSelector(
+    (state) => state.setting.isAllowLocations,
+  );
 
   const { data, loading, refetch } = useQuery(GQL.HOME_SCREEN, {
     fetchPolicy: 'only-cache',
@@ -57,7 +61,7 @@ const HomeScreen = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      setVisiblePopup(true);
+      setVisiblePopup(isAllowLocations !== RESULTS.GRANTED);
     }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

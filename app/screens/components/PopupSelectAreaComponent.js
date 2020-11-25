@@ -3,7 +3,8 @@ import { AppScrollViewIOSBounceColorsWrapper, PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { store } from '@slices';
 import { AppStyles, images } from '@theme';
-import { scale } from '@utils';
+import { appUtil, scale } from '@utils';
+import _ from 'lodash';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
@@ -16,64 +17,61 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
   const init_location = useSelector((state) => state.store.init_location);
-  const cities = useSelector((state) => state.store.cities);
-  const districts = useSelector((state) => state.store.districts);
+  const storesList = useSelector((state) => state.store.stores);
+  const cities = appUtil.getCitiesList(storesList);
 
-  const [city, setCity] = React.useState(-1);
-  const [district, setDistrict] = React.useState(-1);
-
-  React.useEffect(() => {
-    setCity(init_location?.default_city);
-    setDistrict(init_location?.default_district);
-  }, [init_location.default_city, init_location.default_district]);
-
-  const onHandleChangeCity = React.useCallback(
-    (value) => {
-      let indexCity = cities.findIndex((item) => item.value === value);
-      setCity(indexCity);
-      dispatch(store.filterDistrictByCity({ key: cities[indexCity]?.label }));
-    },
-    [cities, dispatch],
+  const [city, setCity] = React.useState(init_location.default_city);
+  const [district, setDistrict] = React.useState(
+    init_location?.default_district,
   );
 
-  const onHandleChangeDistrict = React.useCallback(
-    (value) => {
-      let indexDistrict = districts.findIndex((item) => item.value === value);
-      setDistrict(indexDistrict);
-    },
-    [districts],
-  );
+  const filterDistrict = React.useCallback(() => {
+    let list = [];
+    if (city !== null) {
+      list = appUtil.getDistrictInStoreAtIndex(storesList, city);
+    }
 
-  const onChangeItem = React.useCallback(
-    (type, value) => {
-      console.log('value', value);
-      switch (type) {
-        case 'city':
-          onHandleChangeCity(value);
-          break;
+    return list;
+  }, [city, storesList]);
 
-        default:
-          onHandleChangeDistrict(value);
-          break;
-      }
-    },
-    [onHandleChangeCity, onHandleChangeDistrict],
-  );
+  const onHandleChangeCity = (value) => {
+    if (value !== null) {
+      setCity(value);
+      setDistrict(null);
+    } else {
+      setCity(null);
+    }
+  };
+
+  const onHandleChangeDistrict = (value) => {
+    if (value !== null) {
+      setDistrict(value);
+    }
+  };
 
   const onHandleSubmit = () => {
-    let _city = cities[city]?.label;
-    let _district = districts[district]?.label;
-    let update_location = {
-      ...init_location,
-      city: _city,
-      district: _district,
-    };
-    dispatch(store.setInitLocation(update_location));
-    popupRef.current.forceQuit();
+    if (_.isNumber(city) && _.isNumber(district)) {
+      let _city = cities[city]?.label;
+      let _district = filterDistrict()[district]?.label;
+
+      let update_location = {
+        ...init_location,
+        city: _city,
+        district: _district,
+      };
+      dispatch(store.setInitLocation(update_location));
+      popupRef.current.forceQuit();
+    } else {
+      // !!show dialog yeu cau chon khu vuc, hoac turn on allow location
+    }
   };
 
   return (
-    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
+    <PopupLayout
+      visible={visible}
+      onToggle={onToggle}
+      ref={popupRef}
+      disableBackdrop={true}>
       <AppScrollViewIOSBounceColorsWrapper
         topBounceColor={AppStyles.colors.accent}
         bottomBounceColor={AppStyles.colors.button}
@@ -86,16 +84,15 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
 
             <CustomPickerSelect
               items={cities}
-              placeholder={translate('txtSelectDistrict')}
-              value={city}
-              onChangeItem={(item) => onChangeItem('city', item)}
+              placeholder={translate('txtSelectWard')}
+              onChangeItem={onHandleChangeCity}
             />
 
             <CustomPickerSelect
-              items={districts}
-              placeholder={translate('txtSelectWard')}
+              items={filterDistrict()}
+              placeholder={translate('txtSelectDistrict')}
+              onChangeItem={onHandleChangeDistrict}
               value={district}
-              onChangeItem={(item) => onChangeItem('district', item)}
             />
 
             <View style={styles.polygonStyle}>
@@ -115,8 +112,8 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
             <CustomButton
               onPress={onHandleSubmit}
               label={translate('txtButtonConfirm')}
-              width={181}
-              height={58}
+              width={scaleWidth(181)}
+              height={scaleHeight(58)}
               bgColor={AppStyles.colors.accent}
               textColor={AppStyles.colors.background}
               style={{
@@ -174,12 +171,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   txtNote: {
     ...AppStyles.fonts.text,
     fontSize: scaleWidth(16),
     textAlign: 'center',
     lineHeight: 21,
   },
+
   txtTitle: {
     ...AppStyles.fonts.title,
     fontSize: scaleWidth(24),
@@ -187,6 +186,7 @@ const styles = StyleSheet.create({
     color: AppStyles.colors.white,
     textAlign: 'center',
   },
+
   icon_jollibee: {
     resizeMode: 'contain',
     width: scaleWidth(126),

@@ -22,10 +22,12 @@ export const CustomModal = React.forwardRef(
     }, [showModal]);
 
     const onModalHide = () => {
-      if (disableBackdrop) return;
-
       onDismiss();
       setVisible(false);
+    };
+
+    const onBackDrop = () => {
+      if (!disableBackdrop) onModalHide();
     };
 
     React.useImperativeHandle(ref, () => ({
@@ -44,7 +46,7 @@ export const CustomModal = React.forwardRef(
         isVisible={visible}
         transparent={true}
         onModalHide={onModalHide}
-        onBackdropPress={onModalHide}
+        onBackdropPress={onBackDrop}
         style={styles.container}>
         {children}
       </Modal>

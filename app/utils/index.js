@@ -7,6 +7,7 @@ import * as validate from './validate';
 import * as format from './format';
 import * as generate from './generate';
 import * as destructuring from './destructuring';
+import * as appUtil from './app';
 
 module.exports = {
   StringUtil,
@@ -18,4 +19,5 @@ module.exports = {
   format,
   generate,
   destructuring,
+  appUtil,
 };
