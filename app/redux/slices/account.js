@@ -37,7 +37,9 @@ const accountSlice = createSlice({
   reducers: {
     clearSignupState() {},
     clearSignInState() {},
-
+    clearCartState(state) {
+      state.cart = null;
+    },
     showQRCode(state) {
       state.isShowQRCode = true;
     },

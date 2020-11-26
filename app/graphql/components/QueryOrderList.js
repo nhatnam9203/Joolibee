@@ -37,7 +37,7 @@ export const QueryOrderList = ({
       setRefreshing(false);
     }, 3000);
   };
-
+  console.log(_data);
   return (
     <CustomFlatList
       data={_data}

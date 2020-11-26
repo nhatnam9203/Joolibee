@@ -1,5 +1,5 @@
 import { CustomFlatList, Loading } from '@components';
-import { GEX } from '@graphql';
+import { GEX, query, GQL } from '@graphql';
 import { useComponentSize } from '@hooks';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import { format, scale } from '@utils';
 import React from 'react';
+import { isEmpty } from 'lodash';
 import {
   Image,
   RefreshControl,
@@ -19,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
+import { useQuery } from '@apollo/client';
 
 const { scaleWidth } = scale;
 
@@ -33,11 +35,23 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // Get Customer Cart
   const customerCart = useSelector((state) => state.account?.cart);
-
+  const { data } = useQuery(GQL.CART_DETAIL, {
+    variables: { cartId: customerCart.id },
+    // fetchPolicy: 'cache-first',
+  });
+  const { shipping_addresses, selected_payment_method, billing_address } =
+    data?.cart || {};
   // Mutation update cart product
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   // Mutation update cart product --
+
+  const {
+    setShippingAddressesOnCart,
+    responseShipping,
+  } = GEX.useSetShippingAddress();
+  const { setBillingAddressOnCart } = GEX.useSetBillingAddress();
+  const { setPaymentMethodOnCart } = GEX.useSetPaymentMethod();
   const onRenderItem = ({ item }) => {
     return (
       <OrderItem
@@ -69,7 +83,21 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   // ========= PAYMENT PROCESS
-  const paymentButtonPressed = () => {
+
+  const paymentButtonPressed = async () => {
+    if (isEmpty(shipping_addresses)) {
+      await setShippingAddressesOnCart(26);
+    }
+    if (isEmpty(billing_address)) {
+      await setBillingAddressOnCart(26);
+    }
+
+    if (isEmpty(selected_payment_method)) {
+      await setPaymentMethodOnCart();
+    }
+    goToPayment();
+  };
+  const goToPayment = () => {
     navigation.navigate(ScreenName.Order);
     popupRef.current.forceQuit();
   };

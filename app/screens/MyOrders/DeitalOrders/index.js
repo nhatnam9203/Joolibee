@@ -84,7 +84,7 @@ export default function Index({ navigation, route }) {
   );
 
   const renderStatusComponent = () => {
-    if (order_complete) {
+    if (order_complete || order.status === 'pending') {
       return (
         <>
           <OrderTitle title="TRẠNG THÁI ĐƠN HÀNG" />

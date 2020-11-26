@@ -24,11 +24,11 @@ import {
 } from '../components';
 import ScreenName from '../ScreenName';
 import { OrderItem, CustomScrollViewHorizontal } from './widget';
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { query, GQL, GEX } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
-import { app, address } from '@slices';
+import { app, address, account } from '@slices';
 const { scaleWidth, scaleHeight } = scale;
 
 const OrderSection = ({
@@ -125,7 +125,7 @@ const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const cart_id = useSelector((state) => state.account?.cart?.id);
-  // const { customer } = GEX.useCustomer();
+  console.log('cart_id', cart_id);
 
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
@@ -135,6 +135,7 @@ const OrderScreen = () => {
     variables: { cartId: cart_id },
     // fetchPolicy: 'cache-first',
   });
+  // console.log('data', JSON.stringify(data));
   const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
     variables: { categoryId: 4 },
     fetchPolicy: 'cache-first',
@@ -146,7 +147,7 @@ const OrderScreen = () => {
 
   const [setShippingMethodsOnCart] = useMutation(GQL.SET_ORDER_SHIPPING_METHOD);
   const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
-
+  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   const {
     items,
     applied_coupons,
@@ -155,6 +156,7 @@ const OrderScreen = () => {
   } = data?.cart || {
     items: [],
     prices: { grand_total: {} },
+    shipping_addresses: [{}],
   };
 
   const { method_code } = shipping_addresses[0]?.selected_shipping_method || {};
@@ -262,6 +264,25 @@ const OrderScreen = () => {
       .then((res) => {
         if (res?.data?.applyCouponToCart) {
           setCouponCode('');
+        }
+        dispatch(app.hideLoading());
+      })
+      .catch(() => {
+        dispatch(app.hideLoading());
+      });
+  };
+
+  const onSubmit = () => {
+    dispatch(app.showLoading());
+    placeOrder({
+      variables: {
+        cart_id: cart_id,
+      },
+    })
+      .then((res) => {
+        if (res?.data?.placeOrder) {
+          setShowPopupSuccess(true);
+          dispatch(account.clearCartState());
         }
         dispatch(app.hideLoading());
       })
@@ -634,9 +655,7 @@ const OrderScreen = () => {
 
         <ButtonCC.ButtonRed
           label={translate('txtConfirm')}
-          onPress={() => {
-            setShowPopupSuccess(true);
-          }}
+          onPress={onSubmit}
         />
       </View>
 

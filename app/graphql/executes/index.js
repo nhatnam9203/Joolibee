@@ -5,3 +5,6 @@ export * from './useUpdateCustomerCart';
 export * from './useAddProductsToCart';
 export * from './useGetCheckOutCart';
 export * from './useLoadHomeScreen';
+export * from './useSetShippingAddress';
+export * from './useSetBillingAddress';
+export * from './useSetPaymentMethod';
