@@ -4,6 +4,9 @@ import React from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { JollibeeImage } from '../../components';
 import Carousel from 'react-native-snap-carousel';
+import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../../ScreenName';
+
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
@@ -41,8 +44,16 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
 };
 
 const BannerItem = ({ item, height }) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableOpacity style={styles.content}>
+    <TouchableOpacity
+      style={styles.content}
+      onPress={() => {
+        navigation.navigate(ScreenName.MenuItemDetail, {
+          product: item,
+        });
+      }}>
       <JollibeeImage url={item?.image?.url} height={height} width={width} />
     </TouchableOpacity>
   );
