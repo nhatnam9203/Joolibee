@@ -9,7 +9,7 @@ import { scale } from '@utils';
 
 const { scaleWidth, scaleHeight } = scale;
 
-export const PopupComingSoon = ({ visible, onToggle }) => {
+export const PopupConfirm = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
   return (
@@ -27,11 +27,18 @@ export const PopupComingSoon = ({ visible, onToggle }) => {
           {translate('txtInComingSoon')}
         </Text>
 
-        <ButtonCC.ButtonRed
-          label={translate('txtClose')}
-          width={200}
-          onPress={() => popupRef.current.forceQuit()}
-        />
+        <View style={styles.buttonContent}>
+          <ButtonCC.ButtonRed
+            label={translate('txtClose')}
+            width={200}
+            onPress={() => popupRef.current.forceQuit()}
+          />
+          <ButtonCC.ButtonRed
+            label={translate('txtClose')}
+            width={200}
+            onPress={() => popupRef.current.forceQuit()}
+          />
+        </View>
       </View>
     </PopupLayout>
   );
@@ -63,6 +70,10 @@ const styles = StyleSheet.create({
     color: '#1B1B1B',
     textAlign: 'center',
     marginBottom: scaleHeight(10),
+  },
+
+  buttonContent: {
+    ...AppStyles.styles.horizontalLayout,
   },
 
   buttonStyle: {

@@ -20,6 +20,7 @@ import {
   TopBarLeft,
   TopBarRight,
   PopupSelectAreaComponent,
+  PopupConfirm,
 } from '../components';
 import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';

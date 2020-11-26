@@ -1,11 +1,10 @@
-import { useFirebaseAuthentication, AUTH_STATUS } from '@firebase';
+import { AUTH_STATUS, useFirebaseAuthentication } from '@firebase';
+import { useFocusEffect } from '@react-navigation/native';
 import { app } from '@slices';
 import { validate } from '@utils';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
-import { useNavigationFocus } from '@hooks';
-import { useFocusEffect } from '@react-navigation/native';
 
 const { normalizePhoneNumber } = validate;
 
@@ -22,13 +21,7 @@ const SignUpScreen = () => {
   const [formData, setFormData] = React.useState(null);
 
   const onVerifyPhoneError = (response) => {
-    const { message, data, status, error } = response;
     dispatch(app.hideLoading());
-
-    Logger.debug(
-      response,
-      'SignUpScreen -> Firebase onVerifyPhoneError -> response',
-    );
   };
 
   const {

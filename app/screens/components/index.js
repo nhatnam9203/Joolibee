@@ -33,3 +33,4 @@ export * from './OrderNewItem';
 export * from './CardView';
 export * from './NewsItem';
 export * from './CustomRaiting';
+export * from './PopupConfirm';

@@ -27,6 +27,15 @@ import {
 import ScreenName from '../ScreenName';
 import { useMutation } from '@apollo/client';
 import { GEX } from '@graphql';
+import {
+  BottomBarComponent,
+  HomePageName,
+  MenuPageName,
+  PopupComingSoon,
+  PopupQRCode,
+  PromotionPageName,
+  StorePageName,
+} from '../components';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -46,6 +55,8 @@ const SignInScreen = () => {
   });
 
   const signInError = useSelector((state) => state.account?.signInError);
+  const showComingSoon = useSelector((state) => state.app.comingSoonShow);
+
   const { signIn, token } = GEX.useGenerateToken();
 
   const signInSubmit = React.useCallback(
@@ -111,147 +122,158 @@ const SignInScreen = () => {
   }, [token, dispatch]);
 
   return (
-    <AppScrollViewIOSBounceColorsWrapper
-      style={styles.container}
-      topBounceColor={AppStyles.colors.accent}
-      bottomBounceColor={AppStyles.colors.button}>
-      <SinglePageLayout>
-        <Formik
-          initialValues={{
-            username: null,
-            password: null,
-          }}
-          onSubmit={signInSubmit}
-          validationSchema={SignInSchema}
-          isValidating={true}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            setFieldValue,
-          }) => (
-            <View style={styles.container}>
-              {/**Red*/}
-              <View style={styles.topContent}>
-                {/**LOGO */}
-                <JollibeeLogo />
+    <>
+      <AppScrollViewIOSBounceColorsWrapper
+        style={styles.container}
+        topBounceColor={AppStyles.colors.accent}
+        bottomBounceColor={AppStyles.colors.button}>
+        <SinglePageLayout>
+          <Formik
+            initialValues={{
+              username: null,
+              password: null,
+            }}
+            onSubmit={signInSubmit}
+            validationSchema={SignInSchema}
+            isValidating={true}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              setFieldValue,
+            }) => (
+              <View style={styles.container}>
+                {/**Red*/}
+                <View style={styles.topContent}>
+                  {/**LOGO */}
+                  <JollibeeLogo />
 
-                {/**TITLE */}
-                <LabelTitle
-                  label={translate('txtPleaseSignIn')}
-                  color="#fff"
-                  style={styles.titleStyle}
-                />
-
-                {/**PHONE*/}
-                <CustomInput
-                  style={{ width: LAYOUT_WIDTH }}
-                  onChangeText={handleChange('username')}
-                  onBlur={handleBlur('username')}
-                  value={values.username}
-                  placeholder={translate('txtInputPhone')}
-                  textContentType="telephoneNumber"
-                  keyboardType="phone-pad"
-                />
-
-                {/**Phone input error */}
-                {errors.username && touched.username && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.username}
-                    color={AppStyles.colors.inputError}
+                  {/**TITLE */}
+                  <LabelTitle
+                    label={translate('txtPleaseSignIn')}
+                    color="#fff"
+                    style={styles.titleStyle}
                   />
-                )}
 
-                {/**PASSWORD*/}
-                <PasswordInput
-                  style={{ width: LAYOUT_WIDTH }}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  placeholder={translate('txtInputPassword')}
-                  textContentType="password"
-                />
-
-                {/**Password input error */}
-                {errors.password && touched.password && (
-                  <TextInputErrorMessage
+                  {/**PHONE*/}
+                  <CustomInput
                     style={{ width: LAYOUT_WIDTH }}
-                    message={errors.password}
-                    color={AppStyles.colors.inputError}
+                    onChangeText={handleChange('username')}
+                    onBlur={handleBlur('username')}
+                    value={values.username}
+                    placeholder={translate('txtInputPhone')}
+                    textContentType="telephoneNumber"
+                    keyboardType="phone-pad"
                   />
-                )}
 
-                {/**Server response error */}
-                {!_.isEmpty(signInError) &&
-                  Object.values(signInError).map((item, index) => (
+                  {/**Phone input error */}
+                  {errors.username && touched.username && (
                     <TextInputErrorMessage
                       style={{ width: LAYOUT_WIDTH }}
-                      message={item}
+                      message={errors.username}
                       color={AppStyles.colors.inputError}
-                      key={index}
                     />
-                  ))}
+                  )}
 
-                {/**REMEMBER*/}
-                <View style={styles.rememberStyle}>
-                  <TextCheckBox
-                    label={translate('txtRemember')}
-                    value={values.remember}
-                    onValueChange={() =>
-                      setFieldValue('remember', !values.remember)
-                    }
-                    normalColor="#fff"
-                    fillColor={true}
+                  {/**PASSWORD*/}
+                  <PasswordInput
+                    style={{ width: LAYOUT_WIDTH }}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    placeholder={translate('txtInputPassword')}
+                    textContentType="password"
                   />
 
-                  <CustomTextLink
-                    label={translate('txtForgetPassWord')}
-                    style={styles.txtForgotPass}
-                    onPress={goForgotPasswordScreen}
-                  />
+                  {/**Password input error */}
+                  {errors.password && touched.password && (
+                    <TextInputErrorMessage
+                      style={{ width: LAYOUT_WIDTH }}
+                      message={errors.password}
+                      color={AppStyles.colors.inputError}
+                    />
+                  )}
+
+                  {/**Server response error */}
+                  {!_.isEmpty(signInError) &&
+                    Object.values(signInError).map((item, index) => (
+                      <TextInputErrorMessage
+                        style={{ width: LAYOUT_WIDTH }}
+                        message={item}
+                        color={AppStyles.colors.inputError}
+                        key={index}
+                      />
+                    ))}
+
+                  {/**REMEMBER*/}
+                  <View style={styles.rememberStyle}>
+                    <TextCheckBox
+                      label={translate('txtRemember')}
+                      // label={translate('txtRemember')}
+                      value={values.remember}
+                      onValueChange={() =>
+                        setFieldValue('remember', !values.remember)
+                      }
+                      normalColor="#fff"
+                      fillColor={true}
+                    />
+
+                    <CustomTextLink
+                      label={translate('txtForgetPassWord')}
+                      style={styles.txtForgotPass}
+                      onPress={goForgotPasswordScreen}
+                    />
+                  </View>
+
+                  <View style={styles.polygonStyle}>
+                    <Image source={images.login_polygon} />
+                  </View>
                 </View>
 
-                <View style={styles.polygonStyle}>
-                  <Image source={images.login_polygon} />
+                {/**Yellow*/}
+                <View style={styles.bottomContent}>
+                  {/**SIGN IN*/}
+                  <ButtonCC.ButtonRed
+                    onPress={handleSubmit}
+                    label={translate('txtSignIn')}
+                  />
+
+                  {/**FACEBOOK*/}
+                  <ButtonCC.ButtonFacebook />
+                  {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
+
+                  {/**GOOGLE*/}
+                  <ButtonCC.ButtonGoogle />
+                  {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
+
+                  {/**SIGN UP*/}
+                  <View style={styles.textContent}>
+                    <Text style={styles.txtStyle}>
+                      {translate('txtNotHaveAccount')}
+                    </Text>
+
+                    <CustomTextLink
+                      label={translate('txtSignUpNow')}
+                      style={styles.txtSignIn}
+                      onPress={goSignUpPage}
+                    />
+                  </View>
                 </View>
               </View>
+            )}
+          </Formik>
+        </SinglePageLayout>
+      </AppScrollViewIOSBounceColorsWrapper>
 
-              {/**Yellow*/}
-              <View style={styles.bottomContent}>
-                {/**SIGN IN*/}
-                <ButtonCC.ButtonRed
-                  onPress={handleSubmit}
-                  label={translate('txtSignIn')}
-                />
-
-                {/**FACEBOOK*/}
-                <ButtonCC.ButtonFacebook onPress={signinFB} />
-
-                {/**GOOGLE*/}
-                <ButtonCC.ButtonGoogle onPress={signinGoogle} />
-
-                {/**SIGN UP*/}
-                <View style={styles.textContent}>
-                  <Text style={styles.txtStyle}>
-                    {translate('txtNotHaveAccount')}
-                  </Text>
-
-                  <CustomTextLink
-                    label={translate('txtSignUpNow')}
-                    style={styles.txtSignIn}
-                    onPress={goSignUpPage}
-                  />
-                </View>
-              </View>
-            </View>
-          )}
-        </Formik>
-      </SinglePageLayout>
-    </AppScrollViewIOSBounceColorsWrapper>
+      {/**Popup ComingSoon */}
+      <PopupComingSoon
+        visible={showComingSoon}
+        onToggle={() => dispatch(app.dismissComingSoon())}
+      />
+    </>
   );
 };
 

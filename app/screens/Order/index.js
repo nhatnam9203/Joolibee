@@ -129,6 +129,8 @@ const OrderScreen = () => {
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
   const [coupon_code, setCouponCode] = React.useState('');
+  const [showConfirm, setShowConfirm] = React.useState(false);
+
   // --------- handle fetch data cart -----------
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
