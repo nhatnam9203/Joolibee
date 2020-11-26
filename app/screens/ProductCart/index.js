@@ -208,8 +208,9 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading isLoading={updateCartResp?.loading} />
-      <Loading isLoading={responseShipping?.loading} />
+      <Loading
+        isLoading={updateCartResp?.loading || responseShipping?.loading}
+      />
     </PopupLayout>
   );
 };

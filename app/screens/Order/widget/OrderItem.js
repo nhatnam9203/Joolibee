@@ -4,9 +4,20 @@ import React from 'react';
 import { CustomButtonImage } from '@components';
 import { OrderCount } from '../../components';
 import { format } from '@utils';
-export const OrderItem = ({ item }) => {
+
+export const OrderItem = ({ item, updateMyCart }) => {
   const { product = {}, quantity, prices } = item;
   const _price = format.jollibeeCurrency(prices.price);
+
+  const [qty, setQuantity] = React.useState(quantity);
+
+  const handleUpdateProduct = (value) => () => {
+    let newItem = { ...item };
+    setQuantity(value);
+    newItem.quantity = value;
+    updateMyCart(newItem);
+  };
+
   return (
     <View style={styles.content}>
       <View style={[AppStyles.styles.horizontalLayout, styles.subContent]}>
@@ -15,8 +26,8 @@ export const OrderItem = ({ item }) => {
         </Text>
         <View style={styles.orderCountContainer}>
           <OrderCount
-            defaultValue={quantity + ''}
-            onPress={() => {}}
+            defaultValue={qty + ''}
+            onPress={handleUpdateProduct}
             inputCustomStyle={styles.inputContainer}
           />
         </View>

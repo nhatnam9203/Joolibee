@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { CustomImageBackground, CustomSwitch } from '@components';
+import { CustomImageBackground, CustomSwitch, Loading } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -130,9 +130,11 @@ const OrderScreen = () => {
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
   const [coupon_code, setCouponCode] = React.useState('');
   // --------- handle fetch data cart -----------
+  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
+
   const { data } = useQuery(GQL.CART_DETAIL, {
     variables: { cartId: cart_id },
-    // fetchPolicy: 'cache-first',
+    fetchPolicy: 'cache-and-network',
   });
   // console.log('data', JSON.stringify(data));
   const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
@@ -217,6 +219,17 @@ const OrderScreen = () => {
   //     navigation.navigate(ScreenName.MyAddress);
   //   }
   // };
+
+  const updateMyCart = async (item) => {
+    let input = {
+      cart_item_id: item.id,
+      quantity: item.quantity,
+    };
+
+    await updateCartItems({
+      variables: input,
+    });
+  };
 
   const onChangeCouponCode = (val) => setCouponCode(val);
 
@@ -484,12 +497,15 @@ const OrderScreen = () => {
                 label={translate('txtOrderMore')}
                 style={styles.buttonHeaderStyle}
                 textStyle={styles.headerButtonTextStyle}
+                onPress={() => {
+                  navigation.navigate(ScreenName.Menu);
+                }}
               />
             )}
             key="OrderItems">
             {items.map((item, index) => (
               <OrderSectionItem key={index + ''}>
-                <OrderItem item={item} />
+                <OrderItem item={item} updateMyCart={updateMyCart} />
               </OrderSectionItem>
             ))}
           </OrderSection>
@@ -672,6 +688,8 @@ const OrderScreen = () => {
         visible={showPopupSuccess}
         onToggle={onTogglePopupSuccess}
       />
+
+      <Loading isLoading={updateCartResp?.loading} />
     </CustomImageBackground>
   );
 };
