@@ -52,7 +52,7 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
 
       <View style={styles.bottomStyle}>
         <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />
-        <TouchableOpacity style={styles.buttonStyle}>
+        <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
           <Image
             style={{ tintColor: AppStyles.colors.text }}
             source={images.icons.ic_order_edit}
