@@ -4,7 +4,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { STORE_PICKUP } from '../gql';
 
-export const useStorePickup = () => {
+export const useGetShippingMethod = () => {
   const dispatch = useDispatch();
 
   const [storePickup, { data, loading, refetch }] = useLazyQuery(STORE_PICKUP, {
@@ -12,12 +12,12 @@ export const useStorePickup = () => {
     onCompleted: () => {},
   });
 
-  const onStorePickup = (input) => {
+  const onShippingMethods = (input) => {
     storePickup(input);
   };
 
   return {
-    storePickup: onStorePickup,
-    storeData: data,
+    getShippingMethod: onShippingMethods,
+    shippingMethods: data,
   };
 };

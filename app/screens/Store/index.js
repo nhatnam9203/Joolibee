@@ -45,12 +45,12 @@ const StorePage = () => {
   const [visible, showModal] = React.useState([false, false]);
   const [params, setParams] = React.useState(my_location);
 
-  const { storePickup, storeData } = GEX.useStorePickup();
+  const { getShippingMethod, shippingMethods } = GEX.useGetShippingMethod();
   const cities = appUtil.getCitiesList(storesList);
 
   const refMap = React.useRef(null);
   const stores = [];
-  Logger.debug(storeData, 'storeData'); // !! cai cho nay dung cho been trang checkout
+  Logger.debug(shippingMethods, 'shippingMethods'); // !! cai cho nay dung cho been trang checkout
 
   const openModal = (i) => () => {
     let _visible = [...visible];
@@ -99,7 +99,7 @@ const StorePage = () => {
   }, [params, dispatch]);
 
   React.useEffect(() => {
-    storePickup({ variables: { cityId: 1, districtId: 15 } });
+    getShippingMethod({ variables: { cityId: 1, districtId: 15 } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

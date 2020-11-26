@@ -5,4 +5,4 @@ export * from './useUpdateCustomerCart';
 export * from './useAddProductsToCart';
 export * from './useGetCheckOutCart';
 export * from './useLoadHomeScreen';
-export * from './useStorePickup';
+export * from './useGetShippingMethod';
