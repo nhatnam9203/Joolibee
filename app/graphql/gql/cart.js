@@ -306,6 +306,76 @@ export const UPDATE_CART_PRODUCT = gql`
   }
 `;
 
+export const SET_ORDER_SHIPPING_ADDRESS = gql`
+  mutation($cart_id: String!, $shipping_addresses: [ShippingAddressInput!]!) {
+    setShippingAddressesOnCart(
+      input: { cart_id: $cart_id, shipping_addresses: $shipping_addresses }
+    ) {
+      cart {
+        shipping_addresses {
+          firstname
+          lastname
+          company
+          street
+          city
+          region {
+            code
+            label
+          }
+          postcode
+          telephone
+          country {
+            code
+            label
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const SET_ORDER_BILLING_ADDRESS = gql`
+  mutation($cart_id: String!, $billing_address: BillingAddressInput!) {
+    setBillingAddressOnCart(
+      input: { cart_id: $cart_id, billing_address: $billing_address }
+    ) {
+      cart {
+        billing_address {
+          firstname
+          lastname
+          company
+          street
+          city
+          region {
+            code
+            label
+          }
+          postcode
+          telephone
+          country {
+            code
+            label
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const SET_ORDER_PAYMENT_METHOD = gql`
+  mutation($cart_id: String!, $payment_method: PaymentMethodInput!) {
+    setPaymentMethodOnCart(
+      input: { cart_id: $cart_id, payment_method: $payment_method }
+    ) {
+      cart {
+        selected_payment_method {
+          code
+        }
+      }
+    }
+  }
+`;
+
 export const SET_ORDER_SHIPPING_METHOD = gql`
   mutation($cart_id: String!, $shipping_methods: [ShippingMethodInput!]!) {
     setShippingMethodsOnCart(
@@ -336,6 +406,16 @@ export const APPLY_COUPON_TO_CART = gql`
         applied_coupons {
           code
         }
+      }
+    }
+  }
+`;
+
+export const PLACE_ORDER = gql`
+  mutation($cart_id: String!) {
+    placeOrder(input: { cart_id: $cart_id }) {
+      order {
+        order_number
       }
     }
   }

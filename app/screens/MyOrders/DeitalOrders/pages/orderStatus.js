@@ -33,7 +33,7 @@ const data = [
   {
     title: 'Đã đến nơi',
     description: 'Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.',
-    type: 'ready',
+    type: 'arrived',
   },
   {
     title: 'Hoàn thành',

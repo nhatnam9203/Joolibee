@@ -67,7 +67,7 @@ const Index = () => {
         <Image source={images.icons.ic_order} />
         <View style={styles.itemSubContainer}>
           <View style={styles.grandTotalContainer}>
-            <Text style={styles.txtPrice}>{'215.000đ'}</Text>
+            <Text style={styles.txtPrice}>{item.grand_total}</Text>
             <Text style={AppStyles.fonts.mini}>2 món</Text>
           </View>
 

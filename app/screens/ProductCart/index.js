@@ -1,5 +1,5 @@
 import { CustomFlatList, Loading } from '@components';
-import { GEX } from '@graphql';
+import { GEX, query, GQL } from '@graphql';
 import { useComponentSize } from '@hooks';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import { format, scale } from '@utils';
 import React from 'react';
+import { isEmpty } from 'lodash';
 import {
   Image,
   RefreshControl,
@@ -19,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
+import { useQuery } from '@apollo/client';
 
 const { scaleWidth } = scale;
 
@@ -33,11 +35,25 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // Get Customer Cart
   const customerCart = useSelector((state) => state.account?.cart);
-
+  const { data } = useQuery(GQL.CART_DETAIL, {
+    variables: { cartId: customerCart?.id },
+    // fetchPolicy: 'cache-first',
+  });
+  const { shipping_addresses, selected_payment_method, billing_address } =
+    data?.cart || {};
   // Mutation update cart product
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   // Mutation update cart product --
+  const { customer } = GEX.useCustomer();
+  const addresses = customer?.addresses || [];
+  const address_id = addresses.find((x) => x.default_shipping)?.id;
+  const {
+    setShippingAddressesOnCart,
+    responseShipping,
+  } = GEX.useSetShippingAddress();
+  const { setBillingAddressOnCart } = GEX.useSetBillingAddress();
+  const { setPaymentMethodOnCart } = GEX.useSetPaymentMethod();
   const onRenderItem = ({ item }) => {
     return (
       <OrderItem
@@ -70,6 +86,24 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // ========= PAYMENT PROCESS
   const paymentButtonPressed = () => {
+    //
+    const params = {
+      variables: {
+        shipping_addresses: [{ customer_address_id: address_id }],
+      },
+    };
+    if (isEmpty(shipping_addresses) && address_id) {
+      setShippingAddressesOnCart(params);
+    }
+    if (isEmpty(billing_address) && address_id) {
+      setBillingAddressOnCart(address_id);
+    }
+    if (isEmpty(selected_payment_method?.code)) {
+      setPaymentMethodOnCart();
+    }
+    goToPayment();
+  };
+  const goToPayment = () => {
     navigation.navigate(ScreenName.Order);
     popupRef.current.forceQuit();
   };
@@ -175,6 +209,7 @@ const ProductCart = ({ visible, onToggle }) => {
         </View>
       </View>
       <Loading isLoading={updateCartResp?.loading} />
+      <Loading isLoading={responseShipping?.loading} />
     </PopupLayout>
   );
 };

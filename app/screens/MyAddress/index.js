@@ -1,9 +1,9 @@
-import { GCC } from '@graphql';
+import { GCC, GEX, GQL } from '@graphql';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStyles, metrics, images } from '@theme';
 import { CustomButton, CustomImageBackground } from '@components';
-import { address } from '@slices';
+import { address, app } from '@slices';
 import ScreenName from '../ScreenName';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
@@ -13,15 +13,35 @@ import { scale } from '@utils';
 
 const { scaleWidth, scaleHeight } = scale;
 
-const Index = () => {
+const Index = ({ route }) => {
+  const { selected_address } = route?.params || false;
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const renderItem = ({ item }) => (
-    <ItemAddress item={item} onPress={goToDetail} />
+  // Get Customer Cart
+  const customerCart = useSelector((state) => state.account?.cart);
+  const { setShippingAddressesOnCart } = GEX.useSetShippingAddress(() =>
+    navigation.goBack(),
   );
 
+  const onHandlePress = (item) => {
+    const params = {
+      variables: {
+        shipping_addresses: [{ customer_address_id: item.id }],
+      },
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        { query: GQL.CART_DETAIL, variables: { cartId: customerCart?.id } },
+      ],
+    };
+    if (selected_address && item) {
+      dispatch(app.showLoading());
+      setShippingAddressesOnCart(params);
+    } else {
+      goToDetail(item);
+    }
+  };
+
   const goToDetail = (item) => {
-    console.log('item', item);
     dispatch(
       address.selectedLocation(
         item
@@ -56,9 +76,9 @@ const Index = () => {
     });
   };
 
-  // React.useEffect(() => {
-  //   setData(defaultData);
-  // }, []);
+  const renderItem = ({ item }) => (
+    <ItemAddress item={item} onPress={onHandlePress} />
+  );
 
   return (
     <CustomImageBackground

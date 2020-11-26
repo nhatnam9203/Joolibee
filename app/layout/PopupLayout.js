@@ -2,7 +2,7 @@ import { CustomModal } from '@components';
 import React from 'react';
 
 const PopupLayout = React.forwardRef(
-  ({ visible, onToggle, children, ...props }, ref) => {
+  ({ visible, onToggle, children, disableBackdrop }, ref) => {
     const modalRef = React.createRef(null);
 
     const dismiss = () => {
@@ -15,10 +15,10 @@ const PopupLayout = React.forwardRef(
 
     return (
       <CustomModal
+        disableBackdrop={disableBackdrop}
         showModal={visible}
         onDismiss={onToggle}
-        ref={modalRef}
-        {...props}>
+        ref={modalRef}>
         {children}
       </CustomModal>
     );
