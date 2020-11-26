@@ -18,7 +18,11 @@ export const PopupOrderSuccess = ({
   const popupRef = React.createRef(null);
 
   return (
-    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
+    <PopupLayout
+      disableBackdrop={true}
+      visible={visible}
+      onToggle={onToggle}
+      ref={popupRef}>
       <View style={styles.container}>
         <Image source={images.icons.ic_succeeded} />
 

@@ -201,6 +201,7 @@ const Index = (props) => {
       <CustomSwitch
         toggleSwitch={onChangeValue}
         defautlValue={default_shipping}
+        disabled={values.default_shipping}
       />
     </View>
   );

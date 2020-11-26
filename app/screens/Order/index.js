@@ -125,7 +125,6 @@ const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const cart_id = useSelector((state) => state.account?.cart?.id);
-  console.log('cart_id', cart_id);
 
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
@@ -159,7 +158,10 @@ const OrderScreen = () => {
     shipping_addresses: [{}],
   };
 
-  const { method_code } = shipping_addresses[0]?.selected_shipping_method || {};
+  const { firstname, lastname, selected_shipping_method, telephone } =
+    shipping_addresses[0] || {};
+  const { method_code } = selected_shipping_method || {};
+  const full_address = format.addressFull(shipping_addresses[0]);
   const [shippingType, setShippingType] = React.useState(method_code);
   const total = format.jollibeeCurrency({
     value: grand_total.value,
@@ -175,46 +177,46 @@ const OrderScreen = () => {
     addresses.length > 0 ? addresses.find((x) => x.default_shipping) : {};
 
   const {
-    full_address,
-    lastname,
-    firstname,
-    telephone,
+    // full_address,
+    // lastname,
+    // firstname,
+    // telephone,
     company,
     id,
     default_shipping,
     region,
     city,
-    street,
+    // street,
   } = shipping_address;
   // -------- handle fetch data cart -----------
 
-  const editAddress = () => {
-    if (shipping_address) {
-      dispatch(
-        address.selectedLocation({
-          region: region?.region,
-          city: city,
-          street: street,
-          addressFull: full_address,
-        }),
-      );
-      const val_address = {
-        phone: telephone,
-        place: company,
-        firstname: firstname,
-        lastname: lastname,
-        note: '',
-        id,
-        default_shipping,
-      };
-      navigation.navigate(ScreenName.DetailMyAddress, {
-        val_address,
-        titleHeader: translate('txtEditAddress'),
-      });
-    } else {
-      navigation.navigate(ScreenName.MyAddress);
-    }
-  };
+  // const editAddress = () => {
+  //   if (shipping_address) {
+  //     dispatch(
+  //       address.selectedLocation({
+  //         region: region?.region,
+  //         city: city,
+  //         street: street,
+  //         addressFull: full_address,
+  //       }),
+  //     );
+  //     const val_address = {
+  //       phone: telephone,
+  //       place: company,
+  //       firstname: firstname,
+  //       lastname: lastname,
+  //       note: '',
+  //       id,
+  //       default_shipping,
+  //     };
+  //     navigation.navigate(ScreenName.DetailMyAddress, {
+  //       val_address,
+  //       titleHeader: translate('txtEditAddress'),
+  //     });
+  //   } else {
+  //     navigation.navigate(ScreenName.MyAddress);
+  //   }
+  // };
 
   const onChangeCouponCode = (val) => setCouponCode(val);
 
@@ -222,13 +224,14 @@ const OrderScreen = () => {
     setShowNotice(false);
   };
   const onTogglePopupSuccess = () => {
+    dispatch(account.clearCartState());
     setShowPopupSuccess(false);
   };
 
   const onEdit = () => {
     shippingType === ShippingType.InShop
       ? navigation.navigate(ScreenName.StorePickup)
-      : editAddress();
+      : navigation.navigate(ScreenName.MyAddress, { selected_address: true });
   };
 
   const onChangePaymentMethod = (code) => {
@@ -282,7 +285,6 @@ const OrderScreen = () => {
       .then((res) => {
         if (res?.data?.placeOrder) {
           setShowPopupSuccess(true);
-          dispatch(account.clearCartState());
         }
         dispatch(app.hideLoading());
       })

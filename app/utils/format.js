@@ -22,7 +22,7 @@ export const hours = (date = new Date()) => {
 export const addressFull = (item) => {
   const { city, street, region } = item || {};
   let _street = _.isEmpty(street) ? '' : street[0];
-  let _region = _.isEmpty(region) ? '' : region.region;
+  let _region = _.isEmpty(region) ? '' : region.label;
   return `${_street} ${city} ${_region}`;
 };
 

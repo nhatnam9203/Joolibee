@@ -2,22 +2,28 @@ import { CustomModal } from '@components';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-const PopupLayout = React.forwardRef(({ visible, onToggle, children }, ref) => {
-  const modalRef = React.createRef(null);
+const PopupLayout = React.forwardRef(
+  ({ visible, onToggle, children, disableBackdrop }, ref) => {
+    const modalRef = React.createRef(null);
 
-  const dismiss = () => {
-    modalRef.current.dismiss();
-  };
+    const dismiss = () => {
+      modalRef.current.dismiss();
+    };
 
-  React.useImperativeHandle(ref, () => ({
-    forceQuit: dismiss,
-  }));
+    React.useImperativeHandle(ref, () => ({
+      forceQuit: dismiss,
+    }));
 
-  return (
-    <CustomModal showModal={visible} onDismiss={onToggle} ref={modalRef}>
-      {children}
-    </CustomModal>
-  );
-});
+    return (
+      <CustomModal
+        disableBackdrop={disableBackdrop}
+        showModal={visible}
+        onDismiss={onToggle}
+        ref={modalRef}>
+        {children}
+      </CustomModal>
+    );
+  },
+);
 
 export default PopupLayout;

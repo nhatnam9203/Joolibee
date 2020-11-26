@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-native';
 
-const CustomSwitch = ({ toggleSwitch, defautlValue }) => {
+const CustomSwitch = ({ toggleSwitch, defautlValue, disabled }) => {
   const [isEnabled, setIsEnabled] = React.useState(defautlValue);
 
   const onValueChange = (val) => {
@@ -17,6 +17,7 @@ const CustomSwitch = ({ toggleSwitch, defautlValue }) => {
       ios_backgroundColor="#BCBCBC"
       onValueChange={onValueChange}
       value={isEnabled}
+      disabled={disabled}
     />
   );
 };

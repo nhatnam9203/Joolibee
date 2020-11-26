@@ -36,7 +36,7 @@ const ProductCart = ({ visible, onToggle }) => {
   // Get Customer Cart
   const customerCart = useSelector((state) => state.account?.cart);
   const { data } = useQuery(GQL.CART_DETAIL, {
-    variables: { cartId: customerCart.id },
+    variables: { cartId: customerCart?.id },
     // fetchPolicy: 'cache-first',
   });
   const { shipping_addresses, selected_payment_method, billing_address } =
@@ -45,7 +45,9 @@ const ProductCart = ({ visible, onToggle }) => {
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   // Mutation update cart product --
-
+  const { customer } = GEX.useCustomer();
+  const addresses = customer?.addresses || [];
+  const address_id = addresses.find((x) => x.default_shipping)?.id;
   const {
     setShippingAddressesOnCart,
     responseShipping,
@@ -83,17 +85,21 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   // ========= PAYMENT PROCESS
-
-  const paymentButtonPressed = async () => {
-    if (isEmpty(shipping_addresses)) {
-      await setShippingAddressesOnCart(26);
+  const paymentButtonPressed = () => {
+    //
+    const params = {
+      variables: {
+        shipping_addresses: [{ customer_address_id: address_id }],
+      },
+    };
+    if (isEmpty(shipping_addresses) && address_id) {
+      setShippingAddressesOnCart(params);
     }
-    if (isEmpty(billing_address)) {
-      await setBillingAddressOnCart(26);
+    if (isEmpty(billing_address) && address_id) {
+      setBillingAddressOnCart(address_id);
     }
-
-    if (isEmpty(selected_payment_method)) {
-      await setPaymentMethodOnCart();
+    if (isEmpty(selected_payment_method?.code)) {
+      setPaymentMethodOnCart();
     }
     goToPayment();
   };
@@ -199,6 +205,7 @@ const ProductCart = ({ visible, onToggle }) => {
         </View>
       </View>
       <Loading isLoading={updateCartResp?.loading} />
+      <Loading isLoading={responseShipping?.loading} />
     </PopupLayout>
   );
 };
