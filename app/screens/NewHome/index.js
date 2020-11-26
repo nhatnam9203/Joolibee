@@ -171,12 +171,13 @@ const HomeScreen = () => {
       </CustomImageBackground>
 
       {/**Popup Order List Items */}
+
+      <PopupSelectAreaComponent visible={isVisible} />
+
       <ProductCart
         visible={showOrderList}
         onToggle={() => dispatch(app.dismissOrderList())}
       />
-
-      <PopupSelectAreaComponent visible={isVisible} />
     </View>
   );
 };

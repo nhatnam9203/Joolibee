@@ -108,7 +108,11 @@ const ProductCart = ({ visible, onToggle }) => {
   }, [customerCart]);
 
   return (
-    <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
+    <PopupLayout
+      visible={visible}
+      onToggle={onToggle}
+      ref={popupRef}
+      disableBackdrop={true}>
       <View style={styles.container}>
         {/**Header */}
         <View style={styles.header}>

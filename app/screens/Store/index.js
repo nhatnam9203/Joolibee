@@ -1,23 +1,19 @@
+import { CustomImageBackground } from '@components';
+import { useChangeLanguage } from '@hooks';
+import { translate } from '@localize';
+import { useNavigation } from '@react-navigation/native';
+import { AppStyles, images } from '@theme';
+import { appUtil, scale } from '@utils';
 import React from 'react';
-import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
-import _ from 'lodash';
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CustomPopupMenu,
   CustomMapView,
+  CustomPopupMenu,
   ItemStore,
   TopBarRight,
 } from '../components';
-import { AppStyles, images } from '@theme';
-import { useStore } from '@hooks';
-import { CustomImageBackground } from '@components';
 import { Markers } from './pages';
-import { store } from '@slices';
-import { useNavigation } from '@react-navigation/native';
-import { useChangeLanguage } from '@hooks';
-import { translate } from '@localize';
-import { scale, appUtil } from '@utils';
-import { GEX } from '@graphql';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = {
@@ -34,19 +30,24 @@ const StorePage = () => {
 
   const my_location = useSelector((state) => state.store.my_location);
   const storesList = useSelector((state) => state.store.default.stores);
-  Logger.debug(my_location);
+  const cities = appUtil.getCitiesList(storesList);
+  const currentCity = cities.find((c) => c.id === my_location.cityId);
+  const districts = appUtil.getDistrictList(storesList);
+  const currentDistrict = districts.find(
+    (c) => c.id === my_location.districtId,
+  );
 
   const INITIAL_REGION = {
     latitude: my_location?.position?.lat,
     longitude: my_location?.position?.lng,
     latitudeDelta: 0.5,
-    longitudeDelta: 0.5,
+    longitudeDelta: (0.5 * width) / height,
   };
 
   const [visible, showModal] = React.useState([false, false]);
   const [params, setParams] = React.useState({
-    city: { id: my_location.cityId },
-    district: { id: my_location.districtId },
+    city: currentCity ?? { id: my_location.cityId },
+    district: currentDistrict ?? { id: my_location.districtId },
   });
 
   const localStores = React.useCallback(() => {
@@ -58,10 +59,7 @@ const StorePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
-  const cities = appUtil.getCitiesList(storesList);
-
   const refMap = React.useRef(null);
-  const stores = [];
 
   const openModal = (i) => () => {
     let _visible = [...visible];
@@ -74,7 +72,7 @@ const StorePage = () => {
   };
 
   const fitAllMarkers = () => {
-    refMap.current.fitToCoordinates(stores, {
+    refMap.current.fitToCoordinates(localStores(), {
       edgePadding: DEFAULT_PADDING,
       animated: true,
     });
@@ -87,7 +85,6 @@ const StorePage = () => {
       list = appUtil.getDistrictInCity(storesList, params?.city?.id);
     }
 
-    Logger.debug(list, 'list list list');
     return list;
   }, [params?.city, storesList]);
 
@@ -97,7 +94,6 @@ const StorePage = () => {
   };
 
   const onChangeItemDistrict = (item) => {
-    Logger.debug(item, 'item item item');
     setParams({ ...params, district: item });
   };
 
