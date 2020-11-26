@@ -5,7 +5,7 @@ import { CustomButtonImage } from '@components';
 import { OrderCount } from '../../components';
 import { format } from '@utils';
 
-export const OrderItem = ({ item, updateMyCart }) => {
+export const OrderItem = ({ item, updateMyCart, onPress }) => {
   const { product = {}, quantity, prices } = item;
   const _price = format.jollibeeCurrency(prices.price);
 
@@ -39,8 +39,11 @@ export const OrderItem = ({ item, updateMyCart }) => {
         </Text>
 
         <View style={styles.bottomStyle}>
-          <CustomButtonImage image={images.icons.ic_delete_bg} />
-          <CustomButtonImage image={images.icons.ic_edit} />
+          <CustomButtonImage
+            image={images.icons.ic_delete_bg}
+            onPress={handleUpdateProduct(0)}
+          />
+          <CustomButtonImage image={images.icons.ic_edit} onPress={onPress} />
         </View>
       </View>
     </View>

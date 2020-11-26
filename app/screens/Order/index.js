@@ -505,7 +505,16 @@ const OrderScreen = () => {
             key="OrderItems">
             {items.map((item, index) => (
               <OrderSectionItem key={index + ''}>
-                <OrderItem item={item} updateMyCart={updateMyCart} />
+                <OrderItem
+                  item={item}
+                  updateMyCart={updateMyCart}
+                  onPress={() => {
+                    navigation.navigate(ScreenName.MenuItemDetail, {
+                      product: item?.product,
+                      detailItem: item,
+                    });
+                  }}
+                />
               </OrderSectionItem>
             ))}
           </OrderSection>
