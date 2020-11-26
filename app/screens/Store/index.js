@@ -34,23 +34,34 @@ const StorePage = () => {
 
   const my_location = useSelector((state) => state.store.my_location);
   const storesList = useSelector((state) => state.store.default.stores);
+  Logger.debug(my_location);
 
   const INITIAL_REGION = {
-    latitude: my_location?.lat,
-    longitude: my_location?.lng,
+    latitude: my_location?.position?.lat,
+    longitude: my_location?.position?.lng,
     latitudeDelta: 0.5,
-    longitudeDelta: (0.5 * width) / height,
+    longitudeDelta: 0.5,
   };
 
   const [visible, showModal] = React.useState([false, false]);
-  const [params, setParams] = React.useState(my_location);
+  const [params, setParams] = React.useState({
+    city: { id: my_location.cityId },
+    district: { id: my_location.districtId },
+  });
 
-  const { getShippingMethod, shippingMethods } = GEX.useGetShippingMethod();
+  const localStores = React.useCallback(() => {
+    return appUtil.getStoreListInCity(
+      storesList,
+      params?.city?.id,
+      params?.district?.id,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+
   const cities = appUtil.getCitiesList(storesList);
 
   const refMap = React.useRef(null);
   const stores = [];
-  Logger.debug(shippingMethods, 'shippingMethods'); // !! cai cho nay dung cho been trang checkout
 
   const openModal = (i) => () => {
     let _visible = [...visible];
@@ -75,6 +86,8 @@ const StorePage = () => {
     if (params?.city !== null) {
       list = appUtil.getDistrictInCity(storesList, params?.city?.id);
     }
+
+    Logger.debug(list, 'list list list');
     return list;
   }, [params?.city, storesList]);
 
@@ -84,6 +97,7 @@ const StorePage = () => {
   };
 
   const onChangeItemDistrict = (item) => {
+    Logger.debug(item, 'item item item');
     setParams({ ...params, district: item });
   };
 
@@ -97,11 +111,6 @@ const StorePage = () => {
   React.useEffect(() => {
     // dispatch(store.filterStore(params));
   }, [params, dispatch]);
-
-  React.useEffect(() => {
-    getShippingMethod({ variables: { cityId: 1, districtId: 15 } });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // -------------------- Filter Stores --------------------------//
 
@@ -139,7 +148,7 @@ const StorePage = () => {
             renderItem={({ item, index }) => (
               <ItemStore item={item} index={index} />
             )}
-            data={stores}
+            data={localStores()}
           />
         </View>
 
@@ -148,7 +157,7 @@ const StorePage = () => {
           style={styles.map}
           initialRegion={INITIAL_REGION}
           onMapReady={fitAllMarkers}>
-          <Markers data={stores} mapView={refMap} />
+          <Markers data={localStores()} mapView={refMap} />
         </CustomMapView>
       </View>
     </CustomImageBackground>

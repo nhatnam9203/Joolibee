@@ -17,7 +17,6 @@ export const getDistrictList = (store) => {
   const groupObj = _.groupBy(store, 'region.id');
   const cities = Object.keys(groupObj).map((regionId) => {
     const first = _.head(groupObj[regionId]);
-
     return {
       value: regionId,
       label: first?.region?.name,
@@ -45,9 +44,22 @@ export const getDistrictInCity = (store, cityId) => {
       value: x,
       label: first?.region?.name,
       city: first?.city?.name,
-      id: first?.city?.id,
+      id: first?.region?.id,
     };
   });
 
   return districts;
+};
+
+export const getStoreListInCity = (stores, cityId, districtId) => {
+  if (!stores) {
+    return [];
+  }
+
+  if (districtId && cityId) {
+    return stores.filter((store) => {
+      return store.city.id === cityId && store.region.id === districtId;
+    });
+  }
+  return stores.filter((store) => store.city.id === cityId);
 };
