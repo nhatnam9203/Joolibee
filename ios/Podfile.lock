@@ -439,7 +439,7 @@ PODS:
     - React
   - react-native-viewpager (4.2.1):
     - React-Core
-  - react-native-webview (10.10.2):
+  - react-native-webview (10.9.2):
     - React-Core
   - React-RCTActionSheet (0.63.2):
     - React-Core/RCTActionSheetHeaders (= 0.63.2)
@@ -537,7 +537,7 @@ PODS:
     - React-Core
   - RNPermissions (3.0.0-beta.2):
     - React-Core
-  - RNReanimated (2.0.0-alpha.9.2):
+  - RNReanimated (2.0.0-alpha.9):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -566,8 +566,8 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (2.15.0):
-    - React-Core
+  - RNScreens (2.11.0):
+    - React
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (7.1.0):
@@ -924,7 +924,7 @@ SPEC CHECKSUMS:
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-viewpager: 40876e00dbd7bcee4c627cf5a9640e6593a019b4
-  react-native-webview: 0aa2cde4ee7e3e1c5fffdf64dbce9c709aa18155
+  react-native-webview: 4e96d493f9f90ba4f03b28933f30b2964df07e39
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
   React-RCTBlob: 39cf0ece1927996c4466510e25d2105f67010e13
@@ -949,8 +949,8 @@ SPEC CHECKSUMS:
   RNGoogleSignin: ccf71ee4b6cfd324fd788a41e457e2043838c0d9
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   RNPermissions: 9e7561bcbab267e3f64a4f6509edc00ae0de1519
-  RNReanimated: 174b2c7890664aeb522640bd5b86b464f0abf0ca
-  RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
+  RNReanimated: 51c39025c22b505646c853544600b28f3172cdb5
+  RNScreens: 0e91da98ab26d5d04c7b59a9b6bd694124caf88c
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   SDWebImage: 0b42b8719ab0c5257177d5894306e8a336b21cbb
@@ -959,6 +959,6 @@ SPEC CHECKSUMS:
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 9ba3697ab3ee28bb28841c151497bd648a6a162b
+PODFILE CHECKSUM: db293e69cdeb451741d0dd3c65106766a0577cec
 
 COCOAPODS: 1.10.0.rc.1

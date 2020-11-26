@@ -1,7 +1,6 @@
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 rn_maps_path = '../node_modules/react-native-maps'
-permissions_path = '../node_modules/react-native-permissions/ios'
 
 platform :ios, '10.0'
 
@@ -9,12 +8,6 @@ target 'loyalty' do
   config = use_native_modules!
   use_react_native!(:path => config["reactNativePath"])
 
-
-  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
-  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
-  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
-
-  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
 
   pod 'RNLocalize', :path => '../node_modules/react-native-localize'
 
@@ -31,7 +24,15 @@ target 'loyalty' do
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
-  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
 
   target 'loyaltyTests' do
     inherit! :complete
