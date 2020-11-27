@@ -9,7 +9,7 @@ const Loading = ({
   onCancelLoading,
   transparent = false,
   imageSize = '10%',
-  spinKit = false,
+  spinKit,
 }) => {
   const [showLoading, setShowLoading] = React.useState(false);
 
@@ -32,13 +32,13 @@ const Loading = ({
       style={[
         styles.container,
         // eslint-disable-next-line react-native/no-inline-styles
-        { backgroundColor: transparent ? 'transparent' : '#0009' },
+        { backgroundColor: transparent ? 'transparent' : '#0005' },
       ]}>
       {spinKit ? (
         <Spinner
           style={styles.spinner}
+          type={spinKit ?? 'CircleFlip'}
           size={imageSize}
-          type="CircleFlip"
           color="#fff"
         />
       ) : (
@@ -71,7 +71,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  spinner: { flex: 0 },
+  spinner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   imageStyle: {
     resizeMode: 'contain',

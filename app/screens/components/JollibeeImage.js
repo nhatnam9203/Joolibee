@@ -35,7 +35,7 @@ export const JollibeeImage = React.memo(
       return url;
     }, [url]);
 
-    return (
+    return fullPath || defaultSource ? (
       <Animatable.View
         style={[styles.container, { width: width, height: height }]}>
         <FastImage
@@ -59,6 +59,8 @@ export const JollibeeImage = React.memo(
           </View>
         )}
       </Animatable.View>
+    ) : (
+      <LoadingImage width={width} height={height} />
     );
   },
 );
@@ -88,8 +90,8 @@ const styles = StyleSheet.create({
   },
 
   imgPlaceholder: {
-    width: '90%',
-    height: '90%',
+    width: '80%',
+    height: '80%',
     alignSelf: 'center',
   },
 });

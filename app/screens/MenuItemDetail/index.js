@@ -62,7 +62,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const { addProductsToCart } = GEX.useAddProductsToCart();
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
-  const [getProductDetail] = useLazyQuery(GQL.PRODUCT_DETAIL, {
+  const [getProductDetail, { loading }] = useLazyQuery(GQL.PRODUCT_DETAIL, {
     variables: { sku: product?.sku },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
@@ -279,6 +279,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       quantity={qty}
       increase={onIncreaseQuantity}
       decrease={onDecreaseQuantity}
+      loading={loading}
     />
   );
 
