@@ -5,9 +5,11 @@ import { CustomButton } from '@components';
 import { translate } from '@localize';
 import { app } from '@slices';
 import { useDispatch } from 'react-redux';
+import { scale } from '@utils';
 
-const BUTTON_HEIGHT = 58;
+const BUTTON_HEIGHT = scale.scaleHeight(60);
 const LAYOUT_WIDTH = '90%';
+const BORDER_RADIUS = scale.scaleWidth(14);
 
 export const ButtonRed = ({
   width = LAYOUT_WIDTH,
@@ -16,7 +18,7 @@ export const ButtonRed = ({
   onPress,
   disabled,
   style,
-  borderRadius,
+  borderRadius = BORDER_RADIUS,
   textStyle,
 }) => {
   const dispatch = useDispatch();
@@ -144,6 +146,36 @@ export const ButtonBorderRed = ({
       borderColor={AppStyles.colors.accent}
       borderWidth={2}
       textColor={AppStyles.colors.accent}
+    />
+  );
+};
+
+export const ButtonGray = ({
+  width = LAYOUT_WIDTH,
+  height = BUTTON_HEIGHT,
+  label,
+  onPress,
+  disabled,
+  style,
+  borderRadius = BORDER_RADIUS,
+  textStyle,
+}) => {
+  const dispatch = useDispatch();
+  const showPopup = () => dispatch(app.showComingSoon());
+
+  return (
+    <CustomButton
+      style={[styles.btnStyle, AppStyles.styles.shadow, style]}
+      styleText={textStyle}
+      onPress={onPress ?? showPopup}
+      width={width}
+      height={height}
+      label={label}
+      borderColor={AppStyles.colors.complete}
+      textColor="#fff"
+      bgColor={AppStyles.colors.complete}
+      disabled={disabled}
+      borderRadius={borderRadius}
     />
   );
 };

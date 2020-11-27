@@ -3,19 +3,28 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { PopupConfirm } from '../screens/components';
 
-const ConfirmHandler = React.forwardRef(({ children }, ref) => {
+export const ConfirmHandler = React.forwardRef((props, ref) => {
   const dispatch = useDispatch();
-  const [showPopup, setShowPopup] = React.useState(false);
+
+  const [popupInfo, setPopupInfo] = React.useState(null);
 
   React.useImperativeHandle(ref, () => ({
-    show: () => {
-      setShowPopup(true);
+    show: (title, message, onAccept) => {
+      setPopupInfo({
+        title,
+        message,
+        onAccept,
+      });
     },
   }));
 
   return (
-    <PopupConfirm visible={showPopup} onToggle={() => setShowPopup(false)} />
+    <PopupConfirm
+      visible={popupInfo !== null}
+      onToggle={() => setPopupInfo(null)}
+      message={popupInfo?.message}
+      title={popupInfo?.title}
+      onAccept={popupInfo?.onAccept}
+    />
   );
 });
-
-export default ConfirmHandler;

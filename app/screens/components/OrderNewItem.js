@@ -3,7 +3,12 @@ import { AppStyles, images } from '@theme';
 import { destructuring, format, scale } from '@utils';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Placeholder, PlaceholderLine, PlaceholderMedia } from 'rn-placeholder';
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  Fade,
+} from 'rn-placeholder';
 import { ButtonRed } from './ButtonCC';
 import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
 import { LabelTitle } from './LabelTitle';
@@ -20,7 +25,7 @@ export const OrderNewItemLoading = React.memo(() => (
     imgWidth={IMAGE_SIZE}
     imgHeight={IMAGE_SIZE}
     shadow={true}>
-    <Placeholder>
+    <Placeholder Animation={Fade}>
       <PlaceholderLine width={'100%'} height={15} />
       <PlaceholderLine width={'100%'} height={15} />
       <PlaceholderLine width={'30%'} height={15} />
@@ -146,6 +151,6 @@ const styles = StyleSheet.create({
 
   mediaPlaceholder: {
     width: 120,
-    height: 30,
+    height: 40,
   },
 });

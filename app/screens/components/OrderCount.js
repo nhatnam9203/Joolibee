@@ -5,14 +5,13 @@ import { images, AppStyles } from '@theme';
 
 export const OrderCount = ({
   defaultValue = 0,
-  onPress,
+  increase,
+  decrease,
   inputCustomStyle = {},
 }) => {
   return (
     <View style={styles.orderContentStyle}>
-      <TouchableOpacity
-        onPress={onPress(+defaultValue - 1)}
-        style={styles.buttonOrderStyle}>
+      <TouchableOpacity onPress={decrease} style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_sub} />
       </TouchableOpacity>
 
@@ -29,9 +28,7 @@ export const OrderCount = ({
         editable={false}
       />
 
-      <TouchableOpacity
-        onPress={onPress(+defaultValue + 1)}
-        style={styles.buttonOrderStyle}>
+      <TouchableOpacity onPress={increase} style={styles.buttonOrderStyle}>
         <Image source={images.icons.ic_plus} />
       </TouchableOpacity>
     </View>

@@ -76,15 +76,12 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
     }
   };
   const renderItem = ({ item }, loading) => {
-    // Logger.debug(item, 'MenuDetailScreen');
-
     return (
       <OrderNewItem
         shadow={true}
         loading={loading}
         item={item}
         onPress={() => {
-          Logger.debug(item, 'ScreenName.MenuItemDetail > item');
           navigation.navigate(ScreenName.MenuItemDetail, {
             product: item,
           });
