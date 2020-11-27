@@ -9,3 +9,4 @@ export * from './useSetShippingAddress';
 export * from './useSetBillingAddress';
 export * from './useSetPaymentMethod';
 export * from './useGetShippingMethod';
+export * from './useSetShippingMethod';

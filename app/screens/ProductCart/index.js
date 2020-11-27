@@ -114,7 +114,6 @@ const ProductCart = ({ visible, onToggle }) => {
 
   React.useEffect(() => {
     if (!getShippingMethodResp.data) return;
-    Logger.debug(getShippingMethodResp.data, 'getShippingMethodResp');
 
     const setDefaultValue = async () => {
       const params = {
@@ -143,11 +142,11 @@ const ProductCart = ({ visible, onToggle }) => {
 
     setDefaultValue();
     if (!isPaymentWaiting()) {
-      navigation.navigate(ScreenName.Order);
+      navigation.navigate(ScreenName.Order, getShippingMethodResp.data);
       popupRef.current.forceQuit();
     } else {
       setTimeout(() => {
-        navigation.navigate(ScreenName.Order);
+        navigation.navigate(ScreenName.Order, getShippingMethodResp.data);
         popupRef.current.forceQuit();
       }, 1000);
     }
@@ -196,8 +195,6 @@ const ProductCart = ({ visible, onToggle }) => {
       } = customerCart;
 
       const total = format.jollibeeCurrency(grand_total);
-      Logger.debug(items, 'items');
-      Logger.debug(grand_total, 'grand_total');
 
       setCartDetail({ items, total });
     }
