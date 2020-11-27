@@ -68,7 +68,7 @@ const ProductCart = ({ visible, onToggle }) => {
   } = GEX.useSetBillingAddress();
 
   const {
-    setPaymentMethodOnCart,
+    setPaymentMethod,
     setPaymentMethodOnCartResp,
   } = GEX.useSetPaymentMethod();
 
@@ -137,7 +137,7 @@ const ProductCart = ({ visible, onToggle }) => {
       if (isEmpty(selected_payment_method?.code)) {
         Logger.debug(selected_payment_method, 'selected_payment_method');
 
-        await setPaymentMethodOnCart();
+        await setPaymentMethod();
       }
     };
 

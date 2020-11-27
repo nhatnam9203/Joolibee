@@ -10,13 +10,6 @@ export const useSetPaymentMethod = () => {
 
   const [setPaymentMethodOnCart, response] = useMutation(
     SET_ORDER_PAYMENT_METHOD,
-    {
-      onCompleted: (data) => {
-        if (data?.setPaymentMethodOnCart) {
-          dispatch(app.hideLoading());
-        }
-      },
-    },
   );
 
   const onSetPaymentMethodOnCart = () => {
@@ -28,14 +21,14 @@ export const useSetPaymentMethod = () => {
       variables: {
         cart_id: customerCart.id,
         payment_method: {
-          code: 'freeshipping',
+          code: 'cashondelivery',
         },
       },
     });
   };
 
   return {
-    setPaymentMethodOnCart: onSetPaymentMethodOnCart,
+    setPaymentMethod: onSetPaymentMethodOnCart,
     setPaymentMethodOnCartResp: response,
   };
 };
