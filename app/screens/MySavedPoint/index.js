@@ -3,6 +3,7 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
 import { scale } from '@utils';
+import { GCC } from '@graphql';
 import _ from 'lodash';
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
@@ -96,7 +97,7 @@ const MySavedPointScreen = () => {
               <View style={styles.pointImage}>
                 <Image source={images.icons.ic_jollibee} resizeMode="stretch" />
               </View>
-              <Text style={styles.txtPoint}>120</Text>
+              <Text style={styles.txtPoint}>0</Text>
             </View>
             <Text style={styles.txtPointExpire}>
               {translate('txtExpirePoint')} 11/17/2020
@@ -182,13 +183,10 @@ const MySavedPointScreen = () => {
 
       {/**My Reward  */}
       {renderNewRewardHeader()}
-      <CustomFlatList
-        data={newRewards}
+      <GCC.QueryPointHistoryList
         renderItem={renderNewRewardItem}
+        //renderItemLoading={renderItemLoading}
         contentContainerStyle={styles.myRewardContainer}
-        horizontal={false}
-        keyExtractor={(item, index) => item.id.toString()}
-        showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.seperator} />}
       />
     </CustomImageBackground>

@@ -14,50 +14,7 @@ import { translate } from '@localize';
 import { useDispatch } from 'react-redux';
 import { app } from '@slices';
 
-const defaultData = [
-  {
-    image: images.promotion_thumb,
-    title: 'Combo 2 lựa chọn 139K siêu ngon, siêu ưu đãi',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 1,
-  },
-  {
-    image: images.promotion_thumb,
-    title: 'Combo 2 lựa chọn 139K siêu ngon, siêu ưu đãi',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 2,
-  },
-  {
-    image: images.promotion_thumb,
-    title: 'Combo 2 lựa chọn 139K siêu ngon, siêu ưu đãi',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 3,
-  },
-  {
-    image: images.promotion_thumb,
-    title: 'Combo 2 lựa chọn 139K siêu ngon, siêu ưu đãi',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 4,
-  },
-  {
-    image: images.promotion_thumb,
-    title: 'Combo 2 lựa chọn 139K siêu ngon, siêu ưu đãi',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 5,
-  },
-  {
-    image: images.promotion_thumb,
-    title: 'Combo 2 lựa chọn 139K siêu ngon, siêu ưu đãi',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 6,
-  },
-  {
-    image: images.promotion_thumb,
-    title: 'Món Mới',
-    description: 'Chỉ với 39k bạn có 2 sự lựa chọn cho bữa ăn của mình',
-    id: 7,
-  },
-];
+const defaultData = [];
 
 const PromotionPage = () => {
   const navigation = useNavigation();

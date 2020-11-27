@@ -161,5 +161,6 @@
   "txtReviewYourOrder": "Cảm nhận của bạn về đơn hàng này như thế nào?",
   "txtReviewFeeback": "Đánh giá phản hồi",
   "txtInputFeeback": "Nội dung góp ý của bạn",
-  "txtAttention": "*Chúng tôi chưa phục vụ giao hàng tận nơi tại những khu vực nằm ngoài danh sách trên, mong quý khách thông cảm"
+  "txtAttention": "*Chúng tôi chưa phục vụ giao hàng tận nơi tại những khu vực nằm ngoài danh sách trên, mong quý khách thông cảm",
+  "txtEmptyPointHistoryList": "Hiện tại không có lịch sử điểm nào"
 }

@@ -77,6 +77,7 @@ const OrderButtonInput = ({
   height = 52,
   borderColor = AppStyles.colors.placeholder,
   style,
+  disabled,
 }) => {
   return (
     <View
@@ -88,9 +89,7 @@ const OrderButtonInput = ({
           borderColor,
         },
         style,
-      ]}
-      onPress={onPress}
-      disabled={!onPress}>
+      ]}>
       {children}
       <TouchableOpacity
         style={[
@@ -98,9 +97,11 @@ const OrderButtonInput = ({
           {
             backgroundColor: bgColor,
             width: btnWidth,
+            opacity: disabled ? 0.5 : 1,
           },
         ]}
-        onPress={onPress}>
+        onPress={onPress}
+        disabled={disabled}>
         {!!title && (
           <LabelTitle
             label={title}
@@ -129,6 +130,7 @@ const OrderScreen = () => {
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
   const [coupon_code, setCouponCode] = React.useState('');
+  const [reward_point, setRewardPoint] = React.useState('');
   const [showConfirm, setShowConfirm] = React.useState(false);
 
   // --------- handle fetch data cart -----------
@@ -176,22 +178,10 @@ const OrderScreen = () => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
-  const addresses = resCustomer?.data.customer?.addresses || [];
-  const shipping_address =
-    addresses.length > 0 ? addresses.find((x) => x.default_shipping) : {};
+  // const addresses = resCustomer?.data.customer?.addresses || [];
+  // const shipping_address =
+  //   addresses.length > 0 ? addresses.find((x) => x.default_shipping) : {};
 
-  const {
-    // full_address,
-    // lastname,
-    // firstname,
-    // telephone,
-    company,
-    id,
-    default_shipping,
-    region,
-    city,
-    // street,
-  } = shipping_address;
   // -------- handle fetch data cart -----------
 
   // const editAddress = () => {
@@ -234,7 +224,7 @@ const OrderScreen = () => {
   };
 
   const onChangeCouponCode = (val) => setCouponCode(val);
-
+  const onChangeRewardPoint = (point) => setRewardPoint(point);
   const onTogglePopupNotice = () => {
     setShowNotice(false);
   };
@@ -582,6 +572,7 @@ const OrderScreen = () => {
                 }}>
                 <OrderButtonInput
                   onPress={onApplyCoupon}
+                  disabled={!coupon_code}
                   title={translate('txtApply')}
                   btnWidth={126}
                   bgColor={AppStyles.colors.accent}>
@@ -593,17 +584,19 @@ const OrderScreen = () => {
                   />
                 </OrderButtonInput>
 
-                <View
-                  style={{
-                    height: 45,
-                    marginTop: 19,
-                    justifyContent: 'center',
-                  }}>
-                  <CustomScrollViewHorizontal
-                    data={vouchers}
-                    renderItem={renderItemVoucher}
-                  />
-                </View>
+                {applied_coupons && (
+                  <View
+                    style={{
+                      height: 45,
+                      marginTop: 19,
+                      justifyContent: 'center',
+                    }}>
+                    <CustomScrollViewHorizontal
+                      data={vouchers}
+                      renderItem={renderItemVoucher}
+                    />
+                  </View>
+                )}
               </View>
             </OrderSectionItem>
           </OrderSection>
@@ -618,7 +611,7 @@ const OrderScreen = () => {
                   {translate('txtMySavedPoint')}:
                 </Text>
                 <View style={styles.pointContainer}>
-                  <Text style={styles.txtPoint}>120 điểm</Text>
+                  <Text style={styles.txtPoint}>0 điểm</Text>
                 </View>
               </View>
             )}>
@@ -626,11 +619,14 @@ const OrderScreen = () => {
               <OrderButtonInput
                 title={translate('txtApply')}
                 btnWidth={126}
-                bgColor={AppStyles.colors.accent}>
+                bgColor={AppStyles.colors.accent}
+                disabled={!reward_point}>
                 <TextInput
                   placeholder={'Vd: 5, 10, 15, 20, 25, 30.....'}
                   style={{ paddingHorizontal: 10, flex: 1 }}
                   keyboardType="numeric"
+                  value={reward_point}
+                  onChangeText={onChangeRewardPoint}
                 />
               </OrderButtonInput>
             </OrderSectionItem>
@@ -648,18 +644,20 @@ const OrderScreen = () => {
 
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>Khuyến mãi : </Text>
-          <VoucherContent
-            content="Voucher ưu đãi 30K"
-            style={{
-              paddingHorizontal: 0,
-            }}
-          />
+          {applied_coupons && (
+            <VoucherContent
+              content="Voucher ưu đãi 30K"
+              style={{
+                paddingHorizontal: 0,
+              }}
+            />
+          )}
           <Text style={styles.txtSubPriceStyle}>{_discount}</Text>
         </View>
 
-        <View style={styles.orderSumContent}>
+        {/* <View style={styles.orderSumContent}>
           <VoucherContent
-            content="Đổi 20 điểm nhận 20.000đ."
+            content=""
             style={{
               paddingHorizontal: 0,
               justifyContent: 'flex-end',
@@ -668,7 +666,7 @@ const OrderScreen = () => {
           />
 
           <Text style={styles.txtSubPriceStyle}>{total}</Text>
-        </View>
+        </View> */}
 
         <View style={styles.orderSumContent}>
           <Text style={styles.txtTitleStyle}>Tổng cộng : </Text>

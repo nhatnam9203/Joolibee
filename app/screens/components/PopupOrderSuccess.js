@@ -5,7 +5,8 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import * as ButtonCC from './ButtonCC';
 import { LabelTitle } from './LabelTitle';
-
+import { useNavigation } from '@react-navigation/native';
+import ScreenName from '../ScreenName';
 const BUTTON_WIDTH = '80%';
 const TITLE_SIZE = 24;
 
@@ -16,10 +17,14 @@ export const PopupOrderSuccess = ({
   orderCode = '00909',
 }) => {
   const popupRef = React.createRef(null);
-
+  const navigation = useNavigation();
+  const onHandlePress = (screen) => () => {
+    onToggle();
+    navigation.navigate(screen);
+  };
   return (
     <PopupLayout
-      disableBackdrop={true}
+      // disableBackdrop={true}
       visible={visible}
       onToggle={onToggle}
       ref={popupRef}>
@@ -42,13 +47,13 @@ export const PopupOrderSuccess = ({
         <ButtonCC.ButtonYellow
           label={translate('txtContinueOrder')}
           width={BUTTON_WIDTH}
-          onPress={() => popupRef.current.forceQuit()}
+          onPress={onHandlePress(ScreenName.MyOrders)}
         />
 
         <ButtonCC.ButtonRed
           label={translate('txtFollowOrder')}
           width={BUTTON_WIDTH}
-          onPress={() => popupRef.current.forceQuit()}
+          onPress={onHandlePress(ScreenName.Menu)}
         />
       </View>
     </PopupLayout>
