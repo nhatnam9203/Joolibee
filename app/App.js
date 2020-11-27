@@ -109,7 +109,7 @@ let App = () => {
                   showCancel={true}
                   closeInterval={6000}
                 />
-                {/* <ConfirmHandler ref={confirmRef} /> */}
+                <ConfirmHandler ref={confirmRef} />
               </PaperProvider>
             </GraphErrorHandler>
           </LangProvider>

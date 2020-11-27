@@ -25,8 +25,8 @@ function logout() {
   graphQLErrorRef.current?.forceLogout();
 }
 
-function showConfirm() {
-  confirmRef.current?.show();
+function showConfirm(title, message, onAccept) {
+  confirmRef.current?.show(title, message, onAccept);
 }
 
 export default {

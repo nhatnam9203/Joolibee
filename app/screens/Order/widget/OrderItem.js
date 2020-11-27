@@ -4,6 +4,8 @@ import React from 'react';
 import { CustomButtonImage } from '@components';
 import { OrderCount } from '../../components';
 import { format } from '@utils';
+import NavigationService from '../../../navigation/NavigationService';
+import { translate } from '@localize';
 
 export const OrderItem = ({ item, updateMyCart, onPress }) => {
   const { product = {}, quantity, prices } = item;
@@ -11,7 +13,27 @@ export const OrderItem = ({ item, updateMyCart, onPress }) => {
 
   const [qty, setQuantity] = React.useState(quantity);
 
-  const handleUpdateProduct = (value) => () => {
+  const onConfirmDeleteProduct = () => {
+    NavigationService.showConfirm(
+      translate('txtConfirm'),
+      translate('txtDeleteProductCart'),
+      () => {
+        handleUpdateProduct(0);
+      },
+    );
+  };
+
+  const increaseQuantity = () => {
+    setQuantity((prev) => prev + 1);
+    handleUpdateProduct(qty + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prev) => prev - 1);
+    handleUpdateProduct(qty - 1);
+  };
+
+  const handleUpdateProduct = (value) => {
     let newItem = { ...item };
     setQuantity(value);
     newItem.quantity = value;
@@ -27,7 +49,8 @@ export const OrderItem = ({ item, updateMyCart, onPress }) => {
         <View style={styles.orderCountContainer}>
           <OrderCount
             defaultValue={qty + ''}
-            onPress={handleUpdateProduct}
+            increase={increaseQuantity}
+            decrease={decreaseQuantity}
             inputCustomStyle={styles.inputContainer}
           />
         </View>
@@ -41,7 +64,7 @@ export const OrderItem = ({ item, updateMyCart, onPress }) => {
         <View style={styles.bottomStyle}>
           <CustomButtonImage
             image={images.icons.ic_delete_bg}
-            onPress={handleUpdateProduct(0)}
+            onPress={onConfirmDeleteProduct}
           />
           <CustomButtonImage image={images.icons.ic_edit} onPress={onPress} />
         </View>
@@ -93,7 +116,8 @@ const styles = StyleSheet.create({
     width: '23%',
   },
   inputContainer: {
-    width: 37,
+    minWidth: 37,
+    maxWidth: 60,
     height: 32,
     borderColor: '#707070',
     borderWidth: 1,

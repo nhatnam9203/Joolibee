@@ -9,34 +9,48 @@ import { scale } from '@utils';
 
 const { scaleWidth, scaleHeight } = scale;
 
-export const PopupConfirm = ({ visible, onToggle }) => {
+export const PopupConfirm = ({
+  visible,
+  onToggle,
+  message,
+  title,
+  onAccept,
+}) => {
   const popupRef = React.createRef(null);
+
+  const acceptButtonPressed = () => {
+    if (typeof onAccept === 'function') {
+      onAccept();
+    }
+    popupRef.current.forceQuit();
+  };
 
   return (
     <PopupLayout visible={visible} onToggle={onToggle} ref={popupRef}>
       <View style={styles.container}>
         <View style={styles.header}>
           <LabelTitle
-            label={translate('txtNotification')}
+            label={title ?? translate('txtNotification')}
             color={AppStyles.colors.text}
             fontSize={24}
           />
         </View>
 
         <Text style={styles.txtDescription}>
-          {translate('txtInComingSoon')}
+          {message ?? translate('txtInComingSoon')}
         </Text>
 
         <View style={styles.buttonContent}>
-          <ButtonCC.ButtonRed
-            label={translate('txtClose')}
-            width={200}
+          <ButtonCC.ButtonGray
+            label={translate('txtCancel')}
             onPress={() => popupRef.current.forceQuit()}
+            width={'50%'}
           />
+          <View style={styles.horizontalSpace} />
           <ButtonCC.ButtonRed
-            label={translate('txtClose')}
-            width={200}
-            onPress={() => popupRef.current.forceQuit()}
+            label={translate('txtAccept')}
+            onPress={acceptButtonPressed}
+            width={'50%'}
           />
         </View>
       </View>
@@ -66,7 +80,7 @@ const styles = StyleSheet.create({
 
   txtDescription: {
     ...AppStyles.fonts.medium_SVN,
-    fontSize: 21,
+    fontSize: scaleWidth(21),
     color: '#1B1B1B',
     textAlign: 'center',
     marginBottom: scaleHeight(10),
@@ -74,9 +88,17 @@ const styles = StyleSheet.create({
 
   buttonContent: {
     ...AppStyles.styles.horizontalLayout,
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   buttonStyle: {
     width: '80%',
+  },
+
+  horizontalSpace: {
+    width: scaleWidth(15),
+    height: '100%',
   },
 });

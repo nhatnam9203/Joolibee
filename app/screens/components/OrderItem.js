@@ -16,11 +16,25 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
 
   const [qty, setQuantity] = React.useState(quantity);
 
-  const handleUpdateProduct = (value) => () => {
+  const handleUpdateProduct = (value) => {
     let newItem = { ...item };
     setQuantity(value);
     newItem.quantity = value;
     updateQty(newItem);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity((prev) => prev + 1);
+    handleUpdateProduct(qty + 1);
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prev) => prev - 1);
+    handleUpdateProduct(qty - 1);
+  };
+  const deleteProductCart = () => {
+    setQuantity(0);
+    handleUpdateProduct(0);
   };
 
   return (
@@ -51,7 +65,11 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
       </View>
 
       <View style={styles.bottomStyle}>
-        <OrderCount defaultValue={qty + ''} onPress={handleUpdateProduct} />
+        <OrderCount
+          defaultValue={qty + ''}
+          increase={increaseQuantity}
+          decrease={decreaseQuantity}
+        />
         <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
           <Image
             style={{ tintColor: AppStyles.colors.text }}
@@ -59,7 +77,7 @@ export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleUpdateProduct(0)}
+          onPress={deleteProductCart}
           style={styles.buttonStyle}>
           <Image
             style={{ tintColor: AppStyles.colors.text }}
