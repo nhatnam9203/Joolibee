@@ -122,9 +122,11 @@ const ShippingType = {
 
 const CONFIRM_HEIGHT = 150;
 
-const OrderScreen = () => {
+const OrderScreen = ({ route = { params: {} } }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { shippingMethod } = route.params;
+
   const cart_id = useSelector((state) => state.account?.cart?.id);
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
@@ -137,16 +139,12 @@ const OrderScreen = () => {
   // const [showConfirm, setShowConfirm] = React.useState(false);
 
   // --------- handle fetch data cart -----------
+
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
   const { data } = useQuery(GQL.CART_DETAIL, {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-and-network',
-  });
-  // console.log('data', JSON.stringify(data));
-  const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
-    variables: { categoryId: 4 },
-    fetchPolicy: 'cache-first',
   });
 
   const [setShippingMethodsOnCart] = useMutation(GQL.SET_ORDER_SHIPPING_METHOD);
@@ -162,10 +160,34 @@ const OrderScreen = () => {
     prices: { grand_total: {} },
     shipping_addresses: [{}],
   };
+
+  const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
+    variables: { categoryId: 4 },
+    fetchPolicy: 'cache-first',
+  });
+
+  const resCustomer = useQuery(query.CUSTOMER_INFO, {
+    fetchPolicy: 'only-cache',
+  });
+
+  /**
+   * SET SIPPING METHOD
+   */
+
+  const {
+    setShippingMethod,
+    setShippingMethodResp,
+  } = GEX.useSetShippingMethodsOnCart();
+
+  const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
+  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
+
   const { firstname, lastname, selected_shipping_method, telephone } =
     shipping_addresses[0] || {};
+
   const { method_code } = selected_shipping_method || {};
   const full_address = format.addressFull(shipping_addresses[0]);
+
   const [shippingType, setShippingType] = React.useState(method_code);
   const total = format.jollibeeCurrency({
     value: grand_total.value,
@@ -208,26 +230,15 @@ const OrderScreen = () => {
       : navigation.navigate(ScreenName.MyAddress, { selected_address: true });
   };
 
+  /**
+   * SET PAYMENT METHOD
+   * @param {*} code : ["freeshipping", "storepickup"]
+   */
   const onChangePaymentMethod = (code) => {
     dispatch(app.showLoading());
-    setShippingMethodsOnCart({
-      variables: {
-        cart_id: cart_id,
-        shipping_methods: [
-          {
-            carrier_code: code,
-            method_code: code,
-          },
-        ],
-      },
-    })
-      .then(() => {
-        setShippingType(code);
-        dispatch(app.hideLoading());
-      })
-      .catch(() => {
-        dispatch(app.hideLoading());
-      });
+    setShippingMethod(code);
+    setShippingType(code);
+    dispatch(app.hideLoading());
   };
 
   const onApplyCoupon = () => {
@@ -331,57 +342,43 @@ const OrderScreen = () => {
       <SinglePageLayout>
         <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
-          <OrderSection
-            key="ShippingType"
-            title={`${translate('txtOrderMethod')}`.toUpperCase()}>
-            <OrderSectionItem
-              onPress={() => {
-                onChangePaymentMethod(ShippingType.InPlace);
-              }}>
-              <View style={AppStyles.styles.horizontalLayout}>
-                <Image
-                  source={images.icons.ic_delivery}
-                  style={styles.imgShippingStyle}
-                  resizeMode="center"
-                />
-                <Text style={styles.txtTitleStyle}>
-                  {translate('txtShippingOrder')}
-                </Text>
-              </View>
-              <Image
-                style={styles.arrowStyle}
-                source={
-                  shippingType === ShippingType.InPlace
-                    ? images.icons.ic_radio_active
-                    : images.icons.ic_radio_inactive
-                }
-              />
-            </OrderSectionItem>
-            <OrderSectionItem
-              onPress={() => {
-                onChangePaymentMethod(ShippingType.InShop);
-              }}>
-              <View style={AppStyles.styles.horizontalLayout}>
-                <Image
-                  source={images.icons.ic_in_store}
-                  style={styles.imgShippingStyle}
-                  resizeMode="center"
-                />
-                <Text style={styles.txtTitleStyle}>
-                  {translate('txtPlaceInShopOrder')}
-                </Text>
-              </View>
-              <Image
-                style={styles.arrowStyle}
-                source={
-                  shippingType === ShippingType.InShop
-                    ? images.icons.ic_radio_active
-                    : images.icons.ic_radio_inactive
-                }
-              />
-            </OrderSectionItem>
-          </OrderSection>
-
+          {shippingMethod?.results && (
+            <OrderSection
+              key="ShippingType"
+              title={`${translate('txtOrderMethod')}`.toUpperCase()}>
+              {shippingMethod?.results.map((sm) => (
+                <OrderSectionItem
+                  onPress={() => {
+                    onChangePaymentMethod(sm.method);
+                  }}>
+                  <View style={AppStyles.styles.horizontalLayout}>
+                    <Image
+                      source={
+                        sm.method === ShippingType.InShop
+                          ? images.icons.ic_in_store
+                          : images.icons.ic_delivery
+                      }
+                      style={styles.imgShippingStyle}
+                      resizeMode="center"
+                    />
+                    <Text style={styles.txtTitleStyle}>
+                      {sm.method === ShippingType.InShop
+                        ? translate('txtPlaceInShopOrder')
+                        : translate('txtShippingOrder')}
+                    </Text>
+                  </View>
+                  <Image
+                    style={styles.arrowStyle}
+                    source={
+                      shippingType === sm.method
+                        ? images.icons.ic_radio_active
+                        : images.icons.ic_radio_inactive
+                    }
+                  />
+                </OrderSectionItem>
+              ))}
+            </OrderSection>
+          )}
           {/**Shipping Info */}
           <OrderSection
             title={`${translate('txtShippingInfo')}`.toUpperCase()}
@@ -647,7 +644,10 @@ const OrderScreen = () => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={styles.txtPointStyle}>(+ 20 điểm)</Text>
+            <Text style={styles.txtPointStyle}>
+              (+ {format.caculatePoint(items)}
+              {translate('txtPoint')})
+            </Text>
             <Text style={styles.txtPriceStyle}>{total}</Text>
           </View>
         </View>

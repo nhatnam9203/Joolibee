@@ -20,6 +20,7 @@ export const ButtonRed = ({
   style,
   borderRadius = BORDER_RADIUS,
   textStyle,
+  loading,
 }) => {
   const dispatch = useDispatch();
   const showPopup = () => dispatch(app.showComingSoon());
@@ -37,6 +38,7 @@ export const ButtonRed = ({
       bgColor={AppStyles.colors.accent}
       disabled={disabled}
       borderRadius={borderRadius}
+      loading={loading}
     />
   );
 };

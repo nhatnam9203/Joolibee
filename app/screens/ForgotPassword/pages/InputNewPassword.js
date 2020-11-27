@@ -83,7 +83,7 @@ export const InputNewPassword = ({ next }) => {
               />
             )}
             <ButtonCC.ButtonYellow
-              onPress={next}
+              // onPress={next}
               label={translate('txtSave')}
               style={styles.btnStyle}
             />

@@ -13,6 +13,7 @@ import Animated, {
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
+import Spinner from 'react-native-spinkit';
 
 const DISABLE_COLOR = '#4448';
 const ANIMATION_DURATION = 250;
@@ -36,6 +37,7 @@ const CustomButton = ({
   borderRadius = 12,
   styleContent = {},
   animation = true,
+  loading = false,
   ...props
 }) => {
   const viewScale = useSharedValue(1);
@@ -89,8 +91,17 @@ const CustomButton = ({
             },
             customSpringStyles,
           ]}>
+          {loading && (
+            <Spinner
+              style={styles.spinner}
+              type={'Circle'}
+              size={25}
+              color="#fff"
+            />
+          )}
+
           {children}
-          {!!label && (
+          {!!label && !loading && (
             <Text style={[styles.txtStyle, { color: textColor }, styleText]}>
               {label?.toUpperCase()}
             </Text>
@@ -127,6 +138,11 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+
+  spinner: {
+    flex: 0,
+    alignSelf: 'center',
   },
 });
 

@@ -35,6 +35,6 @@ export const useSetBillingAddress = () => {
 
   return {
     setBillingAddressOnCart: onSetBillingAddress,
-    responseShipping: response,
+    setBillingAddressOnCartResp: response,
   };
 };

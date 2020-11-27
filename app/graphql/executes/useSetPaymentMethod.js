@@ -7,16 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useSetPaymentMethod = () => {
   const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
-  console.log('customerCart', JSON.stringify(customerCart));
 
-  const [setPaymentMethodOnCart] = useMutation(SET_ORDER_PAYMENT_METHOD, {
-    onCompleted: (data) => {
-      Logger.debug(data, 'setPaymentMethodOnCart');
-      if (data?.setPaymentMethodOnCart) {
-        dispatch(app.hideLoading());
-      }
-    },
-  });
+  const [setPaymentMethodOnCart, response] = useMutation(
+    SET_ORDER_PAYMENT_METHOD,
+  );
 
   const onSetPaymentMethodOnCart = () => {
     if (!customerCart) {
@@ -34,7 +28,7 @@ export const useSetPaymentMethod = () => {
   };
 
   return {
-    setPaymentMethodOnCart: onSetPaymentMethodOnCart,
-    // responseShipping: response,
+    setPaymentMethod: onSetPaymentMethodOnCart,
+    setPaymentMethodOnCartResp: response,
   };
 };

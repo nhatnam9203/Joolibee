@@ -35,6 +35,6 @@ export const useSetShippingAddress = (callBack = () => {}) => {
 
   return {
     setShippingAddressesOnCart: onSetShippingAddress,
-    responseShipping: response,
+    setShippingAddressesOnCartResp: response,
   };
 };
