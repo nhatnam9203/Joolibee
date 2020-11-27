@@ -6,18 +6,18 @@ import { STORE_PICKUP } from '../gql';
 
 export const useGetShippingMethod = () => {
   const dispatch = useDispatch();
+  const my_location = useSelector((state) => state.store.my_location);
 
-  const [storePickup, { data, loading, refetch }] = useLazyQuery(STORE_PICKUP, {
+  const [storePickup, response] = useLazyQuery(STORE_PICKUP, {
     fetchPolicy: 'network-only',
-    onCompleted: () => {},
   });
 
   const onShippingMethods = (input) => {
-    storePickup(input);
+    storePickup(input ?? { variables: my_location });
   };
 
   return {
     getShippingMethod: onShippingMethods,
-    shippingMethods: data,
+    getShippingMethodResp: response,
   };
 };

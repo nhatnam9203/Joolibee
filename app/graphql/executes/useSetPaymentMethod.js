@@ -12,7 +12,6 @@ export const useSetPaymentMethod = () => {
     SET_ORDER_PAYMENT_METHOD,
     {
       onCompleted: (data) => {
-        Logger.debug(data, 'setPaymentMethodOnCart');
         if (data?.setPaymentMethodOnCart) {
           dispatch(app.hideLoading());
         }
@@ -29,7 +28,7 @@ export const useSetPaymentMethod = () => {
       variables: {
         cart_id: customerCart.id,
         payment_method: {
-          code: 'cashondelivery',
+          code: 'freeshipping',
         },
       },
     });
