@@ -147,7 +147,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     fetchPolicy: 'cache-and-network',
   });
 
-  const [setShippingMethodsOnCart] = useMutation(GQL.SET_ORDER_SHIPPING_METHOD);
   const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   const {
@@ -166,10 +165,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     fetchPolicy: 'cache-first',
   });
 
-  const resCustomer = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'only-cache',
-  });
-
   /**
    * SET SIPPING METHOD
    */
@@ -178,9 +173,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setShippingMethod,
     setShippingMethodResp,
   } = GEX.useSetShippingMethodsOnCart();
-
-  const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
-  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
 
   const { firstname, lastname, selected_shipping_method, telephone } =
     shipping_addresses[0] || {};
