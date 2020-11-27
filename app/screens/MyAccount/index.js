@@ -37,7 +37,7 @@ const MyAccountScreen = () => {
   const buttonComponent = () => {
     return (
       <View style={styles.pointContainer}>
-        <Text>120 điểm</Text>
+        <Text>0 điểm</Text>
       </View>
     );
   };

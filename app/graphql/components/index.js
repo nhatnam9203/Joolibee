@@ -3,3 +3,4 @@ export * from './QueryMenuDetailList';
 export * from './QueryOrderList';
 export * from './QueryProductDetail';
 export * from './QueryAddressList';
+export * from './QueryPointHistoryList';
