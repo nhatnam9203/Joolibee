@@ -78,7 +78,11 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   const isPaymentWaiting = () => {
-    return getCheckOutCartResp.loading;
+    return (
+      setShippingAddressesOnCartResp.loading ||
+      setBillingAddressOnCartResp.loading ||
+      setPaymentMethodOnCartResp.loading
+    );
   };
 
   const closePopup = () => {
@@ -105,6 +109,10 @@ const ProductCart = ({ visible, onToggle }) => {
         shipping_addresses: [{ customer_address_id: address_id }],
       },
     };
+
+    Logger.debug(shipping_addresses, 'shipping_addresses');
+    Logger.debug(billing_address, 'billing_address');
+    Logger.debug(selected_payment_method, 'shipping_addresses');
 
     if (isEmpty(shipping_addresses) && address_id) {
       await setShippingAddressesOnCart(params);
@@ -139,7 +147,7 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   const onShowCartItem = (item) => {
-    // popupRef.current.forceQuit();
+    popupRef.current.forceQuit();
 
     navigation.navigate(ScreenName.MenuItemDetail, {
       product: item?.product,
@@ -243,6 +251,7 @@ const ProductCart = ({ visible, onToggle }) => {
               label={translate('txtPayment')}
               style={styles.btnProceeds}
               onPress={paymentButtonPressed}
+              loading={isPaymentWaiting()}
             />
           </View>
         </View>
