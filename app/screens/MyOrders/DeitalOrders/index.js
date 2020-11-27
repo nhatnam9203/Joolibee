@@ -1,66 +1,57 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
-import { CustomImageBackground } from '@components';
+import { CustomImageBackground, Loading } from '@components';
 import { PopupRating, ButtonCC } from '../../components';
 import { statusOrder, scale, format } from '@utils';
+import { GQL } from '@graphql';
+import { useLazyQuery } from '@apollo/client';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
 const MARGIN_VERTICAL = scaleHeight(20);
-const defaultData = [
-  {
-    options: '01 miếng gà giòn vui vẻ + 01 mỳ ý sốt bò bằm',
-    extra: 'Súp bí đỏ (+25.000đ)',
-    soft_drink: '7 Up nhỏ - 330ml (+5.000đ)',
-    qty: 1,
-    price: '85.000',
-  },
-  {
-    options:
-      '01 miếng gà giòn vui vẻ + 01 mỳ ý sốt bò bằm + 01 nước ngọt (vừa)',
-    extra: 'Súp bí đỏ (+25.000đ)',
-    soft_drink: '7 Up nhỏ - 330ml (+5.000đ)',
-    qty: 2,
-    price: '170.000',
-  },
-];
 
 export default function Index({ navigation, route }) {
   const { order } = route.params;
-  const [data, setData] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
 
-  let status = statusOrder.convertStatusOrder(order.status);
+  const { number, order_date, status, shipping_address, items, total } =
+    order || {};
+  let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
-    status?.toLowerCase() === 'hoàn thành' || status === 'đã hủy'
+    status_order?.toLowerCase() === 'hoàn thành' ||
+    status_order?.toLowerCase() === 'đã hủy'
       ? true
       : false;
-  let hours = format.hours(order.created_at);
-  let date = format.date(order.created_at);
+  let hours = format.hours(order_date);
+  let date = format.date(order_date);
 
   const onClose = () => setVisible(false);
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: HeaderTitle(),
     });
-
-    setData(defaultData);
   }, [HeaderTitle, navigation]);
 
   const HeaderTitle = React.useCallback(
     () => (
       <View style={styles.headerTitleContainer}>
         <Text style={(AppStyles.fonts.medium_SVN, styles.headerTitle)}>
-          Đơn hàng #{order.order_number}
+          Đơn hàng #{number}
         </Text>
         <Text style={(AppStyles.fonts.text, styles.headerSubTitle)}>
           {hours}, {date}
         </Text>
       </View>
     ),
-    [date, hours, order.order_number],
+    [date, hours, number],
   );
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerTitle: HeaderTitle(),
+    });
+  }, [HeaderTitle, navigation]);
 
   const OrderTitle = ({ title, style }) => (
     <View
@@ -84,12 +75,12 @@ export default function Index({ navigation, route }) {
   );
 
   const renderStatusComponent = () => {
-    if (order_complete || order.status === 'pending') {
+    if (order_complete || status === 'pending') {
       return (
         <>
           <OrderTitle title="TRẠNG THÁI ĐƠN HÀNG" />
           <View style={styles.statusContent}>
-            <OrderStatus status={order?.status} />
+            <OrderStatus status={status} />
           </View>
         </>
       );
@@ -98,7 +89,10 @@ export default function Index({ navigation, route }) {
       <View style={styles.statusContent}>
         {!order_complete && (
           <View style={styles.imageStatusOrder}>
-            <Image style={styles.image} source={statusOrder.getImage(status)} />
+            <Image
+              style={styles.image}
+              source={statusOrder.getImage(status_order)}
+            />
           </View>
         )}
         <ExpectedTime />
@@ -106,7 +100,7 @@ export default function Index({ navigation, route }) {
           title="TRẠNG THÁI ĐƠN HÀNG"
           style={{ marginVertical: scaleHeight(5) }}
         />
-        <OrderStatus status={order?.status} />
+        <OrderStatus status={status} />
       </View>
     );
   };
@@ -128,7 +122,6 @@ export default function Index({ navigation, route }) {
       </View>
     );
   };
-
   return (
     <CustomImageBackground
       style={styles.container}
@@ -143,19 +136,19 @@ export default function Index({ navigation, route }) {
         <View style={styles.statusContainer}>
           {/* -------------- THONG TIN DON HANG  -------------- */}
           <OrderTitle title="THÔNG TIN GIAO HÀNG" />
-          <OrderInfo />
+          <OrderInfo info={shipping_address} />
           {/* -------------- THONG TIN DON HANG  -------------- */}
 
           {/* -------------- SAN PHAM DA CHON  -------------- */}
 
           <OrderTitle title="MÓN ĂN ĐÃ CHỌN" />
-          <OrderProductList data={data} />
+          <OrderProductList data={items} />
           {/* --------------  SAN PHAM DA CHON  -------------- */}
 
           {/* --------------  TOTAL PRICE  -------------- */}
-          <OrderTotal />
+          <OrderTotal total={total} />
           {/* --------------  TOTAL PRICE -------------- */}
-          {status?.toLowerCase() === 'đã hủy' && (
+          {order.status === 'pending' && (
             <View style={styles.btnRemmoveOrder}>
               <ButtonCC.ButtonBorderRed
                 // onPress={onToggle}

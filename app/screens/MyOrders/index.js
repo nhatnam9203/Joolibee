@@ -14,7 +14,9 @@ const Index = () => {
   const navigation = useNavigation();
 
   const goToDetail = (item) => () => {
-    navigation.navigate(ScreenName.DeitalOrders, { order: item });
+    navigation.navigate(ScreenName.DeitalOrders, {
+      order: { ...item, status: item.status?.toLowerCase() },
+    });
   };
 
   const getShippingMethod = (txt = '') => {
@@ -56,7 +58,9 @@ const Index = () => {
   );
 
   const renderItem = ({ item }) => {
-    const status_text = statusOrder.convertStatusOrder(item.status);
+    const { total, order_date, number, status, items, shipping_address } =
+      item || {};
+    const status_text = statusOrder.convertStatusOrder(status);
     const status_style = {
       ...AppStyles.fonts.bold,
       color: statusOrder.getColor(status_text),
@@ -67,19 +71,25 @@ const Index = () => {
         <Image source={images.icons.ic_order} />
         <View style={styles.itemSubContainer}>
           <View style={styles.grandTotalContainer}>
-            <Text style={styles.txtPrice}>{item.grand_total}</Text>
-            <Text style={AppStyles.fonts.mini}>2 món</Text>
+            <Text style={styles.txtPrice}>
+              {total?.grand_total &&
+                format.jollibeeCurrency(total?.grand_total)}
+            </Text>
+            <Text style={AppStyles.fonts.mini}>{items?.length || 0} món</Text>
           </View>
 
-          <Text style={AppStyles.fonts.medium}>
-            Đơn hàng #{item.order_number}
-          </Text>
-          <Text style={styles.txtDate}>{getDateStatus(item.created_at)}</Text>
+          <Text style={AppStyles.fonts.medium}>Đơn hàng #{number}</Text>
+          <Text style={styles.txtDate}>{getDateStatus(order_date)}</Text>
           <Text numberOfLines={1} style={styles.txtAddress}>
             <Text style={{ fontWeight: 'bold' }}>
               {getShippingMethod(item.shipping_method)}
             </Text>
-            :{' ' + item.address}
+            :
+            {' ' +
+              format.addressFull({
+                ...shipping_address,
+                region: { label: shipping_address.region },
+              })}
           </Text>
 
           <View style={styles.bottomContainer}>

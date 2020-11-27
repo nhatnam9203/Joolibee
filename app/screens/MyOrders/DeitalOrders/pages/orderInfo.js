@@ -1,18 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyles, metrics } from '@theme';
-
-export default function orderInfo() {
+import { format } from '@utils';
+export default function orderInfo({ info }) {
+  const { firstname, lastname, telephone, region } = info || {};
   return (
     <View style={styles.container}>
-      <Text style={AppStyles.fonts.text}>Nguyen Van A</Text>
-      <Text style={AppStyles.fonts.text}>0778123456</Text>
+      <Text style={AppStyles.fonts.text}>{firstname + ' ' + lastname}</Text>
+      <Text style={AppStyles.fonts.text}>{telephone}</Text>
       <Text style={[AppStyles.fonts.text, { fontWeight: 'bold' }]}>
         Giao đến:
         <Text
           numberOfLines={2}
           style={[AppStyles.fonts.text, { fontWeight: 'normal' }]}>
-          16 Trương Định, P. 6, Q. 3, Tp. HCM
+          {format.addressFull({ ...info, region: { label: region } })}
         </Text>
       </Text>
     </View>

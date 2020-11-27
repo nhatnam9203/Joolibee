@@ -5,7 +5,7 @@ import { images, AppStyles, metrics } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
 import { scale } from '@utils';
-const { scaleHeight } = scale;
+const { scaleHeight, scaleWidth } = scale;
 const Detail = ({ route }) => {
   const navigation = useNavigation();
   const [guides, setGuides] = React.useState([]);
@@ -54,7 +54,12 @@ const Detail = ({ route }) => {
 
         <View style={styles.layoutHonrizontal}>
           {item.images.map((image, index) => (
-            <Image key={index + ''} source={image.url} />
+            <Image
+              style={item.images.length > 1 ? styles.imgStyle : { flex: 1 }}
+              key={index + ''}
+              source={image.url}
+              resizeMode="contain"
+            />
           ))}
         </View>
       </View>
@@ -130,6 +135,10 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     backgroundColor: '#fff',
+  },
+  imgStyle: {
+    width: scaleWidth(181),
+    height: scaleHeight(390),
   },
 });
 export default Detail;

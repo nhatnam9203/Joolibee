@@ -38,7 +38,6 @@ export function getImage(status = '') {
 }
 
 export function convertStatusOrder(status = '') {
-  console.log('status', status);
   // pending, received, cooking, ready, shipping, complete,ready_to_ship;
   switch (status.toLowerCase()) {
     case 'pending':
@@ -59,8 +58,9 @@ export function convertStatusOrder(status = '') {
 
     case 'cancel':
       return 'Đã hủy';
-
+    case 'bom':
+      return 'Đã hủy';
     default:
-      return '';
+      return 'Đã hủy';
   }
 }
