@@ -3,7 +3,8 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles, metrics } from '@theme';
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { scale } from '@utils';
 const { scaleHeight, scaleWidth } = scale;
 const Detail = ({ route }) => {
@@ -47,18 +48,22 @@ const Detail = ({ route }) => {
   }, [navigation, title]);
   const renderItem = ({ item }) => {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <Text style={styles.txtStep}>
           Bước {item.step}:<Text style={styles.txtCotent}>{item.cotent}</Text>
         </Text>
 
         <View style={styles.layoutHonrizontal}>
           {item.images.map((image, index) => (
-            <Image
-              style={item.images.length > 1 ? styles.imgStyle : { flex: 1 }}
+            <FastImage
+              style={
+                item.images.length > 1
+                  ? styles.imgStyle
+                  : { width: scaleWidth(372), height: scaleHeight(571) }
+              }
               key={index + ''}
               source={image.url}
-              resizeMode="contain"
+              resizeMode={FastImage.resizeMode.contain}
             />
           ))}
         </View>
@@ -67,12 +72,13 @@ const Detail = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <CustomImageBackground
-        style={styles.container}
-        source={images.watermark_background_2}>
+    <CustomImageBackground
+      style={styles.container}
+      source={images.watermark_background_2}>
+      <SafeAreaView style={{ flex: 1 }}>
         <CustomFlatList
           data={guides}
+          horizontal={false}
           keyExtractor={(_, index) => index + ''}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
@@ -80,15 +86,18 @@ const Detail = ({ route }) => {
             <Text style={styles.title}>{title?.toUpperCase()}</Text>
           )}
         />
-      </CustomImageBackground>
-    </SafeAreaView>
+      </SafeAreaView>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // width: '100%',
     paddingHorizontal: metrics.padding * 2,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
   },
   layoutHonrizontal: {
     flexDirection: 'row',

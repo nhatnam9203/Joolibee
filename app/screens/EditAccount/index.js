@@ -14,12 +14,14 @@ import * as Yup from 'yup';
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ButtonCC, TextInputErrorMessage } from '../components';
+import { useNavigation } from '@react-navigation/native';
+import { ButtonCC, TextInputErrorMessage, PasswordInput } from '../components';
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
 const HALF_LAYOUT_WIDTH = '42.5%';
 const EditAccountScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const user = useSelector((state) => state.account?.user?.profile);
   const { email, firstname, lastname, phone_number, gender, date_of_birth } =
     user || {};
@@ -39,15 +41,17 @@ const EditAccountScreen = () => {
       dispatch(app.showLoading());
       updateCustomerInfo({ variables: values })
         .then((data) => {
-          dispatch(account.saveUserInfo(data?.data?.updateCustomerInfo));
+          if (data?.data?.updateCustomerInfo) {
+            dispatch(account.saveUserInfo(data?.data?.updateCustomerInfo));
+            navigation.goBack();
+          }
           dispatch(app.hideLoading());
-          // navigation.goBack();
         })
         .catch(() => {
           dispatch(app.hideLoading());
         });
     },
-    [dispatch, updateCustomerInfo],
+    [dispatch, navigation, updateCustomerInfo],
   );
   const {
     values,
@@ -65,6 +69,7 @@ const EditAccountScreen = () => {
       phone_number,
       gender,
       date_of_birth,
+      password: '',
     },
     validationSchema: EditSchema,
     isValidating: true,
@@ -95,7 +100,6 @@ const EditAccountScreen = () => {
               border
             />
           </View>
-
           {errors.firstname && touched.firstname && (
             <TextInputErrorMessage
               style={{
@@ -105,7 +109,6 @@ const EditAccountScreen = () => {
               color={AppStyles.colors.inputError}
             />
           )}
-
           <CustomInput
             style={{ width: LAYOUT_WIDTH, opacity: 0.4 }}
             placeholder={translate('txtInputPhone')}
@@ -114,7 +117,6 @@ const EditAccountScreen = () => {
             textContentType="telephoneNumber"
             value={phone_number}
           />
-
           <CustomInput
             style={{ width: LAYOUT_WIDTH, opacity: 0.4 }}
             onChangeText={handleChange('email')}
@@ -133,7 +135,6 @@ const EditAccountScreen = () => {
               color={AppStyles.colors.inputError}
             />
           )}
-
           <View style={styles.pickerContentStyle}>
             <CustomBirthdayPicker
               onChangeDate={handleChange('date_of_birth')}
@@ -170,7 +171,6 @@ const EditAccountScreen = () => {
               }}
             />
           </View>
-
           <ButtonCC.ButtonYellow
             label={translate('txtUpdate')}
             onPress={handleSubmit}

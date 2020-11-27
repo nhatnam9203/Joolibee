@@ -186,6 +186,7 @@ export const UPDATE_CUSTOMER = gql`
     $firstname: String!
     $lastname: String!
     $email: String!
+    $password: String!
   ) {
     updateCustomerInfo(
       input: {
@@ -194,7 +195,7 @@ export const UPDATE_CUSTOMER = gql`
         firstname: $firstname
         lastname: $lastname
         email: $email
-        password: "Admin123456"
+        password: $password
       }
     ) {
       customer {

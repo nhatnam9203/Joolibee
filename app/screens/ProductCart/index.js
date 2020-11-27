@@ -84,6 +84,14 @@ const ProductCart = ({ visible, onToggle }) => {
     popupRef.current.forceQuit();
   };
 
+  const orderCreateNewAddress = () => {
+    popupRef.current.forceQuit();
+    navigation.navigate(ScreenName.DetailMyAddress, {
+      titleHeader: translate('txtMyAddressDetail'),
+      cartId: customerCart?.id,
+    });
+  };
+
   // ========= PAYMENT PROCESS
   const paymentButtonPressed = () => {
     //
@@ -92,16 +100,21 @@ const ProductCart = ({ visible, onToggle }) => {
         shipping_addresses: [{ customer_address_id: address_id }],
       },
     };
-    if (isEmpty(shipping_addresses) && address_id) {
-      setShippingAddressesOnCart(params);
+
+    if (isEmpty(addresses)) {
+      orderCreateNewAddress();
+    } else {
+      if (isEmpty(shipping_addresses) && address_id) {
+        setShippingAddressesOnCart(params);
+      }
+      if (isEmpty(billing_address) && address_id) {
+        setBillingAddressOnCart(address_id);
+      }
+      if (isEmpty(selected_payment_method?.code)) {
+        setPaymentMethodOnCart();
+      }
+      goToPayment();
     }
-    if (isEmpty(billing_address) && address_id) {
-      setBillingAddressOnCart(address_id);
-    }
-    if (isEmpty(selected_payment_method?.code)) {
-      setPaymentMethodOnCart();
-    }
-    goToPayment();
   };
   const goToPayment = () => {
     navigation.navigate(ScreenName.Order);
