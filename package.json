@@ -15,7 +15,8 @@
     "clean:android": "cd android && ./gradlew clean",
     "release:ios": "bundle exec fastlane ios release",
     "push:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Production",
-    "push:android": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production"
+    "push:android": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production",
+    "test1": "jest"
   },
   "dependencies": {
     "@apollo/client": "^3.2.4",

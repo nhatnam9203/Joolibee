@@ -3,7 +3,7 @@
  * Everything starts from the entry point
  */
 import { ApolloProvider } from '@apollo/client';
-import { Loading, RootPermission } from '@components';
+import { Loading, RootPermission, CustomPopupConfirm } from '@components';
 import { useChangeLanguage } from '@hooks';
 import { setI18nConfig } from '@localize';
 import { app } from '@slices';
@@ -28,8 +28,13 @@ import {
 } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import GraphErrorHandler from './GraphErrorHandler';
-import { dropdownRef, graphQLErrorRef } from './navigation/NavigationService';
+import {
+  dropdownRef,
+  graphQLErrorRef,
+  confirmRef,
+} from './navigation/NavigationService';
 import { useGraphQLClient } from '@graphql';
+import { ConfirmHandler } from './handlers';
 
 const fontConfig = {
   default: {
@@ -104,6 +109,7 @@ let App = () => {
                   showCancel={true}
                   closeInterval={6000}
                 />
+                {/* <ConfirmHandler ref={confirmRef} /> */}
               </PaperProvider>
             </GraphErrorHandler>
           </LangProvider>
