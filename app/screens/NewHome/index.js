@@ -171,10 +171,9 @@ const HomeScreen = () => {
         </AppScrollViewIOSBounceColorsWrapper>
       </CustomImageBackground>
 
-      {/**Popup Order List Items */}
-
       <PopupSelectAreaComponent visible={isVisible} />
 
+      {/**Popup Order List Items */}
       <ProductCart
         visible={showOrderList}
         onToggle={() => dispatch(app.dismissOrderList())}

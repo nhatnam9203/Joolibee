@@ -125,7 +125,18 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const cart_id = useSelector((state) => state.account?.cart?.id);
+  const {
+    items,
+    applied_coupons,
+    prices: { grand_total, discounts, subtotal_excluding_tax },
+    shipping_addresses,
+  } = data?.cart || {
+    items: [],
+    prices: { grand_total: {} },
+    shipping_addresses: [{}],
+  };
 
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
@@ -140,7 +151,7 @@ const OrderScreen = () => {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-and-network',
   });
-  // console.log('data', JSON.stringify(data));
+
   const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
     variables: { categoryId: 4 },
     fetchPolicy: 'cache-first',
@@ -153,16 +164,6 @@ const OrderScreen = () => {
   const [setShippingMethodsOnCart] = useMutation(GQL.SET_ORDER_SHIPPING_METHOD);
   const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
-  const {
-    items,
-    applied_coupons,
-    prices: { grand_total, discounts, subtotal_excluding_tax },
-    shipping_addresses,
-  } = data?.cart || {
-    items: [],
-    prices: { grand_total: {} },
-    shipping_addresses: [{}],
-  };
 
   const { firstname, lastname, selected_shipping_method, telephone } =
     shipping_addresses[0] || {};

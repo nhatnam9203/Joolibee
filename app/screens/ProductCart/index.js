@@ -30,43 +30,42 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
   const [cartDetail, setCartDetail] = React.useState(null);
-
   const [footerSize, onLayoutFooter] = useComponentSize();
 
-  // Get Customer Cart
+  // GET
   const customerCart = useSelector((state) => state.account?.cart);
-  const { data } = useQuery(GQL.CART_DETAIL, {
-    variables: { cartId: customerCart?.id },
-    // fetchPolicy: 'cache-first',
-  });
-  const { shipping_addresses, selected_payment_method, billing_address } =
-    data?.cart || {};
-  // Mutation update cart product
-  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
 
-  // Mutation update cart product --
   const { customer } = GEX.useCustomer();
-  const addresses = customer?.addresses || [];
-  const address_id = addresses.find((x) => x.default_shipping)?.id;
+  const addresses = customer?.addresses ?? [];
+  const address_id = addresses?.find((x) => x.default_shipping)?.id;
+
+  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
+
+  // cần get ra để nhét default value vào
+  const {
+    shipping_addresses,
+    selected_payment_method,
+    billing_address,
+    applied_coupons,
+    available_payment_methods,
+  } = getCheckOutCartResp?.data?.cart || {};
+
+  // MUTATION
+  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
   const {
     setShippingAddressesOnCart,
-    responseShipping,
+    setShippingAddressesOnCartResp,
   } = GEX.useSetShippingAddress();
-  const { setBillingAddressOnCart } = GEX.useSetBillingAddress();
-  const { setPaymentMethodOnCart } = GEX.useSetPaymentMethod();
-  const onRenderItem = ({ item }) => {
-    return (
-      <OrderItem
-        item={item}
-        key={item.id + ''}
-        shadow={false}
-        updateQty={updateMyCart}
-        onPress={() => {
-          onShowCartItem(item);
-        }}
-      />
-    );
-  };
+
+  const {
+    setBillingAddressOnCart,
+    setBillingAddressOnCartResp,
+  } = GEX.useSetBillingAddress();
+
+  const {
+    setPaymentMethodOnCart,
+    setPaymentMethodOnCartResp,
+  } = GEX.useSetPaymentMethod();
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -78,34 +77,54 @@ const ProductCart = ({ visible, onToggle }) => {
     }, 1000);
   };
 
+  const isPaymentWaiting = () => {
+    return getCheckOutCartResp.loading;
+  };
+
+  const closePopup = () => {
+    // Khi khong process to server moi cho quit, dùng để set default  khi tiến hành thanh toán
+    if (!isPaymentWaiting()) {
+      popupRef.current.forceQuit();
+    }
+  };
+
   // ========= ORDER PROCESS
   const orderButtonPressed = () => {
-    navigation.navigate(ScreenName.Menu);
-    popupRef.current.forceQuit();
+    if (!isPaymentWaiting()) {
+      navigation.navigate(ScreenName.Menu);
+      popupRef.current.forceQuit();
+    }
   };
 
   // ========= PAYMENT PROCESS
-  const paymentButtonPressed = () => {
+
+  const paymentButtonPressed = async () => {
     //
     const params = {
       variables: {
         shipping_addresses: [{ customer_address_id: address_id }],
       },
     };
+
     if (isEmpty(shipping_addresses) && address_id) {
-      setShippingAddressesOnCart(params);
+      await setShippingAddressesOnCart(params);
     }
+
     if (isEmpty(billing_address) && address_id) {
-      setBillingAddressOnCart(address_id);
+      await setBillingAddressOnCart(address_id);
     }
+
     if (isEmpty(selected_payment_method?.code)) {
-      setPaymentMethodOnCart();
+      await setPaymentMethodOnCart();
     }
+
+    Logger.debug('goToPayment', 'goToPayment');
     goToPayment();
   };
+
   const goToPayment = () => {
     navigation.navigate(ScreenName.Order);
-    popupRef.current.forceQuit();
+    closePopup();
   };
 
   const updateMyCart = async (item) => {
@@ -120,12 +139,26 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   const onShowCartItem = (item) => {
-    popupRef.current.forceQuit();
+    // popupRef.current.forceQuit();
 
     navigation.navigate(ScreenName.MenuItemDetail, {
       product: item?.product,
       detailItem: item,
     });
+  };
+
+  const onRenderItem = ({ item }) => {
+    return (
+      <OrderItem
+        item={item}
+        key={item.id + ''}
+        shadow={false}
+        updateQty={updateMyCart}
+        onPress={() => {
+          onShowCartItem(item);
+        }}
+      />
+    );
   };
 
   React.useEffect(() => {
@@ -136,10 +169,17 @@ const ProductCart = ({ visible, onToggle }) => {
       } = customerCart;
 
       const total = format.jollibeeCurrency(grand_total);
+      Logger.debug(items, 'items');
+      Logger.debug(grand_total, 'grand_total');
 
       setCartDetail({ items, total });
     }
   }, [customerCart]);
+
+  React.useEffect(() => {
+    getCheckOutCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <PopupLayout
@@ -150,15 +190,14 @@ const ProductCart = ({ visible, onToggle }) => {
       <View style={styles.container}>
         {/**Header */}
         <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.btnClose}
-            onPress={() => popupRef.current.forceQuit()}>
+          <TouchableOpacity style={styles.btnClose} onPress={closePopup}>
             <Image source={images.icons.ic_popup_close} resizeMode="center" />
           </TouchableOpacity>
-          <Text style={styles.txtHeader}>{`${translate(
-            'txtProductCart',
-          ).toUpperCase()}`}</Text>
+          <Text style={styles.txtHeader}>
+            {translate('txtProductCart').toUpperCase()}
+          </Text>
         </View>
+
         {/**Content List */}
         <CustomFlatList
           style={styles.bodyList}
@@ -184,7 +223,7 @@ const ProductCart = ({ visible, onToggle }) => {
             <View style={styles.priceContent}>
               <Text style={styles.priceStyle}>{cartDetail?.total}</Text>
               <Text style={styles.pointStyle}>
-                (+ {format.caculatePoint(cartDetail?.items)}{' '}
+                (+ {format.caculatePoint(cartDetail?.items)}
                 {translate('txtPoint')})
               </Text>
             </View>
@@ -208,9 +247,7 @@ const ProductCart = ({ visible, onToggle }) => {
           </View>
         </View>
       </View>
-      <Loading
-        isLoading={updateCartResp?.loading || responseShipping?.loading}
-      />
+      <Loading isLoading={updateCartResp?.loading} />
     </PopupLayout>
   );
 };
