@@ -3,7 +3,7 @@ import { CustomFlatList } from '@components';
 import React from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ORDER_LIST } from '../queries';
-
+import { ORDERS_CUSTOMER } from '../gql';
 const defaultData = [
   { id: 1 },
   { id: 2 },
@@ -18,16 +18,13 @@ export const QueryOrderList = ({
   renderItemLoading = () => <View />,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { loading, error, data, refetch } = useQuery(ORDER_LIST, {
-    variables: null,
-  });
+  const { loading, error, data, refetch } = useQuery(ORDERS_CUSTOMER);
 
-  let _data = data?.customerOrders?.items
-    ? data?.customerOrders?.items
+  let _data = data?.customer?.orders.items
+    ? data?.customer?.orders.items
     : defaultData;
-
   if (error) {
-    return null;
+    return <View />;
   }
 
   const handleRefresh = () => {
@@ -37,7 +34,6 @@ export const QueryOrderList = ({
       setRefreshing(false);
     }, 3000);
   };
-  console.log(_data);
   return (
     <CustomFlatList
       data={_data}

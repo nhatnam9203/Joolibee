@@ -11,7 +11,7 @@ import StepIndicator from 'react-native-step-indicator';
 import { AppStyles, metrics, images } from '@theme';
 import { PopupChat } from '../../../components';
 import { makeAPhoneCall } from '@utils';
-
+import LottieView from 'lottie-react-native';
 const data = [
   {
     title: 'Đang chờ xác nhận',
@@ -135,36 +135,26 @@ export default function OrderStatus({ status }) {
   };
 
   const renderStepIndicator = ({ position, stepStatus }) => {
-    const activeBg = {
-      backgroundColor:
-        stepStatus === 'unfinished'
-          ? AppStyles.colors.inactive
-          : AppStyles.colors.accent,
-    };
     const bgWarpper = stepStatus === 'unfinished' && {
       backgroundColor: AppStyles.colors.inactive,
     };
-    const scaleIndicator = stepStatus !== 'unfinished' && {
-      transform: [{ scale }],
-    };
     return (
       <View style={[styles.wrapperStepIndicator, bgWarpper]}>
-        <Animated.View
-          style={[styles.fadeStepIndicator, activeBg, scaleIndicator]}
-        />
-        <View
-          style={[
-            styles.stepIndicator,
-            activeBg,
-            stepStatus !== 'unfinished' && {
-              transform: [
-                {
-                  scale: 0.8,
-                },
-              ],
-            },
-          ]}
-        />
+        {stepStatus === 'unfinished' ? (
+          <View
+            style={[
+              styles.stepIndicator,
+              { backgroundColor: AppStyles.colors.inactive, borderRadius: 10 },
+            ]}
+          />
+        ) : (
+          <LottieView
+            source={images.animations.fade}
+            style={styles.stepIndicator}
+            autoPlay
+            loop
+          />
+        )}
       </View>
     );
   };
@@ -226,9 +216,9 @@ const styles = StyleSheet.create({
   },
 
   stepIndicator: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: 20,
+    height: 20,
+
     position: 'absolute',
   },
 

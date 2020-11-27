@@ -1,25 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyles, metrics } from '@theme';
-
+import { format } from '@utils';
 export default function orderProductList({ data = [] }) {
   const renderItem = (item, index) => (
     <View key={index + ''} style={styles.container}>
       <View style={styles.leftContainer}>
         <Text style={[AppStyles.fonts.bold, styles.txtContent]}>
-          {item.options}
+          {item.product_name}
         </Text>
-        <Text style={[AppStyles.fonts.text, styles.txtContent]}>
+        {/* <Text style={[AppStyles.fonts.text, styles.txtContent]}>
           {item.extra}
         </Text>
         <Text style={[AppStyles.fonts.text, styles.txtContent]}>
           {item.soft_drink}
-        </Text>
+        </Text> */}
       </View>
 
       <View style={styles.rightContainer}>
-        <BlockQuantity qty={item.qty} />
-        <Text style={AppStyles.fonts.bold}>{item.price} đ</Text>
+        <BlockQuantity qty={item.quantity_ordered} />
+        <Text style={AppStyles.fonts.bold}>
+          {format.jollibeeCurrency(item.product_sale_price)}
+        </Text>
       </View>
     </View>
   );

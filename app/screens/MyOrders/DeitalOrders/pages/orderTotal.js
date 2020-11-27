@@ -1,21 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, metrics, images } from '@theme';
+import { format } from '@utils';
+export default function orderTotal({ total }) {
+  const { grand_total, subtotal } = total || {};
+  const discount_total = '0.000đ';
 
-export default function orderTotal() {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={AppStyles.fonts.text}>Tạm tính:</Text>
-        <Text style={AppStyles.fonts.bold}>255.000 đ</Text>
+        <Text style={AppStyles.fonts.bold}>
+          {subtotal && format.jollibeeCurrency(subtotal)}
+        </Text>
       </View>
 
       <View style={styles.content}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image source={images.icons.ic_sticked} />
-          <Text style={AppStyles.fonts.text}> Khuyến mãi (Ưu đãi 40.000đ)</Text>
+          <Text style={AppStyles.fonts.text}> Khuyến mãi (Ưu đãi 0.000đ)</Text>
         </View>
-        <Text style={AppStyles.fonts.bold}>-40.000 đ</Text>
+        <Text style={AppStyles.fonts.bold}>-{discount_total}</Text>
       </View>
 
       <View style={styles.seperator} />
@@ -25,7 +30,7 @@ export default function orderTotal() {
           Tổng cộng:
         </Text>
         <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
-          215.000 đ
+          {grand_total && format.jollibeeCurrency(grand_total)}
         </Text>
       </View>
 
