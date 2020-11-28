@@ -11,33 +11,33 @@ import StepIndicator from 'react-native-step-indicator';
 import { AppStyles, metrics, images } from '@theme';
 import { PopupChat } from '../../../components';
 import { makeAPhoneCall } from '@utils';
+import { translate } from '@localize';
 import LottieView from 'lottie-react-native';
 const data = [
   {
-    title: 'Đang chờ xác nhận',
-    description:
-      'Đơn hàng của bạn đã được gửi và đang chờ xác nhận từ nhà hàng',
+    title: translate('txtStatusOrderPending'),
+    description: translate('txtDesOrderPending'),
     type: 'pending',
   },
   {
-    title: 'Đã xác nhận & chuẩn bị đơn hàng',
-    description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn',
+    title: translate('txtStatusOrderReceived'),
+    description: translate('txtDesOrderReceived'),
     type: 'received',
   },
 
   {
-    title: 'Đang giao hàng',
+    title: translate('txtStatusOrderShipping'),
     description: 'Trần văn C (0778010203)',
     type: 'shipping',
   },
   {
-    title: 'Đã đến nơi',
-    description: 'Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.',
+    title: translate('txtStatusOrderArrived'),
+    description: translate('txtDesOrderArrived'),
     type: 'arrived',
   },
   {
-    title: 'Hoàn thành',
-    description: 'Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng',
+    title: translate('txtStatusOrderComplete'),
+    description: translate('txtDesOrderComplete'),
     type: 'complete',
   },
 ];

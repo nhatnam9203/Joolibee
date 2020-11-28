@@ -1,19 +1,20 @@
 import { AppStyles, images } from '@theme';
+import { translate } from '@localize';
 export function getColor(status = '') {
-  switch (status.toLowerCase()) {
-    case 'đang giao hàng':
+  switch (status) {
+    case translate('txtStatusOrderShipping'):
       return AppStyles.colors.delivery;
 
-    case 'đã xác nhận':
+    case translate('txtStatusOrderReceived'):
       return AppStyles.colors.dark_aqua;
 
-    case 'đã hủy':
+    case translate('txtStatusOrderCancel'):
       return AppStyles.colors.accent;
 
-    case 'đã đến nơi':
+    case translate('txtStatusOrderArrived'):
       return AppStyles.colors.confirmed;
 
-    case 'hoàn thành':
+    case translate('txtStatusOrderComplete'):
       return AppStyles.colors.complete;
 
     default:
@@ -22,14 +23,14 @@ export function getColor(status = '') {
 }
 
 export function getImage(status = '') {
-  switch (status.toLowerCase()) {
-    case 'đang giao hàng':
+  switch (status) {
+    case translate('txtStatusOrderShipping'):
       return images.jolibee_delivery;
 
-    case 'đã xác nhận':
+    case translate('txtStatusOrderReceived'):
       return images.jolibee_cooking;
 
-    case 'đã đến nơi':
+    case translate('txtStatusOrderReceived'):
       return images.jollibee_arrived;
 
     default:
@@ -41,26 +42,25 @@ export function convertStatusOrder(status = '') {
   // pending, received, cooking, ready, shipping, complete,ready_to_ship;
   switch (status.toLowerCase()) {
     case 'pending':
-      return 'Đang chờ xác nhận';
+      return translate('txtStatusOrderPending');
     case 'shipping':
-      return 'Đang giao hàng';
-
+      return translate('txtStatusOrderShipping');
     case 'ready_to_ship':
-      return 'Đã xác nhận';
+      return translate('txtStatusOrderReceived');
     case 'received':
-      return 'Đã xác nhận';
+      return translate('txtStatusOrderReceived');
     case 'cooking':
-      return 'Đã xác nhận';
+      return translate('txtStatusOrderReceived');
     case 'arrived':
-      return 'Đã đến nơi';
+      return translate('txtStatusOrderArrived');
     case 'complete':
-      return 'Hoàn thành';
+      return translate('txtStatusOrderComplete');
 
     case 'cancel':
-      return 'Đã hủy';
+      return translate('txtStatusOrderCancel');
     case 'bom':
-      return 'Đã hủy';
+      return translate('txtStatusOrderCancel');
     default:
-      return 'Đã hủy';
+      return translate('txtStatusOrderCancel');
   }
 }
