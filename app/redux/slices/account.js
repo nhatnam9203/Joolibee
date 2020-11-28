@@ -12,7 +12,7 @@ const initialState = {
     isLogin: false,
     tempCheckSignup: false,
   },
-  cart: null,
+  cart: {},
   isShowQRCode: false,
   isLogout: false,
   isEatingUtensils: false,
@@ -38,8 +38,8 @@ const accountSlice = createSlice({
   reducers: {
     clearSignupState() {},
     clearSignInState() {},
-    clearCartState(state) {
-      state.cart = null;
+    resetCustomerCart(state) {
+      state.cart = state.payload;
       state.isEatingUtensils = false;
     },
     showQRCode(state) {

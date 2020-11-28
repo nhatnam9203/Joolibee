@@ -33,6 +33,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // GET
   const customerCart = useSelector((state) => state.account?.cart);
+  Logger.debug(customerCart, 'customerCart customerCart');
 
   const { customer } = GEX.useCustomer();
   const addresses = customer?.addresses ?? [];
@@ -43,11 +44,12 @@ const ProductCart = ({ visible, onToggle }) => {
     },
   };
 
-  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
+  const { cart } = GEX.useGetCustomerCart();
+  Logger.debug(cart, 'ProductCart >> getCheckOutCartResp');
 
   // cần get ra để nhét default value vào
   const { shipping_addresses, selected_payment_method, billing_address } =
-    getCheckOutCartResp?.data?.cart || {};
+    cart || {};
 
   const {
     getShippingMethod,
@@ -197,22 +199,17 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   React.useEffect(() => {
-    if (customerCart) {
+    if (customerCart?.prices) {
       const {
         items = [],
         prices: { grand_total },
-      } = customerCart;
+      } = customerCart || {};
 
       const total = format.jollibeeCurrency(grand_total);
 
       setCartDetail({ items, total });
     }
   }, [customerCart]);
-
-  React.useEffect(() => {
-    getCheckOutCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <PopupLayout

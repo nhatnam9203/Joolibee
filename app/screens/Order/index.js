@@ -55,6 +55,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   /** AUTO LOAD VALUE */
   const cart_id = useSelector((state) => state.account?.cart?.id);
+  Logger.debug(cart_id, 'cart_id');
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
   );
@@ -74,19 +75,15 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // --------- REQUEST CART-DETAIL -----------
 
-  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
-  const { data } = getCheckOutCartResp;
+  const { cart } = GEX.useGetCustomerCart();
+  Logger.debug(cart, 'OrderScreen > getCheckOutCartResp');
 
   const {
     items,
     applied_coupons,
     prices: { grand_total, discounts, subtotal_excluding_tax },
     shipping_addresses,
-  } = data?.cart || {
-    items: [],
-    prices: { grand_total: {} },
-    shipping_addresses: [{}],
-  };
+  } = cart;
 
   const { firstname, lastname, selected_shipping_method, telephone } =
     shipping_addresses[0] || {};
@@ -220,11 +217,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
-          // graphQlClient.cache.evict({ fieldName: 'cart' });
-          graphQlClient.cache.evict({ fieldName: 'customerCart' });
+          graphQlClient.cache.evict({ fieldName: 'cart' });
           graphQlClient.cache.gc();
-          dispatch(account.clearCartState());
-
           setShowPopupSuccess(true);
         }
         dispatch(app.hideLoading());
@@ -241,7 +235,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, [isEatingUtensils]);
 
   React.useEffect(() => {
-    getCheckOutCart();
     getSubMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

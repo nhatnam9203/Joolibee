@@ -137,8 +137,8 @@ export const CART_DETAIL = gql`
 `;
 
 export const CREATE_EMPTY_CART = gql`
-  mutation {
-    createEmptyCart
+  mutation($cart_id: String) {
+    createEmptyCart(input: { cart_id: $cart_id })
   }
 `;
 
