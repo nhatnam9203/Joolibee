@@ -103,7 +103,7 @@ const Index = () => {
             </Text>
 
             {/* ----- BUTTON ĐAT LAI -----  */}
-            {status_text === 'Hoàn thành' && (
+            {status_text === translate('txtStatusOrderComplete') && (
               <ButtonCC.ButtonBorderRed
                 label={translate('txtReOrder')}
                 width={scaleWidth(127)}

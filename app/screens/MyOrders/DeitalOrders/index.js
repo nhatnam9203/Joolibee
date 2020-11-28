@@ -1,11 +1,10 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
-import { CustomImageBackground, Loading } from '@components';
+import { CustomImageBackground } from '@components';
 import { PopupRating, ButtonCC } from '../../components';
+import { translate } from '@localize';
 import { statusOrder, scale, format } from '@utils';
-import { GQL } from '@graphql';
-import { useLazyQuery } from '@apollo/client';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
@@ -19,8 +18,8 @@ export default function Index({ navigation, route }) {
     order || {};
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
-    status_order?.toLowerCase() === 'hoàn thành' ||
-    status_order?.toLowerCase() === 'đã hủy'
+    status_order === translate('txtStatusOrderComplete') ||
+    status_order === translate('txtStatusOrderCancel')
       ? true
       : false;
   let hours = format.hours(order_date);
@@ -37,7 +36,7 @@ export default function Index({ navigation, route }) {
     () => (
       <View style={styles.headerTitleContainer}>
         <Text style={(AppStyles.fonts.medium_SVN, styles.headerTitle)}>
-          Đơn hàng #{number}
+          {translate('txtOrderNumber')} #{number}
         </Text>
         <Text style={(AppStyles.fonts.text, styles.headerSubTitle)}>
           {hours}, {date}
@@ -59,7 +58,7 @@ export default function Index({ navigation, route }) {
         { marginLeft: MARGIN_LEFT, marginVertical: MARGIN_VERTICAL },
         style,
       ]}>
-      <Text style={styles.orderTitle}>{title}</Text>
+      <Text style={styles.orderTitle}>{title?.toUpperCase()}</Text>
     </View>
   );
 
@@ -78,7 +77,7 @@ export default function Index({ navigation, route }) {
     if (order_complete || status === 'pending') {
       return (
         <>
-          <OrderTitle title="TRẠNG THÁI ĐƠN HÀNG" />
+          <OrderTitle title={translate('txtOrderStattus')} />
           <View style={styles.statusContent}>
             <OrderStatus status={status} />
           </View>
@@ -97,7 +96,7 @@ export default function Index({ navigation, route }) {
         )}
         <ExpectedTime />
         <OrderTitle
-          title="TRẠNG THÁI ĐƠN HÀNG"
+          title={translate('txtOrderStattus')}
           style={{ marginVertical: scaleHeight(5) }}
         />
         <OrderStatus status={status} />
@@ -109,13 +108,13 @@ export default function Index({ navigation, route }) {
       <View style={styles.bottomContainer}>
         <ButtonCC.ButtonYellow
           onPress={() => setVisible(true)}
-          label={'ĐÁNH GIÁ'}
+          label={translate('txtFeeback')}
           width={scaleWidth(185)}
           height={scaleHeight(61)}
         />
         <ButtonCC.ButtonRed
           // onPress={onToggle}
-          label={'ĐẶT LẠI'}
+          label={translate('txtReOrder')}
           width={scaleWidth(185)}
           height={scaleHeight(61)}
         />
@@ -135,13 +134,13 @@ export default function Index({ navigation, route }) {
 
         <View style={styles.statusContainer}>
           {/* -------------- THONG TIN DON HANG  -------------- */}
-          <OrderTitle title="THÔNG TIN GIAO HÀNG" />
+          <OrderTitle title={translate('txtInfoShipping')} />
           <OrderInfo info={shipping_address} />
           {/* -------------- THONG TIN DON HANG  -------------- */}
 
           {/* -------------- SAN PHAM DA CHON  -------------- */}
 
-          <OrderTitle title="MÓN ĂN ĐÃ CHỌN" />
+          <OrderTitle title={translate('txtItemSelect')} />
           <OrderProductList data={items} />
           {/* --------------  SAN PHAM DA CHON  -------------- */}
 
@@ -152,7 +151,7 @@ export default function Index({ navigation, route }) {
             <View style={styles.btnRemmoveOrder}>
               <ButtonCC.ButtonBorderRed
                 // onPress={onToggle}
-                label={'HỦY ĐƠN HÀNG'}
+                label={translate('txtCancel')}
                 width={scaleWidth(195)}
                 height={scaleHeight(61)}
               />

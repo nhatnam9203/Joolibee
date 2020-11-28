@@ -177,5 +177,20 @@
   "txtOrderNumber":"Order",
   "txtDish": "dish",
   "txtDeliveredTo":"Delivered to",
-  "txtToday" :"Today"
+  "txtToday" :"Today",
+  "txtStatusOrderPending" :"Pending",
+  "txtStatusOrderReceived" :"Received",
+  "txtStatusOrderShipping" :"Shipping",
+  "txtStatusOrderArrived" :"Arrived",
+  "txtStatusOrderComplete" :"Complete",
+  "txtStatusOrderCancel" :"Cancel",
+  "txtOrderStattus":"Order Status",
+  "txtInfoShipping":"Shipping Infomation",
+  "txtFeeback":"Feeback",
+  "txtDesOrderPending":"Your order has been sent and is awaiting confirmation from the restaurant",
+  "txtDesOrderReceived":"We have confirmed and are preparing your order",
+  "txtDesOrderArrived":"The order has arrived, please receive the goods.",
+  "txtDesOrderComplete":"Your orders have been completed, bon appétit",
+  "txtGrandTotal":"Grand total",
+  "txtSubmit":"Submit"
 }

@@ -54,6 +54,7 @@ export const CustomRaiting = ({ onPress }) => {
     <View style={styles.container}>
       {defaultData.map((item, index) => (
         <RaitingItem
+          key={index + ''}
           item={item}
           selected={isSelected === index}
           onPress={onHandlePress(index)}

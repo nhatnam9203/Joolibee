@@ -557,7 +557,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
                   {translate('txtMySavedPoint')}:
                 </Text>
                 <View style={styles.pointContainer}>
-                  <Text style={styles.txtPoint}>0 điểm</Text>
+                  <Text style={styles.txtPoint}>0 {translate('txtPoint')}</Text>
                 </View>
               </View>
             )}>
@@ -589,7 +589,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         </View>
 
         <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>Khuyến mãi : </Text>
+          <Text style={styles.txtStyle}>{translate('tabPromotion')} : </Text>
           {applied_coupons && (
             <VoucherContent
               content="Voucher ưu đãi 30K"
@@ -615,7 +615,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
         </View> */}
 
         <View style={styles.orderSumContent}>
-          <Text style={styles.txtTitleStyle}>Tổng cộng : </Text>
+          <Text style={styles.txtTitleStyle}>
+            {translate('txtGrandTotal')} :
+          </Text>
           <View
             style={{
               flexDirection: 'row',

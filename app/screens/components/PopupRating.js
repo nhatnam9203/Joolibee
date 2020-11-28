@@ -106,7 +106,7 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
 
             <CustomButton
               onPress={onHandleSubmit}
-              label="GỬI"
+              label={translate('txtSubmit')}
               width={229}
               height={61}
               disabled={rating > 0 ? false : true}
