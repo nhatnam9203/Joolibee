@@ -39,6 +39,12 @@ const ProductCart = ({ visible, onToggle }) => {
   const addresses = customer?.addresses ?? [];
   const address_id = addresses?.find((x) => x.default_shipping)?.id;
 
+  const params = {
+    variables: {
+      shipping_addresses: [{ customer_address_id: address_id }],
+    },
+  };
+
   const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
 
   // cần get ra để nhét default value vào
@@ -58,7 +64,7 @@ const ProductCart = ({ visible, onToggle }) => {
   // MUTATION
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
   const {
-    setShippingAddressesOnCart,
+    setShippingAddresses,
     setShippingAddressesOnCartResp,
   } = GEX.useSetShippingAddress();
 
@@ -124,16 +130,10 @@ const ProductCart = ({ visible, onToggle }) => {
     if (!getShippingMethodResp.data) return;
 
     const setDefaultValue = async () => {
-      const params = {
-        variables: {
-          shipping_addresses: [{ customer_address_id: address_id }],
-        },
-      };
-
       if (isEmpty(shipping_addresses) && address_id) {
         Logger.debug(shipping_addresses, 'shipping_addresses');
 
-        await setShippingAddressesOnCart(params);
+        await setShippingAddresses(params);
       }
 
       if (isEmpty(billing_address) && address_id) {
@@ -150,11 +150,17 @@ const ProductCart = ({ visible, onToggle }) => {
 
     setDefaultValue();
     if (!isPaymentWaiting()) {
-      navigation.navigate(ScreenName.Order, getShippingMethodResp.data);
+      navigation.navigate(ScreenName.Order, {
+        ...getShippingMethodResp.data,
+        addressParams: params,
+      });
       popupRef.current.forceQuit();
     } else {
       setTimeout(() => {
-        navigation.navigate(ScreenName.Order, getShippingMethodResp.data);
+        navigation.navigate(ScreenName.Order, {
+          ...getShippingMethodResp.data,
+          addressParams: params,
+        });
         popupRef.current.forceQuit();
       }, 1000);
     }

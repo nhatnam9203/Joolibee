@@ -12,6 +12,12 @@ import { CustomPopupMenu, CustomMapView, ItemStore } from '../components';
 import { AppStyles, images } from '@theme';
 import { Markers } from './pages';
 import { CustomButton } from '@components';
+import { CustomImageBackground } from '@components';
+import { translate } from '@localize';
+import { GEX } from '@graphql';
+import { useDispatch, useSelector } from 'react-redux';
+import { order } from '@slices';
+import _ from 'lodash';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = { top: 60, right: 60, bottom: 60, left: 60 };
@@ -84,14 +90,29 @@ const STORES = [
   },
 ];
 
-const StorePage = () => {
+const StorePage = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const refMap = React.useRef(null);
+  const dispatch = useDispatch();
+
+  const storesList = useSelector((state) => state.store.default.stores);
+  const { stores } = route.params;
+
+  const selectedStores = stores?.map((x, idx) => {
+    const index = storesList?.findIndex((st) => st.id === x.id);
+    if (index >= 0) {
+      return storesList[index];
+    } else {
+      return STORES[idx];
+    }
+  });
+
+  Logger.debug(selectedStores, 'selectedStoresselectedStores');
+
   const [city, setCity] = React.useState(null);
   const [districts, setDistricts] = React.useState(null);
   const [store_pickuped, pickupStore] = React.useState(null);
   const [visible, showModal] = React.useState([false, false]);
-
   const store_name = store_pickuped
     ? store_pickuped.store_name
     : 'Vui lòng chọn 1 cửa hàng';
@@ -118,15 +139,21 @@ const StorePage = () => {
     pickupStore(item);
   };
 
-  const onBack = () => {
+  const goBack = () => {
     navigation.goBack();
   };
 
   const fitAllMarkers = () => {
-    refMap.current?.fitToCoordinates(STORES, {
+    refMap.current?.fitToCoordinates(selectedStores, {
       edgePadding: DEFAULT_PADDING,
       animated: true,
     });
+  };
+
+  const setPickupStore = () => {
+    // cho nay chưa xet truogn hop back lai ma ko pickup
+    dispatch(order.pickupStore(store_pickuped?.store_id));
+    goBack();
   };
 
   const renderFooter = () => {
@@ -148,17 +175,19 @@ const StorePage = () => {
           disabled={store_pickuped ? false : true}
           width={'95%'}
           height={58}
-          label="XÁC NHẬN"
-          onPress={onBack}
+          label={translate('txtConfirm')}
           textColor={AppStyles.colors.text}
           bgColor={AppStyles.colors.button}
+          onPress={setPickupStore}
         />
       </View>
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <CustomImageBackground
+      source={images.watermark_background_2}
+      style={styles.waterMarkContainer}>
       {/* ------------ Select city and districts --------------------- */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
@@ -190,7 +219,7 @@ const StorePage = () => {
               ref={refMap}
               initialRegion={INITIAL_REGION}
               onMapReady={fitAllMarkers}>
-              <Markers data={STORES} mapView={refMap} />
+              <Markers data={selectedStores} mapView={refMap} />
             </CustomMapView>
           </View>
         )}
@@ -202,14 +231,16 @@ const StorePage = () => {
             isChecked={item == store_pickuped}
           />
         )}
-        data={STORES}
+        data={selectedStores}
       />
       {renderFooter()}
-    </View>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  waterMarkContainer: { flex: 1, backgroundColor: 'transparent' },
+
   container: {
     height: 320,
     width: '100%',

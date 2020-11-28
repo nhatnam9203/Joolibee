@@ -19,7 +19,7 @@ const Index = ({ route }) => {
   const navigation = useNavigation();
   // Get Customer Cart
   const customerCart = useSelector((state) => state.account?.cart);
-  const { setShippingAddressesOnCart } = GEX.useSetShippingAddress(() =>
+  const { setShippingAddresses } = GEX.useSetShippingAddress(() =>
     navigation.goBack(),
   );
 
@@ -33,7 +33,7 @@ const Index = ({ route }) => {
         { query: GQL.CART_DETAIL, variables: { cartId: customerCart?.id } },
       ],
     };
-    setShippingAddressesOnCart(params);
+    setShippingAddresses(params);
   };
 
   const onHandlePress = (item) => {

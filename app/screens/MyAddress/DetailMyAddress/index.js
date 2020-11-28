@@ -66,7 +66,7 @@ const Index = (props) => {
     : translate('txtSaveChange');
 
   //------------ Set shipping address -----------------//
-  const { setShippingAddressesOnCart } = GEX.useSetShippingAddress();
+  const { setShippingAddresses } = GEX.useSetShippingAddress();
 
   const setShippingAddress = React.useCallback(
     (id) => {
@@ -77,9 +77,9 @@ const Index = (props) => {
         awaitRefetchQueries: true,
         refetchQueries: [{ query: GQL.CART_DETAIL, variables: { cartId } }],
       };
-      setShippingAddressesOnCart(params);
+      setShippingAddresses(params);
     },
-    [cartId, setShippingAddressesOnCart],
+    [cartId],
   );
   //------------ Add address customer -----------------//
   const [createCustomerAddress] = useMutation(mutation.ADD_ADDRESS);

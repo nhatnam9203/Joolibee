@@ -32,9 +32,10 @@ import {
   dropdownRef,
   graphQLErrorRef,
   confirmRef,
+  comingSoonRef,
 } from './navigation/NavigationService';
 import { useGraphQLClient } from '@graphql';
-import { ConfirmHandler } from './handlers';
+import { ConfirmHandler, ComingSoonHandler } from './handlers';
 
 const fontConfig = {
   default: {
@@ -110,6 +111,7 @@ let App = () => {
                   closeInterval={6000}
                 />
                 <ConfirmHandler ref={confirmRef} />
+                <ComingSoonHandler ref={comingSoonRef} />
               </PaperProvider>
             </GraphErrorHandler>
           </LangProvider>

@@ -23,97 +23,21 @@ import {
   OrderNewItem,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { OrderItem, CustomScrollViewHorizontal } from './widget';
-import { useMutation, useQuery } from '@apollo/client';
+import {
+  OrderItem,
+  CustomScrollViewHorizontal,
+  OrderSection,
+  OrderSectionItem,
+  OrderButtonInput,
+} from './widget';
+import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { query, GQL, GEX } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
 import { app, account } from '@slices';
+import NavigationService from '../../navigation/NavigationService';
+
 const { scaleWidth, scaleHeight } = scale;
-
-const OrderSection = ({
-  titleColor = AppStyles.colors.accent,
-  title,
-  children,
-  buttonComponent,
-}) => {
-  return (
-    <View>
-      <View style={[AppStyles.styles.horizontalLayout, { padding: 17 }]}>
-        {!!title && (
-          <LabelTitle label={title} color={titleColor} fontSize={18} />
-        )}
-        {buttonComponent && buttonComponent()}
-      </View>
-      <View>{children}</View>
-    </View>
-  );
-};
-
-const OrderSectionItem = ({ children, onPress, height = 66 }) => {
-  return (
-    <TouchableOpacity
-      style={[
-        styles.itemStyle,
-        {
-          minHeight: height,
-        },
-      ]}
-      onPress={onPress}
-      disabled={!onPress}>
-      {children}
-    </TouchableOpacity>
-  );
-};
-
-const OrderButtonInput = ({
-  children,
-  onPress,
-  title,
-  icon,
-  bgColor,
-  btnWidth,
-  width = '100%',
-  height = 52,
-  borderColor = AppStyles.colors.placeholder,
-  style,
-  disabled,
-}) => {
-  return (
-    <View
-      style={[
-        styles.buttonInputContainer,
-        {
-          height: scaleHeight(height),
-          width,
-          borderColor,
-        },
-        style,
-      ]}>
-      {children}
-      <TouchableOpacity
-        style={[
-          styles.rightBtnInput,
-          {
-            backgroundColor: bgColor,
-            width: btnWidth,
-            opacity: disabled ? 0.5 : 1,
-          },
-        ]}
-        onPress={onPress}
-        disabled={disabled}>
-        {!!title && (
-          <LabelTitle
-            label={title}
-            color={AppStyles.colors.white}
-            fontSize={15}
-          />
-        )}
-        {!!icon && <Image source={icon} />}
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 const ShippingType = {
   InShop: 'storepickup',
@@ -125,30 +49,32 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = ({ route = { params: {} } }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { shippingMethod } = route.params;
+  const { shippingMethod, addressParams } = route.params;
 
   const cart_id = useSelector((state) => state.account?.cart?.id);
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
   );
+  const store_pickup_id = useSelector(
+    (state) => state.order?.pickup_location_code,
+  );
+
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
   const [coupon_code, setCouponCode] = React.useState('');
   const [reward_point, setRewardPoint] = React.useState('');
+  const [isPickupStore, setIsPickupStore] = React.useState(false);
 
-  // const [showConfirm, setShowConfirm] = React.useState(false);
-
-  // --------- handle fetch data cart -----------
-
-  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
-
+  // --------- REQUEST CART DETAIL -----------
   const { data } = useQuery(GQL.CART_DETAIL, {
     variables: { cartId: cart_id },
     fetchPolicy: 'cache-and-network',
   });
 
+  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
   const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
+
   const {
     items,
     applied_coupons,
@@ -160,7 +86,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     shipping_addresses: [{}],
   };
 
-  const responseMenu = useQuery(query.MENU_DETAIL_LIST, {
+  // Load món đi kèm
+  const [getSubMenu, responseMenu] = useLazyQuery(query.MENU_DETAIL_LIST, {
     variables: { categoryId: 4 },
     fetchPolicy: 'cache-first',
   });
@@ -173,14 +100,15 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setShippingMethod,
     setShippingMethodResp,
   } = GEX.useSetShippingMethodsOnCart();
+  const {
+    setShippingAddresses,
+    setShippingAddressesOnCartResp,
+  } = GEX.useSetShippingAddress();
 
   const { firstname, lastname, selected_shipping_method, telephone } =
     shipping_addresses[0] || {};
-
   const { method_code } = selected_shipping_method || {};
   const full_address = format.addressFull(shipping_addresses[0]);
-
-  const [shippingType, setShippingType] = React.useState(method_code);
   const total = format.jollibeeCurrency({
     value: grand_total.value,
     currency: 'VND',
@@ -190,6 +118,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
+  const [shippingType, setShippingType] = React.useState(method_code);
 
   const updateMyCart = async (item) => {
     let input = {
@@ -211,11 +140,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
     dispatch(account.clearCartState());
     setShowPopupSuccess(false);
   };
-
   const ontoggleSwitch = () => {
     dispatch(account.setEatingUtensils());
   };
-
   const onEdit = () => {
     shippingType === ShippingType.InShop
       ? navigation.navigate(ScreenName.StorePickup)
@@ -223,14 +150,36 @@ const OrderScreen = ({ route = { params: {} } }) => {
   };
 
   /**
-   * SET PAYMENT METHOD
+   * SET SHIPPING METHOD
    * @param {*} code : ["freeshipping", "storepickup"]
    */
-  const onChangePaymentMethod = (code) => {
-    dispatch(app.showLoading());
-    setShippingMethod(code);
-    setShippingType(code);
-    dispatch(app.hideLoading());
+  const onChangeShippingMethod = (code) => {
+    switch (code) {
+      case ShippingType.InShop:
+        NavigationService.showComingSoon();
+
+        // if (shippingMethod) {
+        //   const shippingInStore = shippingMethod.results?.find(
+        //     (x) => x.method === ShippingType.InShop,
+        //   );
+
+        //   navigation.navigate(ScreenName.StorePickup, {
+        //     stores: shippingInStore?.stores,
+        //   });
+        //   setIsPickupStore(true);
+        // }
+
+        break;
+      default:
+        setShippingType(code);
+
+        dispatch(app.showLoading());
+
+        setShippingMethod(code);
+        dispatch(app.hideLoading());
+
+        break;
+    }
   };
 
   const onApplyCoupon = () => {
@@ -273,8 +222,30 @@ const OrderScreen = ({ route = { params: {} } }) => {
   React.useEffect(() => {
     setTimeout(() => {
       setShowNotice(!isEatingUtensils);
-    }, 1500);
+    }, 250);
   }, [isEatingUtensils]);
+
+  React.useEffect(() => {
+    getSubMenu();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  React.useEffect(() => {
+    if (addressParams && store_pickup_id && isPickupStore) {
+      const { variables } = addressParams;
+      let pickupAddress = variables.shipping_addresses[0];
+      const pickupStoreAddress = Object.assign({}, pickupAddress, {
+        pickup_location_code: store_pickup_id,
+      });
+      const params = Object.assign({}, addressParams, {
+        variables: {
+          shipping_addresses: [pickupStoreAddress],
+        },
+      });
+
+      setShippingAddresses(params);
+    }
+  }, [store_pickup_id, isPickupStore]);
 
   const renderItemExtra = (item, index) => (
     <View key={index + ''} style={{ flex: 1 }}>
@@ -341,7 +312,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
               {shippingMethod?.results.map((sm) => (
                 <OrderSectionItem
                   onPress={() => {
-                    onChangePaymentMethod(sm.method);
+                    onChangeShippingMethod(sm.method);
                   }}>
                   <View style={AppStyles.styles.horizontalLayout}>
                     <Image
