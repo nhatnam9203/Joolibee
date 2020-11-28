@@ -29,6 +29,7 @@ import {
   OrderSection,
   OrderSectionItem,
   OrderButtonInput,
+  OrderVoucherItem,
 } from './widget';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { query, GQL, GEX } from '@graphql';
@@ -50,36 +51,33 @@ const CONFIRM_HEIGHT = 150;
 const OrderScreen = ({ route = { params: {} } }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { shippingMethod, addressParams } = route.params;
   const graphQlClient = useGraphQLClient();
+
+  const { shippingMethod, addressParams } = route.params;
+
+  /** AUTO LOAD VALUE */
   const cart_id = useSelector((state) => state.account?.cart?.id);
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
   );
+
+  // show dialog notice
+  const [showNotice, setShowNotice] = React.useState(isEatingUtensils);
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
+
+  const [coupon_code, setCouponCode] = React.useState('');
+  const [reward_point, setRewardPoint] = React.useState('');
+
+  // id dung cho store pickup
   const store_pickup_id = useSelector(
     (state) => state.order?.pickup_location_code,
   );
-
-  const [showNotice, setShowNotice] = React.useState(false);
-  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
-  const [coupon_code, setCouponCode] = React.useState('');
-  const [reward_point, setRewardPoint] = React.useState('');
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
-  // --------- REQUEST CART DETAIL -----------
-
-  // const { data } = useQuery(GQL.CART_DETAIL, {
-  //   variables: { cartId: cart_id },
-  //   fetchPolicy: 'cache-and-network',
-  // });
+  // --------- REQUEST CART-DETAIL -----------
 
   const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
   const { data } = getCheckOutCartResp;
-  // --------- REQUEST CART DETAIL -----------
-
-  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
-  const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
-  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
 
   const {
     items,
@@ -92,39 +90,47 @@ const OrderScreen = ({ route = { params: {} } }) => {
     shipping_addresses: [{}],
   };
 
-  // Load món đi kèm
-  const [getSubMenu, responseMenu] = useLazyQuery(query.MENU_DETAIL_LIST, {
-    variables: { categoryId: 4 },
-    fetchPolicy: 'cache-first',
-  });
-
-  /**
-   * SET SIPPING METHOD
-   */
-
-  const {
-    setShippingMethod,
-    setShippingMethodResp,
-  } = GEX.useSetShippingMethodsOnCart();
-  const {
-    setShippingAddresses,
-    setShippingAddressesOnCartResp,
-  } = GEX.useSetShippingAddress();
-
   const { firstname, lastname, selected_shipping_method, telephone } =
     shipping_addresses[0] || {};
+
   const { method_code } = selected_shipping_method || {};
   const full_address = format.addressFull(shipping_addresses[0]);
   const total = format.jollibeeCurrency({
     value: grand_total.value,
     currency: 'VND',
   });
-
   const _discount = format.jollibeeCurrency(discounts ? discounts.amount : {});
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
+  // --------- REQUEST CART-DETAIL -----------
   const [shippingType, setShippingType] = React.useState(method_code);
+
+  // update cart product
+  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
+  // add voucher
+  const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
+  // submit checkout
+  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
+  // Call get món đi kèm
+  const [getSubMenu, responseMenu] = useLazyQuery(query.MENU_DETAIL_LIST, {
+    variables: { categoryId: 4 },
+    fetchPolicy: 'cache-first',
+  });
+
+  /**
+   * SET SIPPING
+   */
+
+  const {
+    setShippingMethod,
+    setShippingMethodResp,
+  } = GEX.useSetShippingMethodsOnCart();
+
+  const {
+    setShippingAddresses,
+    setShippingAddressesOnCartResp,
+  } = GEX.useSetShippingAddress();
 
   const updateMyCart = async (item) => {
     let input = {
@@ -276,18 +282,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     </View>
   );
 
-  const VoucherContent = ({
-    style,
-    content,
-    colorText = AppStyles.colors.moderate_cyan,
-    icon = images.icons.ic_sticked,
-  }) => (
-    <View style={[styles.voucherContainer, style]}>
-      <Image style={styles.voucherIcon} source={icon} />
-      <Text style={[styles.voucherText, { color: colorText }]}>{content}</Text>
-    </View>
-  );
-
   const renderItemVoucher = (item, index) => {
     const color =
       item.status === 'error'
@@ -307,7 +301,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         borderColor={color}
         bgColor={color}
         style={{ marginRight: 5 }}>
-        <VoucherContent content={item.name} colorText={color} icon={icon} />
+        <OrderVoucherItem content={item.name} colorText={color} icon={icon} />
       </OrderButtonInput>
     );
   };
@@ -759,23 +753,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
   },
-  voucherContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    flex: 1,
-  },
-  voucherIcon: {
-    width: scaleWidth(17),
-    height: scaleHeight(17),
-    resizeMode: 'contain',
-  },
-  voucherText: {
-    ...AppStyles.fonts.text,
-    color: AppStyles.colors.moderate_cyan,
-    marginLeft: 3,
-    fontSize: scaleWidth(16),
-  },
+
   pointContainer: {
     paddingHorizontal: 5,
     paddingVertical: 6,
