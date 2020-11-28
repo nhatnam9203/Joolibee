@@ -7,14 +7,13 @@ import { CUSTOMER_CART_QUERY } from '../gql';
 export const useGetCustomerCart = () => {
   const dispatch = useDispatch();
 
-  // CREATE EMPTY CART
-  // const [createEmptyCart, createEmptyCartResp] = useMutation(CREATE_EMPTY_CART);
+  // const [createEmptyCart] = useMutation(CREATE_EMPTY_CART);
 
   // GET CUSTOMER CARTS
   const [getCustomerCart, getCustomerCartResp] = useLazyQuery(
     CUSTOMER_CART_QUERY,
     {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-and-network',
       //   onCompleted: (data) => {
       //     Logger.debug(data, 'get customer info complete');
       //   },
@@ -24,11 +23,10 @@ export const useGetCustomerCart = () => {
   const customerCart = useSelector((state) => state.account?.cart);
 
   React.useEffect(() => {
-    if (!customerCart) {
-      getCustomerCart();
-    }
+    getCustomerCart();
+    Logger.debug('useGetCustomerCart', '==================================');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerCart]);
+  }, []);
 
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
@@ -36,7 +34,7 @@ export const useGetCustomerCart = () => {
         account.updateCustomerCart(getCustomerCartResp.data?.customerCart),
       );
     }
-  }, [getCustomerCartResp, dispatch]);
+  }, [getCustomerCartResp.data, dispatch]);
 
   return {
     cart: customerCart,

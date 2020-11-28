@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
-import { GQL } from '@graphql';
+import { GQL, GEX } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import {
   AppScrollViewIOSBounceColorsWrapper,
@@ -9,12 +9,13 @@ import {
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/stack';
-import { app } from '@slices';
+
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { app } from '@slices';
 import {
   CardView,
   TopBarLeft,
@@ -51,8 +52,9 @@ const HomeScreen = () => {
     fetchPolicy: 'only-cache',
   });
 
+  GEX.useGetCustomerCart(); // !! tam thoi de, non se call khi update cart
+
   const { homeScreen } = data || {};
-  console.log('homeScreen', homeScreen);
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,

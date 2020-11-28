@@ -202,25 +202,6 @@ export const CUSTOMER_INFO = gql`
   }
 `;
 
-export const CUSTOMER_CART_QUERY = gql`
-  {
-    customerCart {
-      id
-      __typename
-      items {
-        id
-        __typename
-        product {
-          name
-          sku
-        }
-        quantity
-      }
-      total_quantity
-    }
-  }
-`;
-
 export const MENU_DETAIL_LIST = gql`
   query products($categoryId: String!) {
     products(filter: { category_id: { eq: $categoryId } }) {

@@ -13,34 +13,6 @@ import { PopupChat } from '../../../components';
 import { makeAPhoneCall } from '@utils';
 import { translate } from '@localize';
 import LottieView from 'lottie-react-native';
-const data = [
-  {
-    title: translate('txtStatusOrderPending'),
-    description: translate('txtDesOrderPending'),
-    type: 'pending',
-  },
-  {
-    title: translate('txtStatusOrderReceived'),
-    description: translate('txtDesOrderReceived'),
-    type: 'received',
-  },
-
-  {
-    title: translate('txtStatusOrderShipping'),
-    description: 'Trần văn C (0778010203)',
-    type: 'shipping',
-  },
-  {
-    title: translate('txtStatusOrderArrived'),
-    description: translate('txtDesOrderArrived'),
-    type: 'arrived',
-  },
-  {
-    title: translate('txtStatusOrderComplete'),
-    description: translate('txtDesOrderComplete'),
-    type: 'complete',
-  },
-];
 
 const stepIndicatorStyles = {
   stepIndicatorSize: 12,
@@ -61,7 +33,34 @@ const stepIndicatorStyles = {
 export default function OrderStatus({ status }) {
   const scale = React.useRef(new Animated.Value(15)).current;
   const [visible, showPopup] = React.useState(false);
+  const data = [
+    {
+      title: translate('txtStatusOrderPending'),
+      description: translate('txtDesOrderPending'),
+      type: 'pending',
+    },
+    {
+      title: translate('txtStatusOrderReceived'),
+      description: translate('txtDesOrderReceived'),
+      type: 'received',
+    },
 
+    {
+      title: translate('txtStatusOrderShipping'),
+      description: 'Trần văn C (0778010203)',
+      type: 'shipping',
+    },
+    {
+      title: translate('txtStatusOrderArrived'),
+      description: translate('txtDesOrderArrived'),
+      type: 'arrived',
+    },
+    {
+      title: translate('txtStatusOrderComplete'),
+      description: translate('txtDesOrderComplete'),
+      type: 'complete',
+    },
+  ];
   let indexStatus = data.findIndex((item) => item.type === status);
 
   const ImageLink = ({ source, onPress }) => (

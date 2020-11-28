@@ -37,18 +37,15 @@ const ProductCart = ({ visible, onToggle }) => {
   const { customer } = GEX.useCustomer();
   const addresses = customer?.addresses ?? [];
   const address_id = addresses?.find((x) => x.default_shipping)?.id;
-
   const params = {
     variables: {
       shipping_addresses: [{ customer_address_id: address_id }],
     },
   };
 
-  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
-
   // cần get ra để nhét default value vào
   const { shipping_addresses, selected_payment_method, billing_address } =
-    getCheckOutCartResp?.data?.cart || {};
+    customerCart || {};
 
   const {
     getShippingMethod,
@@ -117,10 +114,9 @@ const ProductCart = ({ visible, onToggle }) => {
   // ========= PAYMENT PROCESS
 
   const paymentButtonPressed = () => {
-    if (isEmpty(addresses)) {
+    if (!address_id) {
       orderCreateNewAddress();
-    }
-    getShippingMethod();
+    } else getShippingMethod();
   };
 
   React.useEffect(() => {
@@ -199,22 +195,17 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   React.useEffect(() => {
-    if (customerCart) {
+    if (customerCart?.prices) {
       const {
         items = [],
         prices: { grand_total },
-      } = customerCart;
+      } = customerCart || {};
 
       const total = format.jollibeeCurrency(grand_total);
 
       setCartDetail({ items, total });
     }
   }, [customerCart]);
-
-  React.useEffect(() => {
-    getCheckOutCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <PopupLayout

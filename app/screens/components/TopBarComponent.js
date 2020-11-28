@@ -8,7 +8,7 @@ import { scale } from '@utils';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ScreenName from '../ScreenName';
 
 const { scaleHeight } = scale;
@@ -66,7 +66,7 @@ export const TopBarRight = React.memo(() => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { cart } = GEX.useGetCustomerCart();
+  const cart = useSelector((state) => state.account?.cart);
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>

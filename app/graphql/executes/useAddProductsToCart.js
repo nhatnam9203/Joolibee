@@ -14,7 +14,6 @@ export const useAddProductsToCart = () => {
   const [addProductsToCart, response] = useMutation(ADD_PRODUCT_TO_CART, {
     // !! có nên lưu cart lại không, hay chỉ lưu số lượng rồi load lại mỗi lần view, hiện đang lưu
     onCompleted: (data) => {
-      Logger.debug(data, 'addProductsToCart');
       if (data?.addProductsToCart) {
         dispatch(app.hideLoading());
         dispatch(account.updateCustomerCart(data?.addProductsToCart?.cart));

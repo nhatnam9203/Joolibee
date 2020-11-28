@@ -3,14 +3,19 @@ import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomImageBackground } from '@components';
 import { PopupRating, ButtonCC } from '../../components';
+import ScreenName from '../../ScreenName';
 import { translate } from '@localize';
+import { app } from '@slices';
+import { useDispatch } from 'react-redux';
 import { statusOrder, scale, format } from '@utils';
+import { GEX } from '@graphql';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
 const MARGIN_VERTICAL = scaleHeight(20);
 
 export default function Index({ navigation, route }) {
+  const dispatch = useDispatch();
   const { order } = route.params;
   const [visible, setVisible] = React.useState(false);
 
@@ -26,6 +31,22 @@ export default function Index({ navigation, route }) {
   let date = format.date(order_date);
 
   const onClose = () => setVisible(false);
+
+  // --------------- Re Order Items Cart ----------------- //
+  const onReOderSuccess = () => {
+    navigation.navigate(ScreenName.NewHome);
+    setTimeout(() => {
+      dispatch(app.showOrderList());
+    }, 1000);
+  };
+  const { reorderItems } = GEX.useReOrderCart(onReOderSuccess);
+
+  const onHandleReOrder = () => {
+    dispatch(app.showLoading());
+    reorderItems(number);
+  };
+  // --------------- Re Order Items Cart End ----------------- //
+
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: HeaderTitle(),
@@ -113,7 +134,7 @@ export default function Index({ navigation, route }) {
           height={scaleHeight(61)}
         />
         <ButtonCC.ButtonRed
-          // onPress={onToggle}
+          onPress={onHandleReOrder}
           label={translate('txtReOrder')}
           width={scaleWidth(185)}
           height={scaleHeight(61)}

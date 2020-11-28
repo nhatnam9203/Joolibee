@@ -3,3 +3,4 @@ export * from './CustomScrollViewHorizontal';
 export * from './OrderSection';
 export * from './OrderSectionItem';
 export * from './OrderButtonInput';
+export * from './OrderVoucherItem';

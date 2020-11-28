@@ -5,6 +5,7 @@ export const useCodePushUpdate = () => {
   const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
+    codePush.disallowRestart();
     codePush.sync(
       {
         updateDialog: true,

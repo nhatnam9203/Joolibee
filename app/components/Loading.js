@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from 'react-native-spinkit';
 import { View, StyleSheet, Image } from 'react-native';
 
-const LOADING_TIME_OUT = 30000;
+const LOADING_TIME_OUT = 60000;
 let timer;
 const Loading = ({
   isLoading,

@@ -1,4 +1,4 @@
-import { GCC } from '@graphql';
+import { GCC, GEX } from '@graphql';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images, metrics } from '@theme';
 import { format, statusOrder, scale } from '@utils';
@@ -10,9 +10,27 @@ import ScreenName from '../ScreenName';
 import { CustomImageBackground } from '@components';
 import { translate } from '@localize';
 import { ButtonCC } from '../components';
+import { useDispatch } from 'react-redux';
+import { app } from '@slices';
 const { scaleWidth, scaleHeight } = scale;
 const Index = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  // --------------- Re Order Items Cart ----------------- //
+  const onReOderSuccess = () => {
+    navigation.navigate(ScreenName.NewHome);
+    setTimeout(() => {
+      dispatch(app.showOrderList());
+    }, 1000);
+  };
+  const { reorderItems } = GEX.useReOrderCart(onReOderSuccess);
+
+  const onHandleReOrder = (number) => () => {
+    dispatch(app.showLoading());
+    reorderItems(number);
+  };
+  // --------------- Re Order Items Cart End ----------------- //
 
   const goToDetail = (item) => () => {
     navigation.navigate(ScreenName.DeitalOrders, {
@@ -93,7 +111,7 @@ const Index = () => {
             {' ' +
               format.addressFull({
                 ...shipping_address,
-                region: { label: shipping_address.region },
+                region: { label: shipping_address?.region },
               })}
           </Text>
 
@@ -105,6 +123,7 @@ const Index = () => {
             {/* ----- BUTTON ĐAT LAI -----  */}
             {status_text === translate('txtStatusOrderComplete') && (
               <ButtonCC.ButtonBorderRed
+                onPress={onHandleReOrder(number)}
                 label={translate('txtReOrder')}
                 width={scaleWidth(127)}
                 height={scaleHeight(44)}

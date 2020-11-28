@@ -16,6 +16,8 @@ import { Image, SafeAreaView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ButtonCC, TextInputErrorMessage, PasswordInput } from '../components';
+import { format } from '@utils';
+
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
 const HALF_LAYOUT_WIDTH = '42.5%';
@@ -38,6 +40,7 @@ const EditAccountScreen = () => {
 
   const onHandleSubmit = React.useCallback(
     (values) => {
+      Logger.debug(values, 'values');
       dispatch(app.showLoading());
       updateCustomerInfo({ variables: values })
         .then((data) => {
@@ -68,7 +71,7 @@ const EditAccountScreen = () => {
       lastname,
       phone_number,
       gender,
-      date_of_birth,
+      date_of_birth: format.date(date_of_birth),
       password: '',
     },
     validationSchema: EditSchema,
