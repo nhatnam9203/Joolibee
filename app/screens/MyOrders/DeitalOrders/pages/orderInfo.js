@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { AppStyles, metrics } from '@theme';
 import { format } from '@utils';
+import { translate } from '@localize';
 export default function orderInfo({ info }) {
   const { firstname, lastname, telephone, region } = info || {};
   return (
@@ -9,7 +10,7 @@ export default function orderInfo({ info }) {
       <Text style={AppStyles.fonts.text}>{firstname + ' ' + lastname}</Text>
       <Text style={AppStyles.fonts.text}>{telephone}</Text>
       <Text style={[AppStyles.fonts.text, { fontWeight: 'bold' }]}>
-        Giao đến:
+        {translate('txtDeliveredTo')}:
         <Text
           numberOfLines={2}
           style={[AppStyles.fonts.text, { fontWeight: 'normal' }]}>

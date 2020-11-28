@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, metrics, images } from '@theme';
 import { format } from '@utils';
+import { translate } from '@localize';
 export default function orderTotal({ total }) {
   const { grand_total, subtotal } = total || {};
   const discount_total = '0.000đ';
@@ -9,25 +10,27 @@ export default function orderTotal({ total }) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={AppStyles.fonts.text}>Tạm tính:</Text>
+        <Text style={AppStyles.fonts.text}>
+          {translate('txtOrderCalculator')}:
+        </Text>
         <Text style={AppStyles.fonts.bold}>
           {subtotal && format.jollibeeCurrency(subtotal)}
         </Text>
       </View>
 
-      <View style={styles.content}>
+      {/* <View style={styles.content}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Image source={images.icons.ic_sticked} />
           <Text style={AppStyles.fonts.text}> Khuyến mãi (Ưu đãi 0.000đ)</Text>
         </View>
         <Text style={AppStyles.fonts.bold}>-{discount_total}</Text>
-      </View>
+      </View> */}
 
       <View style={styles.seperator} />
 
       <View style={styles.content}>
         <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
-          Tổng cộng:
+          {translate('txtGrandTotal')}:
         </Text>
         <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
           {grand_total && format.jollibeeCurrency(grand_total)}
@@ -45,7 +48,7 @@ const PaymentMethod = () => (
     <View style={styles.block}>
       <Text style={AppStyles.fonts.text}>đ</Text>
     </View>
-    <Text style={AppStyles.fonts.text}>Tiền mặt</Text>
+    <Text style={AppStyles.fonts.text}>{translate('txtPaymentMoney')}</Text>
   </View>
 );
 

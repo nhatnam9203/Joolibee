@@ -27,6 +27,15 @@ export const QueryOrderList = ({
     return <View />;
   }
 
+  const sortList = () => {
+    let list = [..._data];
+    let newList = list?.sort((a, b) => {
+      if (+a.number < +b.number) return 1;
+      if (+a.number > +b.number) return -1;
+      return 0;
+    });
+    return newList;
+  };
   const handleRefresh = () => {
     setRefreshing(true);
     refetch();
@@ -36,7 +45,7 @@ export const QueryOrderList = ({
   };
   return (
     <CustomFlatList
-      data={_data}
+      data={sortList()}
       renderItem={loading ? renderItemLoading : renderItem}
       horizontal={false}
       keyExtractor={(item, index) => item.id.toString()}

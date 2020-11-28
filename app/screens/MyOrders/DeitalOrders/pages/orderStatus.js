@@ -11,36 +11,8 @@ import StepIndicator from 'react-native-step-indicator';
 import { AppStyles, metrics, images } from '@theme';
 import { PopupChat } from '../../../components';
 import { makeAPhoneCall } from '@utils';
+import { translate } from '@localize';
 import LottieView from 'lottie-react-native';
-const data = [
-  {
-    title: 'Đang chờ xác nhận',
-    description:
-      'Đơn hàng của bạn đã được gửi và đang chờ xác nhận từ nhà hàng',
-    type: 'pending',
-  },
-  {
-    title: 'Đã xác nhận & chuẩn bị đơn hàng',
-    description: 'Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn',
-    type: 'received',
-  },
-
-  {
-    title: 'Đang giao hàng',
-    description: 'Trần văn C (0778010203)',
-    type: 'shipping',
-  },
-  {
-    title: 'Đã đến nơi',
-    description: 'Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.',
-    type: 'arrived',
-  },
-  {
-    title: 'Hoàn thành',
-    description: 'Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng',
-    type: 'complete',
-  },
-];
 
 const stepIndicatorStyles = {
   stepIndicatorSize: 12,
@@ -61,7 +33,34 @@ const stepIndicatorStyles = {
 export default function OrderStatus({ status }) {
   const scale = React.useRef(new Animated.Value(15)).current;
   const [visible, showPopup] = React.useState(false);
+  const data = [
+    {
+      title: translate('txtStatusOrderPending'),
+      description: translate('txtDesOrderPending'),
+      type: 'pending',
+    },
+    {
+      title: translate('txtStatusOrderReceived'),
+      description: translate('txtDesOrderReceived'),
+      type: 'received',
+    },
 
+    {
+      title: translate('txtStatusOrderShipping'),
+      description: 'Trần văn C (0778010203)',
+      type: 'shipping',
+    },
+    {
+      title: translate('txtStatusOrderArrived'),
+      description: translate('txtDesOrderArrived'),
+      type: 'arrived',
+    },
+    {
+      title: translate('txtStatusOrderComplete'),
+      description: translate('txtDesOrderComplete'),
+      type: 'complete',
+    },
+  ];
   let indexStatus = data.findIndex((item) => item.type === status);
 
   const ImageLink = ({ source, onPress }) => (

@@ -9,12 +9,13 @@ import {
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/stack';
-import { app } from '@slices';
+
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { app } from '@slices';
 import {
   CardView,
   TopBarLeft,
@@ -52,7 +53,6 @@ const HomeScreen = () => {
   });
 
   const { homeScreen } = data || {};
-  console.log('homeScreen', homeScreen);
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,

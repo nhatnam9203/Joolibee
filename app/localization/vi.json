@@ -176,5 +176,20 @@
   "txtOrderNumber":"Đơn hàng",
   "txtDish": "món",
   "txtDeliveredTo":"Giao đến",
-  "txtToday" :"Hôm nay"
+  "txtToday" :"Hôm nay",
+  "txtStatusOrderPending" :"Đang chờ xác nhận",
+  "txtStatusOrderReceived" :"Đã xác nhận",
+  "txtStatusOrderShipping" :"Đang giao hàng",
+  "txtStatusOrderArrived" :"Đã đến nơi",
+  "txtStatusOrderComplete" :"Hoàn thành",
+  "txtStatusOrderCancel" :"Đã hủy",
+  "txtOrderStattus":"Trạng thái đơn hàng",
+  "txtInfoShipping":"Thông tin giao hàng",
+  "txtFeeback":"Đánh giá",
+  "txtDesOrderPending":"Đơn hàng của bạn đã được gửi và đang chờ xác nhận từ nhà hàng",
+  "txtDesOrderReceived":"Chúng tôi đã xác nhận và đang chuẩn bị đơn hàng của bạn",
+  "txtDesOrderArrived":"Đơn hàng đã đến nơi rồi, bạn vui lòng nhận hàng nhé.",
+  "txtDesOrderComplete":"Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng",
+  "txtGrandTotal":"Tổng cộng",
+  "txtSubmit":"Gửi"
 }
