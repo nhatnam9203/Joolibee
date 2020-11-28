@@ -52,7 +52,7 @@ const HomeScreen = () => {
   });
 
   const { homeScreen } = data || {};
-
+  console.log('homeScreen', homeScreen);
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,

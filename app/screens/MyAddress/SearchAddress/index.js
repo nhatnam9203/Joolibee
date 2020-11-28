@@ -106,7 +106,7 @@ const Index = () => {
     if (data.length === 0) {
       return (
         <Text style={{ padding: 15, textAlign: 'center' }}>
-          Không có địa chỉ nào
+          {translate('txtNotFoundAddress')}
         </Text>
       );
     }
@@ -121,7 +121,7 @@ const Index = () => {
         <CustomInput
           onChangeText={handleChangeText}
           value={key}
-          placeholder="Nhập địa chỉ"
+          placeholder={translate('txtInputAddressPlaceholder')}
           style={styles.inputStyle}
           autoFocus={true}
         />

@@ -104,8 +104,7 @@ const MySavedPointScreen = () => {
             </Text>
 
             <Text style={styles.txtNoteExpire}>
-              Chỉ cần thực hiện 1 giao dịch trước ngày hết hạn để gia hạn hiệu
-              lực điểm thưởng.
+              {translate('txtHowToExendPoints')}
             </Text>
           </View>
         );

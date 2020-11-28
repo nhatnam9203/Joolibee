@@ -20,7 +20,6 @@ import { useSelector } from 'react-redux';
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
-import { useQuery } from '@apollo/client';
 
 const { scaleWidth } = scale;
 
@@ -42,13 +41,8 @@ const ProductCart = ({ visible, onToggle }) => {
   const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
 
   // cần get ra để nhét default value vào
-  const {
-    shipping_addresses,
-    selected_payment_method,
-    billing_address,
-    applied_coupons,
-    available_payment_methods,
-  } = getCheckOutCartResp?.data?.cart || {};
+  const { shipping_addresses, selected_payment_method, billing_address } =
+    getCheckOutCartResp?.data?.cart || {};
 
   const {
     getShippingMethod,
@@ -117,6 +111,9 @@ const ProductCart = ({ visible, onToggle }) => {
   // ========= PAYMENT PROCESS
 
   const paymentButtonPressed = () => {
+    if (isEmpty(addresses)) {
+      orderCreateNewAddress();
+    }
     getShippingMethod();
   };
 
@@ -276,6 +273,7 @@ const ProductCart = ({ visible, onToggle }) => {
               style={styles.btnProceeds}
               onPress={paymentButtonPressed}
               loading={isPaymentWaiting()}
+              disabled={isEmpty(cartDetail?.items)}
             />
           </View>
         </View>

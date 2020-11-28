@@ -15,7 +15,7 @@ import {
 } from 'rn-placeholder';
 import Carousel from 'react-native-snap-carousel';
 import { AppStyles, images } from '@theme';
-
+import { translate } from '@localize';
 import { NewsItem } from '../../components';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
@@ -25,12 +25,14 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
-        <Text style={styles.txtHeader}>Tin mới nhất</Text>
+        <Text style={styles.txtHeader}>{translate('txtLastNews')}</Text>
 
         <TouchableOpacity
           style={{ flexDirection: 'row' }}
           onPress={onCHangeScreen}>
-          <Text style={styles.txtSeeAll}>XEM TẤT CẢ </Text>
+          <Text style={styles.txtSeeAll}>
+            {translate('txtViewAll').toUpperCase()}
+          </Text>
           <Image source={images.icons.ic_forward_red} />
         </TouchableOpacity>
       </View>
