@@ -47,11 +47,11 @@ const ShippingType = {
 const CONFIRM_HEIGHT = 150;
 
 const OrderScreen = ({ route = { params: {} } }) => {
+  const { shippingMethod, addressParams } = route.params;
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const graphQlClient = useGraphQLClient();
-
-  const { shippingMethod, addressParams } = route.params;
 
   /** AUTO LOAD VALUE */
   const cart_id = useSelector((state) => state.account?.cart?.id);
@@ -147,10 +147,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setShowNotice(false);
   };
   const onTogglePopupSuccess = () => {
-    // dispatch(account.clearCartState());
     setShowPopupSuccess(false);
-    navigation.goBack();
   };
+
   const ontoggleSwitch = () => {
     dispatch(account.setEatingUtensils());
   };
@@ -221,7 +220,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
-          graphQlClient.cache.evict({ fieldName: 'cart' });
+          // graphQlClient.cache.evict({ fieldName: 'cart' });
           graphQlClient.cache.evict({ fieldName: 'customerCart' });
           graphQlClient.cache.gc();
           dispatch(account.clearCartState());
@@ -304,6 +303,250 @@ const OrderScreen = ({ route = { params: {} } }) => {
     );
   };
 
+  const renderShippingTypeSection = () => (
+    <OrderSection
+      key="ShippingType"
+      title={`${translate('txtOrderMethod')}`.toUpperCase()}>
+      {shippingMethod?.results.map((sm) => (
+        <OrderSectionItem
+          key={sm.method}
+          onPress={() => {
+            onChangeShippingMethod(sm.method);
+          }}>
+          <View style={AppStyles.styles.horizontalLayout}>
+            <Image
+              source={
+                sm.method === ShippingType.InShop
+                  ? images.icons.ic_in_store
+                  : images.icons.ic_delivery
+              }
+              style={styles.imgShippingStyle}
+              resizeMode="center"
+            />
+            <Text style={styles.txtTitleStyle}>
+              {sm.method === ShippingType.InShop
+                ? translate('txtPlaceInShopOrder')
+                : translate('txtShippingOrder')}
+            </Text>
+          </View>
+          <Image
+            style={styles.arrowStyle}
+            source={
+              shippingType === sm.method
+                ? images.icons.ic_radio_active
+                : images.icons.ic_radio_inactive
+            }
+          />
+        </OrderSectionItem>
+      ))}
+    </OrderSection>
+  );
+
+  const renderAddressShippingSection = () => (
+    <OrderSection
+      title={`${translate('txtShippingInfo')}`.toUpperCase()}
+      key="ShippingInfo"
+      buttonComponent={() => (
+        <ButtonCC.ButtonYellow
+          label={translate('txtEdit')}
+          style={styles.buttonHeaderStyle}
+          textStyle={styles.headerButtonTextStyle}
+          onPress={onEdit}
+        />
+      )}>
+      <OrderSectionItem>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+          }}>
+          <Text style={styles.txtStyle}>{firstname + ' ' + lastname}</Text>
+        </View>
+        <View
+          style={{
+            width: 1,
+            height: '60%',
+            backgroundColor: '#DBDBDB',
+          }}
+        />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            paddingLeft: 17,
+          }}>
+          <Text style={styles.txtStyle}>{telephone}</Text>
+        </View>
+      </OrderSectionItem>
+
+      <OrderSectionItem>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+          }}>
+          <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
+            {shippingType === ShippingType.InPlace
+              ? translate('txtShippingTo')
+              : translate('txtToReceive')}
+            :
+          </Text>
+          <Text
+            style={[styles.txtStyle, { flex: 1 }]}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
+            {full_address}
+          </Text>
+        </View>
+      </OrderSectionItem>
+      <OrderSectionItem height={78}>
+        <TextInput
+          placeholder={translate('txtNote')}
+          multiline={true}
+          style={styles.txtNoteStyle}
+        />
+      </OrderSectionItem>
+    </OrderSection>
+  );
+
+  const renderProductItem = () => (
+    <OrderSection
+      title={translate('txtItemSelect')}
+      buttonComponent={() => (
+        <ButtonCC.ButtonYellow
+          label={translate('txtOrderMore')}
+          style={styles.buttonHeaderStyle}
+          textStyle={styles.headerButtonTextStyle}
+          onPress={() => {
+            navigation.navigate(ScreenName.Menu);
+          }}
+        />
+      )}
+      key="OrderItems">
+      {items.map((item, index) => (
+        <OrderSectionItem key={index + ''}>
+          <OrderItem
+            item={item}
+            updateMyCart={updateMyCart}
+            onPress={() => {
+              navigation.navigate(ScreenName.MenuItemDetail, {
+                product: item?.product,
+                detailItem: item,
+              });
+            }}
+          />
+        </OrderSectionItem>
+      ))}
+    </OrderSection>
+  );
+
+  const renderExtraItems = () => (
+    <OrderSection
+      title={translate('txtExtraProduct')}
+      titleColor={AppStyles.colors.text}
+      key="ExtraItems">
+      <CustomScrollViewHorizontal
+        data={responseMenu.data?.products?.items || []}
+        contentContainerStyle={{
+          paddingHorizontal: 10,
+          paddingBottom: 10,
+        }}
+        renderItem={renderItemExtra}
+      />
+      <OrderSectionItem height={84}>
+        <TextInput
+          placeholder={'Thêm ghi chú (vd: không cay...)'}
+          multiline={true}
+          style={styles.txtNoteStyle}
+        />
+      </OrderSectionItem>
+      <OrderSectionItem>
+        <View style={styles.orderSumContent}>
+          <View style={styles.container}>
+            <Text style={styles.txtTitleStyle}>{translate('txtNotice')}</Text>
+            <Text style={styles.txtStyle}>
+              {translate('txtNoticeEnvironment')}
+            </Text>
+          </View>
+          <CustomSwitch
+            toggleSwitch={ontoggleSwitch}
+            defautlValue={isEatingUtensils}
+          />
+        </View>
+      </OrderSectionItem>
+    </OrderSection>
+  );
+
+  const renderPromotion = () => (
+    <OrderSection title={translate('txtPromotionApply')} key="OrderPromotion">
+      <OrderSectionItem height={160}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+          }}>
+          <OrderButtonInput
+            onPress={onApplyCoupon}
+            disabled={!coupon_code}
+            title={translate('txtApply')}
+            btnWidth={126}
+            bgColor={AppStyles.colors.accent}>
+            <TextInput
+              placeholder={translate('txtInputVoucher')}
+              style={{ paddingHorizontal: 10, flex: 1 }}
+              value={coupon_code}
+              onChangeText={onChangeCouponCode}
+            />
+          </OrderButtonInput>
+
+          {applied_coupons && (
+            <View
+              style={{
+                height: 45,
+                marginTop: 19,
+                justifyContent: 'center',
+              }}>
+              <CustomScrollViewHorizontal
+                data={vouchers}
+                renderItem={renderItemVoucher}
+              />
+            </View>
+          )}
+        </View>
+      </OrderSectionItem>
+    </OrderSection>
+  );
+
+  const renderPoint = () => (
+    <OrderSection
+      title={translate('txtRedeemPoints')}
+      key="OrderCumulativePoints"
+      buttonComponent={() => (
+        <View style={AppStyles.styles.horizontalLayout}>
+          <Text style={styles.txtPoint}>{translate('txtMySavedPoint')}:</Text>
+          <View style={styles.pointContainer}>
+            <Text style={styles.txtPoint}>0 {translate('txtPoint')}</Text>
+          </View>
+        </View>
+      )}>
+      <OrderSectionItem height={117}>
+        <OrderButtonInput
+          title={translate('txtApply')}
+          btnWidth={126}
+          bgColor={AppStyles.colors.accent}
+          disabled={!reward_point}>
+          <TextInput
+            placeholder={'Vd: 5, 10, 15, 20, 25, 30.....'}
+            style={{ paddingHorizontal: 10, flex: 1 }}
+            keyboardType="numeric"
+            value={reward_point}
+            onChangeText={onChangeRewardPoint}
+          />
+        </OrderButtonInput>
+      </OrderSectionItem>
+    </OrderSection>
+  );
+
   return (
     <CustomImageBackground
       source={images.watermark_background_2}
@@ -311,179 +554,13 @@ const OrderScreen = ({ route = { params: {} } }) => {
       <SinglePageLayout>
         <SafeAreaView style={styles.content}>
           {/**Shipping Type */}
-          {shippingMethod?.results && (
-            <OrderSection
-              key="ShippingType"
-              title={`${translate('txtOrderMethod')}`.toUpperCase()}>
-              {shippingMethod?.results.map((sm) => (
-                <OrderSectionItem
-                  onPress={() => {
-                    onChangeShippingMethod(sm.method);
-                  }}>
-                  <View style={AppStyles.styles.horizontalLayout}>
-                    <Image
-                      source={
-                        sm.method === ShippingType.InShop
-                          ? images.icons.ic_in_store
-                          : images.icons.ic_delivery
-                      }
-                      style={styles.imgShippingStyle}
-                      resizeMode="center"
-                    />
-                    <Text style={styles.txtTitleStyle}>
-                      {sm.method === ShippingType.InShop
-                        ? translate('txtPlaceInShopOrder')
-                        : translate('txtShippingOrder')}
-                    </Text>
-                  </View>
-                  <Image
-                    style={styles.arrowStyle}
-                    source={
-                      shippingType === sm.method
-                        ? images.icons.ic_radio_active
-                        : images.icons.ic_radio_inactive
-                    }
-                  />
-                </OrderSectionItem>
-              ))}
-            </OrderSection>
-          )}
+          {shippingMethod?.results && renderShippingTypeSection()}
           {/**Shipping Info */}
-          <OrderSection
-            title={`${translate('txtShippingInfo')}`.toUpperCase()}
-            key="ShippingInfo"
-            buttonComponent={() => (
-              <ButtonCC.ButtonYellow
-                label={translate('txtEdit')}
-                style={styles.buttonHeaderStyle}
-                textStyle={styles.headerButtonTextStyle}
-                onPress={onEdit}
-              />
-            )}>
-            <OrderSectionItem>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                }}>
-                <Text style={styles.txtStyle}>
-                  {firstname + ' ' + lastname}
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: 1,
-                  height: '60%',
-                  backgroundColor: '#DBDBDB',
-                }}
-              />
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  paddingLeft: 17,
-                }}>
-                <Text style={styles.txtStyle}>{telephone}</Text>
-              </View>
-            </OrderSectionItem>
-
-            <OrderSectionItem>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                }}>
-                <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
-                  {shippingType === ShippingType.InPlace
-                    ? translate('txtShippingTo')
-                    : translate('txtToReceive')}
-                  :
-                </Text>
-                <Text
-                  style={[styles.txtStyle, { flex: 1 }]}
-                  ellipsizeMode="tail"
-                  numberOfLines={1}>
-                  {full_address}
-                </Text>
-              </View>
-            </OrderSectionItem>
-            <OrderSectionItem height={78}>
-              <TextInput
-                placeholder={translate('txtNote')}
-                multiline={true}
-                style={styles.txtNoteStyle}
-              />
-            </OrderSectionItem>
-          </OrderSection>
-
+          {renderAddressShippingSection()}
           {/**Order Items List*/}
-          <OrderSection
-            title={translate('txtItemSelect')}
-            buttonComponent={() => (
-              <ButtonCC.ButtonYellow
-                label={translate('txtOrderMore')}
-                style={styles.buttonHeaderStyle}
-                textStyle={styles.headerButtonTextStyle}
-                onPress={() => {
-                  navigation.navigate(ScreenName.Menu);
-                }}
-              />
-            )}
-            key="OrderItems">
-            {items.map((item, index) => (
-              <OrderSectionItem key={index + ''}>
-                <OrderItem
-                  item={item}
-                  updateMyCart={updateMyCart}
-                  onPress={() => {
-                    navigation.navigate(ScreenName.MenuItemDetail, {
-                      product: item?.product,
-                      detailItem: item,
-                    });
-                  }}
-                />
-              </OrderSectionItem>
-            ))}
-          </OrderSection>
-
+          {renderProductItem()}
           {/**Order Extra List*/}
-          <OrderSection
-            title={translate('txtExtraProduct')}
-            titleColor={AppStyles.colors.text}
-            key="ExtraItems">
-            <CustomScrollViewHorizontal
-              data={responseMenu.data?.products?.items || []}
-              contentContainerStyle={{
-                paddingHorizontal: 10,
-                paddingBottom: 10,
-              }}
-              renderItem={renderItemExtra}
-            />
-            <OrderSectionItem height={84}>
-              <TextInput
-                placeholder={'Thêm ghi chú (vd: không cay...)'}
-                multiline={true}
-                style={styles.txtNoteStyle}
-              />
-            </OrderSectionItem>
-            <OrderSectionItem>
-              <View style={styles.orderSumContent}>
-                <View style={styles.container}>
-                  <Text style={styles.txtTitleStyle}>
-                    {translate('txtNotice')}
-                  </Text>
-                  <Text style={styles.txtStyle}>
-                    {translate('txtNoticeEnvironment')}
-                  </Text>
-                </View>
-                <CustomSwitch
-                  toggleSwitch={ontoggleSwitch}
-                  defautlValue={isEatingUtensils}
-                />
-              </View>
-            </OrderSectionItem>
-          </OrderSection>
-
+          {renderExtraItems()}
           {/**Payment*/}
           <OrderSection
             title={translate('txtPaymentMethod')}
@@ -497,81 +574,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
               </View>
             </OrderSectionItem>
           </OrderSection>
-
           {/**Promotion */}
-          <OrderSection
-            title={translate('txtPromotionApply')}
-            key="OrderPromotion">
-            <OrderSectionItem height={160}>
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                }}>
-                <OrderButtonInput
-                  onPress={onApplyCoupon}
-                  disabled={!coupon_code}
-                  title={translate('txtApply')}
-                  btnWidth={126}
-                  bgColor={AppStyles.colors.accent}>
-                  <TextInput
-                    placeholder={translate('txtInputVoucher')}
-                    style={{ paddingHorizontal: 10, flex: 1 }}
-                    value={coupon_code}
-                    onChangeText={onChangeCouponCode}
-                  />
-                </OrderButtonInput>
-
-                {applied_coupons && (
-                  <View
-                    style={{
-                      height: 45,
-                      marginTop: 19,
-                      justifyContent: 'center',
-                    }}>
-                    <CustomScrollViewHorizontal
-                      data={vouchers}
-                      renderItem={renderItemVoucher}
-                    />
-                  </View>
-                )}
-              </View>
-            </OrderSectionItem>
-          </OrderSection>
-
+          {renderPromotion()}
           {/**Points */}
-          <OrderSection
-            title={translate('txtRedeemPoints')}
-            key="OrderCumulativePoints"
-            buttonComponent={() => (
-              <View style={AppStyles.styles.horizontalLayout}>
-                <Text style={styles.txtPoint}>
-                  {translate('txtMySavedPoint')}:
-                </Text>
-                <View style={styles.pointContainer}>
-                  <Text style={styles.txtPoint}>0 {translate('txtPoint')}</Text>
-                </View>
-              </View>
-            )}>
-            <OrderSectionItem height={117}>
-              <OrderButtonInput
-                title={translate('txtApply')}
-                btnWidth={126}
-                bgColor={AppStyles.colors.accent}
-                disabled={!reward_point}>
-                <TextInput
-                  placeholder={'Vd: 5, 10, 15, 20, 25, 30.....'}
-                  style={{ paddingHorizontal: 10, flex: 1 }}
-                  keyboardType="numeric"
-                  value={reward_point}
-                  onChangeText={onChangeRewardPoint}
-                />
-              </OrderButtonInput>
-            </OrderSectionItem>
-          </OrderSection>
+          {renderPoint()}
         </SafeAreaView>
       </SinglePageLayout>
 
+      {/**summary */}
       <View style={styles.confirmStyle}>
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>
@@ -583,7 +593,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         <View style={styles.orderSumContent}>
           <Text style={styles.txtStyle}>{translate('tabPromotion')} : </Text>
           {applied_coupons && (
-            <VoucherContent
+            <OrderVoucherItem
               content="Voucher ưu đãi 30K"
               style={{
                 paddingHorizontal: 0,
@@ -648,6 +658,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+
   content: {
     flex: 1,
     // paddingHorizontal: 10,
@@ -688,6 +699,7 @@ const styles = StyleSheet.create({
     fontSize: scaleWidth(16),
     margin: 5,
   },
+
   txtStyle: { ...AppStyles.fonts.text, fontSize: scaleWidth(16), margin: 5 },
 
   txtPriceStyle: {
@@ -708,28 +720,10 @@ const styles = StyleSheet.create({
     marginRight: scaleWidth(17),
   },
 
-  itemStyle: {
-    backgroundColor: '#fff',
-    marginVertical: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 17,
-  },
-
   imgShippingStyle: {
     height: 42,
     width: 42,
     marginRight: 10,
-  },
-
-  editOrderStyle: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: AppStyles.colors.button,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   txtNoteStyle: {},
@@ -739,19 +733,6 @@ const styles = StyleSheet.create({
   headerButtonTextStyle: {
     fontSize: 14,
     color: '#1B1B1B',
-  },
-  buttonInputContainer: {
-    borderRadius: 8,
-    borderWidth: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    overflow: 'hidden',
-  },
-  rightBtnInput: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
   },
 
   pointContainer: {
@@ -763,6 +744,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   txtPoint: {
     ...AppStyles.fonts.SVN_Merge_Bold,
     fontSize: scaleWidth(14),

@@ -6,15 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const useCustomer = () => {
   const dispatch = useDispatch();
-  const [getCustomerInfo, { loading, data, refetch, error }] = useLazyQuery(
-    CUSTOMER_INFO,
-    {
-      fetchPolicy: 'cache-and-network',
-      //   onCompleted: (data) => {
-      //     Logger.debug(data, 'get customer info complete');
-      //   },
-    },
-  );
+  const [getCustomerInfo, response] = useLazyQuery(CUSTOMER_INFO, {
+    fetchPolicy: 'cache-and-network',
+    //   onCompleted: (data) => {
+    //     Logger.debug(data, 'get customer info complete');
+    //   },
+  });
 
   /**
    * {"customer":{"__typename":"Customer",
@@ -33,10 +30,10 @@ export const useCustomer = () => {
   const user = useSelector((state) => state.account.user?.profile);
 
   React.useEffect(() => {
-    if (data?.customer) {
-      dispatch(account?.saveUserInfo(data));
+    if (response.data?.customer) {
+      dispatch(account?.saveUserInfo(response.data));
     }
-  }, [data, dispatch]);
+  }, [response, dispatch]);
 
   React.useEffect(() => {
     if (!user) {

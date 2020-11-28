@@ -37,7 +37,6 @@ const ProductCart = ({ visible, onToggle }) => {
   const { customer } = GEX.useCustomer();
   const addresses = customer?.addresses ?? [];
   const address_id = addresses?.find((x) => x.default_shipping)?.id;
-
   const params = {
     variables: {
       shipping_addresses: [{ customer_address_id: address_id }],
@@ -117,7 +116,7 @@ const ProductCart = ({ visible, onToggle }) => {
   // ========= PAYMENT PROCESS
 
   const paymentButtonPressed = () => {
-    if (isEmpty(addresses)) {
+    if (!address_id) {
       orderCreateNewAddress();
     } else getShippingMethod();
   };
