@@ -218,7 +218,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
       .then((res) => {
         if (res?.data?.placeOrder) {
           graphQlClient.cache.evict({ fieldName: 'cart' });
+          graphQlClient.cache.evict({ fieldName: 'customerCart' });
           graphQlClient.cache.gc();
+
           setShowPopupSuccess(true);
         }
         dispatch(app.hideLoading());
