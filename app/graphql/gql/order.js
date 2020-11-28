@@ -145,3 +145,84 @@ export const ORDERS_CUSTOMER = gql`
     }
   }
 `;
+
+export const RE_ORDER_CART = gql`
+  mutation($orderNumber: String!) {
+    reorderItems(orderNumber: $orderNumber) {
+      cart {
+        id
+        __typename
+        items {
+          __typename
+          id
+          product {
+            __typename
+            id
+            name
+            sku
+            point
+            options_container
+            meta_description
+            price_range {
+              maximum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+              minimum_price {
+                final_price {
+                  value
+                  currency
+                }
+              }
+            }
+            image {
+              url
+            }
+          }
+          ... on BundleCartItem {
+            bundle_options {
+              id
+              values {
+                id
+                label
+                quantity
+              }
+            }
+          }
+          prices {
+            price {
+              value
+              currency
+            }
+          }
+          quantity
+        }
+        total_quantity
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
+          subtotal_excluding_tax {
+            value
+            currency
+          }
+          discounts {
+            amount {
+              value
+              currency
+            }
+          }
+        }
+      }
+      userInputErrors {
+        code
+        message
+        path
+      }
+    }
+  }
+`;

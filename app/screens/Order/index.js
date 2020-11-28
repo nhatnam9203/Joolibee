@@ -11,13 +11,11 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ButtonCC,
-  LabelTitle,
   PopupNoticeEnvironment,
   PopupOrderSuccess,
   OrderNewItem,

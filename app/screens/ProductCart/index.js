@@ -119,8 +119,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const paymentButtonPressed = () => {
     if (isEmpty(addresses)) {
       orderCreateNewAddress();
-    }
-    getShippingMethod();
+    } else getShippingMethod();
   };
 
   React.useEffect(() => {
