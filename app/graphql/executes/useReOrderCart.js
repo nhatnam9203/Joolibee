@@ -10,7 +10,7 @@ export const useReOrderCart = (onSuccess = () => {}) => {
   const [reorderItems, response] = useMutation(RE_ORDER_CART, {
     onCompleted: (res) => {
       if (res?.reorderItems?.cart) {
-        dispatch(account.updateCustomerCart(res?.reorderItems?.cart));
+        dispatch(account.resetCustomerCart(res?.reorderItems?.cart));
         dispatch(app.hideLoading());
         onSuccess();
       }

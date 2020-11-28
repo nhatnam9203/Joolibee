@@ -38,10 +38,7 @@ const accountSlice = createSlice({
   reducers: {
     clearSignupState() {},
     clearSignInState() {},
-    resetCustomerCart(state) {
-      state.cart = state.payload;
-      state.isEatingUtensils = false;
-    },
+
     showQRCode(state) {
       state.isShowQRCode = true;
     },
@@ -109,8 +106,14 @@ const accountSlice = createSlice({
       state.isEatingUtensils = false;
     },
 
-    updateCustomerCart: (state, action) => {
+    resetCustomerCart(state, action) {
       state.cart = action.payload;
+      state.isEatingUtensils = false;
+    },
+
+    updateCustomerCart: (state, action) => {
+      Logger.debug(action.payload, 'action');
+      state.cart = Object.assign({}, state.cart, action.payload);
     },
 
     addCustomerCartQuantity: (state, action) => {

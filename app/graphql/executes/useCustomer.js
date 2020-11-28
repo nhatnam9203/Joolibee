@@ -36,10 +36,9 @@ export const useCustomer = () => {
   }, [response, dispatch]);
 
   React.useEffect(() => {
-    if (!user) {
-      getCustomerInfo();
-    }
-  }, [getCustomerInfo, user]);
+    getCustomerInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     getCustomerInfo,

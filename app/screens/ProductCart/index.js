@@ -33,7 +33,6 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // GET
   const customerCart = useSelector((state) => state.account?.cart);
-  Logger.debug(customerCart, 'customerCart customerCart');
 
   const { customer } = GEX.useCustomer();
   const addresses = customer?.addresses ?? [];
@@ -44,12 +43,9 @@ const ProductCart = ({ visible, onToggle }) => {
     },
   };
 
-  const { cart } = GEX.useGetCustomerCart();
-  Logger.debug(cart, 'ProductCart >> getCheckOutCartResp');
-
   // cần get ra để nhét default value vào
   const { shipping_addresses, selected_payment_method, billing_address } =
-    cart || {};
+    customerCart || {};
 
   const {
     getShippingMethod,

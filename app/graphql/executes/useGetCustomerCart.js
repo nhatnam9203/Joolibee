@@ -24,13 +24,14 @@ export const useGetCustomerCart = () => {
 
   React.useEffect(() => {
     getCustomerCart();
+    Logger.debug('useGetCustomerCart', '==================================');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
       dispatch(
-        account.updateCustomerCart(getCustomerCartResp.data?.customerCart),
+        account.resetCustomerCart(getCustomerCartResp.data?.customerCart),
       );
     }
   }, [getCustomerCartResp.data, dispatch]);

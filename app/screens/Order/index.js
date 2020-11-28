@@ -55,7 +55,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   /** AUTO LOAD VALUE */
   const cart_id = useSelector((state) => state.account?.cart?.id);
-  Logger.debug(cart_id, 'cart_id');
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
   );
@@ -75,18 +74,24 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // --------- REQUEST CART-DETAIL -----------
 
-  const { cart } = GEX.useGetCustomerCart();
-  Logger.debug(cart, 'OrderScreen > getCheckOutCartResp');
+  // const { cart } = GEX.useGetCustomerCart();
+  const customerCart = useSelector((state) => state.account?.cart);
 
   const {
     items,
     applied_coupons,
     prices: { grand_total, discounts, subtotal_excluding_tax },
     shipping_addresses,
-  } = cart;
+  } = customerCart;
+  Logger.debug(shipping_addresses, 'shipping_addresses');
+  Logger.debug(customerCart, 'customerCart');
 
-  const { firstname, lastname, selected_shipping_method, telephone } =
-    shipping_addresses[0] || {};
+  const {
+    firstname,
+    lastname,
+    selected_shipping_method,
+    telephone,
+  } = shipping_addresses?.find(Boolean);
 
   const { method_code } = selected_shipping_method || {};
   const full_address = format.addressFull(shipping_addresses[0]);
@@ -179,9 +184,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         break;
       default:
         setShippingType(code);
-
         dispatch(app.showLoading());
-
         setShippingMethod(code);
         dispatch(app.hideLoading());
 
