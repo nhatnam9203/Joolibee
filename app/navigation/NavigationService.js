@@ -4,6 +4,7 @@ export const navigationRef = React.createRef();
 export const dropdownRef = React.createRef();
 export const graphQLErrorRef = React.createRef();
 export const confirmRef = React.createRef();
+export const comingSoonRef = React.createRef();
 
 function navigate(name, params) {
   navigationRef.current?.navigate(name, params);
@@ -29,6 +30,9 @@ function logout() {
 function showConfirm(title, message, onAccept) {
   confirmRef.current?.show(title, message, onAccept);
 }
+function showComingSoon() {
+  comingSoonRef.current?.show();
+}
 
 export default {
   navigate,
@@ -37,4 +41,5 @@ export default {
   alertWithError,
   logout,
   showConfirm,
+  showComingSoon,
 };
