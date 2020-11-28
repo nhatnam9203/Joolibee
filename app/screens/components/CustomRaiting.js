@@ -97,7 +97,7 @@ const RaitingItem = ({ item, selected, onPress, selectedColor }) => {
           },
         ]}>
         <Image source={item.icon} />
-        <Image source={item.star} />
+        <Image source={item.star} style={{ flex: 1, resizeMode: 'contain' }} />
       </Animated.View>
     </TouchableOpacity>
   );

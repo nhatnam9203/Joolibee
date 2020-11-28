@@ -21,7 +21,7 @@ export const QueryOrderList = ({
   const { loading, error, data, refetch } = useQuery(ORDERS_CUSTOMER);
 
   let _data = data?.customer?.orders.items
-    ? data?.customer?.orders.items
+    ? data?.customer?.orders?.items
     : defaultData;
   if (error) {
     return <View />;

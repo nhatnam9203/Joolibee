@@ -150,7 +150,7 @@ export default function OrderStatus({ status }) {
         ) : (
           <LottieView
             source={images.animations.fade}
-            style={styles.stepIndicator}
+            style={[styles.stepIndicator, { backgroundColor: '#E3183720' }]}
             autoPlay
             loop
           />

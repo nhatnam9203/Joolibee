@@ -1,4 +1,4 @@
-import { account } from '@slices';
+import { account, app } from '@slices';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -8,6 +8,9 @@ const GraphErrorHandler = React.forwardRef(({ children }, ref) => {
   React.useImperativeHandle(ref, () => ({
     forceLogout: () => {
       dispatch(account.signOutRequest());
+    },
+    hideLoading: () => {
+      dispatch(app.hideLoading());
     },
   }));
 

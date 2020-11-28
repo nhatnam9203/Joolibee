@@ -24,7 +24,7 @@ import { TextInputErrorMessage } from '../../components';
 import ScreenName from '../../ScreenName';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
-import { mutation, query } from '@graphql';
+import { mutation, query, GCC, GEX, GQL } from '@graphql';
 import { app } from '@slices';
 // ADDRESS_LIST
 const LAYOUT_WIDTH = '95%';
@@ -38,7 +38,7 @@ const OPTIONS_MUTATION = {
 const Index = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { val_address, titleHeader } = props.route.params;
+  const { val_address, titleHeader, cartId } = props.route.params;
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );
@@ -64,9 +64,25 @@ const Index = (props) => {
   const txtButton = !isCheckValue
     ? translate('txtSaveAddress')
     : translate('txtSaveChange');
+
+  //------------ Set shipping address -----------------//
+  const { setShippingAddresses } = GEX.useSetShippingAddress();
+
+  const setShippingAddress = React.useCallback(
+    (id) => {
+      const params = {
+        variables: {
+          shipping_addresses: [{ customer_address_id: id }],
+        },
+        awaitRefetchQueries: true,
+        refetchQueries: [{ query: GQL.CART_DETAIL, variables: { cartId } }],
+      };
+      setShippingAddresses(params);
+    },
+    [cartId],
+  );
   //------------ Add address customer -----------------//
   const [createCustomerAddress] = useMutation(mutation.ADD_ADDRESS);
-
   const onHandleAdd = React.useCallback(
     (datas) => {
       let input = {
@@ -86,9 +102,13 @@ const Index = (props) => {
         ...OPTIONS_MUTATION,
         variables: input,
       })
-        .then(() => {
+        .then(({ data }) => {
+          if (data?.createCustomerAddress) {
+            setShippingAddress(data?.createCustomerAddress?.id);
+            navigation.goBack();
+          }
+
           dispatch(app.hideLoading());
-          navigation.goBack();
         })
         .catch(() => {
           dispatch(app.hideLoading());
@@ -97,9 +117,9 @@ const Index = (props) => {
     [
       location_selected,
       default_shipping,
-
       dispatch,
       createCustomerAddress,
+      setShippingAddress,
       navigation,
     ],
   );
@@ -126,15 +146,13 @@ const Index = (props) => {
       updateCustomerAddress({
         ...OPTIONS_MUTATION,
         variables: input,
-        // update: (cache) => {
-        //   cache.modify({
-        //     id:cache.identify
-        //   });
-        // },
       })
-        .then(() => {
+        .then(({ data }) => {
+          if (data?.updateCustomerAddress) {
+            navigation.goBack();
+          }
+
           dispatch(app.hideLoading());
-          navigation.goBack();
         })
         .catch(() => {
           dispatch(app.hideLoading());
@@ -162,9 +180,11 @@ const Index = (props) => {
       ...OPTIONS_MUTATION,
       variables: { id: val_address.id },
     })
-      .then(() => {
+      .then(({ data }) => {
+        if (data?.deleteCustomerAddress) {
+          navigation.goBack();
+        }
         dispatch(app.hideLoading());
-        navigation.goBack();
       })
       .catch(() => {
         dispatch(app.hideLoading());
@@ -239,7 +259,7 @@ const Index = (props) => {
               onChangeText={handleChange('place')}
               onBlur={handleBlur('place')}
               value={values.place}
-              placeholder="Tên địa điểm vd: Nhà, Công ty... *"
+              placeholder={translate('txtInputPlaceName')}
             />
 
             {/**Phone input error */}
@@ -293,7 +313,7 @@ const Index = (props) => {
               onChangeText={handleChange('phone')}
               onBlur={handleBlur('phone')}
               value={values.phone}
-              placeholder="Số điện thoại"
+              placeholder={translate('txtInputPhone')}
             />
 
             {/**Phone input error */}
@@ -312,7 +332,9 @@ const Index = (props) => {
               <Text
                 style={[styles.txtInput, color_placehoder]}
                 numberOfLines={1}>
-                {values.address ? values.address : 'Vui lòng nhập địa chỉ'}
+                {values.address
+                  ? values.address
+                  : translate('txtInputAddressPlaceholder')}
               </Text>
               <Image source={images.icons.ic_arrow} />
             </TouchableOpacity>
@@ -331,7 +353,7 @@ const Index = (props) => {
               onChangeText={handleChange('note')}
               onBlur={handleBlur('note')}
               value={values.note}
-              placeholder="Ghi chú cho địa chỉ"
+              placeholder={translate('txtInputNoteAddress')}
               multiline={true}
               style={[styles.noteInput, styles.inputShadow]}
             />

@@ -8,6 +8,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Fade, Placeholder, PlaceholderLine } from 'rn-placeholder';
 import ScreenName from '../ScreenName';
 import { CustomImageBackground } from '@components';
+import { translate } from '@localize';
 import { ButtonCC } from '../components';
 const { scaleWidth, scaleHeight } = scale;
 const Index = () => {
@@ -21,8 +22,8 @@ const Index = () => {
 
   const getShippingMethod = (txt = '') => {
     switch (txt) {
-      case 'freeshipping_freeshipping':
-        return 'Giao đến';
+      case 'Giao hàng tận nơi - Giao hàng tận nơi':
+        return translate('txtDeliveredTo');
       default:
         return 'Đến lấy';
     }
@@ -31,7 +32,7 @@ const Index = () => {
   const getDateStatus = (date) => {
     const current_day = moment().format('DD/MM/yyyy');
     let dateOrder = format.date(date);
-    return dateOrder === current_day ? 'Hôm nay' : dateOrder;
+    return dateOrder === current_day ? translate('txtToday') : dateOrder;
   };
 
   const renderItemLoading = () => (
@@ -75,10 +76,14 @@ const Index = () => {
               {total?.grand_total &&
                 format.jollibeeCurrency(total?.grand_total)}
             </Text>
-            <Text style={AppStyles.fonts.mini}>{items?.length || 0} món</Text>
+            <Text style={AppStyles.fonts.mini}>
+              {items?.length || 0} {translate('txtDish')}
+            </Text>
           </View>
 
-          <Text style={AppStyles.fonts.medium}>Đơn hàng #{number}</Text>
+          <Text style={AppStyles.fonts.medium}>
+            {translate('txtOrderNumber')} #{number}
+          </Text>
           <Text style={styles.txtDate}>{getDateStatus(order_date)}</Text>
           <Text numberOfLines={1} style={styles.txtAddress}>
             <Text style={{ fontWeight: 'bold' }}>
@@ -100,7 +105,7 @@ const Index = () => {
             {/* ----- BUTTON ĐAT LAI -----  */}
             {status_text === 'Hoàn thành' && (
               <ButtonCC.ButtonBorderRed
-                label="Đặt lại"
+                label={translate('txtReOrder')}
                 width={scaleWidth(127)}
                 height={scaleHeight(44)}
               />

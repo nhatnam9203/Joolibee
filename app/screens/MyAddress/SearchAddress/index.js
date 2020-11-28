@@ -57,10 +57,12 @@ const Index = () => {
   const pickupLocation = ({ description, structured_formatting }) => () => {
     const { main_text, secondary_text } = structured_formatting;
     let addresses = format.addresses_geocoding(secondary_text?.split(','));
+
+    let street = main_text + ' ' + addresses?.district + ' ' + addresses?.ward;
     dispatch(
       address.selectedLocation({
         ...addresses,
-        street: [main_text],
+        street: [street],
         addressFull: description,
       }),
     );
@@ -104,7 +106,7 @@ const Index = () => {
     if (data.length === 0) {
       return (
         <Text style={{ padding: 15, textAlign: 'center' }}>
-          Không có địa chỉ nào
+          {translate('txtNotFoundAddress')}
         </Text>
       );
     }
@@ -119,7 +121,7 @@ const Index = () => {
         <CustomInput
           onChangeText={handleChangeText}
           value={key}
-          placeholder="Nhập địa chỉ"
+          placeholder={translate('txtInputAddressPlaceholder')}
           style={styles.inputStyle}
           autoFocus={true}
         />
