@@ -259,7 +259,7 @@ const Index = (props) => {
               onChangeText={handleChange('place')}
               onBlur={handleBlur('place')}
               value={values.place}
-              placeholder="Tên địa điểm vd: Nhà, Công ty... *"
+              placeholder={translate('txtInputPlaceName')}
             />
 
             {/**Phone input error */}
@@ -313,7 +313,7 @@ const Index = (props) => {
               onChangeText={handleChange('phone')}
               onBlur={handleBlur('phone')}
               value={values.phone}
-              placeholder="Số điện thoại"
+              placeholder={translate('txtInputPhone')}
             />
 
             {/**Phone input error */}
@@ -332,7 +332,9 @@ const Index = (props) => {
               <Text
                 style={[styles.txtInput, color_placehoder]}
                 numberOfLines={1}>
-                {values.address ? values.address : 'Vui lòng nhập địa chỉ'}
+                {values.address
+                  ? values.address
+                  : translate('txtInputAddressPlaceholder')}
               </Text>
               <Image source={images.icons.ic_arrow} />
             </TouchableOpacity>
@@ -351,7 +353,7 @@ const Index = (props) => {
               onChangeText={handleChange('note')}
               onBlur={handleBlur('note')}
               value={values.note}
-              placeholder="Ghi chú cho địa chỉ"
+              placeholder={translate('txtInputNoteAddress')}
               multiline={true}
               style={[styles.noteInput, styles.inputShadow]}
             />

@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { AppStyles } from '@theme';
 import { CustomHTML } from '@components';
 import { JollibeeImage } from './JollibeeImage';
+import FastImage from 'react-native-fast-image';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 
@@ -25,7 +26,10 @@ export const NewsItem = ({
           },
         ]}>
         <View style={styles.topContent}>
-          <JollibeeImage style={styles.imgProduct} url={featured_image} />
+          <FastImage
+            style={styles.imgProduct}
+            source={{ uri: featured_image }}
+          />
         </View>
         <View style={styles.bottomContent}>
           <Text style={styles.txttitle}>{title}</Text>
