@@ -66,10 +66,16 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
   // --------- REQUEST CART DETAIL -----------
-  const { data } = useQuery(GQL.CART_DETAIL, {
-    variables: { cartId: cart_id },
-    fetchPolicy: 'cache-and-network',
-  });
+
+  // const { data } = useQuery(GQL.CART_DETAIL, {
+  //   variables: { cartId: cart_id },
+  //   fetchPolicy: 'cache-and-network',
+  // });
+
+  const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
+
+  const { data } = getCheckOutCartResp;
+  // --------- REQUEST CART DETAIL -----------
 
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
   const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
@@ -137,7 +143,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setShowNotice(false);
   };
   const onTogglePopupSuccess = () => {
-    dispatch(account.clearCartState());
+    // dispatch(account.clearCartState());
+    navigation.goBack();
     setShowPopupSuccess(false);
   };
   const ontoggleSwitch = () => {
@@ -210,6 +217,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
+          dispatch(account.clearCartState());
+
           setShowPopupSuccess(true);
         }
         dispatch(app.hideLoading());
@@ -222,10 +231,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
   React.useEffect(() => {
     setTimeout(() => {
       setShowNotice(!isEatingUtensils);
-    }, 250);
+    }, 1000);
   }, [isEatingUtensils]);
 
   React.useEffect(() => {
+    getCheckOutCart();
     getSubMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

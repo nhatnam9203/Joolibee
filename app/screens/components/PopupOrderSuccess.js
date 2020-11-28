@@ -21,7 +21,9 @@ export const PopupOrderSuccess = ({
   const onHandlePress = (screen) => () => {
     popupRef.current.forceQuit();
     onToggle();
-    navigation.navigate(screen);
+    setTimeout(() => {
+      navigation.navigate(screen);
+    }, 350);
   };
   return (
     <PopupLayout
