@@ -31,7 +31,7 @@ export const useGetCustomerCart = () => {
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
       dispatch(
-        account.resetCustomerCart(getCustomerCartResp.data?.customerCart),
+        account.updateCustomerCart(getCustomerCartResp.data?.customerCart),
       );
     }
   }, [getCustomerCartResp.data, dispatch]);

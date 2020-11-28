@@ -112,7 +112,6 @@ const accountSlice = createSlice({
     },
 
     updateCustomerCart: (state, action) => {
-      Logger.debug(action.payload, 'action');
       state.cart = Object.assign({}, state.cart, action.payload);
     },
 

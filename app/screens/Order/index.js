@@ -83,18 +83,16 @@ const OrderScreen = ({ route = { params: {} } }) => {
     prices: { grand_total, discounts, subtotal_excluding_tax },
     shipping_addresses,
   } = customerCart;
-  Logger.debug(shipping_addresses, 'shipping_addresses');
-  Logger.debug(customerCart, 'customerCart');
 
   const {
-    firstname,
-    lastname,
-    selected_shipping_method,
-    telephone,
-  } = shipping_addresses?.find(Boolean);
+    firstname = '',
+    lastname = '',
+    selected_shipping_method = ShippingType.InPlace,
+    telephone = '',
+  } = shipping_addresses?.find(Boolean) || {};
 
   const { method_code } = selected_shipping_method || {};
-  const full_address = format.addressFull(shipping_addresses[0]);
+  const full_address = format.addressFull(shipping_addresses[0]) ?? '';
   const total = format.jollibeeCurrency({
     value: grand_total.value,
     currency: 'VND',
@@ -132,13 +130,13 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setShippingAddressesOnCartResp,
   } = GEX.useSetShippingAddress();
 
-  const updateMyCart = async (item) => {
+  const updateMyCart = (item) => {
     let input = {
       cart_item_id: item.id,
       quantity: item.quantity,
     };
 
-    await updateCartItems({
+    updateCartItems({
       variables: input,
     });
   };

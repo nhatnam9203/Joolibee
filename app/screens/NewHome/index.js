@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
-import { GQL } from '@graphql';
+import { GQL, GEX } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import {
   AppScrollViewIOSBounceColorsWrapper,
@@ -51,6 +51,8 @@ const HomeScreen = () => {
   const { data, loading, refetch } = useQuery(GQL.HOME_SCREEN, {
     fetchPolicy: 'only-cache',
   });
+
+  GEX.useGetCustomerCart(); // !! tam thoi de, non se call khi update cart
 
   const { homeScreen } = data || {};
   React.useEffect(() => {
