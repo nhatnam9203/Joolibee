@@ -19,6 +19,7 @@ function alert({ type = 'info', title, message, payload, interval }) {
 
 function alertWithError(error) {
   alert(Object.assign({}, error, { type: 'error' }));
+  graphQLErrorRef.current?.hideLoading();
 }
 
 function logout() {
