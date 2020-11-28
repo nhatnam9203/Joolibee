@@ -21,7 +21,7 @@ const Index = () => {
 
   const getShippingMethod = (txt = '') => {
     switch (txt) {
-      case 'freeshipping_freeshipping':
+      case 'Giao hàng tận nơi - Giao hàng tận nơi':
         return 'Giao đến';
       default:
         return 'Đến lấy';

@@ -106,6 +106,14 @@ const ProductCart = ({ visible, onToggle }) => {
     }
   };
 
+  const orderCreateNewAddress = () => {
+    popupRef.current.forceQuit();
+    navigation.navigate(ScreenName.DetailMyAddress, {
+      titleHeader: translate('txtMyAddressDetail'),
+      cartId: customerCart?.id,
+    });
+  };
+
   // ========= PAYMENT PROCESS
 
   const paymentButtonPressed = () => {

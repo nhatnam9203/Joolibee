@@ -15,6 +15,7 @@ const initialState = {
   cart: null,
   isShowQRCode: false,
   isLogout: false,
+  isEatingUtensils: false,
 };
 
 const feedBack = createAsyncThunk(
@@ -39,6 +40,7 @@ const accountSlice = createSlice({
     clearSignInState() {},
     clearCartState(state) {
       state.cart = null;
+      state.isEatingUtensils = false;
     },
     showQRCode(state) {
       state.isShowQRCode = true;
@@ -51,6 +53,9 @@ const accountSlice = createSlice({
     saveUserInfo(state, action) {
       const { customer } = action.payload;
       state.user = { ...state.user, profile: customer };
+    },
+    setEatingUtensils(state) {
+      state.isEatingUtensils = !state.isEatingUtensils;
     },
 
     signInSucceed(state, action) {
@@ -101,6 +106,7 @@ const accountSlice = createSlice({
       state.isLogout = false;
       state.user = initialState.user;
       state.cart = null;
+      state.isEatingUtensils = false;
     },
 
     updateCustomerCart: (state, action) => {

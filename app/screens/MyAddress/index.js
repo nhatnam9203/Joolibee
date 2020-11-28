@@ -23,19 +23,23 @@ const Index = ({ route }) => {
     navigation.goBack(),
   );
 
-  const onHandlePress = (item) => {
+  const onHandleSetShippingAddress = (id) => {
     const params = {
       variables: {
-        shipping_addresses: [{ customer_address_id: item.id }],
+        shipping_addresses: [{ customer_address_id: id }],
       },
       awaitRefetchQueries: true,
       refetchQueries: [
         { query: GQL.CART_DETAIL, variables: { cartId: customerCart?.id } },
       ],
     };
+    setShippingAddressesOnCart(params);
+  };
+
+  const onHandlePress = (item) => {
     if (selected_address && item) {
+      onHandleSetShippingAddress(item.id);
       dispatch(app.showLoading());
-      setShippingAddressesOnCart(params);
     } else {
       goToDetail(item);
     }
@@ -73,6 +77,7 @@ const Index = ({ route }) => {
     navigation.navigate(ScreenName.DetailMyAddress, {
       val_address,
       titleHeader,
+      cartId: customerCart?.id,
     });
   };
 

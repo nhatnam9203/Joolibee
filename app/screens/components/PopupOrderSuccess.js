@@ -19,6 +19,7 @@ export const PopupOrderSuccess = ({
   const popupRef = React.createRef(null);
   const navigation = useNavigation();
   const onHandlePress = (screen) => () => {
+    popupRef.current.forceQuit();
     onToggle();
     navigation.navigate(screen);
   };
@@ -47,13 +48,13 @@ export const PopupOrderSuccess = ({
         <ButtonCC.ButtonYellow
           label={translate('txtContinueOrder')}
           width={BUTTON_WIDTH}
-          onPress={onHandlePress(ScreenName.MyOrders)}
+          onPress={onHandlePress(ScreenName.Menu)}
         />
 
         <ButtonCC.ButtonRed
           label={translate('txtFollowOrder')}
           width={BUTTON_WIDTH}
-          onPress={onHandlePress(ScreenName.Menu)}
+          onPress={onHandlePress(ScreenName.MyOrders)}
         />
       </View>
     </PopupLayout>
