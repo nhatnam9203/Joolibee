@@ -128,7 +128,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           phone_number: phone,
           password: '',
           confirmPassword: '',
-          dob: '',
+          dob: new Date(),
           gender: null,
           is_subscribed: false,
           validateType: 'fb',

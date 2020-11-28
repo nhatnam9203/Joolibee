@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   },
 
   txtDescription: {
-    ...AppStyles.fonts.medium_SVN,
-    fontSize: 21,
+    ...AppStyles.fonts.medium,
+    fontSize: scaleWidth(21),
     color: '#1B1B1B',
     textAlign: 'center',
     marginBottom: scaleHeight(10),

@@ -36,6 +36,7 @@ import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
 import { app, account } from '@slices';
 import NavigationService from '../../navigation/NavigationService';
+import { useGraphQLClient } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -50,7 +51,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { shippingMethod, addressParams } = route.params;
-
+  const graphQlClient = useGraphQLClient();
   const cart_id = useSelector((state) => state.account?.cart?.id);
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
@@ -73,7 +74,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // });
 
   const { getCheckOutCart, getCheckOutCartResp } = GEX.useGetCheckOutCart();
-
   const { data } = getCheckOutCartResp;
   // --------- REQUEST CART DETAIL -----------
 
@@ -144,8 +144,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
   };
   const onTogglePopupSuccess = () => {
     // dispatch(account.clearCartState());
-    navigation.goBack();
     setShowPopupSuccess(false);
+    navigation.goBack();
   };
   const ontoggleSwitch = () => {
     dispatch(account.setEatingUtensils());
@@ -217,6 +217,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
+          graphQlClient.cache.evict({ fieldName: 'cart' });
+          graphQlClient.cache.evict({ fieldName: 'customerCart' });
+          graphQlClient.cache.gc();
           dispatch(account.clearCartState());
 
           setShowPopupSuccess(true);
@@ -255,7 +258,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
       setShippingAddresses(params);
     }
-  }, [store_pickup_id, isPickupStore, addressParams, setShippingAddresses]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store_pickup_id, isPickupStore]);
 
   const renderItemExtra = (item, index) => (
     <View key={index + ''} style={{ flex: 1 }}>

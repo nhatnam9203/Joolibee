@@ -19,11 +19,11 @@ export const PopupOrderSuccess = ({
   const popupRef = React.createRef(null);
   const navigation = useNavigation();
   const onHandlePress = (screen) => () => {
-    popupRef.current.forceQuit();
     onToggle();
+    popupRef.current.forceQuit();
     setTimeout(() => {
       navigation.navigate(screen);
-    }, 350);
+    }, 400);
   };
   return (
     <PopupLayout
