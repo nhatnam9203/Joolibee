@@ -36,6 +36,7 @@ import {
 } from './navigation/NavigationService';
 import { useGraphQLClient } from '@graphql';
 import { ConfirmHandler, ComingSoonHandler } from './handlers';
+import { useCodePushUpdate } from '@hooks';
 
 const fontConfig = {
   default: {
@@ -79,17 +80,20 @@ if (__DEV__) {
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
 }
 
-let codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-  installMode: codePush.InstallMode.IMMEDIATE,
-};
-
-let App = () => {
+// React$Node -> For functional component CodePush
+let App: () => React$Node = () => {
   const graphQlClient = useGraphQLClient();
+  // Sync CodePush here !!
+  const { progress, syncStatus } = useCodePushUpdate();
+
+  React.useEffect(() => {
+    Logger.debug(progress, ' CodePush download progress');
+    Logger.debug(syncStatus, ' CodePush  syncStatus');
+  }, [progress, syncStatus]);
 
   React.useEffect(() => {
     SplashScreen.hide();
-  }, [graphQlClient]);
+  }, []);
 
   if (!graphQlClient) {
     return <Loading />;
@@ -157,6 +161,11 @@ const LangProvider = ({ children }) => {
   // }, []);
 
   return <>{children}</>;
+};
+
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.IMMEDIATE,
 };
 
 App = codePush(codePushOptions)(App);
