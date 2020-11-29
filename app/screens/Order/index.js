@@ -65,7 +65,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const [coupon_code, setCouponCode] = React.useState('');
   const [reward_point, setRewardPoint] = React.useState('');
-
+  const [order_number, setOrderNumber] = React.useState('');
   // id dung cho store pickup
   const store_pickup_id = useSelector(
     (state) => state.order?.pickup_location_code,
@@ -218,10 +218,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
+          console.log(res?.data?.placeOrder);
           graphQlClient.cache.evict({ fieldName: 'cart' });
           graphQlClient.cache.evict({ fieldName: 'customerCart' });
           graphQlClient.cache.gc();
-
+          setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
         }
         dispatch(app.hideLoading());
@@ -645,6 +646,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       <PopupOrderSuccess
         visible={showPopupSuccess}
         onToggle={onTogglePopupSuccess}
+        orderCode={order_number}
       />
 
       <Loading isLoading={updateCartResp?.loading} />

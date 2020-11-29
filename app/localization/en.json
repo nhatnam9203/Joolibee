@@ -28,6 +28,7 @@
   "txtInputEmail": "Email",
   "txtInputPassword": "Password *",
   "txtInputConfirmPassword": "Confirm password *",
+  "txtInputCurrentPassword": "Current password *",
   "txtPickerDate": "Date of birth",
   "txtPickerGender": "Sex",
   "txtPrivacy": "Agree with",
