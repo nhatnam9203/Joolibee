@@ -126,7 +126,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           password: '',
           confirmPassword: '',
           dob: new Date(),
-          gender: null,
+          gender: 0,
           is_subscribed: false,
           validateType: 'fb',
           fcmToken: '123456',
@@ -303,7 +303,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
                       { label: translate('txtMale'), value: 1, key: 'male' },
                       {
                         label: translate('txtFemale'),
-                        value: 0,
+                        value: 2,
                         key: 'female',
                       },
                       // { label: translate('txtOther'), value: -1, key: 'other' },
