@@ -79,7 +79,7 @@ const Index = (props) => {
       };
       setShippingAddresses(params);
     },
-    [cartId],
+    [cartId, setShippingAddresses],
   );
   //------------ Add address customer -----------------//
   const [createCustomerAddress] = useMutation(mutation.ADD_ADDRESS);
