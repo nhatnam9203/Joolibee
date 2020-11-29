@@ -21,6 +21,7 @@ const SignUpScreen = () => {
   const [formData, setFormData] = React.useState(null);
 
   const onVerifyPhoneError = (response) => {
+    setFormData(Object.assign({}, formData, { error: response }));
     dispatch(app.hideLoading());
   };
 
@@ -43,13 +44,16 @@ const SignUpScreen = () => {
 
   const requestAuthCode = async (values) => {
     const { phone } = values;
+    setFormData({ phone: phone });
     if (!phone) {
-      Logger.error('error', 'SignUp -> requestAuthCode -> phone not found!');
+      setFormData(
+        Object.assign({}, formData, { error: { code: 'phone-note-found' } }),
+      );
+
       return;
     }
 
     dispatch(app.showLoading());
-    setFormData(values);
 
     // call firebase phone auth
     await signInWithPhoneNumber(normalizePhoneNumber('+84', phone));
@@ -61,7 +65,6 @@ const SignUpScreen = () => {
   };
 
   React.useEffect(() => {
-    Logger.debug(authStatus, 'authStatus');
 
     if (authStatus === AUTH_STATUS.sent) {
       dispatch(app.hideLoading());
@@ -89,7 +92,7 @@ const SignUpScreen = () => {
       return (
         <VerifyPhoneCode
           infos={formData}
-          resendCode={() => requestAuthCode(formData)}
+          resendCode={requestAuthCode}
           confirmCode={onConfirmCode}
         />
       );

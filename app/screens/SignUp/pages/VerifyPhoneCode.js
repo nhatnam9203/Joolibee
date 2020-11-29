@@ -9,12 +9,14 @@ import { Animated, StyleSheet, Text, View } from 'react-native';
 import Config from 'react-native-config';
 import { useDispatch } from 'react-redux';
 import { ButtonCC, LabelTitle } from '../../components';
+import { TextInputErrorMessage } from '../../components';
 
-const COUNTDOWN_SECONDS = 60;
+const COUNTDOWN_SECONDS = 75;
 const TIME_WAITING = COUNTDOWN_SECONDS - 15;
+const LAYOUT_WIDTH = '90%';
 
 export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
-  const { phone = 'undefine' } = infos;
+  const { phone = 'undefine', error } = infos;
   var interval;
   const dispatch = useDispatch();
   // count number get code call
@@ -24,6 +26,7 @@ export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
   // start count down
   const [timing, setTiming] = React.useState(false);
   const [codeInput, setCodeInput] = React.useState(null);
+
   const verifyCode = () => {
     if (validate.isEmptyString(codeInput)) {
       return;
@@ -53,9 +56,11 @@ export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
         sendCodeCount,
         Config.RESEND_FIREBASE_CODE_TIME_BLOCK,
       );
+
       // call send code
-      if (resendCode) {
-        resendCode();
+      if (typeof resendCode === 'function') {
+        resendCode({ phone });
+        setTiming(true);
       }
     }
   };
@@ -117,6 +122,14 @@ export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
           onChangeText={(txt) => setCodeInput(txt)}
           value={codeInput}
         />
+
+        {error && (
+          <TextInputErrorMessage
+            style={{ width: LAYOUT_WIDTH }}
+            message={error?.code}
+            color={AppStyles.colors.inputError}
+          />
+        )}
 
         {timing && (
           <Text style={styles.textHighlightStyle}>
