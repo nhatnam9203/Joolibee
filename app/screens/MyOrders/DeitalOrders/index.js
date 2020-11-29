@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomImageBackground } from '@components';
@@ -27,8 +28,12 @@ export default function Index({ navigation, route }) {
     status_order === translate('txtStatusOrderCancel')
       ? true
       : false;
+  const getDate = React.useCallback(() => {
+    const current_day = moment().format('DD/MM/yyyy');
+    let dateOrder = format.date(order_date);
+    return dateOrder === current_day ? translate('txtToday') : dateOrder;
+  }, [order_date]);
   let hours = format.hours(order_date);
-  let date = format.date(order_date);
 
   const onClose = () => setVisible(false);
 
@@ -60,11 +65,11 @@ export default function Index({ navigation, route }) {
           {translate('txtOrderNumber')} #{number}
         </Text>
         <Text style={(AppStyles.fonts.text, styles.headerSubTitle)}>
-          {hours}, {date}
+          {hours}, {getDate()}
         </Text>
       </View>
     ),
-    [date, hours, number],
+    [getDate, hours, number],
   );
 
   React.useEffect(() => {

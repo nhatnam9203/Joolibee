@@ -1,4 +1,4 @@
-import { useCodePushUpdate, useStorePickup } from '@hooks';
+import { useStorePickup } from '@hooks';
 import { app, store } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
@@ -10,22 +10,15 @@ const { scaleWidth, scaleHeight } = scale;
 
 const SplashScreen = () => {
   const dispatch = useDispatch();
-  const [progress] = useCodePushUpdate();
 
   // !! check version file store chỗ này, nếu có thay đổi cập nhật ở dây luôn
   const [cities, districts, initStores] = useStorePickup();
 
   React.useEffect(() => {
-    if (progress >= 100) {
-      setTimeout(() => {
-        dispatch(app.loadingSuccess());
-      }, 1500);
-    } else {
-      setTimeout(() => {
-        dispatch(app.loadingSuccess());
-      }, 3000);
-    }
-  }, [progress, dispatch]);
+    setTimeout(() => {
+      dispatch(app.loadingSuccess());
+    }, 1500);
+  }, [dispatch]);
 
   React.useEffect(() => {
     dispatch(store.setStorePickup({ stores: initStores, cities, districts }));
@@ -44,7 +37,7 @@ const SplashScreen = () => {
           style={styles.ic_text}
           resizeMode="center"
         />
-        <View style={styles.container_footer}>
+        {/* <View style={styles.container_footer}>
           {progress > 0 ? (
             <Text style={styles.textDownloadProgress}>
               {Math.min(progress, 100) + '%'}
@@ -52,7 +45,7 @@ const SplashScreen = () => {
           ) : (
             <></>
           )}
-        </View>
+        </View> */}
       </ImageBackground>
     </View>
   );

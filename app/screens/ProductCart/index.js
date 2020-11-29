@@ -33,7 +33,6 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // GET
   const customerCart = useSelector((state) => state.account?.cart);
-
   const { customer } = GEX.useCustomer();
   const addresses = customer?.addresses ?? [];
   const address_id = addresses?.find((x) => x.default_shipping)?.id;

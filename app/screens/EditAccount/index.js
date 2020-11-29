@@ -36,6 +36,7 @@ const EditAccountScreen = () => {
     lastname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
+    password: Yup.string().required(translate('txtRequired')),
   });
 
   const onHandleSubmit = React.useCallback(
@@ -138,10 +139,26 @@ const EditAccountScreen = () => {
               color={AppStyles.colors.inputError}
             />
           )}
+
+          <PasswordInput
+            style={{ width: LAYOUT_WIDTH }}
+            onChangeText={handleChange('password')}
+            onBlur={handleBlur('password')}
+            value={values.password}
+            placeholder={translate('txtInputCurrentPassword')}
+            textContentType="password"
+          />
+          {errors.currentPassword && touched.currentPassword && (
+            <TextInputErrorMessage
+              style={{ width: LAYOUT_WIDTH }}
+              message={errors.currentPassword}
+              color={AppStyles.colors.inputError}
+            />
+          )}
           <View style={styles.pickerContentStyle}>
             <CustomBirthdayPicker
               onChangeDate={handleChange('date_of_birth')}
-              defaultValue={values.date_of_birth}
+              // defaultValue={values.date_of_birth}
               renderBase={() => (
                 <CustomInput
                   style={{ width: FULL_WIDTH }}

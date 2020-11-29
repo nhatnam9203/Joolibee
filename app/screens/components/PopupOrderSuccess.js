@@ -14,7 +14,7 @@ export const PopupOrderSuccess = ({
   visible,
   onToggle,
   message = translate('txtNoticeEnvironment'),
-  orderCode = '00909',
+  orderCode = '',
 }) => {
   const popupRef = React.createRef(null);
   const navigation = useNavigation();
@@ -40,6 +40,7 @@ export const PopupOrderSuccess = ({
 
         <Text style={styles.txtDescription}>
           {translate('txtYourOrderCode') +
+            '#' +
             orderCode +
             '\n' +
             translate('txtThankForYourOrder')}

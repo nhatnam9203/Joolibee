@@ -26,6 +26,7 @@ import {
   TextInputErrorMessage,
 } from '../../components';
 import ScreenName from '../../ScreenName';
+import { format } from '@utils';
 
 const BUTTON_HEIGHT = 60;
 const LAYOUT_WIDTH = '90%';
@@ -94,26 +95,22 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   };
 
   React.useEffect(() => {
-    if (data) {
-      Logger.debug(data, 'signup success');
+    if (data && !error) {
       const onSignupSucceed = async () => {
-        await dispatch(app.hideLoading());
         await dispatch(account.signUpSucceeded(data));
+        await dispatch(app.hideLoading());
+
+        setShowPopupSuccess(PROCESS_STATUS.SUCCESS);
       };
 
       onSignupSucceed();
     }
-  }, [data, dispatch]);
-
-  React.useEffect(() => {
-    if (signUpSucceeded) {
-      setShowPopupSuccess(PROCESS_STATUS.SUCCESS);
-    }
-  }, [signUpSucceeded]);
+  }, [data, error, dispatch]);
 
   React.useEffect(() => {
     if (showPopupSuccess === PROCESS_STATUS.FINISH) {
       navigation.navigate(ScreenName.SignIn);
+      setShowPopupSuccess(PROCESS_STATUS.START);
     }
   }, [showPopupSuccess, navigation]);
 
@@ -129,7 +126,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           password: '',
           confirmPassword: '',
           dob: new Date(),
-          gender: null,
+          gender: 0,
           is_subscribed: false,
           validateType: 'fb',
           fcmToken: '123456',
@@ -306,10 +303,10 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
                       { label: translate('txtMale'), value: 1, key: 'male' },
                       {
                         label: translate('txtFemale'),
-                        value: 0,
+                        value: 2,
                         key: 'female',
                       },
-                      { label: translate('txtOther'), value: -1, key: 'other' },
+                      // { label: translate('txtOther'), value: -1, key: 'other' },
                     ]}
                     placeholder={translate('txtPickerGender')}
                     defaultValue={values.gender}
