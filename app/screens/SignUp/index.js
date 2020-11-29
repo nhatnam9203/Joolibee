@@ -65,7 +65,6 @@ const SignUpScreen = () => {
   };
 
   React.useEffect(() => {
-
     if (authStatus === AUTH_STATUS.sent) {
       dispatch(app.hideLoading());
       setPage(PAGES.InputCode);
