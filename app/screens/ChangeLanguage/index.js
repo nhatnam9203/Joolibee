@@ -1,4 +1,5 @@
-import { CustomFlatList } from '@components';
+import { CustomFlatList, CustomImageBackground } from '@components';
+
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images, metrics } from '@theme';
@@ -11,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ButtonCC } from '../components';
 import { app } from '@slices';
 import { localizeData } from '@localize';
@@ -69,32 +70,35 @@ const ChangeLanguageScreen = () => {
   }, [language, navigation]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        {/**List Item Setting */}
-        <View style={styles.content}>
-          <CustomFlatList
-            bounces={false}
-            data={languageList}
-            renderItem={renderItem}
-            contentContainerStyle={styles.contentContainer}
-          />
+    <CustomImageBackground
+      style={{ flex: 1 }}
+      source={images.watermark_background_2}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+          {/**List Item Setting */}
+          <View style={styles.content}>
+            <CustomFlatList
+              bounces={false}
+              data={languageList}
+              renderItem={renderItem}
+              contentContainerStyle={styles.contentContainer}
+            />
+          </View>
+          <View style={styles.confirmStyle}>
+            <ButtonCC.ButtonYellow
+              label={translate('txtConfirm')}
+              onPress={submitButtonPressed}
+            />
+          </View>
         </View>
-        <View style={styles.confirmStyle}>
-          <ButtonCC.ButtonYellow
-            label={translate('txtConfirm')}
-            onPress={submitButtonPressed}
-          />
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyles.colors.background,
   },
 
   itemContainer: {

@@ -1,11 +1,12 @@
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
-import { AppStyles } from '@theme';
+import { AppStyles, images } from '@theme';
 import { useMutation } from '@apollo/client';
 import { mutation } from '@graphql';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { ButtonCC, PasswordInput, TextInputErrorMessage } from '../components';
+import { CustomImageBackground } from '@components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -67,67 +68,71 @@ const ChangePasswordScreen = () => {
     onSubmit: onHandleSubmit,
   });
   return (
-    <SinglePageLayout backgroundColor={AppStyles.colors.background}>
-      <SafeAreaView>
-        <View style={styles.container}>
-          <PasswordInput
-            style={{ width: LAYOUT_WIDTH }}
-            onChangeText={handleChange('currentPassword')}
-            onBlur={handleBlur('currentPassword')}
-            value={values.currentPassword}
-            placeholder={translate('txtInputOldPassword')}
-            textContentType="password"
-          />
-          {errors.currentPassword && touched.currentPassword && (
-            <TextInputErrorMessage
+    <CustomImageBackground
+      style={{ flex: 1 }}
+      source={images.watermark_background_2}>
+      <SinglePageLayout>
+        <SafeAreaView>
+          <View style={styles.container}>
+            <PasswordInput
               style={{ width: LAYOUT_WIDTH }}
-              message={errors.currentPassword}
-              color={AppStyles.colors.inputError}
+              onChangeText={handleChange('currentPassword')}
+              onBlur={handleBlur('currentPassword')}
+              value={values.currentPassword}
+              placeholder={translate('txtInputOldPassword')}
+              textContentType="password"
             />
-          )}
-          <PasswordInput
-            style={{ width: LAYOUT_WIDTH }}
-            onChangeText={handleChange('newPassword')}
-            onBlur={handleBlur('newPassword')}
-            value={values.newPassword}
-            placeholder={translate('txtInputNewPassword')}
-            textContentType="password"
-          />
-          {errors.newPassword && touched.newPassword && (
-            <TextInputErrorMessage
+            {errors.currentPassword && touched.currentPassword && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.currentPassword}
+                color={AppStyles.colors.inputError}
+              />
+            )}
+            <PasswordInput
               style={{ width: LAYOUT_WIDTH }}
-              message={errors.newPassword}
-              color={AppStyles.colors.inputError}
+              onChangeText={handleChange('newPassword')}
+              onBlur={handleBlur('newPassword')}
+              value={values.newPassword}
+              placeholder={translate('txtInputNewPassword')}
+              textContentType="password"
             />
-          )}
-          <PasswordInput
-            style={{ width: LAYOUT_WIDTH }}
-            onChangeText={handleChange('confirmPassword')}
-            onBlur={handleBlur('confirmPassword')}
-            value={values.confirmPassword}
-            placeholder={translate('txtInputConfirmNewPassword')}
-            textContentType="password"
-          />
-          {errors.confirmPassword && touched.confirmPassword && (
-            <TextInputErrorMessage
+            {errors.newPassword && touched.newPassword && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.newPassword}
+                color={AppStyles.colors.inputError}
+              />
+            )}
+            <PasswordInput
               style={{ width: LAYOUT_WIDTH }}
-              message={errors.confirmPassword}
-              color={AppStyles.colors.inputError}
+              onChangeText={handleChange('confirmPassword')}
+              onBlur={handleBlur('confirmPassword')}
+              value={values.confirmPassword}
+              placeholder={translate('txtInputConfirmNewPassword')}
+              textContentType="password"
             />
-          )}
+            {errors.confirmPassword && touched.confirmPassword && (
+              <TextInputErrorMessage
+                style={{ width: LAYOUT_WIDTH }}
+                message={errors.confirmPassword}
+                color={AppStyles.colors.inputError}
+              />
+            )}
 
-          <ButtonCC.ButtonYellow
-            label={translate('txtSavePassword')}
-            onPress={handleSubmit}
-          />
-        </View>
-      </SafeAreaView>
-    </SinglePageLayout>
+            <ButtonCC.ButtonYellow
+              label={translate('txtSavePassword')}
+              onPress={handleSubmit}
+            />
+          </View>
+        </SafeAreaView>
+      </SinglePageLayout>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center' },
+  container: { flex: 1, alignItems: 'center', backgroundColor: 'transparent' },
 
   pickerContentStyle: {
     width: LAYOUT_WIDTH,
