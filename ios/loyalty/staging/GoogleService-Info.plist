@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>579642910552-oa92f0r7tenrpl5596jb4cgjtb70j8nn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.579642910552-oa92f0r7tenrpl5596jb4cgjtb70j8nn</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>579642910552-f8voatga64ftfc7236t3sj2qm1lvsce6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDDGyP07fQ0z7VAf-zFoCgw0n4GDNvDJ2A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>579642910552</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jollibee.loyalty.staging</string>
+	<key>PROJECT_ID</key>
+	<string>jollibee-vietnam</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jollibee-vietnam.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:579642910552:ios:969ae763f81dc4993e272d</string>
+	<key>DATABASE_URL</key>
+	<string>https://jollibee-vietnam.firebaseio.com</string>
+</dict>
+</plist>

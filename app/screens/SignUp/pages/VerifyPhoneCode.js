@@ -16,7 +16,7 @@ const TIME_WAITING = COUNTDOWN_SECONDS - 15;
 const LAYOUT_WIDTH = '90%';
 
 export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
-  const { phone = 'undefine', error } = infos;
+  const { phone = undefined, error } = infos;
   var interval;
   const dispatch = useDispatch();
   // count number get code call
