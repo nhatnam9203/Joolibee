@@ -100,10 +100,10 @@ const storeSlice = createSlice({
 
           if (district.includes(label)) return district.includes(label);
         });
-
+        // !! check lai truong hop findDistrict undefine
         state.my_location = Object.assign({}, state.my_location, {
-          cityId: findCity.id,
-          districtId: findDistrict.id,
+          cityId: findCity?.id,
+          districtId: findDistrict?.id,
           ...location,
         });
       }
