@@ -12,6 +12,7 @@ const CustomBirthdayPicker = ({
   onChangeDate,
   defaultValue = new Date(),
   style,
+  fmDate = DATE_FORMAT,
 }) => {
   const [visible, setVisible] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
@@ -29,7 +30,7 @@ const CustomBirthdayPicker = ({
     setDate(selectDate);
 
     if (typeof onChangeDate === 'function') {
-      onChangeDate(moment(selectDate).format(DATE_FORMAT));
+      onChangeDate(moment(selectDate).format(fmDate));
     }
 
     hidePicker();

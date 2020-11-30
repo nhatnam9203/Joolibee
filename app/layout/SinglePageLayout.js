@@ -7,30 +7,37 @@ import {
   ScrollView,
   StyleSheet,
   StatusBar,
+  View,
 } from 'react-native';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const SinglePageLayout = ({ children, backgroundColor, bounces }) => {
   const ref = React.useRef(null);
   useScrollToTop(ref);
 
   return (
     <>
-      <KeyboardAvoidingView
+      <KeyboardAwareScrollView
         style={[styles.avoidContainer, { backgroundColor: backgroundColor }]}
-        {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}>
+        bounces={bounces}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        ref={ref}
+        // {...(Platform.OS === 'ios' ? { behavior: 'padding' } : {})}
+      >
         <StatusBar barStyle="light-content" />
 
-        <ScrollView
-          ref={ref}
-          bounces={bounces}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContentContainer}
+        <View
+          // ref={ref}
+          // bounces={bounces}
+          // keyboardShouldPersistTaps="handled"
+          // showsVerticalScrollIndicator={false}
+          // showsHorizontalScrollIndicator={false}
+          // contentContainerStyle={styles.scrollContentContainer}
           style={styles.content}>
           {children}
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </View>
+      </KeyboardAwareScrollView>
     </>
   );
 };
