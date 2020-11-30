@@ -194,5 +194,7 @@
   "txtGrandTotal": "Tổng cộng",
   "txtSubmit": "Gửi",
   "txtDownloadPackage": "Đang tải dữ liệu ",
-  "txtInstallingPackage": "Đang cài đặt ..."
+  "txtInstallingPackage": "Đang cài đặt ...",
+  "txtWrongPassword": "Mật khẩu sai hoặc không được để trống",
+  "txtWrongUsername": "Tên đăng nhập sai hoặc không được để trống"
 }

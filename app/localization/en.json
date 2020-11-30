@@ -195,5 +195,7 @@
   "txtGrandTotal": "Grand total",
   "txtSubmit": "Submit",
   "txtDownloadPackage": "Downloading package ",
-  "txtInstallingPackage": "Installing package"
+  "txtInstallingPackage": "Installing package",
+  "txtWrongPassword": "Password not blank",
+  "txtWrongUsername": "Username not blank"
 }
