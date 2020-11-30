@@ -20,7 +20,7 @@ export default function Index({ navigation, route }) {
   const { order } = route.params;
   const [visible, setVisible] = React.useState(false);
 
-  const { number, order_date, status, shipping_address, items, total } =
+  const { number, order_date, status, shipping_address, items, total,id } =
     order || {};
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
@@ -49,6 +49,17 @@ export default function Index({ navigation, route }) {
   const onHandleReOrder = () => {
     dispatch(app.showLoading());
     reorderItems(number);
+  };
+  // --------------- Re Order Items Cart End ----------------- //
+
+  // --------------- Re Order Items Cart ----------------- //
+  const { cancelOrder } = GEX.useCancelOrder(() =>
+    navigation.navigate(ScreenName.NewHome),
+  );
+
+  const onHandleCancel = () => {
+    dispatch(app.showLoading());
+    cancelOrder(number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -176,7 +187,7 @@ export default function Index({ navigation, route }) {
           {order.status === 'pending' && (
             <View style={styles.btnRemmoveOrder}>
               <ButtonCC.ButtonBorderRed
-                // onPress={onToggle}
+                // onPress={onHandleCancel}
                 label={translate('txtCancel')}
                 width={scaleWidth(195)}
                 height={scaleHeight(61)}

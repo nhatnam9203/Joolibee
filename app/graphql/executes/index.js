@@ -11,3 +11,4 @@ export * from './useSetPaymentMethod';
 export * from './useGetShippingMethod';
 export * from './useSetShippingMethod';
 export * from './useReOrderCart';
+export * from './useCancelOrder';

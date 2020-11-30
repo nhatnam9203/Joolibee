@@ -1,9 +1,10 @@
-import { CustomFlatList } from '@components';
+import { CustomFlatList, CustomImageBackground } from '@components';
+
 import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account } from '@slices';
-import { AppStyles } from '@theme';
+import { AppStyles, images } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -43,38 +44,42 @@ const SettingAccountScreen = () => {
   }, [language, navigation]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        {/**List Item Setting */}
-        <View style={styles.content}>
-          <CustomFlatList
-            bounces={false}
-            data={settingList}
-            renderItem={({ item }) => (
-              <SettingItem
-                item={item}
-                key={item.key}
-                onPress={item?.onPress}
-                buttonComponent={item.buttonComponent}
-              />
-            )}
-            ItemSeparatorComponent={() => (
-              <View style={AppStyles.styles.rowSeparator} />
-            )}
-            contentContainerStyle={styles.contentContainer}
-            ListFooterComponent={renderLogoutButton}
-            keyExtractor={(item) => item.key}
-          />
+    <CustomImageBackground
+      style={styles.container}
+      source={images.watermark_background_2}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+          {/**List Item Setting */}
+          <View style={styles.content}>
+            <CustomFlatList
+              bounces={false}
+              data={settingList}
+              renderItem={({ item }) => (
+                <SettingItem
+                  item={item}
+                  key={item.key}
+                  onPress={item?.onPress}
+                  buttonComponent={item.buttonComponent}
+                />
+              )}
+              ItemSeparatorComponent={() => (
+                <View style={AppStyles.styles.rowSeparator} />
+              )}
+              contentContainerStyle={styles.contentContainer}
+              ListFooterComponent={renderLogoutButton}
+              keyExtractor={(item) => item.key}
+            />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </CustomImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
   },
 
   content: {
