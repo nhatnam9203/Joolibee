@@ -22,7 +22,6 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
   // Handle the button press
   async function signInWithPhoneNumber(phone) {
     setAuthStatus(AUTH_STATUS.none);
-
     const confirmation = await auth().signInWithPhoneNumber(phone);
 
     if (confirmation) {
@@ -32,6 +31,7 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
         if (authStatus === AUTH_STATUS.sent) {
           setAuthStatus(AUTH_STATUS.timeout);
         }
+
         clearTimeout(requestCodeTimer);
         requestCodeTimer = null;
       }, TIMEOUT);
@@ -82,7 +82,6 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
 
   // Handle android auto change
   const onAuthStateChanged = (user) => {
-    console.log(user);
     if (
       (authStatus === AUTH_STATUS.confirmCode ||
         authStatus === AUTH_STATUS.sent) &&

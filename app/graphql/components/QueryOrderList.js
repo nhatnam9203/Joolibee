@@ -1,24 +1,24 @@
 import { useQuery } from '@apollo/client';
 import { CustomFlatList } from '@components';
+import { translate } from '@localize';
 import React from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
-import { ORDER_LIST } from '../queries';
+import { RefreshControl, StyleSheet, View, Text } from 'react-native';
+import { AppStyles } from '@theme';
 import { ORDERS_CUSTOMER } from '../gql';
-const defaultData = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-  { id: 5 },
-  { id: 6 },
-];
+const defaultData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
 export const QueryOrderList = ({
   renderItem = () => <View />,
   renderItemLoading = () => <View />,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { loading, error, data, refetch } = useQuery(ORDERS_CUSTOMER);
+  const [currentPage, nextPage] = React.useState(1);
+  const { loading, error, data, refetch, fetchMore } = useQuery(
+    ORDERS_CUSTOMER,
+    {
+      variables: { currentPage },
+    },
+  );
 
   let _data = data?.customer?.orders.items
     ? data?.customer?.orders?.items
@@ -43,6 +43,31 @@ export const QueryOrderList = ({
       setRefreshing(false);
     }, 3000);
   };
+
+  const handleFreshMore = () => {
+    const next_page = currentPage + 1;
+    nextPage(next_page);
+    console.log('next_page', next_page);
+    fetchMore({
+      variables: { currentPage: next_page },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        console.log('fetchMoreResult', fetchMoreResult);
+        if (!fetchMoreResult) {
+          return prev;
+        }
+        // return Object.assign({}, prev, {
+        //   feed: [...prev.feed, ...fetchMoreResult.feed],
+        // });
+      },
+    });
+  };
+
+  const renderEmptyList = () => (
+    <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+      {translate('txtEmptyOrderList')}
+    </Text>
+  );
+
   return (
     <CustomFlatList
       data={sortList()}
@@ -54,6 +79,10 @@ export const QueryOrderList = ({
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
+      ListEmptyComponent={renderEmptyList}
+      // ListFooterComponent={() => (
+      //   <CustomButton onPress={handleFreshMore} width="90%" label="Load more" />
+      // )}
     />
   );
 };

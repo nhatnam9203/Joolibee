@@ -1,9 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
-const CustomFlatList = ({ ...props }) => (
-  <FlatList {...props}  />
-);
+const CustomFlatList = ({ ...props }) => <FlatList {...props} />;
 
 const styles = StyleSheet.create({
   containerStyle: {

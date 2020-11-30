@@ -76,12 +76,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // const { cart } = GEX.useGetCustomerCart();
   const customerCart = useSelector((state) => state.account?.cart);
+  Logger.debug(customerCart, 'customerCart');
 
   const {
     items,
     applied_coupons,
     prices: { grand_total, discounts, subtotal_excluding_tax },
     shipping_addresses,
+    bonus_point,
   } = customerCart;
 
   const {
@@ -234,7 +236,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      setShowNotice(!isEatingUtensils);
+      setShowNotice(isEatingUtensils);
     }, 1000);
   }, [isEatingUtensils]);
 
@@ -398,7 +400,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       </OrderSectionItem>
       <OrderSectionItem height={78}>
         <TextInput
-          placeholder={translate('txtNote')}
+          placeholder={translate('txtNoteShipping')}
           multiline={true}
           style={styles.txtNoteStyle}
         />
@@ -623,8 +625,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
               alignItems: 'center',
             }}>
             <Text style={styles.txtPointStyle}>
-              (+ {format.caculatePoint(items)}
-              {translate('txtPoint')})
+              {`(+ ${bonus_point} ${translate('txtPoint')})`}
             </Text>
             <Text style={styles.txtPriceStyle}>{total}</Text>
           </View>

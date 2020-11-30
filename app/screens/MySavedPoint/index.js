@@ -99,13 +99,13 @@ const MySavedPointScreen = () => {
               </View>
               <Text style={styles.txtPoint}>0</Text>
             </View>
-            <Text style={styles.txtPointExpire}>
-              {translate('txtExpirePoint')} 11/17/2020
-            </Text>
+            {/* <Text style={styles.txtPointExpire}>
+              {translate('txtExpirePoint')} 17/11/2020
+            </Text> */}
 
-            <Text style={styles.txtNoteExpire}>
+            {/* <Text style={styles.txtNoteExpire}>
               {translate('txtHowToExendPoints')}
-            </Text>
+            </Text> */}
           </View>
         );
       default:

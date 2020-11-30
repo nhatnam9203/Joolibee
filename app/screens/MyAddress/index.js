@@ -19,6 +19,8 @@ const Index = ({ route }) => {
   const navigation = useNavigation();
   // Get Customer Cart
   const customerCart = useSelector((state) => state.account?.cart);
+  const { customer } = GEX.useCustomer();
+  const { firstname, lastname, phone_number } = customer;
   const { setShippingAddresses } = GEX.useSetShippingAddress(() =>
     navigation.goBack(),
   );
@@ -60,17 +62,16 @@ const Index = ({ route }) => {
       ),
     );
 
-    const val_address = item
-      ? {
-          phone: item.telephone,
-          place: item.company,
-          firstname: item.firstname,
-          lastname: item.lastname,
-          note: '',
-          id: item.id,
-          default_shipping: item.default_shipping,
-        }
-      : null;
+    const val_address = {
+      phone: item?.telephone ?? phone_number,
+      place: item?.company ?? '',
+      firstname: item?.firstname ?? firstname,
+      lastname: item?.lastname ?? lastname,
+      note: '',
+      id: item?.id ?? '',
+      default_shipping: item?.default_shipping ?? false,
+    };
+
     const titleHeader = !item
       ? translate('txtMyAddressDetail')
       : translate('txtEditAddress');
@@ -78,6 +79,7 @@ const Index = ({ route }) => {
       val_address,
       titleHeader,
       cartId: customerCart?.id,
+      action_type: item ? true : false,
     });
   };
 

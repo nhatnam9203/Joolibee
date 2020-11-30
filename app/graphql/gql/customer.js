@@ -169,6 +169,7 @@ export const CUSTOMER_CART_QUERY = gql`
         code
       }
       total_quantity
+      bonus_point
       prices {
         __typename
         grand_total {

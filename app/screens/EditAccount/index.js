@@ -44,7 +44,12 @@ const EditAccountScreen = () => {
     (values) => {
       Logger.debug(values, 'values');
       dispatch(app.showLoading());
-      updateCustomerInfo({ variables: values })
+      updateCustomerInfo({
+        variables: {
+          ...values,
+          gender: values.gender === -1 ? null : values.gender,
+        },
+      })
         .then((data) => {
           if (data?.data?.updateCustomerInfo) {
             dispatch(account.saveUserInfo(data?.data?.updateCustomerInfo));
@@ -72,7 +77,7 @@ const EditAccountScreen = () => {
       firstname,
       lastname,
       phone_number,
-      gender,
+      gender: gender ? gender : -1,
       date_of_birth: format.dateTime(date_of_birth, DATE_FORMAT),
       password: '',
     },
@@ -185,6 +190,7 @@ const EditAccountScreen = () => {
               items={[
                 { label: translate('txtMale'), value: 1 },
                 { label: translate('txtFemale'), value: 2 },
+                { label: translate('txtOther'), value: -1, key: 'other' },
               ]}
               placeholder={translate('txtPickerGender')}
               value={values.gender}

@@ -202,7 +202,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
       const total = format.jollibeeCurrency(grand_total);
 
-      setCartDetail({ items, total });
+      setCartDetail(Object.assign({}, customerCart, { total }));
     }
   }, [customerCart]);
 
@@ -247,10 +247,11 @@ const ProductCart = ({ visible, onToggle }) => {
             <Text style={styles.txtSummary}>{translate('txtSummary')} :</Text>
             <View style={styles.priceContent}>
               <Text style={styles.priceStyle}>{cartDetail?.total}</Text>
-              <Text style={styles.pointStyle}>
-                (+ {format.caculatePoint(cartDetail?.items)}
-                {translate('txtPoint')})
-              </Text>
+              {cartDetail?.bonus_point > 0 && (
+                <Text style={styles.pointStyle}>
+                  {`(+ ${cartDetail?.bonus_point} ${translate('txtPoint')})`}
+                </Text>
+              )}
             </View>
           </View>
 
