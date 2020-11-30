@@ -3,26 +3,27 @@ import React from 'react';
 
 export const useCodePushUpdate = () => {
   const [progress, setProgress] = React.useState(0);
+  const [syncStatus, setSyncStatus] = React.useState(null);
 
   React.useEffect(() => {
-    codePush.disallowRestart();
+    // codePush.disallowRestart();
     codePush.sync(
       {
         updateDialog: true,
         installMode: codePush.InstallMode.IMMEDIATE,
       },
       (status) => {
-        Logger.info(status, 'useCodePushUpdate -> status');
-
+        Logger.info(status, 'useCodePushUpdate -> STATUS');
+        setSyncStatus(status);
         switch (status) {
           case codePush.SyncStatus.UPDATE_INSTALLED:
             // self.setState({ modalVisible: true });
-            Logger.info(status, 'useCodePushUpdate -> UPDATE_INSTALLED');
+            Logger.info('Update installed', 'useCodePushUpdate');
             setProgress(100);
             break;
           case codePush.SyncStatus.SYNC_IN_PROGRESS:
             // self.setState({ modalVisible: true });
-            Logger.info(status, 'useCodePushUpdate -> SYNC_IN_PROGRESS');
+            Logger.info('Sync In Progress', 'useCodePushUpdate');
             break;
           case codePush.SyncStatus.CHECKING_FOR_UPDATE:
             Logger.info('Checking for updates.', 'useCodePushUpdate');
@@ -58,5 +59,5 @@ export const useCodePushUpdate = () => {
     );
   }, []);
 
-  return [progress];
+  return { progress, syncStatus };
 };

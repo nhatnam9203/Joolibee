@@ -3,7 +3,8 @@ import React from 'react';
 import { TouchableWithoutFeedback, View, Keyboard } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const DATE_FORMAT = 'YYYY/MM/DD';
+// const DATE_FORMAT = 'YYYY/MM/DD';
+const DATE_FORMAT = 'DD/MM/YYYY';
 const LAYOUT_WIDTH = '100%';
 
 const CustomBirthdayPicker = ({
