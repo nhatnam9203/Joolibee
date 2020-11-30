@@ -1,5 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
+
 export const trimSpaces = (text) => text && text.replace(/\s/g, '');
 
 export const pad2 = (number) => (number < 10 ? '0' : '') + number;

@@ -280,7 +280,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
                           borderRadius: metrics.borderRadius,
                         }}
                         onBlur={handleBlur('dob')}
-                        value={values.dob}
+                        value={format.date(values.dob)}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
