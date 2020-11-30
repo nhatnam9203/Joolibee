@@ -2,7 +2,7 @@ import { AppStyles, images, metrics } from '@theme';
 import { translate } from '@localize';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
-import { scale } from '@utils';
+import { scale, format } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const index = ({ item, onPress }) => {
   const onHandlePress = () => {
@@ -16,7 +16,9 @@ const index = ({ item, onPress }) => {
 
       <View style={styles.content}>
         <View style={styles.placeContainer}>
-          <Text style={AppStyles.fonts.medium}>{item.company}</Text>
+          <Text style={AppStyles.fonts.medium}>
+            {format.translatePlaceAddress(item.company)}
+          </Text>
           {item?.default_shipping && (
             <View style={styles.defaultShippingContainer}>
               <Text style={styles.txtDefaultShipping}>

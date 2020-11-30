@@ -2,62 +2,87 @@ import codePush from 'react-native-code-push';
 import React from 'react';
 
 export const useCodePushUpdate = () => {
-  const [progress, setProgress] = React.useState(0);
-  const [syncStatus, setSyncStatus] = React.useState(null);
+  const [processing, setProcessing] = React.useState(null);
 
-  React.useEffect(() => {
-    // codePush.disallowRestart();
-    codePush.sync(
-      {
-        updateDialog: true,
-        installMode: codePush.InstallMode.IMMEDIATE,
-      },
-      (status) => {
-        Logger.info(status, 'useCodePushUpdate -> STATUS');
-        setSyncStatus(status);
-        switch (status) {
-          case codePush.SyncStatus.UPDATE_INSTALLED:
-            // self.setState({ modalVisible: true });
-            Logger.info('Update installed', 'useCodePushUpdate');
-            setProgress(100);
-            break;
-          case codePush.SyncStatus.SYNC_IN_PROGRESS:
-            // self.setState({ modalVisible: true });
-            Logger.info('Sync In Progress', 'useCodePushUpdate');
-            break;
-          case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-            Logger.info('Checking for updates.', 'useCodePushUpdate');
-            break;
-          case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-            Logger.info('Downloading package.', 'useCodePushUpdate');
-            // Show "downloading" modal
+  const checkCodePushUpdate = () => {
+    try {
+      codePush
+        .checkForUpdate()
+        .then((update) => {
+          if (update) {
+            if (update.failedInstall) {
+              /* đã update */
+              codePushProcessComplete({ code: 'installed' });
+            } else {
+              let options = {
+                updateDialog: true,
+                installMode: codePush.InstallMode.IMMEDIATE,
+                // mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+              };
 
-            break;
-          case codePush.SyncStatus.INSTALLING_UPDATE:
-            Logger.info('Installing update.', 'useCodePushUpdate');
-            // Hide "downloading" modal
+              codePush.sync(
+                options,
+                codePushStatusChange,
+                codePushDownloadProgress,
+              );
+            }
+          } else {
+            codePushProcessComplete({ code: 'had-update' });
+          }
+        })
+        .catch((err) => {
+          codePushProcessComplete({ code: 'check-update-error', err });
+        });
+    } catch (err) {
+      codePushProcessComplete({ code: 'check-update-error', err });
+    }
+  };
 
-            break;
-          case codePush.SyncStatus.UP_TO_DATE:
-          default:
-            Logger.info('Up-to-date.', 'useCodePushUpdate');
-            setProgress(100);
-            break;
-        }
-      },
-      ({ receivedBytes, totalBytes }) => {
-        /* Update download modal progress */
-        // self.setState({
-        //   status: 'Downloaded ' + receivedBytes + ' of ' + totalBytes,
-        // });
-        setProgress((receivedBytes / totalBytes).toFixed(2) * 100);
-        Logger.info(
-          'Downloaded ' + receivedBytes + ' of ' + totalBytes,
-          'useCodePushUpdate',
-        );
-      },
+  const codePushProcessComplete = (values) => {
+    setProcessing(values);
+  };
+
+  const codePushStatusChange = (status) => {
+    switch (status) {
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        // self.setState({ modalVisible: true });
+        codePushProcessComplete({ code: 'update-installed' });
+
+        break;
+      case codePush.SyncStatus.SYNC_IN_PROGRESS:
+        // self.setState({ modalVisible: true });
+        Logger.info('Sync In Progress', 'useCodePushUpdate');
+        break;
+      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+        Logger.info('Checking for updates.', 'useCodePushUpdate');
+        break;
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        Logger.info('Downloading package.', 'useCodePushUpdate');
+        // Show "downloading" modal
+        codePushProcessComplete({ code: 'download-package' });
+
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        Logger.info('Installing update.', 'useCodePushUpdate');
+        // Hide "downloading" modal
+
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+      default:
+        codePushProcessComplete({ code: 'update-to-date' });
+        break;
+    }
+  };
+
+  const codePushDownloadProgress = ({ receivedBytes, totalBytes }) => {
+    setProcessing(
+      Object.assign({}, processing, {
+        progress: (receivedBytes / totalBytes).toFixed(2) * 100,
+      }),
     );
-  }, []);
+  };
 
-  return { progress, syncStatus };
+  // React.useEffect(() => {}, []);
+
+  return { checkCodePushUpdate, processing };
 };

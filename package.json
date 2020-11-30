@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios --scheme='loyalty-develop' --simulator='iPhone 11 Pro' ",
+    "ios-staging": "react-native run-ios --scheme='loyalty-staging' --simulator='iPhone 11 Pro' ",
     "ios:real": "react-native run-ios --scheme='loyalty-develop'  --device 'Bigo' ",
     "start": "react-native start",
     "test": "jest",
@@ -14,7 +15,8 @@
     "clean:ios": "cd ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf Podfile.lock",
     "clean:android": "cd android && ./gradlew clean",
     "release:ios": "bundle exec fastlane ios release",
-    "push:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Production -t 1.0.10 --description review1",
+    "push-production:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Production -t 1.0.10 --description review1",
+    "push-staging:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Development -t 1.0 --description test",
     "push:android": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production",
     "test1": "jest"
   },

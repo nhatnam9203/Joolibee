@@ -24,6 +24,7 @@ const PromotionPage = () => {
   const goToPromotionList = () => {
     navigation.navigate(ScreenName.PromotionList);
   };
+
   React.useEffect(() => {
     setData(defaultData);
     navigation.setOptions({
@@ -56,6 +57,12 @@ const PromotionPage = () => {
     </FlatListItemWithImgHorizontal>
   );
 
+  const renderEmptyList = () => (
+    <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+      {translate('txtEmptyPromotionList')}
+    </Text>
+  );
+
   return (
     <CustomImageBackground
       style={styles.container}
@@ -67,6 +74,7 @@ const PromotionPage = () => {
         keyExtractor={(item, index) => item.id.toString()}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={renderEmptyList}
       />
     </CustomImageBackground>
   );

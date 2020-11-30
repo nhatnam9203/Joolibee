@@ -6,24 +6,34 @@ import React from 'react';
 import { Image, ImageBackground, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+import codePush from 'react-native-code-push';
+import { useCodePushUpdate } from '@hooks';
+
 const { scaleWidth, scaleHeight } = scale;
 
-const SplashScreen = () => {
+const Splash = () => {
   const dispatch = useDispatch();
+  const { checkCodePushUpdate, processing } = useCodePushUpdate();
 
   // !! check version file store chỗ này, nếu có thay đổi cập nhật ở dây luôn
   const [cities, districts, initStores] = useStorePickup();
 
   React.useEffect(() => {
-    setTimeout(() => {
+    if (processing?.code) {
       dispatch(app.loadingSuccess());
-    }, 1500);
-  }, [dispatch]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [processing]);
 
   React.useEffect(() => {
     dispatch(store.setStorePickup({ stores: initStores, cities, districts }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
+  React.useEffect(() => {
+    checkCodePushUpdate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -91,4 +101,12 @@ const styles = StyleSheet.create({
   },
 });
 
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.MANUAL,
+  installMode: codePush.InstallMode.IMMEDIATE,
+};
+
+// let codePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
+
+const SplashScreen = codePush(codePushOptions)(Splash);
 export default SplashScreen;

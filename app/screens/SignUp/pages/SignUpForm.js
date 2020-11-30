@@ -280,7 +280,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
                           borderRadius: metrics.borderRadius,
                         }}
                         onBlur={handleBlur('dob')}
-                        value={format.date(values.dob)}
+                        value={values.dob}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
@@ -306,14 +306,12 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
                         value: 2,
                         key: 'female',
                       },
-                      // { label: translate('txtOther'), value: -1, key: 'other' },
+                      { label: translate('txtOther'), value: -1, key: 'other' },
                     ]}
                     placeholder={translate('txtPickerGender')}
                     defaultValue={values.gender}
                     useNativeAndroidPickerStyle={false}
-                    onChangeItem={(item) =>
-                      setFieldValue('gender', item?.value)
-                    }
+                    onChangeItem={(item) => setFieldValue('gender', item)}
                     border
                   />
                 </View>

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
-
+import { translate } from '@localize';
 export const trimSpaces = (text) => text && text.replace(/\s/g, '');
 
 export const pad2 = (number) => (number < 10 ? '0' : '') + number;
@@ -101,5 +101,20 @@ export const addresses_geocoding = (data = []) => {
 
     default:
       return {};
+  }
+};
+
+export const translatePlaceAddress = (place = '') => {
+  switch (place) {
+    case 'home':
+      return translate('txtHome');
+    case 'company':
+      return translate('txtCompany');
+
+    case 'other':
+      return translate('txtOther');
+
+    default:
+      return place;
   }
 };

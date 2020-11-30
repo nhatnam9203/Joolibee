@@ -1,8 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { CustomFlatList } from '@components';
+import { translate } from '@localize';
 import React from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
-import { CustomButton } from '@components';
+import { RefreshControl, StyleSheet, View, Text } from 'react-native';
+import { AppStyles } from '@theme';
 import { ORDERS_CUSTOMER } from '../gql';
 const defaultData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
@@ -61,6 +62,12 @@ export const QueryOrderList = ({
     });
   };
 
+  const renderEmptyList = () => (
+    <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+      {translate('txtEmptyOrderList')}
+    </Text>
+  );
+
   return (
     <CustomFlatList
       data={sortList()}
@@ -72,11 +79,10 @@ export const QueryOrderList = ({
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
-      // onEndReached={handleFreshMore}
-      // onEndReachedThreshold={0}
-      ListFooterComponent={() => (
-        <CustomButton onPress={handleFreshMore} width="90%" label="Load more" />
-      )}
+      ListEmptyComponent={renderEmptyList}
+      // ListFooterComponent={() => (
+      //   <CustomButton onPress={handleFreshMore} width="90%" label="Load more" />
+      // )}
     />
   );
 };

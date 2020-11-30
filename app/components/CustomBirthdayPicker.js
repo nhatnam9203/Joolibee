@@ -50,9 +50,9 @@ const CustomBirthdayPicker = ({
         onConfirm={handleConfirm}
         onCancel={hidePicker}
         date={defaultValue ?? date}
+        value={defaultValue ?? date}
         maximumDate={new Date()}
         minimumDate={new Date(1900, 0, 1)}
-        value={defaultValue ?? date}
       />
     </View>
   );

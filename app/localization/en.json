@@ -117,6 +117,7 @@
   "txtPaymentMethod": "Payment methods",
   "txtPromotionApply": "Apply Deals",
   "txtNote": "Note",
+  "txtNoteShipping": "Note for shipping address...",
   "txtToReceive": "To receive",
   "txtInComingSoon": "Features developing ... \n Please try again later!",
   "txtOrderCalculator": "Provisional",
@@ -171,7 +172,7 @@
   "txtInputAddressPlaceholder": "Please enter the address",
   "txtInputFirstName": "First name ",
   "txtInputLastName": "Last name ",
-  "txtInputPlaceName": "Place name ex:Home , company... *",
+  "txtInputPlaceName": "Place name*",
   "txtInputNoteAddress": "Note for address",
   "txtNotFoundAddress":"Address not found",
   "txtReOrder":"Re-order",
@@ -193,5 +194,9 @@
   "txtDesOrderArrived":"The order has arrived, please receive the goods.",
   "txtDesOrderComplete":"Your orders have been completed, bon appétit",
   "txtGrandTotal":"Grand total",
-  "txtSubmit":"Submit"
+  "txtSubmit":"Submit",
+  "txtEmptyPromotionList": "Currently there is no promotion",
+  "txtEmptyOrderList":"Currently there is no order",
+  "txtHome" :"Home",
+  "txtCompany" :"Company"
 }

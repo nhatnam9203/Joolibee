@@ -12,7 +12,7 @@ export const AUTH_STATUS = {
   verified: 'verified',
 };
 
-const TIMEOUT = 60000;
+const TIMEOUT = 75000;
 var requestCodeTimer = null;
 export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
   const [confirm, setConfirm] = useState(null); //  to confirm code
@@ -21,6 +21,8 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
 
   // Handle the button press
   async function signInWithPhoneNumber(phone) {
+    setAuthStatus(AUTH_STATUS.none);
+
     const confirmation = await auth().signInWithPhoneNumber(phone);
 
     if (confirmation) {
@@ -30,6 +32,8 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
         if (authStatus === AUTH_STATUS.sent) {
           setAuthStatus(AUTH_STATUS.timeout);
         }
+        clearTimeout(requestCodeTimer);
+        requestCodeTimer = null;
       }, TIMEOUT);
     }
   }

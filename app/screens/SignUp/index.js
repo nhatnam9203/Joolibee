@@ -44,15 +44,16 @@ const SignUpScreen = () => {
 
   const requestAuthCode = async (values) => {
     const { phone } = values;
-    setFormData({ phone: phone });
     if (!phone) {
       setFormData(
         Object.assign({}, formData, { error: { code: 'phone-note-found' } }),
       );
-
+      dispatch(app.hideLoading());
       return;
     }
 
+
+    setFormData(values);
     dispatch(app.showLoading());
 
     // call firebase phone auth
@@ -65,11 +66,10 @@ const SignUpScreen = () => {
   };
 
   React.useEffect(() => {
+    dispatch(app.hideLoading());
     if (authStatus === AUTH_STATUS.sent) {
-      dispatch(app.hideLoading());
       setPage(PAGES.InputCode);
     } else if (authStatus === AUTH_STATUS.verified) {
-      dispatch(app.hideLoading());
       setPage(PAGES.SignUp);
     }
   }, [authStatus, dispatch]);

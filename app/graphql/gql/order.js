@@ -101,9 +101,9 @@ export const ORDER_DETAIL_CUSTOMER = gql`
 `;
 
 export const ORDERS_CUSTOMER = gql`
-  query($currentPage: Int!) {
+  query {
     customer {
-      orders(pageSize: 5, currentPage: $currentPage) {
+      orders {
         items {
           id
           number

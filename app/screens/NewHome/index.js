@@ -71,7 +71,7 @@ const HomeScreen = () => {
 
   const onCHangeScreen = (screen) => () => {
     let params = {
-      data: homeScreen.news ? homeScreen.news : [],
+      data: homeScreen?.news ? homeScreen?.news : [],
       loading,
       refetch,
     };
