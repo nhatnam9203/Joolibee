@@ -21,7 +21,6 @@ export const useReOrderCart = (onSuccess = () => {}) => {
   });
 
   const onReOrderCart = (orderNumber) => {
-    console.log(orderNumber);
     reorderItems({
       variables: {
         orderNumber,
