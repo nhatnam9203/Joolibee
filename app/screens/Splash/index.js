@@ -7,20 +7,25 @@ import { Image, ImageBackground, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import codePush from 'react-native-code-push';
-import { useCodePushUpdate } from '@hooks';
+import { useCodePushUpdate, CodePushStatus } from '@hooks';
+import { translate } from '@localize';
 
 const { scaleWidth, scaleHeight } = scale;
 
 const Splash = () => {
   const dispatch = useDispatch();
+
+  // !!  sao no lai load lai khi chuyen trang thai, hooks lien quan
   const { checkCodePushUpdate, processing } = useCodePushUpdate();
 
   // !! check version file store chỗ này, nếu có thay đổi cập nhật ở dây luôn
   const [cities, districts, initStores] = useStorePickup();
 
   React.useEffect(() => {
-    if (processing?.code) {
-      dispatch(app.loadingSuccess());
+    if (processing?.code !== CodePushStatus.PROCESSING) {
+      setTimeout(() => {
+        dispatch(app.loadingSuccess());
+      }, 3000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [processing]);
@@ -47,15 +52,30 @@ const Splash = () => {
           style={styles.ic_text}
           resizeMode="center"
         />
-        {/* <View style={styles.container_footer}>
-          {progress > 0 ? (
+        <View style={styles.container_footer}>
+          {/* Download package progress */}
+          {processing?.progress > 0 && (
             <Text style={styles.textDownloadProgress}>
-              {Math.min(progress, 100) + '%'}
+              {translate('txtDownloadPackage') +
+                Math.min(processing?.progress, 100) +
+                '%'}
             </Text>
-          ) : (
-            <></>
           )}
-        </View> */}
+
+          {/* Installing package */}
+          {processing?.message === 'installing-update' && (
+            <Text style={styles.textDownloadProgress}>
+              {translate('txtInstallingPackage')}
+            </Text>
+          )}
+
+          {/* Debug status */}
+          {/* {processing && (
+            <Text style={styles.textDownloadProgress}>
+              {processing?.code + '----' + processing?.message}
+            </Text>
+          )} */}
+        </View>
       </ImageBackground>
     </View>
   );
@@ -92,6 +112,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: AppStyles.colors.background,
     marginTop: scaleHeight(5),
+    fontStyle: 'italic',
   },
   imgBackgroundContainer: {
     flex: 1,
