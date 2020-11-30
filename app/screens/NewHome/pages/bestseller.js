@@ -23,7 +23,7 @@ const Bestseller = React.memo(({ data, loading }) => {
       <View style={styles.container}>
         <Carousel
           sliderWidth={width}
-          itemWidth={width * 0.94}
+          itemWidth={width * 0.9}
           keyExtractor={(_) => _.id + ''}
           data={data}
           renderItem={({ item }) => <BestsellerItem item={item} />}

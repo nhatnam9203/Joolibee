@@ -18,6 +18,7 @@ import {
   CustomButton,
   CustomImageBackground,
   CustomSwitch,
+  CustomPickerSelect,
 } from '@components';
 import { SinglePageLayout } from '@layouts';
 import { TextInputErrorMessage } from '../../components';
@@ -35,10 +36,16 @@ const OPTIONS_MUTATION = {
   awaitRefetchQueries: true,
   refetchQueries: [{ query: query.ADDRESS_LIST }],
 };
+
 const Index = (props) => {
+  const PLACES = [
+    { label: translate('txtHome'), value: 'home' },
+    { label: translate('txtCompany'), value: 'company' },
+    { label: translate('txtOther'), value: 'other' },
+  ];
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { val_address, titleHeader, cartId } = props.route.params;
+  const { val_address, titleHeader, cartId, action_type } = props.route.params;
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );
@@ -50,18 +57,12 @@ const Index = (props) => {
     () => setDefaultShipping(!default_shipping),
     [default_shipping],
   );
-  const isCheckValue = val_address ? true : false;
-  const initialValues = isCheckValue
-    ? val_address
-    : {
-        phone: '',
-        place: '',
-        firstname: '',
-        lastname: '',
-        note: '',
-        address: location_selected?.addressFull,
-      };
-  const txtButton = !isCheckValue
+
+  const initialValues = {
+    ...val_address,
+    address: location_selected?.addressFull,
+  };
+  const txtButton = !action_type
     ? translate('txtSaveAddress')
     : translate('txtSaveChange');
 
@@ -192,7 +193,7 @@ const Index = (props) => {
   }, [dispatch, deleteCustomerAddress, val_address, navigation]);
 
   //------------ Update address customer -----------------//
-  const onHandleSubmit = isCheckValue ? onHandleUpdate : onHandleAdd;
+  const onHandleSubmit = action_type ? onHandleUpdate : onHandleAdd;
   const goToCreateAddress = () => navigation.navigate(ScreenName.SearchAddress);
 
   React.useEffect(() => {
@@ -209,7 +210,6 @@ const Index = (props) => {
       .max(15, translate('txtTooLong')),
     place: Yup.string().required(translate('txtRequired')),
     firstname: Yup.string().required(translate('txtRequired')),
-    lastname: Yup.string().required(translate('txtRequired')),
     address: Yup.string().required(translate('txtRequired')),
   });
 
@@ -254,12 +254,22 @@ const Index = (props) => {
         <View style={styles.container}>
           <View style={styles.topContent}>
             {/**PLACE*/}
-            <CustomInput
+            {/* <CustomInput
               style={{ ...styles.inputShadow, width: LAYOUT_WIDTH }}
               onChangeText={handleChange('place')}
               onBlur={handleBlur('place')}
               value={values.place}
               placeholder={translate('txtInputPlaceName')}
+            /> */}
+            <CustomPickerSelect
+              style={{ width: LAYOUT_WIDTH }}
+              border
+              items={PLACES}
+              placeholder={translate('txtInputPlaceName')}
+              value={values.place}
+              onChangeItem={(item) => {
+                setFieldValue('place', item);
+              }}
             />
 
             {/**Phone input error */}
@@ -368,7 +378,7 @@ const Index = (props) => {
             )}
           </View>
 
-          {!values.default_shipping && isCheckValue && (
+          {!values.default_shipping && action_type && (
             <CustomButton
               onPress={onHandleDelete}
               label="XÓA ĐỊA CHỈ"

@@ -236,7 +236,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      setShowNotice(!isEatingUtensils);
+      setShowNotice(isEatingUtensils);
     }, 1000);
   }, [isEatingUtensils]);
 
@@ -400,7 +400,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       </OrderSectionItem>
       <OrderSectionItem height={78}>
         <TextInput
-          placeholder={translate('txtNote')}
+          placeholder={translate('txtNoteShipping')}
           multiline={true}
           style={styles.txtNoteStyle}
         />
