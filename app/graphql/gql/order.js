@@ -101,9 +101,9 @@ export const ORDER_DETAIL_CUSTOMER = gql`
 `;
 
 export const ORDERS_CUSTOMER = gql`
-  query {
+  query($currentPage: Int!) {
     customer {
-      orders {
+      orders(pageSize: 5, currentPage: $currentPage) {
         items {
           id
           number
@@ -229,16 +229,8 @@ export const RE_ORDER_CART = gql`
 
 export const CANCEL_ORDER = gql`
   mutation($orderId: Int!) {
-    order_cancel(data: { order_id: $orderId, reason: "" }) {
-      request_id
-      complexity
-      order {
-        id
-        legacy_id
-        order_number
-        fulfillment_status
-        order_date
-      }
+    cancelOrder(orderId: $orderId, comment: "cancel") {
+      result
     }
   }
 `;

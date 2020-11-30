@@ -20,7 +20,7 @@ export default function Index({ navigation, route }) {
   const { order } = route.params;
   const [visible, setVisible] = React.useState(false);
 
-  const { number, order_date, status, shipping_address, items, total,id } =
+  const { number, order_date, status, shipping_address, items, total, id } =
     order || {};
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
