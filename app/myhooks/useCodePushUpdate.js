@@ -16,8 +16,8 @@ export const useCodePushUpdate = () => {
             } else {
               let options = {
                 updateDialog: true,
-                installMode: codePush.InstallMode.ON_NEXT_RESTART,
-                mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+                installMode: codePush.InstallMode.IMMEDIATE,
+                // mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
               };
 
               codePush.sync(

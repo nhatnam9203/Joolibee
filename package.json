@@ -14,7 +14,8 @@
     "clean:ios": "cd ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* && rm -rf Podfile.lock",
     "clean:android": "cd android && ./gradlew clean",
     "release:ios": "bundle exec fastlane ios release",
-    "push:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Production -t 1.0.10 --description review1",
+    "push-production:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Production -t 1.0.10 --description review1",
+    "push-staging:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Development -t 1.0 --description test",
     "push:android": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production",
     "test1": "jest"
   },
