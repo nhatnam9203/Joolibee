@@ -236,8 +236,12 @@ export const REGISTER_CUSTOMER = gql`
 
 // SIGN IN
 export const GENERATE_CUSTOMER_TOKEN = gql`
-  mutation($email: String!, $password: String!) {
-    generateCustomerToken(email: $email, password: $password) {
+  mutation($email: String!, $password: String!, $fcmToken: String!) {
+    generateCustomerToken(
+      email: $email
+      password: $password
+      fcmToken: $fcmToken
+    ) {
       token
     }
   }

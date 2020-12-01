@@ -57,7 +57,7 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
-  const { signIn, token } = GEX.useGenerateToken();
+  const { signIn, customerToken } = GEX.useGenerateToken();
 
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
@@ -111,15 +111,15 @@ const SignInScreen = () => {
   };
 
   React.useEffect(() => {
-    if (token) {
+    if (customerToken) {
       const onSignInSucceed = async (value) => {
         await dispatch(app.hideLoading());
-        await dispatch(account.signInSucceed(token));
+        await dispatch(account.signInSucceed(customerToken));
       };
 
       onSignInSucceed();
     }
-  }, [token, dispatch]);
+  }, [customerToken, dispatch]);
 
   return (
     <>

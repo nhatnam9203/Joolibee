@@ -202,5 +202,6 @@
   "txtHome" :"Home",
   "txtCompany" :"Company",
   "txtWrongPassword": "Password not blank",
-  "txtWrongUsername": "Username not blank"
+  "txtWrongUsername": "Username not blank",
+  "txtExpectedReceive": "Expected to receive:"
 }

@@ -201,5 +201,6 @@
   "txtHome" :"Nhà riêng",
   "txtCompany" :"Nơi làm việc",
   "txtWrongPassword": "Mật khẩu sai hoặc không được để trống",
-  "txtWrongUsername": "Tên đăng nhập sai hoặc không được để trống"
+  "txtWrongUsername": "Tên đăng nhập sai hoặc không được để trống",
+  "txtExpectedReceive": "Nhận hàng dự kiến:"
 }

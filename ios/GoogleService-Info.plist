@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n.apps.googleusercontent.com</string>
+	<string>320365913986-8tl8j90tkarld0uogu0te9hbnjocahv5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.579642910552-uip7hbfg0s5ic71iq315pf811fj8fo2n</string>
+	<string>com.googleusercontent.apps.320365913986-8tl8j90tkarld0uogu0te9hbnjocahv5</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDDGyP07fQ0z7VAf-zFoCgw0n4GDNvDJ2A</string>
+	<string>AIzaSyA-LZlsbDQB4SOpp-fakBDLTRGcemoWA-s</string>
 	<key>GCM_SENDER_ID</key>
-	<string>579642910552</string>
+	<string>320365913986</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.jollibee.loyalty</string>
 	<key>PROJECT_ID</key>
-	<string>jollibee-vietnam</string>
+	<string>delivery-jollibee</string>
 	<key>STORAGE_BUCKET</key>
-	<string>jollibee-vietnam.appspot.com</string>
+	<string>delivery-jollibee.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,9 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:579642910552:ios:ad1b1e7fd22fa0b13e272d</string>
+	<string>1:320365913986:ios:ad7ec5c4aebcfa5a62919b</string>
 	<key>DATABASE_URL</key>
-	<string>https://jollibee-vietnam.firebaseio.com</string>
-
+	<string>https://delivery-jollibee.firebaseio.com</string>
 </dict>
 </plist>

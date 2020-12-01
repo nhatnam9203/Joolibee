@@ -31,6 +31,14 @@ const Bestseller = React.memo(({ data, loading }) => {
           horizontal
           inactiveSlideOpacity={0.7}
           inactiveSlideScale={1}
+          loop={true}
+          autoplay={true}
+          autoplayInterval={15000}
+          autoplayDelay={1000}
+          removeClippedSubviews={false}
+          // useScrollView={true}
+          lockScrollWhileSnapping={true}
+          loopClonesPerSide={3}
         />
       </View>
     );
