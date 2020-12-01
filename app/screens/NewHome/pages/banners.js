@@ -28,8 +28,8 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
           enableSnap={true}
           loop={true}
           autoplay={true}
-          autoplayInterval={30000}
-          autoplayDelay={1500}
+          autoplayInterval={15000}
+          autoplayDelay={1000}
           removeClippedSubviews={false}
           // useScrollView={true}
           lockScrollWhileSnapping={true}
