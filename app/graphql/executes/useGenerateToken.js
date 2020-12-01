@@ -1,21 +1,11 @@
 import { useMutation } from '@apollo/client';
 import { GENERATE_CUSTOMER_TOKEN } from '../gql';
 import { useFirebaseCloudMessing } from '@firebase';
+import { useSelector } from 'react-redux';
 
 export const useGenerateToken = () => {
-  const onForegroundMessage = () => {};
-  const onBackgroundMessage = () => {};
-  const onOpenedApp = () => {};
-  const onInit = () => {};
-  const onMessageError = () => {};
-
-  const token = useFirebaseCloudMessing(
-    onForegroundMessage,
-    onBackgroundMessage,
-    onOpenedApp,
-    onInit,
-    onMessageError,
-  );
+  const token = useSelector((state) => state.app.fcmToken);
+  Logger.debug(token, 'useGenerateToken');
 
   const [generateCustomerToken, { loading, error, data, called }] = useMutation(
     GENERATE_CUSTOMER_TOKEN,
@@ -32,8 +22,12 @@ export const useGenerateToken = () => {
 
   const signInToken = (value) => {
     const { variables } = value || {};
+    // Logger.debug(
+    //   Object.assign({}, variables, { fcmToken: token }),
+    //   'signInToken',
+    // );
     generateCustomerToken({
-      variables: Object.assign({}, variables, { fcmToken: token }),
+      variables: Object.assign({}, variables, { fcmToken: token ?? '456' }),
     });
   };
 
