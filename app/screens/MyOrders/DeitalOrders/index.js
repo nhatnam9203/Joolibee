@@ -102,9 +102,9 @@ export default function Index({ navigation, route }) {
   const ExpectedTime = () => (
     <View style={{ marginLeft: MARGIN_LEFT }}>
       <Text style={[AppStyles.fonts.medium, { fontSize: 14 }]}>
-        Nhận hàng dự kiến:
+        {translate('txtExpectedReceive')}
         <Text style={[AppStyles.fonts.SVN_Merge_Bold, { fontSize: 18 }]}>
-          10:30
+          {format.hours(order_date, 30)}
         </Text>
       </Text>
     </View>
@@ -166,6 +166,7 @@ export default function Index({ navigation, route }) {
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}>
         {/* -------------- TRANG THAI DON HANG  -------------- */}
+
         {renderStatusComponent()}
         {/* -------------- TRANG THAI DON HANG  -------------- */}
 
