@@ -220,7 +220,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
-          console.log(res?.data?.placeOrder);
           graphQlClient.cache.evict({ fieldName: 'cart' });
           graphQlClient.cache.evict({ fieldName: 'customerCart' });
           graphQlClient.cache.gc();
