@@ -97,19 +97,17 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   );
 
   // function
-  const signUpDataSubmit = React.useCallback(
-    async (formValues) => {
-      await dispatch(app.showLoading());
-      // await dispatch(account.signUp(formValues, { dispatch }));
-      registerCustomer({
-        variables: {
-          ...formValues,
-          gender: formValues.gender !== -1 ?? formValues.gender,
-        },
-      });
-    },
-    [dispatch, registerCustomer],
-  );
+  const signUpDataSubmit = async (formValues) => {
+    await dispatch(app.showLoading());
+    // await dispatch(account.signUp(formValues, { dispatch }));
+    registerCustomer({
+      variables: {
+        ...formValues,
+        gender: formValues.gender !== -1 ?? formValues.gender,
+        fcmToken: token ?? '123456',
+      },
+    });
+  };
 
   const goSignInPage = () => {
     setShowPopupSuccess(PROCESS_STATUS.FINISH);
@@ -147,7 +145,6 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           password: '',
           confirmPassword: '',
           dob: new Date(),
-          date_of_birth: new Date(),
           gender: 0,
           is_subscribed: false,
           validateType: 'fb',
