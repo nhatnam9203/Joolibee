@@ -27,6 +27,7 @@ import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';
 import ProductCart from '../ProductCart';
 import { RESULTS } from 'react-native-permissions';
+import NavigationService from '../../navigation/NavigationService';
 
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
@@ -138,7 +139,9 @@ const HomeScreen = () => {
               {/* --------- Button birthday order ------------ */}
               <View style={styles.layoutHorizontal}>
                 <CardView
-                  onPress={() => {}}
+                  onPress={() => {
+                    NavigationService.showComingSoon();
+                  }}
                   borderRadius={16}
                   width={scaleWidth(181)}
                   height={scaleHeight(170)}
@@ -150,7 +153,9 @@ const HomeScreen = () => {
                 />
                 {/* --------- Button big order ------------ */}
                 <CardView
-                  onPress={() => {}}
+                  onPress={() => {
+                    NavigationService.showComingSoon();
+                  }}
                   borderRadius={16}
                   width={scaleWidth(181)}
                   height={scaleHeight(170)}
