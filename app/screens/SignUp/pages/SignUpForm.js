@@ -131,6 +131,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           password: '',
           confirmPassword: '',
           dob: new Date(),
+          date_of_birth: new Date(),
           gender: 0,
           is_subscribed: false,
           validateType: 'fb',
@@ -276,16 +277,16 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
 
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
-                    onChangeDate={handleChange('dob')}
-                    defaultValue={values.dob}
+                    onChangeDate={handleChange('date_of_birth')}
+                    defaultValue={values.date_of_birth}
                     renderBase={() => (
                       <CustomInput
                         style={{
                           width: FULL_WIDTH,
                           borderRadius: metrics.borderRadius,
                         }}
-                        onBlur={handleBlur('dob')}
-                        value={values.dob}
+                        onBlur={handleBlur('date_of_birth')}
+                        value={values.date_of_birth}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
