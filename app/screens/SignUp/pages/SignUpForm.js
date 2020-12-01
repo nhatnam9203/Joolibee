@@ -85,7 +85,12 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
     async (formValues) => {
       await dispatch(app.showLoading());
       // await dispatch(account.signUp(formValues, { dispatch }));
-      registerCustomer({ variables: formValues });
+      registerCustomer({
+        variables: {
+          ...formValues,
+          gender: formValues.gender !== -1 ?? formValues.gender,
+        },
+      });
     },
     [dispatch, registerCustomer],
   );
