@@ -69,19 +69,8 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
     is_subscribed: Yup.bool(),
   });
 
-  const onForegroundMessage = () => {};
-  const onBackgroundMessage = () => {};
-  const onOpenedApp = () => {};
-  const onInit = () => {};
-  const onMessageError = () => {};
-
-  const token = useFirebaseCloudMessing(
-    onForegroundMessage,
-    onBackgroundMessage,
-    onOpenedApp,
-    onInit,
-    onMessageError,
-  );
+  const token = useSelector((state) => state.app.fcmToken);
+  Logger.debug(token, 'SignUpForm');
 
   // state
   const signUpSucceeded = useSelector(
@@ -104,7 +93,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
       variables: {
         ...formValues,
         gender: formValues.gender !== -1 ?? formValues.gender,
-        fcmToken: token ?? '123456',
+        fcmToken: token ?? '456',
       },
     });
   };
