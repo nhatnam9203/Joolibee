@@ -19,6 +19,7 @@ import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+
 import {
   ButtonCC,
   PasswordInput,
@@ -26,6 +27,7 @@ import {
   TextInputErrorMessage,
 } from '../../components';
 import ScreenName from '../../ScreenName';
+import { useFirebaseCloudMessing } from '@firebase';
 import { format } from '@utils';
 
 const BUTTON_HEIGHT = 60;
@@ -66,6 +68,20 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
       .required(translate('txtPrivacyRequired')),
     is_subscribed: Yup.bool(),
   });
+
+  const onForegroundMessage = () => {};
+  const onBackgroundMessage = () => {};
+  const onOpenedApp = () => {};
+  const onInit = () => {};
+  const onMessageError = () => {};
+
+  const token = useFirebaseCloudMessing(
+    onForegroundMessage,
+    onBackgroundMessage,
+    onOpenedApp,
+    onInit,
+    onMessageError,
+  );
 
   // state
   const signUpSucceeded = useSelector(
@@ -135,7 +151,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           gender: 0,
           is_subscribed: false,
           validateType: 'fb',
-          fcmToken: '123456',
+          fcmToken: token,
         }}
         onSubmit={signUpDataSubmit}
         validationSchema={SignupSchema}
@@ -277,16 +293,16 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
 
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
-                    onChangeDate={handleChange('date_of_birth')}
-                    defaultValue={values.date_of_birth}
+                    onChangeDate={handleChange('dob')}
+                    defaultValue={values.dob}
                     renderBase={() => (
                       <CustomInput
                         style={{
                           width: FULL_WIDTH,
                           borderRadius: metrics.borderRadius,
                         }}
-                        onBlur={handleBlur('date_of_birth')}
-                        value={values.date_of_birth}
+                        onBlur={handleBlur('dob')}
+                        value={values.dob}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
