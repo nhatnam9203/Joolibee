@@ -200,5 +200,7 @@
   "txtEmptyPromotionList": "Currently there is no promotion",
   "txtEmptyOrderList":"Currently there is no order",
   "txtHome" :"Home",
-  "txtCompany" :"Company"
+  "txtCompany" :"Company",
+  "txtWrongPassword": "Password not blank",
+  "txtWrongUsername": "Username not blank"
 }

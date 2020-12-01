@@ -169,11 +169,11 @@ const SignInScreen = () => {
                     keyboardType="phone-pad"
                   />
 
-                  {/**Phone input error */}
+                  {/**Phone input error, do loi server tra ve ghe qua nen ko dung errors.username */}
                   {errors.username && touched.username && (
                     <TextInputErrorMessage
                       style={{ width: LAYOUT_WIDTH }}
-                      message={errors.username}
+                      message={translate('txtWrongUsername')}
                       color={AppStyles.colors.inputError}
                     />
                   )}
@@ -188,11 +188,11 @@ const SignInScreen = () => {
                     textContentType="password"
                   />
 
-                  {/**Password input error */}
+                  {/**Password input error, do loi server tra ve ghe qua nen ko dung errors.password */}
                   {errors.password && touched.password && (
                     <TextInputErrorMessage
                       style={{ width: LAYOUT_WIDTH }}
-                      message={errors.password}
+                      message={translate('txtWrongPassword')}
                       color={AppStyles.colors.inputError}
                     />
                   )}

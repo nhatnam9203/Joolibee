@@ -199,5 +199,7 @@
   "txtEmptyPromotionList": "Hiện tại không có khuyến mãi nào",
   "txtEmptyOrderList":"Hiện tại không có đơn hàng nào",
   "txtHome" :"Nhà riêng",
-  "txtCompany" :"Nơi làm việc"
+  "txtCompany" :"Nơi làm việc",
+  "txtWrongPassword": "Mật khẩu sai hoặc không được để trống",
+  "txtWrongUsername": "Tên đăng nhập sai hoặc không được để trống"
 }

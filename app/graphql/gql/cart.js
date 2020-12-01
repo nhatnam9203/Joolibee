@@ -115,6 +115,7 @@ export const CART_DETAIL = gql`
         code
       }
       total_quantity
+
       prices {
         __typename
         grand_total {
@@ -203,6 +204,7 @@ export const ADD_PRODUCT_TO_CART = gql`
           quantity
         }
         total_quantity
+        bonus_point
         prices {
           __typename
           grand_total {
@@ -284,6 +286,7 @@ export const UPDATE_CART_PRODUCT = gql`
           quantity
         }
         total_quantity
+        bonus_point
         prices {
           __typename
           grand_total {
