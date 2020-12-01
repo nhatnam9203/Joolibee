@@ -19,6 +19,7 @@ import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+
 import {
   ButtonCC,
   PasswordInput,
@@ -26,6 +27,7 @@ import {
   TextInputErrorMessage,
 } from '../../components';
 import ScreenName from '../../ScreenName';
+import { useFirebaseCloudMessing } from '@firebase';
 import { format } from '@utils';
 
 const BUTTON_HEIGHT = 60;
@@ -67,6 +69,20 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
     is_subscribed: Yup.bool(),
   });
 
+  const onForegroundMessage = () => {};
+  const onBackgroundMessage = () => {};
+  const onOpenedApp = () => {};
+  const onInit = () => {};
+  const onMessageError = () => {};
+
+  const token = useFirebaseCloudMessing(
+    onForegroundMessage,
+    onBackgroundMessage,
+    onOpenedApp,
+    onInit,
+    onMessageError,
+  );
+
   // state
   const signUpSucceeded = useSelector(
     (state) => state.account?.user?.tempCheckSignup,
@@ -81,19 +97,17 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   );
 
   // function
-  const signUpDataSubmit = React.useCallback(
-    async (formValues) => {
-      await dispatch(app.showLoading());
-      // await dispatch(account.signUp(formValues, { dispatch }));
-      registerCustomer({
-        variables: {
-          ...formValues,
-          gender: formValues.gender !== -1 ?? formValues.gender,
-        },
-      });
-    },
-    [dispatch, registerCustomer],
-  );
+  const signUpDataSubmit = async (formValues) => {
+    await dispatch(app.showLoading());
+    // await dispatch(account.signUp(formValues, { dispatch }));
+    registerCustomer({
+      variables: {
+        ...formValues,
+        gender: formValues.gender !== -1 ?? formValues.gender,
+        fcmToken: token ?? '123456',
+      },
+    });
+  };
 
   const goSignInPage = () => {
     setShowPopupSuccess(PROCESS_STATUS.FINISH);
@@ -131,11 +145,10 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
           password: '',
           confirmPassword: '',
           dob: new Date(),
-          date_of_birth: new Date(),
           gender: 0,
           is_subscribed: false,
           validateType: 'fb',
-          fcmToken: '123456',
+          fcmToken: token,
         }}
         onSubmit={signUpDataSubmit}
         validationSchema={SignupSchema}
@@ -277,16 +290,16 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
 
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
-                    onChangeDate={handleChange('date_of_birth')}
-                    defaultValue={values.date_of_birth}
+                    onChangeDate={handleChange('dob')}
+                    defaultValue={values.dob}
                     renderBase={() => (
                       <CustomInput
                         style={{
                           width: FULL_WIDTH,
                           borderRadius: metrics.borderRadius,
                         }}
-                        onBlur={handleBlur('date_of_birth')}
-                        value={values.date_of_birth}
+                        onBlur={handleBlur('dob')}
+                        value={values.dob}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>
