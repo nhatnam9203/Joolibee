@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 });
 
 let codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.MANUAL,
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
   installMode: codePush.InstallMode.IMMEDIATE,
 };
 
