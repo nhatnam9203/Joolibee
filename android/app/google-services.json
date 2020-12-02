@@ -1,65 +1,165 @@
 {
   "project_info": {
-    "project_number": "579642910552",
-    "firebase_url": "https://jollibee-vietnam.firebaseio.com",
-    "project_id": "jollibee-vietnam",
-    "storage_bucket": "jollibee-vietnam.appspot.com"
+    "project_number": "320365913986",
+    "firebase_url": "https://delivery-jollibee.firebaseio.com",
+    "project_id": "delivery-jollibee",
+    "storage_bucket": "delivery-jollibee.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:579642910552:android:0cc0634155fb8f333e272d",
+        "mobilesdk_app_id": "1:320365913986:android:e37c6ada885fbf3f62919b",
         "android_client_info": {
-          "package_name": "com.jollibee.loyalty"
+          "package_name": "com.delivery"
         }
       },
       "oauth_client": [
         {
-          "client_id": "579642910552-f8voatga64ftfc7236t3sj2qm1lvsce6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jollibee.loyalty",
-            "certificate_hash": "e5f9f9c6ed2b71efcd598fd3f7d146708a13ba5f"
-          }
-        },
-        {
-          "client_id": "579642910552-u7nbikscmp7qont42hb5em4dbdsaaja9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jollibee.loyalty",
-            "certificate_hash": "2d302c739105c0aef4abd06beb9cad62f5681f6a"
-          }
-        },
-        {
-          "client_id": "579642910552-patvhd5lg4rgu40796u4g3egjrca2grc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jollibee.loyalty",
-            "certificate_hash": "f714592e4f5a5cf6a79189a174bcf128add214d3"
-          }
-        },
-        {
-          "client_id": "579642910552-ano8kp2n2lu863rbf6eq2cvs28uul02m.apps.googleusercontent.com",
+          "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBL2HHozGM5H3iBAyKRk6iZJXir1DDbNeY"
+          "current_key": "AIzaSyAHG3miMZIvOJB2ccp03b1JpHrNLXW1zn0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "579642910552-ano8kp2n2lu863rbf6eq2cvs28uul02m.apps.googleusercontent.com",
+              "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "579642910552-396n6lf3dn6akrdrb166hd9f413tqmsk.apps.googleusercontent.com",
+              "client_id": "320365913986-01v7l4copmj51dg9tvme163herra4pgc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.jollibee.loyalty.develop"
+                "bundle_id": "com.jollibee.merchant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320365913986:android:42647d01396be31d62919b",
+        "android_client_info": {
+          "package_name": "com.jollibee.loyalty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHG3miMZIvOJB2ccp03b1JpHrNLXW1zn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320365913986-01v7l4copmj51dg9tvme163herra4pgc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jollibee.merchant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320365913986:android:fa8c6f47eb044ea062919b",
+        "android_client_info": {
+          "package_name": "com.merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHG3miMZIvOJB2ccp03b1JpHrNLXW1zn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320365913986-01v7l4copmj51dg9tvme163herra4pgc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jollibee.merchant"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320365913986:android:0f3e0c667a742fe662919b",
+        "android_client_info": {
+          "package_name": "jollibeevn.consumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320365913986-b12n5hk9iuravl8ela9aq9cofbcl4c9v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jollibeevn.consumer",
+            "certificate_hash": "e5f9f9c6ed2b71efcd598fd3f7d146708a13ba5f"
+          }
+        },
+        {
+          "client_id": "320365913986-imo5vdk0bpr8olcsq2go55hi1536sak4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jollibeevn.consumer",
+            "certificate_hash": "a9f50e2de5aef7ad10c7253e870a6ff9974122b0"
+          }
+        },
+        {
+          "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHG3miMZIvOJB2ccp03b1JpHrNLXW1zn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320365913986-gmrivdio0g8lb9lnskrbleft9942c642.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320365913986-01v7l4copmj51dg9tvme163herra4pgc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jollibee.merchant"
               }
             }
           ]

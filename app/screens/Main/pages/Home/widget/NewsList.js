@@ -123,8 +123,8 @@ const renderItemLoading = () => {
 
         <PlaceholderLine height={15} />
         <PlaceholderLine height={10} style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
-        <PlaceholderLine height={10} width="70%" style={flex_start_style} />
+        <PlaceholderLine height={10} style={flex_start_style} />
+        <PlaceholderLine height={10} style={flex_start_style} />
         <PlaceholderLine height={40} width={35} style={styles.btnLoading} />
       </View>
     </Placeholder>

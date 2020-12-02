@@ -21,7 +21,7 @@ export const MenuItemLoading = () => (
         <PlaceholderMedia color="#fff" style={styles.imagePlaceholderStyle} />
       </View>
       <View style={[styles.textPlaceholderStyle, styles.centerStyle]}>
-        <PlaceholderLine width={'60%'} height={10} />
+        <PlaceholderLine height={10} />
       </View>
     </View>
   </Placeholder>
