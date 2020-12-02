@@ -8,6 +8,7 @@ const appSlice = createSlice({
     comingSoonShow: false,
     loadIntro: true,
     isShowOrderList: false,
+    fcmToken: '456',
   },
   reducers: {
     showLoading(state, action) {
@@ -33,6 +34,9 @@ const appSlice = createSlice({
     },
     dismissOrderList(state, action) {
       state.isShowOrderList = false;
+    },
+    updateFcmToken(state, action) {
+      state.fcmToken = action.payload;
     },
   },
 });

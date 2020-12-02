@@ -35,6 +35,7 @@ import {
 } from './navigation/NavigationService';
 import { useGraphQLClient } from '@graphql';
 import { ConfirmHandler, ComingSoonHandler } from './handlers';
+import { useFirebaseCloudMessing } from '@firebase';
 
 const fontConfig = {
   default: {
@@ -98,6 +99,7 @@ const App = () => {
             <GraphErrorHandler ref={graphQLErrorRef}>
               <PaperProvider theme={theme}>
                 <Navigator />
+                <NotificationProvider />
                 <LoadingProvider />
                 <RootPermission />
                 <DropdownAlert
@@ -152,6 +154,31 @@ const LangProvider = ({ children }) => {
   // }, []);
 
   return <>{children}</>;
+};
+
+const NotificationProvider = () => {
+  const dispatch = useDispatch();
+
+  const onForegroundMessage = () => {};
+  const onBackgroundMessage = () => {};
+  const onOpenedApp = () => {};
+  const onInit = () => {};
+  const onMessageError = () => {};
+
+  const token = useFirebaseCloudMessing(
+    onForegroundMessage,
+    onBackgroundMessage,
+    onOpenedApp,
+    onInit,
+    onMessageError,
+  );
+
+  React.useEffect(() => {
+    dispatch(app.updateFcmToken(token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  return null;
 };
 
 export default App;
