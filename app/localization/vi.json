@@ -202,5 +202,10 @@
   "txtCompany" :"Nơi làm việc",
   "txtWrongPassword": "Mật khẩu sai hoặc không được để trống",
   "txtWrongUsername": "Tên đăng nhập sai hoặc không được để trống",
-  "txtExpectedReceive": "Nhận hàng dự kiến:"
+  "txtExpectedReceive": "Nhận hàng dự kiến:",
+  "txtEmptyAddressList": "Hiện tại không có địa chỉ nào",
+  "txtEmptyNotifyList":"Hiện tại không có thông báo nào",
+  "txtTryAgain":"Vui lòng thử lại sau :",
+  "txtYouHave":"Bạn còn",
+  "txtInputCode":"lần nhập mã"
 }

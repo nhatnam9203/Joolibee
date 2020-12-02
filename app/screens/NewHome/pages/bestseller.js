@@ -24,7 +24,7 @@ const Bestseller = React.memo(({ data, loading }) => {
         <Carousel
           sliderWidth={width}
           itemWidth={width * 0.9}
-          keyExtractor={(_) => _.id + ''}
+          keyExtractor={(_, index) => index + ''}
           data={data}
           renderItem={({ item }) => <BestsellerItem item={item} />}
           enableSnap={true}

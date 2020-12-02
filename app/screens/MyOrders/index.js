@@ -12,6 +12,7 @@ import { translate } from '@localize';
 import { ButtonCC } from '../components';
 import { useDispatch } from 'react-redux';
 import { app } from '@slices';
+
 const { scaleWidth, scaleHeight } = scale;
 const Index = () => {
   const navigation = useNavigation();

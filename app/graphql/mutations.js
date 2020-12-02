@@ -241,11 +241,30 @@ export const UPDATE_CUSTOMER = gql`
       }
     ) {
       customer {
+        __typename
         email
-        date_of_birth
-        gender
         firstname
         lastname
+        phone_number
+        gender
+        date_of_birth
+        addresses {
+          id
+          city
+          full_address
+          default_shipping
+          firstname
+          lastname
+          telephone
+          street
+          company
+          region {
+            __typename
+            region
+            region_id
+            region_code
+          }
+        }
       }
     }
   }

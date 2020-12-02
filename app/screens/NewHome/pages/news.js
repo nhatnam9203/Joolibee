@@ -21,7 +21,7 @@ import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const index = ({ openDetail, onCHangeScreen, data, loading }) => {
+const index = ({ onOpenDetail, onCHangeScreen, data, loading }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
@@ -44,7 +44,7 @@ const index = ({ openDetail, onCHangeScreen, data, loading }) => {
           loading ? (
             renderItemLoading()
           ) : (
-            <NewsItem item={item?.item} onPress={openDetail} />
+            <NewsItem item={item?.item} onPress={onOpenDetail} />
           )
         }
         sliderWidth={width}

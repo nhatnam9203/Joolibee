@@ -11,7 +11,7 @@ import { OrderNewItem, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
 import { useQuery } from '@apollo/client';
 import { query } from '@graphql';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { address } from '@slices';
 
 const MenuDetailScreen = ({ route = { params: {} } }) => {
@@ -21,7 +21,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
-
+  const customerCart = useSelector((state) => state.account?.cart);
   const { data } = useQuery(query.CUSTOMER_INFO, {
     fetchPolicy: 'only-cache',
   });
@@ -70,6 +70,8 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
       navigation.navigate(ScreenName.DetailMyAddress, {
         val_address,
         titleHeader: translate('txtEditAddress'),
+        cartId: customerCart?.id,
+        action_type: true,
       });
     } else {
       navigation.navigate(ScreenName.MyAddress);

@@ -14,12 +14,20 @@ const NotificationScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}></View>
+      <View style={styles.container}>
+        <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+          {translate('txtEmptyNotifyList')}
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: AppStyles.colors.background },
+  container: {
+    flex: 1,
+    backgroundColor: AppStyles.colors.background,
+    paddingTop: 10,
+  },
 });
 export default NotificationScreen;

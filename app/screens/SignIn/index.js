@@ -27,15 +27,7 @@ import {
 import ScreenName from '../ScreenName';
 import { useMutation } from '@apollo/client';
 import { GEX } from '@graphql';
-import {
-  BottomBarComponent,
-  HomePageName,
-  MenuPageName,
-  PopupComingSoon,
-  PopupQRCode,
-  PromotionPageName,
-  StorePageName,
-} from '../components';
+import { PopupComingSoon } from '../components';
 
 const LAYOUT_WIDTH = '90%';
 

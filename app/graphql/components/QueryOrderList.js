@@ -15,9 +15,6 @@ export const QueryOrderList = ({
   const [currentPage, nextPage] = React.useState(1);
   const { loading, error, data, refetch, fetchMore } = useQuery(
     ORDERS_CUSTOMER,
-    {
-      variables: { currentPage },
-    },
   );
 
   let _data = data?.customer?.orders.items
@@ -26,7 +23,7 @@ export const QueryOrderList = ({
   if (error) {
     return <View />;
   }
-
+  console.log('_data', _data);
   const sortList = () => {
     let list = [..._data];
     let newList = list?.sort((a, b) => {
