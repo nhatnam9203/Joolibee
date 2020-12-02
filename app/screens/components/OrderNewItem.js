@@ -26,9 +26,9 @@ export const OrderNewItemLoading = React.memo(() => (
     imgHeight={IMAGE_SIZE}
     shadow={true}>
     <Placeholder Animation={Fade}>
-      <PlaceholderLine width={'100%'} height={15} />
-      <PlaceholderLine width={'100%'} height={15} />
-      <PlaceholderLine width={'30%'} height={15} />
+      <PlaceholderLine height={15} />
+      <PlaceholderLine height={15} />
+      <PlaceholderLine height={15} />
       <PlaceholderMedia style={styles.mediaPlaceholder} />
     </Placeholder>
   </FlatListItemWithImgHorizontal>
