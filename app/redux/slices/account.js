@@ -16,6 +16,8 @@ const initialState = {
   isShowQRCode: false,
   isLogout: false,
   isEatingUtensils: false,
+  count_input_coupon: 5,
+  timming: false,
 };
 
 const feedBack = createAsyncThunk(
@@ -53,6 +55,14 @@ const accountSlice = createSlice({
     },
     setEatingUtensils(state) {
       state.isEatingUtensils = !state.isEatingUtensils;
+    },
+
+    setCountInputCoupon(state, action) {
+      state.count_input_coupon = action.payload;
+    },
+
+    toggleTimmer(state) {
+      state.timming = !state.timming;
     },
 
     signInSucceed(state, action) {
@@ -109,6 +119,8 @@ const accountSlice = createSlice({
     resetCustomerCart(state, action) {
       state.cart = action.payload;
       state.isEatingUtensils = false;
+      state.count_input_coupon = 5;
+      state.timming = false;
     },
 
     updateCustomerCart: (state, action) => {

@@ -103,10 +103,20 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   const orderCreateNewAddress = () => {
+    const val_address = {
+      phone: customer?.phone_number,
+      place: '',
+      firstname: customer?.firstname,
+      lastname: customer?.lastname,
+      note: '',
+      id: '',
+      default_shipping: true,
+    };
     popupRef.current.forceQuit();
     navigation.navigate(ScreenName.DetailMyAddress, {
       titleHeader: translate('txtMyAddressDetail'),
       cartId: customerCart?.id,
+      val_address,
     });
   };
 

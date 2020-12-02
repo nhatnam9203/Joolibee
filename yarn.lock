@@ -6904,7 +6904,7 @@ react-native-calendars@^1.403.0:
     react-native-swipe-gestures "^1.0.5"
     xdate "^0.8.0"
 
-react-native-code-push@^6.3.0:
+react-native-code-push@^6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-6.4.0.tgz#82fcfd52604e0c6bed527e03d120a211f163e2f3"
   integrity sha512-l9rYFbKc/HAUpgkWvld9M52waeU/Z1YoLKJ9x4p29NpQTyaisxUrWBPlFZGdaXz374l2IC/2VyEsSpcM7QSoJg==

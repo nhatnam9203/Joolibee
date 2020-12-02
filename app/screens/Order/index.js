@@ -19,6 +19,7 @@ import {
   PopupNoticeEnvironment,
   PopupOrderSuccess,
   OrderNewItem,
+  TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
 import {
@@ -29,13 +30,13 @@ import {
   OrderButtonInput,
   OrderVoucherItem,
 } from './widget';
-import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
-import { query, GQL, GEX } from '@graphql';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { query, GQL, GEX, useGraphQLClient } from '@graphql';
 import { format, scale } from '@utils';
 import { vouchers } from '@mocks';
 import { app, account } from '@slices';
+// import { useTimerBackground } from '@hooks';
 import NavigationService from '../../navigation/NavigationService';
-import { useGraphQLClient } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -43,7 +44,7 @@ const ShippingType = {
   InShop: 'storepickup',
   InPlace: 'freeshipping',
 };
-
+const COUNTDOWN_SECONDS = 30;
 const CONFIRM_HEIGHT = 150;
 
 const OrderScreen = ({ route = { params: {} } }) => {
@@ -55,17 +56,32 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   /** AUTO LOAD VALUE */
   const cart_id = useSelector((state) => state.account?.cart?.id);
+  const count_input_coupon = useSelector(
+    (state) => state.account?.count_input_coupon,
+  );
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
   );
 
-  // show dialog notice
-  const [showNotice, setShowNotice] = React.useState(isEatingUtensils);
-  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
+  const timming = useSelector((state) => state.account?.timming);
 
+  // show dialog notice
+  const [showNotice, setShowNotice] = React.useState(false);
+  const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
   const [coupon_code, setCouponCode] = React.useState('');
   const [reward_point, setRewardPoint] = React.useState('');
   const [order_number, setOrderNumber] = React.useState('');
+
+  // const onCallBackEndCountDown = () => {
+  //   dispatch(account.toggleTimmer());
+  //   dispatch(account.setCountInputCoupon(5));
+  // };
+  // const number = useTimerBackground(30, timming, onCallBackEndCountDown);
+
+  // ----------------- Timming apply coupon ------------------------ //
+
+  // ----------------- Timming apply coupon ------------------------ //
+
   // id dung cho store pickup
   const store_pickup_id = useSelector(
     (state) => state.order?.pickup_location_code,
@@ -203,7 +219,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
       .then((res) => {
         if (res?.data?.applyCouponToCart) {
           setCouponCode('');
+          // dispatch(account.toggleTimmer());
+          // dispatch(account.setCountInputCoupon(5));
         }
+        // dispatch(account.setCountInputCoupon(count_input_coupon - 1));
+        // if (count_input_coupon - 1 <= 0) {
+        //   dispatch(account.toggleTimmer());
+        // }
+
         dispatch(app.hideLoading());
       })
       .catch(() => {
@@ -475,6 +498,25 @@ const OrderScreen = ({ route = { params: {} } }) => {
     </OrderSection>
   );
 
+  // const renderBlockedApplyCoupon = () => {
+  //   return timming ? (
+  //     <Text style={{ width: '100%', marginVertical: 5 }}>
+  //       {translate('txtTryAgain') + ' (' + number + ') '}
+  //     </Text>
+  //   ) : (
+  //     <TextInputErrorMessage
+  //       style={{ width: '100%', marginVertical: 5 }}
+  //       message={
+  //         count_input_coupon < 5 &&
+  //         `${translate('txtYouHave')} ${count_input_coupon} ${translate(
+  //           'txtInputCode',
+  //         )}`
+  //       }
+  //       color={AppStyles.colors.inputError}
+  //     />
+  //   );
+  // };
+
   const renderPromotion = () => (
     <OrderSection title={translate('txtPromotionApply')} key="OrderPromotion">
       <OrderSectionItem height={160}>
@@ -485,7 +527,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           }}>
           <OrderButtonInput
             onPress={onApplyCoupon}
-            disabled={!coupon_code}
+            disabled={!coupon_code || timming}
             title={translate('txtApply')}
             btnWidth={126}
             bgColor={AppStyles.colors.accent}>
@@ -496,12 +538,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
               onChangeText={onChangeCouponCode}
             />
           </OrderButtonInput>
-
+          {/* {renderBlockedApplyCoupon()} */}
           {applied_coupons && (
             <View
               style={{
                 height: 45,
-                marginTop: 19,
+                // marginTop: 19,
                 justifyContent: 'center',
               }}>
               <CustomScrollViewHorizontal
@@ -637,10 +679,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
       </View>
 
       {/**Popup Notice */}
-      <PopupNoticeEnvironment
-        visible={showNotice}
-        onToggle={onTogglePopupNotice}
-      />
+      {showNotice && (
+        <PopupNoticeEnvironment
+          visible={showNotice}
+          onToggle={onTogglePopupNotice}
+        />
+      )}
 
       {/**Popup Order Success */}
       <PopupOrderSuccess
