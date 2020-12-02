@@ -61,7 +61,7 @@ export default function OrderStatus({ status }) {
       type: 'complete',
     },
   ];
-  let indexStatus = data.findIndex((item) => item.type === status);
+  let indexStatus = data.findIndex((item) => item.title === status);
 
   const ImageLink = ({ source, onPress }) => (
     <TouchableOpacity onPress={onPress}>

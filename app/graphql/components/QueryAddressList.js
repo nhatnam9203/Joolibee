@@ -1,7 +1,9 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { CustomFlatList } from '@components';
+import { translate } from '@localize';
+import { AppStyles } from '@theme';
 import React from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
+import { RefreshControl, StyleSheet, View, Text } from 'react-native';
 import { ADDRESS_LIST } from '../queries';
 
 const defaultData = [
@@ -42,6 +44,12 @@ export const QueryAddressList = ({
     setRefreshing(false);
   };
 
+  const renderEmptyList = () => (
+    <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+      {translate('txtEmptyAddressList')}
+    </Text>
+  );
+
   return (
     <CustomFlatList
       data={_data}
@@ -55,6 +63,7 @@ export const QueryAddressList = ({
       }
       ListFooterComponent={ListFooterComponent}
       ListHeaderComponent={ListHeaderComponent}
+      ListEmptyComponent={renderEmptyList}
     />
   );
 };

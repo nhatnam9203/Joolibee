@@ -22,6 +22,7 @@ import {
   TopBarRight,
   PopupSelectAreaComponent,
   PopupConfirm,
+  PopupWebView,
 } from '../components';
 import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';
@@ -44,6 +45,7 @@ const HomeScreen = () => {
   const headerHeight = useHeaderHeight();
 
   const [isVisible, setVisiblePopup] = React.useState(false);
+  const [visible_detal, showDetail] = React.useState(false);
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const isAllowLocations = useSelector(
     (state) => state.setting.isAllowLocations,
@@ -78,6 +80,7 @@ const HomeScreen = () => {
     };
     navigation.navigate(screen, params);
   };
+  const onToggleDetail = () => showDetail(!visible_detal);
 
   return (
     <View style={styles.container}>
@@ -171,6 +174,7 @@ const HomeScreen = () => {
                 loading={loading}
                 data={homeScreen?.news ?? []}
                 onCHangeScreen={onCHangeScreen(ScreenName.News)}
+                onOpenDetail={onToggleDetail}
               />
             </CustomImageBackground>
             {/* --------- </Background WaterMark> ------------ */}
@@ -179,7 +183,7 @@ const HomeScreen = () => {
       </CustomImageBackground>
 
       <PopupSelectAreaComponent visible={isVisible} />
-
+      <PopupWebView visible={visible_detal} onToggle={onToggleDetail} />
       {/**Popup Order List Items */}
       <ProductCart
         visible={showOrderList}

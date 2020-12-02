@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { statusOrder, scale, format } from '@utils';
 import { GEX } from '@graphql';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
+import NavigationService from '../../../navigation/NavigationService';
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
 const MARGIN_VERTICAL = scaleHeight(20);
@@ -58,8 +59,9 @@ export default function Index({ navigation, route }) {
   );
 
   const onHandleCancel = () => {
-    dispatch(app.showLoading());
-    cancelOrder(number);
+    NavigationService.showComingSoon();
+    // dispatch(app.showLoading());
+    // cancelOrder(number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -116,7 +118,7 @@ export default function Index({ navigation, route }) {
         <>
           <OrderTitle title={translate('txtOrderStattus')} />
           <View style={styles.statusContent}>
-            <OrderStatus status={status} />
+            <OrderStatus status={status_order} />
           </View>
         </>
       );
@@ -136,7 +138,7 @@ export default function Index({ navigation, route }) {
           title={translate('txtOrderStattus')}
           style={{ marginVertical: scaleHeight(5) }}
         />
-        <OrderStatus status={status} />
+        <OrderStatus status={status_order} />
       </View>
     );
   };
@@ -188,7 +190,7 @@ export default function Index({ navigation, route }) {
           {order.status === 'pending' && (
             <View style={styles.btnRemmoveOrder}>
               <ButtonCC.ButtonBorderRed
-                // onPress={onHandleCancel}
+                onPress={onHandleCancel}
                 label={translate('txtCancel')}
                 width={scaleWidth(195)}
                 height={scaleHeight(61)}

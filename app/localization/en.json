@@ -155,7 +155,7 @@
   "txtExtraProduct": "More delicious when eaten with",
   "txtOrderMethod": "Shipping method",
   "txtInputVoucher": "Input the voucher",
-  "txtRedeemPoints": "REDEEM ACCUMULATED POINTS",
+  "txtRedeemPoints": "REDEEM POINTS",
   "txtApply": "Apply",
   "txtUpdateCart": "Update cart product",
   "txtReviewYourOrder": "How do you feel about your order?",
@@ -203,5 +203,10 @@
   "txtCompany" :"Company",
   "txtWrongPassword": "Password not blank",
   "txtWrongUsername": "Username not blank",
-  "txtExpectedReceive": "Expected to receive:"
+  "txtExpectedReceive": "Expected to receive:",
+  "txtEmptyAddressList": "Currently there is no address",
+  "txtEmptyNotifyList":"Currently there is no notify",
+  "txtTryAgain":"Please try again next time :",
+  "txtYouHave":"You have",
+  "txtInputCode":"times code input"
 }

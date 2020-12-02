@@ -42,13 +42,13 @@ const EditAccountScreen = () => {
 
   const onHandleSubmit = React.useCallback(
     (values) => {
-      Logger.debug(values, 'values');
       dispatch(app.showLoading());
       updateCustomerInfo({
         variables: {
           ...values,
           gender: values.gender === -1 ? null : values.gender,
         },
+        // awaitRefetchQueries
       })
         .then((data) => {
           if (data?.data?.updateCustomerInfo) {
