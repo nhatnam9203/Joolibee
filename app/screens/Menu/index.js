@@ -26,6 +26,7 @@ const getLayoutColor = ({ item, index = 0 }) => {
       break;
     case 1:
       backgroundColor = HOT_COLOR_PALLETS[index];
+
       break;
 
     default:
