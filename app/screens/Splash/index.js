@@ -25,7 +25,7 @@ const Splash = () => {
     if (processing?.code !== CodePushStatus.PROCESSING) {
       setTimeout(() => {
         dispatch(app.loadingSuccess());
-      }, 3000);
+      }, 100);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [processing]);

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 export const useGenerateToken = () => {
   const token = useSelector((state) => state.app.fcmToken);
-  Logger.debug(token, 'useGenerateToken');
 
   const [generateCustomerToken, { loading, error, data, called }] = useMutation(
     GENERATE_CUSTOMER_TOKEN,

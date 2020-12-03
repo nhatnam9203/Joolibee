@@ -58,88 +58,6 @@ export const MENU_DETAIL = gql`
   }
 `;
 
-// HOME_SCREEN
-export const HOME_SCREEN = gql`
-  {
-    homeScreen {
-      __typename
-      banners
-      best_sellers {
-        __typename
-        id
-        name
-        point
-        price_range {
-          __typename
-          maximum_price {
-            __typename
-            final_price {
-              __typename
-              value
-              currency
-            }
-          }
-          minimum_price {
-            __typename
-            final_price {
-              __typename
-              value
-              currency
-            }
-          }
-        }
-        image {
-          __typename
-          url
-        }
-      }
-      news {
-        __typename
-        content
-        featured_image
-        post_id
-        short_content
-        title
-      }
-      promotions {
-        __typename
-        id
-        name
-        point
-        price_range {
-          __typename
-          maximum_price {
-            __typename
-            final_price {
-              __typename
-              value
-              currency
-            }
-          }
-          minimum_price {
-            __typename
-            final_price {
-              __typename
-              value
-              currency
-            }
-          }
-        }
-        image {
-          __typename
-          url
-        }
-      }
-      static_content {
-        __typename
-        description
-        short_description
-        title
-      }
-    }
-  }
-`;
-
 // ADDRESS_LIST
 export const ADDRESS_LIST = gql`
   {
@@ -166,37 +84,6 @@ export const ADDRESS_LIST = gql`
         }
         telephone
         vat_id
-      }
-    }
-  }
-`;
-
-export const CUSTOMER_INFO = gql`
-  {
-    customer {
-      __typename
-      email
-      firstname
-      lastname
-      phone_number
-      gender
-      date_of_birth
-      addresses {
-        id
-        full_address
-        default_shipping
-        firstname
-        lastname
-        telephone
-        street
-        city
-        company
-        region {
-          __typename
-          region
-          region_id
-          region_code
-        }
       }
     }
   }

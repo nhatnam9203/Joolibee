@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const useCustomer = () => {
   const dispatch = useDispatch();
-  const [getCustomerInfo, response] = useLazyQuery(CUSTOMER_INFO, {
-    fetchPolicy: 'cache-and-network',
+  const [getCustomerInfo, getCustomerResp] = useLazyQuery(CUSTOMER_INFO, {
+    fetchPolicy: 'no-cache',
     //   onCompleted: (data) => {
     //     Logger.debug(data, 'get customer info complete');
     //   },
@@ -27,21 +27,23 @@ export const useCustomer = () => {
    * {"__typename":"CustomerAddress","full_address":"29/31 Hoàng Hoa Thám, phường 6, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":false}]}}
    */
 
-  const user = useSelector((state) => state.account.user?.profile);
+  const customerInfo = useSelector((state) => state.account.user?.profile);
 
   React.useEffect(() => {
-    if (response.data?.customer) {
-      dispatch(account?.saveUserInfo(response.data));
+    if (getCustomerResp.data?.customer) {
+      dispatch(account?.saveUserInfo(getCustomerResp.data));
     }
-  }, [response, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getCustomerResp?.data?.customer]);
 
   React.useEffect(() => {
-    getCustomerInfo();
+    if (!customerInfo) {
+      getCustomerInfo();
+      Logger.debug('getCustomerInfo', 'useCustomer DEBUG!!!!');
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {
-    getCustomerInfo,
-    customer: user,
-  };
+  return [customerInfo, getCustomerInfo];
 };

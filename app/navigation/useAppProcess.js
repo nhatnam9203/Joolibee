@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { GQL } from '@graphql';
 import { account } from '@slices';
-import { remove, StorageKey } from '@storage';
+import { remove, StorageKey, get } from '@storage';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,7 +22,11 @@ export const useAppProcess = () => {
   React.useEffect(() => {
     const onSignOut = async () => {
       // call server revoke token
-      await revokeCustomerToken();
+
+      const { token } = await get(StorageKey.User);
+      if (token) {
+        await revokeCustomerToken();
+      }
 
       // await client.cache.reset();
       // Evict and garbage-collect the cached user object

@@ -33,8 +33,9 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // GET
   const customerCart = useSelector((state) => state.account?.cart);
-  const { customer } = GEX.useCustomer();
-  const addresses = customer?.addresses ?? [];
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+
+  const addresses = customerInfo?.addresses ?? [];
   const address_id = addresses?.find((x) => x.default_shipping)?.id;
   const params = {
     variables: {
@@ -104,10 +105,10 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const orderCreateNewAddress = () => {
     const val_address = {
-      phone: customer?.phone_number,
+      phone: customerInfo?.phone_number,
       place: '',
-      firstname: customer?.firstname,
-      lastname: customer?.lastname,
+      firstname: customerInfo?.firstname,
+      lastname: customerInfo?.lastname,
       note: '',
       id: '',
       default_shipping: true,

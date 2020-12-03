@@ -11,7 +11,6 @@ export const CUSTOMER_INFO = gql`
       email
       firstname
       lastname
-      phone_number
       gender
       date_of_birth
       addresses {

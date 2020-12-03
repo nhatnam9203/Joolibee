@@ -54,7 +54,7 @@ const HomeScreen = () => {
   const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen('cache-first');
   const { homeScreen } = homeScreenResp?.data || {};
 
-  GEX.useGetCustomerCart();
+  GEX.useGetCustomerCart(); // load customer cart
 
   React.useEffect(() => {
     navigation.setOptions({

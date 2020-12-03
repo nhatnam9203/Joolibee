@@ -7,6 +7,11 @@ import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
 import { useAppProcess } from './useAppProcess';
 import { GEX } from '@graphql';
+import { scale } from '@utils';
+import { AppStyles } from '@theme';
+import { useNavigation } from '@react-navigation/native';
+
+const { scaleHeight, scaleWidth } = scale;
 
 const Stack = createStackNavigator();
 
@@ -18,22 +23,81 @@ function SplashStack() {
   );
 }
 
+const forFade = ({ current }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
+const ScreenConst = {
+  Splash: 'joPlash',
+  Main: 'joMain',
+  Auth: 'joAuth',
+};
+
 // Process Start App
 function App() {
   const { startApp, isSignIn } = useAppProcess();
-  const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
+  const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
+  const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
 
+  // Load truoc home screen để cho nuột
   React.useEffect(() => {
     if (isSignIn) {
-      Logger.debug(isSignIn, 'isSignIn');
       loadHomeScreen();
+    } else {
+      navigationRef.current?.navigate(ScreenConst.Auth);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignIn]);
 
+  // Khi có dữ liệu home screen sẽ cho vào home screen, KO CÓ ĂN CÁM !!!
+  React.useEffect(() => {
+    if (getHomeScreenResp?.data) {
+      setAllowGotoHomeScreen(true);
+
+      navigationRef.current?.navigate(ScreenConst.Main);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getHomeScreenResp?.data]);
+
   return (
     <NavigationContainer ref={navigationRef}>
-      {startApp ? <SplashStack /> : isSignIn ? <MainStack /> : <AuthStack />}
+      <Stack.Navigator
+        initialRouteName={ScreenConst.Splash}
+        headerMode="none"
+        screenOptions={{
+          gestureEnabled: false,
+          cardStyle: { backgroundColor: 'transparent' },
+        }}>
+        <Stack.Screen
+          component={SplashStack}
+          name={ScreenConst.Splash}
+          options={{
+            headerShown: false,
+            cardStyleInterpolator: forFade,
+          }}
+        />
+
+        <Stack.Screen
+          component={MainStack}
+          name={ScreenConst.Main}
+          options={{
+            headerShown: false,
+            cardStyleInterpolator: forFade,
+          }}
+        />
+
+        <Stack.Screen
+          component={AuthStack}
+          name={ScreenConst.Auth}
+          options={{
+            headerShown: false,
+            cardStyleInterpolator: forFade,
+          }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

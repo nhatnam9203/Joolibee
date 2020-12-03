@@ -21,10 +21,12 @@ export const save = (key, value) =>
     expires: null,
   });
 
-export const remove = (key) =>
+export const remove = (key) => {
+  if (!key) return;
   storage.remove({
     key,
   });
+};
 
 export const get = async (key, options) =>
   new Promise((resolve, reject) =>

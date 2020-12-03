@@ -27,7 +27,7 @@ const MyAccountScreen = () => {
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
 
-  const { customer } = GEX.useCustomer();
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
@@ -54,9 +54,9 @@ const MyAccountScreen = () => {
               style={styles.avatarStyle}
             />
 
-            {customer && (
+            {customerInfo && (
               <Text style={styles.nameStyle}>
-                {customer?.firstname + ' ' + customer?.lastname}
+                {customerInfo?.firstname + ' ' + customerInfo?.lastname}
               </Text>
             )}
             <TouchableOpacity

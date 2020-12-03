@@ -96,9 +96,9 @@ export const TopBarRight = React.memo(() => {
 export const TopBarLeft = () => {
   const navigation = useNavigation();
 
-  const { customer } = GEX.useCustomer();
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
-  return customer ? (
+  return customerInfo ? (
     <TouchableOpacity
       onPress={() => {
         navigation.navigate(ScreenName.Account);
@@ -115,7 +115,7 @@ export const TopBarLeft = () => {
       /> */}
         <View style={styles.userInfo}>
           <Text style={styles.userName}>
-            {customer.firstname + ' ' + customer.lastname}
+            {customerInfo.firstname + ' ' + customerInfo.lastname}
           </Text>
           <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
             {`${0} ${translate('txtPoint')}`}

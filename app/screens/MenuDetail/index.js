@@ -1,5 +1,5 @@
 import { CustomButtonImage, CustomImageBackground } from '@components';
-import { GCC } from '@graphql';
+import { GCC, GEX } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import { TopBarScreenLayout } from '@layouts';
 import { translate } from '@localize';
@@ -22,11 +22,10 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   const customerCart = useSelector((state) => state.account?.cart);
-  const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'only-cache',
-  });
 
-  const addresses_default = data?.customer?.addresses?.find(
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+
+  const addresses_default = customerInfo?.addresses?.find(
     (x) => x.default_shipping,
   );
   React.useEffect(() => {
@@ -98,7 +97,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   return (
     <TopBarScreenLayout>
-      {data?.customer?.addresses?.length > 0 && (
+      {customerInfo?.addresses?.length > 0 && (
         <View style={styles.addressStyle}>
           <Text style={styles.txtAddressTitleStyle}>
             {translate('txtAddressTo')}

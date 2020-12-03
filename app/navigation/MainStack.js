@@ -1,6 +1,7 @@
 import * as React from 'react';
 // import { createNativeStackNavigator } from 'react-native-screens/native-stack'; // use api native
 import { createStackNavigator } from '@react-navigation/stack';
+import { GEX } from '@graphql';
 import {
   MainTabScreen,
   MyAccountScreen,
