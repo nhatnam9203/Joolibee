@@ -6,38 +6,37 @@ import { CUSTOMER_CART_QUERY } from '../gql';
 
 export const useGetCustomerCart = () => {
   const dispatch = useDispatch();
-
-  // const [createEmptyCart] = useMutation(CREATE_EMPTY_CART);
+  const customerCart = useSelector((state) => state.account?.cart);
 
   // GET CUSTOMER CARTS
   const [getCustomerCart, getCustomerCartResp] = useLazyQuery(
     CUSTOMER_CART_QUERY,
     {
       fetchPolicy: 'cache-and-network',
-      //   onCompleted: (data) => {
-      //     Logger.debug(data, 'get customer info complete');
-      //   },
     },
   );
 
-  const customerCart = useSelector((state) => state.account?.cart);
-
   React.useEffect(() => {
-    getCustomerCart();
-    Logger.debug('useGetCustomerCart', '==================================');
+    if (!customerCart) {
+      getCustomerCart();
+      Logger.debug('getCustomerCart', 'useGetCustomerCart');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
+      Logger.debug(
+        'xxxxxx customer cart update and dispatch redux xxxxxxx',
+        'useGetCustomerCart',
+      );
+
       dispatch(
         account.updateCustomerCart(getCustomerCartResp.data?.customerCart),
       );
     }
-  }, [getCustomerCartResp.data, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getCustomerCartResp?.data]);
 
-  return {
-    cart: customerCart,
-    getCustomerCartResp,
-  };
+  return customerCart;
 };

@@ -23,18 +23,18 @@ const Bestseller = React.memo(({ data, loading }) => {
       <View style={styles.container}>
         <Carousel
           sliderWidth={width}
-          itemWidth={width * 0.9}
+          itemWidth={width * 0.86}
           keyExtractor={(_, index) => index + ''}
           data={data}
           renderItem={({ item }) => <BestsellerItem item={item} />}
           enableSnap={true}
           horizontal
           inactiveSlideOpacity={0.7}
-          inactiveSlideScale={1}
+          inactiveSlideScale={0.98}
           loop={true}
           autoplay={true}
-          autoplayInterval={15000}
-          autoplayDelay={1000}
+          autoplayInterval={3000}
+          autoplayDelay={1500}
           removeClippedSubviews={false}
           // useScrollView={true}
           lockScrollWhileSnapping={true}

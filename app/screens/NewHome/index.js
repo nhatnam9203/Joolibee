@@ -40,24 +40,22 @@ const MENU_TOP_MARGIN = height * 0.2;
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  const [language] = useChangeLanguage();
   const headerHeight = useHeaderHeight();
+  const [language] = useChangeLanguage();
 
   const [isVisible, setVisiblePopup] = React.useState(false);
   const [visible_detal, showDetail] = React.useState(false);
+
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const isAllowLocations = useSelector(
     (state) => state.setting.isAllowLocations,
   );
 
-  const { data, loading, refetch } = useQuery(GQL.HOME_SCREEN, {
-    fetchPolicy: 'only-cache',
-  });
+  const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen('cache-first');
+  const { homeScreen } = homeScreenResp?.data || {};
 
-  GEX.useGetCustomerCart(); // !! tam thoi de, non se call khi update cart
+  GEX.useGetCustomerCart();
 
-  const { homeScreen } = data || {};
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => <TopBarRight />,
@@ -66,6 +64,7 @@ const HomeScreen = () => {
   }, [language, navigation]);
 
   React.useEffect(() => {
+    loadHomeScreen();
     setTimeout(() => {
       setVisiblePopup(isAllowLocations !== RESULTS.GRANTED);
     }, 1000);
@@ -75,11 +74,12 @@ const HomeScreen = () => {
   const onCHangeScreen = (screen) => () => {
     let params = {
       data: homeScreen?.news ? homeScreen?.news : [],
-      loading,
-      refetch,
+      loading: homeScreenResp?.loading,
+      refetch: homeScreenResp?.refetch,
     };
     navigation.navigate(screen, params);
   };
+
   const onToggleDetail = () => showDetail(!visible_detal);
 
   return (
@@ -94,7 +94,7 @@ const HomeScreen = () => {
           <SinglePageLayout>
             {/* BANNERS */}
             <Banners
-              loading={loading}
+              loading={homeScreenResp?.loading}
               data={homeScreen?.promotions}
               height={BANNER_HEIGHT}
             />
@@ -126,7 +126,7 @@ const HomeScreen = () => {
                   <Tabs />
                   {/* --------- Bestseller list ------------ */}
                   <Bestseller
-                    loading={loading}
+                    loading={homeScreenResp?.loading}
                     data={homeScreen?.best_sellers}
                   />
                 </View>
@@ -171,7 +171,7 @@ const HomeScreen = () => {
               </View>
 
               <News
-                loading={loading}
+                loading={homeScreenResp?.loading}
                 data={homeScreen?.news ?? []}
                 onCHangeScreen={onCHangeScreen(ScreenName.News)}
                 onOpenDetail={onToggleDetail}

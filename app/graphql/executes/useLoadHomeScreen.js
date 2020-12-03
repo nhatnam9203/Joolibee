@@ -1,25 +1,14 @@
 import { useLazyQuery } from '@apollo/client';
-import { app } from '@slices';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { HOME_SCREEN } from '../gql';
 
-export const useLoadHomeScreen = () => {
-  const dispatch = useDispatch();
+export const useLoadHomeScreen = (fetchPolicy) => {
+  const [getHomeScreen, homeScreenResp] = useLazyQuery(HOME_SCREEN, {
+    fetchPolicy: fetchPolicy ?? 'network-only',
+  });
 
-  const [getHomeScreen, { data, loading, refetch }] = useLazyQuery(
-    HOME_SCREEN,
-    {
-      fetchPolicy: 'cache-first',
-      onCompleted: () => {},
-    },
-  );
-
-  const onLoadHomeScreen = () => {
+  const loadHomeScreen = () => {
     getHomeScreen();
   };
 
-  return {
-    loadHomeScreen: onLoadHomeScreen,
-  };
+  return [homeScreenResp, loadHomeScreen];
 };

@@ -21,7 +21,7 @@ function SplashStack() {
 // Process Start App
 function App() {
   const { startApp, isSignIn } = useAppProcess();
-  const { loadHomeScreen } = GEX.useLoadHomeScreen();
+  const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
 
   React.useEffect(() => {
     if (isSignIn) {
