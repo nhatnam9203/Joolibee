@@ -12,17 +12,17 @@ export const useGetCustomerCart = () => {
   const [getCustomerCart, getCustomerCartResp] = useLazyQuery(
     CUSTOMER_CART_QUERY,
     {
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'no-cache',
     },
   );
 
-  React.useEffect(() => {
-    if (!customerCart) {
-      getCustomerCart();
-      Logger.debug('getCustomerCart', 'useGetCustomerCart');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // React.useEffect(() => {
+  //   if (!customerCart) {
+  //     getCustomerCart();
+  //     Logger.debug('getCustomerCart', 'useGetCustomerCart');
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
@@ -38,5 +38,5 @@ export const useGetCustomerCart = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getCustomerCartResp?.data]);
 
-  return customerCart;
+  return [customerCart, getCustomerCart];
 };

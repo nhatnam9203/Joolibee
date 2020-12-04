@@ -118,7 +118,7 @@ export const TopBarLeft = () => {
             {customerInfo.firstname + ' ' + customerInfo.lastname}
           </Text>
           <Badge size={BADGE_SIZE} style={styles.badgeStyle}>
-            {`${customer?.customer_point ?? 0} ${translate('txtPoint')}`}
+            {`${customerInfo?.customer_point ?? 0} ${translate('txtPoint')}`}
           </Badge>
         </View>
       </View>

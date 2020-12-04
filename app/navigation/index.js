@@ -40,11 +40,13 @@ function App() {
   const { startApp, isSignIn } = useAppProcess();
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
 
   // Load truoc home screen để cho nuột
   React.useEffect(() => {
     if (isSignIn) {
       loadHomeScreen();
+      getCustomerCart();
     } else {
       navigationRef.current?.navigate(ScreenConst.Auth);
     }

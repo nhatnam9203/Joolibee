@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useCustomer = () => {
   const dispatch = useDispatch();
   const [getCustomerInfo, getCustomerResp] = useLazyQuery(CUSTOMER_INFO, {
-    fetchPolicy: 'non-cache',
+    fetchPolicy: 'no-cache',
   });
 
   const customerInfo = useSelector((state) => state.account.user?.profile);
