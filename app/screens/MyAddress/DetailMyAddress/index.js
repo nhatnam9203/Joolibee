@@ -143,11 +143,11 @@ const Index = (props) => {
       dispatch(app.showLoading());
 
       updateCustomerAddress({
-        // ...OPTIONS_MUTATION,
         variables: input,
       })
         .then(({ data }) => {
           if (data?.updateCustomerAddress) {
+            getCustomerInfo();
             navigation.goBack();
           }
 

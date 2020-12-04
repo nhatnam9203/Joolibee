@@ -91,7 +91,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // --------- REQUEST CART-DETAIL -----------
 
-  // const { cart } = GEX.useGetCustomerCart();
   const customerCart = useSelector((state) => state.account?.cart);
 
   const {
