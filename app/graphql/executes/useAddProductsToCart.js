@@ -37,15 +37,11 @@ export const useAddProductsToCart = () => {
     if (!customerCart) {
       return;
     }
+    Logger.debug(customerCart, 'customerCart');
 
     let { variables } = params;
     variables = Object.assign({}, variables, { cart_id: customerCart.id });
-    // setTimeout(() => {
-    //   dispatch(
-    //     account.addCustomerCartQuantity(variables.cart_items[0]?.quantity),
-    //   );
-    // }, ANIMATION_DURATION);
-
+    Logger.debug(variables, 'variables');
     addProductsToCart({
       variables,
     });

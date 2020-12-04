@@ -32,7 +32,8 @@ const ProductCart = ({ visible, onToggle }) => {
   const [footerSize, onLayoutFooter] = useComponentSize();
 
   // GET
-  const customerCart = useSelector((state) => state.account?.cart);
+  // const customerCart = useSelector((state) => state.account?.cart);
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const addresses = customerInfo?.addresses ?? [];
