@@ -23,7 +23,7 @@ export const QueryOrderList = ({
   if (error) {
     return <View />;
   }
-  console.log('_data', _data);
+
   const sortList = () => {
     let list = [..._data];
     let newList = list?.sort((a, b) => {
