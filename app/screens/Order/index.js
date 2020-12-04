@@ -249,6 +249,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           graphQlClient.cache.gc();
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
+          showErrorPoint(false);
         }
         dispatch(app.hideLoading());
       })

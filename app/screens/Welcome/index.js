@@ -108,11 +108,9 @@ const WelcomeScreen = () => {
         <View
           style={{
             marginTop: height * 0.05,
+            paddingHorizontal: 5,
           }}>
           <Text style={styles.title_content}>{item.title}</Text>
-          <Text numberOfLines={3} style={styles.text_content}>
-            {item.content}
-          </Text>
         </View>
         {/* --------- Cricle Red ---------- */}
         <Image source={images.jollibee_head} style={styles.imgHeadIcon} />
