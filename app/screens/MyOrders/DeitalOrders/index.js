@@ -113,7 +113,11 @@ export default function Index({ navigation, route }) {
   );
 
   const renderStatusComponent = () => {
-    if (order_complete || status === 'pending') {
+    if (
+      order_complete ||
+      status === 'pending' ||
+      status?.toLowerCase() === 'processing'
+    ) {
       return (
         <>
           <OrderTitle title={translate('txtOrderStattus')} />
@@ -187,16 +191,17 @@ export default function Index({ navigation, route }) {
           {/* --------------  TOTAL PRICE  -------------- */}
           <OrderTotal total={total} />
           {/* --------------  TOTAL PRICE -------------- */}
-          {order.status === 'pending' && (
-            <View style={styles.btnRemmoveOrder}>
-              <ButtonCC.ButtonBorderRed
-                onPress={onHandleCancel}
-                label={translate('txtCancel')}
-                width={scaleWidth(195)}
-                height={scaleHeight(61)}
-              />
-            </View>
-          )}
+          {order.status === 'pending' ||
+            (status?.toLowerCase() === 'processing' && (
+              <View style={styles.btnRemmoveOrder}>
+                <ButtonCC.ButtonBorderRed
+                  onPress={onHandleCancel}
+                  label={translate('txtCancel')}
+                  width={scaleWidth(195)}
+                  height={scaleHeight(61)}
+                />
+              </View>
+            ))}
           {order_complete && (
             <PopupRating
               visible={visible}
