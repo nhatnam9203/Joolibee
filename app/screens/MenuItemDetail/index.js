@@ -66,41 +66,43 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     variables: { sku: product?.sku },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
-      const item = data.products?.items[0];
-      if (detailItem?.bundle_options?.length > 0) {
-        const { items } = item;
-        const list = items.map((x) => {
-          const { option_id, options } = x;
+      if (data) {
+        const item = data.products?.items[0];
+        if (detailItem?.bundle_options?.length > 0) {
+          const { items } = item;
+          const list = items.map((x) => {
+            const { option_id, options } = x;
 
-          const needUpdateOption = detailItem?.bundle_options.find(
-            (option) => option.id === option_id,
+            const needUpdateOption = detailItem?.bundle_options.find(
+              (option) => option.id === option_id,
+            );
+
+            if (needUpdateOption) {
+              const { values } = needUpdateOption;
+              const renewOptions = options.map((opt) => {
+                const needUpdateOptItem = values.find(
+                  (optItem) => optItem.id === opt.id,
+                );
+
+                if (needUpdateOptItem) {
+                  return Object.assign({}, opt, { is_default: true });
+                } else {
+                  return Object.assign({}, opt, { is_default: false });
+                }
+              });
+
+              return Object.assign({}, x, { options: renewOptions });
+            } else {
+              return x;
+            }
+          });
+
+          dispatchChangeProduct(
+            updateProduct(Object.assign({}, item, { items: list })),
           );
-
-          if (needUpdateOption) {
-            const { values } = needUpdateOption;
-            const renewOptions = options.map((opt) => {
-              const needUpdateOptItem = values.find(
-                (optItem) => optItem.id === opt.id,
-              );
-
-              if (needUpdateOptItem) {
-                return Object.assign({}, opt, { is_default: true });
-              } else {
-                return Object.assign({}, opt, { is_default: false });
-              }
-            });
-
-            return Object.assign({}, x, { options: renewOptions });
-          } else {
-            return x;
-          }
-        });
-
-        dispatchChangeProduct(
-          updateProduct(Object.assign({}, item, { items: list })),
-        );
-      } else {
-        dispatchChangeProduct(updateProduct(item));
+        } else {
+          dispatchChangeProduct(updateProduct(item));
+        }
       }
     },
   });
@@ -115,7 +117,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       const { price_range, items } = productItem;
       const { sellPrice } = destructuring.priceOfRange(price_range);
 
-      let { value } = sellPrice;
+      let { value = 0 } = sellPrice || {};
 
       items?.forEach((item) => {
         const { options } = item;

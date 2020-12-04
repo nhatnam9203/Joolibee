@@ -40,7 +40,7 @@ const CustomBirthdayPicker = ({
     <View>
       <TouchableWithoutFeedback onPress={showPicker} accessible={false}>
         <View pointerEvents="box-only" style={{ width: LAYOUT_WIDTH }}>
-          {RenderBase(renderBase)}
+          {typeof renderBase === 'function' && renderBase()}
         </View>
       </TouchableWithoutFeedback>
 
@@ -49,21 +49,13 @@ const CustomBirthdayPicker = ({
         mode="date"
         onConfirm={handleConfirm}
         onCancel={hidePicker}
-        date={defaultValue ?? date}
+        // date={defaultValue ?? date}
         value={defaultValue ?? date}
         maximumDate={new Date()}
         minimumDate={new Date(1900, 0, 1)}
       />
     </View>
   );
-};
-
-const RenderBase = (renderBase) => {
-  if (typeof renderBase === 'function') {
-    return renderBase();
-  }
-
-  return null;
 };
 
 export default CustomBirthdayPicker;

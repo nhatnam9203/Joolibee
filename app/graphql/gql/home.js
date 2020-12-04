@@ -5,7 +5,10 @@ export const HOME_SCREEN = gql`
   {
     homeScreen {
       __typename
-      banners
+      banners {
+        image_url
+        product_id
+      }
       best_sellers {
         id
         __typename
@@ -15,6 +18,7 @@ export const HOME_SCREEN = gql`
         image {
           url
         }
+        is_hot
         price_range {
           maximum_price {
             regular_price {

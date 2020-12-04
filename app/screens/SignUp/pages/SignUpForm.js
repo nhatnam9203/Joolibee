@@ -88,13 +88,16 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   // function
   const signUpDataSubmit = async (formValues) => {
     await dispatch(app.showLoading());
-    // await dispatch(account.signUp(formValues, { dispatch }));
+    const { dob } = formValues;
+    const variables = {
+      ...formValues,
+      gender: formValues.gender !== -1 ?? formValues.gender,
+      fcmToken: token ?? '456',
+      dob: format.dateTime(dob),
+    };
+    Logger.debug(variables, 'variables');
     registerCustomer({
-      variables: {
-        ...formValues,
-        gender: formValues.gender !== -1 ?? formValues.gender,
-        fcmToken: token ?? '456',
-      },
+      variables,
     });
   };
 
@@ -279,8 +282,11 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
 
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
-                    onChangeDate={handleChange('dob')}
-                    defaultValue={values.dob}
+                    onChangeDate={(d) => {
+                      setFieldValue('dob', format.date(d));
+                    }}
+                    // defaultValue={values.dob}
+                    value={values.dob}
                     renderBase={() => (
                       <CustomInput
                         style={{
@@ -288,7 +294,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
                           borderRadius: metrics.borderRadius,
                         }}
                         onBlur={handleBlur('dob')}
-                        value={values.dob}
+                        value={format.dateTime(values.dob).toString()}
                         placeholder={translate('txtPickerDate')}
                         pointerEvents="none"
                         border>

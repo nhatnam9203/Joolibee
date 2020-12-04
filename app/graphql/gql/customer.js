@@ -316,3 +316,129 @@ export const CHANGE_PASSWORD = gql`
     }
   }
 `;
+
+// ADDRESS_LIST
+export const ADDRESS_LIST = gql`
+  {
+    customer {
+      addresses {
+        __typename
+        id
+        city
+        street
+        company
+        country_code
+        default_billing
+        default_shipping
+        fax
+        postcode
+        firstname
+        lastname
+        full_address
+        region {
+          __typename
+          region
+          region_id
+          region_code
+        }
+        telephone
+        vat_id
+      }
+    }
+  }
+`;
+
+// ADD ADDRESS CUSTOMER
+export const ADD_ADDRESS = gql`
+  mutation(
+    $company: String!
+    $country_code: CountryCodeEnum
+    $street: [String]
+    $telephone: String!
+    $city: String!
+    $firstname: String!
+    $lastname: String!
+    $default_shipping: Boolean
+    $default_billing: Boolean
+    $full_address: String!
+  ) {
+    createCustomerAddress(
+      input: {
+        company: $company
+        country_code: $country_code
+        street: $street
+        telephone: $telephone
+        city: $city
+        firstname: $firstname
+        lastname: $lastname
+        default_shipping: $default_shipping
+        default_billing: $default_billing
+        full_address: $full_address
+      }
+    ) {
+      __typename
+      id
+      city
+      street
+      company
+      country_code
+      default_billing
+      default_shipping
+      fax
+      postcode
+      firstname
+      lastname
+      full_address
+      region {
+        __typename
+        region
+        region_id
+        region_code
+      }
+      telephone
+      vat_id
+    }
+  }
+`;
+
+// UPDATE ADDRESS CUSTOMER
+export const UPDATE_ADDRESS = gql`
+  mutation(
+    $id: Int!
+    $company: String!
+    $street: [String]
+    $telephone: String!
+    $city: String!
+    $firstname: String!
+    $lastname: String!
+    $default_shipping: Boolean
+    $default_billing: Boolean
+    $full_address: String!
+  ) {
+    updateCustomerAddress(
+      id: $id
+      input: {
+        company: $company
+        street: $street
+        telephone: $telephone
+        city: $city
+        firstname: $firstname
+        lastname: $lastname
+        default_shipping: $default_shipping
+        default_billing: $default_billing
+        full_address: $full_address
+      }
+    ) {
+      id
+      city
+      postcode
+    }
+  }
+`;
+
+// DELETE ADDRESS CUSTOMER
+export const DELETE_ADDRESS = gql`
+  mutation($id: Int!) {
+    deleteCustomerAddress(id: $id)
+  }
+`;

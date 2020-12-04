@@ -13,7 +13,13 @@ const LoadingImage = ({ width, height }) => (
 );
 
 export const JollibeeImage = React.memo(
-  ({ url, width, height, defaultSource }) => {
+  ({
+    url,
+    width,
+    height,
+    defaultSource,
+    resizeMode = FastImage.resizeMode.contain,
+  }) => {
     const [download, setDownload] = React.useState(-1);
 
     // Callback functions
@@ -45,7 +51,7 @@ export const JollibeeImage = React.memo(
               ? { uri: fullPath, priority: FastImage.priority.normal }
               : defaultSource
           }
-          resizeMode={FastImage.resizeMode.contain}
+          resizeMode={resizeMode}
           onLoadStart={onLoadStart}
           onProgress={onProgress}
           onLoadEnd={onLoadEnd}

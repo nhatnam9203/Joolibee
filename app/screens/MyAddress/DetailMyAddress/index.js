@@ -32,11 +32,6 @@ const LAYOUT_WIDTH = '95%';
 const HALF_LAYOUT_WIDTH = '45%';
 const { width } = Dimensions.get('window');
 
-const OPTIONS_MUTATION = {
-  awaitRefetchQueries: true,
-  refetchQueries: [{ query: query.ADDRESS_LIST }],
-};
-
 const Index = (props) => {
   const PLACES = [
     { label: translate('txtHome'), value: 'home' },
@@ -53,6 +48,8 @@ const Index = (props) => {
   const [default_shipping, setDefaultShipping] = React.useState(
     Boolean(val_address?.default_shipping),
   );
+
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
   const onChangeValue = React.useCallback(
     () => setDefaultShipping(!default_shipping),
     [default_shipping],
@@ -83,7 +80,8 @@ const Index = (props) => {
     [cartId, setShippingAddresses],
   );
   //------------ Add address customer -----------------//
-  const [createCustomerAddress] = useMutation(mutation.ADD_ADDRESS);
+  const [createCustomerAddress] = useMutation(GQL.ADD_ADDRESS);
+
   const onHandleAdd = React.useCallback(
     (datas) => {
       let input = {
@@ -100,12 +98,12 @@ const Index = (props) => {
       };
       dispatch(app.showLoading());
       createCustomerAddress({
-        ...OPTIONS_MUTATION,
         variables: input,
       })
         .then(({ data }) => {
           if (data?.createCustomerAddress) {
             setShippingAddress(data?.createCustomerAddress?.id);
+            getCustomerInfo();
             navigation.goBack();
           }
 
@@ -126,7 +124,7 @@ const Index = (props) => {
   );
 
   //------------ Update address customer -----------------//
-  const [updateCustomerAddress] = useMutation(mutation.UPDATE_ADDRESS);
+  const [updateCustomerAddress] = useMutation(GQL.UPDATE_ADDRESS);
 
   const onHandleUpdate = React.useCallback(
     (datas) => {
@@ -178,7 +176,6 @@ const Index = (props) => {
     dispatch(app.showLoading());
 
     deleteCustomerAddress({
-      ...OPTIONS_MUTATION,
       variables: { id: val_address.id },
     })
       .then(({ data }) => {

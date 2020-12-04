@@ -23,7 +23,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const [language] = useChangeLanguage();
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+  const customerInfo = useSelector((state) => state.account.user?.profile);
 
   const addresses_default = customerInfo?.addresses?.find(
     (x) => x.default_shipping,

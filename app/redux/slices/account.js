@@ -53,6 +53,12 @@ const accountSlice = createSlice({
       const { customer } = action.payload;
       state.user = { ...state.user, profile: customer };
     },
+
+    updateCustomerAddress(state, action) {
+      const { customer } = action.payload;
+      state.user = { ...state.user, profile: customer };
+    },
+
     setEatingUtensils(state) {
       state.isEatingUtensils = !state.isEatingUtensils;
     },

@@ -7,34 +7,20 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useCustomer = () => {
   const dispatch = useDispatch();
   const [getCustomerInfo, getCustomerResp] = useLazyQuery(CUSTOMER_INFO, {
-    fetchPolicy: 'no-cache',
-    //   onCompleted: (data) => {
-    //     Logger.debug(data, 'get customer info complete');
-    //   },
+    fetchPolicy: 'non-cache',
   });
-
-  /**
-   * {"customer":{"__typename":"Customer",
-   * "email":"luc@gmail.com",
-   * "firstname":"Lil",
-   * "lastname":"Moi",
-   * "phone_number":"0921251798",
-   * "gender":2,
-   * "date_of_birth":"2008-09-11",
-   * "addresses":[
-   * {"__typename":"CustomerAddress","full_address":"61 Cao Thắng, phường 3, Quận 3, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":true},
-   * {"__typename":"CustomerAddress","full_address":"33 Lê Duẩn, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":false},
-   * {"__typename":"CustomerAddress","full_address":"29/31 Hoàng Hoa Thám, phường 6, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam","default_shipping":false}]}}
-   */
 
   const customerInfo = useSelector((state) => state.account.user?.profile);
 
   React.useEffect(() => {
     if (getCustomerResp.data?.customer) {
+      Logger.debug('getCustomerResp.data', 'useCustomer DEBUG!!!!');
+
       dispatch(account?.saveUserInfo(getCustomerResp.data));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCustomerResp?.data?.customer]);
+  }, [getCustomerResp?.data]);
 
   React.useEffect(() => {
     if (!customerInfo) {

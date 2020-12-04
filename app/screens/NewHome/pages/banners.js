@@ -50,11 +50,11 @@ const BannerItem = ({ item, height }) => {
     <TouchableOpacity
       style={styles.content}
       onPress={() => {
-        navigation.navigate(ScreenName.MenuItemDetail, {
-          product: item,
-        });
+        // navigation.navigate(ScreenName.MenuItemDetail, {
+        //   product: item,
+        // });
       }}>
-      <JollibeeImage url={item?.image?.url} height={height} width={width} />
+      <JollibeeImage url={item?.image_url} height={height} width={width} />
     </TouchableOpacity>
   );
 };

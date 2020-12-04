@@ -87,7 +87,16 @@ const errorLink = onError(
 
 const timeStartLink = new ApolloLink((operation, forward) => {
   operation.setContext({ start: new Date() });
-  // Logger.debug('operation', `Start Request -----> ${operation.operationName}`);
+  Logger.debug(
+    operation?.variables,
+    `***************** Start Request -----> ${
+      operation?.query?.definitions[0]?.operation
+    }: ${
+      operation.operationName ??
+      operation?.query?.definitions[0]?.selectionSet?.selections[0]?.name?.value
+    }`,
+  );
+
   return forward(operation);
 });
 
@@ -97,12 +106,14 @@ const logTimeLink = new ApolloLink((operation, forward) => {
     const time = new Date() - operation.getContext().start;
 
     Logger.debug(
-      `Complete in ${(time / 1000).toFixed(2)} s`,
-      `End Request -----> ${operation?.query?.definitions[0]?.operation} - ${
+      operation?.variables,
+      `*****************  End Request ----->  ${
+        operation?.query?.definitions[0]?.operation
+      }: ${
         operation.operationName ??
         operation?.query?.definitions[0]?.selectionSet?.selections[0]?.name
           ?.value
-      }`,
+      } in ${(time / 1000).toFixed(2)} s`,
     );
 
     return data;
@@ -124,7 +135,7 @@ const defaultOptions = {
    * We can subscribe to this ObservableQuery and receive updated results through a GraphQL observer when the cache store changes.
    */
   watchQuery: {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     errorPolicy: 'ignore',
   },
   query: {

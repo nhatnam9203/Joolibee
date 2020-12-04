@@ -95,7 +95,7 @@ const HomeScreen = () => {
             {/* BANNERS */}
             <Banners
               loading={homeScreenResp?.loading}
-              data={homeScreen?.promotions}
+              data={homeScreen?.banners}
               height={BANNER_HEIGHT}
             />
             {/* END BANNERS */}

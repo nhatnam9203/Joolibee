@@ -5,19 +5,21 @@ export const trimSpaces = (text) => text && text.replace(/\s/g, '');
 
 export const pad2 = (number) => (number < 10 ? '0' : '') + number;
 
+export const dateFormatString = 'DD/MM/YYYY';
+
 export const pad_ = (n, len) =>
   (0).toFixed(len).slice(2, -n.toString().length) + n.toString();
 
-export const dateTime = (date = new Date(), formatString) => {
-  return moment(date).format(formatString);
+export const dateTime = (d = new Date(), formatString = 'DD/MM/YYYY') => {
+  return moment(d).format(formatString);
 };
 
-export const date = (date = new Date()) => {
-  return moment(date).format('DD/MM/YYYY');
+export const date = (d = new Date()) => {
+  return moment(d, 'DD/MM/YYYY');
 };
 
-export const hours = (date = new Date(), extraMinutes = 0) => {
-  let fmDate = dateTime(date, 'YYYY/MM/DD hh:mm A');
+export const hours = (d = new Date(), extraMinutes = 0) => {
+  let fmDate = dateTime(d, 'YYYY/MM/DD hh:mm A');
   let gmtDate = new Date(`${fmDate} GMT`);
   return moment(gmtDate).add(extraMinutes, 'minutes').format('hh:mm A');
 };
