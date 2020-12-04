@@ -208,5 +208,6 @@
   "txtEmptyNotifyList":"Currently there is no notify",
   "txtTryAgain":"Please try again next time :",
   "txtYouHave":"You have",
-  "txtInputCode":"times code input"
+  "txtInputCode":"times code input",
+  "txtErrorApplyPoint":"Points can't be applied. Please enter 25, 50 or 75 ..."
 }

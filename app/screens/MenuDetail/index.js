@@ -10,7 +10,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { OrderNewItem, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
 import { useQuery } from '@apollo/client';
-import { query } from '@graphql';
+import { query, GEX } from '@graphql';
 import { useDispatch, useSelector } from 'react-redux';
 import { address } from '@slices';
 
@@ -22,11 +22,9 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   const customerCart = useSelector((state) => state.account?.cart);
-  const { data } = useQuery(query.CUSTOMER_INFO, {
-    fetchPolicy: 'only-cache',
-  });
+  const { customer } = GEX.useCustomer();
 
-  const addresses_default = data?.customer?.addresses?.find(
+  const addresses_default = customer?.addresses?.find(
     (x) => x.default_shipping,
   );
   React.useEffect(() => {
@@ -98,7 +96,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   return (
     <TopBarScreenLayout>
-      {data?.customer?.addresses?.length > 0 && (
+      {customer?.addresses?.length > 0 && (
         <View style={styles.addressStyle}>
           <Text style={styles.txtAddressTitleStyle}>
             {translate('txtAddressTo')}

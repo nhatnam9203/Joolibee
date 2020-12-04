@@ -28,7 +28,6 @@ const MyAccountScreen = () => {
   const [language] = useChangeLanguage();
 
   const { customer } = GEX.useCustomer();
-
   React.useEffect(() => {
     navigation.setOptions({ headerTitle: translate('txtSetting') });
     setSettingList(localData(navigation));
@@ -37,7 +36,9 @@ const MyAccountScreen = () => {
   const buttonComponent = () => {
     return (
       <View style={styles.pointContainer}>
-        <Text>0 {translate('txtPoint')}</Text>
+        <Text>
+          {customer?.customer_point ?? 0} {translate('txtPoint')}
+        </Text>
       </View>
     );
   };

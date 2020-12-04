@@ -207,5 +207,6 @@
   "txtEmptyNotifyList":"Hiện tại không có thông báo nào",
   "txtTryAgain":"Vui lòng thử lại sau :",
   "txtYouHave":"Bạn còn",
-  "txtInputCode":"lần nhập mã"
+  "txtInputCode":"lần nhập mã",
+  "txtErrorApplyPoint":"Điểm không thể được áp dụng. Vui lòng nhập 25, 50 hoặc 75 ..."
 }

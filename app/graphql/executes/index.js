@@ -12,3 +12,4 @@ export * from './useGetShippingMethod';
 export * from './useSetShippingMethod';
 export * from './useReOrderCart';
 export * from './useCancelOrder';
+export * from './useRedeemPoint';
