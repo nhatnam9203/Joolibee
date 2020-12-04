@@ -9,8 +9,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { OrderNewItem, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
-import { useQuery } from '@apollo/client';
-import { query, GEX } from '@graphql';
 import { useDispatch, useSelector } from 'react-redux';
 import { address } from '@slices';
 

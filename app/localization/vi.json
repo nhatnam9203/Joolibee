@@ -208,5 +208,7 @@
   "txtTryAgain":"Vui lòng thử lại sau :",
   "txtYouHave":"Bạn còn",
   "txtInputCode":"lần nhập mã",
-  "txtErrorApplyPoint":"Điểm không thể được áp dụng. Vui lòng nhập 25, 50 hoặc 75 ..."
+  "txtErrorApplyPoint":"Điểm không thể được áp dụng. Vui lòng nhập 25, 50 hoặc 75 ...",
+  "txtChange":"Đổi",
+  "txtEarnPoint":"điểm nhận"
 }

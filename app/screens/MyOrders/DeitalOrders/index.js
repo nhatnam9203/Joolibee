@@ -31,7 +31,7 @@ export default function Index({ navigation, route }) {
       : false;
   const getDate = React.useCallback(() => {
     const current_day = moment().format('DD/MM/yyyy');
-    let dateOrder = format.date(order_date);
+    let dateOrder = format.dateTime(order_date);
     return dateOrder === current_day ? translate('txtToday') : dateOrder;
   }, [order_date]);
   let hours = format.hours(order_date);

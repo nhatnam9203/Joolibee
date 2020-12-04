@@ -119,7 +119,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
-  const { customer } = GEX.useCustomer();
+  const [customerInfo] = GEX.useCustomer();
   // --------- REQUEST CART-DETAIL -----------
   const [shippingType, setShippingType] = React.useState(method_code);
 
@@ -263,9 +263,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
       let remainder = reward_point % MINIUM_POINT;
       let use_point = reward_point - remainder;
       dispatch(app.showLoading());
-      redeemCustomerPoint(use_point).then(() => {
-        setRewardPoint('');
-        showErrorPoint(false);
+      redeemCustomerPoint(use_point).then((res) => {
+        console.log('res', res);
+        if (res?.data?.useCustomerPoint) {
+          setRewardPoint('');
+          showErrorPoint(false);
+        }
       });
     } else {
       showErrorPoint(true);
@@ -582,7 +585,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           <Text style={styles.txtPoint}>{translate('txtMySavedPoint')}:</Text>
           <View style={styles.pointContainer}>
             <Text style={styles.txtPoint}>
-              {customer?.customer_point ?? 0} {translate('txtPoint')}
+              {customerInfo?.customer_point ?? 0} {translate('txtPoint')}
             </Text>
           </View>
         </View>
@@ -596,7 +599,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
             bgColor={AppStyles.colors.accent}
             disabled={!reward_point}>
             <TextInput
-              placeholder={'Vd:25, 50.....'}
+              placeholder={'Vd:25, 50, 75.....'}
               style={{ paddingHorizontal: 10, flex: 1 }}
               keyboardType="numeric"
               value={reward_point}
@@ -624,7 +627,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
       used_point?.point && (
         <View style={styles.orderSumContent}>
           <OrderVoucherItem
-            content={`Đổi ${used_point?.point} điểm nhận ${use_amount}.`}
+            content={`${translate('txtChange')} ${
+              used_point?.point
+            } ${translate('txtEarnPoint')} ${use_amount}.`}
             style={{
               justifyContent: 'flex-end',
             }}

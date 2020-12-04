@@ -55,7 +55,7 @@ const MySavedPointScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const { customer } = GEX.useCustomer();
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
   const [settingList, setSettingList] = React.useState([]);
   const [data, setData] = React.useState([]);
 
@@ -102,7 +102,7 @@ const MySavedPointScreen = () => {
                 <Image source={images.icons.ic_jollibee} resizeMode="stretch" />
               </View>
               <Text style={styles.txtPoint}>
-                {customer?.customer_point ?? 0}
+                {customerInfo?.customer_point ?? 0}
               </Text>
             </View>
             {/* <Text style={styles.txtPointExpire}>

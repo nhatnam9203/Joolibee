@@ -50,7 +50,7 @@ const Index = () => {
 
   const getDateStatus = (date) => {
     const current_day = moment().format('DD/MM/yyyy');
-    let dateOrder = format.date(date);
+    let dateOrder = format.dateTime(date);
     return dateOrder === current_day ? translate('txtToday') : dateOrder;
   };
 
