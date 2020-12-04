@@ -3,7 +3,7 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
 import { scale } from '@utils';
-import { GCC } from '@graphql';
+import { GCC, GEX } from '@graphql';
 import _ from 'lodash';
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
@@ -11,6 +11,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
 import ScreenName from '../ScreenName';
+
 const { scaleHeight, scaleWidth } = scale;
 const newRewards = [
   {
@@ -53,8 +54,11 @@ const newRewards = [
 const MySavedPointScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const { customer } = GEX.useCustomer();
   const [settingList, setSettingList] = React.useState([]);
   const [data, setData] = React.useState([]);
+
   const onViewAllHistory = () =>
     navigation.navigate(ScreenName.HistorySavedPoint);
 
@@ -97,7 +101,9 @@ const MySavedPointScreen = () => {
               <View style={styles.pointImage}>
                 <Image source={images.icons.ic_jollibee} resizeMode="stretch" />
               </View>
-              <Text style={styles.txtPoint}>0</Text>
+              <Text style={styles.txtPoint}>
+                {customer?.customer_point ?? 0}
+              </Text>
             </View>
             {/* <Text style={styles.txtPointExpire}>
               {translate('txtExpirePoint')} 17/11/2020

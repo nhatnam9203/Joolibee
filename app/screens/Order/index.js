@@ -46,6 +46,7 @@ const ShippingType = {
 };
 const COUNTDOWN_SECONDS = 30;
 const CONFIRM_HEIGHT = 150;
+const MINIUM_POINT = 25;
 
 const OrderScreen = ({ route = { params: {} } }) => {
   const { shippingMethod, addressParams } = route.params;
@@ -71,7 +72,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [coupon_code, setCouponCode] = React.useState('');
   const [reward_point, setRewardPoint] = React.useState('');
   const [order_number, setOrderNumber] = React.useState('');
-
+  const [error_point, showErrorPoint] = React.useState(null);
   // const onCallBackEndCountDown = () => {
   //   dispatch(account.toggleTimmer());
   //   dispatch(account.setCountInputCoupon(5));
@@ -92,7 +93,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // const { cart } = GEX.useGetCustomerCart();
   const customerCart = useSelector((state) => state.account?.cart);
-  Logger.debug(customerCart, 'customerCart');
 
   const {
     items,
@@ -100,8 +100,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     prices: { grand_total, discounts, subtotal_excluding_tax },
     shipping_addresses,
     bonus_point,
+    used_point,
   } = customerCart;
-
   const {
     firstname = '',
     lastname = '',
@@ -119,6 +119,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
+  const { customer } = GEX.useCustomer();
   // --------- REQUEST CART-DETAIL -----------
   const [shippingType, setShippingType] = React.useState(method_code);
 
@@ -133,7 +134,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     variables: { categoryId: 4 },
     fetchPolicy: 'cache-first',
   });
-
+  // Redeem points
+  const { redeemCustomerPoint, redeemCustomerPointResp } = GEX.useRedeemPoint();
   /**
    * SET SIPPING
    */
@@ -207,7 +209,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
         break;
     }
   };
-
   const onApplyCoupon = () => {
     dispatch(app.showLoading());
     applyCouponToCart({
@@ -248,12 +249,27 @@ const OrderScreen = ({ route = { params: {} } }) => {
           graphQlClient.cache.gc();
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
+          showErrorPoint(false);
         }
         dispatch(app.hideLoading());
       })
       .catch(() => {
         dispatch(app.hideLoading());
       });
+  };
+
+  const onRedeemPoint = () => {
+    if (+reward_point >= MINIUM_POINT) {
+      let remainder = reward_point % MINIUM_POINT;
+      let use_point = reward_point - remainder;
+      dispatch(app.showLoading());
+      redeemCustomerPoint(use_point).then(() => {
+        setRewardPoint('');
+        showErrorPoint(false);
+      });
+    } else {
+      showErrorPoint(true);
+    }
   };
 
   React.useEffect(() => {
@@ -565,27 +581,60 @@ const OrderScreen = ({ route = { params: {} } }) => {
         <View style={AppStyles.styles.horizontalLayout}>
           <Text style={styles.txtPoint}>{translate('txtMySavedPoint')}:</Text>
           <View style={styles.pointContainer}>
-            <Text style={styles.txtPoint}>0 {translate('txtPoint')}</Text>
+            <Text style={styles.txtPoint}>
+              {customer?.customer_point ?? 0} {translate('txtPoint')}
+            </Text>
           </View>
         </View>
       )}>
       <OrderSectionItem height={117}>
-        <OrderButtonInput
-          title={translate('txtApply')}
-          btnWidth={126}
-          bgColor={AppStyles.colors.accent}
-          disabled={!reward_point}>
-          <TextInput
-            placeholder={'Vd: 5, 10, 15, 20, 25, 30.....'}
-            style={{ paddingHorizontal: 10, flex: 1 }}
-            keyboardType="numeric"
-            value={reward_point}
-            onChangeText={onChangeRewardPoint}
-          />
-        </OrderButtonInput>
+        <View style={{ flex: 1 }}>
+          <OrderButtonInput
+            onPress={onRedeemPoint}
+            title={translate('txtApply')}
+            btnWidth={126}
+            bgColor={AppStyles.colors.accent}
+            disabled={!reward_point}>
+            <TextInput
+              placeholder={'Vd:25, 50.....'}
+              style={{ paddingHorizontal: 10, flex: 1 }}
+              keyboardType="numeric"
+              value={reward_point}
+              onChangeText={onChangeRewardPoint}
+            />
+          </OrderButtonInput>
+          {error_point && (
+            <OrderVoucherItem
+              content={translate('txtErrorApplyPoint')}
+              colorText={AppStyles.colors.accent}
+              icon={images.icons.ic_warning}
+              style={styles.styleErrorPoint}
+            />
+          )}
+        </View>
       </OrderSectionItem>
     </OrderSection>
   );
+
+  const renderUsePoint = () => {
+    const use_amount = used_point
+      ? format.jollibeeCurrency({ value: used_point?.amount })
+      : 0;
+    return (
+      used_point?.point && (
+        <View style={styles.orderSumContent}>
+          <OrderVoucherItem
+            content={`Đổi ${used_point?.point} điểm nhận ${use_amount}.`}
+            style={{
+              justifyContent: 'flex-end',
+            }}
+          />
+
+          <Text style={styles.txtSubPriceStyle}>-{use_amount}</Text>
+        </View>
+      )
+    );
+  };
 
   return (
     <CustomImageBackground
@@ -629,33 +678,21 @@ const OrderScreen = ({ route = { params: {} } }) => {
           </Text>
           <Text style={styles.txtSubPriceStyle}>{subTotal}</Text>
         </View>
-
-        <View style={styles.orderSumContent}>
-          <Text style={styles.txtStyle}>{translate('tabPromotion')} : </Text>
-          {applied_coupons && (
-            <OrderVoucherItem
-              content="Voucher ưu đãi 30K"
-              style={{
-                paddingHorizontal: 0,
-              }}
-            />
-          )}
-          <Text style={styles.txtSubPriceStyle}>{_discount}</Text>
-        </View>
-
-        {/* <View style={styles.orderSumContent}>
-          <VoucherContent
-            content=""
-            style={{
-              paddingHorizontal: 0,
-              justifyContent: 'flex-end',
-              marginRight: scaleWidth(17),
-            }}
-          />
-
-          <Text style={styles.txtSubPriceStyle}>{total}</Text>
-        </View> */}
-
+        {applied_coupons && (
+          <View style={styles.orderSumContent}>
+            <Text style={styles.txtStyle}>{translate('tabPromotion')} : </Text>
+            {applied_coupons && (
+              <OrderVoucherItem
+                content="Voucher ưu đãi 30K"
+                style={{
+                  paddingHorizontal: 0,
+                }}
+              />
+            )}
+            <Text style={styles.txtSubPriceStyle}>{_discount}</Text>
+          </View>
+        )}
+        {renderUsePoint()}
         <View style={styles.orderSumContent}>
           <Text style={styles.txtTitleStyle}>
             {translate('txtGrandTotal')} :
@@ -671,7 +708,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
             <Text style={styles.txtPriceStyle}>{total}</Text>
           </View>
         </View>
-
         <ButtonCC.ButtonRed
           label={translate('txtConfirm')}
           onPress={onSubmit}
@@ -790,6 +826,13 @@ const styles = StyleSheet.create({
   txtPoint: {
     ...AppStyles.fonts.SVN_Merge_Bold,
     fontSize: scaleWidth(14),
+  },
+  styleErrorPoint: {
+    paddingHorizontal: 0,
+    paddingRight: 10,
+    flex: 0,
+    marginTop: 5,
+    alignItems: 'flex-start',
   },
 });
 

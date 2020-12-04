@@ -37,7 +37,9 @@ const MyAccountScreen = () => {
   const buttonComponent = () => {
     return (
       <View style={styles.pointContainer}>
-        <Text>0 {translate('txtPoint')}</Text>
+        <Text>
+          {customer?.customer_point ?? 0} {translate('txtPoint')}
+        </Text>
       </View>
     );
   };

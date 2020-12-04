@@ -11,6 +11,7 @@ export const CUSTOMER_INFO = gql`
       email
       firstname
       lastname
+      customer_point
       gender
       date_of_birth
       addresses {
@@ -40,6 +41,10 @@ export const CUSTOMER_CART_QUERY = gql`
       id
       __typename
       email
+      used_point {
+        point
+        amount
+      }
       billing_address {
         city
         country {
@@ -280,7 +285,6 @@ export const UPDATE_CUSTOMER = gql`
         email
         firstname
         lastname
-        phone_number
         gender
         date_of_birth
         addresses {

@@ -423,3 +423,12 @@ export const PLACE_ORDER = gql`
     }
   }
 `;
+
+export const REDEEM_POINT_CUSTOMER = gql`
+  mutation($cart_id: String!, $redeemPoint: Int!) {
+    useCustomerPoint(cartId: $cart_id, redeemPoint: $redeemPoint) {
+      point
+      amount
+    }
+  }
+`;
