@@ -56,7 +56,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const graphQlClient = useGraphQLClient();
 
   /** AUTO LOAD VALUE */
-  const cart_id = useSelector((state) => state.account?.cart?.id);
   const count_input_coupon = useSelector(
     (state) => state.account?.count_input_coupon,
   );
@@ -91,7 +90,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // --------- REQUEST CART-DETAIL -----------
 
-  const customerCart = useSelector((state) => state.account?.cart);
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
 
   const {
     items,
@@ -212,7 +211,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
     dispatch(app.showLoading());
     applyCouponToCart({
       variables: {
-        cart_id: cart_id,
+        cart_id: customerCart?.id,
         coupon_code,
       },
     })
@@ -238,7 +237,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
     dispatch(app.showLoading());
     placeOrder({
       variables: {
-        cart_id: cart_id,
+        cart_id: customerCart?.id,
       },
     })
       .then((res) => {
@@ -249,6 +248,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
           showErrorPoint(false);
+          getCustomerCart();
         }
         dispatch(app.hideLoading());
       })

@@ -10,10 +10,8 @@ import { translate } from '@localize';
 export const OrderItem = ({ item, updateMyCart, onPress }) => {
   const { product = {}, quantity, prices } = item;
   const _price = format.jollibeeCurrency(prices.price);
-  Logger.debug(quantity, 'quantity');
 
   const [qty, setQuantity] = React.useState(quantity);
-  Logger.debug(qty, 'qty');
 
   const onConfirmDeleteProduct = () => {
     NavigationService.showConfirm(

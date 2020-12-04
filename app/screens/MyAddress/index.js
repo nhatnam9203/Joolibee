@@ -18,7 +18,8 @@ const Index = ({ route }) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   // Get Customer Cart
-  const customerCart = useSelector((state) => state.account?.cart);
+  // const customerCart = useSelector((state) => state.account?.cart);
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const { firstname, lastname, phone_number } = customerInfo;
