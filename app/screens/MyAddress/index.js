@@ -38,7 +38,6 @@ const Index = ({ route }) => {
     setShippingAddresses(params).then((res) => {
       if (res?.data?.setShippingAddressesOnCart) {
         getCustomerCart();
-        //
       }
     });
   };

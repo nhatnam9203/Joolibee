@@ -5,7 +5,7 @@ import { AppStyles } from '@theme';
 import React from 'react';
 import { RefreshControl, StyleSheet, View, Text } from 'react-native';
 import { ADDRESS_LIST } from '../queries';
-
+import { useGetAddressList } from '../executes';
 const defaultData = [
   { id: 1 },
   { id: 2 },
@@ -20,23 +20,14 @@ export const QueryAddressList = ({
   renderItemLoading = () => <View />,
   ListFooterComponent,
   ListHeaderComponent,
-  isDefault = false,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [getAddress, { loading, data, refetch, error }] = useLazyQuery(
-    ADDRESS_LIST,
-    {
-      fetchPolicy: 'cache-and-network',
-    },
-  );
+  const [addresses, getAddressList, getAddressListResp] = useGetAddressList();
+  const { loading, refetch } = getAddressListResp;
   React.useEffect(() => {
-    getAddress();
-  }, [getAddress]);
-  let _data = data?.customer ? data?.customer?.addresses : defaultData;
-
-  if (error) {
-    return <></>;
-  }
+    getAddressList();
+  }, []);
+  let _data = addresses ? addresses : defaultData;
 
   const handleRefresh = () => {
     setRefreshing(true);

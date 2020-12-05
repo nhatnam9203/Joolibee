@@ -21,11 +21,9 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const [language] = useChangeLanguage();
   // const customerCart = useSelector((state) => state.account?.cart);
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
-  const customerInfo = useSelector((state) => state.account.user?.profile);
-
-  const addresses_default = customerInfo?.addresses?.find(
-    (x) => x.default_shipping,
-  );
+  // const customerInfo = useSelector((state) => state.account.user?.profile);
+  const [addresses] = GEX.useGetAddressList();
+  const addresses_default = addresses.find((x) => x.default_shipping);
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtOrderMenu').toUpperCase(),
@@ -95,7 +93,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
 
   return (
     <TopBarScreenLayout>
-      {customerInfo?.addresses?.length > 0 && (
+      {addresses.length > 0 && (
         <View style={styles.addressStyle}>
           <Text style={styles.txtAddressTitleStyle}>
             {translate('txtAddressTo')}
