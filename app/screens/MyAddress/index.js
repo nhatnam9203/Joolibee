@@ -19,25 +19,28 @@ const Index = ({ route }) => {
   const navigation = useNavigation();
   // Get Customer Cart
   // const customerCart = useSelector((state) => state.account?.cart);
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const onCompleted = () => {
+    dispatch(app.hideLoading());
+    navigation.goBack();
+  };
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const { firstname, lastname, phone_number } = customerInfo;
-  const { setShippingAddresses } = GEX.useSetShippingAddress(() =>
-    navigation.goBack(),
-  );
+  const { setShippingAddresses } = GEX.useSetShippingAddress();
 
   const onHandleSetShippingAddress = (id) => {
     const params = {
       variables: {
         shipping_addresses: [{ customer_address_id: id }],
       },
-      awaitRefetchQueries: true,
-      refetchQueries: [
-        { query: GQL.CART_DETAIL, variables: { cartId: customerCart?.id } },
-      ],
     };
-    setShippingAddresses(params);
+    setShippingAddresses(params).then((res) => {
+      if (res?.data?.setShippingAddressesOnCart) {
+        getCustomerCart();
+        //
+      }
+    });
   };
 
   const onHandlePress = (item) => {

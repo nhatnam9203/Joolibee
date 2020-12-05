@@ -72,8 +72,6 @@ const Index = (props) => {
         variables: {
           shipping_addresses: [{ customer_address_id: id }],
         },
-        awaitRefetchQueries: true,
-        refetchQueries: [{ query: GQL.CART_DETAIL, variables: { cartId } }],
       };
       setShippingAddresses(params);
     },
@@ -102,7 +100,6 @@ const Index = (props) => {
       })
         .then(({ data }) => {
           if (data?.createCustomerAddress) {
-            setShippingAddress(data?.createCustomerAddress?.id);
             getCustomerInfo();
             navigation.goBack();
           }

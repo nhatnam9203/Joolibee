@@ -59,9 +59,9 @@ export default function Index({ navigation, route }) {
   );
 
   const onHandleCancel = () => {
-    NavigationService.showComingSoon();
-    // dispatch(app.showLoading());
-    // cancelOrder(number);
+    //NavigationService.showComingSoon();
+    dispatch(app.showLoading());
+    cancelOrder(id);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -191,17 +191,17 @@ export default function Index({ navigation, route }) {
           {/* --------------  TOTAL PRICE  -------------- */}
           <OrderTotal total={total} />
           {/* --------------  TOTAL PRICE -------------- */}
-          {order.status === 'pending' ||
-            (status?.toLowerCase() === 'processing' && (
-              <View style={styles.btnRemmoveOrder}>
-                <ButtonCC.ButtonBorderRed
-                  onPress={onHandleCancel}
-                  label={translate('txtCancel')}
-                  width={scaleWidth(195)}
-                  height={scaleHeight(61)}
-                />
-              </View>
-            ))}
+          {(status?.toLowerCase() === 'pending' ||
+            status?.toLowerCase() === 'processing') && (
+            <View style={styles.btnRemmoveOrder}>
+              <ButtonCC.ButtonBorderRed
+                onPress={onHandleCancel}
+                label={translate('txtCancel')}
+                width={scaleWidth(195)}
+                height={scaleHeight(61)}
+              />
+            </View>
+          )}
           {order_complete && (
             <PopupRating
               visible={visible}

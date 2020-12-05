@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: -scaleHeight(90),
-    height: '120%',
+    // height: '120%',
     width: '100%',
   },
 });
