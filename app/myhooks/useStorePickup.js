@@ -33,7 +33,7 @@ export const useStorePickup = () => {
   }, []);
 
   React.useEffect(() => {
-    if (!pickupLocation && storeList && currentLocation) {
+    if (storeList && currentLocation) {
       let location;
       // chua tim dc pickup location thi se tim
       if (currentLocation) {
@@ -48,7 +48,7 @@ export const useStorePickup = () => {
         });
 
         if (currentCity) {
-          location = Object.create({ cityId: currentCity.id });
+          location = { cityId: currentCity.id };
           const districtsInCity = appUtil.getDistrictInCity(
             storeList,
             currentCity.id,
@@ -69,7 +69,7 @@ export const useStorePickup = () => {
         }
       }
     }
-  }, [storeList, pickupLocation, currentLocation, dispatch]);
+  }, [storeList, currentLocation, dispatch]);
 
   return storeList;
 };

@@ -39,16 +39,36 @@ const StorePage = () => {
   const INITIAL_REGION = {
     latitude: my_location?.position?.lat,
     longitude: my_location?.position?.lng,
-    latitudeDelta: 0.5,
-    longitudeDelta: (0.5 * width) / height,
+    latitudeDelta: 0.09,
+    longitudeDelta: (0.05 * width) / height,
   };
 
   const [visible, showModal] = React.useState([false, false]);
 
   const [params, setParams] = React.useState({
-    city: { id: my_location?.cityId },
-    district: { id: my_location?.districtId },
+    city: { id: pickupLocation?.cityId },
+    district: { id: pickupLocation?.districtId },
   });
+
+  React.useEffect(() => {
+    if (pickupLocation) {
+      const cityItem = cities.find((c) => c.id === pickupLocation.cityId);
+      if (cityItem) {
+        onChangeItemCity(cityItem);
+
+        const districtsList = appUtil.getDistrictInCity(
+          storeList,
+          cityItem?.id,
+        );
+
+        const districtItem = districtsList?.find(
+          (d) => d.id === pickupLocation.districtId,
+        );
+
+        onChangeItemDistrict(districtItem);
+      }
+    }
+  }, [pickupLocation, storeList, cities]);
 
   const localStores = React.useCallback(() => {
     return appUtil.getStoreListInCity(
@@ -135,6 +155,14 @@ const StorePage = () => {
         />
       </View>
       <View style={styles.container}>
+        <CustomMapView
+          ref={refMap}
+          style={styles.map}
+          region={INITIAL_REGION}
+          onMapReady={fitAllMarkers}>
+          <Markers data={localStores()} mapView={refMap} />
+        </CustomMapView>
+
         <View style={styles.listStoreStyle}>
           <FlatList
             showsVerticalScrollIndicator={false}
@@ -145,20 +173,12 @@ const StorePage = () => {
             data={localStores()}
           />
         </View>
-
-        <CustomMapView
-          ref={refMap}
-          style={styles.map}
-          initialRegion={INITIAL_REGION}
-          onMapReady={fitAllMarkers}>
-          <Markers data={localStores()} mapView={refMap} />
-        </CustomMapView>
       </View>
     </CustomImageBackground>
   );
 };
 
-const MAP_HEIGHT = scale.scaleHeight(410);
+const MAP_HEIGHT = scale.scaleHeight(320);
 
 const styles = StyleSheet.create({
   waterMarkContainer: { flex: 1, backgroundColor: 'transparent' },
@@ -169,7 +189,6 @@ const styles = StyleSheet.create({
 
   map: {
     ...StyleSheet.absoluteFillObject,
-    top: 0,
     height: MAP_HEIGHT,
   },
 
@@ -191,7 +210,6 @@ const styles = StyleSheet.create({
   listStoreStyle: {
     marginTop: MAP_HEIGHT,
     paddingBottom: scale.scaleHeight(20),
-    width: '100%',
     flex: 1,
   },
 });
