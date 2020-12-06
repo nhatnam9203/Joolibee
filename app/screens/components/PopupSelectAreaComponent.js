@@ -10,6 +10,7 @@ import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { JollibeeLogo } from '../components';
+import { useStorePickup } from '@hooks';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
@@ -17,11 +18,11 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
   const init_location = useSelector((state) => state.store.init_location);
-  const storesList = useSelector((state) => state.store.default.stores);
+  const storesList = useStorePickup();
 
   const cities = appUtil.getCitiesList(storesList);
 
-  const [city, setCity] = React.useState(init_location.default_city);
+  const [city, setCity] = React.useState(null);
   const [district, setDistrict] = React.useState(
     init_location?.default_district,
   );

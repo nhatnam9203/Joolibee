@@ -10,6 +10,7 @@ import { GEX } from '@graphql';
 import { scale } from '@utils';
 import { AppStyles } from '@theme';
 import { useNavigation } from '@react-navigation/native';
+import { useStorePickup } from '@hooks';
 
 const { scaleHeight, scaleWidth } = scale;
 
@@ -41,9 +42,19 @@ function App() {
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  const storeList = useStorePickup();
 
-  // Load truoc home screen để cho nuột
   React.useEffect(() => {
+    if (!startApp) {
+      goToHomeScreen();
+    } else {
+      navigationRef.current?.navigate(ScreenConst.Splash);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startApp]);
+
+  const goToHomeScreen = React.useCallback(() => {
     if (isSignIn) {
       loadHomeScreen();
       getCustomerCart();
@@ -57,7 +68,6 @@ function App() {
   React.useEffect(() => {
     if (getHomeScreenResp?.data) {
       setAllowGotoHomeScreen(true);
-
       navigationRef.current?.navigate(ScreenConst.Main);
     }
 

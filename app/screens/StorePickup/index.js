@@ -18,6 +18,7 @@ import { GEX } from '@graphql';
 import { useDispatch, useSelector } from 'react-redux';
 import { order } from '@slices';
 import _ from 'lodash';
+import { useStorePickup } from '@hooks';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = { top: 60, right: 60, bottom: 60, left: 60 };
@@ -95,7 +96,7 @@ const StorePage = ({ route = { params: {} } }) => {
   const refMap = React.useRef(null);
   const dispatch = useDispatch();
 
-  const storesList = useSelector((state) => state.store.default.stores);
+  const storesList = useStorePickup();
   const { stores } = route.params;
 
   const selectedStores = stores?.map((x, idx) => {

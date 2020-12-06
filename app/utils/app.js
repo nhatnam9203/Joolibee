@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export const getCitiesList = (store) => {
   if (!store) return [];
@@ -14,13 +15,13 @@ export const getCitiesList = (store) => {
 
 export const getDistrictList = (store) => {
   if (!store) return [];
-  const groupObj = _.groupBy(store, 'region.id');
+  const groupObj = _.groupBy(store, 'district.id');
   const cities = Object.keys(groupObj).map((regionId) => {
     const first = _.head(groupObj[regionId]);
     return {
       value: regionId,
-      label: first?.region?.name,
-      id: first?.region?.id,
+      label: first?.district?.name,
+      id: first?.district?.id,
       city: first?.city?.id,
     };
   });
@@ -33,18 +34,18 @@ export const getDistrictInCity = (store, cityId) => {
 
   const groupObj = _.groupBy(store, 'city.id');
 
-  const listRegions = groupObj[cityId + ''];
+  const listRegions = groupObj[cityId];
 
-  const groupRegions = _.groupBy(listRegions, 'region.id');
+  const groupRegions = _.groupBy(listRegions, 'district.id');
 
   const districts = Object.keys(groupRegions).map((x) => {
     const first = _.head(groupRegions[x]);
 
     return {
       value: x,
-      label: first?.region?.name,
+      label: first?.district?.name,
       city: first?.city?.name,
-      id: first?.region?.id,
+      id: first?.district?.id,
     };
   });
 
@@ -58,8 +59,13 @@ export const getStoreListInCity = (stores, cityId, districtId) => {
 
   if (districtId && cityId) {
     return stores.filter((store) => {
-      return store.city.id === cityId && store.region.id === districtId;
+      return store.city.id === cityId && store.district.id === districtId;
     });
   }
   return stores.filter((store) => store.city.id === cityId);
+};
+
+export const getStorePath = () => {
+  const dirs = RNFetchBlob.fs.dirs;
+  return `${dirs.DocumentDir}/store.json`;
 };

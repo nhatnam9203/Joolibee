@@ -1,5 +1,5 @@
 import { CustomImageBackground } from '@components';
-import { useChangeLanguage } from '@hooks';
+import { useChangeLanguage, useStorePickup } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
@@ -28,14 +28,13 @@ const StorePage = () => {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
 
-  const my_location = useSelector((state) => state.store.my_location);
-  const storesList = useSelector((state) => state.store.default.stores);
-  const cities = appUtil.getCitiesList(storesList);
-  const currentCity = cities.find((c) => c.id === my_location.cityId);
-  const districts = appUtil.getDistrictList(storesList);
-  const currentDistrict = districts.find(
-    (c) => c.id === my_location.districtId,
-  );
+  const my_location = useSelector((state) => state.app.currentLocation);
+  const cities = useSelector((state) => state.store.cities);
+  const pickupLocation = useSelector((state) => state.store.pickupLocation);
+  const refMap = React.useRef(null);
+
+  const storeList = useStorePickup();
+  // Logger.debug(storeList, 'storeList');
 
   const INITIAL_REGION = {
     latitude: my_location?.position?.lat,
@@ -45,21 +44,20 @@ const StorePage = () => {
   };
 
   const [visible, showModal] = React.useState([false, false]);
+
   const [params, setParams] = React.useState({
-    city: currentCity ?? { id: my_location.cityId },
-    district: currentDistrict ?? { id: my_location.districtId },
+    city: { id: my_location?.cityId },
+    district: { id: my_location?.districtId },
   });
 
   const localStores = React.useCallback(() => {
     return appUtil.getStoreListInCity(
-      storesList,
+      storeList,
       params?.city?.id,
       params?.district?.id,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-
-  const refMap = React.useRef(null);
 
   const openModal = (i) => () => {
     let _visible = [...visible];
@@ -82,11 +80,11 @@ const StorePage = () => {
     let list = [];
 
     if (params?.city !== null) {
-      list = appUtil.getDistrictInCity(storesList, params?.city?.id);
+      list = appUtil.getDistrictInCity(storeList, params?.city?.id);
     }
 
     return list;
-  }, [params?.city, storesList]);
+  }, [params?.city, storeList]);
 
   // -------------------- Filter Stores --------------------------//
   const onChangeItemCity = (item) => {

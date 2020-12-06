@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import codePush from 'react-native-code-push';
 import { useCodePushUpdate, CodePushStatus } from '@hooks';
 import { translate } from '@localize';
+import { GEX } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -18,22 +19,19 @@ const Splash = () => {
   // !!  sao no lai load lai khi chuyen trang thai, hooks lien quan
   const { checkCodePushUpdate, processing } = useCodePushUpdate();
 
-  // !! check version file store chỗ này, nếu có thay đổi cập nhật ở dây luôn
-  const [cities, districts, initStores] = useStorePickup();
+  const getStoreJsonData = GEX.useGetStoreInfo();
 
   React.useEffect(() => {
+    // update code push success
     if (processing?.code !== CodePushStatus.PROCESSING) {
+      getStoreJsonData();
+
       setTimeout(() => {
         dispatch(app.loadingSuccess());
-      }, 100);
+      }, 1000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [processing]);
-
-  React.useEffect(() => {
-    dispatch(store.setStorePickup({ stores: initStores, cities, districts }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
 
   React.useEffect(() => {
     checkCodePushUpdate();

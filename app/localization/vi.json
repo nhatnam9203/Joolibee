@@ -204,11 +204,13 @@
   "txtWrongUsername": "Tên đăng nhập sai hoặc không được để trống",
   "txtExpectedReceive": "Nhận hàng dự kiến:",
   "txtEmptyAddressList": "Hiện tại không có địa chỉ nào",
-  "txtEmptyNotifyList":"Hiện tại không có thông báo nào",
-  "txtTryAgain":"Vui lòng thử lại sau :",
-  "txtYouHave":"Bạn còn",
-  "txtInputCode":"lần nhập mã",
-  "txtErrorApplyPoint":"Điểm không thể được áp dụng. Vui lòng nhập 25, 50 hoặc 75 ...",
-  "txtChange":"Đổi",
-  "txtEarnPoint":"điểm nhận"
+  "txtEmptyNotifyList": "Hiện tại không có thông báo nào",
+  "txtTryAgain": "Vui lòng thử lại sau :",
+  "txtYouHave": "Bạn còn",
+  "txtInputCode": "lần nhập mã",
+  "txtErrorApplyPoint": "Điểm không thể được áp dụng. Vui lòng nhập 25, 50 hoặc 75 ...",
+  "txtChange": "Đổi",
+  "txtEarnPoint": "điểm nhận",
+  "txtServerMaintainTitle": "Hệ thống bảo trì",
+  "txtServerMaintainDesc": "Hệ thông đang tiến hành ảo trì, xin vui lòng quay lại sau! "
 }
