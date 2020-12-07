@@ -6,8 +6,6 @@ import { STORE_PICKUP } from '../gql';
 
 export const useGetShippingMethod = () => {
   const pickupLocation = useSelector((state) => state.store.pickupLocation);
-  Logger.debug(pickupLocation, 'pickupLocation');
-
   const [storePickup, shippingMethodResp] = useLazyQuery(STORE_PICKUP, {
     fetchPolicy: 'network-only',
   });
@@ -17,7 +15,10 @@ export const useGetShippingMethod = () => {
     // sure la co gui len district va city
     storePickup(
       input ?? {
-        variables: Object.assign({}, pickupLocation, { cityId, districtId }),
+        variables: {
+          cityId: parseInt(cityId),
+          districtId: parseInt(districtId),
+        },
       },
     );
   };

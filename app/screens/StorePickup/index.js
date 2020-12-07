@@ -108,10 +108,9 @@ const StorePage = ({ route = { params: {} } }) => {
     }
   });
 
-  Logger.debug(selectedStores, 'selectedStoresselectedStores');
-
   const [city, setCity] = React.useState(null);
   const [districts, setDistricts] = React.useState(null);
+
   const [store_pickuped, pickupStore] = React.useState(null);
   const [visible, showModal] = React.useState([false, false]);
   const store_name = store_pickuped
@@ -153,7 +152,7 @@ const StorePage = ({ route = { params: {} } }) => {
 
   const setPickupStore = () => {
     // cho nay chưa xet truogn hop back lai ma ko pickup
-    dispatch(order.pickupStore(store_pickuped?.store_id));
+    dispatch(order.pickupStore(store_pickuped?.id));
     goBack();
   };
 

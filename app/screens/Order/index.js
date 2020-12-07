@@ -32,10 +32,10 @@ import {
 } from './widget';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { query, GQL, GEX, useGraphQLClient } from '@graphql';
-import { format, scale } from '@utils';
+import { format, scale, appUtil } from '@utils';
 import { vouchers } from '@mocks';
-import { app, account } from '@slices';
-// import { useTimerBackground } from '@hooks';
+import { app, account, order } from '@slices';
+import { useStorePickup } from '@hooks';
 import NavigationService from '../../navigation/NavigationService';
 
 const { scaleWidth, scaleHeight } = scale;
@@ -83,8 +83,27 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // ----------------- Timming apply coupon ------------------------ //
 
+  // List store available ============
+  const methodInPlace = shippingMethod?.results?.find(
+    (x) => x.method === ShippingType.InPlace,
+  );
+  const methodInShop = shippingMethod?.results?.find(
+    (x) => x.method === ShippingType.InShop,
+  );
 
-  // Lít
+  Logger.debug(methodInShop, 'methodInShop');
+
+  const storeList = useStorePickup();
+  let availableStores = storeList;
+  if (methodInShop?.stores) {
+    availableStores = methodInShop?.stores?.map((st) => {
+      const findStore = storeList?.find((x) => x.id === st.id.toString());
+      return findStore;
+    });
+  }
+  Logger.debug(availableStores, '====> availableStores');
+
+  // =================================
   // id dung cho store pickup
   const store_pickup_id = useSelector(
     (state) => state.order?.pickup_location_code,
@@ -187,22 +206,23 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const onChangeShippingMethod = (code) => {
     switch (code) {
       case ShippingType.InShop:
-        if (shippingMethod) {
-          const shippingInStore = shippingMethod.results?.find(
-            (x) => x.method === ShippingType.InShop,
-          );
+        navigation.navigate(ScreenName.StorePickup, {
+          stores: availableStores,
+        });
 
-          navigation.navigate(ScreenName.StorePickup, {
-            stores: shippingInStore?.stores,
-          });
-          setIsPickupStore(true);
-        }
+        dispatch(order.pickupStore(null));
+        setIsPickupStore(true);
 
         break;
       default:
+        let store_id = null;
+        if (availableStores) {
+          const pickStore = availableStores.find(Boolean);
+          store_id = pickStore?.id;
+        }
         setShippingType(code);
         dispatch(app.showLoading());
-        setShippingMethods(code);
+        setShippingMethods(code, store_id);
         dispatch(app.hideLoading());
 
         break;
@@ -288,22 +308,32 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, []);
 
   React.useEffect(() => {
-    if (addressParams && store_pickup_id && isPickupStore) {
-      const { variables } = addressParams;
-      let pickupAddress = variables.shipping_addresses[0];
-      const pickupStoreAddress = Object.assign({}, pickupAddress, {
-        pickup_location_code: store_pickup_id,
-      });
-      const params = Object.assign({}, addressParams, {
-        variables: {
-          shipping_addresses: [pickupStoreAddress],
-        },
-      });
+    if (addressParams && store_pickup_id) {
+      setShippingType(ShippingType.InShop);
 
-      setShippingAddress(params);
+      const setShippingMethod = async () => {
+        const { variables } = addressParams;
+        let pickupAddress = variables.shipping_addresses[0];
+        const pickupStoreAddress = Object.assign({}, pickupAddress, {
+          pickup_location_code: store_pickup_id,
+        });
+        const params = Object.assign({}, addressParams, {
+          variables: {
+            shipping_addresses: [pickupStoreAddress],
+          },
+        });
+
+        await dispatch(app.showLoading());
+        await setShippingAddress(params);
+
+        await setShippingMethods(ShippingType.InShop, store_pickup_id);
+        await dispatch(app.hideLoading());
+      };
+
+      setShippingMethod();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store_pickup_id, isPickupStore]);
+  }, [store_pickup_id]);
 
   const renderItemExtra = (item, index) => (
     <View key={index + ''} style={{ flex: 1 }}>

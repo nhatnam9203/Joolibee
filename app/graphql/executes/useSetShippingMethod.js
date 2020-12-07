@@ -11,7 +11,7 @@ export const useSetShippingMethodsOnCart = () => {
     SET_ORDER_SHIPPING_METHOD,
   );
 
-  const setShippingMethods = (code) => {
+  const setShippingMethods = (code, storeId) => {
     if (!customerCart) {
       return;
     }
@@ -23,6 +23,8 @@ export const useSetShippingMethodsOnCart = () => {
           {
             carrier_code: code,
             method_code: code,
+            // eslint-disable-next-line radix
+            ...(storeId && { pickup_store: parseInt(storeId) }),
           },
         ],
       },

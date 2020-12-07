@@ -14,7 +14,6 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     SET_ORDER_SHIPPING_ADDRESS,
     {
       onCompleted: (data) => {
-        Logger.debug(data, 'setShippingAddressesOnCart');
         if (data?.setShippingAddressesOnCart) {
           callBack();
         }
