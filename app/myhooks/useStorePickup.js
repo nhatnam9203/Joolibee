@@ -33,39 +33,42 @@ export const useStorePickup = () => {
   }, []);
 
   React.useEffect(() => {
-    if (storeList && currentLocation) {
-      let location;
-      // chua tim dc pickup location thi se tim
+    if (storeList) {
+      const cities = appUtil.getCitiesList(storeList);
+      dispatch(store.updateCities(cities));
+
       if (currentLocation) {
-        let city = format.convertString(currentLocation?.adminArea);
-        let district = format.convertString(currentLocation?.subAdminArea);
+        let location;
+        // chua tim dc pickup location thi se tim
+        if (currentLocation) {
+          let city = format.convertString(currentLocation?.adminArea);
+          let district = format.convertString(currentLocation?.subAdminArea);
 
-        const cities = appUtil.getCitiesList(storeList);
-        dispatch(store.updateCities(cities));
-        const currentCity = cities.find((item) => {
-          let label = format.convertString(item.label);
-          if (city.includes(label)) return city.includes(label);
-        });
-
-        if (currentCity) {
-          location = { cityId: currentCity.id };
-          const districtsInCity = appUtil.getDistrictInCity(
-            storeList,
-            currentCity.id,
-          );
-
-          const currentDistrict = districtsInCity.find((item) => {
+          const currentCity = cities.find((item) => {
             let label = format.convertString(item.label);
-            if (district.includes(label)) return district.includes(label);
+            if (city.includes(label)) return city.includes(label);
           });
 
-          if (currentDistrict) {
-            location = Object.assign({}, location, {
-              districtId: currentDistrict.id,
-            });
-          }
+          if (currentCity) {
+            location = { cityId: currentCity.id };
+            const districtsInCity = appUtil.getDistrictInCity(
+              storeList,
+              currentCity.id,
+            );
 
-          dispatch(store.pickupLocation(location));
+            const currentDistrict = districtsInCity.find((item) => {
+              let label = format.convertString(item.label);
+              if (district.includes(label)) return district.includes(label);
+            });
+
+            if (currentDistrict) {
+              location = Object.assign({}, location, {
+                districtId: currentDistrict.id,
+              });
+            }
+
+            dispatch(store.pickupLocation(location));
+          }
         }
       }
     }

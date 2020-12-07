@@ -23,25 +23,29 @@ const DEFAULT_PADDING = {
   left: 60,
 };
 
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = 0.0421;
+
 const StorePage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
 
   const my_location = useSelector((state) => state.app.currentLocation);
-  const cities = useSelector((state) => state.store.cities);
-  const pickupLocation = useSelector((state) => state.store.pickupLocation);
-  const refMap = React.useRef(null);
-
-  const storeList = useStorePickup();
-  // Logger.debug(storeList, 'storeList');
-
   const INITIAL_REGION = {
     latitude: my_location?.position?.lat,
     longitude: my_location?.position?.lng,
-    latitudeDelta: 0.09,
-    longitudeDelta: (0.05 * width) / height,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: (LONGITUDE_DELTA * width) / height,
   };
+
+  const cities = useSelector((state) => state.store.cities);
+  const pickupLocation = useSelector((state) => state.store.pickupLocation);
+  const refMap = React.useRef(null);
+  const [region, setRegion] = React.useState(INITIAL_REGION);
+
+  const storeList = useStorePickup();
+  // Logger.debug(storeList, 'storeList');
 
   const [visible, showModal] = React.useState([false, false]);
 
@@ -68,6 +72,7 @@ const StorePage = () => {
         onChangeItemDistrict(districtItem);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickupLocation, storeList, cities]);
 
   const localStores = React.useCallback(() => {
@@ -158,8 +163,9 @@ const StorePage = () => {
         <CustomMapView
           ref={refMap}
           style={styles.map}
-          region={INITIAL_REGION}
-          onMapReady={fitAllMarkers}>
+          region={region}
+          onMapReady={fitAllMarkers}
+          showCurrentUser={my_location}>
           <Markers data={localStores()} mapView={refMap} />
         </CustomMapView>
 
