@@ -65,6 +65,12 @@ export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
     }
   };
 
+  const convertMaskPhoneNumber = (phone = '') => {
+    let start_phone = phone?.substring(0, 4);
+    let end_phone = phone?.substring(phone?.length, phone?.length - 2);
+    return start_phone + '****' + end_phone;
+  };
+
   React.useEffect(() => {
     if (phone) {
       const getResendCount = async () => {
@@ -109,7 +115,7 @@ export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {
         <Text style={styles.textStyle}>
           {translate('txtInputPhoneDesc1') +
             ' ' +
-            phone +
+            convertMaskPhoneNumber(phone) +
             translate('txtInputPhoneDesc2')}
         </Text>
 

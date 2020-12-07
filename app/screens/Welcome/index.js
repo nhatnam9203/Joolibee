@@ -310,12 +310,13 @@ const styles = StyleSheet.create({
     marginTop: '15%',
   },
   title_content: {
-    fontSize: 24,
+    ...AppStyles.fonts.SVN_Merge_Bold,
+    fontSize: scaleWidth(24),
     color: AppStyles.colors.white,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   text_content: {
+    ...AppStyles.fonts.text,
     fontSize: scaleWidth(14),
     color: AppStyles.colors.white,
     lineHeight: scaleHeight(30),
@@ -323,6 +324,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   txt_skip: {
+    ...AppStyles.fonts.text,
     fontSize: scaleWidth(14),
     color: '#2B2B2B',
     marginRight: scaleWidth(6),

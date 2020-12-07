@@ -52,7 +52,7 @@
   "txtWrongPhoneNumber": "Phone number incorrect",
   "txtContinue": "Continue",
   "txtInputPhoneNumber": "Enter your phone number",
-  "txtPhoneCode": "Enter Auth Code",
+  "txtPhoneCode": "Auth Code",
   "txtForgetPassword": "Forgot password",
   "txtNewPassword": "Reset Password",
   "txtInputPhoneDesc1": "We sent the authentication code to the phone number ",
