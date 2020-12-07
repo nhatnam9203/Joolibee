@@ -19,9 +19,10 @@ export const date = (d = new Date()) => {
 };
 
 export const hours = (d = new Date(), extraMinutes = 0) => {
-  let fmDate = dateTime(d, 'YYYY/MM/DD hh:mm A');
-  let gmtDate = new Date(`${fmDate} GMT`);
-  return moment(gmtDate).add(extraMinutes, 'minutes').format('hh:mm A');
+  return moment(d)
+    .add('7:00', 'hours')
+    .add(extraMinutes, 'minutes')
+    .format('hh:mm A');
 };
 
 export const addressFull = (item) => {
