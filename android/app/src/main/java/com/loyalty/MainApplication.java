@@ -38,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           packages.add(new RNFetchBlobPackage());
           packages.add(new RNFSPackage());
+          packages.add(new ReactNativePushNotificationPackage());
           return packages;
         }
 
