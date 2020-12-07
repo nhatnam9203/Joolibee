@@ -97,6 +97,7 @@ export const QueryProductDetail = ({
   renderHeader,
   renderFooter,
   sku,
+  product_id,
   updateProductItemDetail,
   optionData,
   renderProductHeader,

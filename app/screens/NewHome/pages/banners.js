@@ -51,7 +51,7 @@ const BannerItem = ({ item, height }) => {
       style={styles.content}
       onPress={() => {
         // navigation.navigate(ScreenName.MenuItemDetail, {
-        //   product: item,
+        //   product_id: item?.product_id,
         // });
       }}>
       <JollibeeImage url={item?.image_url} height={height} width={width} />

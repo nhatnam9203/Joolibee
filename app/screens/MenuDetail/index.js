@@ -15,6 +15,7 @@ import { address } from '@slices';
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
     menuItem: { products = { items: [] }, id, name },
+    product_id,
   } = route.params;
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -128,6 +129,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
         source={images.watermark_background_2}>
         <GCC.QueryMenuDetailList
           input={products.items}
+          product_id={product_id}
           categoryId={id}
           renderItem={renderItem}
         />
