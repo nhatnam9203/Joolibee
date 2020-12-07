@@ -1,15 +1,17 @@
 import { gql } from '@apollo/client';
 
+/**
+ *  used_point {
+      point
+      amount
+    }
+ */
 export const CART_DETAIL = gql`
   query($cartId: String!) {
     cart(cart_id: $cartId) {
       id
       __typename
       email
-      used_point {
-        point
-        amount
-      }
       billing_address {
         city
         country {

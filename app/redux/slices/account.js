@@ -132,6 +132,10 @@ const accountSlice = createSlice({
       state.timming = false;
     },
 
+    setCustomerCart: (state, action) => {
+      state.cart = action.payload;
+    },
+
     updateCustomerCart: (state, action) => {
       state.cart = Object.assign({}, state.cart, action.payload);
     },

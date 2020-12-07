@@ -10,8 +10,7 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
 
   const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
     onCompleted: (data) => {
-      Logger.debug(data, '====> createEmptyCart data');
-      dispatch(account.updateCustomerCart({ id: data?.createEmptyCart }));
+      dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
     },
   });
 
@@ -25,24 +24,19 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
 
   React.useEffect(() => {
     if (checkOutCartResp.data?.cart) {
-      Logger.debug(
-        checkOutCartResp.data,
-        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx customer cart update and dispatch redux',
-      );
-
       dispatch(account.updateCustomerCart(checkOutCartResp.data?.cart));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkOutCartResp?.data]);
 
-  const getCheckOutCart = React.useCallback(() => {
-    if (customerCart?.id) {
+  const getCheckOutCart = (renew = false) => {
+    if (customerCart?.id && !renew) {
       getCartDetail({ variables: { cartId: customerCart?.id } });
     } else {
       createEmptyCart();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerCart]);
+  };
 
   return [customerCart, getCheckOutCart];
 };
