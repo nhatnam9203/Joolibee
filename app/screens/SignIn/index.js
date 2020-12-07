@@ -49,7 +49,7 @@ const SignInScreen = () => {
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
   const { signIn, customerToken } = GEX.useGenerateToken();
-
+  const { socialSignIn } = GEX.useGenerateTokenBySocial();
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
       //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
@@ -69,6 +69,22 @@ const SignInScreen = () => {
     },
     [dispatch, signIn],
   );
+  // -------social SignIn Submit
+  const socialSignInSubmit = React.useCallback(
+    async (submitData) => {
+      socialSignIn({ variables: submitData })
+        .then((res) => {
+          if (!res?.errors) {
+            dispatch(account.signInSucceed(''));
+          }
+          dispatch(app.hideLoading());
+        })
+        .catch(() => {
+          dispatch(app.hideLoading());
+        });
+    },
+    [dispatch, socialSignIn],
+  );
 
   const goSignUpPage = () => {
     navigation.navigate(ScreenName.SignUp);
@@ -79,18 +95,20 @@ const SignInScreen = () => {
   };
 
   const signinFB = async () => {
+    await dispatch(app.showLoading());
     const data = await loginFb();
-    if (data) {
-      signInSubmit(data);
-    }
+    let submitData = { type: 'Facebook', token: data?.accessToken };
+    socialSignInSubmit(submitData);
   };
 
   const signinGoogle = async () => {
-    const data = await loginGoogle();
-    Logger.debug(data, 'data');
+    await dispatch(app.showLoading());
     try {
-      data && signInSubmit(data.user);
+      const data = await loginGoogle();
+      let submitData = { type: 'Google', token: data?.idToken };
+      socialSignInSubmit(submitData);
     } catch (error) {
+      await dispatch(app.hideLoading());
       if (error === statusCodes.SIGN_IN_CANCELLED) {
         return;
       } else if (error === statusCodes.IN_PROGRESS) {
@@ -235,8 +253,8 @@ const SignInScreen = () => {
                   />
 
                   {/**FACEBOOK*/}
-                  <ButtonCC.ButtonFacebook />
-                  {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
+                  {/* <ButtonCC.ButtonFacebook /> */}
+                  <ButtonCC.ButtonFacebook onPress={signinFB} />
 
                   {/**GOOGLE*/}
                   {/* <ButtonCC.ButtonGoogle /> */}

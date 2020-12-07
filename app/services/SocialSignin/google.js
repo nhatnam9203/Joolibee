@@ -13,7 +13,11 @@ export const loginGoogle = async () =>
   new Promise(async (resolve, reject) => {
     try {
       await GoogleSignin.hasPlayServices();
+
       const userInfo = await GoogleSignin.signIn();
+      // let token = await GoogleSignin.getTokens();
+      // console.log('token', token);
+
       resolve(userInfo);
     } catch (error) {
       reject(error.code);

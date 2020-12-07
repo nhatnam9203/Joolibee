@@ -446,3 +446,12 @@ export const DELETE_ADDRESS = gql`
     deleteCustomerAddress(id: $id)
   }
 `;
+
+// SIGN IN BY SOCIAL
+export const GENERATE_CUSTOMER_TOKEN_BY_SOCIAL = gql`
+  mutation($type: String!, $token: String!, $fcmToken: String!) {
+    socialSignIn(type: $type, token: $token, fcmToken: $fcmToken) {
+      token
+    }
+  }
+`;
