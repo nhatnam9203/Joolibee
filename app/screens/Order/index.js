@@ -50,7 +50,6 @@ const MINIUM_POINT = 25;
 
 const OrderScreen = ({ route = { params: {} } }) => {
   const { shippingMethod, addressParams } = route.params;
-  Logger.debug(shippingMethod, 'shippingMethod');
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -100,7 +99,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
     shipping_addresses,
     bonus_point,
     used_point,
-  } = customerCart;
+  } = customerCart || {};
   const {
     firstname = '',
     lastname = '',

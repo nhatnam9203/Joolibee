@@ -44,7 +44,8 @@ const storeSlice = createSlice({
       state.districts = action.payload;
     },
 
-    pickupLocation: (state, action) => {
+    pickLocation: (state, action) => {
+      Logger.debug(action, '======> action');
       state.pickupLocation = action.payload;
     },
   },

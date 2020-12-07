@@ -87,6 +87,7 @@ const SignInScreen = () => {
 
   const signinGoogle = async () => {
     const data = await loginGoogle();
+    Logger.debug(data, 'data');
     try {
       data && signInSubmit(data.user);
     } catch (error) {
@@ -238,8 +239,8 @@ const SignInScreen = () => {
                   {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
                   {/**GOOGLE*/}
-                  <ButtonCC.ButtonGoogle />
-                  {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
+                  {/* <ButtonCC.ButtonGoogle /> */}
+                  <ButtonCC.ButtonGoogle onPress={signinGoogle} />
 
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>

@@ -67,7 +67,7 @@ export const useStorePickup = () => {
               });
             }
 
-            dispatch(store.pickupLocation(location));
+            dispatch(store.pickLocation(location));
           }
         }
       }

@@ -1,13 +1,13 @@
 import { CustomFlatList, Loading } from '@components';
-import { GEX, query, GQL } from '@graphql';
+import { GEX } from '@graphql';
 import { useComponentSize } from '@hooks';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import { format, scale } from '@utils';
-import React from 'react';
 import { isEmpty } from 'lodash';
+import React from 'react';
 import {
   Image,
   RefreshControl,
@@ -16,7 +16,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
@@ -51,16 +50,11 @@ const ProductCart = ({ visible, onToggle }) => {
   // MUTATION
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
   const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
-
   const [billingAddressResp, setBillingAddress] = GEX.useSetBillingAddress();
-
   const [paymentMethodResp, setPaymentMethod] = GEX.useSetPaymentMethod();
 
   const handleRefresh = () => {
     setRefreshing(true);
-    // refetch();
-    // getCheckOutCart();
-
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -109,7 +103,6 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   // ========= PAYMENT PROCESS
-
   const paymentButtonPressed = async () => {
     if (!address_id) {
       orderCreateNewAddress();
@@ -137,14 +130,17 @@ const ProductCart = ({ visible, onToggle }) => {
 
   React.useEffect(() => {
     // get Shipping methods ko thay là không thể  payment
-    if (!shippingMethodResp.data) return;
+    if (shippingMethodResp.data) {
+      popupRef.current.forceQuit();
 
-    popupRef.current.forceQuit();
+      navigation.navigate(ScreenName.Order, {
+        ...shippingMethodResp.data,
+        addressParams: params,
+      });
+    } else {
+      // Show popup dich vu ko ho tro o khu vuc cua ban
+    }
 
-    navigation.navigate(ScreenName.Order, {
-      ...shippingMethodResp.data,
-      addressParams: params,
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shippingMethodResp.data]);
 

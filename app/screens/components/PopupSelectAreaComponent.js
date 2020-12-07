@@ -18,8 +18,7 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const popupRef = React.createRef(null);
 
   const storesList = useStorePickup();
-
-  const cities = appUtil.getCitiesList(storesList);
+  const cities = useSelector((state) => state.store.cities);
 
   const [city, setCity] = React.useState(null);
   const [district, setDistrict] = React.useState(null);
@@ -47,14 +46,15 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
     }
   };
 
-  const onHandleSubmit = () => {
+  const onHandleSubmit = async () => {
     if (city && district) {
-      let update_location = {
-        cityId: city?.id,
-        districtId: district?.id,
+      const pickup = {
+        cityId: city + '',
+        districtId: district + '',
       };
 
-      dispatch(store.pickupLocation(update_location));
+      Logger.debug(pickup, '==> pickup');
+      dispatch(store.pickLocation(pickup));
       popupRef.current.forceQuit();
     } else {
       // !!show dialog yeu cau chon khu vuc, hoac turn on allow location

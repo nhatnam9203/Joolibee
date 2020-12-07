@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { STORE_PICKUP } from '../gql';
 
 export const useGetShippingMethod = () => {
-  const dispatch = useDispatch();
+  const pickupLocation = useSelector((state) => state.store.pickupLocation);
+  Logger.debug(pickupLocation, 'pickupLocation');
 
-  const pickupLocation = useSelector((state) => state.app.pickupLocation);
   const [storePickup, shippingMethodResp] = useLazyQuery(STORE_PICKUP, {
     fetchPolicy: 'network-only',
   });
