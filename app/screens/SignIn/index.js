@@ -25,7 +25,6 @@ import {
   TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
-import { useMutation } from '@apollo/client';
 import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
 
@@ -65,6 +64,7 @@ const SignInScreen = () => {
       //   submitData = Object.assign({}, data, { email: username });
       // }
       await dispatch(app.showLoading());
+      await dispatch(account.setPhoneNumber(username));
       signIn({ variables: submitData });
     },
     [dispatch, signIn],
