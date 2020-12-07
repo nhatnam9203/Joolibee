@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ButtonCC, TextInputErrorMessage, PasswordInput } from '../components';
 import { format } from '@utils';
-
+const REGEX_EMAIL = /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
 const HALF_LAYOUT_WIDTH = '42.5%';
@@ -38,6 +38,7 @@ const EditAccountScreen = () => {
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     password: Yup.string().required(translate('txtRequired')),
+    email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
   });
 
   const onHandleSubmit = React.useCallback(
@@ -76,7 +77,7 @@ const EditAccountScreen = () => {
       email,
       firstname,
       lastname,
-      phone_number,
+      // phone_number,
       gender: gender ? gender : -1,
       date_of_birth: format.dateTime(date_of_birth, DATE_FORMAT),
       password: '',
@@ -128,14 +129,13 @@ const EditAccountScreen = () => {
             value={phone_number}
           />
           <CustomInput
-            style={{ width: LAYOUT_WIDTH, opacity: 0.4 }}
+            style={{ width: LAYOUT_WIDTH }}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
             value={values.email}
             placeholder={translate('txtInputEmail')}
             textContentType="emailAddress"
             border
-            editable={false}
           />
           {/**Email input error */}
           {errors.email && touched.email && (
