@@ -1,14 +1,13 @@
+import { CustomImageBackground } from '@components';
 import { GCC } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
+import { images } from '@theme';
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { MenuItem, MenuItemLoading, TopBarRight } from '../components';
 import ScreenName from '../ScreenName';
-import { images } from '@theme';
-import { Dimensions } from 'react-native';
-import { CustomImageBackground } from '@components';
 
 const { QueryMenuList } = GCC;
 

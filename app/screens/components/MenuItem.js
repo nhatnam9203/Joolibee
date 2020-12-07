@@ -34,15 +34,17 @@ export const MenuItem = ({ item, onPress, color }) => (
         <JollibeeImage
           // url={item.thumbnail_image}
           width="100%"
-          height="80%"
+          height="84%"
           defaultSource={images.menu_combo_hot}
+          resizeMode="cover"
         />
       ) : (
         <JollibeeImage
           url={item.thumbnail_image}
           width="100%"
-          height="80%"
+          height="84%"
           defaultSource={images.menu_3}
+          resizeMode="cover"
         />
       )}
       <View style={styles.textContentStyle}>
