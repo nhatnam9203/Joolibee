@@ -50,6 +50,7 @@ const MINIUM_POINT = 25;
 
 const OrderScreen = ({ route = { params: {} } }) => {
   const { shippingMethod, addressParams } = route.params;
+  Logger.debug(shippingMethod, 'shippingMethod');
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -143,10 +144,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setShippingMethodResp,
   } = GEX.useSetShippingMethodsOnCart();
 
-  const {
-    setShippingAddresses,
-    setShippingAddressesOnCartResp,
-  } = GEX.useSetShippingAddress();
+  // const {
+  //   setShippingAddresses,
+  //   setShippingAddressesOnCartResp,
+  // } = GEX.useSetShippingAddress();
+  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
 
   const updateMyCart = (item) => {
     let input = {
@@ -299,7 +301,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         },
       });
 
-      setShippingAddresses(params);
+      setShippingAddress(params);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store_pickup_id, isPickupStore]);

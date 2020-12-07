@@ -143,7 +143,7 @@ const accountSlice = createSlice({
     },
     saveAddressCustomer(state, action) {
       state.addresses = action.payload;
-}
+    },
     setPhoneNumber: (state, action) => {
       state.user.phone_number = action.payload;
     },

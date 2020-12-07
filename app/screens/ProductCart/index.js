@@ -46,27 +46,15 @@ const ProductCart = ({ visible, onToggle }) => {
   const { shipping_addresses, selected_payment_method, billing_address } =
     customerCart || {};
 
-  const {
-    getShippingMethod,
-    getShippingMethodResp,
-  } = GEX.useGetShippingMethod();
+  const [shippingMethodResp, getShippingMethods] = GEX.useGetShippingMethod();
 
   // MUTATION
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
-  const {
-    setShippingAddresses,
-    setShippingAddressesOnCartResp,
-  } = GEX.useSetShippingAddress();
+  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
 
-  const {
-    setBillingAddressOnCart,
-    setBillingAddressOnCartResp,
-  } = GEX.useSetBillingAddress();
+  const [billingAddressResp, setBillingAddress] = GEX.useSetBillingAddress();
 
-  const {
-    setPaymentMethod,
-    setPaymentMethodOnCartResp,
-  } = GEX.useSetPaymentMethod();
+  const [paymentMethodResp, setPaymentMethod] = GEX.useSetPaymentMethod();
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -80,10 +68,10 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const isPaymentWaiting = () => {
     return (
-      setShippingAddressesOnCartResp.loading ||
-      setBillingAddressOnCartResp.loading ||
-      setPaymentMethodOnCartResp.loading ||
-      getShippingMethodResp.loading
+      shippingAddressResp.loading ||
+      billingAddressResp.loading ||
+      paymentMethodResp.loading ||
+      shippingMethodResp.loading
     );
   };
 
@@ -122,25 +110,19 @@ const ProductCart = ({ visible, onToggle }) => {
 
   // ========= PAYMENT PROCESS
 
-  const paymentButtonPressed = () => {
+  const paymentButtonPressed = async () => {
     if (!address_id) {
       orderCreateNewAddress();
-    } else getShippingMethod();
-  };
-
-  React.useEffect(() => {
-    if (!getShippingMethodResp.data) return;
-
-    const setDefaultValue = async () => {
+    } else {
       if (isEmpty(shipping_addresses) && address_id) {
         Logger.debug(shipping_addresses, 'shipping_addresses');
 
-        await setShippingAddresses(params);
+        await setShippingAddress(params);
       }
 
       if (isEmpty(billing_address) && address_id) {
         Logger.debug(billing_address, 'billing_address');
-        await setBillingAddressOnCart(address_id);
+        await setBillingAddress(address_id);
       }
 
       if (isEmpty(selected_payment_method?.code)) {
@@ -148,26 +130,23 @@ const ProductCart = ({ visible, onToggle }) => {
 
         await setPaymentMethod();
       }
-    };
 
-    setDefaultValue();
-    if (!isPaymentWaiting()) {
-      navigation.navigate(ScreenName.Order, {
-        ...getShippingMethodResp.data,
-        addressParams: params,
-      });
-      popupRef.current.forceQuit();
-    } else {
-      setTimeout(() => {
-        navigation.navigate(ScreenName.Order, {
-          ...getShippingMethodResp.data,
-          addressParams: params,
-        });
-        popupRef.current.forceQuit();
-      }, 1000);
+      await getShippingMethods();
     }
+  };
+
+  React.useEffect(() => {
+    // get Shipping methods ko thay là không thể  payment
+    if (!shippingMethodResp.data) return;
+
+    popupRef.current.forceQuit();
+
+    navigation.navigate(ScreenName.Order, {
+      ...shippingMethodResp.data,
+      addressParams: params,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getShippingMethodResp.data]);
+  }, [shippingMethodResp.data]);
 
   const updateMyCart = async (item) => {
     let input = {

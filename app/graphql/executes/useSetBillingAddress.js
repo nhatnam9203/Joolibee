@@ -8,19 +8,12 @@ export const useSetBillingAddress = () => {
   const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const [setBillingAddressOnCart, response] = useMutation(
+  const [setBillingAddressOnCart, billingAddressResp] = useMutation(
     SET_ORDER_BILLING_ADDRESS,
-    {
-      onCompleted: (data) => {
-        Logger.debug(data, 'setBillingAddressesOnCart');
-        if (data?.setBillingAddressOnCart) {
-          dispatch(app.hideLoading());
-        }
-      },
-    },
+    {},
   );
 
-  const onSetBillingAddress = (customer_address_id) => {
+  const setBillingAddress = (customer_address_id) => {
     if (!customerCart) {
       return;
     }
@@ -33,8 +26,5 @@ export const useSetBillingAddress = () => {
     });
   };
 
-  return {
-    setBillingAddressOnCart: onSetBillingAddress,
-    setBillingAddressOnCartResp: response,
-  };
+  return [billingAddressResp, setBillingAddress];
 };
