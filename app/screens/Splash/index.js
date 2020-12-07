@@ -18,7 +18,6 @@ const Splash = () => {
 
   // !!  sao no lai load lai khi chuyen trang thai, hooks lien quan
   const { checkCodePushUpdate, processing } = useCodePushUpdate();
-
   const getStoreJsonData = GEX.useGetStoreInfo();
 
   React.useEffect(() => {

@@ -24,7 +24,9 @@ const Index = ({ route }) => {
   };
 
   // Get Customer Cart
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
+  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart(onCompleted);
+
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const { firstname, lastname, phone_number } = customerInfo;
@@ -38,7 +40,7 @@ const Index = ({ route }) => {
     };
     setShippingAddress(params).then((res) => {
       if (res?.data?.setShippingAddressesOnCart) {
-        getCustomerCart();
+        getCheckOutCart();
       }
     });
   };

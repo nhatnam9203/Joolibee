@@ -111,7 +111,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
   // --------- REQUEST CART-DETAIL -----------
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCheckOutCart] = GEX.useGetCustomerCart();
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const {
     items,
@@ -269,7 +270,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
           showErrorPoint(false);
-          getCustomerCart();
+          getCheckOutCart();
         }
         dispatch(app.hideLoading());
       })
@@ -285,7 +286,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       dispatch(app.showLoading());
       redeemCustomerPoint(use_point).then((res) => {
         if (res?.data?.useCustomerPoint) {
-          getCustomerCart();
+          getCheckOutCart();
           setRewardPoint('');
           showErrorPoint(false);
         }

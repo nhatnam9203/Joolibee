@@ -20,7 +20,9 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   // const customerCart = useSelector((state) => state.account?.cart);
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+
   // const customerInfo = useSelector((state) => state.account.user?.profile);
   const [addresses] = GEX.useGetAddressList();
   const addresses_default = addresses?.find((x) => x.default_shipping);

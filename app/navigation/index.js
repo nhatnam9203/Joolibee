@@ -44,7 +44,9 @@ function App() {
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+
   const storeList = useStorePickup();
 
   React.useEffect(() => {
@@ -60,12 +62,11 @@ function App() {
   const goToHomeScreen = React.useCallback(() => {
     if (isLogin) {
       loadHomeScreen();
-      getCustomerCart();
+      getCheckOutCart();
     } else {
       navigationRef.current?.navigate(ScreenConst.Auth);
     }
 
-    Logger.debug(isLogin, '====> isLogin');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 

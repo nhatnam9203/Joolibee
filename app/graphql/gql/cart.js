@@ -6,6 +6,10 @@ export const CART_DETAIL = gql`
       id
       __typename
       email
+      used_point {
+        point
+        amount
+      }
       billing_address {
         city
         country {
@@ -68,23 +72,32 @@ export const CART_DETAIL = gql`
         }
       }
       items {
-        id
         __typename
+        id
         product {
           __typename
           id
           name
           sku
           point
+          options_container
           meta_description
           price_range {
             maximum_price {
+              regular_price {
+                value
+                currency
+              }
               final_price {
                 value
                 currency
               }
             }
             minimum_price {
+              regular_price {
+                value
+                currency
+              }
               final_price {
                 value
                 currency
@@ -95,13 +108,23 @@ export const CART_DETAIL = gql`
             url
           }
         }
+        ... on BundleCartItem {
+          bundle_options {
+            id
+            values {
+              id
+              label
+              quantity
+            }
+          }
+        }
+        quantity
         prices {
           price {
             value
             currency
           }
         }
-        quantity
       }
       available_payment_methods {
         code
@@ -115,7 +138,7 @@ export const CART_DETAIL = gql`
         code
       }
       total_quantity
-
+      bonus_point
       prices {
         __typename
         grand_total {

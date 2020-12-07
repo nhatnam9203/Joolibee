@@ -20,6 +20,7 @@ import com.facebook.react.bridge.JSIModulePackage; // <- add
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.rnfs.RNFSPackage; // <------- add package
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;  // <--- Import Package
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -36,9 +37,9 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-          packages.add(new RNFetchBlobPackage());
-          packages.add(new RNFSPackage());
-          packages.add(new ReactNativePushNotificationPackage());
+          // packages.add(new RNFetchBlobPackage());
+          // packages.add(new RNFSPackage());
+          // packages.add(new ReactNativePushNotificationPackage());
           return packages;
         }
 
