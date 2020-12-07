@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useSetShippingMethodsOnCart = () => {
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const [setShippingMethodsOnCart, response] = useMutation(
+  const [setShippingMethodsOnCart, shippingMethodResp] = useMutation(
     SET_ORDER_SHIPPING_METHOD,
   );
 
-  const onSetShippingMethodsOnCart = (code) => {
+  const setShippingMethods = (code) => {
     if (!customerCart) {
       return;
     }
@@ -29,8 +29,5 @@ export const useSetShippingMethodsOnCart = () => {
     });
   };
 
-  return {
-    setShippingMethod: onSetShippingMethodsOnCart,
-    setShippingMethodResp: response,
-  };
+  return [shippingMethodResp, setShippingMethods];
 };

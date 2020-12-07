@@ -56,11 +56,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const graphQlClient = useGraphQLClient();
 
   /** AUTO LOAD VALUE */
-  const count_input_coupon = useSelector(
-    (state) => state.account?.count_input_coupon,
-  );
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
+  );
+  const count_input_coupon = useSelector(
+    (state) => state.account?.count_input_coupon,
   );
 
   const timming = useSelector((state) => state.account?.timming);
@@ -72,6 +72,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [reward_point, setRewardPoint] = React.useState('');
   const [order_number, setOrderNumber] = React.useState('');
   const [error_point, showErrorPoint] = React.useState(null);
+
   // const onCallBackEndCountDown = () => {
   //   dispatch(account.toggleTimmer());
   //   dispatch(account.setCountInputCoupon(5));
@@ -82,6 +83,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // ----------------- Timming apply coupon ------------------------ //
 
+
+  // Lít
   // id dung cho store pickup
   const store_pickup_id = useSelector(
     (state) => state.order?.pickup_location_code,
@@ -89,7 +92,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
   // --------- REQUEST CART-DETAIL -----------
-
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
 
   const {
@@ -100,6 +102,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
     bonus_point,
     used_point,
   } = customerCart || {};
+
   const {
     firstname = '',
     lastname = '',
@@ -118,7 +121,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
   const [customerInfo] = GEX.useCustomer();
-  // --------- REQUEST CART-DETAIL -----------
   const [shippingType, setShippingType] = React.useState(method_code);
 
   // update cart product
@@ -138,10 +140,10 @@ const OrderScreen = ({ route = { params: {} } }) => {
    * SET SIPPING
    */
 
-  const {
-    setShippingMethod,
-    setShippingMethodResp,
-  } = GEX.useSetShippingMethodsOnCart();
+  const [
+    shippingMethodResp,
+    setShippingMethods,
+  ] = GEX.useSetShippingMethodsOnCart();
 
   // const {
   //   setShippingAddresses,
@@ -185,24 +187,22 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const onChangeShippingMethod = (code) => {
     switch (code) {
       case ShippingType.InShop:
-        NavigationService.showComingSoon();
+        if (shippingMethod) {
+          const shippingInStore = shippingMethod.results?.find(
+            (x) => x.method === ShippingType.InShop,
+          );
 
-        // if (shippingMethod) {
-        //   const shippingInStore = shippingMethod.results?.find(
-        //     (x) => x.method === ShippingType.InShop,
-        //   );
-
-        //   navigation.navigate(ScreenName.StorePickup, {
-        //     stores: shippingInStore?.stores,
-        //   });
-        //   setIsPickupStore(true);
-        // }
+          navigation.navigate(ScreenName.StorePickup, {
+            stores: shippingInStore?.stores,
+          });
+          setIsPickupStore(true);
+        }
 
         break;
       default:
         setShippingType(code);
         dispatch(app.showLoading());
-        setShippingMethod(code);
+        setShippingMethods(code);
         dispatch(app.hideLoading());
 
         break;
