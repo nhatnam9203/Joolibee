@@ -13,7 +13,7 @@ export const useRedeemPoint = () => {
     onCompleted: (data) => {
       Logger.debug(data, 'useCustomerPoint');
       if (data?.useCustomerPoint) {
-        dispatch(app.hideLoading());
+        // dispatch(app.hideLoading());
       }
     },
   });
@@ -29,8 +29,8 @@ export const useRedeemPoint = () => {
         cart_id: customerCart.id,
         redeemPoint,
       },
-      awaitRefetchQueries: true,
-      refetchQueries: [{ query: CUSTOMER_CART_QUERY }],
+      // awaitRefetchQueries: true,
+      // refetchQueries: [{ query: CUSTOMER_CART_QUERY }],
     });
   };
 

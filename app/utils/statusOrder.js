@@ -30,7 +30,7 @@ export function getImage(status = '') {
     case translate('txtStatusOrderReceived'):
       return images.jolibee_cooking;
 
-    case translate('txtStatusOrderReceived'):
+    case translate('txtStatusOrderArrived'):
       return images.jollibee_arrived;
 
     default:
@@ -43,9 +43,11 @@ export function convertStatusOrder(status = '') {
   switch (status.toLowerCase()) {
     case 'pending':
       return translate('txtStatusOrderPending');
+    case 'processing':
+      return translate('txtStatusOrderPending');
     case 'shipping':
       return translate('txtStatusOrderShipping');
-    case 'ready_to_ship':
+    case 'ready to ship':
       return translate('txtStatusOrderReceived');
     case 'received':
       return translate('txtStatusOrderReceived');

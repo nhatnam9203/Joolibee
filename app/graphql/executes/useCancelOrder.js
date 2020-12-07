@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux';
 export const useCancelOrder = (onSuccess = () => {}) => {
   const dispatch = useDispatch();
 
-  const [cancelOrder, response] = useMutation(CANCEL_ORDER, {
+  const [cancelOrderCustomer, response] = useMutation(CANCEL_ORDER, {
     onCompleted: (res) => {
-      console.log('res?.cancelOrder', res?.cancelOrder);
-      if (res?.order_cancel) {
+      console.log('res?.cancelOrderCustomer', res?.cancelOrderCustomer);
+      if (res?.cancelOrderCustomer) {
         dispatch(app.hideLoading());
         onSuccess();
       }
@@ -21,7 +21,7 @@ export const useCancelOrder = (onSuccess = () => {}) => {
   });
 
   const onCancelOrder = (orderId) => {
-    cancelOrder({
+    cancelOrderCustomer({
       variables: {
         orderId,
       },

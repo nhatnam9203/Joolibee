@@ -80,6 +80,7 @@ const Index = () => {
   const renderItem = ({ item }) => {
     const { total, order_date, number, status, items, shipping_address } =
       item || {};
+    console.log('a', order_date);
     const status_text = statusOrder.convertStatusOrder(status);
     const status_style = {
       ...AppStyles.fonts.bold,

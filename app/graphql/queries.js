@@ -4,14 +4,8 @@ export const ORDER_LIST = gql`
   {
     customerOrders {
       items {
-        __typename
-        order_number
+        number
         id
-        created_at
-        grand_total
-        status
-        address
-        shipping_method
       }
     }
   }

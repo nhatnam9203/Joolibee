@@ -19,6 +19,7 @@ const initialState = {
   isEatingUtensils: false,
   count_input_coupon: 5,
   timming: false,
+  addresses: [],
 };
 
 const feedBack = createAsyncThunk(
@@ -121,6 +122,7 @@ const accountSlice = createSlice({
       state.user = initialState.user;
       state.cart = null;
       state.isEatingUtensils = false;
+      state.addresses = [];
     },
 
     resetCustomerCart(state, action) {
@@ -139,7 +141,9 @@ const accountSlice = createSlice({
         total_quantity: state.cart.total_quantity + action.payload,
       });
     },
-
+    saveAddressCustomer(state, action) {
+      state.addresses = action.payload;
+}
     setPhoneNumber: (state, action) => {
       state.user.phone_number = action.payload;
     },

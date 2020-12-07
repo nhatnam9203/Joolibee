@@ -39,7 +39,7 @@ const PROCESS_STATUS = {
   SUCCESS: 2,
   FINISH: 3,
 };
-
+const REGEX_EMAIL = /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const SignUpForm = ({ infos: { phone = '' } }) => {
   const navigation = useNavigation();
   // redux
@@ -53,7 +53,9 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
     lastname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
-    email: Yup.string().email(translate('txtInvalidEmail')),
+    email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
+
+    // .email(translate('txtInvalidEmail'))
     password: Yup.string()
       .min(6, translate('txtTooShort'))
       .max(30, translate('txtTooLong'))

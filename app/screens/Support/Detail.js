@@ -53,7 +53,11 @@ const Detail = ({ route }) => {
           Bước {item.step}:<Text style={styles.txtCotent}>{item.cotent}</Text>
         </Text>
 
-        <View style={styles.layoutHonrizontal}>
+        <View
+          style={[
+            styles.layoutHonrizontal,
+            item.images.length === 1 ? styles.bottomImg : {},
+          ]}>
           {item.images.map((image, index) => (
             <FastImage
               style={
@@ -148,6 +152,10 @@ const styles = StyleSheet.create({
   imgStyle: {
     width: scaleWidth(181),
     height: scaleHeight(390),
+  },
+  bottomImg: {
+    backgroundColor: 'white',
+    paddingBottom: scaleHeight(50),
   },
 });
 export default Detail;

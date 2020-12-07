@@ -59,9 +59,9 @@ export default function Index({ navigation, route }) {
   );
 
   const onHandleCancel = () => {
-    NavigationService.showComingSoon();
-    // dispatch(app.showLoading());
-    // cancelOrder(number);
+    //NavigationService.showComingSoon();
+    dispatch(app.showLoading());
+    cancelOrder(id);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -113,7 +113,11 @@ export default function Index({ navigation, route }) {
   );
 
   const renderStatusComponent = () => {
-    if (order_complete || status === 'pending') {
+    if (
+      order_complete ||
+      status === 'pending' ||
+      status?.toLowerCase() === 'processing'
+    ) {
       return (
         <>
           <OrderTitle title={translate('txtOrderStattus')} />
@@ -187,7 +191,8 @@ export default function Index({ navigation, route }) {
           {/* --------------  TOTAL PRICE  -------------- */}
           <OrderTotal total={total} />
           {/* --------------  TOTAL PRICE -------------- */}
-          {order.status === 'pending' && (
+          {(status?.toLowerCase() === 'pending' ||
+            status?.toLowerCase() === 'processing') && (
             <View style={styles.btnRemmoveOrder}>
               <ButtonCC.ButtonBorderRed
                 onPress={onHandleCancel}

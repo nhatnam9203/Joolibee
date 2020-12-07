@@ -48,8 +48,12 @@ const Index = (props) => {
   const [default_shipping, setDefaultShipping] = React.useState(
     Boolean(val_address?.default_shipping),
   );
-
-  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+  const successQuery = () => {
+    dispatch(app.hideLoading());
+    navigation.goBack();
+  };
+  // const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+  const [addresses, getAddressList] = GEX.useGetAddressList(successQuery);
   const onChangeValue = React.useCallback(
     () => setDefaultShipping(!default_shipping),
     [default_shipping],
@@ -63,23 +67,7 @@ const Index = (props) => {
     ? translate('txtSaveAddress')
     : translate('txtSaveChange');
 
-  //------------ Set shipping address -----------------//
-  const { setShippingAddresses } = GEX.useSetShippingAddress();
-
-  const setShippingAddress = React.useCallback(
-    (id) => {
-      const params = {
-        variables: {
-          shipping_addresses: [{ customer_address_id: id }],
-        },
-        awaitRefetchQueries: true,
-        refetchQueries: [{ query: GQL.CART_DETAIL, variables: { cartId } }],
-      };
-      setShippingAddresses(params);
-    },
-    [cartId, setShippingAddresses],
-  );
-  //------------ Add address customer -----------------//
+  // ------------ Add address customer -----------------//
   const [createCustomerAddress] = useMutation(GQL.ADD_ADDRESS);
 
   const onHandleAdd = React.useCallback(
@@ -102,12 +90,12 @@ const Index = (props) => {
       })
         .then(({ data }) => {
           if (data?.createCustomerAddress) {
-            setShippingAddress(data?.createCustomerAddress?.id);
-            getCustomerInfo();
-            navigation.goBack();
-          }
-
-          dispatch(app.hideLoading());
+            console.log(
+              'data?.createCustomerAddress',
+              data?.createCustomerAddress,
+            );
+            getAddressList();
+          } else dispatch(app.hideLoading());
         })
         .catch(() => {
           dispatch(app.hideLoading());
@@ -118,8 +106,7 @@ const Index = (props) => {
       default_shipping,
       dispatch,
       createCustomerAddress,
-      setShippingAddress,
-      navigation,
+      getAddressList,
     ],
   );
 
@@ -147,11 +134,10 @@ const Index = (props) => {
       })
         .then(({ data }) => {
           if (data?.updateCustomerAddress) {
-            getCustomerInfo();
-            navigation.goBack();
-          }
-
-          dispatch(app.hideLoading());
+            getAddressList();
+            // getCustomerInfo();
+            // navigation.goBack();
+          } else dispatch(app.hideLoading());
         })
         .catch(() => {
           dispatch(app.hideLoading());
@@ -180,9 +166,9 @@ const Index = (props) => {
     })
       .then(({ data }) => {
         if (data?.deleteCustomerAddress) {
-          navigation.goBack();
-        }
-        dispatch(app.hideLoading());
+          getAddressList();
+          //navigation.goBack();
+        } else dispatch(app.hideLoading());
       })
       .catch(() => {
         dispatch(app.hideLoading());

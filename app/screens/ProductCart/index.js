@@ -34,8 +34,7 @@ const ProductCart = ({ visible, onToggle }) => {
   // GET
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
-
-  const addresses = customerInfo?.addresses ?? [];
+  const [addresses] = GEX.useGetAddressList();
   const address_id = addresses?.find((x) => x.default_shipping)?.id;
   const params = {
     variables: {

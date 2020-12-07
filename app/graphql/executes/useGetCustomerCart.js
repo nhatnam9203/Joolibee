@@ -1,10 +1,10 @@
 import { useLazyQuery } from '@apollo/client';
-import { account } from '@slices';
+import { account, app } from '@slices';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_CART_QUERY } from '../gql';
 
-export const useGetCustomerCart = () => {
+export const useGetCustomerCart = (onCompleted = () => {}) => {
   const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
 
@@ -13,6 +13,10 @@ export const useGetCustomerCart = () => {
     CUSTOMER_CART_QUERY,
     {
       fetchPolicy: 'no-cache',
+      onCompleted,
+      onError: () => {
+        dispatch(app.hideLoading());
+      },
     },
   );
 

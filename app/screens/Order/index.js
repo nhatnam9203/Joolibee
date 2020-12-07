@@ -263,11 +263,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
       let use_point = reward_point - remainder;
       dispatch(app.showLoading());
       redeemCustomerPoint(use_point).then((res) => {
-        console.log('res', res);
         if (res?.data?.useCustomerPoint) {
+          getCustomerCart();
           setRewardPoint('');
           showErrorPoint(false);
         }
+        dispatch(app.hideLoading());
       });
     } else {
       showErrorPoint(true);

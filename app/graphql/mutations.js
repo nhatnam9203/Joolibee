@@ -157,7 +157,6 @@ export const UPDATE_CUSTOMER = gql`
         email
         firstname
         lastname
-        phone_number
         gender
         date_of_birth
         addresses {

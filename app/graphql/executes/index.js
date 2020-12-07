@@ -13,4 +13,5 @@ export * from './useSetShippingMethod';
 export * from './useReOrderCart';
 export * from './useCancelOrder';
 export * from './useRedeemPoint';
+export * from './useGetAddressList';
 export * from './useGetStoreInfo';
