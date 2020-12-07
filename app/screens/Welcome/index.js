@@ -158,7 +158,7 @@ const WelcomeScreen = () => {
           onPress={nextPage(index)}
           label="BẮT ĐẦU TRẢI NGHIỆM"
           width={width * 0.55}
-          height={61}
+          height={scaleHeight(61)}
           bgColor={AppStyles.colors.accent}
           style={styles.btn}
           textColor={AppStyles.colors.white}
@@ -212,7 +212,7 @@ const WelcomeScreen = () => {
               onPress={nextPage(index)}
               label={label}
               width={width * 0.55}
-              height={61}
+              height={scaleHeight(61)}
               bgColor={btnBackgroundColor}
               style={styles.btn}
               txtColor={txtColor}
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
 
   contentTop: {
     width: '100%',
-    height: '80%',
+    height: scaleHeight(600),
     resizeMode: 'center',
     backgroundColor: AppStyles.colors.background,
     alignItems: 'center',
