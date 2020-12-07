@@ -18,6 +18,7 @@ import { GEX } from '@graphql';
 import { useDispatch, useSelector } from 'react-redux';
 import { order } from '@slices';
 import _ from 'lodash';
+import { useStorePickup } from '@hooks';
 
 const { width, height } = Dimensions.get('window');
 const DEFAULT_PADDING = { top: 60, right: 60, bottom: 60, left: 60 };
@@ -95,7 +96,7 @@ const StorePage = ({ route = { params: {} } }) => {
   const refMap = React.useRef(null);
   const dispatch = useDispatch();
 
-  const storesList = useSelector((state) => state.store.default.stores);
+  const storesList = useStorePickup();
   const { stores } = route.params;
 
   const selectedStores = stores?.map((x, idx) => {
@@ -107,10 +108,9 @@ const StorePage = ({ route = { params: {} } }) => {
     }
   });
 
-  Logger.debug(selectedStores, 'selectedStoresselectedStores');
-
   const [city, setCity] = React.useState(null);
   const [districts, setDistricts] = React.useState(null);
+
   const [store_pickuped, pickupStore] = React.useState(null);
   const [visible, showModal] = React.useState([false, false]);
   const store_name = store_pickuped
@@ -152,7 +152,7 @@ const StorePage = ({ route = { params: {} } }) => {
 
   const setPickupStore = () => {
     // cho nay chưa xet truogn hop back lai ma ko pickup
-    dispatch(order.pickupStore(store_pickuped?.store_id));
+    dispatch(order.pickupStore(store_pickuped?.id));
     goBack();
   };
 

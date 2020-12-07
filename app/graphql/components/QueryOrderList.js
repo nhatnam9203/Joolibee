@@ -15,6 +15,9 @@ export const QueryOrderList = ({
   const [currentPage, nextPage] = React.useState(1);
   const { loading, error, data, refetch, fetchMore } = useQuery(
     ORDERS_CUSTOMER,
+    {
+      fetchPolicy: 'cache-first',
+    },
   );
 
   let _data = data?.customer?.orders.items

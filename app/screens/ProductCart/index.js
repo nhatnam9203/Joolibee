@@ -1,13 +1,13 @@
 import { CustomFlatList, Loading } from '@components';
-import { GEX, query, GQL } from '@graphql';
+import { GEX } from '@graphql';
 import { useComponentSize } from '@hooks';
 import { PopupLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import { format, scale } from '@utils';
-import React from 'react';
 import { isEmpty } from 'lodash';
+import React from 'react';
 import {
   Image,
   RefreshControl,
@@ -16,7 +16,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useSelector } from 'react-redux';
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
@@ -32,7 +31,6 @@ const ProductCart = ({ visible, onToggle }) => {
   const [footerSize, onLayoutFooter] = useComponentSize();
 
   // GET
-  // const customerCart = useSelector((state) => state.account?.cart);
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
   const [addresses] = GEX.useGetAddressList();
@@ -47,33 +45,16 @@ const ProductCart = ({ visible, onToggle }) => {
   const { shipping_addresses, selected_payment_method, billing_address } =
     customerCart || {};
 
-  const {
-    getShippingMethod,
-    getShippingMethodResp,
-  } = GEX.useGetShippingMethod();
+  const [shippingMethodResp, getShippingMethods] = GEX.useGetShippingMethod();
 
   // MUTATION
   const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
-  const {
-    setShippingAddresses,
-    setShippingAddressesOnCartResp,
-  } = GEX.useSetShippingAddress();
-
-  const {
-    setBillingAddressOnCart,
-    setBillingAddressOnCartResp,
-  } = GEX.useSetBillingAddress();
-
-  const {
-    setPaymentMethod,
-    setPaymentMethodOnCartResp,
-  } = GEX.useSetPaymentMethod();
+  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
+  const [billingAddressResp, setBillingAddress] = GEX.useSetBillingAddress();
+  const [paymentMethodResp, setPaymentMethod] = GEX.useSetPaymentMethod();
 
   const handleRefresh = () => {
     setRefreshing(true);
-    // refetch();
-    // getCheckOutCart();
-
     setTimeout(() => {
       setRefreshing(false);
     }, 1000);
@@ -81,10 +62,10 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const isPaymentWaiting = () => {
     return (
-      setShippingAddressesOnCartResp.loading ||
-      setBillingAddressOnCartResp.loading ||
-      setPaymentMethodOnCartResp.loading ||
-      getShippingMethodResp.loading
+      shippingAddressResp.loading ||
+      billingAddressResp.loading ||
+      paymentMethodResp.loading ||
+      shippingMethodResp.loading
     );
   };
 
@@ -122,26 +103,19 @@ const ProductCart = ({ visible, onToggle }) => {
   };
 
   // ========= PAYMENT PROCESS
-
-  const paymentButtonPressed = () => {
+  const paymentButtonPressed = async () => {
     if (!address_id) {
       orderCreateNewAddress();
-    } else getShippingMethod();
-  };
-
-  React.useEffect(() => {
-    if (!getShippingMethodResp.data) return;
-
-    const setDefaultValue = async () => {
+    } else {
       if (isEmpty(shipping_addresses) && address_id) {
         Logger.debug(shipping_addresses, 'shipping_addresses');
 
-        await setShippingAddresses(params);
+        await setShippingAddress(params);
       }
 
       if (isEmpty(billing_address) && address_id) {
         Logger.debug(billing_address, 'billing_address');
-        await setBillingAddressOnCart(address_id);
+        await setBillingAddress(address_id);
       }
 
       if (isEmpty(selected_payment_method?.code)) {
@@ -149,26 +123,26 @@ const ProductCart = ({ visible, onToggle }) => {
 
         await setPaymentMethod();
       }
-    };
 
-    setDefaultValue();
-    if (!isPaymentWaiting()) {
+      await getShippingMethods();
+    }
+  };
+
+  React.useEffect(() => {
+    // get Shipping methods ko thay là không thể  payment
+    if (shippingMethodResp.data) {
+      popupRef.current.forceQuit();
+
       navigation.navigate(ScreenName.Order, {
-        ...getShippingMethodResp.data,
+        ...shippingMethodResp.data,
         addressParams: params,
       });
-      popupRef.current.forceQuit();
     } else {
-      setTimeout(() => {
-        navigation.navigate(ScreenName.Order, {
-          ...getShippingMethodResp.data,
-          addressParams: params,
-        });
-        popupRef.current.forceQuit();
-      }, 1000);
+      // Show popup dich vu ko ho tro o khu vuc cua ban
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getShippingMethodResp.data]);
+  }, [shippingMethodResp.data]);
 
   const updateMyCart = async (item) => {
     let input = {

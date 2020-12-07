@@ -32,10 +32,10 @@ import {
 } from './widget';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { query, GQL, GEX, useGraphQLClient } from '@graphql';
-import { format, scale } from '@utils';
+import { format, scale, appUtil } from '@utils';
 import { vouchers } from '@mocks';
-import { app, account } from '@slices';
-// import { useTimerBackground } from '@hooks';
+import { app, account, order } from '@slices';
+import { useStorePickup } from '@hooks';
 import NavigationService from '../../navigation/NavigationService';
 
 const { scaleWidth, scaleHeight } = scale;
@@ -56,11 +56,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const graphQlClient = useGraphQLClient();
 
   /** AUTO LOAD VALUE */
-  const count_input_coupon = useSelector(
-    (state) => state.account?.count_input_coupon,
-  );
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
+  );
+  const count_input_coupon = useSelector(
+    (state) => state.account?.count_input_coupon,
   );
 
   const timming = useSelector((state) => state.account?.timming);
@@ -72,6 +72,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [reward_point, setRewardPoint] = React.useState('');
   const [order_number, setOrderNumber] = React.useState('');
   const [error_point, showErrorPoint] = React.useState(null);
+
   // const onCallBackEndCountDown = () => {
   //   dispatch(account.toggleTimmer());
   //   dispatch(account.setCountInputCoupon(5));
@@ -82,6 +83,27 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // ----------------- Timming apply coupon ------------------------ //
 
+  // List store available ============
+  const methodInPlace = shippingMethod?.results?.find(
+    (x) => x.method === ShippingType.InPlace,
+  );
+  const methodInShop = shippingMethod?.results?.find(
+    (x) => x.method === ShippingType.InShop,
+  );
+
+  Logger.debug(methodInShop, 'methodInShop');
+
+  const storeList = useStorePickup();
+  let availableStores = storeList;
+  if (methodInShop?.stores) {
+    availableStores = methodInShop?.stores?.map((st) => {
+      const findStore = storeList?.find((x) => x.id === st.id.toString());
+      return findStore;
+    });
+  }
+  Logger.debug(availableStores, '====> availableStores');
+
+  // =================================
   // id dung cho store pickup
   const store_pickup_id = useSelector(
     (state) => state.order?.pickup_location_code,
@@ -89,7 +111,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
   // --------- REQUEST CART-DETAIL -----------
-
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
 
   const {
@@ -99,7 +120,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     shipping_addresses,
     bonus_point,
     used_point,
-  } = customerCart;
+  } = customerCart || {};
+
   const {
     firstname = '',
     lastname = '',
@@ -118,7 +140,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
   const [customerInfo] = GEX.useCustomer();
-  // --------- REQUEST CART-DETAIL -----------
   const [shippingType, setShippingType] = React.useState(method_code);
 
   // update cart product
@@ -138,15 +159,16 @@ const OrderScreen = ({ route = { params: {} } }) => {
    * SET SIPPING
    */
 
-  const {
-    setShippingMethod,
-    setShippingMethodResp,
-  } = GEX.useSetShippingMethodsOnCart();
+  const [
+    shippingMethodResp,
+    setShippingMethods,
+  ] = GEX.useSetShippingMethodsOnCart();
 
-  const {
-    setShippingAddresses,
-    setShippingAddressesOnCartResp,
-  } = GEX.useSetShippingAddress();
+  // const {
+  //   setShippingAddresses,
+  //   setShippingAddressesOnCartResp,
+  // } = GEX.useSetShippingAddress();
+  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
 
   const updateMyCart = (item) => {
     let input = {
@@ -184,24 +206,23 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const onChangeShippingMethod = (code) => {
     switch (code) {
       case ShippingType.InShop:
-        NavigationService.showComingSoon();
+        navigation.navigate(ScreenName.StorePickup, {
+          stores: availableStores,
+        });
 
-        // if (shippingMethod) {
-        //   const shippingInStore = shippingMethod.results?.find(
-        //     (x) => x.method === ShippingType.InShop,
-        //   );
-
-        //   navigation.navigate(ScreenName.StorePickup, {
-        //     stores: shippingInStore?.stores,
-        //   });
-        //   setIsPickupStore(true);
-        // }
+        dispatch(order.pickupStore(null));
+        setIsPickupStore(true);
 
         break;
       default:
+        let store_id = null;
+        if (availableStores) {
+          const pickStore = availableStores.find(Boolean);
+          store_id = pickStore?.id;
+        }
         setShippingType(code);
         dispatch(app.showLoading());
-        setShippingMethod(code);
+        setShippingMethods(code, store_id);
         dispatch(app.hideLoading());
 
         break;
@@ -287,22 +308,32 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, []);
 
   React.useEffect(() => {
-    if (addressParams && store_pickup_id && isPickupStore) {
-      const { variables } = addressParams;
-      let pickupAddress = variables.shipping_addresses[0];
-      const pickupStoreAddress = Object.assign({}, pickupAddress, {
-        pickup_location_code: store_pickup_id,
-      });
-      const params = Object.assign({}, addressParams, {
-        variables: {
-          shipping_addresses: [pickupStoreAddress],
-        },
-      });
+    if (addressParams && store_pickup_id) {
+      setShippingType(ShippingType.InShop);
 
-      setShippingAddresses(params);
+      const setShippingMethod = async () => {
+        const { variables } = addressParams;
+        let pickupAddress = variables.shipping_addresses[0];
+        const pickupStoreAddress = Object.assign({}, pickupAddress, {
+          pickup_location_code: store_pickup_id,
+        });
+        const params = Object.assign({}, addressParams, {
+          variables: {
+            shipping_addresses: [pickupStoreAddress],
+          },
+        });
+
+        await dispatch(app.showLoading());
+        await setShippingAddress(params);
+
+        await setShippingMethods(ShippingType.InShop, store_pickup_id);
+        await dispatch(app.hideLoading());
+      };
+
+      setShippingMethod();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store_pickup_id, isPickupStore]);
+  }, [store_pickup_id]);
 
   const renderItemExtra = (item, index) => (
     <View key={index + ''} style={{ flex: 1 }}>

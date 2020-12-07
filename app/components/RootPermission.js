@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Platform } from 'react-native';
-import { getCurrentPosition } from '@location';
-import { setting, store } from '@slices';
+import { getCurrentPosition, reverseGeocoding } from '@location';
+import { setting, app } from '@slices';
 import { useDispatch } from 'react-redux';
 import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
@@ -17,7 +17,7 @@ const RootPermission = () => {
       }),
     )
       .then((result) => {
-        dispatch(setting.allowLocations(result));
+        dispatch(setting.allowLocations(result)); // save to show select area
         switch (result) {
           case RESULTS.UNAVAILABLE:
             console.log(
@@ -32,9 +32,13 @@ const RootPermission = () => {
             break;
           case RESULTS.GRANTED:
             console.log('The permission is granted');
+            requestCurrentLocation();
+
             break;
           case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
+            console.log(
+              'The permission is denied and not reques table anymore',
+            );
             break;
         }
       })
@@ -44,19 +48,19 @@ const RootPermission = () => {
       });
   };
 
-  React.useEffect(() => {
-    const requestCurrentLocation = async () => {
-      try {
-        let result = await getCurrentPosition();
-        const myLocations = {
-          lat: result.coords.latitude,
-          lng: result.coords.longitude,
-        };
-        dispatch(store.getPosition(myLocations, { dispatch }));
-      } catch (error) {}
-    };
-    requestCurrentLocation();
-  }, [dispatch]);
+  const requestCurrentLocation = async () => {
+    try {
+      let result = await getCurrentPosition();
+      const myLocations = {
+        lat: result.coords.latitude,
+        lng: result.coords.longitude,
+      };
+
+      const response = await reverseGeocoding(myLocations);
+      const location = response[0];
+      dispatch(app.setCurrentLocation(location));
+    } catch (error) {}
+  };
 
   React.useEffect(() => {
     checcPermissionLocation();

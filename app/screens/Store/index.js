@@ -1,5 +1,5 @@
 import { CustomImageBackground } from '@components';
-import { useChangeLanguage } from '@hooks';
+import { useChangeLanguage, useStorePickup } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
@@ -23,43 +23,66 @@ const DEFAULT_PADDING = {
   left: 60,
 };
 
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = 0.0421;
+
 const StorePage = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
 
-  const my_location = useSelector((state) => state.store.my_location);
-  const storesList = useSelector((state) => state.store.default.stores);
-  const cities = appUtil.getCitiesList(storesList);
-  const currentCity = cities.find((c) => c.id === my_location.cityId);
-  const districts = appUtil.getDistrictList(storesList);
-  const currentDistrict = districts.find(
-    (c) => c.id === my_location.districtId,
-  );
-
+  const my_location = useSelector((state) => state.app.currentLocation);
   const INITIAL_REGION = {
     latitude: my_location?.position?.lat,
     longitude: my_location?.position?.lng,
-    latitudeDelta: 0.5,
-    longitudeDelta: (0.5 * width) / height,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: (LONGITUDE_DELTA * width) / height,
   };
 
+  const cities = useSelector((state) => state.store.cities);
+  const pickupLocation = useSelector((state) => state.store.pickupLocation);
+  const refMap = React.useRef(null);
+  const [region, setRegion] = React.useState(INITIAL_REGION);
+
+  const storeList = useStorePickup();
+  // Logger.debug(storeList, 'storeList');
+
   const [visible, showModal] = React.useState([false, false]);
+
   const [params, setParams] = React.useState({
-    city: currentCity ?? { id: my_location.cityId },
-    district: currentDistrict ?? { id: my_location.districtId },
+    city: { id: pickupLocation?.cityId },
+    district: { id: pickupLocation?.districtId },
   });
+
+  React.useEffect(() => {
+    if (pickupLocation) {
+      const cityItem = cities.find((c) => c.id === pickupLocation.cityId);
+      if (cityItem) {
+        onChangeItemCity(cityItem);
+
+        const districtsList = appUtil.getDistrictInCity(
+          storeList,
+          cityItem?.id,
+        );
+
+        const districtItem = districtsList?.find(
+          (d) => d.id === pickupLocation.districtId,
+        );
+
+        onChangeItemDistrict(districtItem);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pickupLocation, storeList, cities]);
 
   const localStores = React.useCallback(() => {
     return appUtil.getStoreListInCity(
-      storesList,
+      storeList,
       params?.city?.id,
       params?.district?.id,
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
-
-  const refMap = React.useRef(null);
 
   const openModal = (i) => () => {
     let _visible = [...visible];
@@ -82,11 +105,11 @@ const StorePage = () => {
     let list = [];
 
     if (params?.city !== null) {
-      list = appUtil.getDistrictInCity(storesList, params?.city?.id);
+      list = appUtil.getDistrictInCity(storeList, params?.city?.id);
     }
 
     return list;
-  }, [params?.city, storesList]);
+  }, [params?.city, storeList]);
 
   // -------------------- Filter Stores --------------------------//
   const onChangeItemCity = (item) => {
@@ -137,6 +160,15 @@ const StorePage = () => {
         />
       </View>
       <View style={styles.container}>
+        <CustomMapView
+          ref={refMap}
+          style={styles.map}
+          region={region}
+          onMapReady={fitAllMarkers}
+          showCurrentUser={my_location}>
+          <Markers data={localStores()} mapView={refMap} />
+        </CustomMapView>
+
         <View style={styles.listStoreStyle}>
           <FlatList
             showsVerticalScrollIndicator={false}
@@ -147,20 +179,12 @@ const StorePage = () => {
             data={localStores()}
           />
         </View>
-
-        <CustomMapView
-          ref={refMap}
-          style={styles.map}
-          initialRegion={INITIAL_REGION}
-          onMapReady={fitAllMarkers}>
-          <Markers data={localStores()} mapView={refMap} />
-        </CustomMapView>
       </View>
     </CustomImageBackground>
   );
 };
 
-const MAP_HEIGHT = scale.scaleHeight(410);
+const MAP_HEIGHT = scale.scaleHeight(320);
 
 const styles = StyleSheet.create({
   waterMarkContainer: { flex: 1, backgroundColor: 'transparent' },
@@ -171,7 +195,6 @@ const styles = StyleSheet.create({
 
   map: {
     ...StyleSheet.absoluteFillObject,
-    top: 0,
     height: MAP_HEIGHT,
   },
 
@@ -193,7 +216,6 @@ const styles = StyleSheet.create({
   listStoreStyle: {
     marginTop: MAP_HEIGHT,
     paddingBottom: scale.scaleHeight(20),
-    width: '100%',
     flex: 1,
   },
 });

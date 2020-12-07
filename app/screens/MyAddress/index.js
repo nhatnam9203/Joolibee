@@ -17,17 +17,18 @@ const Index = ({ route }) => {
   const { selected_address } = route?.params || false;
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  // Get Customer Cart
-  // const customerCart = useSelector((state) => state.account?.cart);
+
   const onCompleted = () => {
     dispatch(app.hideLoading());
     navigation.goBack();
   };
+
+  // Get Customer Cart
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const { firstname, lastname, phone_number } = customerInfo;
-  const { setShippingAddresses } = GEX.useSetShippingAddress();
+  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
 
   const onHandleSetShippingAddress = (id) => {
     const params = {
@@ -35,7 +36,7 @@ const Index = ({ route }) => {
         shipping_addresses: [{ customer_address_id: id }],
       },
     };
-    setShippingAddresses(params).then((res) => {
+    setShippingAddress(params).then((res) => {
       if (res?.data?.setShippingAddressesOnCart) {
         getCustomerCart();
       }

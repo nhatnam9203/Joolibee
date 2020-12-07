@@ -5,14 +5,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useSetPaymentMethod = () => {
-  const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const [setPaymentMethodOnCart, response] = useMutation(
+  const [setPaymentMethodOnCart, paymentMethodResp] = useMutation(
     SET_ORDER_PAYMENT_METHOD,
   );
 
-  const onSetPaymentMethodOnCart = () => {
+  const setPaymentMethod = () => {
     if (!customerCart) {
       return;
     }
@@ -27,8 +26,5 @@ export const useSetPaymentMethod = () => {
     });
   };
 
-  return {
-    setPaymentMethod: onSetPaymentMethodOnCart,
-    setPaymentMethodOnCartResp: response,
-  };
+  return [paymentMethodResp, setPaymentMethod];
 };

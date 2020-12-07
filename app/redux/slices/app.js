@@ -9,6 +9,7 @@ const appSlice = createSlice({
     loadIntro: true,
     isShowOrderList: false,
     fcmToken: '456',
+    currentLocation: null,
   },
   reducers: {
     showLoading(state, action) {
@@ -37,6 +38,9 @@ const appSlice = createSlice({
     },
     updateFcmToken(state, action) {
       state.fcmToken = action.payload;
+    },
+    setCurrentLocation(state, action) {
+      state.currentLocation = action.payload;
     },
   },
 });

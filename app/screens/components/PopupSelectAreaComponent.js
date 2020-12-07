@@ -10,21 +10,18 @@ import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { JollibeeLogo } from '../components';
+import { useStorePickup } from '@hooks';
 
 const { scaleWidth, scaleHeight } = scale;
 export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
   const dispatch = useDispatch();
   const popupRef = React.createRef(null);
 
-  const init_location = useSelector((state) => state.store.init_location);
-  const storesList = useSelector((state) => state.store.default.stores);
+  const storesList = useStorePickup();
+  const cities = useSelector((state) => state.store.cities);
 
-  const cities = appUtil.getCitiesList(storesList);
-
-  const [city, setCity] = React.useState(init_location.default_city);
-  const [district, setDistrict] = React.useState(
-    init_location?.default_district,
-  );
+  const [city, setCity] = React.useState(null);
+  const [district, setDistrict] = React.useState(null);
 
   const filterDistrict = React.useCallback(() => {
     let list = [];
@@ -49,14 +46,15 @@ export const PopupSelectAreaComponent = ({ visible, onToggle }) => {
     }
   };
 
-  const onHandleSubmit = () => {
+  const onHandleSubmit = async () => {
     if (city && district) {
-      let update_location = {
-        ...init_location,
-        cityId: city,
-        districtId: district,
+      const pickup = {
+        cityId: city + '',
+        districtId: district + '',
       };
-      dispatch(store.pickMyLocations(update_location));
+
+      Logger.debug(pickup, '==> pickup');
+      dispatch(store.pickLocation(pickup));
       popupRef.current.forceQuit();
     } else {
       // !!show dialog yeu cau chon khu vuc, hoac turn on allow location

@@ -6,6 +6,7 @@ import { onError } from '@apollo/client/link/error';
 import { InMemoryCache } from '@apollo/client/core';
 import { CachePersistor } from 'apollo3-cache-persist';
 import AsyncStorage from '@react-native-community/async-storage';
+import { translate } from '@localize';
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
@@ -73,13 +74,26 @@ const errorLink = onError(
      * networkError
      * Do something with a network error
      */
+    //https://www.facebook.com/JollibeeVietnam/
+
     if (networkError) {
       const { name, statusCode, result = {} } = networkError;
 
-      // Logger.debug('[Network error]:', networkError);
-      NavigationService.alertWithError({
-        message: name + ' with status code ' + statusCode,
-      });
+      switch (statusCode) {
+        case 503:
+          NavigationService.showConfirm(
+            translate('txtServerMaintainTitle'),
+            translate('txtServerMaintainDesc'),
+            () => {},
+          );
+          break;
+        default:
+          // Logger.debug('[Network error]:', networkError);
+          NavigationService.alertWithError({
+            message: name + ' with status code ' + statusCode,
+          });
+          break;
+      }
     }
     //networkError
   },

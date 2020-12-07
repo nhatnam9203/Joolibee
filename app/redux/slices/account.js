@@ -11,6 +11,7 @@ const initialState = {
     isRemember: false,
     isLogin: false,
     tempCheckSignup: false,
+    phone_number: null,
   },
   cart: {},
   isShowQRCode: false,
@@ -91,7 +92,7 @@ const accountSlice = createSlice({
         state.user.isLogin = true;
         state.isLogout = false;
       } else {
-        state.user.isLogin = true;
+        state.user.isLogin = false;
       }
     },
 
@@ -142,6 +143,9 @@ const accountSlice = createSlice({
     },
     saveAddressCustomer(state, action) {
       state.addresses = action.payload;
+    },
+    setPhoneNumber: (state, action) => {
+      state.user.phone_number = action.payload;
     },
   },
   extraReducers: {

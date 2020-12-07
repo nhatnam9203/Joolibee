@@ -10,11 +10,10 @@ export const useSetShippingAddress = (callBack = () => {}) => {
   // const customerCart = useSelector((state) => state.account?.cart);
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
 
-  const [setShippingAddressesOnCart, response] = useMutation(
+  const [setShippingAddressesOnCart, shippingAddressResp] = useMutation(
     SET_ORDER_SHIPPING_ADDRESS,
     {
       onCompleted: (data) => {
-        Logger.debug(data, 'setShippingAddressesOnCart');
         if (data?.setShippingAddressesOnCart) {
           callBack();
         }
@@ -22,7 +21,7 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     },
   );
 
-  const onSetShippingAddress = (params) => {
+  const setShippingAddress = (params) => {
     if (!customerCart) {
       return;
     }
@@ -34,8 +33,5 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     });
   };
 
-  return {
-    setShippingAddresses: onSetShippingAddress,
-    setShippingAddressesOnCartResp: response,
-  };
+  return [shippingAddressResp, setShippingAddress];
 };

@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+    paddingHorizontal: 10,
   },
 
   leftContainer: {

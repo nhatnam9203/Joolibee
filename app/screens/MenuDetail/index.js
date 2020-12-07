@@ -23,7 +23,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   // const customerInfo = useSelector((state) => state.account.user?.profile);
   const [addresses] = GEX.useGetAddressList();
-  const addresses_default = addresses.find((x) => x.default_shipping);
+  const addresses_default = addresses?.find((x) => x.default_shipping);
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtOrderMenu').toUpperCase(),

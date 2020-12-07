@@ -25,9 +25,9 @@ const DATE_FORMAT = 'YYYY/MM/DD';
 const EditAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const user = useSelector((state) => state.account?.user?.profile);
-  const { email, firstname, lastname, phone_number, gender, date_of_birth } =
-    user || {};
+  const { phone_number, profile } = useSelector((state) => state.account?.user);
+  const { email, firstname, lastname, gender, date_of_birth } = profile || {};
+
   const [updateCustomerInfo] = useMutation(mutation.UPDATE_CUSTOMER);
 
   const EditSchema = Yup.object().shape({

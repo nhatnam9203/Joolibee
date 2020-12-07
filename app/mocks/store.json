@@ -1,68 +1,3402 @@
 {
   "1": {
     "id": "1",
-    "name": "JBVN01 Coopmart Xa Lộ Hà Nội",
+    "name": "Coopmart Xa L\u1ed9 H\u00e0 N\u1ed9i",
+    "email": "son.nguyen@levincigroup.com",
+    "phone": "028 -3730-7554 \n6282-7000",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "21",
+      "name": "Qu\u1eadn 9"
+    },
     "address": "CoopMart XLHN, 191 Quang Trung, W. Hiep Phu, D. 9,  HCMC",
-    "city": { "id": 1, "name": "Hồ Chí Minh" },
-    "region": { "id": 9, "name": "Quận 9" },
-    "email": "jbvn001@jollibee.com.vn",
-    "phone": "028 -3730-7554 / 6282-7000",
+    "vietnamese_address": "CoopMart Xa L\u1ed9 H\u00e0 N\u1ed9i, 191 Quang Trung, ph\u01b0\u1eddng Hi\u1ec7p Ph\u00fa, Qu\u1eadn 9, TPHCM",
     "weekday_opening_hours": "9:00:00 AM-9:00 PM",
     "weekend_opening_hours": "8:00:00 AM-9:00PM",
     "latitude": "10.848302",
-    "longitude": "106.774461"
+    "longitude": "106.774461",
+    "code": "1",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
   },
   "2": {
     "id": "2",
-    "name": "JBVN03 Pasteur",
+    "name": "Pasteur",
+    "email": "jbvn003@jollibee.com.vn",
+    "phone": "(028) 3823-7000 \n3822-7050",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "15",
+      "name": "Qu\u1eadn 3"
+    },
     "address": "194D Pasteur, Ward 6, Dist.3, HCMC",
-    "city": { "id": 1, "name": "Hồ Chí Minh" },
-    "region": { "id": 10, "name": "Quận 10" },
-    "email": "jbvn002@jollibee.com.vn",
-    "phone": "(028) 3823-7000 / 3822-7050",
+    "vietnamese_address": "194D Pasteur, ph\u01b0\u1eddng 6, qu\u1eadn 3, TPHCM",
     "weekday_opening_hours": "9:00:00 AM-10:00 PM",
     "weekend_opening_hours": "8:00:00 AM-10:00 PM",
     "latitude": "10.781636",
-    "longitude": "106.694722"
+    "longitude": "106.694722",
+    "code": "3",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
   },
   "3": {
     "id": "3",
-    "name": "JBVN04 Trần Hưng Đạo",
+    "name": "Tr\u1ea7n H\u01b0ng \u0110\u1ea1o",
+    "email": "jbvn004@jollibee.com.vn",
+    "phone": "028-3838-0999 \n028-6261-0593",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "17",
+      "name": "Qu\u1eadn 5"
+    },
     "address": "354-356 Tran Hung Dao Str, W. 2, D. 5, HCMC",
-    "city": { "id": 1, "name": "Hồ Chí Minh" },
-    "region": { "id": 5, "name": "Quận 5" },
-    "email": "jbvn003@jollibee.com.vn",
-    "phone": "(028) 3823-7000 / 3822-7050",
-    "weekday_opening_hours": "9:00:00 AM-10:00 PM",
-    "weekend_opening_hours": "8:00:00 AM-10:00 PM",
+    "vietnamese_address": "354-356 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, ph\u01b0\u1eddng 2, qu\u1eadn 5, TPHCM",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
     "latitude": "10.756496",
-    "longitude": "106.684968"
+    "longitude": "106.684968",
+    "code": "4",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
   },
   "4": {
     "id": "4",
-    "name": "JBVN010 Coopmart Biên Hòa",
+    "name": "Coopmart Bi\u00ean H\u00f2a",
+    "email": "jbvn010@jollibee.com.vn",
+    "phone": "0251-260-7777",
+    "city": {
+      "id": "5",
+      "name": "\u0110\u1ed3ng Nai"
+    },
+    "district": {
+      "id": "71",
+      "name": "Bi\u00ean H\u00f2a"
+    },
     "address": "3rd Floor Co.op Mart Bien Hoa, 121 Highway 15, Ward Tan Tien, Bien Hoa City, Dong Nai Province ",
-    "city": { "id": 12, "name": "Đồng Nai" },
-    "region": { "id": 45, "name": "Biên Hòa" },
-    "email": "jbvn004@jollibee.com.vn",
-    "phone": "(028) 3823-7000 / 3822-7050",
-    "weekday_opening_hours": "9:00:00 AM-10:00 PM",
-    "weekend_opening_hours": "8:00:00 AM-10:00 PM",
+    "vietnamese_address": "T\u1ea7ng 03 Co.op Mart Bi\u00ean H\u00f2a, 121 Qu\u1ed1c l\u1ed9 15, ph\u01b0\u1eddng T\u00e2n Ti\u1ebfn, Th\u00e0nh ph\u1ed1 Bi\u00ean H\u00f2a, t\u1ec9nh \u0110\u1ed3ng Nai ",
+    "weekday_opening_hours": "9:00:00 AM-9:00 PM",
+    "weekend_opening_hours": "8:30:00 AM-9:00 PM",
     "latitude": "10.958616",
-    "longitude": "106.834366"
+    "longitude": "106.834366",
+    "code": "10",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
   },
   "5": {
     "id": "5",
-    "name": "JBVN013 Coopmart Cần Thơ",
+    "name": "Coopmart C\u1ea7n Th\u01a1",
+    "email": "jbvn013@jollibee.com.vn",
+    "phone": "0292-381-9600\n381-8001",
+    "city": {
+      "id": "12",
+      "name": "C\u1ea7n Th\u01a1"
+    },
+    "district": {
+      "id": "166",
+      "name": "Ninh Ki\u1ec1u"
+    },
     "address": "2 nd Flr. Co.op Mart Can Tho, 01 Hoa Binh, W. Tan An, D. Ninh Kieu, Can Tho City ",
-    "city": { "id": 13, "name": "Cần Thơ" },
-    "region": { "id": 50, "name": "Ninh Kiều" },
-
-    "email": "jbvn005@jollibee.com.vn",
-    "phone": "(028) 3823-7000 / 3822-7050",
-    "weekday_opening_hours": "9:00:00 AM-10:00 PM",
-    "weekend_opening_hours": "8:00:00 AM-10:00 PM",
+    "vietnamese_address": "T\u1ea7ng 2, Co.op Mart C\u1ea7n Th\u01a1, 01 H\u00f2a B\u00ecnh, ph\u01b0\u1eddng T\u00e2n An, Qu\u1eadn Ninh Ki\u1ec1u, Th\u00e0nh ph\u1ed1 C\u1ea7n Th\u01a1 ",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
     "latitude": "10.034533",
-    "longitude": "105.785719"
+    "longitude": "105.785719",
+    "code": "13",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "6": {
+    "id": "6",
+    "name": "Coopmart Long Xuy\u00ean",
+    "email": "jbvn014@jollibee.com.vn",
+    "phone": "0296-394-1889 \n625-2000",
+    "city": {
+      "id": "30",
+      "name": "An Giang"
+    },
+    "district": {
+      "id": "393",
+      "name": "Long Xuy\u00ean"
+    },
+    "address": "Ground Flr. Co.op Mart Long Xuyen, 12 Nguyen Hue A. My Long Ward, Long Xuyen City, An Giang province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Co.op Mart Long Xuy\u00ean, 12 Nguy\u1ec5n Hu\u1ec7 A. ph\u01b0\u1eddng M\u1ef9 Long, Th\u00e0nh ph\u1ed1 Long Xuy\u00ean, t\u1ec9nh An Giang",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "10.382193",
+    "longitude": "105.440212",
+    "code": "14",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "7": {
+    "id": "7",
+    "name": "Coopmart T\u00e2n An",
+    "email": "jbvn015@jollibee.com.vn",
+    "phone": "0272-358 0000 /  358 0001",
+    "city": {
+      "id": "8",
+      "name": "Long An"
+    },
+    "district": {
+      "id": "114",
+      "name": "T\u00e2n An"
+    },
+    "address": "Ground Flr. Co.op Mart Tan An, 1, Mai Thi Tot, Cho Moi Area, W.2. Tan An City, Long An Province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart T\u00e2n An, S\u1ed1 01 Mai Th\u1ecb T\u1ed1t, Ph\u01b0\u1eddng 2, Th\u00e0nh ph\u1ed1 T\u00e2n An, T\u1ec9nh Long An",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "10.533268",
+    "longitude": "106.405259",
+    "code": "15",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "8": {
+    "id": "8",
+    "name": "Coopmart R\u1ea1ch Mi\u1ec5u",
+    "email": "jbvn016@jollibee.com.vn",
+    "phone": "(028)3517-8000 \n3517-1311",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "9",
+      "name": "Ph\u00fa Nhu\u1eadn"
+    },
+    "address": "2nd Floor Co.op Mart Rach Mieu, 48 Hoa Su Street Ward 7, Phu Nhuan District, HCMC,",
+    "vietnamese_address": "T\u1ea7ng 2 Co.opmart R\u1ea1ch Mi\u1ec5u, 48 \u0111\u01b0\u1eddng Hoa S\u1ee9, P. 7, Q. Ph\u00fa Nhu\u1eadn, TPHCM",
+    "weekday_opening_hours": "9:00:00 AM-9:00 PM",
+    "weekend_opening_hours": "9:00:00 AM-9:00 PM",
+    "latitude": "10.799062",
+    "longitude": "106.689107",
+    "code": "16",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "9": {
+    "id": "9",
+    "name": "Vincom C\u1ed9ng H\u00f2a",
+    "email": "jbvn018@jollibee.com.vn",
+    "phone": "028-3811 7000 \n3811 5039",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "22",
+      "name": "T\u00e2n B\u00ecnh"
+    },
+    "address": "Ground Flr. Maximark Cong Hoa, 15-17 Cong Hoa, Tan Binh Dist. HCMC",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Maximark C\u1ed9ng H\u00f2a, 15-17 C\u1ed9ng H\u00f2a, Qu\u1eadn T\u00e2n B\u00ecnh. TPHCM",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "10.800658",
+    "longitude": "106.659398",
+    "code": "18",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "10": {
+    "id": "10",
+    "name": "Vincom Nha Trang",
+    "email": "jbvn019@jollibee.com.vn",
+    "phone": "0258 - 3818 800 \n3818 900",
+    "city": {
+      "id": "6",
+      "name": "Kh\u00e1nh H\u00f2a"
+    },
+    "district": {
+      "id": "87",
+      "name": "Nha Trang"
+    },
+    "address": "4thFlr. Maximark Nha Trang, 60 Thai Nguyen, Phuong Sai Ward, Nha Trang City",
+    "vietnamese_address": "T\u1ea7ng 4 Maximark Nha Trang, 60 Th\u00e1i Nguy\u00ean, ph\u01b0\u1eddng Ph\u01b0\u01a1ng S\u00e0i, T.p Nha Trang",
+    "weekday_opening_hours": "8:30:00 AM-9:00 PM",
+    "weekend_opening_hours": "8:30:00 AM-9:00 PM",
+    "latitude": "12.248338",
+    "longitude": "109.186683",
+    "code": "19",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "11": {
+    "id": "11",
+    "name": "Coopmart H\u00e0 \u0110\u00f4ng",
+    "email": "jbvn020@jollibee.com.vn",
+    "phone": "024 - 6286 3358\n6286 3359",
+    "city": {
+      "id": "2",
+      "name": "Ha\u0300 N\u00f4\u0323i"
+    },
+    "district": {
+      "id": "34",
+      "name": "H\u00e0 \u0110\u00f4ng"
+    },
+    "address": "3Fl., Coop Ha Dong, Km 10, Nguyen Trai Str, Mo Lao Ward, Ha Dong Dist, Hanoi City",
+    "vietnamese_address": "T\u1ea7ng 3, Coop H\u00e0 \u0110\u00f4ng, Km 10, \u0111\u01b0\u1eddng Nguy\u1ec5n Tr\u00e3i, Ph\u01b0\u1eddng M\u1ed9 Lao, Qu\u1eadn H\u00e0 \u0110\u00f4ng, Th\u00e0nh ph\u1ed1 H\u00e0 N\u1ed9i",
+    "weekday_opening_hours": "9:00:00 AM-9:00 PM",
+    "weekend_opening_hours": "9:00:00 AM-9:00 PM",
+    "latitude": "105.8568",
+    "longitude": "21.01772",
+    "code": "20",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "12": {
+    "id": "12",
+    "name": "Big C \u0110\u1ed3ng Nai",
+    "email": "jbvn022@jollibee.com.vn",
+    "phone": "0251-626 7000\n882 6759",
+    "city": {
+      "id": "5",
+      "name": "\u0110\u1ed3ng Nai"
+    },
+    "district": {
+      "id": "71",
+      "name": "Bi\u00ean H\u00f2a"
+    },
+    "address": "G/F Big C Dong Nai, QL51, Long Binh Tan Ward, Bien hoa city; Dong nai province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Big C \u0110\u1ed3ng Nai, QL51, ph\u01b0\u1eddng Long B\u00ecnh T\u00e2n, TP Bi\u00ean H\u00f2a; t\u1ec9nh \u0110\u1ed3ng Nai",
+    "weekday_opening_hours": "9:00:00 AM-9:00 PM",
+    "weekend_opening_hours": "8:30:00 AM-9:00 PM",
+    "latitude": "10.905841",
+    "longitude": "106.850367",
+    "code": "22",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "13": {
+    "id": "13",
+    "name": "Coopmart M\u1ef9 Tho",
+    "email": "jbvn023@jollibee.com.vn",
+    "phone": "02733 970 000/ 978 700",
+    "city": {
+      "id": "26",
+      "name": "Ti\u1ec1n Giang"
+    },
+    "district": {
+      "id": "356",
+      "name": "M\u1ef9 Tho"
+    },
+    "address": "Ground Floor Co.Op Mart My tho, 35 ap bac Street , Ward 5, My tho city, Tien Giang province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Co.op Mart M\u1ef9 Tho, 35 \u0111\u01b0\u1eddng \u1ea4p B\u1eafc , ph\u01b0\u1eddng 5, Th\u00e0nh ph\u1ed1 M\u1ef9 Tho, t\u1ec9nh Ti\u1ec1n Giang",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "10.372924",
+    "longitude": "106.347552",
+    "code": "23",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "14": {
+    "id": "14",
+    "name": "Big C V\u0129nh Ph\u00fac",
+    "email": "jbvn024@jollibee.com.vn",
+    "phone": "0211 3711909\n02113711444",
+    "city": {
+      "id": "31",
+      "name": "V\u0129nh Ph\u00fac"
+    },
+    "district": {
+      "id": "406",
+      "name": "V\u0129nh Y\u00ean"
+    },
+    "address": "Ground Fl,Highway 2, Khai Quang ward, Vinh Yen City, Vinh Phuc ",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Qu\u1ed1c l\u1ed9 2, ph\u01b0\u1eddng Kh\u1ea3i Quang, th\u00e0nh ph\u1ed1 V\u0129nh Y\u00ean, t\u1ec9nh V\u0129nh Ph\u00fac",
+    "weekday_opening_hours": "9:00:00 AM-9:00 PM",
+    "weekend_opening_hours": "9:00:00 AM-9:00 PM",
+    "latitude": "21.30623",
+    "longitude": "105.6147",
+    "code": "24",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "15": {
+    "id": "15",
+    "name": "Coopmart S\u00f3c Tr\u0103ng",
+    "email": "jbvn025@jollibee.com.vn",
+    "phone": "02993 - 829 000/823 979",
+    "city": {
+      "id": "48",
+      "name": "S\u00f3c Tr\u0103ng"
+    },
+    "district": {
+      "id": "567",
+      "name": "S\u00f3c Tr\u0103ng"
+    },
+    "address": "Ground Floor Co.Op Mart Soc Trang, No 6 Hung Vuong Street , Soc Trang city, Soc Trang province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart S\u00f3c Tr\u0103ng, s\u1ed1 06 H\u00f9ng V\u01b0\u01a1ng , Tp. S\u00f3c Tr\u0103ng, T\u1ec9nh S\u00f3c Tr\u0103ng",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "9.612696",
+    "longitude": "105.969315",
+    "code": "25",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "16": {
+    "id": "16",
+    "name": "Coopmart R\u1ea1ch Gi\u00e1 1",
+    "email": "jbvn026@jollibee.com.vn",
+    "phone": "02973 - 926 000/926 060",
+    "city": {
+      "id": "16",
+      "name": "Ki\u00ean Giang"
+    },
+    "district": {
+      "id": "213",
+      "name": "R\u1ea1ch Gi\u00e1"
+    },
+    "address": "2nd Floor Co.op Mart Kien Giang, 1332 Nguyen Trung Truc street, Ward An Binh, Rach Gia City, Kien Giang Province",
+    "vietnamese_address": "T\u1ea7ng 2 Co.opmart Ki\u00ean Giang, 1332 Nguy\u1ec5n Trung Tr\u1ef1c, ph\u01b0\u1eddng An B\u00ecnh, Tp. R\u1ea1ch Gi\u00e1, T\u1ec9nh Ki\u00ean Giang",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "9.95955",
+    "longitude": "105.118183",
+    "code": "26",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "17": {
+    "id": "17",
+    "name": "Coopmart L\u00fd Th\u01b0\u1eddng Ki\u1ec7t",
+    "email": "jbvn027@jollibee.com.vn",
+    "phone": "(028) 3957 5484\n3957 5464",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "11",
+      "name": "Qu\u1eadn 10"
+    },
+    "address": "3 Fl., Coop mart Ly Thuong Kiet, 497 Hoa Hao, Ward 7 District 10, HCMC",
+    "vietnamese_address": "T\u1ea7ng 3,Co.op Mart L\u00fd Th\u01b0\u1eddng Ki\u1ec7t, 497 H\u00f2a H\u1ea3o, Ph\u01b0\u1eddng 7, Qu\u1eadn 10,TPHCM",
+    "weekday_opening_hours": "9:30:00 - 9 :00 PM",
+    "weekend_opening_hours": "9:30:00 - 9 :00 PM",
+    "latitude": "10.761974",
+    "longitude": "106.66867",
+    "code": "27",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "18": {
+    "id": "18",
+    "name": "Coopmart V\u0129nh Long",
+    "email": "jbvn028@jollibee.com.vn",
+    "phone": "02703 - 926 789/ 888 000",
+    "city": {
+      "id": "40",
+      "name": "V\u0129nh Long"
+    },
+    "district": {
+      "id": "491",
+      "name": "V\u0129nh Long"
+    },
+    "address": "GF Coopmart Vinh Long , 26 -Ba Thang Hai Street ,Ward 1,Vinh Long City ,Vinh Long Province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart V\u0129nh Long , 26 \u0111\u01b0\u1eddng Ba Th\u00e1ng Hai , ph\u01b0\u1eddng 1, Tp. V\u0129nh Long , T\u1ec9nh V\u0129nh Long",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "10.255095",
+    "longitude": "105.970905",
+    "code": "28",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "19": {
+    "id": "19",
+    "name": "Coopmart H\u00e0 T\u0129nh",
+    "email": "jbvn029@jollibee.com.vn",
+    "phone": "02393 896 799\n 0393 896 797",
+    "city": {
+      "id": "46",
+      "name": "H\u00e0 T\u0129nh"
+    },
+    "district": {
+      "id": "539",
+      "name": "H\u00e0 T\u0129nh"
+    },
+    "address": "GF Coopmart Ha Tinh , 02 Phan Dinh Phung Street, Ha Tinh City , Ha Tinh Province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart H\u00e0 T\u0129nh , 02 Phan \u0110\u00ecnh Ph\u00f9ng, T.p H\u00e0 T\u0129nh , T\u1ec9nh H\u00e0 T\u0129nh",
+    "weekday_opening_hours": "8:00:00 AM-9:30PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "18.3281",
+    "longitude": "105.686",
+    "code": "29",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "20": {
+    "id": "20",
+    "name": "Coopmart Pleiku",
+    "email": "jbvn031@jollibee.com.vn",
+    "phone": "2696250122",
+    "city": {
+      "id": "22",
+      "name": "Gia Lai"
+    },
+    "district": {
+      "id": null,
+      "name": ""
+    },
+    "address": "Ground Flr. Coop Mart Pleiku, #21 CMTT Street, Pleiku City, Gia Lai Province.",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart Pleiku, 21 C\u00e1ch M\u1ea1ng Th\u00e1ng T\u00e1m. Tp. Pleiku, T\u1ec9nh Gia Lai",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "13.98745",
+    "longitude": "108.008176",
+    "code": "31",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "21": {
+    "id": "21",
+    "name": "Coopmart Tam K\u1ef3",
+    "email": "jbvn033@jollibee.com.vn",
+    "phone": "0235 3813 000",
+    "city": {
+      "id": "9",
+      "name": "Qu\u1ea3ng Nam"
+    },
+    "district": {
+      "id": "135",
+      "name": "Tam K\u1ef3"
+    },
+    "address": "Ground Flr., Coop Mart Tam Ky, # 7 Phan Chu Trinh, P.Phuoc Hoa, Tx.Tam Ky, Quang Nam",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Co.opmart Tam K\u1ef3, 07 Phan Chu Trinh, Ph\u01b0\u1eddng Ph\u01b0\u1edbc H\u00f2a, Th\u1ecb x\u00e3 Tam K\u1ef3, T\u1ec9nh Qu\u1ea3ng Nam",
+    "weekday_opening_hours": "9:00:00 AM-9:00 PM",
+    "weekend_opening_hours": "8:30:00 AM-9:00 PM",
+    "latitude": "15.573062",
+    "longitude": "108.484217",
+    "code": "33",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "22": {
+    "id": "22",
+    "name": "Coopmart Tuy H\u00f2a",
+    "email": "jbvn034@jollibee.com.vn",
+    "phone": "0257-3818441\n0257-3818442",
+    "city": {
+      "id": "44",
+      "name": "Ph\u00fa Y\u00ean"
+    },
+    "district": {
+      "id": "529",
+      "name": "Tuy H\u00f2a"
+    },
+    "address": "Ground Flr, Coopmart Tuy Hoa, O PHO B8, Duong Duy Tan, TP Tuy Hoa, Phu Yen",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart Tuy H\u00f2a, \u00f4 Ph\u1ed1 B8, \u0111\u01b0\u1eddng Duy T\u00e2n, TP. Tuy H\u00f2a, T\u1ec9nh Ph\u00fa Y\u00ean",
+    "weekday_opening_hours": "8:00AM - 9:00PM",
+    "weekend_opening_hours": "8:00AM - 9:00PM",
+    "latitude": "13.088622",
+    "longitude": "109.309594",
+    "code": "34",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "23": {
+    "id": "23",
+    "name": "Coopmart B\u1ea1c Li\u00eau",
+    "email": "jbvn036@jollibee.com.vn",
+    "phone": "0291 3867 999",
+    "city": {
+      "id": "55",
+      "name": "B\u1ea1c Li\u00eau"
+    },
+    "district": {
+      "id": "626",
+      "name": "B\u1ea1c Li\u00eau"
+    },
+    "address": "Ground Flr., Coop Mart  Bac Lieu, # 7 Tran Huynh, P.7, Bac Lieu",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Co.opmart B\u1ea1c Li\u00eau, 07 Tr\u1ea7n Hu\u1ef3nh, Ph\u01b0\u1eddng 7, B\u1ea1c Li\u00eau",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "9.292546",
+    "longitude": "105.716268",
+    "code": "36",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "24": {
+    "id": "24",
+    "name": "Coopmart Tr\u00e0 Vinh",
+    "email": "jbvn037@jollibee.com.vn",
+    "phone": "0294 3867000 \n074 3869000",
+    "city": {
+      "id": "52",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "district": {
+      "id": "606",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "address": "Ground Flr., Coop Mart Tra Vinh, # 599 Nguyen Dang, Khom 3 , Thi Xa Tra Vinh",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Co.opmart Tr\u00e0 Vinh, 599 Nguy\u1ec5n \u0110\u00e1ng, Kh\u00f3m 3, Th\u1ecb x\u00e3 Tr\u00e0 Vinh",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "9.924097",
+    "longitude": "106.340159",
+    "code": "37",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "25": {
+    "id": "25",
+    "name": "Coopmart H\u1ea3i Ph\u00f2ng",
+    "email": "jbvn042@jollibee.com.vn",
+    "phone": "(0225) 3556 079\n3603 200",
+    "city": {
+      "id": "7",
+      "name": "H\u1ea3i Ph\u00f2ng"
+    },
+    "district": {
+      "id": "102",
+      "name": "Ng\u00f4 Quy\u1ec1n"
+    },
+    "address": "3 Fl., Coop Hai Phong, 1 Le Hong Phong street, Dong Khe W, Ngo Quyen district, Hai Phong city",
+    "vietnamese_address": "T\u1ea7ng 3., Coop H\u1ea3i Ph\u00f2ng, 1 \u0111\u01b0\u1eddng L\u00ea H\u1ed3ng Phong, ph\u01b0\u1eddng \u0110\u00f4ng Kh\u00ea,, qu\u1eadn Ng\u00f4 Quy\u1ec1n, th\u00e0nh ph\u1ed1 H\u1ea3i Ph\u00f2ng",
+    "weekday_opening_hours": "9:00:00 AM-9:30PM",
+    "weekend_opening_hours": "9:00:00 AM-9:30PM",
+    "latitude": "20.7884",
+    "longitude": "106.6172",
+    "code": "42",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "26": {
+    "id": "26",
+    "name": "Coopmart Thanh H\u00f3a",
+    "email": "jbvn048@jollibee.com.vn",
+    "phone": "0237 372 5269",
+    "city": {
+      "id": "19",
+      "name": "Thanh H\u00f3a"
+    },
+    "district": {
+      "id": "258",
+      "name": "Thanh H\u00f3a"
+    },
+    "address": "3F, Coopmart Thanh Hoa #  Phan Chu Trinh St.,Phuong Dien Bien - TP.Thanh Hoa",
+    "vietnamese_address": "T\u1ea7ng 3, Co.opmart Thanh H\u00f3a, \u0110\u01b0\u1eddng Phan Chu Trinh, Ph\u01b0\u1eddng \u0110i\u1ec7n Bi\u00ean - TP.Thanh Ho\u00e1",
+    "weekday_opening_hours": "8:30:00 AM-9:30PM",
+    "weekend_opening_hours": "8:30:00 AM-9:30PM",
+    "latitude": "105.5376",
+    "longitude": "19.90745",
+    "code": "48",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "27": {
+    "id": "27",
+    "name": "Coopmart Nha Trang",
+    "email": "jbvn051@jollibee.com.vn",
+    "phone": "0258-3875353 \n0258-3875373",
+    "city": {
+      "id": "6",
+      "name": "Kh\u00e1nh H\u00f2a"
+    },
+    "district": {
+      "id": "87",
+      "name": "Nha Trang"
+    },
+    "address": "3rd Floor Coopmart Nha Trang, #2 Le Hong Phong Street,Phuoc Hai Ward, Nha Trang City, Khanh Hoa Province",
+    "vietnamese_address": "T\u1ea7ng 3 Co.opmart Nha Trang, s\u1ed1 02 L\u00ea H\u1ed3ng Phong, p.Ph\u01b0\u1edbc H\u1ea3i, Tp. Nha Trang, t\u1ec9nh Kh\u00e1nh H\u00f2a",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "12.242855",
+    "longitude": "109.182087",
+    "code": "51",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "28": {
+    "id": "28",
+    "name": "Coopmart B\u00ecnh Tri\u1ec7u",
+    "email": "jbvn052@jollibee.com.vn",
+    "phone": "(028).37260086",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "24",
+      "name": "Th\u1ee7 \u0110\u1ee9c"
+    },
+    "address": "1 Fl., 68/1 Quoc lo 13, P Hiep Binh Chanh, Q Thu Duc",
+    "vietnamese_address": "T\u1ea7ng 1, 68/1 Qu\u1ed1c l\u1ed9 13, Ph\u01b0\u1eddng Hi\u1ec7p B\u00ecnh Ch\u00e1nh, Qu\u1eadn Th\u1ee7 \u0110\u1ee9c, Tp. H\u1ed3 Ch\u00ed Minh",
+    "weekday_opening_hours": "9:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "10.832744",
+    "longitude": "106.715422",
+    "code": "52",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "29": {
+    "id": "29",
+    "name": "EC Th\u00e1i Nguy\u00ean",
+    "email": "jbvn053@jollibee.com.vn",
+    "phone": "(0208) 3.841.133 \n3.841.838",
+    "city": {
+      "id": "33",
+      "name": "Th\u00e1i Nguy\u00ean"
+    },
+    "district": {
+      "id": "424",
+      "name": "Th\u00e1i Nguy\u00ean"
+    },
+    "address": "107 Luong Ngoc Quyen street, Hoang Van Thu ward Thai Nguyen City",
+    "vietnamese_address": "107 L\u01b0\u01a1ng Ng\u1ecdc Quy\u1ebfn, ph\u01b0\u1eddng Ho\u00e0ng V\u0103n Th\u1ee5, th\u00e0nh ph\u1ed1 Th\u00e1i Nguy\u00ean",
+    "weekday_opening_hours": "9:00AM:10:00 PM",
+    "weekend_opening_hours": "9:00AM:10:00 PM",
+    "latitude": "21.5583",
+    "longitude": "105.8394",
+    "code": "53",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "30": {
+    "id": "30",
+    "name": "Coopmart T\u00e2y Ninh",
+    "email": "jbvn054@jollibee.com.vn",
+    "phone": "(0276) 3530-777 \n3530-888",
+    "city": {
+      "id": "32",
+      "name": "T\u00e2y Ninh"
+    },
+    "district": {
+      "id": "415",
+      "name": "T\u00e2y Ninh"
+    },
+    "address": "Ground Fl.,576 Cach Mang Thang Tam, Ward 3, Tay Ninh town ,Tay Ninh province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t.,576 C\u00e1ch M\u1ea1ng Th\u00e1ng T\u00e1m, Ph\u01b0\u1eddng 3, T\u00f2a nh\u00e0 T\u00e2y Ninh, t\u1ec9nh T\u00e2y Ninh",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "11.307764",
+    "longitude": "106.108653",
+    "code": "54",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "31": {
+    "id": "31",
+    "name": "Coopmart R\u1ea1ch Gi\u00e1 2",
+    "email": "jbvn055@jollibee.com.vn",
+    "phone": "02973-916-555\n870-555",
+    "city": {
+      "id": "16",
+      "name": "Ki\u00ean Giang"
+    },
+    "district": {
+      "id": "213",
+      "name": "R\u1ea1ch Gi\u00e1"
+    },
+    "address": "Gound floor Coopmart Rach Gia 2, 16 Ha Commercial Area,Vinh Thanh Van Ward, Rach Gia, Kien Giang.",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Co.opmart R\u1ea1ch Gi\u00e1 2, Khu Trung T\u00e2m Th\u01b0\u01a1ng M\u1ea1i 16Ha, ph\u01b0\u1eddng V\u0129nh Th\u1ea1nh Xu\u00e2n, Tp.R\u1ea1ch Gi\u00e1 , T\u1ec9nh Ki\u00ean Giang",
+    "weekday_opening_hours": "8:00:00 AM-9:00PM",
+    "weekend_opening_hours": "8:00:00 AM-9:00PM",
+    "latitude": "10.009438",
+    "longitude": "105.07937",
+    "code": "55",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "32": {
+    "id": "32",
+    "name": "EC B\u1ebfn Tre",
+    "email": "jbvn057@jollibee.com.vn",
+    "phone": "0275-3833 989",
+    "city": {
+      "id": "37",
+      "name": "B\u1ebfn Tre"
+    },
+    "district": {
+      "id": "460",
+      "name": "B\u1ebfn Tre"
+    },
+    "address": "47 Dong Khoi, Ward 3, Ben Tre",
+    "vietnamese_address": "47 \u0110\u1ed3ng Kh\u1edfi, ph\u01b0\u1eddng 3, Tp. B\u1ebfn Tre",
+    "weekday_opening_hours": "8:00:00 - 10:00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "10.244118",
+    "longitude": "106.375338",
+    "code": "57",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "33": {
+    "id": "33",
+    "name": "S\u00e0i G\u00f2n Star",
+    "email": "jbvn060@jollibee.com.vn",
+    "phone": "0283 930 8085/ \u202684",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "15",
+      "name": "Qu\u1eadn 3"
+    },
+    "address": "204 Nguyen Minh Khai, Ward6, District 3",
+    "vietnamese_address": "204 Nguy\u1ec5n Th\u1ecb Minh Khai, ph\u01b0\u1eddng 6, Qu\u1eadn 3, TPHCM",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "10.775237",
+    "longitude": "106.690464",
+    "code": "60",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "34": {
+    "id": "34",
+    "name": "EC B\u1eafc Giang",
+    "email": "jbvn062@jollibee.com.vn",
+    "phone": "02043 - 526 660\n526 661",
+    "city": {
+      "id": "28",
+      "name": "B\u1eafc Giang"
+    },
+    "district": {
+      "id": "367",
+      "name": "B\u1eafc Giang"
+    },
+    "address": "224 Le Loi Street, Hoang Van Thu Ward, Bac Giang City",
+    "vietnamese_address": "224 L\u00ea L\u1ee3i, ph\u01b0\u1eddng Ho\u00e0ng V\u0103n Th\u1ee5, Tp. B\u1eafc Giang.",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "21.273683",
+    "longitude": "106.197237",
+    "code": "62",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "35": {
+    "id": "35",
+    "name": "EC Th\u00e1i B\u00ecnh",
+    "email": "jbvn063@jollibee.com.vn",
+    "phone": "02273 - 832822\n832 823",
+    "city": {
+      "id": "27",
+      "name": "Th\u00e1i B\u00ecnh"
+    },
+    "district": {
+      "id": "363",
+      "name": "Th\u00e1i B\u00ecnh"
+    },
+    "address": "323 Ly Bon Street, Bo Xuyen Ward, Thai Binh City",
+    "vietnamese_address": "323 L\u00fd B\u00f4n, ph\u01b0\u1eddng B\u1ed3 Xuy\u00ean, Tp.Th\u00e1i B\u00ecnh.",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "20.49224",
+    "longitude": "106.3618",
+    "code": "63",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "36": {
+    "id": "36",
+    "name": "Big C Quy Nh\u01a1n",
+    "email": "jbvn064@jollibee.com.vn",
+    "phone": "02563 535 069",
+    "city": {
+      "id": "25",
+      "name": "B\u00ecnh \u0110\u1ecbnh"
+    },
+    "district": {
+      "id": "343",
+      "name": "Quy Nh\u01a1n"
+    },
+    "address": "Ground Fl, Big C Quy Nhon, Kim Cuc Plaza, Genh Rang Ward, Quy Nhon City",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Big C Quy Nh\u01a1n, Kim C\u00fac Plaza, ph\u01b0\u1eddng Gh\u1ec1nh R\u00e1ng, Tp. Quy Nh\u01a1n, T\u1ec9nh B\u00ecnh \u0110\u1ecbnh",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "13.754653",
+    "longitude": "109.207393",
+    "code": "64",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "37": {
+    "id": "37",
+    "name": "Tr\u01b0\u1eddng Chinh",
+    "email": "jbvn065@jollibee.com.vn",
+    "phone": "028 38125053\n028 38125063",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "22",
+      "name": "T\u00e2n B\u00ecnh"
+    },
+    "address": "360 Truong Chinh st, ward 13, Dis Tan Binh, HCM City",
+    "vietnamese_address": "360 Tr\u01b0\u1eddng Chinh, ph\u01b0\u1eddng 13, Q. T\u00e2n B\u00ecnh, Tp. H\u1ed3 Ch\u00ed Minh",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "9:00:00 - 10 :00 PM",
+    "latitude": "10.799485",
+    "longitude": "106.641319",
+    "code": "65",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "38": {
+    "id": "38",
+    "name": "Ph\u1ee7 L\u00fd",
+    "email": "jbvn066@jollibee.com.vn",
+    "phone": "02263 883 589\n02263 889 588",
+    "city": {
+      "id": "45",
+      "name": "H\u00e0 Nam"
+    },
+    "district": {
+      "id": "534",
+      "name": "Ph\u1ee7 L\u00fd"
+    },
+    "address": "#149 Bien Hoa Str, Phu Ly City, Ha nam Province",
+    "vietnamese_address": "149 Bi\u00ean H\u00f2a, Tp. Ph\u1ee7 L\u00fd, T\u1ec9nh H\u00e0 Nam.",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "9:00:00 - 10 :00 PM",
+    "latitude": "20.53364",
+    "longitude": "105.9176",
+    "code": "66",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "39": {
+    "id": "39",
+    "name": "H\u01b0ng Y\u00ean",
+    "email": "gsvn067@vngoldstar.com",
+    "phone": "02213 668 868\n02213 551 888",
+    "city": {
+      "id": "24",
+      "name": "H\u01b0ng Y\u00ean"
+    },
+    "district": {
+      "id": "328",
+      "name": "H\u01b0ng Y\u00ean"
+    },
+    "address": "224 Dien Bien 2 Street, Hung Yen City, Hung Yen",
+    "vietnamese_address": "S\u1ed1 224 \u0111\u01b0\u1eddng \u0110i\u1ec7n Bi\u00ean 2, ph\u01b0\u1eddng Quang Trung, th\u00e0nh ph\u1ed1 H\u01b0ng Y\u00ean, T\u1ec9nh H\u01b0ng Y\u00ean",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "20.81428",
+    "longitude": "106.0474",
+    "code": "67",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "40": {
+    "id": "40",
+    "name": "EC Vi\u1ec7t Tr\u00ec",
+    "email": "jbvn068@jollibee.com.vn",
+    "phone": "02103.847.686\n02103.850.686",
+    "city": {
+      "id": "42",
+      "name": "Ph\u00fa Th\u1ecd"
+    },
+    "district": {
+      "id": "512",
+      "name": "Vi\u1ec7t Tr\u00ec"
+    },
+    "address": "1828  Hung Vuong St, Nong Trang W., Viet Tri City,  Phu Tho Province",
+    "vietnamese_address": "1828 Hu\u0300ng V\u01b0\u01a1ng, Ph\u01b0\u01a1\u0300ng N\u00f4ng Trang, Tp. Vi\u1ec7t Tr\u00ec, T\u1ec9nh Ph\u00fa Th\u1ecd",
+    "weekday_opening_hours": "9:00 \u2013 21 :00 PM",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "21.32614",
+    "longitude": "105.3804",
+    "code": "68",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "41": {
+    "id": "41",
+    "name": "EC Nam \u0110\u1ecbnh",
+    "email": "jbvn069@jollibee.com.vn",
+    "phone": "02283 666 256\n02283 666 257",
+    "city": {
+      "id": "35",
+      "name": "Nam \u0110\u1ecbnh"
+    },
+    "district": {
+      "id": "438",
+      "name": "Nam \u0110\u1ecbnh"
+    },
+    "address": "151 Nguyen Du St, Vi Hoang W., Nam Dinh City, Nam Dinh Province",
+    "vietnamese_address": "151 Nguy\u00ea\u0303n Du, P. Vi\u0323 Hoa\u0300ng, TP. Nam \u0110i\u0323nh, t\u1ec9nh Nam \u0110\u1ecbnh",
+    "weekday_opening_hours": "9:00:00 - 10 :00 PM",
+    "weekend_opening_hours": "8:00:00 - 10:00 PM",
+    "latitude": "20.431961",
+    "longitude": "106.179659",
+    "code": "69",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "42": {
+    "id": "42",
+    "name": "EC Sa \u0110\u00e9c",
+    "email": "jbvn070@jollibee.com.vn",
+    "phone": "02773 775801",
+    "city": {
+      "id": "47",
+      "name": "\u0110\u1ed3ng Th\u00e1p"
+    },
+    "district": {
+      "id": "555",
+      "name": "Sa \u0110\u00e9c"
+    },
+    "address": "138A Hung Vuong, P.2, Sa Dec, Dong Thap.",
+    "vietnamese_address": "138A H\u00f9ng V\u01b0\u01a1ng, Ph\u01b0\u1eddng 2, TP. Sa \u0110\u00e9c, T\u1ec9nh \u0110\u1ed3ng Th\u00e1p",
+    "weekday_opening_hours": "9:00 \u2013 21 :00 PM",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "10.293099",
+    "longitude": "105.766754",
+    "code": "70",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "43": {
+    "id": "43",
+    "name": "EC B\u1eafc Ninh",
+    "email": "jbvn071@jollibee.com.vn",
+    "phone": "02223 854 857\n 854.856",
+    "city": {
+      "id": "17",
+      "name": "B\u1eafc Ninh"
+    },
+    "district": {
+      "id": "217",
+      "name": "B\u1eafc Ninh"
+    },
+    "address": "393 Tran Hung Dao, Pho Vu , P.Van Phuc, TP.Bac Ninh",
+    "vietnamese_address": "S\u1ed1 393 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Ph\u1ed1 V\u0169, Ph\u01b0\u1eddng V\u1ea1n Ph\u00fac, TP.B\u1eafc Ninh",
+    "weekday_opening_hours": "9 AM \u2013 9 PM",
+    "weekend_opening_hours": "9 AM \u2013 9 :30 PM",
+    "latitude": "21.06821",
+    "longitude": "106.1168",
+    "code": "71",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "44": {
+    "id": "44",
+    "name": "EC Thanh H\u00f3a",
+    "email": "gsvn072@vngoldstar.com",
+    "phone": "02373 859 369",
+    "city": {
+      "id": "19",
+      "name": "Thanh H\u00f3a"
+    },
+    "district": {
+      "id": "258",
+      "name": "Thanh H\u00f3a"
+    },
+    "address": "So 468 duong tran phu ,p.Ba Dinh.Tp.Thanh Hoa.T thanh Hoa",
+    "vietnamese_address": "S\u1ed1 468 Tr\u1ea7n Ph\u00fa, Ph\u01b0\u1eddng Ba \u0110\u00ecnh, TP. Thanh H\u00f3a, t\u1ec9nh Thanh H\u00f3a",
+    "weekday_opening_hours": "8:00AM \u2013 21:00PM",
+    "weekend_opening_hours": "8:00AM \u2013 21:00PM",
+    "latitude": "19.79114",
+    "longitude": "105.4147",
+    "code": "72",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "45": {
+    "id": "45",
+    "name": "EC T\u00e2n An",
+    "email": "gsvn073@vngoldstar.com",
+    "phone": "02723 592 700",
+    "city": {
+      "id": "8",
+      "name": "Long An"
+    },
+    "district": {
+      "id": "114",
+      "name": "T\u00e2n An"
+    },
+    "address": "482A hung vuong , p3 ,TP Tan An , Long An",
+    "vietnamese_address": "482A H\u00f9ng V\u01b0\u01a1ng, Ph\u01b0\u1eddng 3, TP T\u00e2n An, Long An",
+    "weekday_opening_hours": "8:00AM \u2013 21:00PM",
+    "weekend_opening_hours": "8:00AM \u2013 21:00PM",
+    "latitude": "10.535206",
+    "longitude": "106.407675",
+    "code": "73",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "46": {
+    "id": "46",
+    "name": "Aeon Mall B\u00ecnh D\u01b0\u01a1ng",
+    "email": "jbvn074@jollibee.com.vn",
+    "phone": "0274 626 0735",
+    "city": {
+      "id": "4",
+      "name": "B\u00ecnh D\u01b0\u01a1ng"
+    },
+    "district": {
+      "id": "70",
+      "name": "Thu\u1eadn An"
+    },
+    "address": "2 Fl., Lo S-19, Khu Phuc Hop Canary, Dai Lo Binh Duong, P.Binh Hoa, TX.Thuan An, BinH Duong",
+    "vietnamese_address": "T\u1ea7ng 2, L\u00f4 S \u2013 19 , t\u1ea7ng 2 khu ph\u1ee9c h\u1ee3p CANARY AEON MALL , \u0110\u1ea1i L\u1ed9 B\u00ecnh D\u01b0\u01a1ng, th\u1ecb x\u00e3 Thu\u1eadn An, t\u1ec9nh B\u00ecnh D\u01b0\u01a1ng",
+    "weekday_opening_hours": "9:00 \u2013 22 :00 PM",
+    "weekend_opening_hours": "9:00 \u2013 22 :00 PM",
+    "latitude": "10.931793",
+    "longitude": "106.711669",
+    "code": "74",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "47": {
+    "id": "47",
+    "name": "EC Pleiku",
+    "email": "gsvn075@vngoldstar.com",
+    "phone": "02696 251 279",
+    "city": {
+      "id": "22",
+      "name": "Gia Lai"
+    },
+    "district": {
+      "id": null,
+      "name": ""
+    },
+    "address": "101 Hai B\u00e0 Tr\u01b0ng, TP Pleiku, Tinh Gia Lai",
+    "vietnamese_address": "101 Hai B\u00e0 Tr\u01b0ng, TP Pleiku, Tinh Gia Lai",
+    "weekday_opening_hours": "9AM-9:30PM",
+    "weekend_opening_hours": "8AM-9:30PM",
+    "latitude": "13.980712",
+    "longitude": "108.000373",
+    "code": "75",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "48": {
+    "id": "48",
+    "name": "EC Kon Tum",
+    "email": "jbvn076@jollibee.com.vn",
+    "phone": "0606 250 350",
+    "city": {
+      "id": "49",
+      "name": "Kon Tum"
+    },
+    "district": {
+      "id": null,
+      "name": ""
+    },
+    "address": "75 Tran Hung Dao St, Thong Nhat W., KomTum",
+    "vietnamese_address": "75 \u0111\u01b0\u1eddng Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, ph\u01b0\u1eddng Th\u1ed1ng Nh\u1ea5t., Kon Tum",
+    "weekday_opening_hours": "8:30 \u2013 21 :00 PM",
+    "weekend_opening_hours": "8:00 \u2013 21 :30 PM",
+    "latitude": "14.349852",
+    "longitude": "108.005719",
+    "code": "76",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "49": {
+    "id": "49",
+    "name": "EC M\u1ef9 Tho",
+    "email": "gsvn077@vngoldstar.com",
+    "phone": "02733 88 66 69",
+    "city": {
+      "id": "26",
+      "name": "Ti\u1ec1n Giang"
+    },
+    "district": {
+      "id": "356",
+      "name": "M\u1ef9 Tho"
+    },
+    "address": "142 Le Loi, P.7, My Tho, Tien Giang.",
+    "vietnamese_address": "142 L\u00ea L\u1ee3i, P.7, TP M\u1ef9 Tho , Ti\u1ec1n Giang",
+    "weekday_opening_hours": "8:00AM \u2013 21:00PM",
+    "weekend_opening_hours": "8:00AM \u2013 21:00PM",
+    "latitude": "10.361254",
+    "longitude": "106.367151",
+    "code": "77",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "50": {
+    "id": "50",
+    "name": "Big C Nha Trang",
+    "email": "jbvn078@jollibee.com.vn",
+    "phone": "02583 892 104",
+    "city": {
+      "id": "6",
+      "name": "Kh\u00e1nh H\u00f2a"
+    },
+    "district": {
+      "id": "87",
+      "name": "Nha Trang"
+    },
+    "address": "Ground Fl, Big C Nha Trang, Khu \u0110\u00f4 Thi V\u0129nh \u0110i\u1ec1m Trung, TP Nha Trang, Kh\u00e1nh Ho\u00e0 ",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Big C Nha Trang, Khu \u0110\u00f4 Thi V\u0129nh \u0110i\u1ec1m Trung, TP Nha Trang, Kh\u00e1nh Ho\u00e0 ",
+    "weekday_opening_hours": "9:00 \u2013 21 :00 PM",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "12.256163",
+    "longitude": "109.170009",
+    "code": "78",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "51": {
+    "id": "51",
+    "name": "Coopmart Quang Trung",
+    "email": "jbvn079@jollibee.com.vn",
+    "phone": "028 3589 4904",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "6",
+      "name": "G\u00f2 V\u1ea5p"
+    },
+    "address": "Lau 2, Coop Mart Quang Trung, 304A Quang Trung, P.11, Go Vap, TP.HCM.",
+    "vietnamese_address": "T\u1ea7ng 2 Coopmart Quang Trung , 304A Quang Trung , P.11, Q.G\u00f2 V\u1ea5p, Tp.H\u1ed3 Ch\u00ed Minh",
+    "weekday_opening_hours": "9:00:00 - 21:00:00",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "10.83515",
+    "longitude": "106.662258",
+    "code": "79",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "52": {
+    "id": "52",
+    "name": "Coopmart Cao L\u00e3nh",
+    "email": "jbvn080@jollibee.com.vn",
+    "phone": "2773887700",
+    "city": {
+      "id": "47",
+      "name": "\u0110\u1ed3ng Th\u00e1p"
+    },
+    "district": {
+      "id": "548",
+      "name": "Cao L\u00e3nh"
+    },
+    "address": "#1 Ngo Thoi Nham, Coopmart Cao Lanh, P.1, Cao Lanh, Dong Thap.",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t si\u00eau th\u1ecb Co.opMart Cao L\u00e3nh, 1 Ng\u00f4 Th\u1eddi Nh\u1eadm, P.1, TP Cao L\u00e3nh, \u0110\u1ed3ng Th\u00e1p",
+    "weekday_opening_hours": "9:00:00 - 21:00:00",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "10.459331",
+    "longitude": "105.640413",
+    "code": "80",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "53": {
+    "id": "53",
+    "name": "Big C B\u1eafc Giang",
+    "email": "jbvn081@jollibee.com.vn",
+    "phone": "02043 529 676",
+    "city": {
+      "id": "28",
+      "name": "B\u1eafc Giang"
+    },
+    "district": {
+      "id": "367",
+      "name": "B\u1eafc Giang"
+    },
+    "address": "Ground Fl,Big C Bac Giang, Xa Tan Tien, Thanh Pho Bac Giang, Tinh Bac Giang",
+    "vietnamese_address": "L\u1ea7u 1 TTTM Big C B\u1eafc Giang, X\u00e3 T\u00e2n Ti\u1ebfn, TP B\u1eafc Giang, T\u1ec9nh B\u1eafc Giang",
+    "weekday_opening_hours": "9:00:00 - 21:00:00",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "21.33252",
+    "longitude": "106.3954",
+    "code": "81",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "54": {
+    "id": "54",
+    "name": "EC Ch\u00e2u \u0110\u1ed1c",
+    "email": "gsvn083@vngoldstar.com",
+    "phone": "02966.260.209",
+    "city": {
+      "id": "30",
+      "name": "An Giang"
+    },
+    "district": {
+      "id": "389",
+      "name": "Ch\u00e2u \u0110\u1ed1c"
+    },
+    "address": "63 Suong Nguyet Anh, Chau Phu A, TP.Chau Doc, An Giang province",
+    "vietnamese_address": "63 S\u01b0\u01a1ng Nguy\u1ec7t Anh, P. Ch\u00e2u Ph\u00fa A, TP Ch\u00e2u \u0110\u1ed1c, t\u1ec9nh An Giang",
+    "weekday_opening_hours": "9:00:00 - 21:00:00",
+    "weekend_opening_hours": "8:30 \u2013 21 :30 PM",
+    "latitude": "10.711632",
+    "longitude": "105.117717",
+    "code": "83",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "55": {
+    "id": "55",
+    "name": "Big C H\u1ea1 Long",
+    "email": "jbvn084@jollibee.com.vn",
+    "phone": "02033 818 558",
+    "city": {
+      "id": "18",
+      "name": "Qu\u1ea3ng Ninh"
+    },
+    "district": {
+      "id": "231",
+      "name": "H\u1ea1 Long"
+    },
+    "address": "Ground Fl, Big C Ha Long, Column 5, Hong Hai ward, Ha Long city, Quang Ninh province",
+    "vietnamese_address": "T\u1ea7ng 1 TTTM Big C H\u1ea1 Long, C\u1ed9t 5, Ph\u01b0\u1eddng H\u1ed3ng H\u1ea3i, TP.H\u1ea1 Long, T\u1ec9nh Qu\u1ea3ng Ninh.",
+    "weekday_opening_hours": "9:00:00 - 22:00:00",
+    "weekend_opening_hours": "9:00:00 - 22:00:00",
+    "latitude": "20.942413",
+    "longitude": "107.110895",
+    "code": "84",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "56": {
+    "id": "56",
+    "name": "EC Ninh B\u00ecnh",
+    "email": "jbvn085@jollibee.com.vn",
+    "phone": "02293 880 556 /\n\u2026557",
+    "city": {
+      "id": "41",
+      "name": "Ninh B\u00ecnh"
+    },
+    "district": {
+      "id": "497",
+      "name": "Ninh B\u00ecnh"
+    },
+    "address": "920-922 Tran Hung Dao St, Ninh Binh City",
+    "vietnamese_address": "920 - 922, Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Ph\u01b0\u1eddng Ph\u00fac Th\u00e0nh, TP.Ninh B\u00ecnh, T\u1ec9nh Ninh B\u00ecnh",
+    "weekday_opening_hours": "9:00:00 - 22:00:00",
+    "weekend_opening_hours": "9:00:00 - 22:00:00",
+    "latitude": "20.258348",
+    "longitude": "105.971188",
+    "code": "85",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "57": {
+    "id": "57",
+    "name": "Big C D\u0129 An",
+    "email": "jbvn086@jollibee.com.vn",
+    "phone": "0274 377 9944",
+    "city": {
+      "id": "4",
+      "name": "B\u00ecnh D\u01b0\u01a1ng"
+    },
+    "district": {
+      "id": "66",
+      "name": "D\u0129 An"
+    },
+    "address": "T\u1ea7ng tr\u1ec7t Trung T\u00e2m Th\u01b0\u01a1ng M\u1ea1i Green Square, Qu\u1ed1c l\u1ed9 1K, P. \u0110\u00f4ng H\u00f2a, Th\u1ecb x\u00e3 D\u0129 An, t\u1ec9nh B\u00ecnh D\u01b0\u01a1ng ",
+    "vietnamese_address": "Shop 17 - 18, TTTM Green Square, Qu\u1ed1c l\u1ed9 1K, Ph\u01b0\u1eddng \u0110\u00f4ng H\u00f2a, Th\u1ecb X\u00e3 D\u0129 An, T\u1ec9nh B\u00ecnh D\u01b0\u01a1ng",
+    "weekday_opening_hours": "8:00:00 - 21:00:00",
+    "weekend_opening_hours": "8:00:00 - 21:00:00",
+    "latitude": "10.888806",
+    "longitude": "106.776892",
+    "code": "86",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "58": {
+    "id": "58",
+    "name": "Coopmart B\u00ecnh D\u01b0\u01a1ng",
+    "email": "jbvn087@jollibee.com.vn",
+    "phone": "0274 625 1679",
+    "city": {
+      "id": "4",
+      "name": "B\u00ecnh D\u01b0\u01a1ng"
+    },
+    "district": {
+      "id": "69",
+      "name": "Th\u1ee7 D\u1ea7u M\u1ed9t"
+    },
+    "address": "T\u1ea7ng tr\u1ec7t Trung T\u00e2m Th\u01b0\u01a1ng M\u1ea1i B\u00ecnh D\u01b0\u01a1ng Square, P. Ph\u00fa L\u1ee3i, Th\u1ee7 D\u1ea7u M\u1ed9t, t\u1ec9nh B\u00ecnh D\u01b0\u01a1ng",
+    "vietnamese_address": "GF-02, T\u1ea7ng tr\u1ec7t, TTTM B\u00ecnh D\u01b0\u01a1ng Square, Ph\u01b0\u1eddng Ph\u00fa L\u1ee3i, TP.Th\u1ee7 D\u1ea7u M\u1ed9t, T\u1ec9nh B\u00ecnh D\u01b0\u01a1ng",
+    "weekday_opening_hours": "8:00:00 - 21:00:00",
+    "weekend_opening_hours": "8:00:00 - 21:00:00",
+    "latitude": "10.984422",
+    "longitude": "106.666687",
+    "code": "87",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "59": {
+    "id": "59",
+    "name": "Vincom \u0110\u00e0 N\u1eb5ng",
+    "email": "jbvn088@jollibee.com.vn",
+    "phone": "0236 3938 000",
+    "city": {
+      "id": "3",
+      "name": "\u0110\u00e0 N\u1eb5ng"
+    },
+    "district": {
+      "id": "61",
+      "name": "S\u01a1n Tr\u00e0"
+    },
+    "address": "4th Fl, 910A Ngo Quyen, P.An Hai Bac, Q.Son Tra, TP. Da Nang",
+    "vietnamese_address": "Gian h\u00e0ng L4-04 va L4-05, TTTM Vincom \u0110\u00e0 N\u1eb5ng, 910A Ng\u00f4 Quy\u1ec1n, Ph\u01b0\u1eddng An H\u1ea3i B\u1eafc, Qu\u1eadn S\u01a1n Tr\u00e0 Tp.\u0110\u00e0 N\u1eb5ng",
+    "weekday_opening_hours": "9:00:00 - 21:00:00",
+    "weekend_opening_hours": "9:00:00 - 21:00:00",
+    "latitude": "16.071733",
+    "longitude": "108.230202",
+    "code": "88",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "60": {
+    "id": "60",
+    "name": "Vincom H\u1ea3i Ph\u00f2ng",
+    "email": "jbvn092@jollibee.com.vn",
+    "phone": "0225 22 99 586",
+    "city": {
+      "id": "7",
+      "name": "H\u1ea3i Ph\u00f2ng"
+    },
+    "district": {
+      "id": "102",
+      "name": "Ng\u00f4 Quy\u1ec1n"
+    },
+    "address": "4th Floor Vincom, 1 Le Thanh Tong street, Ngo Quyen dist, Hai Phong city",
+    "vietnamese_address": " T\u1ea7ng 4 Vincom ,S\u1ed1 1 L\u00ea Th\u00e1nh T\u00f4ng, P. M\u00e1y T\u01a1, Q. Ng\u00f4 Quy\u1ec1n, Tp. H\u1ea3i Ph\u00f2ng",
+    "weekday_opening_hours": "9:30 - 21:30",
+    "weekend_opening_hours": "9:30 - 21:30",
+    "latitude": "20.865509",
+    "longitude": "106.691258",
+    "code": "92",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "61": {
+    "id": "61",
+    "name": "Aeon Mall Long Bi\u00ean",
+    "email": "jbvn093@jollibee.com.vn",
+    "phone": "02432.003.392",
+    "city": {
+      "id": "2",
+      "name": "Ha\u0300 N\u00f4\u0323i"
+    },
+    "district": {
+      "id": "39",
+      "name": "Long Bi\u00ean"
+    },
+    "address": "L\u1ea7u 3, Trung t\u00e2m Th\u01b0\u01a1ng m\u1ea1i Aeon Mall, \u0111\u01b0\u1eddng C\u1ed1 Linh, Q.Long Bi\u00ean, H\u00e0 N\u1ed9i city",
+    "vietnamese_address": "L\u1ea7u 3, Trung T\u00e2m Aeon Mall, \u0110\u01b0\u1eddng C\u1ed5 Linh, Qu\u1eadn Long Bi\u00ean, H\u00e0 N\u1ed9i",
+    "weekday_opening_hours": "9:00 \u2013 22 :00 ",
+    "weekend_opening_hours": "9:00 \u2013 22 :00",
+    "latitude": "21.027399",
+    "longitude": "105.899056",
+    "code": "93",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "62": {
+    "id": "62",
+    "name": "Vincom An Giang",
+    "email": "jbvn091@jollibee.com.vn",
+    "phone": "02962 479 779",
+    "city": {
+      "id": "30",
+      "name": "An Giang"
+    },
+    "district": {
+      "id": "393",
+      "name": "Long Xuy\u00ean"
+    },
+    "address": "4th Floor, Lot L4-02-03, Vincom An Giang, Tran Hung Dao, My Binh,  Long Xuyen City, An Giang Province",
+    "vietnamese_address": "L\u1ea7u 4, Lot L4-02-03, Vincom An Giang, TP.Long Xuy\u00ean, T\u1ec9nh An Giang",
+    "weekday_opening_hours": "9:00 - 21:30",
+    "weekend_opening_hours": "9:00 - 21:30",
+    "latitude": "10.38367",
+    "longitude": "105.437164",
+    "code": "91",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "63": {
+    "id": "63",
+    "name": "Vincom Vi\u1ec7t Tr\u00ec",
+    "email": "jbvn096@jollibee.com.vn",
+    "phone": "2103787787",
+    "city": {
+      "id": "42",
+      "name": "Ph\u00fa Th\u1ecd"
+    },
+    "district": {
+      "id": "512",
+      "name": "Vi\u1ec7t Tr\u00ec"
+    },
+    "address": "4th floor - Vincom Plaza, Hung Vuong street, Tien Cat Ward - Viet Tri city - Phu Tho province",
+    "vietnamese_address": "L\u1ea7u 4 - Vincom Plaza, \u0110\u01b0\u1eddng H\u00f9ng V\u01b0\u01a1ng, Ph\u01b0\u1eddng Ti\u00ean C\u00e1t - Th\u00e0nh ph\u1ed1 Vi\u1ec7t Tr\u00ec, t\u1ec9nh Ph\u00fa Th\u1ecd",
+    "weekday_opening_hours": "9:00 - 21:30",
+    "weekend_opening_hours": "9:00 - 21:30",
+    "latitude": "21.31231",
+    "longitude": "105.39587",
+    "code": "96",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "64": {
+    "id": "64",
+    "name": "EC Bi\u00ean H\u00f2a",
+    "email": "gsvn098@vngoldstar.com",
+    "phone": "02516 575 844",
+    "city": {
+      "id": "5",
+      "name": "\u0110\u1ed3ng Nai"
+    },
+    "district": {
+      "id": "71",
+      "name": "Bi\u00ean H\u00f2a"
+    },
+    "address": "Ng\u00e3 t\u01b0 V\u00f5 Th\u1ecb S\u00e1u, P. Quy\u1ebft Th\u1eafng, TP. Bi\u00ean H\u00f2a, \u0110\u1ed3ng Nai",
+    "vietnamese_address": "Ng\u00e3 t\u01b0 V\u00f5 Th\u1ecb S\u00e1u, P. Quy\u1ebft Th\u1eafng, TP. Bi\u00ean H\u00f2a, \u0110\u1ed3ng Nai",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.946222",
+    "longitude": "106.823073",
+    "code": "98",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "65": {
+    "id": "65",
+    "name": "EC Quy Nh\u01a1n",
+    "email": "gsvn099@vngoldstar.com",
+    "phone": "02563 814 066",
+    "city": {
+      "id": "25",
+      "name": "B\u00ecnh \u0110\u1ecbnh"
+    },
+    "district": {
+      "id": "343",
+      "name": "Quy Nh\u01a1n"
+    },
+    "address": "419 Nguy\u1ec5n Hu\u1ec7 - p. Tr\u1ea7n Ph\u00fa - tp. Quy Nh\u01a1n - t\u1ec9nh B\u00ecnh \u0110\u1ecbnh",
+    "vietnamese_address": "419 Nguy\u1ec5n Hu\u1ec7 - p. Tr\u1ea7n Ph\u00fa - tp. Quy Nh\u01a1n - t\u1ec9nh B\u00ecnh \u0110\u1ecbnh",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "9:00 - 22:00",
+    "latitude": "13.767562",
+    "longitude": "109.227415",
+    "code": "99",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "66": {
+    "id": "66",
+    "name": "Vincom Phan V\u0103n Tr\u1ecb",
+    "email": "jbvn100@jollibee.com.vn",
+    "phone": "028 35 8800 37",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "6",
+      "name": "G\u00f2 V\u1ea5p"
+    },
+    "address": "12 Phan Van Tri street, ward 7, district Go Vap, HCM city",
+    "vietnamese_address": "12 \u0111\u01b0\u1eddng Phan V\u0103n Tr\u1ecb, ph\u01b0\u1eddng 07, qu\u1eadn G\u00f2 V\u1ea5p,  TPHCM",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "9:00 - 22:00",
+    "latitude": "10.828764",
+    "longitude": "106.683646",
+    "code": "100",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "67": {
+    "id": "67",
+    "name": "Coopmart Qu\u1ea3ng B\u00ecnh",
+    "email": "jbvn101@jollibee.com.vn",
+    "phone": "02323 779 678",
+    "city": {
+      "id": "50",
+      "name": "Qu\u1ea3ng B\u00ecnh"
+    },
+    "district": {
+      "id": "583",
+      "name": "\u0110\u1ed3ng H\u1edbi"
+    },
+    "address": "Ground Fl, Co.op Quang Binh ,Khu do thi phia bac ,duong Le Loi,  P.Dong Phu,TP.Dong Hoi",
+    "vietnamese_address": " T\u1ea7ng tr\u1ec7t ,Co.opmart Qu\u1ea3ng B\u00ecnh, Khu \u0111\u00f4 th\u1ecb ph\u00eda b\u1eafc, \u0110\u01b0\u1eddng L\u00ea L\u1ee3i, Ph\u01b0\u1eddng \u0110\u00f4ng Ph\u00fa, TP.\u0110\u1ed3ng H\u1edbi",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "17.46167",
+    "longitude": "106.618177",
+    "code": "101",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "68": {
+    "id": "68",
+    "name": "Big C An L\u1ea1c",
+    "email": "jbvn102@jollibee.com.vn",
+    "phone": "028 665 659 94",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "486",
+      "name": "B\u00ecnh T\u00e2n"
+    },
+    "address": "Ground Fl, S\u1ed1 1231, Qu\u1ed1c l\u1ed9 1A, Khu ph\u1ed1 5, Ph\u01b0\u1eddng B\u00ecnh Tr\u1ecb \u0110\u00f4ng B, qu\u1eadn B\u00ecnh T\u00e2n, Tp. H\u1ed3 Ch\u00ed Minh ",
+    "vietnamese_address": "t\u1ea7ng tr\u1ec7t, S\u1ed1 1231, Qu\u1ed1c l\u1ed9 1A, Khu ph\u1ed1 5, Ph\u01b0\u1eddng B\u00ecnh Tr\u1ecb \u0110\u00f4ng B, qu\u1eadn B\u00ecnh T\u00e2n, Tp. H\u1ed3 Ch\u00ed Minh ",
+    "weekday_opening_hours": "9:00 - 21:30",
+    "weekend_opening_hours": "9:00 - 21:30",
+    "latitude": "10.73078",
+    "longitude": "106.603393",
+    "code": "102",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "69": {
+    "id": "69",
+    "name": "Vincom L\u00ea V\u0103n Vi\u1ec7t",
+    "email": "jbvn104@jollibee.com.vn",
+    "phone": "028 37306189",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "21",
+      "name": "Qu\u1eadn 9"
+    },
+    "address": " 4th Fl, 50 Le Van Viet street, Hiep Phu Ward, 9 District, HCM City  \n",
+    "vietnamese_address": "T\u1ea7ng 4, Vincom plaza L\u00ea V\u0103n Vi\u1ec7t, s\u1ed1 50 L\u00ea V\u0103n Vi\u1ec7t, P.Hi\u1ec7p Ph\u00fa, Qu\u1eadn 9\n",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "9:00 - 22:00",
+    "latitude": "10.845725",
+    "longitude": "106.77914",
+    "code": "104",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "70": {
+    "id": "70",
+    "name": "Big C T\u00e2n Hi\u1ec7p",
+    "email": "jbvn106@jollibee.com.vn",
+    "phone": "2513680052",
+    "city": {
+      "id": "5",
+      "name": "\u0110\u1ed3ng Nai"
+    },
+    "district": {
+      "id": "71",
+      "name": "Bi\u00ean H\u00f2a"
+    },
+    "address": "Ground Fl,1135 Nguyen Ai Quoc Street, Khu Pho 2, Tan Hiep Ward Bien Hoa City, Dong Nai Province  \n",
+    "vietnamese_address": " T\u1ea7ng tr\u1ec7t,1135 Nguy\u1ec5n \u00c1i Qu\u1ed1c, khu ph\u1ed1 2, ph\u01b0\u1eddng T\u00e2n Hi\u1ec7p, TP.Bi\u00ean Ho\u00e0, t\u1ec9nh \u0110\u1ed3ng Nai\n",
+    "weekday_opening_hours": "  9:00 - 21:00",
+    "weekend_opening_hours": "  9:00 - 21:00",
+    "latitude": "10.966545",
+    "longitude": "106.854744",
+    "code": "106",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "71": {
+    "id": "71",
+    "name": "Coopmart B\u1ebfn L\u1ee9c",
+    "email": "jbvn105@jollibee.com.vn",
+    "phone": "02723.890.319",
+    "city": {
+      "id": "8",
+      "name": "Long An"
+    },
+    "district": {
+      "id": "106",
+      "name": "B\u1ebfn L\u1ee9c"
+    },
+    "address": "Ground Fl, Coopmart Ben Luc, 61 QL1A, thi tran Ben Luc, Ben Luc District, Long An provine",
+    "vietnamese_address": "t\u1ea7ng tr\u1ec7t, Coopmart B\u1ebfn L\u1ee9c, 61 QL1A th\u1ecb tr\u1ea5n B\u1ebfn L\u1ee9c, huy\u1ec7n B\u1ebfn L\u1ee9c, t\u1ec9nh Long An",
+    "weekday_opening_hours": "  9:00 -21:00",
+    "weekend_opening_hours": "  9:00 -21:00",
+    "latitude": "10.637631",
+    "longitude": "106.482535",
+    "code": "105",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "72": {
+    "id": "72",
+    "name": "Vincom Th\u00e1i B\u00ecnh",
+    "email": "jbvn107@jollibee.com.vn",
+    "phone": "02273 836 789",
+    "city": {
+      "id": "27",
+      "name": "Th\u00e1i B\u00ecnh"
+    },
+    "district": {
+      "id": "363",
+      "name": "Th\u00e1i B\u00ecnh"
+    },
+    "address": "5th Fl, TTTM Vincom Ly Bon- Thai Binh, Ly Bon street, De Tham Ward, TP.Thai Binh, T\u1ec9nh Th\u00e1i B\u00ecnh",
+    "vietnamese_address": "t\u1ea7ng 5, Vincom Th\u00e1i B\u00ecnh, \u0111\u01b0\u1eddng L\u00fd B\u00f4n, ph\u01b0\u1eddng \u0110\u1ec1 Th\u00e1m, Th\u00e0nh ph\u1ed1 Th\u00e1i B\u00ecnh, T\u1ec9nh Th\u00e1i B\u00ecnh",
+    "weekday_opening_hours": "  9:00 -21:30",
+    "weekend_opening_hours": "  9:00 -21:30",
+    "latitude": "20.44449",
+    "longitude": "106.336967",
+    "code": "107",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "73": {
+    "id": "73",
+    "name": "T\u00f4 Hi\u1ec7u",
+    "email": "jbvn108@jollibee.com.vn",
+    "phone": "2463299797",
+    "city": {
+      "id": "2",
+      "name": "Ha\u0300 N\u00f4\u0323i"
+    },
+    "district": {
+      "id": "28",
+      "name": "C\u1ea7u Gi\u1ea5y"
+    },
+    "address": "303, 305 Pho To Hieu, Nghia T\u00e2n ward , Cau Giay distric.  Hnoi",
+    "vietnamese_address": "303 - 305 T\u00f4 Hi\u1ec7u, Qu\u1eadn C\u1ea7u Gi\u1ea5y, H\u00e0 N\u1ed9i",
+    "weekday_opening_hours": "  9:00 -21:30",
+    "weekend_opening_hours": "  9:00 -21:30",
+    "latitude": "21.041494",
+    "longitude": "105.790616",
+    "code": "108",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "74": {
+    "id": "74",
+    "name": "Bu\u00f4n Ma Thu\u1ed9t",
+    "email": "jbvn109@jollibee.com.vn",
+    "phone": "02623 55 35 79",
+    "city": {
+      "id": "11",
+      "name": "\u0110\u1eafk L\u1eafk"
+    },
+    "district": {
+      "id": "149",
+      "name": "Bu\u00f4n Ma Thu\u1ed9t"
+    },
+    "address": "11 Quang Trung, Thong Nhat Ward, Buon Ma Thuot City ",
+    "vietnamese_address": "11 Quang Trung, Ph\u01b0\u1eddng Th\u1ed1ng Nh\u1ea5t, tp. Bu\u00f4n M\u00ea Thu\u1ed9t",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "12.680975",
+    "longitude": "108.044379",
+    "code": "109",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "75": {
+    "id": "75",
+    "name": "Vincom Ph\u1ea1m Ng\u1ecdc Th\u1ea1ch",
+    "email": "jbvn110@jollibee.com.vn",
+    "phone": "2423466333",
+    "city": {
+      "id": "2",
+      "name": "Ha\u0300 N\u00f4\u0323i"
+    },
+    "district": {
+      "id": "32",
+      "name": "\u0110\u1ed1ng \u0110a"
+    },
+    "address": "2 Pham Ngoc Thach, Trung T\u1ef1 Ward, Dong Da Distric, Ha Noi City",
+    "vietnamese_address": "2 Ph\u1ea1m Ng\u1ecdc Th\u1ea1ch, Ph\u01b0\u1eddng Trung T\u1ef1 , Qu\u1eadn \u0110\u1ed1ng \u0110a, H\u00e0 N\u1ed9i",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "21.006324",
+    "longitude": "105.831932",
+    "code": "110",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "76": {
+    "id": "76",
+    "name": "Coopmart Th\u1ed1t N\u1ed1t",
+    "email": "jbvn111@jollibee.com.vn",
+    "phone": "0292 3851212",
+    "city": {
+      "id": "12",
+      "name": "C\u1ea7n Th\u01a1"
+    },
+    "district": {
+      "id": "169",
+      "name": "Th\u1ed1t N\u1ed1t"
+    },
+    "address": "QL91, Coop Thot Not, Thot Not Ward, Thot Not Distric, Can Tho City",
+    "vietnamese_address": "QL91, Coop Th\u1ed1t N\u1ed1t, Ph\u01b0\u1eddng Th\u1ed1t N\u1ed1t, Qu\u1eadn Th\u1ed1t N\u1ed1t, TP. C\u1ea7n Th\u01a1",
+    "weekday_opening_hours": "8:00 - 21:00",
+    "weekend_opening_hours": "8:00 - 21:00",
+    "latitude": "10.270007",
+    "longitude": "105.536158",
+    "code": "111",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "77": {
+    "id": "77",
+    "name": "EC Tr\u00e0 Vinh",
+    "email": "jbvn112@jollibee.com.vn",
+    "phone": "02943 866 000",
+    "city": {
+      "id": "52",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "district": {
+      "id": "606",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "address": "74-76 Le Loi, khom 3, Ward 2, Tra Vinh City, Tra Vinh Province",
+    "vietnamese_address": "74-76 L\u00ea L\u1ee3i, kh\u00f3m 3, ph\u01b0\u1eddng 2, TP.Tr\u00e0 Vinh, t\u1ec9nh Tr\u00e0 Vinh",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.935664",
+    "longitude": "106.341047",
+    "code": "112",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "78": {
+    "id": "78",
+    "name": "EC S\u00f3c Tr\u0103ng",
+    "email": "jbvn113@jollibee.com.vn",
+    "phone": "02993 629 949",
+    "city": {
+      "id": "48",
+      "name": "S\u00f3c Tr\u0103ng"
+    },
+    "district": {
+      "id": "567",
+      "name": "S\u00f3c Tr\u0103ng"
+    },
+    "address": "116 Ly Thuong Kiet, Ward 1, Soc Trang City, Soc Trang Province",
+    "vietnamese_address": "116 L\u00fd Th\u01b0\u1eddng Ki\u1ec7t, ph\u01b0\u1eddng 1, TP.S\u00f3c Tr\u0103ng , T\u1ec9nh S\u00f3c Tr\u0103ng",
+    "weekday_opening_hours": "8:00 - 21:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.606354",
+    "longitude": "106.341047",
+    "code": "113",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "79": {
+    "id": "79",
+    "name": "Coopmart Ch\u00e2u \u0110\u1ed1c",
+    "email": "jbvn116@jollibee.com.vn",
+    "phone": "02963.869.040",
+    "city": {
+      "id": "30",
+      "name": "An Giang"
+    },
+    "district": {
+      "id": "389",
+      "name": "Ch\u00e2u \u0110\u1ed1c"
+    },
+    "address": "Ground Fl, 63 L\u00ea L\u1ee3i, Ch\u00e2u Ph\u00fa B Ward, CH\u00e2u \u0110\u1ed1c City, Anh Giang Province",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, 63 L\u00ea L\u1ee3i, ph\u01b0\u1eddng Ch\u00e2u Ph\u00fa B, TP.Ch\u00e2u \u0110\u1ed1c , t\u1ec9nh An Giang",
+    "weekday_opening_hours": "8:00 - 21:00",
+    "weekend_opening_hours": "8:00 - 21:00",
+    "latitude": "10.707308",
+    "longitude": "105.124498",
+    "code": "116",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "80": {
+    "id": "80",
+    "name": "EC \u00c2u C\u01a1",
+    "email": "jbvn115@jollibee.com.vn",
+    "phone": "02838 616 848",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "22",
+      "name": "T\u00e2n B\u00ecnh"
+    },
+    "address": "650 Au c\u01a1, Ward 10, Tan Binh Distric, HCMC",
+    "vietnamese_address": "650 \u00c2u C\u01a1, Ph\u01b0\u1eddng 10, Qu\u1eadn T\u00e2n B\u00ecnh , HCMC",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.785203",
+    "longitude": "106.642026",
+    "code": "115",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "81": {
+    "id": "81",
+    "name": "EC Long Xuy\u00ean",
+    "email": "jbvn114@jollibee.com.vn",
+    "phone": "02963 941 899",
+    "city": {
+      "id": "30",
+      "name": "An Giang"
+    },
+    "district": {
+      "id": "393",
+      "name": "Long Xuy\u00ean"
+    },
+    "address": "58 Nguyen Thai Hoc, My Binh ward, Long Xuyen City, An Giang Provine",
+    "vietnamese_address": "58 Nguy\u1ec5n Th\u00e1i H\u1ecdc, ph\u01b0\u1eddng M\u1ef9 B\u00ecnh, Th\u00e0nh ph\u1ed1 Long Xuy\u00ean, t\u1ec9nh An Giang",
+    "weekday_opening_hours": "8:00 - 21:00",
+    "weekend_opening_hours": "8:00 - 21:00",
+    "latitude": "10.387014",
+    "longitude": "105.435462",
+    "code": "114",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "82": {
+    "id": "82",
+    "name": "Vincom V\u0129nh Long",
+    "email": "jbvn117@jollibee.com.vn",
+    "phone": "2703888001",
+    "city": {
+      "id": "40",
+      "name": "V\u0129nh Long"
+    },
+    "district": {
+      "id": "491",
+      "name": "V\u0129nh Long"
+    },
+    "address": "4th Floor,Vincom Plaza ,55 Nguyen Thai Buong Str., 4 Ward, Vinh Long City, Vinh Long Province",
+    "vietnamese_address": "T\u1ea7ng 4,Vincom Plaza, 55 Ph\u1ea1m Th\u00e1i B\u01b0\u1eddng, ph\u01b0\u1eddng 4, th\u00e0nh ph\u1ed1 V\u0129nh Long, t\u1ec9nh V\u0129nh Long",
+    "weekday_opening_hours": "  9:30 AM- 10 PM",
+    "weekend_opening_hours": "9AM - 10 PM",
+    "latitude": "10.246083",
+    "longitude": "105.977166",
+    "code": "117",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "83": {
+    "id": "83",
+    "name": "Vincom Y\u00ean B\u00e1i",
+    "email": "jbvn118@jollibee.com.vn",
+    "phone": "02166 511 118",
+    "city": {
+      "id": "56",
+      "name": "Y\u00ean B\u00e1i"
+    },
+    "district": {
+      "id": "640",
+      "name": "Y\u00ean B\u00e1i"
+    },
+    "address": "L3 02-03 Floor 3 Vincom Plaza Yen Bai. Yen Hoa Park Peninsula. Thanh Cong Street, Nguyen Thai Hoc Ward, Yen Bai City, Yen Bai",
+    "vietnamese_address": "L\u1ea7u 3 Vincom Plaza Y\u00ean B\u00e1i, C\u00f4ng vi\u00ean Y\u00ean H\u00f2a, \u0111\u01b0\u1eddng Th\u00e0nh C\u00f4ng, ph\u01b0\u1eddng Nguy\u1ec5n Th\u00e1i H\u1ecdc, th\u00e0nh ph\u1ed1 Y\u00ean B\u00e1i, t\u1ec9nh Y\u00ean B\u00e1i",
+    "weekday_opening_hours": "10:00 - 22:00",
+    "weekend_opening_hours": "10:00 - 22:00",
+    "latitude": "10:00 - 22:00",
+    "longitude": "104.881283",
+    "code": "118",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "84": {
+    "id": "84",
+    "name": "Sense city C\u00e0 Mau",
+    "email": "jbvn119@jollibee.com.vn",
+    "phone": "2903520996",
+    "city": {
+      "id": "39",
+      "name": "C\u00e0 Mau"
+    },
+    "district": {
+      "id": "476",
+      "name": "C\u00e0 Mau"
+    },
+    "address": "L1-22, 1st floor, Sense city Ca Mau, 9 Tran Hung \u0110ao street, Ward 5,Ca Mau city, Ca Mau  \n",
+    "vietnamese_address": "L\u1ea7u 1 Sense City Ca Mau, s\u1ed1 9 \u0111\u01b0\u1eddng Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, ph\u01b0\u1eddng 5, th\u00e0nh ph\u1ed1 C\u00e0 Mau, t\u1ec9nh C\u00e0 Mau\n",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.177607",
+    "longitude": "105.154218",
+    "code": "119",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "85": {
+    "id": "85",
+    "name": "Vincom Tuy\u00ean Quang",
+    "email": "jbvn120@jollibee.com.vn",
+    "phone": "2072204888",
+    "city": {
+      "id": "57",
+      "name": "Tuy\u00ean Quang"
+    },
+    "district": {
+      "id": "647",
+      "name": "Tuy\u00ean Quang"
+    },
+    "address": "L303 Vincom Plaza Tuyen Quang, 260 Quang Trung street, Phan Thiet ward, Tuyen Quang City, Tuyen Quang Province",
+    "vietnamese_address": "Vincom Plaza Tuy\u00ean Quang, 260 Quang Trung, P. Phan Thi\u1ebft, Tp. Tuy\u00ean Quang, T\u1ec9nh Tuy\u00ean Quang",
+    "weekday_opening_hours": "10:00 - 22:00",
+    "weekend_opening_hours": "10:00 - 22:00",
+    "latitude": "10:00 - 22:00",
+    "longitude": "105.205252",
+    "code": "120",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "86": {
+    "id": "86",
+    "name": "Vincom H\u00e0 T\u0129nh",
+    "email": "jbvn121@jollibee.com.vn",
+    "phone": "2396566676",
+    "city": {
+      "id": "46",
+      "name": "H\u00e0 T\u0129nh"
+    },
+    "district": {
+      "id": "539",
+      "name": "H\u00e0 T\u0129nh"
+    },
+    "address": "L3 -09 Floor 3 Vincom Plaza Ha Huy Tap - Ha Tinh,Ham Nghi Street, Ha Huy Tap Ward, Ha Tinh City, Ha Tinh Province",
+    "vietnamese_address": "L\u1ea7u 3 Vincom Plaza H\u00e0 Huy T\u1eadp, \u0111\u01b0\u1eddng H\u00e0m Nghi, ph\u01b0\u1eddng H\u00e0 Huy T\u1eadp, Th\u00e0nh ph\u1ed1 H\u00e0 T\u0129nh, T\u1ec9nh H\u00e0 T\u0129nh",
+    "weekday_opening_hours": "  10 AM- 10 PM",
+    "weekend_opening_hours": "  10 AM- 10 PM",
+    "latitude": "18.33644",
+    "longitude": "105.894964",
+    "code": "121",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "87": {
+    "id": "87",
+    "name": "Coopmart Qu\u1ea3ng Ng\u00e3i",
+    "email": "jbvn122@jollibee.com.vn",
+    "phone": "2556251524",
+    "city": {
+      "id": "36",
+      "name": "Qu\u1ea3ng Ng\u00e3i"
+    },
+    "district": {
+      "id": "452",
+      "name": "Qu\u1ea3ng Ng\u00e3i"
+    },
+    "address": "Ground Floor Coopmart Quang Ngai, 242 Nguyen Nghiem, Group 6, Ward Nguyen Nghiem, Quang Ngai Dictrict",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t, Coop mart Qu\u1ea3ng Ng\u00e3i, 242 Nguy\u1ec5n B\u00e1 Loan, P. Nguy\u1ec5n Nghi\u00eam, Tp. Qu\u1ea3ng Ng\u00e3i, Qu\u1ea3ng Ng\u00e3i",
+    "weekday_opening_hours": "  10 AM- 10 PM",
+    "weekend_opening_hours": "  10 AM- 10 PM",
+    "latitude": "15.121034",
+    "longitude": "108.806671",
+    "code": "122",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "88": {
+    "id": "88",
+    "name": "EC C\u1ea7n Th\u01a1",
+    "email": "jbvn123@jollibee.com.vn",
+    "phone": "2923820123",
+    "city": {
+      "id": "12",
+      "name": "C\u1ea7n Th\u01a1"
+    },
+    "district": {
+      "id": "166",
+      "name": "Ninh Ki\u1ec1u"
+    },
+    "address": "376, 30/4 Street, Hung Loi ward, Ninh Kieu Distric, Can Tho City",
+    "vietnamese_address": "376, \u0111\u01b0\u1eddng 30/4, ph\u01b0\u1eddng H\u01b0ng L\u1ee3i, qu\u1eadn Ninh Ki\u1ec1u, C\u1ea7n Th\u01a1",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.022052",
+    "longitude": "105.770892",
+    "code": "123",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "89": {
+    "id": "89",
+    "name": "Nam \u0110\u1ecbnh Tower",
+    "email": "jbvn124@jollibee.com.vn",
+    "phone": "2286293888",
+    "city": {
+      "id": "35",
+      "name": "Nam \u0110\u1ecbnh"
+    },
+    "district": {
+      "id": "438",
+      "name": "Nam \u0110\u1ecbnh"
+    },
+    "address": "1st floor Nam Dinh Tower,  #91 Dien Bien Street, Cua Bac Ward, Nam Dinh City.",
+    "vietnamese_address": "T\u1ea7ng 1 Nam \u0110\u1ecbnh Tower, 91, \u0111\u01b0\u1eddng \u0110i\u1ec7n Bi\u00ean, Ph\u01b0\u1eddng C\u1eeda B\u1eafc, th\u00e0nh ph\u1ed1 Nam \u0110\u1ecbnh",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "20.43045",
+    "longitude": "106.161817",
+    "code": "124",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "90": {
+    "id": "90",
+    "name": "EC Tuy H\u00f2a",
+    "email": "jbvn126@jollibee.com.vn",
+    "phone": "02573.849.000",
+    "city": {
+      "id": "44",
+      "name": "Ph\u00fa Y\u00ean"
+    },
+    "district": {
+      "id": "529",
+      "name": "Tuy H\u00f2a"
+    },
+    "address": "93 Phan Dinh Phung, Ward 1, Tuy Hoa Dictrict, Tuy Hoa City",
+    "vietnamese_address": "93 Phan \u0110\u00ecnh Ph\u00f9ng, ph\u01b0\u1eddng 1, qu\u1eadn Tuy H\u00f2a, th\u00e0nh ph\u1ed1 Tuy H\u00f2a",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "13.086275",
+    "longitude": "109.301363",
+    "code": "126",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "91": {
+    "id": "91",
+    "name": "EC B\u1ea1c Li\u00eau",
+    "email": "jbvn125@jollibee.com.vn",
+    "phone": "2913657888",
+    "city": {
+      "id": "55",
+      "name": "B\u1ea1c Li\u00eau"
+    },
+    "district": {
+      "id": "626",
+      "name": "B\u1ea1c Li\u00eau"
+    },
+    "address": "128 Nguyen Tat Thanh, Ward 7, Bac Lieu City, Bac Lieu Province",
+    "vietnamese_address": "128 Nguy\u1ec5n T\u1ea5t Th\u00e0nh, ph\u01b0\u1eddng 7, Tp. B\u1ea1c Li\u00eau, t\u1ec9nh B\u1ea1c li\u00eau",
+    "weekday_opening_hours": "8:00 - 21:00",
+    "weekend_opening_hours": "8:00 - 21:00",
+    "latitude": "9.290832",
+    "longitude": "105.722725",
+    "code": "125",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "92": {
+    "id": "92",
+    "name": "Coopmart Qu\u1ea3ng Tr\u1ecb",
+    "email": "jbvn129@jollibee.com.vn",
+    "phone": "02333 666 525",
+    "city": {
+      "id": "51",
+      "name": "Qu\u1ea3ng Tr\u1ecb"
+    },
+    "district": {
+      "id": "592",
+      "name": "\u0110\u00f4ng H\u00e0"
+    },
+    "address": "Coopmart Dong Ha - 2 Tran Hung Dao, Ward 1, Quang Tri Dictrict, Dong Ha City",
+    "vietnamese_address": "Coop Mart \u0110\u00f4ng H\u00e0, 2 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Ph\u01b0\u1eddng 1, TP \u0110\u00f4ng H\u00e0, Qu\u1ea3ng Tr\u1ecb",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "16.821671",
+    "longitude": "107.095685",
+    "code": "129",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "93": {
+    "id": "93",
+    "name": "Coopmart KonTum",
+    "email": "jbvn127@jollibee.com.vn",
+    "phone": "02603 884885",
+    "city": {
+      "id": "49",
+      "name": "Kon Tum"
+    },
+    "district": {
+      "id": null,
+      "name": ""
+    },
+    "address": "Kontum Supermarket - 205B Le Hong Phong, Quyet Thang Ward, Kontum Dictrict, Kontum City",
+    "vietnamese_address": "Si\u00eau th\u1ecb Kontum -205B L\u00ea H\u1ed3ng Phong, Ph\u01b0\u1eddng Quy\u1ebft Th\u1eafng, Tp. Kon Tum",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "14.355559",
+    "longitude": "108.003223",
+    "code": "127",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "94": {
+    "id": "94",
+    "name": "Coopmart H\u00e0 Ti\u00ean",
+    "email": "jbvn128@jollibee.com.vn",
+    "phone": "02973 967 999",
+    "city": {
+      "id": "16",
+      "name": "Ki\u00ean Giang"
+    },
+    "district": {
+      "id": "208",
+      "name": "H\u00e0 Ti\u00ean"
+    },
+    "address": "Ground Fl,Coopmart H\u00e0 Ti\u00ean- Khu \u0111\u1ea5t nh\u00e0 v\u0103n h\u00f3a, M\u1ea1c C\u00f4ng Du St, \u0110\u00f4ng H\u1ed3 District, H\u00e0 Ti\u00ean, Ki\u00ean Giang",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t,Coop Mart H\u00e0 Ti\u00ean, khu \u0111\u1ea5t nh\u00e0 v\u0103n h\u00f3a, \u0111\u01b0\u1eddng M\u1ea1c C\u00f4ng Du, Qu\u1eadn \u0110\u00f4ng H\u1ed3, Tp H\u00e0 Ti\u00ean, T\u1ec9nh Ki\u00ean Giang",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.383786",
+    "longitude": "104.488671",
+    "code": "128",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "95": {
+    "id": "95",
+    "name": "Co.op Xtra S\u01b0 V\u1ea1n H\u1ea1nh",
+    "email": "jbvn130@jollibee.com.vn",
+    "phone": "2871079010",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "11",
+      "name": "Qu\u1eadn 10"
+    },
+    "address": "B3-CoopXtra Su Van Hanh, 11 S\u01b0 V\u1ea1n H\u1ea1nh, Distric 10, HCM City",
+    "vietnamese_address": "CoopXtra V\u1ea1n H\u1ea1nh, 11 S\u01b0 V\u1ea1n H\u1ea1nh, Ph\u01b0\u1eddng 12, Qu\u1eadn 10, H\u1ed3 Ch\u00ed Minh",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.770771",
+    "longitude": "106.669633",
+    "code": "130",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "96": {
+    "id": "96",
+    "name": "Coopmart Cai L\u1eady",
+    "email": "jbvn131@jollibee.com.vn",
+    "phone": "0273 658 0000",
+    "city": {
+      "id": "26",
+      "name": "Ti\u1ec1n Giang"
+    },
+    "district": {
+      "id": "349",
+      "name": "Cai L\u1eady"
+    },
+    "address": "Floor Coop mart, 30/4 street, ward 1, Thi xa Cai Lay, Tien Giang provine",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Coopmart, \u0110\u01b0\u1eddng 30/4, Ph\u01b0\u1eddng 1, Th\u1ecb x\u00e3 Cai L\u1eady, Ti\u1ec1n Giang",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.408468",
+    "longitude": "106.119245",
+    "code": "131",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "97": {
+    "id": "97",
+    "name": "Coopmart H\u1ed3ng Ng\u1ef1",
+    "email": "jbvn132@jollibee.com.vn",
+    "phone": "0277 3567 000",
+    "city": {
+      "id": "47",
+      "name": "\u0110\u1ed3ng Th\u00e1p"
+    },
+    "district": {
+      "id": "550",
+      "name": "H\u1ed3ng Ng\u1ef1"
+    },
+    "address": "Floor Coop Mart Hong Ngu, Nguyen Tat Thanh, An Thanh, TX.Hong Ngu",
+    "vietnamese_address": "GF-01, t\u1ea7ng tr\u1ec7t Si\u00eau th\u1ecb CoopMart H\u1ed3ng Ng\u1ef1, Nguy\u1ec5n T\u1ea5t Th\u00e0nh, Ph\u01b0\u1eddng An Th\u1ea1nh, Th\u1ecb X\u00e3 H\u1ed3ng Ng\u1ef1, T\u1ec9nh \u0110\u1ed3ng Th\u00e1p",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.810252",
+    "longitude": "105.349221",
+    "code": "132",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "98": {
+    "id": "98",
+    "name": "Vincom B\u1ea3o L\u1ed9c",
+    "email": "jbvn133@jollibee.com.vn",
+    "phone": "2633757666",
+    "city": {
+      "id": "14",
+      "name": "L\u00e2m \u0110\u1ed3ng"
+    },
+    "district": {
+      "id": "182",
+      "name": "B\u1ea3o L\u1ed9c"
+    },
+    "address": "L3-06, 3rd floor, Vincom Plaza bao Loc, 83 Le Hong Phong street, Ward 1, Bao Loc city, Lam Dong",
+    "vietnamese_address": "L3-06, t\u1ea7ng 3, Vincom Plaza B\u1ea3o L\u1ed9c, 83 L\u00ea H\u1ed3ng Phong, Ph\u01b0\u1eddng 1, TP. B\u1ea3o L\u1ed9c, L\u00e2m \u0110\u1ed3ng",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "11.544271",
+    "longitude": "107.810909",
+    "code": "133",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "99": {
+    "id": "99",
+    "name": "Vincom Hu\u1ebf",
+    "email": "jbvn134@jollibee.com.vn",
+    "phone": "2343686875",
+    "city": {
+      "id": "15",
+      "name": "Th\u1eeba Thi\u00ean Hu\u1ebf"
+    },
+    "district": {
+      "id": "194",
+      "name": "Hu\u1ebf"
+    },
+    "address": "TTTM Vincom Plaza H\u00f9ng V\u01b0\u01a1ng, T\u1ea7ng 4, S\u1ed1 50A H\u00f9ng V\u01b0\u01a1ng, Ph\u01b0\u1eddng Ph\u00fa Nhu\u1eadn, Th\u00e0nh ph\u1ed1 Hu\u1ebf, T\u1ec9nh Th\u1eeba Thi\u00ean Hu\u1ebf",
+    "vietnamese_address": "TTTM Vincom Plaza H\u00f9ng V\u01b0\u01a1ng, T\u1ea7ng 4, S\u1ed1 50A H\u00f9ng V\u01b0\u01a1ng, Ph\u01b0\u1eddng Ph\u00fa Nhu\u1eadn, Th\u00e0nh ph\u1ed1 Hu\u1ebf, T\u1ec9nh Th\u1eeba Thi\u00ean Hu\u1ebf",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "16.46333",
+    "longitude": "107.594483",
+    "code": "134",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "100": {
+    "id": "100",
+    "name": "Vincom Qu\u1ea3ng B\u00ecnh",
+    "email": "jbvn135@jollibee.com.vn",
+    "phone": "2323836979",
+    "city": {
+      "id": "50",
+      "name": "Qu\u1ea3ng B\u00ecnh"
+    },
+    "district": {
+      "id": "583",
+      "name": "\u0110\u1ed3ng H\u1edbi"
+    },
+    "address": "L\u1ea7u 3 Vincom Plaza \u0110\u1ed3ng H\u1edbi, \u0111\u01b0\u1eddng Qu\u00e1ch Xu\u00e2n K\u1ef3, ph\u01b0\u1eddng H\u1ea3i \u0110\u00ecnh, Th\u00e0nh ph\u1ed1 \u0110\u1ed3ng H\u1edbi, T\u1ec9nh Qu\u1ea3ng B\u00ecnh",
+    "vietnamese_address": "L\u1ea7u 3 Vincom Plaza \u0110\u1ed3ng H\u1edbi, \u0111\u01b0\u1eddng Qu\u00e1ch Xu\u00e2n K\u1ef3, ph\u01b0\u1eddng H\u1ea3i \u0110\u00ecnh, Th\u00e0nh ph\u1ed1 \u0110\u1ed3ng H\u1edbi, T\u1ec9nh Qu\u1ea3ng B\u00ecnh",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "17.465492",
+    "longitude": "106.626462",
+    "code": "135",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "101": {
+    "id": "101",
+    "name": "EC \u0110\u00e0 L\u1ea1t",
+    "email": "jbvn136@jollibee.com.vn",
+    "phone": "2633858555",
+    "city": {
+      "id": "14",
+      "name": "L\u00e2m \u0110\u1ed3ng"
+    },
+    "district": {
+      "id": "185",
+      "name": "\u0110\u00e0 L\u1ea1t"
+    },
+    "address": "49BS2 Dinh Tien Hoang street, 2 ward, Da Lat City, Lam Dong Province\n",
+    "vietnamese_address": "49BS2 \u0110inh Ti\u00ean Ho\u00e0ng, Ph\u01b0\u1eddng 2, Th\u00e0nh ph\u1ed1 \u0110\u00e0 L\u1ea1t, t\u1ec9nh L\u00e2m \u0110\u1ed3ng\n",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "11.945296",
+    "longitude": "108.442841",
+    "code": "136",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "102": {
+    "id": "102",
+    "name": "Vincom Th\u00e1i Nguy\u00ean",
+    "email": "jbvn139@jollibee.com.vn",
+    "phone": "2082220422",
+    "city": {
+      "id": "33",
+      "name": "Th\u00e1i Nguy\u00ean"
+    },
+    "district": {
+      "id": "424",
+      "name": "Th\u00e1i Nguy\u00ean"
+    },
+    "address": "L4 -04 Floor 4 Vincom Plaza Thai Nguyen -  247 Luong Ngoc Quyen Street, Quang Trung Ward, Thai Nguyen City.",
+    "vietnamese_address": "L4 -04 T\u1ea7ng 4 Vincom Plaza Th\u00e1i Nguy\u00ean - 247 \u0110\u01b0\u1eddng L\u01b0\u01a1ng Ng\u1ecdc Quy\u1ebfn, Ph\u01b0\u1eddng Quang Trung, Th\u00e0nh ph\u1ed1 Th\u00e1i Nguy\u00ean",
+    "weekday_opening_hours": "10:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "21.591291",
+    "longitude": "105.826321",
+    "code": "139",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "103": {
+    "id": "103",
+    "name": "Vincom B\u1eafc Ninh",
+    "email": "jbvn138@jollibee.com.vn",
+    "phone": "0222 6282840",
+    "city": {
+      "id": "17",
+      "name": "B\u1eafc Ninh"
+    },
+    "district": {
+      "id": "217",
+      "name": "B\u1eafc Ninh"
+    },
+    "address": "L3 -03, T\u1ea7ng 3 TTTM Vincom Plaza B\u1eafc Ninh, Km1 + 200 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Ph\u01b0\u1eddng Su\u1ed1i Hoa, Tp B\u1eafc Ninh, B\u1eafc Ninh",
+    "vietnamese_address": "L3 -03, T\u1ea7ng 3 TTTM Vincom Plaza B\u1eafc Ninh, Km1 + 200 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Ph\u01b0\u1eddng Su\u1ed1i Hoa, Tp B\u1eafc Ninh, B\u1eafc Ninh",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "21.178566",
+    "longitude": "106.072655",
+    "code": "138",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "104": {
+    "id": "104",
+    "name": "Satra C\u1ee7 Chi",
+    "email": "jbvn137@jollibee.com.vn",
+    "phone": "2837355678",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "5",
+      "name": "C\u1ee7 Chi"
+    },
+    "address": "1239 Tinh 8 Street, Ward Trung An, Cu Chi District, Ho Chi Minh City",
+    "vietnamese_address": "1239 T\u1ec9nh l\u1ed9 8, X\u00e3 Trung An, Huy\u1ec7n C\u1ee7 Chi, TPHCM",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.983688",
+    "longitude": "106.583969",
+    "code": "137",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "105": {
+    "id": "105",
+    "name": "EC V\u0129nh Long",
+    "email": "jbvn140@jollibee.com.vn",
+    "phone": "02703 888111",
+    "city": {
+      "id": "40",
+      "name": "V\u0129nh Long"
+    },
+    "district": {
+      "id": "491",
+      "name": "V\u0129nh Long"
+    },
+    "address": "10 Ph\u1ea1m H\u00f9ng, Ph\u01b0\u1eddng 2, Tp.V\u0129nh Long",
+    "vietnamese_address": "10 Ph\u1ea1m H\u00f9ng, Ph\u01b0\u1eddng 2, Tp.V\u0129nh Long",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.25515",
+    "longitude": "105.962656",
+    "code": "140",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "106": {
+    "id": "106",
+    "name": "EC \u0110\u00e0 N\u1eb5ng",
+    "email": "jbvn144@jollibee.com.vn",
+    "phone": "2363556996",
+    "city": {
+      "id": "3",
+      "name": "\u0110\u00e0 N\u1eb5ng"
+    },
+    "district": {
+      "id": "56",
+      "name": "H\u1ea3i Ch\u00e2u"
+    },
+    "address": "32 Tieu La, Hoa Cuong Bac, Hai Chau ward, Da Nang City",
+    "vietnamese_address": "32 Ti\u1ec3u La, Ph\u01b0\u1eddng Ho\u00e0 C\u01b0\u1eddng B\u1eafc, Qu\u1eadn H\u1ea3i Ch\u00e2u, Tp. \u0110\u00e0 N\u1eb5ng",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "16.0455998",
+    "longitude": "108.2186309",
+    "code": "144",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "107": {
+    "id": "107",
+    "name": "EC R\u1ea1ch Gi\u00e1",
+    "email": "jbvn141@jollibee.com.vn",
+    "phone": "02973826141 / 02973825141",
+    "city": {
+      "id": "16",
+      "name": "Ki\u00ean Giang"
+    },
+    "district": {
+      "id": "213",
+      "name": "R\u1ea1ch Gi\u00e1"
+    },
+    "address": "L\u00f4 E9 S\u1ed1 1+2 \u0110\u01b0\u1eddng 3/2 Ph\u01b0\u1eddng V\u0129nh L\u1ea1c, TP.R\u1ea1ch Gi\u00e1",
+    "vietnamese_address": "L\u00f4 E9 S\u1ed1 1+2 \u0110\u01b0\u1eddng 3/2 Ph\u01b0\u1eddng V\u0129nh L\u1ea1c, TP.R\u1ea1ch Gi\u00e1",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.0002646",
+    "longitude": "105.0831717",
+    "code": "141",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "108": {
+    "id": "108",
+    "name": "Coopmart Duy\u00ean H\u1ea3i",
+    "email": "jbvn145@jollibee.com.vn",
+    "phone": "0294 383 2002",
+    "city": {
+      "id": "52",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "district": {
+      "id": "603",
+      "name": "Duy\u00ean H\u1ea3i"
+    },
+    "address": "\u0110\u01b0\u1eddng L\u00fd Th\u01b0\u1eddng Ki\u1ec7t, Kh\u00f3m 1, Ph\u01b0\u1eddng 1, Th\u1ecb x\u00e3 Duy\u00ean H\u1ea3i, Tr\u00e0 Vinh",
+    "vietnamese_address": "\u0110\u01b0\u1eddng L\u00fd Th\u01b0\u1eddng Ki\u1ec7t, Kh\u00f3m 1, Ph\u01b0\u1eddng 1, Th\u1ecb x\u00e3 Duy\u00ean H\u1ea3i, Tr\u00e0 Vinh",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.6331608",
+    "longitude": "106.4975726",
+    "code": "145",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "109": {
+    "id": "109",
+    "name": "EC Tam K\u1ef3",
+    "email": "jbvn142@jollibee.com.vn",
+    "phone": "'02353525279",
+    "city": {
+      "id": "9",
+      "name": "Qu\u1ea3ng Nam"
+    },
+    "district": {
+      "id": "135",
+      "name": "Tam K\u1ef3"
+    },
+    "address": "187 Huynh Thuc Khang, An Xuan , Tam Ky City, Quang Nam Province",
+    "vietnamese_address": "187 Hu\u1ef3nh Th\u00fac Kh\u00e1ng, An Xu\u00e2n , TP. Tam K\u1ef3, t\u1ec9nh Qu\u1ea3ng Nam",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "15.5643128",
+    "longitude": "108.488664",
+    "code": "142",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "110": {
+    "id": "110",
+    "name": "Big C M\u1ef9 Tho",
+    "email": "jbvn143@jollibee.com.vn",
+    "phone": "'02733 877 000",
+    "city": {
+      "id": "26",
+      "name": "Ti\u1ec1n Giang"
+    },
+    "district": {
+      "id": "356",
+      "name": "M\u1ef9 Tho"
+    },
+    "address": "L\u1ea7u 3, si\u00eau th\u1ecb Big C M\u1ef9 tho, 545 L\u00ea V\u0103n Ph\u1ea9m,P5,TP.M\u1ef9 Tho",
+    "vietnamese_address": "L\u1ea7u 3, si\u00eau th\u1ecb Big C M\u1ef9 tho, 545 L\u00ea V\u0103n Ph\u1ea9m,P5,TP.M\u1ef9 Tho",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.3588232",
+    "longitude": "106.3410503",
+    "code": "143",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "111": {
+    "id": "111",
+    "name": "EC C\u00e0 Mau",
+    "email": "jbvn147@jollibee.com.vn",
+    "phone": "2903661166",
+    "city": {
+      "id": "39",
+      "name": "C\u00e0 Mau"
+    },
+    "district": {
+      "id": "476",
+      "name": "C\u00e0 Mau"
+    },
+    "address": "128 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Kh\u00f3m 8, Ph\u01b0\u1eddng 5, TP C\u00e0 Mau",
+    "vietnamese_address": "128 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, Kh\u00f3m 8, Ph\u01b0\u1eddng 5, TP C\u00e0 Mau",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.1824981",
+    "longitude": "105.1597619",
+    "code": "147",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "112": {
+    "id": "112",
+    "name": "Vincom Imperia H\u1ea3i Ph\u00f2ng",
+    "email": "jbvn151@jollibee.com.vn",
+    "phone": "02252 809 666",
+    "city": {
+      "id": "7",
+      "name": "H\u1ea3i Ph\u00f2ng"
+    },
+    "district": {
+      "id": "98",
+      "name": "H\u1ed3ng B\u00e0ng"
+    },
+    "address": "T\u1ea7ng 3 TTTM Vincom Imperia H\u1ea3i Ph\u00f2ng, ph\u01b0\u1eddng Th\u01b0\u1ee3ng L\u00fd, Q. H\u1ed3ng B\u00e0ng. TP. H\u1ea3i Ph\u00f2ng, H\u1ea3i Ph\u00f2ng",
+    "vietnamese_address": "T\u1ea7ng 3 TTTM Vincom Imperia H\u1ea3i Ph\u00f2ng, ph\u01b0\u1eddng Th\u01b0\u1ee3ng L\u00fd, Q. H\u1ed3ng B\u00e0ng. TP. H\u1ea3i Ph\u00f2ng, H\u1ea3i Ph\u00f2ng",
+    "weekday_opening_hours": "9:30 - 21:00",
+    "weekend_opening_hours": "9:30 - 21:00",
+    "latitude": "20.8629155",
+    "longitude": "106.6614903",
+    "code": "151",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "113": {
+    "id": "113",
+    "name": "Vincom Qu\u1ea3ng Ng\u00e3i",
+    "email": "jbvn146@jollibee.com.vn",
+    "phone": "2553722929",
+    "city": {
+      "id": "36",
+      "name": "Qu\u1ea3ng Ng\u00e3i"
+    },
+    "district": {
+      "id": "452",
+      "name": "Qu\u1ea3ng Ng\u00e3i"
+    },
+    "address": "4th Floor, Vincom Quang Ngai, 26 Le Thanh Ton street, Quang Ngai city",
+    "vietnamese_address": "T\u1ea7ng 4, Vincom Qu\u1ea3ng Ng\u00e3i, 26 L\u00ea Th\u00e1nh T\u00f4n, Th\u00e0nh ph\u1ed1 Qu\u1ea3ng Ng\u00e3i",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "15.1136808",
+    "longitude": "108.8100997",
+    "code": "146",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "114": {
+    "id": "114",
+    "name": "Coopmart Ti\u1ec3u C\u1ea7n",
+    "email": "jbvn148@jollibee.com.vn",
+    "phone": "0294 3630000",
+    "city": {
+      "id": "52",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "district": {
+      "id": "604",
+      "name": "Ti\u1ec3u C\u1ea7n"
+    },
+    "address": "Si\u00eau Th\u1ecb Coop Mart Ti\u1ec3u C\u1ea7n, qu\u1ed1c l\u1ed9 60, \u0111\u01b0\u1eddng V\u00f5 Th\u1ecb S\u00e1u, TT.Ti\u1ec3u C\u1ea7n, H.Ti\u1ec3u C\u1ea7n, Tr\u00e0 Vinh",
+    "vietnamese_address": "Si\u00eau Th\u1ecb Coop Mart Ti\u1ec3u C\u1ea7n, qu\u1ed1c l\u1ed9 60, \u0111\u01b0\u1eddng V\u00f5 Th\u1ecb S\u00e1u, TT.Ti\u1ec3u C\u1ea7n, H.Ti\u1ec3u C\u1ea7n, Tr\u00e0 Vinh",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.8184745",
+    "longitude": "106.1917633",
+    "code": "148",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "115": {
+    "id": "115",
+    "name": "Giga Mall Ph\u1ea1m V\u0103n \u0110\u1ed3ng",
+    "email": "jbvn150@jollibee.com.vn",
+    "phone": "2871027799",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "24",
+      "name": "Th\u1ee7 \u0110\u1ee9c"
+    },
+    "address": "T\u1ea7ng B1 Giga Mall \n240-242 Ph\u1ea1m V\u0103n \u0110\u1ed3ng, P.Hi\u1ec7p B\u00ecnh Ch\u00e1nh, Qu\u1eadn Th\u1ee7 \u0110\u1ee9c, TPHCM ",
+    "vietnamese_address": "T\u1ea7ng B1 Giga Mall \n240-242 Ph\u1ea1m V\u0103n \u0110\u1ed3ng, P.Hi\u1ec7p B\u00ecnh Ch\u00e1nh, Qu\u1eadn Th\u1ee7 \u0110\u1ee9c, TPHCM ",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "9:00 - 22:00",
+    "latitude": "10.8275775",
+    "longitude": "106.7210415",
+    "code": "150",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "116": {
+    "id": "116",
+    "name": "Coopmart Topaz Home",
+    "email": "jbvn152@jollibee.com.vn",
+    "phone": "2871013989",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "13",
+      "name": "Qu\u1eadn 12"
+    },
+    "address": "Ground Fl. - Coopmart Topaz Home\n102 Phan Van Hon, Tan Thoi Nhat Ward, Q.12, TP.HCM ",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t. - Coopmart Topaz Home\n102 Phan V\u0103n H\u1edbn, ph\u01b0\u1eddng T\u00e2n Th\u1edbi Nh\u1ea5t, Q.12, TP.HCM ",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.8284915",
+    "longitude": "106.6196686",
+    "code": "152",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "117": {
+    "id": "117",
+    "name": "Coopmart S\u00e0i G\u00f2n Home",
+    "email": "jbvn149@jollibee.com.vn",
+    "phone": "2866864884",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "486",
+      "name": "B\u00ecnh T\u00e2n"
+    },
+    "address": "Ground Fl. - Coopmart Sai Gon Home\n815 Huong Lo 2, B\u00ecnh Tr\u1ecb \u0110\u00f4ng A, District B\u00ecnh T\u00e2n , Ho Chi Minh City",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t. - Coopmart S\u00e0i G\u00f2n Home\n815 H\u01b0\u01a1ng L\u1ed9 2, B\u00ecnh Tr\u1ecb \u0110\u00f4ng A, Qu\u1eadn B\u00ecnh T\u00e2n , TPHCM",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.7652586",
+    "longitude": "106.6015119",
+    "code": "149",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "118": {
+    "id": "118",
+    "name": "Big C Ninh B\u00ecnh",
+    "email": "jbvn155@jollibee.com.vn",
+    "phone": "2293666121",
+    "city": {
+      "id": "41",
+      "name": "Ninh B\u00ecnh"
+    },
+    "district": {
+      "id": "497",
+      "name": "Ninh B\u00ecnh"
+    },
+    "address": "Shop 9 Suppermarket Big C Ninh Binh - Tran Nhan Tong Street\nNinh Phuc ward, Ninh Binh City, Ninh Binh province",
+    "vietnamese_address": "Gian h\u00e0ng s\u1ed1 9 si\u00eau th\u1ecb Big C Ninh B\u00ecnh - \u0111\u01b0\u1eddng Tr\u1ea7n Nh\u00e2n T\u00f4ng, ph\u01b0\u1eddng Ninh Ph\u00fac, th\u00e0nh ph\u1ed1 Ninh B\u00ecnh, t\u1ec9nh Ninh B\u00ecnh",
+    "weekday_opening_hours": "9:30 - 21:30",
+    "weekend_opening_hours": "9:30 - 21:30",
+    "latitude": "20.2423988",
+    "longitude": "106.0043617",
+    "code": "155",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "119": {
+    "id": "119",
+    "name": "EC Cao L\u00e3nh",
+    "email": "jbvn154@jollibee.com.vn",
+    "phone": "2773868668",
+    "city": {
+      "id": "47",
+      "name": "\u0110\u1ed3ng Th\u00e1p"
+    },
+    "district": {
+      "id": "548",
+      "name": "Cao L\u00e3nh"
+    },
+    "address": "144 Nguy\u1ec5n Hu\u1ec7, Ph\u01b0\u1eddng 2, TP Cao L\u00e3nh",
+    "vietnamese_address": "144 Nguy\u1ec5n Hu\u1ec7, Ph\u01b0\u1eddng 2, TP Cao L\u00e3nh",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.4562828",
+    "longitude": "105.636726",
+    "code": "154",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "120": {
+    "id": "120",
+    "name": "EC B\u00ecnh Th\u1ee7y",
+    "email": "jbvn153@jollibee.com.vn",
+    "phone": "2923872873",
+    "city": {
+      "id": "12",
+      "name": "C\u1ea7n Th\u01a1"
+    },
+    "district": {
+      "id": "163",
+      "name": "B\u00ecnh Th\u1ee7y"
+    },
+    "address": "15A C\u00e1ch M\u1ea1ng Th\u00e1ng 8, P.An Th\u1edbi, Q.B\u00ecnh Th\u1ee7y, C\u1ea7n Th\u01a1",
+    "vietnamese_address": "15A C\u00e1ch M\u1ea1ng Th\u00e1ng 8, P.An Th\u1edbi, Q.B\u00ecnh Th\u1ee7y, C\u1ea7n Th\u01a1",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.0584812",
+    "longitude": "105.7667706",
+    "code": "153",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "121": {
+    "id": "121",
+    "name": "EC Thanh Kh\u00ea",
+    "email": "jbvn156@jollibee.com.vn",
+    "phone": "2363799989",
+    "city": {
+      "id": "3",
+      "name": "\u0110\u00e0 N\u1eb5ng"
+    },
+    "district": {
+      "id": "62",
+      "name": "Thanh Kh\u00ea"
+    },
+    "address": "47 Nguyen Duc Trung, P. Xuan Ha, Q. Thanh Khe, TP Da Nang",
+    "vietnamese_address": "47 Nguy\u1ec5n \u0110\u1ee9c Trung, P. Xu\u00e2n H\u00e0, Q. Thanh Kh\u00ea, TP \u0110\u00e0 N\u1eb5ng",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "16.0702332",
+    "longitude": "108.1873727",
+    "code": "156",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "122": {
+    "id": "122",
+    "name": "Coopmart T\u00f4 K\u00fd",
+    "email": "jbvn159@jollibee.com.vn",
+    "phone": "2862722260",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "13",
+      "name": "Qu\u1eadn 12"
+    },
+    "address": "Ground Fl.- Coopmart T\u00f4 K\u00fd\n10A T\u00f4 K\u00fd, Trung M\u1ef9 T\u00e2y, District 12 , Ho Chi Minh City",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t.- Coopmart T\u00f4 K\u00fd\n10A T\u00f4 K\u00fd, Trung M\u1ef9 T\u00e2y, qu\u1eadn 12 , Ho Chi Minh City",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "8:30 - 22:00",
+    "latitude": "10.8592167",
+    "longitude": "106.6174861",
+    "code": "159",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "123": {
+    "id": "123",
+    "name": "Aeon H\u00e0 \u0110\u00f4ng",
+    "email": "jbvn158@jollibee.com.vn",
+    "phone": "2422310246",
+    "city": {
+      "id": "2",
+      "name": "Ha\u0300 N\u00f4\u0323i"
+    },
+    "district": {
+      "id": "34",
+      "name": "H\u00e0 \u0110\u00f4ng"
+    },
+    "address": "L\u00f4 T355-1 & T355-2,Trung t\u00e2m Th\u01b0\u01a1ng M\u1ea1i AeonMall H\u00e0 \u0110\u00f4ng, C\u1ee5m D\u00e2n C\u01b0 Ho\u00e0ng V\u0103n Thu, D\u01b0\u01a1ng N\u1ed9i, Q. H\u00e0 \u0110\u00f4ng, H\u00e0 N\u1ed9i",
+    "vietnamese_address": "L\u00f4 T355-1 & T355-2,Trung t\u00e2m Th\u01b0\u01a1ng M\u1ea1i AeonMall H\u00e0 \u0110\u00f4ng, C\u1ee5m D\u00e2n C\u01b0 Ho\u00e0ng V\u0103n Thu, D\u01b0\u01a1ng N\u1ed9i, Q. H\u00e0 \u0110\u00f4ng, H\u00e0 N\u1ed9i",
+    "weekday_opening_hours": "10:00 - 22:00",
+    "weekend_opening_hours": "10:00 - 22:00",
+    "latitude": "20.9899504",
+    "longitude": "105.7504647",
+    "code": "158",
+    "area": {
+      "id": "6",
+      "name": "NORTH"
+    }
+  },
+  "124": {
+    "id": "124",
+    "name": "Vinh Center",
+    "email": "jbvn162@jollibee.com.vn",
+    "phone": "0238 3505989",
+    "city": {
+      "id": "20",
+      "name": "Ngh\u1ec7 An"
+    },
+    "district": {
+      "id": "285",
+      "name": "Vinh"
+    },
+    "address": "T\u1ea7ng 2 TTTM Vinh Centre, 69 H\u1ed3 T\u00f9ng M\u1eadu, Tr\u01b0\u1eddng Thi, Tp Vinh, Ngh\u1ec7 An",
+    "vietnamese_address": "T\u1ea7ng 2 TTTM Vinh Centre, 69 H\u1ed3 T\u00f9ng M\u1eadu, Tr\u01b0\u1eddng Thi, Tp Vinh, Ngh\u1ec7 An",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "9:00 - 22:00",
+    "latitude": "18.6719725",
+    "longitude": "105.6911641",
+    "code": "162",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "125": {
+    "id": "125",
+    "name": "Moonlight Th\u1ee7 \u0110\u1ee9c",
+    "email": "jbvn164@jollibee.com.vn",
+    "phone": "2871016879",
+    "city": {
+      "id": "1",
+      "name": "H\u1ed3 Ch\u00ed Minh"
+    },
+    "district": {
+      "id": "24",
+      "name": "Th\u1ee7 \u0110\u1ee9c"
+    },
+    "address": "102 \u0110\u1eb7ng V\u0103n Bi, B\u00ecnh Th\u1ecd, Q. Th\u1ee7 \u0110\u1ee9c, TP. HCM",
+    "vietnamese_address": "102 \u0110\u1eb7ng V\u0103n Bi, B\u00ecnh Th\u1ecd, Q. Th\u1ee7 \u0110\u1ee9c, TP. HCM",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "10.8443158",
+    "longitude": "106.7622455",
+    "code": "164",
+    "area": {
+      "id": "1",
+      "name": "HCMC"
+    }
+  },
+  "126": {
+    "id": "126",
+    "name": "Vincom+ Ninh Ho\u00e0",
+    "email": "jbvn165@jollibee.com.vn",
+    "phone": "2583847800",
+    "city": {
+      "id": "6",
+      "name": "Kh\u00e1nh H\u00f2a"
+    },
+    "district": {
+      "id": "88",
+      "name": "Ninh H\u00f2a"
+    },
+    "address": "L1 TTTM Vincom Ninh Hoa, \u0111\u01b0\u1eddng 2/4 , Ninh Hiep, Ninh Hoa, Khanh Hoa",
+    "vietnamese_address": "L\u1ea7u 1 TTTM Vincom Ninh H\u00f2a, \u0111\u01b0\u1eddng 2/4 , Ninh Hi\u1ec7p, Ninh H\u00f2a, Kh\u00e1nh H\u00f2a",
+    "weekday_opening_hours": "9:30 - 21:30",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "12.4890824",
+    "longitude": "109.132148",
+    "code": "165",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "127": {
+    "id": "127",
+    "name": "Coopmart T\u00e2n Bi\u00ean",
+    "email": "jbvn160@jollibee.com.vn",
+    "phone": "02763510118\n'02763510117",
+    "city": {
+      "id": "32",
+      "name": "T\u00e2y Ninh"
+    },
+    "district": {
+      "id": "413",
+      "name": "T\u00e2n Bi\u00ean"
+    },
+    "address": "T\u1ea7ng tr\u1ec7t Coopmart T\u00e2n Bi\u00ean, Qu\u1ed1c l\u1ed9 22B, Khu Ph\u1ed1 3, Th\u1ecb Tr\u1ea5n T\u00e2n Bi\u00ean, Huy\u1ec7n T\u00e2n Bi\u00ean, T\u00e2y Ninh",
+    "vietnamese_address": "T\u1ea7ng tr\u1ec7t Coopmart T\u00e2n Bi\u00ean, Qu\u1ed1c l\u1ed9 22B, Khu Ph\u1ed1 3, Th\u1ecb Tr\u1ea5n T\u00e2n Bi\u00ean, Huy\u1ec7n T\u00e2n Bi\u00ean, T\u00e2y Ninh",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "11.5430063",
+    "longitude": "106.0049422",
+    "code": "160",
+    "area": {
+      "id": "2",
+      "name": "SOUTHEAST"
+    }
+  },
+  "128": {
+    "id": "128",
+    "name": "Vincom S\u00f3c Tr\u0103ng",
+    "email": "jbvn163@jollibee.com.vn",
+    "phone": "02993 828 979",
+    "city": {
+      "id": "48",
+      "name": "S\u00f3c Tr\u0103ng"
+    },
+    "district": {
+      "id": "567",
+      "name": "S\u00f3c Tr\u0103ng"
+    },
+    "address": "L\u1ea7u 4 VinCom S\u00f3c Tr\u0103ng, 12 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, P2, Tp.S\u00f3c Tr\u0103ng",
+    "vietnamese_address": "L\u1ea7u 4 VinCom S\u00f3c Tr\u0103ng, 12 Tr\u1ea7n H\u01b0ng \u0110\u1ea1o, P2, Tp.S\u00f3c Tr\u0103ng",
+    "weekday_opening_hours": "9:30 - 22:00",
+    "weekend_opening_hours": "9:30 - 22:00",
+    "latitude": "9.5971155",
+    "longitude": "105.9706235",
+    "code": "163",
+    "area": {
+      "id": "3",
+      "name": "SOUTH MEKONG"
+    }
+  },
+  "129": {
+    "id": "129",
+    "name": "EC Phan Rang",
+    "email": "jbvn166@jollibee.com.vn",
+    "phone": "2593668688",
+    "city": {
+      "id": "43",
+      "name": "Ninh Thu\u1eadn"
+    },
+    "district": {
+      "id": "518",
+      "name": "Phan Rang - Th\u00e1p Ch\u00e0m"
+    },
+    "address": "230B Ng\u00f4 Gia T\u1ef1, Ph\u01b0\u1eddng Thanh S\u01a1n, Th\u00e0nh Ph\u1ed1 Phan Rang-Th\u00e1p Ch\u00e0m, Ninh Thu\u1eadn",
+    "vietnamese_address": "230B Ng\u00f4 Gia T\u1ef1, Ph\u01b0\u1eddng Thanh S\u01a1n, Th\u00e0nh Ph\u1ed1 Phan Rang-Th\u00e1p Ch\u00e0m, Ninh Thu\u1eadn",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "11.5686188",
+    "longitude": "108.9947833",
+    "code": "166",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "130": {
+    "id": "130",
+    "name": "EC Th\u00e1i B\u00ecnh 3",
+    "email": "jbvn161@jollibee.com.vn",
+    "phone": "02273735666\n'02273735678",
+    "city": {
+      "id": "27",
+      "name": "Th\u00e1i B\u00ecnh"
+    },
+    "district": {
+      "id": "363",
+      "name": "Th\u00e1i B\u00ecnh"
+    },
+    "address": "G\u00f3c \u0111\u01b0\u1eddng s\u1ed1 7 & L\u00ea Qu\u00fd \u0110\u00f4n, khu D\u00e2n c\u01b0 cao c\u1ea5p Tr\u1ea7n L\u00e3m, P. Tr\u1ea7n L\u00e3m, TP.Th\u00e1i B\u00ecnh, t\u1ec9nh Th\u00e1i B\u00ecnh",
+    "vietnamese_address": "G\u00f3c \u0111\u01b0\u1eddng s\u1ed1 7 & L\u00ea Qu\u00fd \u0110\u00f4n, khu D\u00e2n c\u01b0 cao c\u1ea5p Tr\u1ea7n L\u00e3m, P. Tr\u1ea7n L\u00e3m, TP.Th\u00e1i B\u00ecnh, t\u1ec9nh Th\u00e1i B\u00ecnh",
+    "weekday_opening_hours": "9:00 - 22:00",
+    "weekend_opening_hours": "9:00 - 22:00",
+    "latitude": "10.7518491",
+    "longitude": "106.6087742",
+    "code": "161",
+    "area": {
+      "id": "7",
+      "name": "NORTH CENTRAL Coast"
+    }
+  },
+  "131": {
+    "id": "131",
+    "name": "Big C Tr\u00e0 Vinh",
+    "email": "jbvn157@jollibee.com.vn",
+    "phone": "2943855000",
+    "city": {
+      "id": "52",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "district": {
+      "id": "606",
+      "name": "Tr\u00e0 Vinh"
+    },
+    "address": "TTTM  GO! Tr\u00e0 Vinh , Shop 6 , T\u1ea7ng tr\u1ec7t , \u0110\u01b0\u1eddng V\u00f5 Nguy\u00ean Gi\u00e1p ,P.7 , TP Tr\u00e0 Vinh",
+    "vietnamese_address": "TTTM  GO! Tr\u00e0 Vinh , Shop 6 , T\u1ea7ng tr\u1ec7t , \u0110\u01b0\u1eddng V\u00f5 Nguy\u00ean Gi\u00e1p ,P.7 , TP Tr\u00e0 Vinh",
+    "weekday_opening_hours": "8:00 - 22:00",
+    "weekend_opening_hours": "8:00 - 22:00",
+    "latitude": "9.9201031",
+    "longitude": "106.3228689",
+    "code": "157",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
+  },
+  "132": {
+    "id": "132",
+    "name": "EC Phan \u0110\u0103ng L\u01b0u",
+    "email": "jbvn168@jollibee.com.vn",
+    "phone": "2363626979",
+    "city": {
+      "id": "3",
+      "name": "\u0110\u00e0 N\u1eb5ng"
+    },
+    "district": {
+      "id": "56",
+      "name": "H\u1ea3i Ch\u00e2u"
+    },
+    "address": "126 Phan Dang Luu street, Hai Chau, Da Nang city",
+    "vietnamese_address": "126 \u0111\u01b0\u1eddng Phan \u0110\u0103ng L\u01b0u, H\u1ea3i Ch\u00e2u, TP \u0110\u00e0 N\u1eb5ng",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "16.0363152",
+    "longitude": "108.2169134",
+    "code": "168",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "133": {
+    "id": "133",
+    "name": "Go Bu\u00f4n Ma Thu\u1ed9t",
+    "email": "jbvn170@jollibee.com.vn",
+    "phone": "2623775123",
+    "city": {
+      "id": "11",
+      "name": "\u0110\u1eafk L\u1eafk"
+    },
+    "district": {
+      "id": "149",
+      "name": "Bu\u00f4n Ma Thu\u1ed9t"
+    },
+    "address": "Mall GO! Buon Ma Thuot corner of Nguyen Thi Dinh street and the western belt, Thanh Nhat Ward, Buon Ma Thuot City",
+    "vietnamese_address": "TTTM GO!Bu\u00f4n Ma Thu\u1ed9t g\u00f3c \u0111\u01b0\u1eddng Nguy\u1ec5n Th\u1ecb \u0110\u1ecbnh v\u00e0 v\u00e0nh \u0111ai t\u00e2y, ph\u01b0\u1eddng Th\u00e0nh Nh\u1ea5t, TP Bu\u00f4n Ma Thu\u1ed9t",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "12.6771071",
+    "longitude": "108.0063366",
+    "code": "170",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "134": {
+    "id": "134",
+    "name": "Go! Tam K\u1ef3",
+    "email": "jbvn169@jollibee.com.vn ",
+    "phone": "2353812868",
+    "city": {
+      "id": "9",
+      "name": "Qu\u1ea3ng Nam"
+    },
+    "district": {
+      "id": "135",
+      "name": "Tam K\u1ef3"
+    },
+    "address": "Shop2 Go! Tam Ky , 07 Phan Chu Trinh, Phuoc Hoa, Tam Ky city, Quang Nam provine",
+    "vietnamese_address": "TTTM Go! Tam K\u1ef3 , 07 Phan Chu Trinh, Ph\u01b0\u1edbc H\u00f2a, TP Tam K\u1ef3, t\u1ec9nh Qu\u1ea3ng Nam",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "15.573705",
+    "longitude": "108.482919",
+    "code": "169",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "135": {
+    "id": "135",
+    "name": "Ph\u1ea1m Nh\u01b0 X\u01b0\u01a1ng",
+    "email": "jbvn167@jollibee.com.vn",
+    "phone": "2363622979",
+    "city": {
+      "id": "3",
+      "name": "\u0110\u00e0 N\u1eb5ng"
+    },
+    "district": {
+      "id": "59",
+      "name": "Li\u00ean Chi\u1ec3u"
+    },
+    "address": "10 Pham Nhu Xuong street, Hoa Khanh Nam ward, Lien Chieu district, Da Nang city",
+    "vietnamese_address": "10 \u0111\u01b0\u1eddng Ph\u1ea1m Nh\u01b0 X\u01b0\u01a1ng, ph\u01b0\u1eddng H\u00f2a Kh\u00e1nh Nam, Qu\u1eadn Li\u00ean Chi\u1ec3u, TP \u0110\u00e0 N\u1eb5ng",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "16.062737",
+    "longitude": "108.15771",
+    "code": "167",
+    "area": {
+      "id": "5",
+      "name": "CENTRAL"
+    }
+  },
+  "136": {
+    "id": "136",
+    "name": "EC B\u1ebfn Tre",
+    "email": "jbvn172@jollibee.com.vn ",
+    "phone": "0275 3839 969",
+    "city": {
+      "id": "37",
+      "name": "B\u1ebfn Tre"
+    },
+    "district": {
+      "id": "460",
+      "name": "B\u1ebfn Tre"
+    },
+    "address": "19/2 \u0110\u01b0\u1eddng Tr\u1ea7n Qu\u1ed1c Tu\u1ea5n, khu ph\u1ed1 2, Ph\u01b0\u1eddng 4, Tp.B\u1ebfn Tre",
+    "vietnamese_address": "19/2 \u0110\u01b0\u1eddng Tr\u1ea7n Qu\u1ed1c Tu\u1ea5n, khu ph\u1ed1 2, Ph\u01b0\u1eddng 4, Tp.B\u1ebfn Tre",
+    "weekday_opening_hours": "9:00 - 21:00",
+    "weekend_opening_hours": "9:00 - 21:00",
+    "latitude": "10.2410965",
+    "longitude": "106.3763398",
+    "code": "172",
+    "area": {
+      "id": "4",
+      "name": "NORTH MEKONG"
+    }
   }
 }

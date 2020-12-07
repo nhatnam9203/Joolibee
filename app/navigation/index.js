@@ -10,6 +10,8 @@ import { GEX } from '@graphql';
 import { scale } from '@utils';
 import { AppStyles } from '@theme';
 import { useNavigation } from '@react-navigation/native';
+import { useStorePickup } from '@hooks';
+import { useSelector } from 'react-redux';
 
 const { scaleHeight, scaleWidth } = scale;
 
@@ -38,26 +40,39 @@ const ScreenConst = {
 // Process Start App
 function App() {
   const { startApp, isSignIn } = useAppProcess();
+  const isLogin = useSelector((state) => state.account?.user?.isLogin);
+
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  const storeList = useStorePickup();
 
-  // Load truoc home screen để cho nuột
   React.useEffect(() => {
-    if (isSignIn) {
+    if (!startApp) {
+      goToHomeScreen();
+    } else {
+      navigationRef.current?.navigate(ScreenConst.Splash);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startApp, isLogin]);
+
+  const goToHomeScreen = React.useCallback(() => {
+    if (isLogin) {
       loadHomeScreen();
       getCustomerCart();
     } else {
       navigationRef.current?.navigate(ScreenConst.Auth);
     }
+
+    Logger.debug(isLogin, '====> isLogin');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignIn]);
+  }, [isLogin]);
 
   // Khi có dữ liệu home screen sẽ cho vào home screen, KO CÓ ĂN CÁM !!!
   React.useEffect(() => {
     if (getHomeScreenResp?.data) {
       setAllowGotoHomeScreen(true);
-
       navigationRef.current?.navigate(ScreenConst.Main);
     }
 

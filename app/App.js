@@ -36,6 +36,8 @@ import {
 import { useGraphQLClient } from '@graphql';
 import { ConfirmHandler, ComingSoonHandler } from './handlers';
 import { useFirebaseCloudMessing } from '@firebase';
+import PushNotification from 'react-native-push-notification';
+import { GEX } from '@graphql';
 
 const fontConfig = {
   default: {
@@ -159,11 +161,33 @@ const LangProvider = ({ children }) => {
 const NotificationProvider = () => {
   const dispatch = useDispatch();
 
-  const onForegroundMessage = () => {};
-  const onBackgroundMessage = () => {};
-  const onOpenedApp = () => {};
-  const onInit = () => {};
-  const onMessageError = () => {};
+  const [orderListResp, getOrderList] = GEX.useOrderList();
+
+  const onForegroundMessage = (data) => {
+    Logger.debug(data, 'notification onForegroundMessage');
+    getOrderList();
+
+    const title = data?.notification?.title ? data?.notification?.title : '';
+    const body = data?.notification?.body ? data?.notification?.body : '';
+    PushNotification.localNotification({
+      smallIcon: 'ic_merchant',
+      largeIcon: 'ic_merchant',
+      title: title,
+      message: body,
+    });
+  };
+  const onBackgroundMessage = (data) => {
+    Logger.debug(data, 'notification onBackgroundMessage');
+  };
+  const onOpenedApp = (data) => {
+    Logger.debug(data, 'notification onOpenedApp');
+  };
+  const onInit = (data) => {
+    Logger.debug(data, 'notification onInit');
+  };
+  const onMessageError = (data) => {
+    Logger.debug(data, 'notification onMessageError');
+  };
 
   const token = useFirebaseCloudMessing(
     onForegroundMessage,
