@@ -31,15 +31,46 @@ const ProductCart = ({ visible, onToggle }) => {
   const [footerSize, onLayoutFooter] = useComponentSize();
 
   // GET
-  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
   const [addresses] = GEX.useGetAddressList();
-  const address_id = addresses?.find((x) => x.default_shipping)?.id;
+
+  const defaultAddress = addresses?.find((x) => x.default_shipping);
+  const address_id = defaultAddress?.id;
+
+  const {
+    firstname,
+    lastname,
+    company,
+    street,
+    city,
+    region,
+    postcode,
+    country_code,
+    telephone,
+  } = defaultAddress;
+
+  Logger.debug(defaultAddress, '====> defaultAddress');
   const params = {
     variables: {
-      shipping_addresses: [{ customer_address_id: address_id }],
+      shipping_addresses: [
+        {
+          customer_address_id: address_id,
+          address: {
+            firstname,
+            lastname,
+            company,
+            street,
+            city,
+            region,
+            postcode,
+            country_code,
+            telephone,
+          },
+        },
+      ],
     },
   };
 

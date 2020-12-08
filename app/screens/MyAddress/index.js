@@ -24,8 +24,8 @@ const Index = ({ route }) => {
   };
 
   // Get Customer Cart
-  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart(onCompleted);
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart(onCompleted);
 
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
@@ -40,8 +40,8 @@ const Index = ({ route }) => {
     };
     setShippingAddress(params).then((res) => {
       if (res?.data?.setShippingAddressesOnCart) {
-        getCheckOutCart();
-
+        // getCheckOutCart();
+        getCustomerCart();
       }
     });
   };
