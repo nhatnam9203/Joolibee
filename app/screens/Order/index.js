@@ -208,6 +208,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
           const pickStore = availableStores.find(Boolean);
           store_id = pickStore?.id;
         }
+
+        Logger.debug(store_id, '========> store_id');
         setShippingType(code);
         dispatch(app.showLoading());
         setShippingMethods(code, store_id);

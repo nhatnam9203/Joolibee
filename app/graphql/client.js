@@ -28,7 +28,7 @@ const authLink = new ApolloLink(async (operation, forward) => {
  */
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, response = {}, forward }) => {
-    Logger.debug(graphQLErrors, 'graphQLErrors');
+    Logger.debug(graphQLErrors, '======> graphQLErrors');
 
     /**
      * graphQLErrors
@@ -38,7 +38,13 @@ const errorLink = onError(
       let errors = [];
       graphQLErrors.map(
         (
-          { message, locations, path, extensions: { category, code } },
+          {
+            debugMessage,
+            message,
+            locations,
+            path,
+            extensions: { category, code },
+          },
           index,
         ) => {
           switch (category) {
@@ -46,6 +52,9 @@ const errorLink = onError(
             case 'graphql-input':
               // client query/mutation wrong
               errors.push(message);
+              // if (debugMessage) {
+              //   errors.push(debugMessage);
+              // }
 
               break;
             case 'graphql-authorization':

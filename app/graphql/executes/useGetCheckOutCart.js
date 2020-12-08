@@ -8,17 +8,18 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
   const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
-    onCompleted: (data) => {
-      dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
-    },
-  });
-
   const [getCartDetail, checkOutCartResp] = useLazyQuery(CART_DETAIL, {
     fetchPolicy: 'no-cache',
     onCompleted,
     onError: () => {
       dispatch(app.hideLoading());
+    },
+  });
+
+  const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
+    onCompleted: (data) => {
+      dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
+      getCartDetail({ variables: { cartId: data?.createEmptyCart } });
     },
   });
 
