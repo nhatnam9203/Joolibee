@@ -8,26 +8,37 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
   const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
-    onCompleted: (data) => {
-      dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
-    },
-  });
-
   const [getCartDetail, checkOutCartResp] = useLazyQuery(CART_DETAIL, {
     fetchPolicy: 'no-cache',
-    onCompleted,
+    onCompleted: (data) => {
+      // Logger.debug(data, 'data ======> ');
+      dispatch(account.updateCustomerCart(data?.cart));
+
+      dispatch(app.hideLoading());
+      if (typeof onCompleted === 'function') {
+        onCompleted();
+      }
+    },
     onError: () => {
       dispatch(app.hideLoading());
     },
   });
 
-  React.useEffect(() => {
-    if (checkOutCartResp.data?.cart) {
-      dispatch(account.updateCustomerCart(checkOutCartResp.data?.cart));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkOutCartResp?.data]);
+  const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
+    onCompleted: (data) => {
+      if (data) {
+        dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
+        getCartDetail({ variables: { cartId: data?.createEmptyCart } });
+      }
+    },
+  });
+
+  // React.useEffect(() => {
+  //   if (checkOutCartResp.data?.cart) {
+  //     dispatch(account.updateCustomerCart(checkOutCartResp.data?.cart));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [checkOutCartResp]);
 
   const getCheckOutCart = (renew = false) => {
     if (customerCart?.id && !renew) {

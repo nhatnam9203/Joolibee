@@ -41,6 +41,7 @@ const Index = ({ route }) => {
     setShippingAddress(params).then((res) => {
       if (res?.data?.setShippingAddressesOnCart) {
         getCheckOutCart();
+
       }
     });
   };

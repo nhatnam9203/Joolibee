@@ -215,6 +215,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
           const pickStore = availableStores.find(Boolean);
           store_id = pickStore?.id;
         }
+
+        Logger.debug(store_id, '========> store_id');
         setShippingType(code);
         dispatch(app.showLoading());
         setShippingMethods(code, store_id);
@@ -332,12 +334,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
       const setShippingMethod = async () => {
         const { variables } = addressParams;
         let pickupAddress = variables.shipping_addresses[0];
-        const pickupStoreAddress = Object.assign({}, pickupAddress, {
-          pickup_location_code: store_pickup_id,
-        });
+        // const pickupStoreAddress = Object.assign({}, pickupAddress, {
+        //   pickup_location_code: store_pickup_id,
+        // });
         const params = Object.assign({}, addressParams, {
           variables: {
-            shipping_addresses: [pickupStoreAddress],
+            shipping_addresses: [pickupAddress],
           },
         });
 
