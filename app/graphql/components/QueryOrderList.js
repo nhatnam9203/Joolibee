@@ -16,7 +16,7 @@ export const QueryOrderList = ({
   const { loading, error, data, refetch, fetchMore } = useQuery(
     ORDERS_CUSTOMER,
     {
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'cache-and-network',
     },
   );
 

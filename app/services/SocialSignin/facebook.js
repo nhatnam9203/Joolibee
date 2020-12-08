@@ -8,7 +8,7 @@ import {
 
 const checkPermissionFb = async () => {
   try {
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       LoginManager.setLoginBehavior('web_only');
     }
     let permission = await LoginManager.logInWithPermissions([
@@ -46,22 +46,23 @@ const requestApi = (accessToken, responseInfoCallback) => {
 export const loginFb = async () =>
   new Promise(async (resolve, reject) => {
     let data = await AccessToken.getCurrentAccessToken();
-    const responseInfoCallback = (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
-      }
-    };
+    // const responseInfoCallback = (error, result) => {
+    //   if (error) {
+    //     reject(error);
+    //   } else {
+    //     resolve(result);
+    //   }
+    // };
 
     if (data) {
-      requestApi(data.accessToken, responseInfoCallback);
+      resolve(data);
+      // requestApi(data.accessToken, responseInfoCallback);
     } else {
       let result = await checkPermissionFb();
 
-      if (result == 'public_profile') {
+      if (result === 'public_profile') {
         let data = await AccessToken.getCurrentAccessToken();
-        requestApi(data.accessToken, responseInfoCallback);
+        resolve(data);
       } else alert(result && result);
     }
   });

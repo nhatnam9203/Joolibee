@@ -119,7 +119,6 @@ const ProductCart = ({ visible, onToggle }) => {
         Logger.debug(billing_address, 'billing_address');
         await setBillingAddress(address_id);
       }
-
       if (isEmpty(selected_payment_method?.code)) {
         Logger.debug(selected_payment_method, 'selected_payment_method');
 

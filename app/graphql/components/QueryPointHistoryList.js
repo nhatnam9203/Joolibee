@@ -47,21 +47,19 @@ export const QueryPointHistoryList = ({
   contentContainerStyle,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const { loading, error, data, refetch } = useQuery(ORDER_LIST, {
-    variables: null,
-  });
+  // const { loading, error, data, refetch } = useQuery(ORDER_LIST, {
+  //   variables: null,
+  // });
 
-  let _data = data?.customerOrders?.items
-    ? data?.customerOrders?.items
-    : defaultData;
+  // let _data = defaultData;
 
-  if (error) {
-    return null;
-  }
+  // if (error) {
+  //   return null;
+  // }
 
   const handleRefresh = () => {
     setRefreshing(true);
-    refetch();
+    // refetch();
     setTimeout(() => {
       setRefreshing(false);
     }, 3000);
@@ -69,7 +67,8 @@ export const QueryPointHistoryList = ({
   return (
     <CustomFlatList
       data={[]}
-      renderItem={loading ? renderItemLoading : renderItem}
+      //renderItem={loading ? renderItemLoading : renderItem}
+      renderItem={renderItem}
       horizontal={false}
       keyExtractor={(item, index) => item.id.toString()}
       contentContainerStyle={contentContainerStyle}
