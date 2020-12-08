@@ -114,9 +114,9 @@ const StorePage = ({ route = { params: {} } }) => {
   const [store_pickuped, pickupStore] = React.useState(null);
   const [visible, showModal] = React.useState([false, false]);
   const store_name = store_pickuped
-    ? store_pickuped.store_name
+    ? store_pickuped.name
     : 'Vui lòng chọn 1 cửa hàng';
-
+  console.log('store_pickuped', store_pickuped);
   const openModal = (i) => () => {
     let _visible = [...visible];
     _visible[i] = !_visible[i];

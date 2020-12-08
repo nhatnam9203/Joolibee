@@ -181,9 +181,16 @@ const OrderScreen = ({ route = { params: {} } }) => {
     dispatch(account.setEatingUtensils());
   };
   const onEdit = () => {
-    shippingType === ShippingType.InShop
-      ? navigation.navigate(ScreenName.StorePickup)
-      : navigation.navigate(ScreenName.MyAddress, { selected_address: true });
+    if (shippingType === ShippingType.InShop) {
+      navigation.navigate(ScreenName.StorePickup, {
+        stores: availableStores,
+      });
+
+      dispatch(order.pickupStore(null));
+      setIsPickupStore(true);
+    } else {
+      navigation.navigate(ScreenName.MyAddress, { selected_address: true });
+    }
   };
 
   /**
@@ -208,9 +215,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
           const pickStore = availableStores.find(Boolean);
           store_id = pickStore?.id;
         }
+
+        Logger.debug(store_id, '========> store_id');
         setShippingType(code);
         dispatch(app.showLoading());
         setShippingMethods(code, store_id);
+        dispatch(order.pickupStore(null));
         dispatch(app.hideLoading());
 
         break;
@@ -257,7 +267,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
           showErrorPoint(false);
-
+          dispatch(order.pickupStore(null));
           getCheckOutCart(true);
 
           /// chua get lai list order
@@ -317,7 +327,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
     setAvailableStores(arr);
   }, [shippingMethod?.results, storeList]);
-
   React.useEffect(() => {
     if (addressParams && store_pickup_id) {
       setShippingType(ShippingType.InShop);
@@ -325,12 +334,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
       const setShippingMethod = async () => {
         const { variables } = addressParams;
         let pickupAddress = variables.shipping_addresses[0];
-        const pickupStoreAddress = Object.assign({}, pickupAddress, {
-          pickup_location_code: store_pickup_id,
-        });
+        // const pickupStoreAddress = Object.assign({}, pickupAddress, {
+        //   pickup_location_code: store_pickup_id,
+        // });
         const params = Object.assign({}, addressParams, {
           variables: {
-            shipping_addresses: [pickupStoreAddress],
+            shipping_addresses: [pickupAddress],
           },
         });
 

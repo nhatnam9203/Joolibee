@@ -18,7 +18,7 @@
     "release:ios": "bundle exec fastlane ios release",
     "push-production:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Production -t 1.0 --description fixbug",
     "push-staging:ios": "appcenter codepush release-react -a levinci/Jollibee-Consummer -d Staging -t 1.0 --description test",
-    "push:android": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production",
+    "push:android": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production -t 1.0 --description test",
     "test1": "jest"
   },
   "dependencies": {
