@@ -58,17 +58,17 @@ const ProductCart = ({ visible, onToggle }) => {
       shipping_addresses: [
         {
           customer_address_id: address_id,
-          address: {
-            firstname,
-            lastname,
-            company,
-            street,
-            city,
-            region,
-            postcode,
-            country_code,
-            telephone,
-          },
+          // address: {
+          //   firstname,
+          //   lastname,
+          //   company,
+          //   street,
+          //   city,
+          //   region,
+          //   postcode,
+          //   country_code,
+          //   telephone,
+          // },
         },
       ],
     },
