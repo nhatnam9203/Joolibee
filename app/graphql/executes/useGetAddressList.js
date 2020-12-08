@@ -10,7 +10,11 @@ export const useGetAddressList = (onCompleted) => {
 
   const [getAddressList, getAddressListResp] = useLazyQuery(ADDRESS_LIST, {
     fetchPolicy: 'no-cache',
-    onCompleted,
+    onCompleted: () => {
+      if (typeof onCompleted === 'function') {
+        onCompleted();
+      }
+    },
     onError: () => {
       dispatch(app.hideLoading());
     },

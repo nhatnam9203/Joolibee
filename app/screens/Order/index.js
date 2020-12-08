@@ -94,8 +94,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
   // --------- REQUEST CART-DETAIL -----------
-  // const [customerCart, getCheckOutCart] = GEX.useGetCustomerCart();
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const {
     items,
@@ -268,7 +268,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
           setShowPopupSuccess(true);
           showErrorPoint(false);
           dispatch(order.pickupStore(null));
-          getCheckOutCart(true);
+          // getCheckOutCart(true);
+          getCustomerCart(true);
 
           /// chua get lai list order
         }

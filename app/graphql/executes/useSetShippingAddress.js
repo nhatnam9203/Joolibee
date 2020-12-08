@@ -8,8 +8,8 @@ import { GEX } from '@graphql';
 export const useSetShippingAddress = (callBack = () => {}) => {
   const dispatch = useDispatch();
   // const customerCart = useSelector((state) => state.account?.cart);
-  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const [setShippingAddressesOnCart, shippingAddressResp] = useMutation(
     SET_ORDER_SHIPPING_ADDRESS,
