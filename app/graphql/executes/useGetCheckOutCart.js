@@ -11,8 +11,13 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
   const [getCartDetail, checkOutCartResp] = useLazyQuery(CART_DETAIL, {
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
-      Logger.debug(data, 'data ======> ');
+      // Logger.debug(data, 'data ======> ');
       dispatch(account.updateCustomerCart(data?.cart));
+
+      dispatch(app.hideLoading());
+      if (typeof onCompleted === 'function') {
+        onCompleted();
+      }
     },
     onError: () => {
       dispatch(app.hideLoading());
@@ -21,8 +26,6 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
 
   const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
     onCompleted: (data) => {
-      Logger.debug(data, 'empty data ======> ');
-
       if (data) {
         dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
         getCartDetail({ variables: { cartId: data?.createEmptyCart } });
