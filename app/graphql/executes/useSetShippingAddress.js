@@ -1,9 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { SET_ORDER_SHIPPING_ADDRESS } from '../gql';
-import { app } from '@slices';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { GEX } from '@graphql';
+import { useDispatch } from 'react-redux';
+import { SET_ORDER_SHIPPING_ADDRESS } from '../gql';
 
 export const useSetShippingAddress = (callBack = () => {}) => {
   const dispatch = useDispatch();

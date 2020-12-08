@@ -130,7 +130,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [shippingType, setShippingType] = React.useState(method_code);
 
   // update cart product
-  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
+  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
   // add voucher
   const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
   // submit checkout
@@ -163,7 +163,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       quantity: item.quantity,
     };
 
-    updateCartItems({
+    updateCart({
       variables: input,
     });
   };
@@ -287,7 +287,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
       dispatch(app.showLoading());
       redeemCustomerPoint(use_point).then((res) => {
         if (res?.data?.useCustomerPoint) {
-          getCheckOutCart();
+          // getCheckOutCart();
+          getCustomerCart();
+
           setRewardPoint('');
           showErrorPoint(false);
         }

@@ -60,7 +60,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   );
 
   const { addProductsToCart } = GEX.useAddProductsToCart();
-  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
+  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
 
   const [getProductDetail, { loading }] = useLazyQuery(GQL.PRODUCT_DETAIL, {
     variables: { sku: product?.sku },
@@ -196,7 +196,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       quantity: qty,
     };
 
-    updateCartItems({
+    updateCart({
       variables: input,
     });
 

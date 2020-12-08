@@ -1,8 +1,6 @@
 import { useMutation } from '@apollo/client';
+import { useSelector } from 'react-redux';
 import { SET_ORDER_SHIPPING_METHOD } from '../gql';
-import { app } from '@slices';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 export const useSetShippingMethodsOnCart = () => {
   const customerCart = useSelector((state) => state.account?.cart);

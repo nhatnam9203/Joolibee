@@ -28,8 +28,8 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const [refreshing, setRefreshing] = React.useState(false);
   const [cartDetail, setCartDetail] = React.useState(null);
-  const [footerSize, onLayoutFooter] = useComponentSize();
 
+  const [footerSize, onLayoutFooter] = useComponentSize();
   // GET
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
@@ -57,7 +57,7 @@ const ProductCart = ({ visible, onToggle }) => {
   const [shippingMethodResp, getShippingMethods] = GEX.useGetShippingMethod();
 
   // MUTATION
-  const { updateCartItems, updateCartResp } = GEX.useUpdateCustomerCart();
+  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
   const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
   const [billingAddressResp, setBillingAddress] = GEX.useSetBillingAddress();
   const [paymentMethodResp, setPaymentMethod] = GEX.useSetPaymentMethod();
@@ -158,7 +158,7 @@ const ProductCart = ({ visible, onToggle }) => {
       quantity: item.quantity,
     };
 
-    await updateCartItems({
+    await updateCart({
       variables: input,
     });
   };
