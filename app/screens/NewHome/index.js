@@ -51,6 +51,7 @@ const HomeScreen = () => {
     (state) => state.setting.isAllowLocations,
   );
 
+
   const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen('cache-first');
   const { homeScreen } = homeScreenResp?.data || {};
 
@@ -63,6 +64,7 @@ const HomeScreen = () => {
 
   React.useEffect(() => {
     loadHomeScreen();
+
     setTimeout(() => {
       setVisiblePopup(isAllowLocations !== RESULTS.GRANTED);
     }, 1000);

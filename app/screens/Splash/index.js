@@ -1,39 +1,217 @@
-import { useStorePickup } from '@hooks';
-import { app, store } from '@slices';
+import { CodePushStatus, useCodePushUpdate } from '@hooks';
+import { translate } from '@localize';
+import { app } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import codePush from 'react-native-code-push';
 import { Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
-import codePush from 'react-native-code-push';
-import { useCodePushUpdate, CodePushStatus } from '@hooks';
-import { translate } from '@localize';
-import { GEX } from '@graphql';
 
 const { scaleWidth, scaleHeight } = scale;
 
-const Splash = () => {
+const Splash: () => React$Node = () => {
   const dispatch = useDispatch();
 
-  // !!  sao no lai load lai khi chuyen trang thai, hooks lien quan
-  const { checkCodePushUpdate, processing } = useCodePushUpdate();
-  const getStoreJsonData = GEX.useGetStoreInfo();
+  const [processing, setProcessing] = React.useState({
+    code: CodePushStatus.PROCESSING,
+    message: 'init',
+  });
+
+  const codePushDownloadProgress = (
+    { receivedBytes, totalBytes },
+    isMounted = false,
+  ) => {
+    setProcessing(
+      Object.assign(
+        {},
+        processing,
+        {
+          progress: Math.round((receivedBytes / totalBytes).toFixed(2) * 100),
+        },
+        isMounted,
+      ),
+    );
+  };
+
+  const codePushProcessComplete = (values, isMounted = false) => {
+    Logger.debug(values, `CodePush Update ${isMounted}`);
+    if (isMounted) {
+      setProcessing(values);
+    }
+  };
+
+  const codePushStatusChange = (status, isMounted = false) => {
+    switch (status) {
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        // self.setState({ modalVisible: true });
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.SUCCESS,
+            message: 'update-installed',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.SYNC_IN_PROGRESS:
+        // self.setState({ modalVisible: true });
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.PROCESSING,
+            message: 'sync-in-progress',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.PROCESSING,
+            message: 'check-for-update',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.PROCESSING,
+            message: 'download-package',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.PROCESSING,
+            message: 'installing-update',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.AWAITING_USER_ACTION:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.PROCESSING,
+            message: 'awaiting-user-action',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.UPDATE_IGNORED:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.SUCCESS,
+            message: 'update-ignored',
+          },
+          isMounted,
+        );
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.SUCCESS,
+            message: 'update-to-date',
+          },
+          isMounted,
+        );
+        break;
+
+      default:
+        codePushProcessComplete(
+          {
+            code: CodePushStatus.SUCCESS,
+            message: status + '',
+          },
+          isMounted,
+        );
+        break;
+    }
+  };
 
   React.useEffect(() => {
     // update code push success
     if (processing?.code !== CodePushStatus.PROCESSING) {
-      getStoreJsonData();
-
-      setTimeout(() => {
-        dispatch(app.loadingSuccess());
-      }, 1000);
+      dispatch(app.loadingSuccess());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [processing]);
 
   React.useEffect(() => {
-    checkCodePushUpdate();
+    let isMounted = true; // note this flag denote mount status
+    try {
+      codePush
+        .checkForUpdate()
+        .then((update) => {
+          if (update) {
+            if (update.isFirstRun && update.description) {
+              // Display a "what's new?" modal
+              codePushProcessComplete(
+                {
+                  code: CodePushStatus.PROCESSING,
+                  message: update.description,
+                },
+                isMounted,
+              );
+            } else if (update.failedInstall) {
+              /* đã update */
+              codePushProcessComplete(
+                {
+                  code: CodePushStatus.SUCCESS,
+                  message: 'update-rollbacks',
+                },
+                isMounted,
+              );
+            } else {
+              let options = {
+                updateDialog: true,
+                installMode: codePush.InstallMode.IMMEDIATE,
+                mandatoryInstallMode: codePush.InstallMode.IMMEDIATE,
+              };
+
+              codePush.sync(
+                options,
+                (value) => codePushStatusChange(value, isMounted),
+                (value) => codePushDownloadProgress(value, isMounted),
+              );
+            }
+          } else {
+            codePushProcessComplete(
+              {
+                code: CodePushStatus.SUCCESS,
+                message: 'no-updated',
+              },
+              isMounted,
+            );
+          }
+        })
+        .catch((err) => {
+          codePushProcessComplete(
+            {
+              code: CodePushStatus.ERROR,
+              message: 'error',
+              err,
+            },
+            isMounted,
+          );
+        });
+    } catch (err) {
+      codePushProcessComplete(
+        {
+          code: CodePushStatus.ERROR,
+          message: 'error',
+          err,
+        },
+        isMounted,
+      );
+    }
+
+    return () => {
+      isMounted = false;
+    }; // use effect cleanup to set flag false, if unmounted
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
