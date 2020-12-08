@@ -1,28 +1,42 @@
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { CART_DETAIL } from '../gql';
+import { useDispatch, useSelector } from 'react-redux';
+import { CART_DETAIL, CREATE_EMPTY_CART } from '../gql';
+import { account, app } from '@slices';
 
-export const useGetCheckOutCart = () => {
-  const [getCheckOutCart, getCheckOutCartResp] = useLazyQuery(CART_DETAIL, {
-    fetchPolicy: 'no-cache',
-    //   onCompleted: (data) => {
-    //     Logger.debug(data, 'get customer info complete');
-    //   },
-  });
-
-  // GET CUSTOMER CARTS
+export const useGetCheckOutCart = (onCompleted = () => {}) => {
+  const dispatch = useDispatch();
   const customerCart = useSelector((state) => state.account?.cart);
 
-  const onCheckOutCart = React.useCallback(() => {
-    if (customerCart?.id) {
-      getCheckOutCart({ variables: { cartId: customerCart?.id } });
+  const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
+    onCompleted: (data) => {
+      dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
+    },
+  });
+
+  const [getCartDetail, checkOutCartResp] = useLazyQuery(CART_DETAIL, {
+    fetchPolicy: 'no-cache',
+    onCompleted,
+    onError: () => {
+      dispatch(app.hideLoading());
+    },
+  });
+
+  React.useEffect(() => {
+    if (checkOutCartResp.data?.cart) {
+      dispatch(account.updateCustomerCart(checkOutCartResp.data?.cart));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerCart?.id]);
+  }, [checkOutCartResp?.data]);
 
-  return {
-    getCheckOutCartResp,
-    getOrderCart: onCheckOutCart,
+  const getCheckOutCart = (renew = false) => {
+    if (customerCart?.id && !renew) {
+      getCartDetail({ variables: { cartId: customerCart?.id } });
+    } else {
+      createEmptyCart();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
+
+  return [customerCart, getCheckOutCart];
 };

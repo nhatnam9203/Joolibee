@@ -1,17 +1,15 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { GEX } from '@graphql';
+import { useStorePickup } from '@hooks';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { scale } from '@utils';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { ScreenName, SplashScreen } from '../screens';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
 import { useAppProcess } from './useAppProcess';
-import { GEX } from '@graphql';
-import { scale } from '@utils';
-import { AppStyles } from '@theme';
-import { useNavigation } from '@react-navigation/native';
-import { useStorePickup } from '@hooks';
-import { useSelector } from 'react-redux';
 
 const { scaleHeight, scaleWidth } = scale;
 
@@ -44,14 +42,20 @@ function App() {
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  const [categoryListResp, getCategoryList] = GEX.useGetCategoryList();
+  const getStoreJsonData = GEX.useGetStoreInfo();
   const storeList = useStorePickup();
 
   React.useEffect(() => {
     if (!startApp) {
+      getStoreJsonData();
       goToHomeScreen();
     } else {
-      navigationRef.current?.navigate(ScreenConst.Splash);
+      // navigationRef.current?.navigate(ScreenConst.Splash);
+      // StackActions.replace(ScreenConst.Splash);
+      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Splash));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,13 +63,14 @@ function App() {
 
   const goToHomeScreen = React.useCallback(() => {
     if (isLogin) {
+      getCheckOutCart();
+      getCategoryList();
       loadHomeScreen();
-      getCustomerCart();
     } else {
-      navigationRef.current?.navigate(ScreenConst.Auth);
+      // navigationRef.current?.navigate(ScreenConst.Auth);
+      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Auth));
     }
 
-    Logger.debug(isLogin, '====> isLogin');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
@@ -73,7 +78,10 @@ function App() {
   React.useEffect(() => {
     if (getHomeScreenResp?.data) {
       setAllowGotoHomeScreen(true);
-      navigationRef.current?.navigate(ScreenConst.Main);
+
+      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Main));
+
+      // navigationRef.current?.navigate(ScreenConst.Main);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

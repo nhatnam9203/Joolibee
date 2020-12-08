@@ -15,12 +15,15 @@ import { address } from '@slices';
 const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
     menuItem: { products = { items: [] }, id, name },
+    product_id,
   } = route.params;
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
   // const customerCart = useSelector((state) => state.account?.cart);
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+
   // const customerInfo = useSelector((state) => state.account.user?.profile);
   const [addresses] = GEX.useGetAddressList();
   const addresses_default = addresses?.find((x) => x.default_shipping);
@@ -126,6 +129,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
         source={images.watermark_background_2}>
         <GCC.QueryMenuDetailList
           input={products.items}
+          product_id={product_id}
           categoryId={id}
           renderItem={renderItem}
         />

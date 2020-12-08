@@ -7,7 +7,7 @@ import { STORE_PICKUP } from '../gql';
 export const useGetShippingMethod = () => {
   const pickupLocation = useSelector((state) => state.store.pickupLocation);
   const [storePickup, shippingMethodResp] = useLazyQuery(STORE_PICKUP, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
   });
 
   const getShippingMethods = (input) => {

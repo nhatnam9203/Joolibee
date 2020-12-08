@@ -72,6 +72,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [reward_point, setRewardPoint] = React.useState('');
   const [order_number, setOrderNumber] = React.useState('');
   const [error_point, showErrorPoint] = React.useState(null);
+  const [availableStores, setAvailableStores] = React.useState(null);
 
   // const onCallBackEndCountDown = () => {
   //   dispatch(account.toggleTimmer());
@@ -83,25 +84,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // ----------------- Timming apply coupon ------------------------ //
 
-  // List store available ============
-  const methodInPlace = shippingMethod?.results?.find(
-    (x) => x.method === ShippingType.InPlace,
-  );
-  const methodInShop = shippingMethod?.results?.find(
-    (x) => x.method === ShippingType.InShop,
-  );
-
-  Logger.debug(methodInShop, 'methodInShop');
-
   const storeList = useStorePickup();
-  let availableStores = storeList;
-  if (methodInShop?.stores) {
-    availableStores = methodInShop?.stores?.map((st) => {
-      const findStore = storeList?.find((x) => x.id === st.id.toString());
-      return findStore;
-    });
-  }
-  Logger.debug(availableStores, '====> availableStores');
 
   // =================================
   // id dung cho store pickup
@@ -111,31 +94,35 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [isPickupStore, setIsPickupStore] = React.useState(false);
 
   // --------- REQUEST CART-DETAIL -----------
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCheckOutCart] = GEX.useGetCustomerCart();
+  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const {
     items,
     applied_coupons,
-    prices: { grand_total, discounts, subtotal_excluding_tax },
+    prices,
     shipping_addresses,
     bonus_point,
     used_point,
   } = customerCart || {};
 
+  const { grand_total, discounts, subtotal_excluding_tax } = prices || {};
+
+  const shippingAddress = shipping_addresses?.find(Boolean);
   const {
     firstname = '',
     lastname = '',
     selected_shipping_method = ShippingType.InPlace,
     telephone = '',
-  } = shipping_addresses?.find(Boolean) || {};
+  } = shippingAddress || {};
 
   const { method_code } = selected_shipping_method || {};
-  const full_address = format.addressFull(shipping_addresses[0]) ?? '';
+  const full_address = format.addressFull(shippingAddress) ?? '';
   const total = format.jollibeeCurrency({
-    value: grand_total.value,
+    value: grand_total?.value,
     currency: 'VND',
   });
-  const _discount = format.jollibeeCurrency(discounts ? discounts.amount : {});
+  const _discount = format.jollibeeCurrency(discounts ? discounts?.amount : {});
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
@@ -204,6 +191,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
    * @param {*} code : ["freeshipping", "storepickup"]
    */
   const onChangeShippingMethod = (code) => {
+    Logger.debug(availableStores, ' ========xxxxxxxx> availableStores');
     switch (code) {
       case ShippingType.InShop:
         navigation.navigate(ScreenName.StorePickup, {
@@ -269,7 +257,10 @@ const OrderScreen = ({ route = { params: {} } }) => {
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
           showErrorPoint(false);
-          getCustomerCart();
+
+          getCheckOutCart(true);
+
+          /// chua get lai list order
         }
         dispatch(app.hideLoading());
       })
@@ -285,7 +276,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       dispatch(app.showLoading());
       redeemCustomerPoint(use_point).then((res) => {
         if (res?.data?.useCustomerPoint) {
-          getCustomerCart();
+          getCheckOutCart();
           setRewardPoint('');
           showErrorPoint(false);
         }
@@ -306,6 +297,26 @@ const OrderScreen = ({ route = { params: {} } }) => {
     getSubMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    // List store available ============
+    const methodInPlace = shippingMethod?.results?.find(
+      (x) => x.method === ShippingType.InPlace,
+    );
+    const methodInShop = shippingMethod?.results?.find(
+      (x) => x.method === ShippingType.InShop,
+    );
+
+    let arr = storeList;
+    if (methodInShop?.stores) {
+      arr = methodInShop?.stores?.map((st) => {
+        const findStore = storeList?.find((x) => x.id === st.id.toString());
+        return findStore;
+      });
+    }
+
+    setAvailableStores(arr);
+  }, [shippingMethod?.results, storeList]);
 
   React.useEffect(() => {
     if (addressParams && store_pickup_id) {
@@ -494,7 +505,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         />
       )}
       key="OrderItems">
-      {items.map((item, index) => (
+      {items?.map((item, index) => (
         <OrderSectionItem key={index + ''}>
           <OrderItem
             item={item}

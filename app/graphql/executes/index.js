@@ -16,4 +16,5 @@ export * from './useRedeemPoint';
 export * from './useGetAddressList';
 export * from './useGetStoreInfo';
 export * from './useOrderList';
+export * from './useGetCategoryList';
 export * from './useGenerateTokenBySocial';

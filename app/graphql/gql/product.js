@@ -73,3 +73,39 @@ export const PRODUCT_DETAIL = gql`
     }
   }
 `;
+
+export const MENU_LIST = gql`
+  query categoryList($arrayCategory: [String]) {
+    categoryList(filters: { ids: { in: $arrayCategory } }) {
+      id
+      thumbnail_image
+      name
+      position
+      products(pageSize: 10, currentPage: 1) {
+        items {
+          id
+          sku
+          point
+          name
+          image {
+            url
+          }
+          price_range {
+            maximum_price {
+              final_price {
+                value
+                currency
+              }
+            }
+            minimum_price {
+              final_price {
+                value
+                currency
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
