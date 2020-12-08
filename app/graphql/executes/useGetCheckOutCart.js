@@ -10,7 +10,10 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
 
   const [getCartDetail, checkOutCartResp] = useLazyQuery(CART_DETAIL, {
     fetchPolicy: 'no-cache',
-    onCompleted,
+    onCompleted: (data) => {
+      Logger.debug(data, 'data ======> ');
+      dispatch(account.updateCustomerCart(data?.cart));
+    },
     onError: () => {
       dispatch(app.hideLoading());
     },
@@ -18,17 +21,21 @@ export const useGetCheckOutCart = (onCompleted = () => {}) => {
 
   const [createEmptyCart, createCartResp] = useMutation(CREATE_EMPTY_CART, {
     onCompleted: (data) => {
-      dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
-      getCartDetail({ variables: { cartId: data?.createEmptyCart } });
+      Logger.debug(data, 'empty data ======> ');
+
+      if (data) {
+        dispatch(account.setCustomerCart({ id: data?.createEmptyCart }));
+        getCartDetail({ variables: { cartId: data?.createEmptyCart } });
+      }
     },
   });
 
-  React.useEffect(() => {
-    if (checkOutCartResp.data?.cart) {
-      dispatch(account.updateCustomerCart(checkOutCartResp.data?.cart));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkOutCartResp?.data]);
+  // React.useEffect(() => {
+  //   if (checkOutCartResp.data?.cart) {
+  //     dispatch(account.updateCustomerCart(checkOutCartResp.data?.cart));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [checkOutCartResp]);
 
   const getCheckOutCart = (renew = false) => {
     if (customerCart?.id && !renew) {
