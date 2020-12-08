@@ -37,38 +37,14 @@ const ProductCart = ({ visible, onToggle }) => {
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
   const [addresses] = GEX.useGetAddressList();
 
-  const defaultAddress = addresses?.find((x) => x.default_shipping);
+  const defaultAddress = addresses?.find((x) => x.default_shipping) || {};
   const address_id = defaultAddress?.id;
 
-  const {
-    firstname,
-    lastname,
-    company,
-    street,
-    city,
-    region,
-    postcode,
-    country_code,
-    telephone,
-  } = defaultAddress;
-
-  Logger.debug(defaultAddress, '====> defaultAddress');
   const params = {
     variables: {
       shipping_addresses: [
         {
           customer_address_id: address_id,
-          // address: {
-          //   firstname,
-          //   lastname,
-          //   company,
-          //   street,
-          //   city,
-          //   region,
-          //   postcode,
-          //   country_code,
-          //   telephone,
-          // },
         },
       ],
     },
