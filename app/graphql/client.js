@@ -26,87 +26,93 @@ const authLink = new ApolloLink(async (operation, forward) => {
 /**
  * Error Handle - graphQLErrors/networkError
  */
-const errorLink = onError(
-  ({ graphQLErrors, networkError, operation, response = {}, forward }) => {
-    Logger.debug(graphQLErrors, '======> graphQLErrors');
+const errorLink = onError((err) => {
+  const {
+    graphQLErrors,
+    networkError,
+    operation,
+    response = {},
+    forward,
+  } = err;
+  // Logger.debug(err, '======> graphQLErrors err');
+  Logger.debug(graphQLErrors, '======> graphQLErrors');
 
-    /**
-     * graphQLErrors
-     * Do something with a graphql error
-     */
-    if (graphQLErrors?.length > 0) {
-      let errors = [];
-      graphQLErrors.map(
-        (
-          {
-            debugMessage,
-            message,
-            locations,
-            path,
-            extensions: { category, code },
-          },
-          index,
-        ) => {
-          switch (category) {
-            case 'graphql':
-            case 'graphql-input':
-              // client query/mutation wrong
-              errors.push(message);
-              // if (debugMessage) {
-              //   errors.push(debugMessage);
-              // }
-
-              break;
-            case 'graphql-authorization':
-              remove(StorageKey.Token);
-              errors.push(message);
-              // kick out user here ...
-              NavigationService.logout();
-              break;
-            default:
-              errors[index] = message;
-
-              break;
-          }
+  /**
+   * graphQLErrors
+   * Do something with a graphql error
+   */
+  if (graphQLErrors?.length > 0) {
+    let errors = [];
+    graphQLErrors.map(
+      (
+        {
+          debugMessage,
+          message,
+          locations,
+          path,
+          extensions: { category, code },
         },
-      );
+        index,
+      ) => {
+        switch (category) {
+          case 'graphql':
+          case 'graphql-input':
+            // client query/mutation wrong
+            errors.push(message);
+            // if (debugMessage) {
+            //   errors.push(debugMessage);
+            // }
 
-      // alert message on top
-      if (errors.length > 0) {
-        NavigationService.alertWithError({ message: errors.join('\n ') });
-        response.errors = errors;
-      }
+            break;
+          case 'graphql-authorization':
+            remove(StorageKey.Token);
+            errors.push(message);
+            // kick out user here ...
+            NavigationService.logout();
+            break;
+          default:
+            errors[index] = message;
+
+            break;
+        }
+      },
+    );
+
+    // alert message on top
+    if (errors.length > 0) {
+      NavigationService.alertWithError({ message: errors.join('\n ') });
+      response.errors = errors;
     }
-    //graphQLErrors
+  }
+  //graphQLErrors
 
-    /**
-     * networkError
-     * Do something with a network error
-     */
-    //https://www.facebook.com/JollibeeVietnam/
+  /**
+   * networkError
+   * Do something with a network error
+   */
+  //https://www.facebook.com/JollibeeVietnam/
 
-    if (networkError) {
-      const { name, statusCode, result = {} } = networkError;
+  if (networkError) {
+    const { name, statusCode, result = {} } = networkError;
 
-      switch (statusCode) {
-        case 503:
-          NavigationService.showConfirm(
-            translate('txtServerMaintainTitle'),
-            translate('txtServerMaintainDesc'),
-            () => {},
-          );
-          break;
-        default:
-          // Logger.debug('[Network error]:', networkError);
-          NavigationService.alertWithError({
-            message: name + ' with status code ' + statusCode,
-          });
-          break;
-      }
+    switch (statusCode) {
+      case 503:
+        NavigationService.showConfirm(
+          translate('txtServerMaintainTitle'),
+          translate('txtServerMaintainDesc'),
+          () => {},
+        );
+        break;
+      default:
+        // Logger.debug('[Network error]:', networkError);
+        NavigationService.alertWithError({
+          message: name + ' with status code ' + statusCode,
+        });
+        break;
     }
-    //networkError
-  },
-);
+  }
+  //networkError
+});
 
 const timeStartLink = new ApolloLink((operation, forward) => {
   operation.setContext({ start: new Date() });
