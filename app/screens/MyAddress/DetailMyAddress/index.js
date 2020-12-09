@@ -95,8 +95,6 @@ const Index = (props) => {
           if (data?.createCustomerAddress) {
             setAction(true);
             getAddressList();
-            // navigation.goBack();
-            // dispatch(app.hideLoading());
           }
           dispatch(app.hideLoading());
         })
@@ -139,9 +137,6 @@ const Index = (props) => {
           if (data?.updateCustomerAddress) {
             setAction(true);
             getAddressList();
-
-            // getCustomerInfo();
-            // navigation.goBack();
           } else dispatch(app.hideLoading());
         })
         .catch(() => {
@@ -150,10 +145,9 @@ const Index = (props) => {
     },
     [
       default_shipping,
-
       dispatch,
+      getAddressList,
       location_selected,
-      navigation,
       updateCustomerAddress,
     ],
   );
@@ -242,13 +236,6 @@ const Index = (props) => {
         <View style={styles.container}>
           <View style={styles.topContent}>
             {/**PLACE*/}
-            {/* <CustomInput
-              style={{ ...styles.inputShadow, width: LAYOUT_WIDTH }}
-              onChangeText={handleChange('place')}
-              onBlur={handleBlur('place')}
-              value={values.place}
-              placeholder={translate('txtInputPlaceName')}
-            /> */}
             <CustomPickerSelect
               style={{ width: LAYOUT_WIDTH }}
               border
