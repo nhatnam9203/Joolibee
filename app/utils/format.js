@@ -18,11 +18,20 @@ export const date = (d = new Date()) => {
   return moment(d, 'DD/MM/YYYY');
 };
 
-export const hours = (d = new Date(), extraMinutes = 0) => {
-  return moment(d)
+export const hours = (d, extraMinutes = 0) => {
+  const dateString = moment(new Date(d)).format();
+  return moment(dateString)
     .add('7:00', 'hours')
     .add(extraMinutes, 'minutes')
     .format('hh:mm A');
+};
+
+export const compareTime = (date) => {
+  const currentTime = moment().format('hh:mm A');
+  var startTime = moment(currentTime, 'HH:mm:ss a');
+  var endTime = moment(hours(date), 'HH:mm:ss a');
+  var second = endTime.diff(startTime, 'second');
+  return second ?? 75000;
 };
 
 export const addressFull = (item) => {

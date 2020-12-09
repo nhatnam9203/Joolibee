@@ -1,31 +1,31 @@
-import React from 'react';
-import { InputPhoneNumber, InputNewPassword, VerifyPhoneCode } from './pages';
-import { validate } from '@utils';
-import { app } from '@slices';
-import { useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { getUniqueId } from 'react-native-device-info';
+import { app, account } from '@slices';
+import { validate } from '@utils';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { GEX } from '@graphql';
+import { getUniqueId } from 'react-native-device-info';
+const { normalizePhoneNumber } = validate;
+
 const PAGES = {
   InputPhone: 0,
   InputCode: 1,
-  InputNewPassWord: 2,
+  SignUp: 2,
 };
-const TYPE_VERIFY = 'reset';
-const { normalizePhoneNumber } = validate;
 
-const ForgotPasswordScreen = () => {
+const SignUpScreen = ({ route }) => {
+  const { params } = route || {};
+
   // redux
   const dispatch = useDispatch();
-
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
   const [formData, setFormData] = React.useState(null);
-
+  const [blocked, setBlock] = React.useState(false);
   const onVerifyPhoneError = (response) => {
     setFormData(Object.assign({}, formData, { error: response }));
     dispatch(app.hideLoading());
   };
-
   const AUTH_STATUS = GEX.AUTH_STATUS;
   const {
     confirmCode,
@@ -35,7 +35,6 @@ const ForgotPasswordScreen = () => {
   } = GEX.useOtpAuthentication({
     onVerifyPhoneError: onVerifyPhoneError,
   });
-
   const onConfirmCode = async (code, phone) => {
     if (!code) {
       return;
@@ -43,7 +42,7 @@ const ForgotPasswordScreen = () => {
     let input = {
       deviceId: getUniqueId(),
       phoneNumber: normalizePhoneNumber('+84', phone),
-      type: TYPE_VERIFY,
+      type: params?.typeVerify,
       otpCode: code,
     };
     dispatch(app.showLoading());
@@ -52,18 +51,23 @@ const ForgotPasswordScreen = () => {
 
   const requestAuthCode = async (values) => {
     const { phone } = values;
+    setFormData(values);
+
     if (!phone) {
-      Logger.error('error', 'SignUp -> requestAuthCode -> phone not found!');
+      setFormData(
+        Object.assign({}, formData, { error: { code: 'phone-note-found' } }),
+      );
+      dispatch(app.hideLoading());
       return;
     }
+
     dispatch(app.showLoading());
-    setFormData(values);
     let input = {
       phoneNumber: normalizePhoneNumber('+84', phone),
       deviceId: getUniqueId(),
-      type: TYPE_VERIFY,
+      type: params?.typeVerify,
     };
-    // call firebase phone auth
+
     await signInWithPhoneNumber(input);
   };
 
@@ -74,13 +78,20 @@ const ForgotPasswordScreen = () => {
 
   React.useEffect(() => {
     if (authStatus === AUTH_STATUS.sent) {
-      dispatch(app.hideLoading());
       setPage(PAGES.InputCode);
     } else if (authStatus === AUTH_STATUS.verified) {
-      dispatch(app.hideLoading());
-      setPage(PAGES.InputNewPassWord);
+      if (params?.customerToken) {
+        dispatch(account.setPhoneNumber(formData?.phone));
+        dispatch(account.signInSucceed(params?.customerToken));
+      } else {
+        setPage(PAGES.SignUp);
+      }
+    } else if (authStatus === AUTH_STATUS.spam) {
+      // setBlock(true);
+      setPage(PAGES.InputCode);
     }
-  }, [AUTH_STATUS, authStatus, dispatch]);
+    dispatch(app.hideLoading());
+  }, [AUTH_STATUS, authStatus, dispatch, formData?.phone, params]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -95,22 +106,22 @@ const ForgotPasswordScreen = () => {
   );
 
   switch (showPage) {
-    case 1:
+    case PAGES.InputCode:
       return (
         <VerifyPhoneCode
           infos={formData}
           resendCode={requestAuthCode}
           confirmCode={onConfirmCode}
           timeOut={second_expired}
+          blocked={blocked}
         />
       );
-    case 2:
-      return <InputNewPassword infos={formData} />;
-
-    case 0:
+    case PAGES.SignUp:
+      return <SignUpForm infos={formData} />;
+    case PAGES.InputPhone:
     default:
       return <InputPhoneNumber next={onSubmitPhoneNumber} />;
   }
 };
 
-export default ForgotPasswordScreen;
+export default SignUpScreen;

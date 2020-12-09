@@ -455,3 +455,35 @@ export const GENERATE_CUSTOMER_TOKEN_BY_SOCIAL = gql`
     }
   }
 `;
+// GET OTP
+export const GET_OTP = gql`
+  mutation($deviceId: String!, $phoneNumber: String!, $type: String!) {
+    getOTP(deviceId: $deviceId, phoneNumber: $phoneNumber, type: $type) {
+      error
+      spam
+      existed
+      expired
+      expiredAt
+      otpCode
+    }
+  }
+`;
+
+// VERIFY OTP
+export const VERIFY_OTP = gql`
+  mutation(
+    $deviceId: String!
+    $phoneNumber: String!
+    $type: String!
+    $otpCode: String!
+  ) {
+    verfiyOTP(
+      deviceId: $deviceId
+      phoneNumber: $phoneNumber
+      type: $type
+      otpCode: $otpCode
+    ) {
+      result
+    }
+  }
+`;

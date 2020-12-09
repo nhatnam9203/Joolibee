@@ -34,6 +34,7 @@ import HomeScreen from './NewHome';
 import PromotionScreen from './Promotion';
 import JollibeeVNScreen from './JollibeeVN';
 import SupportDetailScreen from './Support/Detail';
+import NewSignUpScreen from './NewSignUp';
 module.exports = {
   ScreenName,
   WelcomeScreen,
@@ -71,4 +72,5 @@ module.exports = {
   PromotionScreen,
   JollibeeVNScreen,
   SupportDetailScreen,
+  NewSignUpScreen,
 };

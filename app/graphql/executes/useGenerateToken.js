@@ -21,10 +21,7 @@ export const useGenerateToken = () => {
 
   const signInToken = (value) => {
     const { variables } = value || {};
-    // Logger.debug(
-    //   Object.assign({}, variables, { fcmToken: token }),
-    //   'signInToken',
-    // );
+    Logger.debug(token, 'signInToken');
     generateCustomerToken({
       variables: Object.assign({}, variables, { fcmToken: token ?? '456' }),
     });

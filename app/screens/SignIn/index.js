@@ -27,7 +27,6 @@ import {
 import ScreenName from '../ScreenName';
 import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
-import { get, save, StorageKey } from '@storage';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -77,8 +76,9 @@ const SignInScreen = () => {
       socialSignIn({ variables: submitData })
         .then((res) => {
           if (res?.data?.socialSignIn?.token) {
-            navigation.navigate(ScreenName.SignUp, {
+            navigation.navigate(ScreenName.NewSignUp, {
               customerToken: res?.data?.socialSignIn?.token,
+              typeVerify: 'update',
             });
           }
           dispatch(app.hideLoading());
@@ -87,11 +87,14 @@ const SignInScreen = () => {
           dispatch(app.hideLoading());
         });
     },
-    [dispatch, socialSignIn],
+    [dispatch, navigation, socialSignIn],
   );
 
   const goSignUpPage = () => {
-    navigation.navigate(ScreenName.SignUp);
+    navigation.navigate(ScreenName.NewSignUp, {
+      customerToken: null,
+      typeVerify: 'create',
+    });
   };
 
   const goForgotPasswordScreen = () => {

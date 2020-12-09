@@ -35,7 +35,7 @@ import { query, GQL, GEX, useGraphQLClient } from '@graphql';
 import { format, scale, appUtil } from '@utils';
 import { vouchers } from '@mocks';
 import { app, account, order } from '@slices';
-import { useStorePickup } from '@hooks';
+import { useStorePickup, useCountDown } from '@hooks';
 import NavigationService from '../../navigation/NavigationService';
 
 const { scaleWidth, scaleHeight } = scale;
@@ -573,25 +573,25 @@ const OrderScreen = ({ route = { params: {} } }) => {
       </OrderSectionItem>
     </OrderSection>
   );
-
-  // const renderBlockedApplyCoupon = () => {
-  //   return timming ? (
-  //     <Text style={{ width: '100%', marginVertical: 5 }}>
-  //       {translate('txtTryAgain') + ' (' + number + ') '}
-  //     </Text>
-  //   ) : (
-  //     <TextInputErrorMessage
-  //       style={{ width: '100%', marginVertical: 5 }}
-  //       message={
-  //         count_input_coupon < 5 &&
-  //         `${translate('txtYouHave')} ${count_input_coupon} ${translate(
-  //           'txtInputCode',
-  //         )}`
-  //       }
-  //       color={AppStyles.colors.inputError}
-  //     />
-  //   );
-  // };
+  const number = useCountDown();
+  const renderBlockedApplyCoupon = () => {
+    return true ? (
+      <Text style={{ width: '100%', marginVertical: 5 }}>
+        {translate('txtTryAgain') + ' (' + number + ') '}
+      </Text>
+    ) : (
+      <TextInputErrorMessage
+        style={{ width: '100%', marginVertical: 5 }}
+        message={
+          count_input_coupon < 5 &&
+          `${translate('txtYouHave')} ${count_input_coupon} ${translate(
+            'txtInputCode',
+          )}`
+        }
+        color={AppStyles.colors.inputError}
+      />
+    );
+  };
 
   const renderPromotion = () => (
     <OrderSection title={translate('txtPromotionApply')} key="OrderPromotion">
@@ -614,7 +614,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
               onChangeText={onChangeCouponCode}
             />
           </OrderButtonInput>
-          {/* {renderBlockedApplyCoupon()} */}
+          {renderBlockedApplyCoupon()}
           {applied_coupons && (
             <View
               style={{
