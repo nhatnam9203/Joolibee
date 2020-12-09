@@ -8,6 +8,8 @@ export const useGetAddressList = (onCompleted) => {
   const dispatch = useDispatch();
   const addresses = useSelector((state) => state.account.addresses);
 
+  Logger.debug(addresses, '======> addresses');
+
   const [getAddressList, getAddressListResp] = useLazyQuery(ADDRESS_LIST, {
     fetchPolicy: 'cache-and-network',
     onCompleted: () => {
@@ -21,7 +23,10 @@ export const useGetAddressList = (onCompleted) => {
   });
 
   React.useEffect(() => {
-    if (addresses?.length <= 0) getAddressList();
+    if (addresses?.length <= 0) {
+      getAddressList();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -33,7 +38,7 @@ export const useGetAddressList = (onCompleted) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getAddressListResp?.data]);
+  }, [getAddressListResp]);
 
-  return [addresses, getAddressList, getAddressListResp];
+  return [addresses, getAddressList];
 };

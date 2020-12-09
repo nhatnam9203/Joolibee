@@ -54,9 +54,8 @@ const Index = (props) => {
     setAction(false);
     navigation.goBack();
   };
-  const [addresses, getAddressList] = GEX.useGetAddressList(
-    isAction && successQuery,
-  );
+  const [, getAddressList] = GEX.useGetAddressList(isAction && successQuery);
+
   const onChangeValue = React.useCallback(
     () => setDefaultShipping(!default_shipping),
     [default_shipping],
@@ -150,10 +149,11 @@ const Index = (props) => {
     },
     [
       default_shipping,
-
       dispatch,
-      location_selected,
-      navigation,
+      getAddressList,
+      location_selected.addressFull,
+      location_selected.city,
+      location_selected.street,
       updateCustomerAddress,
     ],
   );
@@ -178,7 +178,7 @@ const Index = (props) => {
       .catch(() => {
         dispatch(app.hideLoading());
       });
-  }, [dispatch, deleteCustomerAddress, val_address, navigation]);
+  }, [dispatch, deleteCustomerAddress, val_address.id, getAddressList]);
 
   //------------ Update address customer -----------------//
   const onHandleSubmit = action_type ? onHandleUpdate : onHandleAdd;
