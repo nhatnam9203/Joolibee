@@ -107,17 +107,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   } = customerCart || {};
 
   const { grand_total, discounts, subtotal_excluding_tax } = prices || {};
-
-  const shippingAddress = shipping_addresses?.find(Boolean);
-  const {
-    firstname = '',
-    lastname = '',
-    selected_shipping_method = ShippingType.InPlace,
-    telephone = '',
-  } = shippingAddress || {};
-
-  const { method_code } = selected_shipping_method || {};
-  const full_address = format.addressFull(shippingAddress) ?? '';
   const total = format.jollibeeCurrency({
     value: grand_total?.value,
     currency: 'VND',
@@ -126,6 +115,17 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
+
+  const shippingAddress = shipping_addresses?.find(Boolean);
+  const {
+    firstname = '',
+    lastname = '',
+    selected_shipping_method = { method_code: ShippingType.InPlace },
+    telephone = '',
+  } = shippingAddress || {};
+  const { method_code } = selected_shipping_method || {};
+  const full_address = format.addressFull(shippingAddress) ?? '';
+
   const [customerInfo] = GEX.useCustomer();
   const [shippingType, setShippingType] = React.useState(method_code);
 
@@ -198,7 +198,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
    * @param {*} code : ["freeshipping", "storepickup"]
    */
   const onChangeShippingMethod = (code) => {
-    Logger.debug(availableStores, ' ========xxxxxxxx> availableStores');
     switch (code) {
       case ShippingType.InShop:
         navigation.navigate(ScreenName.StorePickup, {
@@ -269,7 +268,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           showErrorPoint(false);
           dispatch(order.pickupStore(null));
           // getCheckOutCart(true);
-          getCustomerCart(true);
+          getCustomerCart();
 
           /// chua get lai list order
         }
@@ -330,6 +329,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
     setAvailableStores(arr);
   }, [shippingMethod?.results, storeList]);
+
   React.useEffect(() => {
     if (addressParams && store_pickup_id) {
       setShippingType(ShippingType.InShop);
@@ -357,6 +357,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store_pickup_id]);
+
+  // React.useEffect(() => {}, []);
 
   const renderItemExtra = (item, index) => (
     <View key={index + ''} style={{ flex: 1 }}>

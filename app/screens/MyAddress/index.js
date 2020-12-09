@@ -24,13 +24,15 @@ const Index = ({ route }) => {
   };
 
   // Get Customer Cart
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
+  const [customerCart] = GEX.useGetCustomerCart(onCompleted);
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart(onCompleted);
 
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const { firstname, lastname, phone_number } = customerInfo;
-  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
+  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress(
+    onCompleted,
+  );
 
   const onHandleSetShippingAddress = (id) => {
     const params = {
@@ -38,18 +40,13 @@ const Index = ({ route }) => {
         shipping_addresses: [{ customer_address_id: id }],
       },
     };
-    setShippingAddress(params).then((res) => {
-      if (res?.data?.setShippingAddressesOnCart) {
-        // getCheckOutCart();
-        getCustomerCart();
-      }
-    });
+    setShippingAddress(params);
   };
 
   const onHandlePress = (item) => {
     if (selected_address && item) {
-      onHandleSetShippingAddress(item.id);
       dispatch(app.showLoading());
+      onHandleSetShippingAddress(item.id);
     } else {
       goToDetail(item);
     }

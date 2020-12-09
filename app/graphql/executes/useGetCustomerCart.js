@@ -40,7 +40,7 @@ export const useGetCustomerCart = (onCompleted = () => {}) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCustomerCartResp?.data]);
+  }, [getCustomerCartResp]);
 
   return [customerCart, getCustomerCart];
 };

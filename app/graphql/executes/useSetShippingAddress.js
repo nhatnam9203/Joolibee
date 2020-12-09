@@ -14,7 +14,10 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     {
       onCompleted: (data) => {
         if (data?.setShippingAddressesOnCart) {
-          callBack();
+          getCustomerCart();
+          if (typeof callBack === 'function') {
+            callBack();
+          }
         }
       },
     },
@@ -26,6 +29,7 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     }
     let { variables } = params;
     variables = Object.assign({}, variables, { cart_id: customerCart.id });
+    Logger.debug(params, '=======> setShippingAddress');
     return setShippingAddressesOnCart({
       ...params,
       variables,
