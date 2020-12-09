@@ -146,6 +146,7 @@ const accountSlice = createSlice({
         total_quantity: state.cart.total_quantity + action.payload,
       });
     },
+
     saveAddressCustomer(state, action) {
       state.addresses = action.payload;
     },

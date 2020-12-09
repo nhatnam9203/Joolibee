@@ -20,14 +20,6 @@ export const useGetCustomerCart = (onCompleted = () => {}) => {
     },
   );
 
-  // React.useEffect(() => {
-  //   if (!customerCart) {
-  //     getCustomerCart();
-  //     Logger.debug('getCustomerCart', 'useGetCustomerCart');
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
       // Logger.debug(
@@ -40,7 +32,7 @@ export const useGetCustomerCart = (onCompleted = () => {}) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getCustomerCartResp]);
+  }, [getCustomerCartResp.data]);
 
   return [customerCart, getCustomerCart];
 };

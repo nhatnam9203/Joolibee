@@ -2,11 +2,12 @@ import { useMutation } from '@apollo/client';
 import { GEX } from '@graphql';
 import { useDispatch } from 'react-redux';
 import { SET_ORDER_SHIPPING_ADDRESS } from '../gql';
+import { account } from '@slices';
 
 export const useSetShippingAddress = (callBack = () => {}) => {
   const dispatch = useDispatch();
   // const customerCart = useSelector((state) => state.account?.cart);
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const [customerCart] = GEX.useGetCustomerCart();
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const [setShippingAddressesOnCart, shippingAddressResp] = useMutation(
@@ -14,10 +15,12 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     {
       onCompleted: (data) => {
         if (data?.setShippingAddressesOnCart) {
-          getCustomerCart();
           if (typeof callBack === 'function') {
             callBack();
           }
+          dispatch(
+            account.updateCustomerCart(data?.setShippingAddressesOnCart?.cart),
+          );
         }
       },
     },

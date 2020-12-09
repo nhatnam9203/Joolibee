@@ -96,6 +96,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // --------- REQUEST CART-DETAIL -----------
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  Logger.debug(customerCart, '======> customerCart');
 
   const {
     items,
