@@ -75,6 +75,7 @@ const accountSlice = createSlice({
 
     signInSucceed(state, action) {
       const token = action.payload;
+      console.log('token', token);
       if (token) {
         // received token from server
 

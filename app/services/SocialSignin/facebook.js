@@ -48,9 +48,10 @@ export const loginFb = async () =>
     let data = await AccessToken.getCurrentAccessToken();
     // const responseInfoCallback = (error, result) => {
     //   if (error) {
-    //     reject(error);
+    //     // reject(error);
     //   } else {
-    //     resolve(result);
+    //     console.log(result);
+    //     // resolve(result);
     //   }
     // };
 
@@ -62,6 +63,7 @@ export const loginFb = async () =>
 
       if (result === 'public_profile') {
         let data = await AccessToken.getCurrentAccessToken();
+
         resolve(data);
       } else alert(result && result);
     }

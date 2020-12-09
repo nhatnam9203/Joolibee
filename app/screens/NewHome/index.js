@@ -51,7 +51,6 @@ const HomeScreen = () => {
     (state) => state.setting.isAllowLocations,
   );
 
-
   const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen('cache-first');
   const { homeScreen } = homeScreenResp?.data || {};
 

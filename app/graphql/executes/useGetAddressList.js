@@ -9,7 +9,7 @@ export const useGetAddressList = (onCompleted) => {
   const addresses = useSelector((state) => state.account.addresses);
 
   const [getAddressList, getAddressListResp] = useLazyQuery(ADDRESS_LIST, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'cache-and-network',
     onCompleted: () => {
       if (typeof onCompleted === 'function') {
         onCompleted();

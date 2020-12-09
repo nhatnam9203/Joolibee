@@ -7,7 +7,7 @@ import { translate } from '@localize';
 import { statusCodes } from '@react-native-community/google-signin';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
-import { loginFb, loginGoogle } from '@social';
+import { loginFb, loginGoogle, logoutFb } from '@social';
 import { AppStyles, images } from '@theme';
 import { regex } from '@utils';
 import { Formik } from 'formik';
@@ -27,6 +27,7 @@ import {
 import ScreenName from '../ScreenName';
 import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
+import { get, save, StorageKey } from '@storage';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -50,6 +51,7 @@ const SignInScreen = () => {
 
   const { signIn, customerToken } = GEX.useGenerateToken();
   const { socialSignIn } = GEX.useGenerateTokenBySocial();
+  // const { signIn, customerToken } = GEX.useGenerateToken();
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
       //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
@@ -74,8 +76,10 @@ const SignInScreen = () => {
     async (submitData) => {
       socialSignIn({ variables: submitData })
         .then((res) => {
-          if (!res?.errors) {
-            dispatch(account.signInSucceed(''));
+          if (res?.data?.socialSignIn?.token) {
+            navigation.navigate(ScreenName.SignUp, {
+              customerToken: res?.data?.socialSignIn?.token,
+            });
           }
           dispatch(app.hideLoading());
         })
@@ -96,9 +100,13 @@ const SignInScreen = () => {
 
   const signinFB = async () => {
     await dispatch(app.showLoading());
-    const data = await loginFb();
-    let submitData = { type: 'Facebook', token: data?.accessToken };
-    socialSignInSubmit(submitData);
+    try {
+      const data = await loginFb();
+      let submitData = { type: 'Facebook', token: data?.accessToken };
+      socialSignInSubmit(submitData);
+    } catch (error) {
+      await dispatch(app.hideLoading());
+    }
   };
 
   const signinGoogle = async () => {
@@ -253,7 +261,6 @@ const SignInScreen = () => {
                   />
 
                   {/**FACEBOOK*/}
-                  {/* <ButtonCC.ButtonFacebook /> */}
                   <ButtonCC.ButtonFacebook onPress={signinFB} />
 
                   {/**GOOGLE*/}

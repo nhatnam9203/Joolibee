@@ -19,7 +19,7 @@ import {
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
-
+import { useSelector } from 'react-redux';
 const { scaleWidth } = scale;
 
 const ProductCart = ({ visible, onToggle }) => {
@@ -29,12 +29,13 @@ const ProductCart = ({ visible, onToggle }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [cartDetail, setCartDetail] = React.useState(null);
   const [footerSize, onLayoutFooter] = useComponentSize();
-
+  const { phone_number } = useSelector((state) => state.account?.user);
   // GET
   // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+
   const [addresses] = GEX.useGetAddressList();
   const address_id = addresses?.find((x) => x.default_shipping)?.id;
   const params = {
@@ -88,7 +89,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const orderCreateNewAddress = () => {
     const val_address = {
-      phone: customerInfo?.phone_number,
+      phone: phone_number ?? '',
       place: '',
       firstname: customerInfo?.firstname,
       lastname: customerInfo?.lastname,

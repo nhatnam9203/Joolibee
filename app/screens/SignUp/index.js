@@ -1,6 +1,6 @@
 import { AUTH_STATUS, useFirebaseAuthentication } from '@firebase';
 import { useFocusEffect } from '@react-navigation/native';
-import { app } from '@slices';
+import { app, account } from '@slices';
 import { validate } from '@utils';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,8 @@ const PAGES = {
   SignUp: 2,
 };
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ route }) => {
+  const { params } = route || {};
   // redux
   const dispatch = useDispatch();
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
@@ -70,10 +71,14 @@ const SignUpScreen = () => {
       setPage(PAGES.InputCode);
     } else if (authStatus === AUTH_STATUS.verified) {
       dispatch(app.hideLoading());
-
-      setPage(PAGES.SignUp);
+      if (params?.customerToken) {
+        dispatch(account.setPhoneNumber(formData?.phone));
+        dispatch(account.signInSucceed(params?.customerToken));
+      } else {
+        setPage(PAGES.SignUp);
+      }
     }
-  }, [authStatus, dispatch]);
+  }, [authStatus, dispatch, formData?.phone, params?.customerToken]);
 
   useFocusEffect(
     React.useCallback(() => {
