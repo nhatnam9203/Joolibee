@@ -22,16 +22,13 @@ export const QueryAddressList = ({
   ListHeaderComponent,
 }) => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [addresses, getAddressList, getAddressListResp] = useGetAddressList();
-  const { loading, refetch } = getAddressListResp;
-  React.useEffect(() => {
-    getAddressList();
-  }, []);
+  const [addresses, getAddressList] = useGetAddressList();
+
   let _data = addresses ? addresses : defaultData;
 
   const handleRefresh = () => {
     setRefreshing(true);
-    refetch();
+    getAddressList();
     setRefreshing(false);
   };
 
@@ -44,7 +41,7 @@ export const QueryAddressList = ({
   return (
     <CustomFlatList
       data={_data}
-      renderItem={loading ? renderItemLoading : renderItem}
+      renderItem={renderItem}
       horizontal={false}
       keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={styles.contentContainerStyle}
