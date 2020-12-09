@@ -27,9 +27,11 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1050288668736378</string>
+				<string>fb3282021825245249</string>
 			</array>
 		</dict>
 		<dict>
@@ -54,9 +56,9 @@
 	<key>CodePushDeploymentKey</key>
 	<string>ZTeG5QBzw5uS_V1zdGjwdDCiQrsI5pWNozA76</string>
 	<key>FacebookAppID</key>
-	<string>1050288668736378</string>
+	<string>3282021825245249</string>
 	<key>FacebookDisplayName</key>
-	<string>Jollibee Vietnam</string>
+	<string>Jollibee Web App</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

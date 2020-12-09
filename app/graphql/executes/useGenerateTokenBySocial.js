@@ -21,10 +21,10 @@ export const useGenerateTokenBySocial = () => {
 
   const signInToken = (value) => {
     const { variables } = value || {};
-    // Logger.debug(
-    //   Object.assign({}, variables, { fcmToken: token }),
-    //   'signInToken',
-    // );
+    Logger.debug(
+      Object.assign({}, variables, { fcmToken: token }),
+      'signInToken',
+    );
     return socialSignIn({
       variables: Object.assign({}, variables, { fcmToken: token ?? '456' }),
     });
@@ -32,6 +32,6 @@ export const useGenerateTokenBySocial = () => {
 
   return {
     socialSignIn: signInToken,
-    customerToken: data?.generateCustomerToken?.token,
+    customerToken: data?.socialSignIn?.token,
   };
 };

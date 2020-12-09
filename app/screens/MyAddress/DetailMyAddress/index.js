@@ -48,10 +48,15 @@ const Index = (props) => {
   const [default_shipping, setDefaultShipping] = React.useState(
     Boolean(val_address?.default_shipping),
   );
+  const [isAction, setAction] = React.useState(false);
   const successQuery = () => {
     dispatch(app.hideLoading());
+    setAction(false);
+    navigation.goBack();
   };
-  const [addresses, getAddressList] = GEX.useGetAddressList(successQuery);
+  const [addresses, getAddressList] = GEX.useGetAddressList(
+    isAction && successQuery,
+  );
   const onChangeValue = React.useCallback(
     () => setDefaultShipping(!default_shipping),
     [default_shipping],
@@ -88,9 +93,12 @@ const Index = (props) => {
       })
         .then(({ data }) => {
           if (data?.createCustomerAddress) {
+            setAction(true);
             getAddressList();
-            navigation.goBack();
-          } else dispatch(app.hideLoading());
+            // navigation.goBack();
+            // dispatch(app.hideLoading());
+          }
+          dispatch(app.hideLoading());
         })
         .catch(() => {
           dispatch(app.hideLoading());
@@ -129,9 +137,11 @@ const Index = (props) => {
       })
         .then(({ data }) => {
           if (data?.updateCustomerAddress) {
+            setAction(true);
             getAddressList();
+
             // getCustomerInfo();
-            navigation.goBack();
+            // navigation.goBack();
           } else dispatch(app.hideLoading());
         })
         .catch(() => {
@@ -161,8 +171,8 @@ const Index = (props) => {
     })
       .then(({ data }) => {
         if (data?.deleteCustomerAddress) {
+          setAction(true);
           getAddressList();
-          navigation.goBack();
         } else dispatch(app.hideLoading());
       })
       .catch(() => {
