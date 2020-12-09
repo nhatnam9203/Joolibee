@@ -1,8 +1,7 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { UPDATE_CART_PRODUCT } from '../gql';
+import { useMutation } from '@apollo/client';
 import { account } from '@slices';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { UPDATE_CART_PRODUCT } from '../gql';
 
 /**
  *
@@ -21,7 +20,7 @@ export const useUpdateCustomerCart = () => {
     },
   });
 
-  const onupdateCartItems = (params) => {
+  const updateCart = (params) => {
     if (!customerCart) {
       return;
     }
@@ -31,8 +30,5 @@ export const useUpdateCustomerCart = () => {
     updateCartItems({ variables });
   };
 
-  return {
-    updateCartItems: onupdateCartItems,
-    updateCartResp,
-  };
+  return [updateCartResp, updateCart];
 };

@@ -24,8 +24,8 @@ const Index = ({ route }) => {
   };
 
   // Get Customer Cart
-  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart(onCompleted);
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(onCompleted);
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart(onCompleted);
 
   const [customerInfo] = GEX.useCustomer();
   const { phone_number } = useSelector((state) => state.account?.user);

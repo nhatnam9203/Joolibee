@@ -67,8 +67,8 @@ export const TopBarRight = React.memo(() => {
   const dispatch = useDispatch();
 
   // const cart = useSelector((state) => state.account?.cart);
-  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>

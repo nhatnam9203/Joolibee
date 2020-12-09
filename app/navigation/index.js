@@ -42,8 +42,8 @@ function App() {
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
-  // const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
-  const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
   const [categoryListResp, getCategoryList] = GEX.useGetCategoryList();
   const getStoreJsonData = GEX.useGetStoreInfo();
   const storeList = useStorePickup();
@@ -63,7 +63,8 @@ function App() {
 
   const goToHomeScreen = React.useCallback(() => {
     if (isLogin) {
-      getCheckOutCart();
+      // getCheckOutCart();
+      getCustomerCart();
       getCategoryList();
       loadHomeScreen();
     } else {

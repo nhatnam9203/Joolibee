@@ -18,3 +18,4 @@ export * from './useGetStoreInfo';
 export * from './useOrderList';
 export * from './useGetCategoryList';
 export * from './useGenerateTokenBySocial';
+export * from './useSearchStoreByAddress';
