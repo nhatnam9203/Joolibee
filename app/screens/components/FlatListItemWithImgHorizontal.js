@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { AppStyles } from '@theme';
+import { AppStyles, images } from '@theme';
 import { JollibeeImage } from './JollibeeImage';
 import { scale } from '@utils';
+import FastImage from 'react-native-fast-image';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -20,6 +21,7 @@ export const FlatListItemWithImgHorizontal = ({
   imgHeight = DEFAULT_HEIGHT,
   imgWidth = DEFAULT_HEIGHT,
   shadow = true,
+  hotIcon = true,
 }) => {
   const renderImage = () => (
     <JollibeeImage url={image} width={imgWidth} height={imgHeight} />
@@ -30,6 +32,13 @@ export const FlatListItemWithImgHorizontal = ({
       <View
         style={[styles.background, shadow && AppStyles.styles.shadowStrong]}>
         {imgPosition === 'left' && renderImage()}
+        {hotIcon && (
+          <Image
+            style={styles.hotIcon}
+            source={images.icons.ic_hot}
+            resizeMode="center"
+          />
+        )}
         <View style={[styles.content, contentStyle]}>{children}</View>
         {imgPosition === 'right' && renderImage()}
       </View>
@@ -53,5 +62,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flex: 1,
     borderRadius: 14,
+  },
+
+  hotIcon: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 });

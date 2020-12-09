@@ -47,11 +47,9 @@ export const QueryOrderList = ({
   const handleFreshMore = () => {
     const next_page = currentPage + 1;
     nextPage(next_page);
-    console.log('next_page', next_page);
     fetchMore({
       variables: { currentPage: next_page },
       updateQuery: (prev, { fetchMoreResult }) => {
-        console.log('fetchMoreResult', fetchMoreResult);
         if (!fetchMoreResult) {
           return prev;
         }

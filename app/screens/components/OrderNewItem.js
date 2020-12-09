@@ -55,7 +55,8 @@ export const OrderNewItem = ({
   };
 
   const ListItem = (value) => {
-    const { image, id, name, price_range, point } = value?.item;
+    const { image, id, name, price_range, point, is_hot = false } =
+      value?.item || {};
 
     return (
       <FlatListItemWithImgHorizontal
@@ -68,7 +69,8 @@ export const OrderNewItem = ({
         imgWidth={IMAGE_SIZE}
         imgHeight={IMAGE_SIZE}
         shadow={shadow}
-        key={`${id}`}>
+        key={`${id}`}
+        hotIcon={is_hot}>
         <LabelTitle
           label={name}
           numberOfLines={2}

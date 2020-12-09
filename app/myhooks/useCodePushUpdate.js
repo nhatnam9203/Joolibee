@@ -70,7 +70,6 @@ export const useCodePushUpdate = () => {
 
   const codePushProcessComplete = (values) => {
     setProcessing(values);
-    console.log(values);
   };
 
   const codePushStatusChange = (status) => {

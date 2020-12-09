@@ -20,23 +20,23 @@ const RootPermission = () => {
         dispatch(setting.allowLocations(result)); // save to show select area
         switch (result) {
           case RESULTS.UNAVAILABLE:
-            console.log(
+            Logger.debug(
               'This feature is not available (on this device / in this context)',
             );
 
             break;
           case RESULTS.DENIED:
-            console.log(
+            Logger.debug(
               'The permission has not been requested / is denied but requestable',
             );
             break;
           case RESULTS.GRANTED:
-            console.log('The permission is granted');
+            Logger.debug('The permission is granted');
             requestCurrentLocation();
 
             break;
           case RESULTS.BLOCKED:
-            console.log(
+            Logger.debug(
               'The permission is denied and not reques table anymore',
             );
             break;
