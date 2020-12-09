@@ -69,3 +69,10 @@ export const getStorePath = () => {
   const dirs = RNFetchBlob.fs.dirs;
   return `${dirs.DocumentDir}/store.json`;
 };
+
+export const getRegion = () => ({
+  region: {
+    region: 'Viet Nam',
+    region_code: 'VN',
+  },
+});

@@ -206,9 +206,11 @@ const Index = (props) => {
       />
     </View>
   );
+
   const color_placehoder = {
     color: location_selected?.addressFull ? '#484848' : '#9E9E9E',
   };
+
   const {
     handleChange,
     handleBlur,
@@ -227,6 +229,7 @@ const Index = (props) => {
   React.useEffect(() => {
     setFieldValue('address', location_selected?.addressFull);
   }, [location_selected, setFieldValue]);
+
   return (
     <CustomImageBackground
       source={images.watermark_background_2}
