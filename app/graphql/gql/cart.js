@@ -439,9 +439,10 @@ export const APPLY_COUPON_TO_CART = gql`
   }
 `;
 
+//restaurant_id: $restaurant_id
 export const PLACE_ORDER = gql`
-  mutation($cart_id: String!, $restaurant_id: String) {
-    placeOrder(input: { cart_id: $cart_id, restaurant_id: $restaurant_id }) {
+  mutation($cart_id: String!) {
+    placeOrder(input: { cart_id: $cart_id }) {
       order {
         order_number
       }

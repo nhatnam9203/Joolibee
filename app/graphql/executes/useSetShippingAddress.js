@@ -15,7 +15,7 @@ export const useSetShippingAddress = (callBack = () => {}) => {
   const [searchStore] = useMutation(SEARCH_STORE_BY_ADDRESS, {
     onCompleted: (data) => {
       if (data?.searchStore) {
-        dispatch(store.setPickupStores(data?.searchStore?.area_data));
+        dispatch(store.setPickupStore(data?.searchStore?.area_data));
       }
     },
   });

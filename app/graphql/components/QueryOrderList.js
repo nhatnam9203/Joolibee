@@ -20,8 +20,8 @@ export const QueryOrderList = ({
     },
   );
 
-  let _data = data?.customer?.orders.items
-    ? data?.customer?.orders?.items
+  let _data = data?.customerOrders?.items
+    ? data?.customerOrders?.items
     : defaultData;
   if (error) {
     return <View />;
@@ -30,8 +30,8 @@ export const QueryOrderList = ({
   const sortList = () => {
     let list = [..._data];
     let newList = list?.sort((a, b) => {
-      if (+a.number < +b.number) return 1;
-      if (+a.number > +b.number) return -1;
+      if (+a.order_number < +b.order_number) return 1;
+      if (+a.order_number > +b.order_number) return -1;
       return 0;
     });
     return newList;

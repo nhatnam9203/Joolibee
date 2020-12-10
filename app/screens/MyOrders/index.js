@@ -41,10 +41,10 @@ const Index = () => {
 
   const getShippingMethod = (txt = '') => {
     switch (txt) {
-      case 'Giao hàng tận nơi - Giao hàng tận nơi':
+      case 'freeshipping_freeshipping':
         return translate('txtDeliveredTo');
       default:
-        return 'Đến lấy';
+        return translate('txtToReceive');
     }
   };
 
@@ -78,9 +78,15 @@ const Index = () => {
   );
 
   const renderItem = ({ item }) => {
-    const { total, order_date, number, status, items, shipping_address } =
-      item || {};
-    // console.log('a', order_date);
+    const {
+      grand_total,
+      order_number,
+      status,
+      items,
+      address,
+      created_at,
+      shipping_method,
+    } = item || {};
     const status_text = statusOrder.convertStatusOrder(status);
     const status_style = {
       ...AppStyles.fonts.bold,
@@ -93,28 +99,22 @@ const Index = () => {
         <View style={styles.itemSubContainer}>
           <View style={styles.grandTotalContainer}>
             <Text style={styles.txtPrice}>
-              {total?.grand_total &&
-                format.jollibeeCurrency(total?.grand_total)}
+              {grand_total && format.jollibeeCurrency({ value: grand_total })}
             </Text>
-            <Text style={AppStyles.fonts.mini}>
+            {/* <Text style={AppStyles.fonts.mini}>
               {items?.length || 0} {translate('txtDish')}
-            </Text>
+            </Text> */}
           </View>
 
           <Text style={AppStyles.fonts.medium}>
-            {translate('txtOrderNumber')} #{number}
+            {translate('txtOrderNumber')} #{order_number}
           </Text>
-          <Text style={styles.txtDate}>{getDateStatus(order_date)}</Text>
+          <Text style={styles.txtDate}>{getDateStatus(created_at)}</Text>
           <Text numberOfLines={1} style={styles.txtAddress}>
             <Text style={{ fontWeight: 'bold' }}>
-              {getShippingMethod(item.shipping_method)}
+              {getShippingMethod(shipping_method)}
             </Text>
-            :
-            {' ' +
-              format.addressFull({
-                ...shipping_address,
-                region: { label: shipping_address?.region },
-              })}
+            : {!!address ? address : translate('txtAddressNotFound')}
           </Text>
 
           <View style={styles.bottomContainer}>
@@ -125,7 +125,7 @@ const Index = () => {
             {/* ----- BUTTON ĐAT LAI -----  */}
             {status_text === translate('txtStatusOrderComplete') && (
               <ButtonCC.ButtonBorderRed
-                onPress={onHandleReOrder(number)}
+                onPress={onHandleReOrder(order_number)}
                 label={translate('txtReOrder')}
                 width={scaleWidth(127)}
                 height={scaleHeight(44)}
@@ -225,10 +225,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   txtAddress: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'normal',
     paddingVertical: 4,
     ...AppStyles.fonts.text,
+    color: '#484848',
   },
 
   containerLoading: {
