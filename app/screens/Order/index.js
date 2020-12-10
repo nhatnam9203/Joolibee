@@ -341,14 +341,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, [store_pickup_id]);
 
   React.useEffect(() => {
-    if (shippingType === shippingType.InPlace) {
+    if (shippingType === ShippingType.InPlace) {
       let store_id = null;
       if (pickupStores) {
         const pickStore = pickupStores.find(Boolean);
         store_id = pickStore?.id;
       }
       setAssignStoreId(store_id);
-      setShippingMethods(shippingType.InPlace, store_id);
+      setShippingMethods(ShippingType.InPlace, store_id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickupStores, shippingType]);
@@ -433,72 +433,99 @@ const OrderScreen = ({ route = { params: {} } }) => {
     </OrderSection>
   );
 
-  const renderAddressShippingSection = () => (
-    <OrderSection
-      title={`${translate('txtShippingInfo')}`.toUpperCase()}
-      key="ShippingInfo"
-      buttonComponent={() => (
-        <ButtonCC.ButtonYellow
-          label={translate('txtEdit')}
-          style={styles.buttonHeaderStyle}
-          textStyle={styles.headerButtonTextStyle}
-          onPress={onEdit}
-        />
-      )}>
-      <OrderSectionItem>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-          }}>
-          <Text style={styles.txtStyle}>{firstname + ' ' + lastname}</Text>
-        </View>
-        <View
-          style={{
-            width: 1,
-            height: '60%',
-            backgroundColor: '#DBDBDB',
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            paddingLeft: 17,
-          }}>
-          <Text style={styles.txtStyle}>{telephone}</Text>
-        </View>
-      </OrderSectionItem>
+  const renderAddressShippingSection = () => {
+    let pickStore = null;
+    if (shippingType === ShippingType.InShop) {
+      pickStore = availableStores?.find((x) => x.id === assignStoreId);
+      Logger.debug(pickStore, '====> pickStore');
+    }
 
-      <OrderSectionItem>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-          }}>
-          <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
-            {shippingType === ShippingType.InPlace
-              ? translate('txtShippingTo')
-              : translate('txtToReceive')}
-            :
-          </Text>
-          <Text
-            style={[styles.txtStyle, { flex: 1 }]}
-            ellipsizeMode="tail"
-            numberOfLines={1}>
-            {full_address}
-          </Text>
-        </View>
-      </OrderSectionItem>
-      <OrderSectionItem height={78}>
-        <TextInput
-          placeholder={translate('txtNoteShipping')}
-          multiline={true}
-          style={styles.txtNoteStyle}
-        />
-      </OrderSectionItem>
-    </OrderSection>
-  );
+    return (
+      <OrderSection
+        title={`${translate('txtShippingInfo')}`.toUpperCase()}
+        key="ShippingInfo"
+        buttonComponent={() => (
+          <ButtonCC.ButtonYellow
+            label={translate('txtEdit')}
+            style={styles.buttonHeaderStyle}
+            textStyle={styles.headerButtonTextStyle}
+            onPress={onEdit}
+          />
+        )}>
+        <OrderSectionItem>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+            }}>
+            <Text style={styles.txtStyle}>{firstname + ' ' + lastname}</Text>
+          </View>
+          <View
+            style={{
+              width: 1,
+              height: '60%',
+              backgroundColor: '#DBDBDB',
+            }}
+          />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              paddingLeft: 17,
+            }}>
+            <Text style={styles.txtStyle}>{telephone}</Text>
+          </View>
+        </OrderSectionItem>
+
+        <OrderSectionItem>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+            }}>
+            <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
+              {shippingType === ShippingType.InPlace
+                ? translate('txtShippingTo')
+                : translate('txtAddress')}
+              :
+            </Text>
+            <Text
+              style={[styles.txtStyle, { flex: 1 }]}
+              ellipsizeMode="tail"
+              numberOfLines={1}>
+              {full_address}
+            </Text>
+          </View>
+        </OrderSectionItem>
+        {shippingType === ShippingType.InShop && pickStore && (
+          <OrderSectionItem>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+              }}>
+              <Text style={[styles.txtTitleStyle, { flex: 0 }]}>
+                {translate('txtToReceive') + ': '}
+              </Text>
+              <Text
+                style={[styles.txtStyle, { flex: 1 }]}
+                ellipsizeMode="tail"
+                numberOfLines={1}>
+                {pickStore?.name + ' - ' + pickStore?.address}
+              </Text>
+            </View>
+          </OrderSectionItem>
+        )}
+        <OrderSectionItem height={78}>
+          <TextInput
+            placeholder={translate('txtNoteShipping')}
+            multiline={true}
+            style={styles.txtNoteStyle}
+          />
+        </OrderSectionItem>
+      </OrderSection>
+    );
+  };
 
   const renderProductItem = () => (
     <OrderSection

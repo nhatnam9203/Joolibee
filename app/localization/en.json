@@ -214,5 +214,6 @@
   "txtEarnPoint": "receive point",
   "txtServerMaintainTitle": "Server is maintenance",
   "txtServerMaintainDesc": "Sorry ! Server is maintenance, please come back later!",
-  "txtAddressNotFound": "Address not found"
+  "txtAddressNotFound": "Address not found",
+  "txtAddress": "Address"
 }

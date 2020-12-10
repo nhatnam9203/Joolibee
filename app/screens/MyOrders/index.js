@@ -82,7 +82,7 @@ const Index = () => {
       grand_total,
       order_number,
       status,
-      items,
+      store_name,
       address,
       created_at,
       shipping_method,
@@ -114,7 +114,10 @@ const Index = () => {
             <Text style={{ fontWeight: 'bold' }}>
               {getShippingMethod(shipping_method)}
             </Text>
-            : {!!address ? address : translate('txtAddressNotFound')}
+            :{' '}
+            {!!address
+              ? address
+              : store_name ?? translate('txtAddressNotFound')}
           </Text>
 
           <View style={styles.bottomContainer}>
