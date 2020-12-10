@@ -97,7 +97,6 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
       fcmToken: token ?? '456',
       dob: format.dateTime(dob),
     };
-    Logger.debug(variables, 'variables');
     registerCustomer({
       variables,
     });

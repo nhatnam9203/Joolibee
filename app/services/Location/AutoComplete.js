@@ -10,7 +10,6 @@ export const autocomplete = (params) =>
       const url = Config.MAPS_ENDPOINT + default_url + stringified;
       const response = await fetch(url);
       const resJson = await response.json();
-      Logger.debug(resJson, '=====> resJson');
       let newResponse = {
         status: resJson.status,
         data: resJson.predictions,

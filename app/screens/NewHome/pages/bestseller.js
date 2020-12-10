@@ -18,8 +18,6 @@ const Bestseller = React.memo(({ data, loading }) => {
     );
   }
 
-  Logger.debug(data, '====> Bestseller data');
-
   if (data) {
     return (
       <View style={styles.container}>

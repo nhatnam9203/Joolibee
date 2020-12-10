@@ -129,6 +129,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const [customerInfo] = GEX.useCustomer();
   const [shippingType, setShippingType] = React.useState(method_code);
+  const [, getOrderList] = GEX.useOrderList();
 
   // update cart product
   const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
@@ -211,15 +212,16 @@ const OrderScreen = ({ route = { params: {} } }) => {
             return findStore;
           });
         }
+        dispatch(order.pickupStore(null));
 
         navigation.navigate(ScreenName.StorePickup, {
           stores: arr,
         });
         setAvailableStores(arr);
-        dispatch(order.pickupStore(null));
 
         break;
       default:
+        dispatch(order.pickupStore(null));
         setShippingType(code);
 
         break;
@@ -253,6 +255,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const onSubmit = () => {
     dispatch(app.showLoading());
+    dispatch(order.pickupStore(null));
+
     placeOrder({
       variables: {
         cart_id: customerCart?.id,
@@ -267,11 +271,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
           setOrderNumber(res?.data?.placeOrder?.order?.order_number);
           setShowPopupSuccess(true);
           showErrorPoint(false);
-          dispatch(order.pickupStore(null));
           // getCheckOutCart(true);
           getCustomerCart();
 
           /// chua get lai list order
+          getOrderList();
         }
         dispatch(app.hideLoading());
       })
@@ -341,13 +345,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, [store_pickup_id]);
 
   React.useEffect(() => {
-    if (shippingType === ShippingType.InPlace) {
-      let store_id = null;
-      if (pickupStores) {
-        const pickStore = pickupStores.find(Boolean);
-        store_id = pickStore?.id;
-      }
+    if (shippingType === ShippingType.InPlace && pickupStores) {
+      const pickStore = pickupStores.find(Boolean);
+      const store_id = pickStore?.store_id;
+
       setAssignStoreId(store_id);
+
       setShippingMethods(ShippingType.InPlace, store_id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -437,7 +440,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     let pickStore = null;
     if (shippingType === ShippingType.InShop) {
       pickStore = availableStores?.find((x) => x.id === assignStoreId);
-      Logger.debug(pickStore, '====> pickStore');
     }
 
     return (

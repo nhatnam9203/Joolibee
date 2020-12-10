@@ -50,14 +50,25 @@ export const useSetShippingAddress = (callBack = () => {}) => {
       const fullAddress = format.addressFull(address);
       const { data, status } = await geocodeAddress(fullAddress);
       if (data) {
-        let input = {};
+        let input = {
+          street_number: '',
+          route: '',
+          locality: '',
+          sublocality_level_1: '',
+          administrative_area_level_1: '',
+          administrative_area_level_2: '',
+          country: 'Việt Nam',
+          ward: '',
+          neighborhood: '',
+          order_amount: 0,
+        };
         const { address_components = [] } = data;
         address_components.forEach((item) => {
           const type = item.types?.find(Boolean);
           input[type] = item.long_name;
         });
 
-        await searchStore({ variables: input });
+        searchStore({ variables: input });
       }
     }
   };

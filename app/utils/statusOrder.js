@@ -40,28 +40,26 @@ export function getImage(status = '') {
 
 export function convertStatusOrder(status = '') {
   // pending, received, cooking, ready, shipping, complete,ready_to_ship;
+
   switch (status.toLowerCase()) {
     case 'pending':
-      return translate('txtStatusOrderPending');
     case 'processing':
       return translate('txtStatusOrderPending');
     case 'shipping':
       return translate('txtStatusOrderShipping');
     case 'ready to ship':
-      return translate('txtStatusOrderReceived');
+    case 'ready_to_ship':
     case 'received':
-      return translate('txtStatusOrderReceived');
     case 'cooking':
       return translate('txtStatusOrderReceived');
     case 'arrived':
       return translate('txtStatusOrderArrived');
     case 'complete':
+    case 'completed':
       return translate('txtStatusOrderComplete');
-
     case 'cancel':
-      return translate('txtStatusOrderCancel');
     case 'bom':
-      return translate('txtStatusOrderCancel');
+    case 'fraud':
     default:
       return translate('txtStatusOrderCancel');
   }

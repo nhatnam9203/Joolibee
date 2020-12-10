@@ -21,7 +21,7 @@ export const FlatListItemWithImgHorizontal = ({
   imgHeight = DEFAULT_HEIGHT,
   imgWidth = DEFAULT_HEIGHT,
   shadow = true,
-  hotIcon = true,
+  hotIcon = false,
 }) => {
   const renderImage = () => (
     <JollibeeImage url={image} width={imgWidth} height={imgHeight} />

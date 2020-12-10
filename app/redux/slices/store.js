@@ -46,7 +46,6 @@ const storeSlice = createSlice({
     },
 
     pickLocation: (state, action) => {
-      Logger.debug(action, '======> action');
       state.pickupLocation = action.payload;
     },
 

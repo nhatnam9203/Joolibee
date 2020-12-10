@@ -38,6 +38,7 @@ import { ConfirmHandler, ComingSoonHandler } from './handlers';
 import { useFirebaseCloudMessing } from '@firebase';
 import PushNotification from 'react-native-push-notification';
 import { GEX } from '@graphql';
+import { order } from '@slices';
 
 const fontConfig = {
   default: {
@@ -100,17 +101,18 @@ const App = () => {
           <LangProvider>
             <GraphErrorHandler ref={graphQLErrorRef}>
               <PaperProvider theme={theme}>
-                <Navigator />
-                <NotificationProvider />
-                <LoadingProvider />
-                <RootPermission />
-                <DropdownAlert
-                  ref={dropdownRef}
-                  showCancel={true}
-                  closeInterval={6000}
-                />
-                <ConfirmHandler ref={confirmRef} />
-                <ComingSoonHandler ref={comingSoonRef} />
+                <NotificationProvider>
+                  <Navigator />
+                  <LoadingProvider />
+                  <RootPermission />
+                  <DropdownAlert
+                    ref={dropdownRef}
+                    showCancel={true}
+                    closeInterval={6000}
+                  />
+                  <ConfirmHandler ref={confirmRef} />
+                  <ComingSoonHandler ref={comingSoonRef} />
+                </NotificationProvider>
               </PaperProvider>
             </GraphErrorHandler>
           </LangProvider>
@@ -158,51 +160,72 @@ const LangProvider = ({ children }) => {
   return <>{children}</>;
 };
 
-const NotificationProvider = () => {
+const NotificationProvider = ({ children }) => {
   const dispatch = useDispatch();
 
-  const [orderListResp, getOrderList] = GEX.useOrderList();
+  // const [, getOrderList] = GEX.useOrderList();
 
   const onForegroundMessage = (data) => {
-    Logger.debug(data, 'notification onForegroundMessage');
-    getOrderList();
+    Logger.debug('onForegroundMessage', data);
 
-    const title = data?.notification?.title ? data?.notification?.title : '';
-    const body = data?.notification?.body ? data?.notification?.body : '';
-    PushNotification.localNotification({
-      smallIcon: 'ic_merchant',
-      largeIcon: 'ic_merchant',
-      title: title,
-      message: body,
-    });
+    /**
+     * TRƯỜNG HỢP APP DANG ACTIVE
+     * - cập nhật trạng thái đơn hàng, field: status, get nhanh server cache -> nen can update redux
+     * - cập nhật lại notify của app
+     */
+    if (data?.data?.order) {
+      const { status, order_number } = JSON.parse(data?.data?.order);
+      dispatch(order.updateOrderStatus({ status, order_number }));
+    }
+
+    // const title = data?.notification?.title ? data?.notification?.title : '';
+    // const body = data?.notification?.body ? data?.notification?.body : '';
+    // PushNotification.localNotification({
+    //   smallIcon: 'ic_merchant',
+    //   largeIcon: 'ic_merchant',
+    //   title: title,
+    //   message: body,
+    // });
   };
   const onBackgroundMessage = (data) => {
-    Logger.debug(data, 'notification onBackgroundMessage');
-  };
-  const onOpenedApp = (data) => {
-    Logger.debug(data, 'notification onOpenedApp');
-  };
-  const onInit = (data) => {
-    Logger.debug(data, 'notification onInit');
-  };
-  const onMessageError = (data) => {
-    Logger.debug(data, 'notification onMessageError');
+    Logger.debug('onBackgroundMessage', data);
+    /**
+     * TRƯỜNG HỢP APP IN BACKGROUND (ACTIVE & INACTIVE)
+     *
+     *
+     */
   };
 
-  const token = useFirebaseCloudMessing(
+  const onOpenedApp = (data) => {
+    Logger.debug('onOpenedApp', data);
+    /**
+     * TRƯỜNG HỢP APP IN OPENING
+     *
+     *
+     */
+  };
+
+  const onInit = (data) => {
+    Logger.debug('onInit', data);
+  };
+  const onMessageError = (data) => {
+    Logger.debug('onMessageError', data);
+  };
+
+  const token = useFirebaseCloudMessing({
     onForegroundMessage,
     onBackgroundMessage,
     onOpenedApp,
     onInit,
     onMessageError,
-  );
+  });
 
   React.useEffect(() => {
     dispatch(app.updateFcmToken(token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
-  return null;
+  return <>{children}</>;
 };
 
 export default App;
