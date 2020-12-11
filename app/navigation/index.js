@@ -38,7 +38,6 @@ const ScreenConst = {
 // Process Start App
 function App() {
   const { startApp, isSignIn } = useAppProcess();
-  const isLogin = useSelector((state) => state.account?.user?.isLogin);
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
@@ -59,10 +58,10 @@ function App() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startApp, isLogin]);
+  }, [startApp, isSignIn]);
 
   const goToHomeScreen = React.useCallback(() => {
-    if (isLogin) {
+    if (isSignIn) {
       // getCheckOutCart();
       getCustomerCart();
       getCategoryList();
@@ -73,7 +72,7 @@ function App() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin]);
+  }, [isSignIn]);
 
   // Khi có dữ liệu home screen sẽ cho vào home screen, KO CÓ ĂN CÁM !!!
   React.useEffect(() => {

@@ -36,6 +36,7 @@ import { format, scale, appUtil } from '@utils';
 import { vouchers } from '@mocks';
 import { app, account, order } from '@slices';
 import { useStorePickup } from '@hooks';
+import { distanceMatrix } from '@location';
 import NavigationService from '../../navigation/NavigationService';
 
 const { scaleWidth, scaleHeight } = scale;
@@ -65,6 +66,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const timming = useSelector((state) => state.account?.timming);
   const pickupStores = useSelector((state) => state.store?.pickupStores);
+  const shippingLocation = useSelector((state) => state.store.shippingLocation);
 
   // show dialog notice
   const [showNotice, setShowNotice] = React.useState(false);
@@ -345,13 +347,37 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, [store_pickup_id]);
 
   React.useEffect(() => {
-    if (shippingType === ShippingType.InPlace && pickupStores) {
-      const pickStore = pickupStores.find(Boolean);
+    const selectTheStore = async () => {
+      let pickStore = pickupStores.find(Boolean);
+
+      //!! Find store follow distance, tam thoi ko dung
+      // if (pickupStores?.length > 1 && shippingLocation) {
+      //   const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
+      //   let destinations = '';
+      //   pickupStores?.forEach((x) => {
+      //     const findStore = storeList?.find((findX) => x.store_id === findX.id);
+      //     if (findStore) {
+      //       destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
+      //     }
+      //   });
+      //   let { status, data } = await distanceMatrix({ origins, destinations });
+      //   if (status === 'OK') {
+      //     const listDistances = data?.rows[0]?.elements;
+      //     const getStore = format.getNearStore(listDistances);
+      //     if (getStore) {
+      //       pickStore = getStore;
+      //     }
+      //   }
+      // }
       const store_id = pickStore?.store_id;
 
       setAssignStoreId(store_id);
 
       setShippingMethods(ShippingType.InPlace, store_id);
+    };
+
+    if (shippingType === ShippingType.InPlace && pickupStores) {
+      selectTheStore();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickupStores, shippingType]);

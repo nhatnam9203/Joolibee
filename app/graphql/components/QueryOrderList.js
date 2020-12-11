@@ -24,8 +24,12 @@ export const QueryOrderList = ({
     getOrderList,
   ] = useOrderList();
 
+  Logger.debug(networkStatus, '====> networkStatus');
+
   const handleRefresh = () => {
-    refetch();
+    if (typeof refetch === 'function') {
+      refetch();
+    }
   };
 
   const handleFreshMore = () => {

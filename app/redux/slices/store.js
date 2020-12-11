@@ -10,6 +10,7 @@ const storeSlice = createSlice({
     pickupLocation: null,
     cities: [],
     pickupStores: null,
+    shippingLocation: null,
   },
   reducers: {
     filterStore(state, action) {
@@ -51,6 +52,10 @@ const storeSlice = createSlice({
 
     setPickupStore: (state, action) => {
       state.pickupStores = action.payload;
+    },
+
+    setShippingLocation: (state, action) => {
+      state.shippingLocation = action.payload;
     },
   },
   extraReducers: {},

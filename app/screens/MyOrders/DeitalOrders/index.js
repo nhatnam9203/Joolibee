@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, images } from '@theme';
-import { CustomImageBackground } from '@components';
+import { CustomImageBackground, Loading } from '@components';
 import { PopupRating, ButtonCC } from '../../components';
 import ScreenName from '../../ScreenName';
 import { translate } from '@localize';
@@ -184,63 +184,66 @@ export default function Index({ navigation, route }) {
   Logger.debug(orderDetailResp?.data, '=======> orderDetailResp');
 
   return (
-    <CustomImageBackground
-      style={styles.container}
-      source={images.watermark_background_2}>
-      <ScrollView
-        contentContainerStyle={styles.contentContainerStyle}
-        showsVerticalScrollIndicator={false}>
-        {/* -------------- TRANG THAI DON HANG  -------------- */}
+    <>
+      <CustomImageBackground
+        style={styles.container}
+        source={images.watermark_background_2}>
+        <ScrollView
+          contentContainerStyle={styles.contentContainerStyle}
+          showsVerticalScrollIndicator={false}>
+          {/* -------------- TRANG THAI DON HANG  -------------- */}
 
-        {renderStatusComponent()}
-        {/* -------------- TRANG THAI DON HANG  -------------- */}
+          {renderStatusComponent()}
+          {/* -------------- TRANG THAI DON HANG  -------------- */}
 
-        <View style={styles.statusContainer}>
-          {/* -------------- THONG TIN DON HANG  -------------- */}
-          <OrderTitle title={translate('txtInfoShipping')} />
-          <OrderInfo
-            info={
-              orderDetailResp?.data?.customer?.orders?.items[0]
-                ?.shipping_address
-            }
-          />
-          {/* -------------- THONG TIN DON HANG  -------------- */}
-
-          {/* -------------- SAN PHAM DA CHON  -------------- */}
-
-          <OrderTitle title={translate('txtItemSelect')} />
-          <OrderProductList
-            data={orderDetailResp?.data?.customer?.orders?.items[0]?.items}
-          />
-          {/* --------------  SAN PHAM DA CHON  -------------- */}
-
-          {/* --------------  TOTAL PRICE  -------------- */}
-          <OrderTotal
-            total={orderDetailResp?.data?.customer?.orders?.items[0]?.total}
-          />
-          {/* --------------  TOTAL PRICE -------------- */}
-          {(status?.toLowerCase() === 'pending' ||
-            status?.toLowerCase() === 'processing') && (
-            <View style={styles.btnRemmoveOrder}>
-              <ButtonCC.ButtonBorderRed
-                onPress={onHandleCancel}
-                label={translate('txtCancel')}
-                width={scaleWidth(195)}
-                height={scaleHeight(61)}
-              />
-            </View>
-          )}
-          {order_complete && (
-            <PopupRating
-              visible={visible}
-              onToggle={onClose}
-              orderId={order.id}
+          <View style={styles.statusContainer}>
+            {/* -------------- THONG TIN DON HANG  -------------- */}
+            <OrderTitle title={translate('txtInfoShipping')} />
+            <OrderInfo
+              info={
+                orderDetailResp?.data?.customer?.orders?.items[0]
+                  ?.shipping_address
+              }
             />
-          )}
-        </View>
-      </ScrollView>
-      {order_complete && renderBottomComponent()}
-    </CustomImageBackground>
+            {/* -------------- THONG TIN DON HANG  -------------- */}
+
+            {/* -------------- SAN PHAM DA CHON  -------------- */}
+
+            <OrderTitle title={translate('txtItemSelect')} />
+            <OrderProductList
+              data={orderDetailResp?.data?.customer?.orders?.items[0]?.items}
+            />
+            {/* --------------  SAN PHAM DA CHON  -------------- */}
+
+            {/* --------------  TOTAL PRICE  -------------- */}
+            <OrderTotal
+              total={orderDetailResp?.data?.customer?.orders?.items[0]?.total}
+            />
+            {/* --------------  TOTAL PRICE -------------- */}
+            {(status?.toLowerCase() === 'pending' ||
+              status?.toLowerCase() === 'processing') && (
+              <View style={styles.btnRemmoveOrder}>
+                <ButtonCC.ButtonBorderRed
+                  onPress={onHandleCancel}
+                  label={translate('txtCancel')}
+                  width={scaleWidth(195)}
+                  height={scaleHeight(61)}
+                />
+              </View>
+            )}
+            {order_complete && (
+              <PopupRating
+                visible={visible}
+                onToggle={onClose}
+                orderId={order.id}
+              />
+            )}
+          </View>
+        </ScrollView>
+        {order_complete && renderBottomComponent()}
+      </CustomImageBackground>
+      <Loading isLoading={orderDetailResp.loading} />
+    </>
   );
 }
 

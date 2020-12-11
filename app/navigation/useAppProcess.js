@@ -10,13 +10,15 @@ import { useGraphQLClient } from '@graphql';
 export const useAppProcess = () => {
   const dispatch = useDispatch();
 
-  const isLogin = useSelector((state) => state.account?.user?.isLogin);
+  const isSignIn = useSelector((state) => state.account?.user?.isLogin);
   const isLogout = useSelector((state) => state.account?.isLogout);
   const startApp = useSelector((state) => state.app.loading_app);
 
   const graphQlClient = useGraphQLClient();
 
-  const [revokeCustomerToken] = useMutation(GQL.REVOKE_CUSTOMER_TOKEN);
+  const [revokeCustomerToken] = useMutation(GQL.REVOKE_CUSTOMER_TOKEN, {
+    errorPolicy: 'ignore',
+  });
 
   // Process SignOut
   React.useEffect(() => {
@@ -32,7 +34,7 @@ export const useAppProcess = () => {
       // Evict and garbage-collect the cached user object
       graphQlClient.cache.evict({ fieldName: 'customer' });
       graphQlClient.cache.evict({ fieldName: 'customerCart' });
-      // graphQlClient.cache.evict({ fieldName: 'products' });
+      graphQlClient.cache.evict({ fieldName: 'customerOrders' });
       graphQlClient.cache.gc();
 
       // remove token
@@ -40,11 +42,11 @@ export const useAppProcess = () => {
     };
 
     if (isLogout) {
-      onSignOut();
       dispatch(account.signOutComplete());
+      onSignOut();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogout]);
 
-  return { startApp, isSignIn: isLogin };
+  return { startApp, isSignIn };
 };

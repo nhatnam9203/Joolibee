@@ -163,7 +163,7 @@ const LangProvider = ({ children }) => {
 const NotificationProvider = ({ children }) => {
   const dispatch = useDispatch();
 
-  // const [, getOrderList] = GEX.useOrderList();
+  const [, getOrderList] = GEX.useOrderList();
 
   const onForegroundMessage = (data) => {
     Logger.debug('onForegroundMessage', data);
@@ -200,9 +200,10 @@ const NotificationProvider = ({ children }) => {
     Logger.debug('onOpenedApp', data);
     /**
      * TRƯỜNG HỢP APP IN OPENING
-     *
+     * - sau khi mở nhảy vào order list
      *
      */
+    getOrderList();
   };
 
   const onInit = (data) => {

@@ -62,11 +62,20 @@ export const useSetShippingAddress = (callBack = () => {}) => {
           neighborhood: '',
           order_amount: 0,
         };
-        const { address_components = [] } = data;
+        const { address_components = [], geometry = {}, place_id } = data;
         address_components.forEach((item) => {
           const type = item.types?.find(Boolean);
           input[type] = item.long_name;
         });
+
+        // dispatch location ship
+        const { location } = geometry;
+        dispatch(
+          store.setShippingLocation({
+            latitude: location.lat,
+            longitude: location.lng,
+          }),
+        );
 
         searchStore({ variables: input });
       }

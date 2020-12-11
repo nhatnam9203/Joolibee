@@ -8,6 +8,14 @@ import { CachePersistor } from 'apollo3-cache-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import { translate } from '@localize';
 
+const GraphQLException = {
+  AlreadyExists: 'graphql-already-exists', //Thrown when data already exists
+  Authentication: 'graphql-authentication', //Thrown when an authentication fails
+  Authorization: 'graphql-authorization', //Thrown when an authorization error occurs
+  Input: 'graphql-input', //Thrown when a query contains invalid input
+  NoSuchEntity: 'graphql-no-such-entity', //Thrown when an expected resource doesn’t exist
+};
+
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
 
 const authLink = new ApolloLink(async (operation, forward) => {
@@ -43,7 +51,7 @@ const errorLink = onError((err) => {
    */
   if (graphQLErrors?.length > 0) {
     let errors = [];
-    graphQLErrors.map(
+    graphQLErrors?.map(
       (
         {
           debugMessage,
@@ -55,8 +63,7 @@ const errorLink = onError((err) => {
         index,
       ) => {
         switch (category) {
-          case 'graphql':
-          case 'graphql-input':
+          case GraphQLException.Input:
             // client query/mutation wrong
             errors.push(message);
             // if (debugMessage) {
@@ -64,9 +71,10 @@ const errorLink = onError((err) => {
             // }
 
             break;
-          case 'graphql-authorization':
-            remove(StorageKey.Token);
+          case GraphQLException.Authorization:
+          case GraphQLException.Authentication:
             errors.push(message);
+            remove(StorageKey.Token);
             // kick out user here ...
             NavigationService.logout();
             break;
