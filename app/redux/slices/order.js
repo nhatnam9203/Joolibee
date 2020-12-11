@@ -37,7 +37,7 @@ const orderSlice = createSlice({
 
     updateOrderStatus: (state, action) => {
       const { status, order_number } = action.payload;
-      state.orderList = state.orderList.map((x) => {
+      state.orderList = state.orderList?.map((x) => {
         if (x.order_number === order_number) {
           return Object.assign({}, x, { status });
         } else {

@@ -8,7 +8,6 @@ export const ORDER_DETAIL_CUSTOMER = gql`
           id
           number
           order_date
-          status
           shipping_address {
             firstname
             lastname
@@ -17,13 +16,11 @@ export const ORDER_DETAIL_CUSTOMER = gql`
             telephone
             region
           }
+          shipping_method
+          __typename
           items {
+            __typename
             product_name
-            product_sku
-            product_url_key
-            product_sale_price {
-              value
-            }
             product_sale_price {
               value
               currency
@@ -32,68 +29,17 @@ export const ORDER_DETAIL_CUSTOMER = gql`
             quantity_invoiced
             quantity_shipped
           }
-          carrier
-          shipments {
-            id
-            number
-            items {
-              product_name
-              quantity_shipped
-            }
-          }
           total {
-            base_grand_total {
-              value
-              currency
-            }
             grand_total {
               value
               currency
-            }
-            total_tax {
-              value
             }
             subtotal {
               value
               currency
             }
-            taxes {
-              amount {
-                value
-                currency
-              }
-              title
-              rate
-            }
-            total_shipping {
-              value
-            }
-            shipping_handling {
-              amount_including_tax {
-                value
-              }
-              amount_excluding_tax {
-                value
-              }
-              total_amount {
-                value
-              }
-              taxes {
-                amount {
-                  value
-                }
-                title
-                rate
-              }
-            }
-            discounts {
-              amount {
-                value
-                currency
-              }
-              label
-            }
           }
+          status
         }
       }
     }

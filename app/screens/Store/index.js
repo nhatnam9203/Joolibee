@@ -33,8 +33,8 @@ const StorePage = () => {
 
   const my_location = useSelector((state) => state.app.currentLocation);
   const INITIAL_REGION = {
-    latitude: my_location?.position?.lat,
-    longitude: my_location?.position?.lng,
+    latitude: my_location?.position?.lat ?? 37.78825,
+    longitude: my_location?.position?.lng ?? -122.4324,
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: (LONGITUDE_DELTA * width) / height,
   };

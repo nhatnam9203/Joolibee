@@ -33,7 +33,7 @@ const Index = () => {
   };
   // --------------- Re Order Items Cart End ----------------- //
 
-  const goToDetail = (item) => () => {
+  const goToDetail = (item) => {
     navigation.navigate(ScreenName.DeitalOrders, {
       order: { ...item, status: item.status?.toLowerCase() },
     });
@@ -93,8 +93,12 @@ const Index = () => {
       color: statusOrder.getColor(status_text),
       fontSize: 14,
     };
+
+    const viewDetailItem = () => {
+      goToDetail(item);
+    };
     return (
-      <TouchableOpacity onPress={goToDetail(item)} style={styles.itemContainer}>
+      <TouchableOpacity onPress={viewDetailItem} style={styles.itemContainer}>
         <Image source={images.icons.ic_order} />
         <View style={styles.itemSubContainer}>
           <View style={styles.grandTotalContainer}>

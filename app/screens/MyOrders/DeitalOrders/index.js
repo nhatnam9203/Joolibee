@@ -9,9 +9,11 @@ import { translate } from '@localize';
 import { app } from '@slices';
 import { useDispatch } from 'react-redux';
 import { statusOrder, scale, format } from '@utils';
-import { GEX } from '@graphql';
+import { GEX, GQL } from '@graphql';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 import NavigationService from '../../../navigation/NavigationService';
+import { useLazyQuery, useQuery } from '@apollo/client';
+
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
 const MARGIN_VERTICAL = scaleHeight(20);
@@ -21,8 +23,15 @@ export default function Index({ navigation, route }) {
   const { order } = route.params;
   const [visible, setVisible] = React.useState(false);
 
-  const { number, order_date, status, shipping_address, items, total, id } =
+  const { order_number, created_at, status, address, grand_total, id } =
     order || {};
+  const [getOrderDetail, orderDetailResp] = useLazyQuery(
+    GQL.ORDER_DETAIL_CUSTOMER,
+    {
+      fetchPolicy: 'network-only',
+    },
+  );
+
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
     status_order === translate('txtStatusOrderComplete') ||
@@ -31,10 +40,10 @@ export default function Index({ navigation, route }) {
       : false;
   const getDate = React.useCallback(() => {
     const current_day = moment().format('DD/MM/yyyy');
-    let dateOrder = format.dateTime(order_date);
+    let dateOrder = format.dateTime(created_at);
     return dateOrder === current_day ? translate('txtToday') : dateOrder;
-  }, [order_date]);
-  let hours = format.hours(order_date);
+  }, [created_at]);
+  let hours = format.hours(created_at);
 
   const onClose = () => setVisible(false);
 
@@ -49,7 +58,7 @@ export default function Index({ navigation, route }) {
 
   const onHandleReOrder = () => {
     dispatch(app.showLoading());
-    reorderItems(number);
+    reorderItems(order_number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -75,14 +84,14 @@ export default function Index({ navigation, route }) {
     () => (
       <View style={styles.headerTitleContainer}>
         <Text style={(AppStyles.fonts.medium_SVN, styles.headerTitle)}>
-          {translate('txtOrderNumber')} #{number}
+          {translate('txtOrderNumber')} #{order_number}
         </Text>
         <Text style={(AppStyles.fonts.text, styles.headerSubTitle)}>
           {hours}, {getDate()}
         </Text>
       </View>
     ),
-    [getDate, hours, number],
+    [getDate, hours, order_number],
   );
 
   React.useEffect(() => {
@@ -90,6 +99,13 @@ export default function Index({ navigation, route }) {
       headerTitle: HeaderTitle(),
     });
   }, [HeaderTitle, navigation]);
+
+  React.useEffect(() => {
+    if (order_number) {
+      getOrderDetail({ variables: { number: order_number } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order_number]);
 
   const OrderTitle = ({ title, style }) => (
     <View
@@ -106,7 +122,7 @@ export default function Index({ navigation, route }) {
       <Text style={[AppStyles.fonts.medium, { fontSize: 14 }]}>
         {translate('txtExpectedReceive')}
         <Text style={[AppStyles.fonts.SVN_Merge_Bold, { fontSize: 18 }]}>
-          {format.hours(order_date, 30)}
+          {format.hours(created_at, 30)}
         </Text>
       </Text>
     </View>
@@ -164,6 +180,9 @@ export default function Index({ navigation, route }) {
       </View>
     );
   };
+
+  Logger.debug(orderDetailResp?.data, '=======> orderDetailResp');
+
   return (
     <CustomImageBackground
       style={styles.container}
@@ -179,17 +198,26 @@ export default function Index({ navigation, route }) {
         <View style={styles.statusContainer}>
           {/* -------------- THONG TIN DON HANG  -------------- */}
           <OrderTitle title={translate('txtInfoShipping')} />
-          <OrderInfo info={shipping_address} />
+          <OrderInfo
+            info={
+              orderDetailResp?.data?.customer?.orders?.items[0]
+                ?.shipping_address
+            }
+          />
           {/* -------------- THONG TIN DON HANG  -------------- */}
 
           {/* -------------- SAN PHAM DA CHON  -------------- */}
 
           <OrderTitle title={translate('txtItemSelect')} />
-          <OrderProductList data={items} />
+          <OrderProductList
+            data={orderDetailResp?.data?.customer?.orders?.items[0]?.items}
+          />
           {/* --------------  SAN PHAM DA CHON  -------------- */}
 
           {/* --------------  TOTAL PRICE  -------------- */}
-          <OrderTotal total={total} />
+          <OrderTotal
+            total={orderDetailResp?.data?.customer?.orders?.items[0]?.total}
+          />
           {/* --------------  TOTAL PRICE -------------- */}
           {(status?.toLowerCase() === 'pending' ||
             status?.toLowerCase() === 'processing') && (
