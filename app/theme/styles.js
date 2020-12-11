@@ -6,6 +6,7 @@
 // import { scale } from '@utils';
 
 // const { scaleHeight } = scale;
+import { Platform } from 'react-native';
 
 const primaryColor = '#FFFFFF';
 const secondaryColor = '#E31837';
@@ -60,22 +61,22 @@ const AppStyles = {
     },
 
     medium_SVN: {
-      fontFamily: 'SVN-Merge',
+      fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
       fontSize: 14,
     },
 
     SVN_Merge_Bold: {
-      fontFamily: 'SVN-Merge',
+      fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
       fontWeight: 'bold',
     },
 
     title: {
-      fontFamily: 'SVN-Merge',
+      fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
       fontSize: 28,
     },
 
     header: {
-      fontFamily: 'SVN-Merge',
+      fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
       fontSize: 18,
     },
   },
