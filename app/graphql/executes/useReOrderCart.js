@@ -16,7 +16,7 @@ export const useReOrderCart = (onSuccess = () => {}) => {
       }
     },
     onError: (error) => {
-      console.log('err', error);
+      Logger.debug(error, 'useReOrderCart error');
     },
   });
 

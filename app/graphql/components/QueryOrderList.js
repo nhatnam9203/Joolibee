@@ -20,8 +20,8 @@ export const QueryOrderList = ({
     },
   );
 
-  let _data = data?.customer?.orders.items
-    ? data?.customer?.orders?.items
+  let _data = data?.customerOrders?.items
+    ? data?.customerOrders?.items
     : defaultData;
   if (error) {
     return <View />;
@@ -30,8 +30,8 @@ export const QueryOrderList = ({
   const sortList = () => {
     let list = [..._data];
     let newList = list?.sort((a, b) => {
-      if (+a.number < +b.number) return 1;
-      if (+a.number > +b.number) return -1;
+      if (+a.order_number < +b.order_number) return 1;
+      if (+a.order_number > +b.order_number) return -1;
       return 0;
     });
     return newList;
@@ -47,11 +47,9 @@ export const QueryOrderList = ({
   const handleFreshMore = () => {
     const next_page = currentPage + 1;
     nextPage(next_page);
-    console.log('next_page', next_page);
     fetchMore({
       variables: { currentPage: next_page },
       updateQuery: (prev, { fetchMoreResult }) => {
-        console.log('fetchMoreResult', fetchMoreResult);
         if (!fetchMoreResult) {
           return prev;
         }

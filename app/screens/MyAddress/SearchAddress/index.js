@@ -12,7 +12,7 @@ import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 import _ from 'lodash';
 import { CustomInput, CustomImageBackground } from '@components';
-import { autocomplete } from '@location';
+import { autocomplete, placeSearch } from '@location';
 import { address } from '@slices';
 import { format, scale } from '@utils';
 const { scaleHeight } = scale;
@@ -25,7 +25,7 @@ const Index = () => {
   const loading_location = useSelector(
     (state) => state.address.loading_location,
   );
-  const [key, setKey] = React.useState(key);
+  const [searchInputText, setSearchInputText] = React.useState(null);
 
   const searchLocation = async (input = '') => {
     let params = { input };
@@ -33,6 +33,7 @@ const Index = () => {
       try {
         await dispatch(address.autoCompleteStart());
         let { status, data } = await autocomplete(params);
+
         if (status === 'OK') {
           dispatch(address.autoCompleteSuccess(data));
         } else {
@@ -50,11 +51,13 @@ const Index = () => {
   ).current;
 
   const handleChangeText = (key) => {
-    setKey(key);
+    setSearchInputText(key);
     delayedQuery(key);
   };
 
-  const pickupLocation = ({ description, structured_formatting }) => () => {
+  const pickupLocation = (item) => () => {
+    const { description, structured_formatting } = item;
+
     const { main_text, secondary_text } = structured_formatting;
     let addresses = format.addresses_geocoding(secondary_text?.split(','));
 
@@ -120,7 +123,7 @@ const Index = () => {
       <View style={styles.topContent}>
         <CustomInput
           onChangeText={handleChangeText}
-          value={key}
+          value={searchInputText}
           placeholder={translate('txtInputAddressPlaceholder')}
           style={styles.inputStyle}
           autoFocus={true}

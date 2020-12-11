@@ -2,6 +2,11 @@ import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid, Platform } from 'react-native';
 import Geocoder from 'react-native-geocoder';
 
+import Config from 'react-native-config';
+const queryString = require('query-string');
+
+const default_url = `/geocode/json?key=${Config.GOOGLE_API_KEY}&language=vi&&components=country:VN&region=vn&`;
+
 const options = {
   enableHighAccuracy: false,
   timeout: 20000,
@@ -58,4 +63,35 @@ export const reverseGeocoding = async (options) => {
   //         })
   //         .catch(error => reject(error));
   // })
+};
+
+// export const geocodeAddress = async (address) => {
+//   Logger.debug(address, 'address ========>');
+
+//   try {
+//     const res = await Geocoder.geocodePosition(queryString.stringify(address));
+//     return res;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+export const geocodeAddress = async (address) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const stringified = queryString.stringify({ address });
+      const url = Config.MAPS_ENDPOINT + default_url + stringified;
+
+      const response = await fetch(url);
+      const resJson = await response.json();
+      let newResponse = {
+        status: resJson?.status,
+        data: resJson?.results?.find(Boolean),
+      };
+      resolve(newResponse);
+    } catch (err) {
+      reject(err);
+      console.log(err);
+    }
+  });
 };

@@ -52,7 +52,7 @@ const useGeolocation = (props) => {
             getOneTimeLocation();
           }
         } catch (err) {
-          console.log(err);
+          Logger.log(err, '===> useGeolocation');
         }
       }
     };

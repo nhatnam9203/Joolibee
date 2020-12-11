@@ -159,7 +159,7 @@
   "txtApply": "Apply",
   "txtUpdateCart": "Update cart product",
   "txtReviewYourOrder": "How do you feel about your order?",
-  "txtReviewFeeback": "Reviews feeback",
+  "txtReviewFeeback": "Reviews feedback",
   "txtInputFeeback": "Content of your review",
   "txtAttention": "*Chúng tôi chưa phục vụ giao hàng tận nơi tại những khu vực nằm ngoài danh sách trên, mong quý khách thông cảm",
   "txtCancel": "Cancel",
@@ -187,8 +187,8 @@
   "txtStatusOrderComplete": "Complete",
   "txtStatusOrderCancel": "Cancel",
   "txtOrderStattus": "Order Status",
-  "txtInfoShipping": "Shipping Infomation",
-  "txtFeeback": "Feeback",
+  "txtInfoShipping": "Shipping Information",
+  "txtFeeback": "Feedback",
   "txtDesOrderPending": "Your order has been sent and is awaiting confirmation from the restaurant",
   "txtDesOrderReceived": "We have confirmed and are preparing your order",
   "txtDesOrderArrived": "The order has arrived, please receive the goods.",
@@ -212,7 +212,8 @@
   "txtErrorApplyPoint": "Points can't be applied. Please enter 25, 50 or 75 ...",
   "txtChange": "Change",
   "txtEarnPoint": "receive point",
-  "txtServerMaintainTitle": "Hệ thống bảo trì",
-  "txtServerMaintainDesc": "Hệ thông đang tiến hành ảo trì, xin vui lòng quay lại sau! ",
-  "txtBlockSpam": "This phone number was blocked, Please try again :"
+  "txtServerMaintainTitle": "Server is maintenance",
+  "txtServerMaintainDesc": "Sorry ! Server is maintenance, please come back later!",
+  "txtAddressNotFound": "Address not found",
+	txtBlockSpam": "This phone number was blocked, Please try again :"
 }

@@ -9,14 +9,13 @@ export const useCancelOrder = (onSuccess = () => {}) => {
 
   const [cancelOrderCustomer, response] = useMutation(CANCEL_ORDER, {
     onCompleted: (res) => {
-      console.log('res?.cancelOrderCustomer', res?.cancelOrderCustomer);
       if (res?.cancelOrderCustomer) {
         dispatch(app.hideLoading());
         onSuccess();
       }
     },
     onError: (error) => {
-      console.log('err', error);
+      Logger.debug(error, 'useCancelOrder error');
     },
   });
 

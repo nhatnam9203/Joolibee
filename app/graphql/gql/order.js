@@ -102,49 +102,67 @@ export const ORDER_DETAIL_CUSTOMER = gql`
 
 export const ORDERS_CUSTOMER = gql`
   query {
-    customer {
-      orders {
-        items {
-          id
-          number
-          order_date
-          shipping_address {
-            firstname
-            lastname
-            street
-            city
-            telephone
-            region
-          }
-          shipping_method
-          __typename
-          items {
-            __typename
-            product_name
-            product_sale_price {
-              value
-              currency
-            }
-            quantity_ordered
-            quantity_invoiced
-            quantity_shipped
-          }
-          total {
-            grand_total {
-              value
-              currency
-            }
-            subtotal {
-              value
-              currency
-            }
-          }
-          status
-        }
+    customerOrders {
+      items {
+        id
+        __typename
+        order_number
+        created_at
+        grand_total
+        status
+        address
+        shipping_method
+        store_name
+        use_plastic
       }
     }
   }
 `;
+// export const ORDERS_CUSTOMER = gql`
+//   query {
+//     customer {
+//       orders {
+//         items {
+//           id
+//           number
+//           order_date
+//           shipping_address {
+//             firstname
+//             lastname
+//             street
+//             city
+//             telephone
+//             region
+//           }
+//           shipping_method
+//           __typename
+//           items {
+//             __typename
+//             product_name
+//             product_sale_price {
+//               value
+//               currency
+//             }
+//             quantity_ordered
+//             quantity_invoiced
+//             quantity_shipped
+//           }
+//           total {
+//             grand_total {
+//               value
+//               currency
+//             }
+//             subtotal {
+//               value
+//               currency
+//             }
+//           }
+//           status
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const RE_ORDER_CART = gql`
   mutation($orderNumber: String!) {

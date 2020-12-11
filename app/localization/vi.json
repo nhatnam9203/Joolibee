@@ -119,7 +119,7 @@
   "txtPromotionApply": "Áp dụng khuyến mãi",
   "txtNote": "Thêm ghi chú...",
   "txtNoteShipping": "Thêm ghi chú địa chỉ giao hàng...",
-  "txtToReceive": "Đến nhận",
+  "txtToReceive": "Đến lấy",
   "txtInComingSoon": "Tinh năng đang phát triển! \n Vui lòng thử lại sau!",
   "txtOrderCalculator": "Tạm tính",
   "txtNotice": "Lấy dụng cụ ăn uống nhựa",
@@ -213,5 +213,6 @@
   "txtEarnPoint": "điểm nhận",
   "txtServerMaintainTitle": "Hệ thống bảo trì",
   "txtServerMaintainDesc": "Hệ thông đang tiến hành bảo trì, xin vui lòng quay lại sau! ",
+  "txtAddressNotFound": "Không có địa chỉ giao hàng"
   "txtBlockSpam": "Số điện thoại này tạm thời bị khoá, Vui lòng thử lại sau :"
 }
