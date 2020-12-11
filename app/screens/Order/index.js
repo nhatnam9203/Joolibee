@@ -74,14 +74,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [error_point, showErrorPoint] = React.useState(null);
   const [availableStores, setAvailableStores] = React.useState(null);
 
-  // const onCallBackEndCountDown = () => {
-  //   dispatch(account.toggleTimmer());
-  //   dispatch(account.setCountInputCoupon(5));
-  // };
-  // const number = useTimerBackground(30, timming, onCallBackEndCountDown);
-
   // ----------------- Timming apply coupon ------------------------ //
-
+  const onCallBackEndCountDown = () => {
+    dispatch(account.toggleTimmer());
+    dispatch(account.setCountInputCoupon(5));
+  };
+  const { second, startTimer } = useCountDown({
+    callBackEnd: onCallBackEndCountDown,
+  });
   // ----------------- Timming apply coupon ------------------------ //
 
   const storeList = useStorePickup();
@@ -226,7 +226,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
         break;
     }
   };
+
   const onApplyCoupon = () => {
+    // dispatch(account.toggleTimmer());
     dispatch(app.showLoading());
     applyCouponToCart({
       variables: {
@@ -237,13 +239,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
       .then((res) => {
         if (res?.data?.applyCouponToCart) {
           setCouponCode('');
-          // dispatch(account.toggleTimmer());
-          // dispatch(account.setCountInputCoupon(5));
+          dispatch(account.toggleTimmer());
+          dispatch(account.setCountInputCoupon(5));
         }
-        // dispatch(account.setCountInputCoupon(count_input_coupon - 1));
-        // if (count_input_coupon - 1 <= 0) {
-        //   dispatch(account.toggleTimmer());
-        // }
+        dispatch(account.setCountInputCoupon(count_input_coupon - 1));
+        if (count_input_coupon - 1 <= 0) {
+          dispatch(account.toggleTimmer());
+          startTimer(COUNTDOWN_SECONDS);
+        }
 
         dispatch(app.hideLoading());
       })
@@ -573,11 +576,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
       </OrderSectionItem>
     </OrderSection>
   );
-  const number = useCountDown();
+
   const renderBlockedApplyCoupon = () => {
-    return true ? (
+    return timming ? (
       <Text style={{ width: '100%', marginVertical: 5 }}>
-        {translate('txtTryAgain') + ' (' + number + ') '}
+        {translate('txtTryAgain') + ' (' + second + ') '}
       </Text>
     ) : (
       <TextInputErrorMessage
@@ -603,7 +606,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
           }}>
           <OrderButtonInput
             onPress={onApplyCoupon}
-            disabled={!coupon_code || timming}
+            disabled={!coupon_code}
             title={translate('txtApply')}
             btnWidth={126}
             bgColor={AppStyles.colors.accent}>

@@ -212,5 +212,6 @@
   "txtChange": "Đổi",
   "txtEarnPoint": "điểm nhận",
   "txtServerMaintainTitle": "Hệ thống bảo trì",
-  "txtServerMaintainDesc": "Hệ thông đang tiến hành bảo trì, xin vui lòng quay lại sau! "
+  "txtServerMaintainDesc": "Hệ thông đang tiến hành bảo trì, xin vui lòng quay lại sau! ",
+  "txtBlockSpam": "Số điện thoại này tạm thời bị khoá, Vui lòng thử lại sau :"
 }

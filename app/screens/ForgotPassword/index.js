@@ -42,7 +42,7 @@ const ForgotPasswordScreen = () => {
     }
     let input = {
       deviceId: getUniqueId(),
-      phoneNumber: normalizePhoneNumber('+84', phone),
+      phoneNumber: phone,
       type: TYPE_VERIFY,
       otpCode: code,
     };
@@ -59,7 +59,7 @@ const ForgotPasswordScreen = () => {
     dispatch(app.showLoading());
     setFormData(values);
     let input = {
-      phoneNumber: normalizePhoneNumber('+84', phone),
+      phoneNumber: phone,
       deviceId: getUniqueId(),
       type: TYPE_VERIFY,
     };
@@ -79,6 +79,10 @@ const ForgotPasswordScreen = () => {
     } else if (authStatus === AUTH_STATUS.verified) {
       dispatch(app.hideLoading());
       setPage(PAGES.InputNewPassWord);
+    } else if (authStatus === AUTH_STATUS.spam) {
+      setPage(PAGES.InputCode);
+      dispatch(app.toggleBlockSpam(true));
+      dispatch(app.hideLoading());
     }
   }, [AUTH_STATUS, authStatus, dispatch]);
 

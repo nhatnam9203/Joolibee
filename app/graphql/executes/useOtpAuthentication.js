@@ -28,27 +28,23 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
       variables: input,
     });
     console.log('confirmation', confirmation?.data?.getOTP);
-    setExprired(format.compareTime(confirmation?.data?.getOTP?.expiredAt));
-    if (confirmation?.data?.getOTP) {
-      setAuthStatus(AUTH_STATUS.sent);
-      requestCodeTimer = setTimeout(() => {
-        if (authStatus === AUTH_STATUS.sent) {
-          setAuthStatus(AUTH_STATUS.timeout);
-        }
 
-        clearTimeout(requestCodeTimer);
-        requestCodeTimer = null;
-      }, second_expired);
+    if (confirmation?.data?.getOTP) {
+      setExprired(confirmation?.data?.getOTP?.OTPExpiredAfter);
+      if (confirmation?.data?.getOTP?.spam) {
+        setAuthStatus(AUTH_STATUS.spam);
+      } else if (confirmation?.data?.getOTP?.phoneNumberExisted) {
+        setAuthStatus(AUTH_STATUS.existed);
+      } else if (confirmation?.data?.getOTP?.error) {
+        setAuthStatus(AUTH_STATUS.error);
+      } else {
+        setAuthStatus(AUTH_STATUS.sent);
+      }
     }
-    if (confirmation?.data?.getOTP?.spam) {
-      setAuthStatus(AUTH_STATUS.spam);
-    }
-    // if (confirmation?.data?.getOTP?.existed) {
-    //   setAuthStatus(AUTH_STATUS.existed);
-    // }
   }
 
   async function confirmCode(input) {
+    console.log('input');
     if (requestCodeTimer) {
       clearTimeout(requestCodeTimer);
       requestCodeTimer = null;
@@ -59,6 +55,10 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
         variables: input,
       });
       if (confirmed?.data?.verfiyOTP?.result) {
+        console.log(
+          'confirmed?.data?.verfiyOTP?.result',
+          confirmed?.data?.verfiyOTP?.result,
+        );
         setAuthStatus(AUTH_STATUS.verified);
       } else {
         setAuthStatus(AUTH_STATUS.error);

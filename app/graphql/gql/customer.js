@@ -247,6 +247,7 @@ export const GENERATE_CUSTOMER_TOKEN = gql`
       fcmToken: $fcmToken
     ) {
       token
+      otp_confirmed
     }
   }
 `;
@@ -452,6 +453,7 @@ export const GENERATE_CUSTOMER_TOKEN_BY_SOCIAL = gql`
   mutation($type: String!, $token: String!, $fcmToken: String!) {
     socialSignIn(type: $type, token: $token, fcmToken: $fcmToken) {
       token
+      otp_confirmed
     }
   }
 `;
@@ -460,11 +462,11 @@ export const GET_OTP = gql`
   mutation($deviceId: String!, $phoneNumber: String!, $type: String!) {
     getOTP(deviceId: $deviceId, phoneNumber: $phoneNumber, type: $type) {
       error
+      phoneNumberExisted
       spam
-      existed
-      expired
-      expiredAt
-      otpCode
+      OTPExisted
+      OTPExpired
+      OTPExpiredAfter
     }
   }
 `;

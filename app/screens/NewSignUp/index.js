@@ -21,7 +21,6 @@ const SignUpScreen = ({ route }) => {
   const dispatch = useDispatch();
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
   const [formData, setFormData] = React.useState(null);
-  const [blocked, setBlock] = React.useState(false);
   const onVerifyPhoneError = (response) => {
     setFormData(Object.assign({}, formData, { error: response }));
     dispatch(app.hideLoading());
@@ -35,13 +34,15 @@ const SignUpScreen = ({ route }) => {
   } = GEX.useOtpAuthentication({
     onVerifyPhoneError: onVerifyPhoneError,
   });
+
   const onConfirmCode = async (code, phone) => {
     if (!code) {
       return;
     }
     let input = {
       deviceId: getUniqueId(),
-      phoneNumber: normalizePhoneNumber('+84', phone),
+      // phoneNumber: normalizePhoneNumber('+84', phone),
+      phoneNumber: phone,
       type: params?.typeVerify,
       otpCode: code,
     };
@@ -63,7 +64,7 @@ const SignUpScreen = ({ route }) => {
 
     dispatch(app.showLoading());
     let input = {
-      phoneNumber: normalizePhoneNumber('+84', phone),
+      phoneNumber: phone,
       deviceId: getUniqueId(),
       type: params?.typeVerify,
     };
@@ -77,20 +78,27 @@ const SignUpScreen = ({ route }) => {
   };
 
   React.useEffect(() => {
-    if (authStatus === AUTH_STATUS.sent) {
-      setPage(PAGES.InputCode);
-    } else if (authStatus === AUTH_STATUS.verified) {
+    if (authStatus === AUTH_STATUS.verified) {
       if (params?.customerToken) {
+        dispatch(app.savePhoneVerify(''));
         dispatch(account.setPhoneNumber(formData?.phone));
         dispatch(account.signInSucceed(params?.customerToken));
       } else {
         setPage(PAGES.SignUp);
       }
-    } else if (authStatus === AUTH_STATUS.spam) {
-      // setBlock(true);
+    } else if (authStatus === AUTH_STATUS.sent) {
+      dispatch(app.hideLoading());
       setPage(PAGES.InputCode);
+    } else if (authStatus === AUTH_STATUS.spam) {
+      setPage(PAGES.InputCode);
+      dispatch(app.toggleBlockSpam(true));
+      dispatch(app.hideLoading());
+    } else if (authStatus === AUTH_STATUS.existed) {
+      dispatch(app.hideLoading());
+      alert('phone number is existed');
+    } else {
+      dispatch(app.hideLoading());
     }
-    dispatch(app.hideLoading());
   }, [AUTH_STATUS, authStatus, dispatch, formData?.phone, params]);
 
   useFocusEffect(
@@ -113,7 +121,6 @@ const SignUpScreen = ({ route }) => {
           resendCode={requestAuthCode}
           confirmCode={onConfirmCode}
           timeOut={second_expired}
-          blocked={blocked}
         />
       );
     case PAGES.SignUp:

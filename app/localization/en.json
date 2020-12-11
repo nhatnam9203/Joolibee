@@ -213,5 +213,6 @@
   "txtChange": "Change",
   "txtEarnPoint": "receive point",
   "txtServerMaintainTitle": "Hệ thống bảo trì",
-  "txtServerMaintainDesc": "Hệ thông đang tiến hành ảo trì, xin vui lòng quay lại sau! "
+  "txtServerMaintainDesc": "Hệ thông đang tiến hành ảo trì, xin vui lòng quay lại sau! ",
+  "txtBlockSpam": "This phone number was blocked, Please try again :"
 }

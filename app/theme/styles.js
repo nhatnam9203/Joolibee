@@ -66,7 +66,7 @@ const AppStyles = {
 
     SVN_Merge_Bold: {
       fontFamily: 'SVN-Merge',
-      fontWeight: 'bold',
+      // fontWeight: 'bold',
     },
 
     title: {

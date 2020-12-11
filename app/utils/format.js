@@ -19,7 +19,7 @@ export const date = (d = new Date()) => {
 };
 
 export const hours = (d, extraMinutes = 0) => {
-  const dateString = moment(new Date(d)).format();
+  const dateString = d?.replace(/-/g, '/') ?? new Date();
   return moment(dateString)
     .add('7:00', 'hours')
     .add(extraMinutes, 'minutes')

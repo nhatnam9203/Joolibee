@@ -4,15 +4,17 @@ import { useNavigation } from '@react-navigation/native';
 import { images, AppStyles } from '@theme';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { SettingItem, ButtonCC } from '../components';
 import ScreenName from '../ScreenName';
 import { scale, makeAPhoneCall } from '@utils';
+import { useChangeLanguage } from '@hooks';
+
 const { scaleHeight, scaleWidth } = scale;
 const SupportScreen = () => {
-  const dispatch = useDispatch();
+  const [language] = useChangeLanguage();
   const navigation = useNavigation();
   const [settingList, setSettingList] = React.useState([]);
+  const [icon_call, changeIconCall] = React.useState(images.icons.ic_call_now);
   const onCall = () => makeAPhoneCall.makeAPhoneCall('19001533');
   React.useEffect(() => {
     setSettingList([
@@ -59,12 +61,18 @@ const SupportScreen = () => {
     ]);
   }, [navigation]);
 
+  React.useEffect(() => {
+    changeIconCall(
+      language === 'vi' ? images.icons.ic_call_now : images.jollibee_call_now,
+    );
+  }, [language]);
+
   const renderItem = ({ item }) => {
     switch (item.key) {
       case 'key_support':
         return (
           <View style={styles.supportContainer}>
-            <Image source={images.icons.ic_call_now} />
+            <Image source={icon_call} />
             <Text style={styles.phoneStyle}>1900 1533</Text>
             <ButtonCC.ButtonYellow
               onPress={onCall}

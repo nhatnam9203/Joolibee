@@ -5,8 +5,10 @@ import { AppStyles } from '@theme';
 import { format, validate } from '@utils';
 import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-
 import { ButtonCC, LabelTitle, TextInputErrorMessage } from '../../components';
+import { app } from '@slices';
+import { useCountDown } from '@hooks';
+import { useDispatch, useSelector } from 'react-redux';
 const LAYOUT_WIDTH = '90%';
 export const VerifyPhoneCode = ({
   infos,
@@ -15,11 +17,17 @@ export const VerifyPhoneCode = ({
   timeOut,
 }) => {
   const { phone = 'undefine', error } = infos;
-  var interval;
-
+  const dispatch = useDispatch();
+  const isSpam = useSelector((state) => state.app?.isSpam);
   // count number get code call
   // time count down
-  const [timer, setSecond] = React.useState(timeOut);
+  const second = useCountDown({
+    time: timeOut,
+    callBackEnd: () => {
+      dispatch(app.toggleBlockSpam(false));
+      setTiming(false);
+    },
+  });
   // start count down
   const [timing, setTiming] = React.useState(false);
   const [codeInput, setCodeInput] = React.useState(null);
@@ -41,24 +49,6 @@ export const VerifyPhoneCode = ({
   React.useEffect(() => {
     setTiming(true);
   }, []);
-
-  React.useEffect(() => {
-    if (timing) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      interval = setInterval(() => {
-        setSecond((preSecond) => {
-          if (preSecond <= 1) {
-            setTiming(false);
-            clearInterval(interval);
-            return timeOut;
-          } else {
-            return preSecond - 1;
-          }
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [timing]);
 
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
@@ -92,7 +82,7 @@ export const VerifyPhoneCode = ({
           <Text style={styles.textHighlightStyle}>
             {translate('txtVerifyCodeTime') +
               '\n (' +
-              format.pad_(timer, 2) +
+              format.pad_(second, 2) +
               ') ' +
               translate('txtSecondUnit')}
           </Text>
@@ -102,7 +92,7 @@ export const VerifyPhoneCode = ({
           label={translate('txtContinue')}
           style={styles.btnStyle}
           onPress={verifyCode}
-          disabled={!timing || validate.isEmptyString(codeInput)}
+          disabled={isSpam || validate.isEmptyString(codeInput)}
         />
 
         {/**resend code */}

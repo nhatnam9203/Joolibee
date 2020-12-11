@@ -48,9 +48,8 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
-  const { signIn, customerToken } = GEX.useGenerateToken();
+  const { signIn, customerToken, otp_confirmed } = GEX.useGenerateToken();
   const { socialSignIn } = GEX.useGenerateTokenBySocial();
-  // const { signIn, customerToken } = GEX.useGenerateToken();
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
       //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
@@ -65,6 +64,7 @@ const SignInScreen = () => {
       //   submitData = Object.assign({}, data, { email: username });
       // }
       await dispatch(app.showLoading());
+      await dispatch(app.savePhoneVerify(username));
       await dispatch(account.setPhoneNumber(username));
       signIn({ variables: submitData });
     },
@@ -74,12 +74,17 @@ const SignInScreen = () => {
   const socialSignInSubmit = React.useCallback(
     async (submitData) => {
       socialSignIn({ variables: submitData })
-        .then((res) => {
-          if (res?.data?.socialSignIn?.token) {
-            navigation.navigate(ScreenName.NewSignUp, {
-              customerToken: res?.data?.socialSignIn?.token,
-              typeVerify: 'update',
-            });
+        .then(({ data }) => {
+          const res_socialSigin = data?.socialSignIn || {};
+          if (res_socialSigin?.token) {
+            if (res_socialSigin?.otp_confirmed) {
+              dispatch(account.signInSucceed(res_socialSigin?.token));
+            } else {
+              navigation.navigate(ScreenName.NewSignUp, {
+                customerToken: res_socialSigin?.token,
+                typeVerify: 'update',
+              });
+            }
           }
           dispatch(app.hideLoading());
         })
@@ -134,14 +139,21 @@ const SignInScreen = () => {
 
   React.useEffect(() => {
     if (customerToken) {
-      const onSignInSucceed = async (value) => {
-        await dispatch(app.hideLoading());
-        await dispatch(account.signInSucceed(customerToken));
-      };
-
-      onSignInSucceed();
+      if (!otp_confirmed) {
+        const onSignInSucceed = async (value) => {
+          await dispatch(app.hideLoading());
+          await dispatch(account.signInSucceed(customerToken));
+        };
+        onSignInSucceed();
+      }
+      // else {
+      //   navigation.navigate(ScreenName.NewSignUp, {
+      //     customerToken,
+      //     typeVerify: 'update',
+      //   });
+      // }
     }
-  }, [customerToken, dispatch]);
+  }, [customerToken, dispatch, navigation, otp_confirmed]);
 
   return (
     <>

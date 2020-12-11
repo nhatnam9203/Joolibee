@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { format } from '@utils';
-export const useCountDown = (props) => {
-  const [second, setSecond] = useState(10);
-  const currentSecond = format.dateTime(new Date(), 'ss');
-  console.log('currentSecond', currentSecond);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSecond((preSecond) => {
-        if (preSecond <= 1) {
-          clearInterval(interval);
-          return 10;
-        } else {
-          return preSecond - 1;
-        }
-      });
-    }, 1000);
-    return () => {
-      clearInterval(interval);
-    };
+import { useDispatch } from 'react-redux';
+export const useCountDown = ({ callBackEnd }) => {
+  const [second, setSecond] = useState(null);
+
+  const startTimer = React.useCallback((time) => {
+    setSecond(time);
   }, []);
-  return second;
+
+  const endTimer = () => {
+    setSecond(null);
+    callBackEnd();
+  };
+
+  useEffect(() => {
+    console.log('second', second);
+    if (second) {
+      const interval = setInterval(() => {
+        if (second > 1) {
+          setSecond((preSecond) => preSecond - 1);
+        } else {
+          endTimer();
+          clearInterval(interval);
+        }
+      }, 1000);
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [second]);
+  return { second, startTimer };
 };

@@ -10,6 +10,8 @@ const appSlice = createSlice({
     isShowOrderList: false,
     fcmToken: '456',
     currentLocation: null,
+    isSpam: false,
+    phone_verify: '',
   },
   reducers: {
     showLoading(state, action) {
@@ -41,6 +43,12 @@ const appSlice = createSlice({
     },
     setCurrentLocation(state, action) {
       state.currentLocation = action.payload;
+    },
+    toggleBlockSpam: (state, action) => {
+      state.isSpam = action.payload;
+    },
+    savePhoneVerify: (state, action) => {
+      state.phone_verify = action.payload;
     },
   },
 });
