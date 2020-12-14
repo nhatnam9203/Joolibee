@@ -2,8 +2,11 @@ import { useMutation } from '@apollo/client';
 import { GENERATE_CUSTOMER_TOKEN } from '../gql';
 import { useFirebaseCloudMessing } from '@firebase';
 import { useSelector } from 'react-redux';
+import { app } from '@slices';
+import { useDispatch } from 'react-redux';
 
 export const useGenerateToken = () => {
+  const dispatch = useDispatch();
   const token = useSelector((state) => state.app.fcmToken);
 
   const [generateCustomerToken, { loading, error, data, called }] = useMutation(
@@ -25,6 +28,7 @@ export const useGenerateToken = () => {
     //   Object.assign({}, variables, { fcmToken: token }),
     //   'signInToken',
     // );
+
     generateCustomerToken({
       variables: Object.assign({}, variables, { fcmToken: token ?? '456' }),
     });

@@ -1,6 +1,12 @@
 import { AppStyles, images } from '@theme';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
 import {
   Placeholder,
   PlaceholderMedia,
@@ -10,6 +16,7 @@ import {
 import { JollibeeImage } from './JollibeeImage';
 import { format, scale } from '@utils';
 import { translate } from '@localize';
+const windowWidth = Dimensions.get('window').width;
 
 const MENU_DETAIL_HEIGHT = 238;
 const BOTTOM_DETAIL_HEIGHT = 86;
@@ -45,7 +52,7 @@ export const MenuItem = ({ item, onPress, color }) => (
           width="100%"
           height="100%"
           defaultSource={images.menu_3}
-          resizeMode="center"
+          resizeMode="contain"
         />
       )}
       <View style={styles.textContentStyle}>
@@ -100,14 +107,14 @@ export const MenuProductItem = ({
   </TouchableOpacity>
 );
 
-const MENU_HEIGHT = 183;
+const MENU_HEIGHT = (windowWidth - 30) / 2;
 const TEXT_HEIGHT = 45;
 const BOTTOM_HEIGHT = 55;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
     height: MENU_HEIGHT,
+    width: MENU_HEIGHT,
     margin: 5,
     ...AppStyles.styles.shadowStrong,
   },

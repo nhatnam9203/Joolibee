@@ -42,8 +42,8 @@ export const useAppProcess = () => {
     };
 
     if (isLogout) {
-      dispatch(account.signOutComplete());
       onSignOut();
+      dispatch(account.signOutComplete());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogout]);

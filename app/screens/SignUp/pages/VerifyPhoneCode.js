@@ -11,8 +11,8 @@ import { useDispatch } from 'react-redux';
 import { ButtonCC, LabelTitle } from '../../components';
 import { TextInputErrorMessage } from '../../components';
 
-const COUNTDOWN_SECONDS = 75;
-const TIME_WAITING = COUNTDOWN_SECONDS - 15;
+const COUNTDOWN_SECONDS = 60;
+const TIME_WAITING = COUNTDOWN_SECONDS - 45;
 const LAYOUT_WIDTH = '90%';
 
 export const VerifyPhoneCode = ({ infos, resendCode, confirmCode }) => {

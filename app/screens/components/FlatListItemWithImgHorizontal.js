@@ -36,7 +36,7 @@ export const FlatListItemWithImgHorizontal = ({
           <Image
             style={styles.hotIcon}
             source={images.icons.ic_hot}
-            resizeMode="center"
+            resizeMode="contain"
           />
         )}
         <View style={[styles.content, contentStyle]}>{children}</View>
@@ -68,5 +68,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+    width: scale.scaleWidth(64),
+    height: scale.scaleHeight(43),
   },
 });

@@ -4,12 +4,13 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { scale } from '@utils';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ScreenName, SplashScreen } from '../screens';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
 import { useAppProcess } from './useAppProcess';
+import { app } from '@slices';
 
 const { scaleHeight, scaleWidth } = scale;
 
@@ -37,6 +38,7 @@ const ScreenConst = {
 
 // Process Start App
 function App() {
+  const dispatch = useDispatch();
   const { startApp, isSignIn } = useAppProcess();
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
@@ -58,14 +60,12 @@ function App() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startApp]);
+  }, [startApp, isSignIn]);
 
   const goToHomeScreen = React.useCallback(() => {
     if (isSignIn) {
       // getCheckOutCart();
-      getCustomerCart();
-      getCategoryList();
-      getNotifyList();
+
       loadHomeScreen();
     } else {
       // navigationRef.current?.navigate(ScreenConst.Auth);
@@ -79,6 +79,10 @@ function App() {
   React.useEffect(() => {
     if (getHomeScreenResp?.data) {
       setAllowGotoHomeScreen(true);
+      getCustomerCart();
+      getCategoryList();
+      getNotifyList();
+      dispatch(app.hideLoading());
 
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Main));
 
@@ -86,7 +90,7 @@ function App() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getHomeScreenResp?.data]);
+  }, [getHomeScreenResp]);
 
   return (
     <NavigationContainer ref={navigationRef}>

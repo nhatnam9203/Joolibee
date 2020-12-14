@@ -134,11 +134,13 @@ const SignInScreen = () => {
       const onSignInSucceed = async (value) => {
         await dispatch(app.hideLoading());
         await dispatch(account.signInSucceed(customerToken));
+        await dispatch(app.showLoading());
       };
 
       onSignInSucceed();
     }
-  }, [customerToken, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerToken]);
 
   return (
     <>
