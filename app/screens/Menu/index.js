@@ -78,6 +78,7 @@ const MenuScreen = () => {
 
   const renderItem = (object) => {
     const { item } = object;
+
     return (
       <MenuItem
         color={getLayoutColor(object)}

@@ -8,7 +8,7 @@ import {
   Fade,
 } from 'rn-placeholder';
 import { JollibeeImage } from './JollibeeImage';
-import { format } from '@utils';
+import { format, scale } from '@utils';
 import { translate } from '@localize';
 
 const MENU_DETAIL_HEIGHT = 238;
@@ -29,22 +29,23 @@ export const MenuItemLoading = () => (
 
 export const MenuItem = ({ item, onPress, color }) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
-    <View style={[styles.content, { backgroundColor: color.background }]}>
-      {item.id === 10 ? (
+    {/* <View style={[styles.content, { backgroundColor: color.background }]}> */}
+    <View style={[styles.content]}>
+      {item.id === 0 ? (
         <JollibeeImage
-          // url={item.thumbnail_image}
+          // url={item.category_image}
           width="100%"
           height="84%"
           defaultSource={images.menu_combo_hot}
-          resizeMode="cover"
+          resizeMode="contain"
         />
       ) : (
         <JollibeeImage
-          url={item.thumbnail_image}
+          url={item.image}
           width="100%"
-          height="84%"
+          height="100%"
           defaultSource={images.menu_3}
-          resizeMode="cover"
+          resizeMode="center"
         />
       )}
       <View style={styles.textContentStyle}>
@@ -99,7 +100,7 @@ export const MenuProductItem = ({
   </TouchableOpacity>
 );
 
-const MENU_HEIGHT = 179;
+const MENU_HEIGHT = 183;
 const TEXT_HEIGHT = 45;
 const BOTTOM_HEIGHT = 55;
 
@@ -125,9 +126,13 @@ const styles = StyleSheet.create({
   },
 
   textContentStyle: {
-    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: scale.scaleHeight(60),
   },
 
   textStyle: {

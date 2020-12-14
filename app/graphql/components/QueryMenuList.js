@@ -8,6 +8,7 @@ const MENU_LIST = gql`
     categoryList(filters: { ids: { in: $arrayCategory } }) {
       id
       thumbnail_image
+      image
       name
       position
       products(pageSize: 5, currentPage: 1) {
@@ -72,7 +73,9 @@ export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
 
   const getData = React.useCallback(() => {
     if (data?.categoryList?.length > 0 && !error) {
-      return [...data?.categoryList].sort((a, b) => a.position - b.position);
+      return [...data?.categoryList]
+        .filter((x) => x.id !== 2)
+        .sort((a, b) => a.position - b.position);
     }
     return defaultData;
   }, [data?.categoryList, error]);

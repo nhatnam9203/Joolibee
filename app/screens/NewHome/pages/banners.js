@@ -44,8 +44,7 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
 };
 
 const BannerItem = ({ item, height }) => {
-  const navigation = useNavigation();
-
+  // const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.content}
@@ -54,7 +53,12 @@ const BannerItem = ({ item, height }) => {
         //   product_id: item?.product_id,
         // });
       }}>
-      <JollibeeImage url={item?.image_url} height={height} width={width} />
+      <JollibeeImage
+        url={item?.image_url}
+        height={height}
+        width={width}
+        resizeMode="contain"
+      />
     </TouchableOpacity>
   );
 };

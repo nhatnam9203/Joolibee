@@ -369,7 +369,23 @@ const OrderScreen = ({ route = { params: {} } }) => {
       //     }
       //   }
       // }
-      const store_id = pickStore?.store_id;
+
+      // !! hard code 3 store_id
+      const hard_code = ['2', '3', '33', '3', '2', '3'].sort(
+        () => Math.random() - 0.5,
+      );
+      Logger.debug(hard_code, '=====> hard_code');
+      let store_id = pickStore?.store_id;
+
+      const findStoreId = hard_code.find((storeId) => {
+        const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
+
+        if (findIdex >= 0) return storeId;
+      });
+
+      if (findStoreId) {
+        store_id = findStoreId;
+      }
 
       setAssignStoreId(store_id);
 

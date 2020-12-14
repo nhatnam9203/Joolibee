@@ -33,7 +33,7 @@ import NavigationService from '../../navigation/NavigationService';
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
 
-const BANNER_HEIGHT = height * 0.44;
+const BANNER_HEIGHT = height * 0.42;
 const BANNER_PADDING = height * 0.2;
 const MENU_TOP_MARGIN = height * 0.23;
 
@@ -96,6 +96,7 @@ const HomeScreen = () => {
               loading={homeScreenResp?.loading}
               data={homeScreen?.banners}
               height={BANNER_HEIGHT}
+              width={BANNER_HEIGHT}
             />
             {/* END BANNERS */}
 
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
 
   topContentView: {
     flex: 1,
-    paddingBottom: 20,
+    paddingBottom: 0,
     justifyContent: 'space-around',
   },
 });

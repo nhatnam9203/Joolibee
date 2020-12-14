@@ -79,9 +79,10 @@ export const MENU_LIST = gql`
     categoryList(filters: { ids: { in: $arrayCategory } }) {
       id
       thumbnail_image
+      image
       name
       position
-      products(pageSize: 10, currentPage: 1) {
+      products(pageSize: 20, currentPage: 1) {
         items {
           id
           sku
