@@ -101,6 +101,8 @@ const images = {
     ic_star_five: require('../assets/icons/ic-star-five.png'),
     jollibee_avatar: require('../assets/icons/jollibee_avatar.png'),
     ic_hot: require('../assets/icons/ic_hot.png'),
+    ic_notification: require('../assets/icons/ic_notification.png'),
+    ic_notification_new: require('../assets/icons/ic_notification_new.png'),
   },
   animations: {
     fade: require('../assets/animations/animation_fade.json'),

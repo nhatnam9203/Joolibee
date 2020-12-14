@@ -70,6 +70,9 @@ export const TopBarRight = React.memo(() => {
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
+  const [{ notifyList }] = GEX.useGetNotifyList();
+  const notifyCount = notifyList?.filter((notify) => !notify?.is_read)?.length;
+
   return (
     <View style={[AppStyles.styles.horizontalLayout, styles.container]}>
       <Action
@@ -77,7 +80,7 @@ export const TopBarRight = React.memo(() => {
         onPress={() => {
           navigation.navigate(ScreenName.Notification);
         }}
-        notifyNumber={0}
+        notifyNumber={notifyCount}
         bagSize={BADGE_SIZE}
         bagStyle={styles.badgeStyle}
       />

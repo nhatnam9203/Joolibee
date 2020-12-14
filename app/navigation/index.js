@@ -41,11 +41,11 @@ function App() {
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
+  const [, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
-  const [categoryListResp, getCategoryList] = GEX.useGetCategoryList();
+  const [, getCategoryList] = GEX.useGetCategoryList();
   const getStoreJsonData = GEX.useGetStoreInfo();
-  const storeList = useStorePickup();
+  const [, getNotifyList] = GEX.useGetNotifyList();
 
   React.useEffect(() => {
     if (!startApp) {
@@ -58,13 +58,14 @@ function App() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startApp, isSignIn]);
+  }, [startApp]);
 
   const goToHomeScreen = React.useCallback(() => {
     if (isSignIn) {
       // getCheckOutCart();
       getCustomerCart();
       getCategoryList();
+      getNotifyList();
       loadHomeScreen();
     } else {
       // navigationRef.current?.navigate(ScreenConst.Auth);

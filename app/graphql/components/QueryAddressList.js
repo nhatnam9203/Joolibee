@@ -4,7 +4,7 @@ import { translate } from '@localize';
 import { AppStyles } from '@theme';
 import React from 'react';
 import { RefreshControl, StyleSheet, View, Text } from 'react-native';
-import { ADDRESS_LIST } from '../queries';
+import { ADDRESS_LIST } from '../gql';
 import { useGetAddressList } from '../executes';
 const defaultData = [
   { id: 1 },

@@ -1,43 +1,7 @@
 import { gql } from '@apollo/client';
 
 // SIGN UP CUSTOMER ACCOUNT
-export const SIGN_UP = gql`
-  mutation(
-    $phone_number: String!
-    $password: String!
-    $firstname: String!
-    $lastname: String!
-    $gender: Int
-    $email: String
-    $dob: String
-    $is_subscribed: Boolean!
-    $validateType: String
-    $fcmToken: String
-  ) {
-    registerCustomer(
-      input: {
-        firstname: $firstname
-        lastname: $lastname
-        phone_number: $phone_number
-        password: $password
-        email: $email
-        gender: $gender
-        dob: $dob
-        is_subscribed: $is_subscribed
-      }
-      validateType: $validateType
-      fcmToken: $fcmToken
-    ) {
-      customer {
-        __typename
-        firstname
-        lastname
-        email
-        is_subscribed
-      }
-    }
-  }
-`;
+
 
 // SIGN IN CUSTOMER ACCOUNT
 export const SIGN_IN = gql`
@@ -132,54 +96,6 @@ export const DELETE_ADDRESS = gql`
   }
 `;
 
-// UPDATE CUSTOMER INFO
-export const UPDATE_CUSTOMER = gql`
-  mutation(
-    $date_of_birth: String
-    $gender: Int
-    $firstname: String!
-    $lastname: String!
-    $email: String!
-    $password: String!
-  ) {
-    updateCustomerInfo(
-      input: {
-        date_of_birth: $date_of_birth
-        gender: $gender
-        firstname: $firstname
-        lastname: $lastname
-        email: $email
-        password: $password
-      }
-    ) {
-      customer {
-        __typename
-        email
-        firstname
-        lastname
-        gender
-        date_of_birth
-        addresses {
-          id
-          city
-          full_address
-          default_shipping
-          firstname
-          lastname
-          telephone
-          street
-          company
-          region {
-            __typename
-            region
-            region_id
-            region_code
-          }
-        }
-      }
-    }
-  }
-`;
 
 //CHANGE CUSTOMER PASSWORD
 export const CHANGE_PASSWORD = gql`

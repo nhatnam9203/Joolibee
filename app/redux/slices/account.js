@@ -20,6 +20,7 @@ const initialState = {
   count_input_coupon: 5,
   timming: false,
   addresses: [],
+  notificationList: [],
 };
 
 const feedBack = createAsyncThunk(
@@ -151,6 +152,21 @@ const accountSlice = createSlice({
     },
     setPhoneNumber: (state, action) => {
       state.user.phone_number = action.payload;
+    },
+    setNotificationList: (state, action) => {
+      state.notificationList = action.payload;
+    },
+    updateNotify: (state, action) => {
+      const { id } = action.payload || {};
+      const notifyIndex = state.notificationList?.findIndex((x) => x.id === id);
+      if (notifyIndex >= 0) {
+        let notify = state.notificationList[notifyIndex];
+        notify.is_read = true;
+        // state.notificationList = [
+        //   ...state.notificationList,
+        //   Object.assign({}, notify, { is_read: true }),
+        // ];
+      }
     },
   },
   extraReducers: {

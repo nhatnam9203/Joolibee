@@ -1,5 +1,43 @@
 import { gql } from '@apollo/client';
 
+export const SIGN_UP = gql`
+  mutation(
+    $phone_number: String!
+    $password: String!
+    $firstname: String!
+    $lastname: String!
+    $gender: Int
+    $email: String
+    $dob: String
+    $is_subscribed: Boolean!
+    $validateType: String
+    $fcmToken: String
+  ) {
+    registerCustomer(
+      input: {
+        firstname: $firstname
+        lastname: $lastname
+        phone_number: $phone_number
+        password: $password
+        email: $email
+        gender: $gender
+        dob: $dob
+        is_subscribed: $is_subscribed
+      }
+      validateType: $validateType
+      fcmToken: $fcmToken
+    ) {
+      customer {
+        __typename
+        firstname
+        lastname
+        email
+        is_subscribed
+      }
+    }
+  }
+`;
+
 /**
  * QUERY
  */
@@ -199,45 +237,6 @@ export const CUSTOMER_CART_QUERY = gql`
  * MUTATION
  */
 
-// SIGN UP
-export const REGISTER_CUSTOMER = gql`
-  mutation(
-    $phone_number: String!
-    $password: String!
-    $firstname: String!
-    $lastname: String!
-    $gender: Int
-    $email: String
-    $dob: String
-    $is_subscribed: Boolean!
-    $validateType: String
-    $fcmToken: String
-  ) {
-    registerCustomer(
-      input: {
-        firstname: $firstname
-        lastname: $lastname
-        phone_number: $phone_number
-        password: $password
-        email: $email
-        gender: $gender
-        dob: $dob
-        is_subscribed: $is_subscribed
-      }
-      validateType: $validateType
-      fcmToken: $fcmToken
-    ) {
-      customer {
-        __typename
-        firstname
-        lastname
-        email
-        is_subscribed
-      }
-    }
-  }
-`;
-
 // SIGN IN
 export const GENERATE_CUSTOMER_TOKEN = gql`
   mutation($email: String!, $password: String!, $fcmToken: String!) {
@@ -322,35 +321,35 @@ export const CHANGE_PASSWORD = gql`
 `;
 
 // ADDRESS_LIST
-export const ADDRESS_LIST = gql`
-  {
-    customer {
-      addresses {
-        __typename
-        id
-        city
-        street
-        company
-        country_code
-        default_billing
-        default_shipping
-        fax
-        postcode
-        firstname
-        lastname
-        full_address
-        region {
-          __typename
-          region
-          region_id
-          region_code
-        }
-        telephone
-        vat_id
-      }
-    }
-  }
-`;
+// export const ADDRESS_LIST = gql`
+//   {
+//     customer {
+//       addresses {
+//         __typename
+//         id
+//         city
+//         street
+//         company
+//         country_code
+//         default_billing
+//         default_shipping
+//         fax
+//         postcode
+//         firstname
+//         lastname
+//         full_address
+//         region {
+//           __typename
+//           region
+//           region_id
+//           region_code
+//         }
+//         telephone
+//         vat_id
+//       }
+//     }
+//   }
+// `;
 
 // ADD ADDRESS CUSTOMER
 export const ADD_ADDRESS = gql`

@@ -14,8 +14,6 @@ export const useCustomer = () => {
 
   React.useEffect(() => {
     if (getCustomerResp.data?.customer) {
-      Logger.debug('getCustomerResp.data', 'useCustomer DEBUG!!!!');
-
       dispatch(account?.saveUserInfo(getCustomerResp.data));
     }
 
@@ -25,7 +23,6 @@ export const useCustomer = () => {
   React.useEffect(() => {
     if (!customerInfo) {
       getCustomerInfo();
-      Logger.debug('getCustomerInfo', 'useCustomer DEBUG!!!!');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

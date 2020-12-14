@@ -8,7 +8,7 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
-import { mutation } from '@graphql';
+import { GQL } from '@graphql';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -79,9 +79,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
     (state) => state.account?.user?.tempCheckSignup,
   );
 
-  const [registerCustomer, { data, error, loading }] = useMutation(
-    mutation.SIGN_UP,
-  );
+  const [registerCustomer, { data, error, loading }] = useMutation(GQL.SIGN_UP);
 
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(
     PROCESS_STATUS.START,

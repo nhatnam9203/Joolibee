@@ -91,3 +91,25 @@ export const HOME_SCREEN = gql`
     }
   }
 `;
+
+export const GET_NOTIFY_LIST = gql`
+  {
+    customerNotification {
+      list {
+        id
+        title
+        content
+        is_read
+        order_id
+      }
+    }
+  }
+`;
+
+export const READ_CUSTOMER_NOTIFY = gql`
+  mutation($id: Int!) {
+    markReadCustomerNotification(id: $id) {
+      result
+    }
+  }
+`;

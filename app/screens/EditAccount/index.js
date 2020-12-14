@@ -7,7 +7,7 @@ import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import { useMutation } from '@apollo/client';
-import { mutation } from '@graphql';
+import { GQL } from '@graphql';
 import { app, account } from '@slices';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -28,7 +28,7 @@ const EditAccountScreen = () => {
   const { phone_number, profile } = useSelector((state) => state.account?.user);
   const { email, firstname, lastname, gender, date_of_birth } = profile || {};
 
-  const [updateCustomerInfo] = useMutation(mutation.UPDATE_CUSTOMER);
+  const [updateCustomerInfo] = useMutation(GQL.UPDATE_CUSTOMER);
 
   const EditSchema = Yup.object().shape({
     firstname: Yup.string()
