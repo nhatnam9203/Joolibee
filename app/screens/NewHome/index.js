@@ -1,6 +1,5 @@
-import { useQuery } from '@apollo/client';
 import { CustomImageBackground } from '@components';
-import { GQL, GEX } from '@graphql';
+import { GEX } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import {
   AppScrollViewIOSBounceColorsWrapper,
@@ -9,26 +8,24 @@ import {
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/stack';
-
+import { app } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { RESULTS } from 'react-native-permissions';
 import { useDispatch, useSelector } from 'react-redux';
-import { app } from '@slices';
+import NavigationService from '../../navigation/NavigationService';
 import {
   CardView,
+  PopupSelectAreaComponent,
+  PopupWebView,
   TopBarLeft,
   TopBarRight,
-  PopupSelectAreaComponent,
-  PopupConfirm,
-  PopupWebView,
 } from '../components';
+import ProductCart from '../ProductCart';
 import ScreenName from '../ScreenName';
 import { Banners, Bestseller, News, Tabs } from './pages';
-import ProductCart from '../ProductCart';
-import { RESULTS } from 'react-native-permissions';
-import NavigationService from '../../navigation/NavigationService';
 
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;

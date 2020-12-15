@@ -5,8 +5,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { STORE_JSON_INFO } from '../gql';
 
 export const useGetStoreInfo = () => {
-  const [getStoreJsonData, {}] = useLazyQuery(STORE_JSON_INFO, {
-    fetchPolicy: 'no-cache',
+  const [getStoreJsonData] = useLazyQuery(STORE_JSON_INFO, {
+    fetchPolicy: 'network-only',
     onCompleted: async (data) => {
       if (data?.getStoreJsonData) {
         const { url, version } = data?.getStoreJsonData;

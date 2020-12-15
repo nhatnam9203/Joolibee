@@ -66,7 +66,6 @@ function App() {
     if (isSignIn) {
       // getCheckOutCart();
       setAllowGotoHomeScreen(true);
-
       loadHomeScreen();
     } else {
       // navigationRef.current?.navigate(ScreenConst.Auth);
@@ -79,9 +78,9 @@ function App() {
   // Khi có dữ liệu home screen sẽ cho vào home screen, KO CÓ ĂN CÁM !!!
   React.useEffect(() => {
     if (getHomeScreenResp?.data && allowGotoHomeScreen) {
-      getCustomerCart();
-      getCategoryList();
-      getNotifyList();
+      // getCustomerCart();
+      // getCategoryList();
+      // getNotifyList();
       dispatch(app.hideLoading());
 
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Main));
