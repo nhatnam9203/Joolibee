@@ -44,7 +44,9 @@ const SignUpScreen = ({ route }) => {
   };
 
   const requestAuthCode = async (values) => {
-    const { phone } = values;
+    if (!values) return;
+
+    const { phone = '' } = values || {};
     setFormData(values);
 
     if (!phone) {

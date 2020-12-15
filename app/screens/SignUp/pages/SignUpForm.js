@@ -40,7 +40,8 @@ const PROCESS_STATUS = {
   FINISH: 3,
 };
 const REGEX_EMAIL = /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
-export const SignUpForm = ({ infos: { phone = '' } }) => {
+export const SignUpForm = ({ infos }) => {
+  const { phone = '' } = infos || {};
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
@@ -72,7 +73,6 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   });
 
   const token = useSelector((state) => state.app.fcmToken);
-  Logger.debug(token, 'SignUpForm');
 
   // state
   const signUpSucceeded = useSelector(

@@ -371,7 +371,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       // }
 
       // !! hard code 3 store_id
-      const hard_code = ['2', '3', '33', '3', '2', '3'].sort(
+      const hard_code = ['33', '3', '33', '2', '33'].sort(
         () => Math.random() - 0.5,
       );
       Logger.debug(hard_code, '=====> hard_code');
@@ -386,6 +386,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
       if (findStoreId) {
         store_id = findStoreId;
       }
+
+      store_id = '33';
 
       setAssignStoreId(store_id);
 

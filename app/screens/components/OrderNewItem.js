@@ -41,21 +41,23 @@ export const OrderNewItem = ({
   updateQty,
   loading = false,
 }) => {
-  const PriceAndPoint = ({ point, price_range }) => {
+  const PriceAndPoint = ({ point = 0, price_range }) => {
     const { sellPrice } = destructuring.priceOfRange(price_range);
 
     return (
       <View style={styles.priceContent}>
-        <Text style={styles.priceStyle}>
-          {format.jollibeeCurrency(sellPrice)}
-        </Text>
-        <Text style={styles.pointStyle}>(+ {`${point}`} điểm)</Text>
+        {sellPrice && (
+          <Text style={styles.priceStyle}>
+            {format.jollibeeCurrency(sellPrice)}
+          </Text>
+        )}
+        <Text style={styles.pointStyle}>(+ {`${point} điểm`} )</Text>
       </View>
     );
   };
 
   const ListItem = (value) => {
-    const { image, id, name, price_range, point, is_hot = false } =
+    const { image, id, name = '', price_range, point = 0, is_hot = false } =
       value?.item || {};
 
     return (
@@ -63,7 +65,7 @@ export const OrderNewItem = ({
         style={styles.container}
         imgStyle={styles.imageStyle}
         contentStyle={styles.itemStyle}
-        image={image?.url || images.jollibee_combo}
+        image={image?.url}
         onPress={onPress}
         imgPosition="left"
         imgWidth={IMAGE_SIZE}

@@ -263,11 +263,12 @@ const SignInScreen = () => {
                   />
 
                   {/**FACEBOOK*/}
-                  <ButtonCC.ButtonFacebook onPress={signinFB} />
+                  <ButtonCC.ButtonFacebook />
+                  {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
                   {/**GOOGLE*/}
-                  {/* <ButtonCC.ButtonGoogle /> */}
-                  <ButtonCC.ButtonGoogle onPress={signinGoogle} />
+                  <ButtonCC.ButtonGoogle />
+                  {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
 
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>

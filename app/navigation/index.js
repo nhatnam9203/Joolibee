@@ -65,6 +65,7 @@ function App() {
   const goToHomeScreen = React.useCallback(() => {
     if (isSignIn) {
       // getCheckOutCart();
+      setAllowGotoHomeScreen(true);
 
       loadHomeScreen();
     } else {
@@ -77,20 +78,20 @@ function App() {
 
   // Khi có dữ liệu home screen sẽ cho vào home screen, KO CÓ ĂN CÁM !!!
   React.useEffect(() => {
-    if (getHomeScreenResp?.data) {
-      setAllowGotoHomeScreen(true);
+    if (getHomeScreenResp?.data && allowGotoHomeScreen) {
       getCustomerCart();
       getCategoryList();
       getNotifyList();
       dispatch(app.hideLoading());
 
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Main));
+      setAllowGotoHomeScreen(false);
 
       // navigationRef.current?.navigate(ScreenConst.Main);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getHomeScreenResp]);
+  }, [getHomeScreenResp?.data]);
 
   return (
     <NavigationContainer ref={navigationRef}>

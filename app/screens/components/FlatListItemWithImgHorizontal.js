@@ -32,7 +32,7 @@ export const FlatListItemWithImgHorizontal = ({
       <View
         style={[styles.background, shadow && AppStyles.styles.shadowStrong]}>
         {imgPosition === 'left' && renderImage()}
-        {hotIcon && (
+        {!!hotIcon && (
           <Image
             style={styles.hotIcon}
             source={images.icons.ic_hot}

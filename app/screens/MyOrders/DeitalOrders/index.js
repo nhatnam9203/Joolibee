@@ -13,6 +13,7 @@ import { GEX, GQL } from '@graphql';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 import NavigationService from '../../../navigation/NavigationService';
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { stat } from 'react-native-fs';
 
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
@@ -22,9 +23,13 @@ export default function Index({ navigation, route }) {
   const dispatch = useDispatch();
   const { order } = route.params;
   const [visible, setVisible] = React.useState(false);
+  const [{ orderList }, getOrderList] = GEX.useOrderList();
 
-  const { order_number, created_at, status, address, grand_total, id } =
+  let { order_number, created_at, status, address, grand_total, id } =
     order || {};
+
+  const findOrder = orderList?.find((x) => x?.id === id);
+  status = findOrder?.status;
   const [getOrderDetail, orderDetailResp] = useLazyQuery(
     GQL.ORDER_DETAIL_CUSTOMER,
     {
@@ -180,8 +185,6 @@ export default function Index({ navigation, route }) {
       </View>
     );
   };
-
-  Logger.debug(orderDetailResp?.data, '=======> orderDetailResp');
 
   return (
     <>

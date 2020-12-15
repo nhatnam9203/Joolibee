@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { or } from 'react-native-reanimated';
 
 const orderSlice = createSlice({
   name: 'order',

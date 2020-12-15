@@ -52,7 +52,7 @@ const BestsellerItem = React.memo(({ item }) => {
 
   return (
     <OrderNewItem
-      key={item.id + ''}
+      key={item?.id + ''}
       shadow={true}
       item={item}
       onPress={() => {

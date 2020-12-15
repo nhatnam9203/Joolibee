@@ -6,6 +6,7 @@ import { JollibeeImage } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../../ScreenName';
+import { images } from '@theme';
 
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
@@ -57,6 +58,7 @@ const BannerItem = ({ item, height }) => {
         url={item?.image_url}
         height={height}
         width={width}
+        // defaultSource={images.test}
         resizeMode="contain"
       />
     </TouchableOpacity>

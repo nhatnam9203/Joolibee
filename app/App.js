@@ -166,7 +166,7 @@ const NotificationProvider = ({ children }) => {
   const [, getOrderList] = GEX.useOrderList();
 
   const onForegroundMessage = (data) => {
-    Logger.debug('onForegroundMessage', data);
+    // Logger.debug('onForegroundMessage', data);
 
     /**
      * TRƯỜNG HỢP APP DANG ACTIVE
@@ -174,21 +174,21 @@ const NotificationProvider = ({ children }) => {
      * - cập nhật lại notify của app
      */
     if (data?.data?.order) {
-      const { status, order_number } = JSON.parse(data?.data?.order);
+      const { status, order_number, title, content } = JSON.parse(
+        data?.data?.order,
+      );
       dispatch(order.updateOrderStatus({ status, order_number }));
-    }
 
-    // const title = data?.notification?.title ? data?.notification?.title : '';
-    // const body = data?.notification?.body ? data?.notification?.body : '';
-    // PushNotification.localNotification({
-    //   smallIcon: 'ic_merchant',
-    //   largeIcon: 'ic_merchant',
-    //   title: title,
-    //   message: body,
-    // });
+      PushNotification.localNotification({
+        // smallIcon: 'ic_merchant',
+        // largeIcon: 'ic_merchant',
+        title: title ?? '',
+        message: content ?? '',
+      });
+    }
   };
   const onBackgroundMessage = (data) => {
-    Logger.debug('onBackgroundMessage', data);
+    // Logger.debug('onBackgroundMessage', data);
     /**
      * TRƯỜNG HỢP APP IN BACKGROUND (ACTIVE & INACTIVE)
      *
@@ -197,7 +197,7 @@ const NotificationProvider = ({ children }) => {
   };
 
   const onOpenedApp = (data) => {
-    Logger.debug('onOpenedApp', data);
+    // Logger.debug('onOpenedApp', data);
     /**
      * TRƯỜNG HỢP APP IN OPENING
      * - sau khi mở nhảy vào order list
@@ -207,10 +207,10 @@ const NotificationProvider = ({ children }) => {
   };
 
   const onInit = (data) => {
-    Logger.debug('onInit', data);
+    // Logger.debug('onInit', data);
   };
   const onMessageError = (data) => {
-    Logger.debug('onMessageError', data);
+    // Logger.debug('onMessageError', data);
   };
 
   const token = useFirebaseCloudMessing({

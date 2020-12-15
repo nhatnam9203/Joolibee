@@ -23,9 +23,9 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
   async function signInWithPhoneNumber(phone) {
     setAuthStatus(AUTH_STATUS.none);
     const confirmation = await auth().signInWithPhoneNumber(phone);
+    setAuthStatus(AUTH_STATUS.sent);
 
     if (confirmation) {
-      setAuthStatus(AUTH_STATUS.sent);
       setConfirm(confirmation);
       requestCodeTimer = setTimeout(() => {
         if (authStatus === AUTH_STATUS.sent) {
@@ -81,7 +81,11 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
 
   // Handle android auto change
   const onAuthStateChanged = (user) => {
-    if (user && Platform.OS === 'android') {
+    if (
+      user &&
+      Platform.OS === 'android' &&
+      (authStatus === AUTH_STATUS.sent || authStatus === AUTH_STATUS.confirmed)
+    ) {
       setAuthStatus(AUTH_STATUS.verified);
       setLoginUser(user);
     }

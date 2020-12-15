@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     padding: metrics.padding + 5,
-    marginVertical: scaleHeight(2),
+    marginVertical: scaleHeight(1),
+    paddingVertical: 5,
   },
   content: {
     paddingHorizontal: scaleWidth(10),
