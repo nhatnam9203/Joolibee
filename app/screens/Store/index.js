@@ -23,8 +23,15 @@ const DEFAULT_PADDING = {
   left: 60,
 };
 
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = 0.0421;
+const LATITUDE_DELTA = 0.1;
+const LONGITUDE_DELTA = 0.5;
+
+const INITIAL_REGION = {
+  latitude: 10.780644,
+  longitude: 106.635679,
+  latitudeDelta: 0.1,
+  longitudeDelta: (0.5 * width) / height,
+};
 
 const StorePage = () => {
   const dispatch = useDispatch();
@@ -32,12 +39,12 @@ const StorePage = () => {
   const [language] = useChangeLanguage();
 
   const my_location = useSelector((state) => state.app.currentLocation);
-  const INITIAL_REGION = {
-    latitude: my_location?.position?.lat ?? 37.78825,
-    longitude: my_location?.position?.lng ?? -122.4324,
-    latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: (LONGITUDE_DELTA * width) / height,
-  };
+  // const INITIAL_REGION = {
+  //   latitude: my_location?.position?.lat ?? 37.78825,
+  //   longitude: my_location?.position?.lng ?? -122.4324,
+  //   latitudeDelta: LATITUDE_DELTA,
+  //   longitudeDelta: (LONGITUDE_DELTA * width) / height,
+  // };
 
   const cities = useSelector((state) => state.store.cities);
   const pickupLocation = useSelector((state) => state.store.pickupLocation);
@@ -120,6 +127,16 @@ const StorePage = () => {
     setParams({ ...params, district: item });
   };
 
+  const onSelectStore = (item) => () => {
+    console.log(item);
+    setRegion(
+      Object.assign({}, INITIAL_REGION, {
+        latitude: item.latitude,
+        longitude: item.longitude,
+      }),
+    );
+  };
+
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: translate('txtStore').toUpperCase(),
@@ -174,7 +191,11 @@ const StorePage = () => {
             showsVerticalScrollIndicator={false}
             keyExtractor={(_, index) => index + ''}
             renderItem={({ item, index }) => (
-              <ItemStore item={item} index={index} />
+              <ItemStore
+                item={item}
+                index={index}
+                onPress={onSelectStore(item)}
+              />
             )}
             data={localStores()}
           />

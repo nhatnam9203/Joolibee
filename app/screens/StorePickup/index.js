@@ -188,7 +188,7 @@ const StorePage = ({ route = { params: {} } }) => {
       source={images.watermark_background_2}
       style={styles.waterMarkContainer}>
       {/* ------------ Select city and districts --------------------- */}
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
           placeHolders="Chọn tỉnh thành"
           visible={visible[0]}
@@ -206,7 +206,7 @@ const StorePage = ({ route = { params: {} } }) => {
           openMenu={openModal(1)}
           closeMenu={closeModal}
         />
-      </View>
+      </View> */}
       {/* ------------ Select city and districts --------------------- */}
 
       <FlatList

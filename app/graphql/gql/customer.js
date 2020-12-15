@@ -184,9 +184,12 @@ export const CUSTOMER_CART_QUERY = gql`
         ... on BundleCartItem {
           bundle_options {
             id
+            label
+            type
             values {
               id
               label
+              price
               quantity
             }
           }

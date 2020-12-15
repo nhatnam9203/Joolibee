@@ -148,9 +148,12 @@ export const RE_ORDER_CART = gql`
           ... on BundleCartItem {
             bundle_options {
               id
+              label
+              type
               values {
                 id
                 label
+                price
                 quantity
               }
             }

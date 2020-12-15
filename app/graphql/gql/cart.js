@@ -113,9 +113,12 @@ export const CART_DETAIL = gql`
         ... on BundleCartItem {
           bundle_options {
             id
+            label
+            type
             values {
               id
               label
+              price
               quantity
             }
           }
@@ -169,8 +172,10 @@ export const CREATE_EMPTY_CART = gql`
 `;
 
 export const ADD_PRODUCT_TO_CART = gql`
-  mutation($cart_id: String!, $cart_items: [CartItemInput!]!) {
-    addProductsToCart(cartId: $cart_id, cartItems: $cart_items) {
+  mutation($cart_id: String!, $cart_items: [BundleProductCartItemInput!]!) {
+    addBundleProductsToCart(
+      input: { cart_id: $cart_id, cart_items: $cart_items }
+    ) {
       cart {
         id
         __typename
@@ -206,9 +211,12 @@ export const ADD_PRODUCT_TO_CART = gql`
           ... on BundleCartItem {
             bundle_options {
               id
+              label
+              type
               values {
                 id
                 label
+                price
                 quantity
               }
             }
@@ -251,6 +259,89 @@ export const ADD_PRODUCT_TO_CART = gql`
     }
   }
 `;
+// export const ADD_PRODUCT_TO_CART = gql`
+//   mutation($cart_id: String!, $cart_items: [CartItemInput!]!) {
+//     addBundleProductsToCart(cartId: $cart_id, cartItems: $cart_items) {
+//       cart {
+//         id
+//         __typename
+//         items {
+//           __typename
+//           id
+//           product {
+//             __typename
+//             id
+//             name
+//             sku
+//             point
+//             meta_description
+//             options_container
+//             price_range {
+//               maximum_price {
+//                 final_price {
+//                   value
+//                   currency
+//                 }
+//               }
+//               minimum_price {
+//                 final_price {
+//                   value
+//                   currency
+//                 }
+//               }
+//             }
+//             image {
+//               url
+//             }
+//           }
+//           ... on BundleCartItem {
+//             bundle_options {
+//               id
+//               values {
+//                 id
+//                 label
+//                 quantity
+//               }
+//             }
+//             customizable_options {
+//               id
+//               values {
+//                 id
+//                 label
+//               }
+//             }
+//           }
+//           prices {
+//             price {
+//               value
+//               currency
+//             }
+//           }
+//           quantity
+//         }
+//         total_quantity
+//         bonus_point
+//         prices {
+//           __typename
+//           grand_total {
+//             value
+//             currency
+//           }
+//           subtotal_excluding_tax {
+//             value
+//             currency
+//           }
+//           discounts {
+//             amount {
+//               value
+//               currency
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export const UPDATE_CART_PRODUCT = gql`
   mutation($cart_id: String!, $cart_item_id: Int!, $quantity: Float!) {
@@ -295,9 +386,12 @@ export const UPDATE_CART_PRODUCT = gql`
           ... on BundleCartItem {
             bundle_options {
               id
+              label
+              type
               values {
                 id
                 label
+                price
                 quantity
               }
             }

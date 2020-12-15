@@ -12,7 +12,7 @@ export const AUTH_STATUS = {
   verified: 'verified',
 };
 
-const TIMEOUT = 75000;
+const TIMEOUT = 60000;
 var requestCodeTimer = null;
 export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
   const [confirm, setConfirm] = useState(null); //  to confirm code
@@ -51,7 +51,6 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
         setLoginUser(user);
       }
     } catch (error) {
-      console.log(`Firebase confirm error code ${error?.code}`, error);
       setAuthStatus(AUTH_STATUS.error);
       if (typeof onVerifyPhoneError === 'function') {
         let code;
@@ -82,12 +81,7 @@ export const useFirebaseAuthentication = ({ onVerifyPhoneError }) => {
 
   // Handle android auto change
   const onAuthStateChanged = (user) => {
-    if (
-      (authStatus === AUTH_STATUS.confirmCode ||
-        authStatus === AUTH_STATUS.sent) &&
-      user &&
-      Platform.OS === 'android'
-    ) {
+    if (user && Platform.OS === 'android') {
       setAuthStatus(AUTH_STATUS.verified);
       setLoginUser(user);
     }

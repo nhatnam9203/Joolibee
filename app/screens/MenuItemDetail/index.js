@@ -160,26 +160,34 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const addProductToCart = () => {
     const { sku, items = [] } = productItem;
     const optionsMap = [];
+    // Logger.debug(productItem ,'======> xxxxxxxx productItem');
 
     items.forEach((item) => {
-      const { options = [] } = item;
+      const { options = [], option_id } = item;
       const mapArr = options
         .filter((x) => x.is_default === true)
-        .map((x) => x.uid);
+        .map((x) => {
+          return x.id + '';
+        });
 
-      optionsMap.push(...mapArr);
+      optionsMap.push({ id: parseInt(option_id), quantity: 1, value: mapArr });
     });
-    // Logger.debug(optionsMap, 'options');
+
+    // items.forEach((item) => {
+
+    //   const { options = [] } = item;
+    //   const mapArr = options
+    //     .filter((x) => x.is_default === true)
+    //     .map((x) => x.uid);
+
+    //   optionsMap.push(...mapArr);
+    // });
     addProductsToCart({
       variables: {
         cart_items: [
           {
-            quantity: qty,
-            sku: sku,
-            selected_options: optionsMap,
-            // entered_options: [
-
-            // ]
+            data: { quantity: qty, sku: sku },
+            bundle_options: optionsMap,
           },
         ],
       },
@@ -201,6 +209,8 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     });
 
     animationOnQuit();
+
+    // addProductToCart();
   };
 
   const animationOnQuit = () => {

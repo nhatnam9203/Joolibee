@@ -16,6 +16,8 @@ export function getColor(status = '') {
 
     case translate('txtStatusOrderComplete'):
       return AppStyles.colors.complete;
+    case translate('txtStatusOrderPending'):
+      return AppStyles.colors.orange;
 
     default:
       return AppStyles.colors.confirmed;

@@ -74,7 +74,7 @@ export const QueryMenuList = ({ renderItem, renderItemLoading }) => {
   const getData = React.useCallback(() => {
     if (data?.categoryList?.length > 0 && !error) {
       return [...data?.categoryList]
-        .filter((x) => x.id !== 2)
+        .filter((x) => x.id !== 2) // bo menu null ra
         .sort((a, b) => a.position - b.position);
     }
     return defaultData;
