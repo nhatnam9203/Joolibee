@@ -16,8 +16,13 @@ import {
   OrderNewItem,
 } from '../../components';
 import React from 'react';
+import { scale } from '@utils';
 
-export const OrderSectionItem = ({ children, onPress, height = 66 }) => {
+export const OrderSectionItem = ({
+  children,
+  onPress,
+  height = scale.scaleHeight(66),
+}) => {
   return (
     <TouchableOpacity
       style={[

@@ -14,6 +14,7 @@ const GraphQLException = {
   Authorization: 'graphql-authorization', //Thrown when an authorization error occurs
   Input: 'graphql-input', //Thrown when a query contains invalid input
   NoSuchEntity: 'graphql-no-such-entity', //Thrown when an expected resource doesn’t exist
+  ServerInternal: 'internal', //Thrown when an expected resource doesn’t exist
 };
 
 const httpLink = new HttpLink({ uri: Config.GRAPHQL_ENDPOINT });
@@ -66,9 +67,6 @@ const errorLink = onError((err) => {
           case GraphQLException.Input:
             // client query/mutation wrong
             errors.push(message);
-            // if (debugMessage) {
-            //   errors.push(debugMessage);
-            // }
 
             break;
           case GraphQLException.Authorization:
@@ -77,6 +75,11 @@ const errorLink = onError((err) => {
             // kick out user here ...
             NavigationService.logout();
             break;
+          case GraphQLException.ServerInternal:
+            errors.push(debugMessage);
+
+            break;
+
           default:
             errors[index] = message;
 

@@ -20,3 +20,5 @@ export * from './useGetCategoryList';
 export * from './useGenerateTokenBySocial';
 export * from './useSearchStoreByAddress';
 export * from './useGetNotifyList';
+export * from './useApplyVoucherToCart';
+export * from './useRemoveVoucherFromCart';

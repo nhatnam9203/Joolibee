@@ -1,9 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { CustomImageBackground, CustomSwitch, Loading } from '@components';
+import { GEX, GQL, query, useGraphQLClient } from '@graphql';
+import { useStorePickup } from '@hooks';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
+import { account, app, order } from '@slices';
 import { AppStyles, images } from '@theme';
+import { format, scale } from '@utils';
 import React from 'react';
 import {
   Image,
@@ -14,29 +19,23 @@ import {
   View,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import NavigationService from '../../navigation/NavigationService';
 import {
   ButtonCC,
+  OrderNewItem,
   PopupNoticeEnvironment,
   PopupOrderSuccess,
-  OrderNewItem,
-  TextInputErrorMessage,
 } from '../components';
 import ScreenName from '../ScreenName';
 import {
-  OrderItem,
   CustomScrollViewHorizontal,
+  OrderButtonInput,
+  OrderItem,
   OrderSection,
   OrderSectionItem,
-  OrderButtonInput,
   OrderVoucherItem,
 } from './widget';
-import { useMutation, useLazyQuery } from '@apollo/client';
-import { query, GQL, GEX, useGraphQLClient } from '@graphql';
-import { format, scale, appUtil } from '@utils';
-import { app, account, order } from '@slices';
-import { useStorePickup } from '@hooks';
-import { distanceMatrix } from '@location';
-import NavigationService from '../../navigation/NavigationService';
+// import { removeVoucherFromCart } from './controllers';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -44,9 +43,11 @@ const ShippingType = {
   InShop: 'storepickup',
   InPlace: 'freeshipping',
 };
+
 const COUNTDOWN_SECONDS = 30;
 const CONFIRM_HEIGHT = 150;
 const MINIUM_POINT = 25;
+const SUB_MENU_ID = 4;
 
 const OrderScreen = ({ route = { params: {} } }) => {
   const { shippingMethod, addressParams } = route.params;
@@ -96,9 +97,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
   );
   const [assignStoreId, setAssignStoreId] = React.useState(null);
 
-  // --------- REQUEST CART-DETAIL -----------
+  // --------- CUSTOMER CART -----------
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
-  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
   const {
     items,
@@ -132,20 +132,23 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const [customerInfo] = GEX.useCustomer();
   const [shippingType, setShippingType] = React.useState(method_code);
-  const [appliedVouchers, setAppliedVouchers] = React.useState(
-    applied_vouchers,
-  );
+  // const [appliedVouchers, setAppliedVouchers] = React.useState(
+  //   applied_vouchers,
+  // );
   const [, getOrderList] = GEX.useOrderList();
 
   // update cart product
   const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
   // add voucher
-  const [applyVoucherToCart] = useMutation(GQL.APPLY_VOUCHER_TO_CART);
+
+  const [, removeVoucher] = GEX.useRemoveVoucherFromCart();
+  const [, addVoucherToCart] = GEX.useApplyVoucherToCart();
+
   // submit checkout
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   // Call get món đi kèm
   const [getSubMenu, responseMenu] = useLazyQuery(query.MENU_DETAIL_LIST, {
-    variables: { categoryId: 4 },
+    variables: { categoryId: SUB_MENU_ID },
     fetchPolicy: 'cache-first',
   });
   // Redeem points
@@ -153,7 +156,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   /**
    * SET SIPPING
    */
-
   const [
     shippingMethodResp,
     setShippingMethods,
@@ -176,7 +178,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
     });
   };
 
-  const onChangeCouponCode = (val) => setCouponCode(val);
+  const onChangeCouponCode = (val) => setVoucherCode(val);
   const onChangeRewardPoint = (point) => setRewardPoint(point);
   const onTogglePopupNotice = () => {
     setShowNotice(false);
@@ -188,7 +190,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const ontoggleSwitch = () => {
     dispatch(account.setEatingUtensils());
   };
-  const onEdit = () => {
+  const onEditAddressShipping = () => {
     if (shippingType === ShippingType.InShop) {
       navigation.navigate(ScreenName.StorePickup, {
         stores: availableStores,
@@ -233,30 +235,25 @@ const OrderScreen = ({ route = { params: {} } }) => {
         break;
     }
   };
+
   const onApplyCoupon = () => {
-    dispatch(app.showLoading());
-    applyVoucherToCart({
+    addVoucherToCart({
       variables: {
         cart_id: customerCart?.id,
         voucher_code: voucherCode,
       },
-    })
-      .then((res) => {
-        if (res?.data?.applyVoucherToCart) {
-          setVoucherCode('');
-          // dispatch(account.toggleTimmer());
-          // dispatch(account.setCountInputCoupon(5));
-        }
-        // dispatch(account.setCountInputCoupon(count_input_coupon - 1));
-        // if (count_input_coupon - 1 <= 0) {
-        //   dispatch(account.toggleTimmer());
-        // }
+    });
 
-        dispatch(app.hideLoading());
-      })
-      .catch(() => {
-        dispatch(app.hideLoading());
-      });
+    setVoucherCode(null);
+  };
+
+  const removeVoucherItem = (code) => {
+    removeVoucher({
+      variables: {
+        cart_id: customerCart?.id,
+        voucher_code: code,
+      },
+    });
   };
 
   const onSubmit = () => {
@@ -322,7 +319,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   React.useEffect(() => {
     setTimeout(() => {
       setShowNotice(isEatingUtensils);
-    }, 1000);
+    }, 250);
   }, [isEatingUtensils]);
 
   React.useEffect(() => {
@@ -437,12 +434,19 @@ const OrderScreen = ({ route = { params: {} } }) => {
         key={index + ''}
         icon={images.icons.ic_delete}
         btnWidth={scaleWidth(43)}
-        height={43}
-        width={scaleWidth(230)}
+        height={scaleHeight(40)}
+        width={scaleWidth(200)}
         borderColor={color}
         bgColor={color}
-        style={{ marginRight: 5 }}>
-        <OrderVoucherItem content={item.code} colorText={color} icon={icon} />
+        style={{ marginRight: 5 }}
+        onPress={() => {
+          removeVoucherItem(item.code);
+        }}>
+        <OrderVoucherItem
+          content={`Voucher giảm ${Math.round(item.discount_amount / 1000)}k `}
+          colorText={color}
+          icon={icon}
+        />
       </OrderButtonInput>
     );
   };
@@ -501,7 +505,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
             label={translate('txtEdit')}
             style={styles.buttonHeaderStyle}
             textStyle={styles.headerButtonTextStyle}
-            onPress={onEdit}
+            onPress={onEditAddressShipping}
           />
         )}>
         <OrderSectionItem>
@@ -668,11 +672,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const renderPromotion = () => (
     <OrderSection title={translate('txtPromotionApply')} key="OrderPromotion">
-      <OrderSectionItem height={160}>
+      <OrderSectionItem height={scale.scaleHeight(70)}>
         <View
           style={{
             flex: 1,
             alignItems: 'center',
+            paddingVertical: scaleHeight(20),
           }}>
           <OrderButtonInput
             onPress={onApplyCoupon}
@@ -688,15 +693,15 @@ const OrderScreen = ({ route = { params: {} } }) => {
             />
           </OrderButtonInput>
           {/* {renderBlockedApplyCoupon()} */}
-          {appliedVouchers && (
+          {applied_vouchers && (
             <View
               style={{
-                height: 45,
-                // marginTop: 19,
+                height: scale.scaleHeight(40),
+                marginTop: scale.scaleHeight(10),
                 justifyContent: 'center',
               }}>
               <CustomScrollViewHorizontal
-                data={appliedVouchers?.list}
+                data={applied_vouchers?.list}
                 renderItem={renderItemVoucher}
               />
             </View>

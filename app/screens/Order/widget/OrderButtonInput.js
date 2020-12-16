@@ -27,8 +27,7 @@ export const OrderButtonInput = ({
   icon,
   bgColor,
   btnWidth,
-  width = '100%',
-  height = 52,
+  height = scaleHeight(52),
   borderColor = AppStyles.colors.placeholder,
   style,
   disabled,
@@ -38,8 +37,8 @@ export const OrderButtonInput = ({
       style={[
         styles.buttonInputContainer,
         {
-          height: scaleHeight(height),
-          width,
+          height,
+          flex: 0,
           borderColor,
         },
         style,

@@ -557,6 +557,23 @@ export const APPLY_VOUCHER_TO_CART = gql`
           }
           total_discount_amount
         }
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
+          subtotal_excluding_tax {
+            value
+            currency
+          }
+          discounts {
+            amount {
+              value
+              currency
+            }
+          }
+        }
       }
     }
   }
@@ -575,6 +592,23 @@ export const REMOVE_VOUCHER_TO_CART = gql`
             discount_amount
           }
           total_discount_amount
+        }
+        prices {
+          __typename
+          grand_total {
+            value
+            currency
+          }
+          subtotal_excluding_tax {
+            value
+            currency
+          }
+          discounts {
+            amount {
+              value
+              currency
+            }
+          }
         }
       }
     }
