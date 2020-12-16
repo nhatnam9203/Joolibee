@@ -543,6 +543,7 @@ export const APPLY_COUPON_TO_CART = gql`
   }
 `;
 
+// * APPLY_COUPON_TO_CART
 export const APPLY_VOUCHER_TO_CART = gql`
   mutation($cart_id: String!, $voucher_code: String!) {
     applyVoucherToCart(
@@ -579,6 +580,7 @@ export const APPLY_VOUCHER_TO_CART = gql`
   }
 `;
 
+// * APPLY_VOUCHER_TO_CART
 export const REMOVE_VOUCHER_TO_CART = gql`
   mutation($cart_id: String!, $voucher_code: String!) {
     removeVoucherFromCart(

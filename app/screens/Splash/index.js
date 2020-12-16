@@ -4,10 +4,11 @@ import { app } from '@slices';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import React from 'react';
-import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import codePush from 'react-native-code-push';
 import { Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+import { CustomImageBackground } from '@components';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -216,43 +217,40 @@ const Splash: () => React$Node = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={images.watermark_background_transparent}
-        style={styles.imgBackgroundContainer}
-        resizeMode="stretch">
-        <Image source={images.loading_welcome} style={styles.ic_bee_man} />
-        <Image
-          source={images.icons.ic_text_jollibee}
-          style={styles.ic_text}
-          resizeMode="center"
-        />
-        <View style={styles.container_footer}>
-          {/* Download package progress */}
-          {processing?.progress > 0 && (
-            <Text style={styles.textDownloadProgress}>
-              {translate('txtDownloadPackage') +
-                Math.min(processing?.progress, 100) +
-                '%'}
-            </Text>
-          )}
+    <CustomImageBackground
+      source={images.watermark_background_transparent}
+      style={styles.container}>
+      <Image source={images.loading_welcome} style={styles.ic_bee_man} />
+      <Image
+        source={images.icons.ic_text_jollibee}
+        style={styles.ic_text}
+        resizeMode="center"
+      />
+      <View style={styles.container_footer}>
+        {/* Download package progress */}
+        {processing?.progress > 0 && (
+          <Text style={styles.textDownloadProgress}>
+            {translate('txtDownloadPackage') +
+              Math.min(processing?.progress, 100) +
+              '%'}
+          </Text>
+        )}
 
-          {/* Installing package */}
-          {processing?.message === 'installing-update' && (
-            <Text style={styles.textDownloadProgress}>
-              {translate('txtInstallingPackage')}
-            </Text>
-          )}
+        {/* Installing package */}
+        {processing?.message === 'installing-update' && (
+          <Text style={styles.textDownloadProgress}>
+            {translate('txtInstallingPackage')}
+          </Text>
+        )}
 
-          {/* Debug status */}
-          {/* {processing && (
+        {/* Debug status */}
+        {/* {processing && (
             <Text style={styles.textDownloadProgress}>
               {processing?.code + '----' + processing?.message}
             </Text>
           )} */}
-        </View>
-      </ImageBackground>
-    </View>
+      </View>
+    </CustomImageBackground>
   );
 };
 
@@ -266,7 +264,7 @@ const styles = StyleSheet.create({
 
   container_footer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: scale.scaleHeight(30),
     alignItems: 'center',
   },
 
@@ -289,6 +287,7 @@ const styles = StyleSheet.create({
     marginTop: scaleHeight(5),
     fontStyle: 'italic',
   },
+
   imgBackgroundContainer: {
     flex: 1,
     ...StyleSheet.absoluteFill,
