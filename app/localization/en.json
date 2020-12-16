@@ -215,5 +215,7 @@
   "txtServerMaintainTitle": "Server is maintenance",
   "txtServerMaintainDesc": "Sorry ! Server is maintenance, please come back later!",
   "txtAddressNotFound": "Address not found",
-  "txtAddress": "Address"
+  "txtAddress": "Address",
+  "txtMaxNumOrderPendingTitle": "Reached Max Pending Order!",
+  "txtMaxNumOrderPendingDesc": "Xin vui lòng hoàn thành đơn hàng, hoặc chờ hệ thống xác nhận đơn để tiếp tục!"
 }

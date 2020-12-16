@@ -43,11 +43,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const params = {
     variables: {
-      shipping_addresses: [
-        {
-          customer_address_id: address_id,
-        },
-      ],
+      customer_address_id: address_id,
     },
   };
 
@@ -124,7 +120,6 @@ const ProductCart = ({ visible, onToggle }) => {
       }
 
       if (isEmpty(billing_address) && address_id) {
-        Logger.debug(billing_address, 'billing_address');
         await setBillingAddress(address_id);
       }
       if (isEmpty(selected_payment_method?.code)) {

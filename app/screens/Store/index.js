@@ -157,7 +157,7 @@ const StorePage = () => {
       {/* ------------ Select city and districts --------------------- */}
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <CustomPopupMenu
-          placeHolders={translate('txtSelectDistrict')}
+          placeHolders={translate('txtSelectWard')}
           visible={visible[0]}
           menus={cities}
           onChangeItem={onChangeItemCity}
@@ -167,7 +167,7 @@ const StorePage = () => {
         />
 
         <CustomPopupMenu
-          placeHolders={translate('txtSelectWard')}
+          placeHolders={translate('txtSelectDistrict')}
           visible={visible[1]}
           menus={filterDistrict()}
           value={params?.district?.label}

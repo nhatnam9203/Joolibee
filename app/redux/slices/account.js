@@ -15,7 +15,6 @@ const initialState = {
   },
   cart: {},
   isShowQRCode: false,
-  isLogout: false,
   isEatingUtensils: false,
   count_input_coupon: 5,
   timming: false,
@@ -75,10 +74,8 @@ const accountSlice = createSlice({
     },
 
     signInSucceed(state, action) {
-      const token = action.payload;
+      const { token, phone_number } = action.payload;
       if (token) {
-        // received token from server
-
         // get token object save in store
         let uStorage = get(StorageKey.User);
         // store token to local store
@@ -91,14 +88,15 @@ const accountSlice = createSlice({
         );
         // update state
         state.user.isLogin = true;
-        state.isLogout = false;
+        state.user.phone_number = phone_number;
       } else {
         state.user.isLogin = false;
+        state.user.phone_number = null;
       }
     },
 
     signInError(state, action) {
-      state.user.isLogin = false;
+      state.user = initialState.user;
     },
 
     signUpSucceeded(state, action) {
@@ -114,16 +112,9 @@ const accountSlice = createSlice({
       state.user.tempCheckSignup = false;
     },
 
-    signOutRequest(state, action) {
-      state.isLogout = true;
-    },
-
-    signOutComplete(state, action) {
-      state.isLogout = false;
-      state.user = initialState.user;
-      state.cart = null;
-      state.isEatingUtensils = false;
-      state.addresses = [];
+    // clear redux state for all info account/ reset account state
+    signOutComplete(state) {
+      return initialState;
     },
 
     resetCustomerCart(state, action) {
@@ -150,12 +141,11 @@ const accountSlice = createSlice({
     saveAddressCustomer(state, action) {
       state.addresses = action.payload;
     },
-    setPhoneNumber: (state, action) => {
-      state.user.phone_number = action.payload;
-    },
+
     setNotificationList: (state, action) => {
       state.notificationList = action.payload;
     },
+
     updateNotify: (state, action) => {
       const { id } = action.payload || {};
       const notifyIndex = state.notificationList?.findIndex((x) => x.id === id);

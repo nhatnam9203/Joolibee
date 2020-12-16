@@ -142,6 +142,13 @@ export const CART_DETAIL = gql`
       applied_coupons {
         code
       }
+      applied_vouchers {
+        total_discount_amount
+        list {
+          code
+          discount_amount
+        }
+      }
       total_quantity
       bonus_point
       prices {
@@ -429,9 +436,12 @@ export const UPDATE_CART_PRODUCT = gql`
 `;
 
 export const SET_ORDER_SHIPPING_ADDRESS = gql`
-  mutation($cart_id: String!, $shipping_addresses: [ShippingAddressInput!]!) {
+  mutation($cart_id: String!, $customer_address_id: Int!) {
     setShippingAddressesOnCart(
-      input: { cart_id: $cart_id, shipping_addresses: $shipping_addresses }
+      input: {
+        cart_id: $cart_id
+        shipping_addresses: { customer_address_id: $customer_address_id }
+      }
     ) {
       cart {
         shipping_addresses {
@@ -533,10 +543,49 @@ export const APPLY_COUPON_TO_CART = gql`
   }
 `;
 
+export const APPLY_VOUCHER_TO_CART = gql`
+  mutation($cart_id: String!, $voucher_code: String!) {
+    applyVoucherToCart(
+      input: { cart_id: $cart_id, voucher_code: $voucher_code }
+    ) {
+      cart {
+        bonus_point
+        applied_vouchers {
+          list {
+            code
+            discount_amount
+          }
+          total_discount_amount
+        }
+      }
+    }
+  }
+`;
+
+export const REMOVE_VOUCHER_TO_CART = gql`
+  mutation($cart_id: String!, $voucher_code: String!) {
+    removeVoucherFromCart(
+      input: { cart_id: $cart_id, voucher_code: $voucher_code }
+    ) {
+      cart {
+        bonus_point
+        applied_vouchers {
+          list {
+            code
+            discount_amount
+          }
+          total_discount_amount
+        }
+      }
+    }
+  }
+`;
+
 //restaurant_id: $restaurant_id
 export const PLACE_ORDER = gql`
   mutation($cart_id: String!) {
     placeOrder(input: { cart_id: $cart_id }) {
+      reachedMaxPendingOrder
       order {
         order_number
       }

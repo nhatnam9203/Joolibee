@@ -9,7 +9,7 @@ import { ScreenName, SplashScreen } from '../screens';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
-import { useAppProcess } from './useAppProcess';
+import { useSignInFlow } from '../myhooks/useSignInFlow';
 import { app } from '@slices';
 
 const { scaleHeight, scaleWidth } = scale;
@@ -39,7 +39,7 @@ const ScreenConst = {
 // Process Start App
 function App() {
   const dispatch = useDispatch();
-  const { startApp, isSignIn } = useAppProcess();
+  const [{ startApp, isSignIn }] = useSignInFlow();
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
   const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
@@ -50,23 +50,20 @@ function App() {
   const [, getNotifyList] = GEX.useGetNotifyList();
 
   React.useEffect(() => {
-    if (!startApp) {
+    if (startApp) {
       getStoreJsonData();
-      goToHomeScreen();
-    } else {
-      // navigationRef.current?.navigate(ScreenConst.Splash);
-      // StackActions.replace(ScreenConst.Splash);
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Splash));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startApp, isSignIn]);
+  }, [startApp]);
 
-  const goToHomeScreen = React.useCallback(() => {
+  React.useEffect(() => {
     if (isSignIn) {
-      // getCheckOutCart();
       setAllowGotoHomeScreen(true);
       loadHomeScreen();
+      getCustomerCart();
+      getCategoryList();
+      getNotifyList();
     } else {
       // navigationRef.current?.navigate(ScreenConst.Auth);
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Auth));
@@ -75,22 +72,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSignIn]);
 
-  // Khi có dữ liệu home screen sẽ cho vào home screen, KO CÓ ĂN CÁM !!!
   React.useEffect(() => {
     if (getHomeScreenResp?.data && allowGotoHomeScreen) {
-      // getCustomerCart();
-      // getCategoryList();
-      // getNotifyList();
-      dispatch(app.hideLoading());
-
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Main));
-      setAllowGotoHomeScreen(false);
 
-      // navigationRef.current?.navigate(ScreenConst.Main);
+      dispatch(app.hideLoading());
+      setAllowGotoHomeScreen(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getHomeScreenResp?.data]);
+  }, [getHomeScreenResp?.data, allowGotoHomeScreen]);
 
   return (
     <NavigationContainer ref={navigationRef}>

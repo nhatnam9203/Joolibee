@@ -16,17 +16,17 @@ import { useSelector } from 'react-redux';
 const Stack = createStackNavigator();
 
 function AuthStack() {
-  const showWelcome = useSelector((state) => state.app.loadIntro);
+  const showIntro = useSelector((state) => state.app.loadIntro);
 
   return (
     <Stack.Navigator
-      initialRouteName={showWelcome ? ScreenName.Welcome : ScreenName.SignIn}
+      initialRouteName={showIntro ? ScreenName.Welcome : ScreenName.SignIn}
       screenOptions={{
         ...AppStyles.navigation.default,
         headerBackImage: () => <HeaderImage src={images.icons.nav_back} />,
         gestureEnabled: false,
       }}>
-      {showWelcome && (
+      {showIntro && (
         <Stack.Screen
           component={WelcomeScreen}
           name={ScreenName.Welcome}
@@ -48,8 +48,6 @@ function AuthStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtSignUp'),
-          // headerBackImage: () => <View />,
-          // headerStyle: { backgroundColor: 'transparent' },
           headerBackground: () => <View style={styles.container} />,
         }}
       />
@@ -60,8 +58,6 @@ function AuthStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtForgotPassword'),
-          // headerBackImage: () => <View />,
-          // headerStyle: { backgroundColor: 'transparent' },
           headerBackground: () => <View style={styles.container} />,
         }}
       />

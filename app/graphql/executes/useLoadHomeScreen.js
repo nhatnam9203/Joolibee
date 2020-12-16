@@ -3,7 +3,7 @@ import { HOME_SCREEN } from '../gql';
 
 export const useLoadHomeScreen = (fetchPolicy) => {
   const [getHomeScreen, homeScreenResp] = useLazyQuery(HOME_SCREEN, {
-    fetchPolicy: fetchPolicy ?? 'cache-first',
+    fetchPolicy: fetchPolicy ?? 'network-only',
   });
 
   const loadHomeScreen = () => {

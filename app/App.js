@@ -180,8 +180,8 @@ const NotificationProvider = ({ children }) => {
       dispatch(order.updateOrderStatus({ status, order_number }));
 
       PushNotification.localNotification({
-        // smallIcon: 'ic_merchant',
-        // largeIcon: 'ic_merchant',
+        smallIcon: 'consumer',
+        largeIcon: 'consumer',
         title: title ?? '',
         message: content ?? '',
       });

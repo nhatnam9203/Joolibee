@@ -33,7 +33,6 @@ import {
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { query, GQL, GEX, useGraphQLClient } from '@graphql';
 import { format, scale, appUtil } from '@utils';
-import { vouchers } from '@mocks';
 import { app, account, order } from '@slices';
 import { useStorePickup } from '@hooks';
 import { distanceMatrix } from '@location';
@@ -72,6 +71,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
   const [coupon_code, setCouponCode] = React.useState('');
+  const [voucherCode, setVoucherCode] = React.useState('');
   const [reward_point, setRewardPoint] = React.useState('');
   const [order_number, setOrderNumber] = React.useState('');
   const [error_point, showErrorPoint] = React.useState(null);
@@ -103,6 +103,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const {
     items,
     applied_coupons,
+    applied_vouchers,
     prices,
     shipping_addresses,
     bonus_point,
@@ -131,12 +132,15 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const [customerInfo] = GEX.useCustomer();
   const [shippingType, setShippingType] = React.useState(method_code);
+  const [appliedVouchers, setAppliedVouchers] = React.useState(
+    applied_vouchers,
+  );
   const [, getOrderList] = GEX.useOrderList();
 
   // update cart product
   const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
   // add voucher
-  const [applyCouponToCart] = useMutation(GQL.APPLY_COUPON_TO_CART);
+  const [applyVoucherToCart] = useMutation(GQL.APPLY_VOUCHER_TO_CART);
   // submit checkout
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   // Call get món đi kèm
@@ -231,15 +235,15 @@ const OrderScreen = ({ route = { params: {} } }) => {
   };
   const onApplyCoupon = () => {
     dispatch(app.showLoading());
-    applyCouponToCart({
+    applyVoucherToCart({
       variables: {
         cart_id: customerCart?.id,
-        coupon_code,
+        voucher_code: voucherCode,
       },
     })
       .then((res) => {
-        if (res?.data?.applyCouponToCart) {
-          setCouponCode('');
+        if (res?.data?.applyVoucherToCart) {
+          setVoucherCode('');
           // dispatch(account.toggleTimmer());
           // dispatch(account.setCountInputCoupon(5));
         }
@@ -262,22 +266,31 @@ const OrderScreen = ({ route = { params: {} } }) => {
     placeOrder({
       variables: {
         cart_id: customerCart?.id,
-        restaurant_id: assignStoreId,
+        // restaurant_id: assignStoreId,
       },
     })
       .then((res) => {
         if (res?.data?.placeOrder) {
-          graphQlClient.cache.evict({ fieldName: 'cart' });
-          graphQlClient.cache.evict({ fieldName: 'customerCart' });
-          graphQlClient.cache.gc();
-          setOrderNumber(res?.data?.placeOrder?.order?.order_number);
-          setShowPopupSuccess(true);
-          showErrorPoint(false);
-          // getCheckOutCart(true);
-          getCustomerCart();
+          const { reachedMaxPendingOrder } = res?.data?.placeOrder;
+          if (reachedMaxPendingOrder) {
+            NavigationService.alert({
+              title: translate('txtMaxNumOrderPendingTitle'),
+              message: translate('txtMaxNumOrderPendingDesc'),
+            });
+          } else {
+            graphQlClient.cache.evict({ fieldName: 'cart' });
+            graphQlClient.cache.evict({ fieldName: 'customerCart' });
+            graphQlClient.cache.gc();
+            setOrderNumber(res?.data?.placeOrder?.order?.order_number);
+            setShowPopupSuccess(true);
+            showErrorPoint(false);
 
-          /// chua get lai list order
-          getOrderList();
+            // getCheckOutCart(true);
+            getCustomerCart();
+
+            /// chua get lai list order
+            getOrderList();
+          }
         }
         dispatch(app.hideLoading());
       })
@@ -328,9 +341,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         //   pickup_location_code: store_pickup_id,
         // });
         const params = Object.assign({}, addressParams, {
-          variables: {
-            shipping_addresses: [pickupAddress],
-          },
+          variables: pickupAddress,
         });
 
         await dispatch(app.showLoading());
@@ -418,14 +429,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
   );
 
   const renderItemVoucher = (item, index) => {
-    const color =
-      item.status === 'error'
-        ? AppStyles.colors.accent
-        : AppStyles.colors.moderate_cyan;
-    const icon =
-      item.status === 'error'
-        ? images.icons.ic_warning
-        : images.icons.ic_sticked;
+    const color = AppStyles.colors.moderate_cyan;
+    const icon = images.icons.ic_sticked;
+
     return (
       <OrderButtonInput
         key={index + ''}
@@ -436,7 +442,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         borderColor={color}
         bgColor={color}
         style={{ marginRight: 5 }}>
-        <OrderVoucherItem content={item.name} colorText={color} icon={icon} />
+        <OrderVoucherItem content={item.code} colorText={color} icon={icon} />
       </OrderButtonInput>
     );
   };
@@ -670,19 +676,19 @@ const OrderScreen = ({ route = { params: {} } }) => {
           }}>
           <OrderButtonInput
             onPress={onApplyCoupon}
-            disabled={!coupon_code || timming}
+            disabled={!voucherCode || timming}
             title={translate('txtApply')}
             btnWidth={126}
             bgColor={AppStyles.colors.accent}>
             <TextInput
               placeholder={translate('txtInputVoucher')}
               style={{ paddingHorizontal: 10, flex: 1 }}
-              value={coupon_code}
+              value={voucherCode}
               onChangeText={onChangeCouponCode}
             />
           </OrderButtonInput>
           {/* {renderBlockedApplyCoupon()} */}
-          {applied_coupons && (
+          {appliedVouchers && (
             <View
               style={{
                 height: 45,
@@ -690,7 +696,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
                 justifyContent: 'center',
               }}>
               <CustomScrollViewHorizontal
-                data={vouchers}
+                data={appliedVouchers?.list}
                 renderItem={renderItemVoucher}
               />
             </View>

@@ -49,28 +49,25 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
-  const { signIn, customerToken } = GEX.useGenerateToken();
+  const [, signIn] = GEX.useGenerateToken();
   const { socialSignIn } = GEX.useGenerateTokenBySocial();
-  // const { signIn, customerToken } = GEX.useGenerateToken();
-  const signInSubmit = React.useCallback(
-    async ({ username, ...values }) => {
-      //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
-      let submitData = Object.assign({}, values, { email: username });
 
-      // let submitData = values;
-      // if (validate.phoneNumber(username)) {
-      //   submitData = Object.assign({}, data, { email: username });
-      // }
+  const signInSubmit = async ({ username, ...values }) => {
+    //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
+    let submitData = Object.assign({}, values, { email: username });
 
-      // if (validate.email(username)) {
-      //   submitData = Object.assign({}, data, { email: username });
-      // }
-      await dispatch(app.showLoading());
-      await dispatch(account.setPhoneNumber(username));
-      signIn({ variables: submitData });
-    },
-    [dispatch, signIn],
-  );
+    // let submitData = values;
+    // if (validate.phoneNumber(username)) {
+    //   submitData = Object.assign({}, data, { email: username });
+    // }
+
+    // if (validate.email(username)) {
+    //   submitData = Object.assign({}, data, { email: username });
+    // }
+    await dispatch(app.showLoading());
+    signIn({ variables: submitData });
+  };
+
   // -------social SignIn Submit
   const socialSignInSubmit = React.useCallback(
     async (submitData) => {
@@ -128,19 +125,6 @@ const SignInScreen = () => {
       }
     }
   };
-
-  React.useEffect(() => {
-    if (customerToken) {
-      const onSignInSucceed = async (value) => {
-        await dispatch(app.hideLoading());
-        await dispatch(account.signInSucceed(customerToken));
-        await dispatch(app.showLoading());
-      };
-
-      onSignInSucceed();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerToken]);
 
   return (
     <>

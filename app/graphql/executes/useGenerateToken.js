@@ -1,41 +1,47 @@
 import { useMutation } from '@apollo/client';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { GENERATE_CUSTOMER_TOKEN } from '../gql';
-import { useFirebaseCloudMessing } from '@firebase';
-import { useSelector } from 'react-redux';
-import { app } from '@slices';
-import { useDispatch } from 'react-redux';
+import { account } from '@slices';
 
 export const useGenerateToken = () => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.app.fcmToken);
+  const fcmToken = useSelector((state) => state.app.fcmToken);
+  const [customerToken, setCustomerToken] = React.useState(null);
+  const [submitValue, setSubmitValue] = React.useState(null);
 
-  const [generateCustomerToken, { loading, error, data, called }] = useMutation(
-    GENERATE_CUSTOMER_TOKEN,
-    {
-      // onCompleted: (data) => {
-      //   Logger.debug(data, 'sign in complete');
-      // },
+  const [generateCustomerToken] = useMutation(GENERATE_CUSTOMER_TOKEN, {
+    onCompleted: (data) => {
+      Logger.debug(
+        data?.generateCustomerToken?.token,
+        'AAAAA sign in complete',
+      );
+
+      const token = data?.generateCustomerToken?.token;
+
+      setCustomerToken(token);
+      Logger.debug(submitValue, '====> generateCustomerToken');
+
+      dispatch(account.signInSucceed({ token, ...submitValue }));
     },
-  );
+  });
 
   /**
    * data = {"generateCustomerToken":{"token":"fzktbjet0d6snz9ontt0g6h0x28j49ew","__typename":"CustomerToken"}}
    */
 
-  const signInToken = (value) => {
+  const signIn = (value) => {
     const { variables } = value || {};
-    // Logger.debug(
-    //   Object.assign({}, variables, { fcmToken: token }),
-    //   'signInToken',
-    // );
+    const submitVal = Object.assign({}, variables, {
+      fcmToken: fcmToken ?? '456',
+    });
+
+    setSubmitValue(submitVal);
 
     generateCustomerToken({
-      variables: Object.assign({}, variables, { fcmToken: token ?? '456' }),
+      variables: submitVal,
     });
   };
 
-  return {
-    signIn: signInToken,
-    customerToken: data?.generateCustomerToken?.token,
-  };
+  return [customerToken, signIn];
 };

@@ -37,7 +37,7 @@ const Index = ({ route }) => {
   const onHandleSetShippingAddress = (id) => {
     const params = {
       variables: {
-        shipping_addresses: [{ customer_address_id: id }],
+        customer_address_id: id,
       },
     };
     setShippingAddress(params);

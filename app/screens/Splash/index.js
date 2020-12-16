@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
 });
 
 let codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.MANUAL,
+  checkFrequency: codePush.CheckFrequency.MANUAL, //  only check when codePush.sync() is called in app code
   installMode: codePush.InstallMode.IMMEDIATE,
 };
 

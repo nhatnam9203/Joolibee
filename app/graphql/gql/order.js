@@ -195,7 +195,7 @@ export const RE_ORDER_CART = gql`
 `;
 
 export const CANCEL_ORDER = gql`
-  mutation($orderId: String!) {
+  mutation($orderId: Int!) {
     cancelOrderCustomer(orderId: $orderId) {
       result
     }

@@ -74,7 +74,8 @@ const SignUpScreen = ({ route }) => {
     } else if (authStatus === AUTH_STATUS.verified) {
       dispatch(app.hideLoading());
       if (params?.customerToken) {
-        dispatch(account.setPhoneNumber(formData?.phone));
+        // !! ??? wtf
+        // dispatch(account.setPhoneNumber(formData?.phone));
         dispatch(account.signInSucceed(params?.customerToken));
       } else {
         setPage(PAGES.SignUp);

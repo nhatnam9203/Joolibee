@@ -213,6 +213,13 @@ export const CUSTOMER_CART_QUERY = gql`
       applied_coupons {
         code
       }
+      applied_vouchers {
+        total_discount_amount
+        list {
+          code
+          discount_amount
+        }
+      }
       total_quantity
       bonus_point
       prices {

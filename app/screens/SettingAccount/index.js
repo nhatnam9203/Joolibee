@@ -10,6 +10,7 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { ButtonCC, SettingItem } from '../components';
 import { localData } from './localData';
+import { useSignInFlow } from '@hooks';
 
 const SettingAccountScreen = () => {
   const dispatch = useDispatch();
@@ -17,13 +18,14 @@ const SettingAccountScreen = () => {
 
   const [settingList, setSettingList] = React.useState([]);
   const [language] = useChangeLanguage();
+  const [, signOut] = useSignInFlow();
 
   /**functions */
   const btnLogoutPressed = async () => {
     // logoutFb();
     // await logoutGoogle();
-    // dispatch(account.signOutRequest());
-    await dispatch(account.signOutRequest());
+
+    signOut();
   };
 
   // LOGOUT BUTTON

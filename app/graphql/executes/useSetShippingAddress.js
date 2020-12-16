@@ -88,6 +88,7 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     }
     let { variables } = params;
     variables = Object.assign({}, variables, { cart_id: customerCart.id });
+    Logger.debug(variables, '========> variables variables variables');
     return setShippingAddressesOnCart({
       ...params,
       variables,

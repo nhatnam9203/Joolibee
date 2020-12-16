@@ -74,7 +74,6 @@ const errorLink = onError((err) => {
           case GraphQLException.Authorization:
           case GraphQLException.Authentication:
             errors.push(message);
-            remove(StorageKey.Token);
             // kick out user here ...
             NavigationService.logout();
             break;
@@ -111,6 +110,16 @@ const errorLink = onError((err) => {
           () => {},
         );
         break;
+      case 500:
+        // kick out user here ...
+        NavigationService.logout();
+
+        NavigationService.showConfirm(
+          translate('txtServerMaintainTitle'),
+          translate('txtServerMaintainDesc'),
+          () => {},
+        );
+        break;
       default:
         // Logger.debug('[Network error]:', networkError);
         NavigationService.alertWithError({
@@ -141,6 +150,11 @@ const logTimeLink = new ApolloLink((operation, forward) => {
   return forward(operation).map((data) => {
     // data from a previous link
     const time = new Date() - operation.getContext().start;
+
+    const {
+      name,
+      selectionSet,
+    } = operation?.query?.definitions[0]?.selectionSet?.selections[0];
 
     Logger.debug(
       operation?.variables,
