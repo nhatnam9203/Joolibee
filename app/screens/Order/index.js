@@ -83,9 +83,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
     dispatch(account.toggleTimmer());
     dispatch(account.setCountInputCoupon(5));
   };
-  const { second, startTimer } = useCountDown({
-    callBackEnd: onCallBackEndCountDown,
-  });
+  // const { second, startTimer } = useCountDown({
+  //   callBackEnd: onCallBackEndCountDown,
+  // });
   // ----------------- Timming apply coupon ------------------------ //
 
   const storeList = useStorePickup();
@@ -99,6 +99,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // --------- CUSTOMER CART -----------
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const [, getCustomerInfo] = GEX.useCustomer();
 
   const {
     items,
@@ -305,6 +306,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         if (res?.data?.useCustomerPoint) {
           // getCheckOutCart();
           getCustomerCart();
+          getCustomerInfo();
 
           setRewardPoint('');
           showErrorPoint(false);
@@ -443,7 +445,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
           removeVoucherItem(item.code);
         }}>
         <OrderVoucherItem
-          content={`Voucher giảm ${Math.round(item.discount_amount / 1000)}k `}
+          content={`${translate('txtVoucher')} ${Math.round(
+            item.discount_amount / 1000,
+          )}k `}
           colorText={color}
           icon={icon}
         />
@@ -651,24 +655,24 @@ const OrderScreen = ({ route = { params: {} } }) => {
     </OrderSection>
   );
 
-  const renderBlockedApplyCoupon = () => {
-    return timming ? (
-      <Text style={{ width: '100%', marginVertical: 5 }}>
-        {translate('txtTryAgain') + ' (' + second + ') '}
-      </Text>
-    ) : (
-      <TextInputErrorMessage
-        style={{ width: '100%', marginVertical: 5 }}
-        message={
-          count_input_coupon < 5 &&
-          `${translate('txtYouHave')} ${count_input_coupon} ${translate(
-            'txtInputCode',
-          )}`
-        }
-        color={AppStyles.colors.inputError}
-      />
-    );
-  };
+  // const renderBlockedApplyCoupon = () => {
+  //   return timming ? (
+  //     <Text style={{ width: '100%', marginVertical: 5 }}>
+  //       {translate('txtTryAgain') + ' (' + second + ') '}
+  //     </Text>
+  //   ) : (
+  //     <TextInputErrorMessage
+  //       style={{ width: '100%', marginVertical: 5 }}
+  //       message={
+  //         count_input_coupon < 5 &&
+  //         `${translate('txtYouHave')} ${count_input_coupon} ${translate(
+  //           'txtInputCode',
+  //         )}`
+  //       }
+  //       color={AppStyles.colors.inputError}
+  //     />
+  //   );
+  // };
 
   const renderPromotion = () => (
     <OrderSection title={translate('txtPromotionApply')} key="OrderPromotion">
@@ -818,18 +822,30 @@ const OrderScreen = ({ route = { params: {} } }) => {
           </Text>
           <Text style={styles.txtSubPriceStyle}>{subTotal}</Text>
         </View>
-        {applied_coupons && (
+        {applied_vouchers && (
           <View style={styles.orderSumContent}>
             <Text style={styles.txtStyle}>{translate('tabPromotion')} : </Text>
-            {applied_coupons && (
-              <OrderVoucherItem
-                content="Voucher ưu đãi 30K"
-                style={{
-                  paddingHorizontal: 0,
-                }}
-              />
+            {applied_vouchers && (
+              <View>
+                {applied_vouchers?.list?.map((x) => (
+                  <OrderVoucherItem
+                    content={`${translate(
+                      'txtVoucher',
+                    )} ${format.jollibeeCurrency({
+                      value: x?.discount_amount,
+                    })}`}
+                    style={{
+                      paddingHorizontal: 0,
+                    }}
+                  />
+                ))}
+              </View>
             )}
-            <Text style={styles.txtSubPriceStyle}>{_discount}</Text>
+            <Text style={styles.txtSubPriceStyle}>
+              {`-${format.jollibeeCurrency({
+                value: applied_vouchers?.total_discount_amount,
+              })}`}
+            </Text>
           </View>
         )}
         {renderUsePoint()}

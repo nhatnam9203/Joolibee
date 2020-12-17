@@ -18,7 +18,6 @@ const { scaleWidth, scaleHeight } = scale;
 
 const Index = ({ visible, item, onToggle }) => {
   const popupRef = React.createRef(null);
-  Logger.debug(item, 'item =======>');
   return (
     <Modal visible={visible} ref={popupRef}>
       <View style={styles.iconContainer}>
@@ -42,9 +41,9 @@ const Index = ({ visible, item, onToggle }) => {
             // renderLoading={() => (
             //   <Loading isLoading={true} transparent={true} />
             // )}
-            startInLoadingState={true}
+            // startInLoadingState={true}
             scrollEnabled={false}
-            // bounces={true}
+            bounces={true}
             source={{
               html: item?.content,
             }}

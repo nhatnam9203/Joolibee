@@ -13,7 +13,6 @@ export const useOrderList = (onSuccess = () => {}) => {
     onCompleted: (res) => {
       if (res) {
         dispatch(order.setOrderItemList(res?.customerOrders?.items));
-        Logger.debug(res, '=======> getOrderList');
       }
     },
     onError: (error) => {},

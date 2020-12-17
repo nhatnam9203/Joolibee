@@ -6,7 +6,7 @@ import { translate } from '@localize';
 export default function orderTotal({ total }) {
   const { grand_total, subtotal } = total || {};
   const discount_total = '0.000đ';
-
+  // Logger.debug(total, '======> total');
   return (
     <View style={styles.container}>
       <View style={styles.content}>

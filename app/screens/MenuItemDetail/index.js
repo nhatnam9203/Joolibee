@@ -245,7 +245,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem
       item={item}
-      key={`${index}`}
+      key={index + ''}
       type={type}
       onPress={onPress}
     />
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
 
   listHeaderStyle: {
     backgroundColor: '#FFC522',
-    height: 46,
+    height: scaleHeight(72),
   },
 
   closeButtonStyle: {

@@ -218,5 +218,6 @@
   "txtMaxNumOrderPendingTitle": "Bạn có nhiều đơn hàng chưa xác nhận!",
   "txtMaxNumOrderPendingDesc": "Xin vui lòng hoàn thành đơn hàng, hoặc chờ hệ thống xác nhận đơn để tiếp tục!",
   "txtBlockSpam": "Số điện thoại này tạm thời bị khoá, Vui lòng thử lại sau :",
-  "txtPhoneExisted":"Số điện thoại đã tồn tại!"
+  "txtPhoneExisted": "Số điện thoại đã tồn tại!",
+  "txtVoucher": "Voucher ưu đãi "
 }
