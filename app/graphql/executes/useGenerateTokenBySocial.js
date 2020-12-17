@@ -1,41 +1,47 @@
 import { useMutation } from '@apollo/client';
 import { GENERATE_CUSTOMER_TOKEN_BY_SOCIAL } from '../gql';
-import { useFirebaseCloudMessing } from '@firebase';
-import { useSelector } from 'react-redux';
-
+import { account } from '@slices';
+import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import ScreenName from '../../screens/ScreenName';
+import { useNavigation } from '@react-navigation/native';
 export const useGenerateTokenBySocial = () => {
-  const token = useSelector((state) => state.app.fcmToken);
-
-  const [socialSignIn, { loading, error, data, called }] = useMutation(
-    GENERATE_CUSTOMER_TOKEN_BY_SOCIAL,
-    {
-      // onCompleted: (data) => {
-      //   Logger.debug(data?.socialSignIn?.token, 'AAAAA sign in complete');
-      //   const { token, otp_confirmed } = data?.generateCustomerToken || {};
-      //   setCustomerToken({ customerToken: token, otpConfirmed: otp_confirmed });
-      //   Logger.debug(submitValue, '====> generateCustomerToken');
-      //   dispatch(account.signInSucceed({ token, ...submitValue }));
-      // },
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const fcmToken = useSelector((state) => state.app.fcmToken);
+  const [submitValue, setSubmitValue] = React.useState(null);
+  const [socialSinginResp, setCustomerToken] = React.useState({});
+  const [socialSignIn] = useMutation(GENERATE_CUSTOMER_TOKEN_BY_SOCIAL, {
+    onCompleted: (data) => {
+      Logger.debug(data?.socialSignIn?.token, 'AAAAA sign in complete');
+      const { token, otp_confirmed } = data?.socialSignIn || {};
+      setCustomerToken(data?.socialSignIn);
+      Logger.debug(submitValue, '====> generateCustomerToken');
+      if (otp_confirmed) {
+        dispatch(account.signInSucceed({ token, ...submitValue }));
+      } else {
+        navigation.navigate(ScreenName.NewSignUp, {
+          customerToken: token,
+          typeVerify: 'update',
+        });
+      }
     },
-  );
+  });
 
   /**
    * data = {"generateCustomerToken":{"token":"fzktbjet0d6snz9ontt0g6h0x28j49ew","__typename":"CustomerToken"}}
    */
 
-  const signInToken = (value) => {
+  const signinSocial = (value) => {
     const { variables } = value || {};
-    // Logger.debug(
-    //   Object.assign({}, variables, { fcmToken: token }),
-    //   'signInToken',
-    // );
+    const submitVal = Object.assign({}, variables, {
+      fcmToken: fcmToken ?? '456',
+    });
+    setSubmitValue(submitVal);
     return socialSignIn({
-      variables: Object.assign({}, variables, { fcmToken: token ?? '456' }),
+      variables: submitVal,
     });
   };
 
-  return {
-    socialSignIn: signInToken,
-    customerToken: data?.socialSignIn?.token,
-  };
+  return [socialSinginResp, signinSocial];
 };
