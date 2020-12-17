@@ -78,14 +78,14 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [error_point, showErrorPoint] = React.useState(null);
   const [availableStores, setAvailableStores] = React.useState(null);
 
-  // const onCallBackEndCountDown = () => {
-  //   dispatch(account.toggleTimmer());
-  //   dispatch(account.setCountInputCoupon(5));
-  // };
-  // const number = useTimerBackground(30, timming, onCallBackEndCountDown);
-
   // ----------------- Timming apply coupon ------------------------ //
-
+  const onCallBackEndCountDown = () => {
+    dispatch(account.toggleTimmer());
+    dispatch(account.setCountInputCoupon(5));
+  };
+  const { second, startTimer } = useCountDown({
+    callBackEnd: onCallBackEndCountDown,
+  });
   // ----------------- Timming apply coupon ------------------------ //
 
   const storeList = useStorePickup();
@@ -651,24 +651,24 @@ const OrderScreen = ({ route = { params: {} } }) => {
     </OrderSection>
   );
 
-  // const renderBlockedApplyCoupon = () => {
-  //   return timming ? (
-  //     <Text style={{ width: '100%', marginVertical: 5 }}>
-  //       {translate('txtTryAgain') + ' (' + number + ') '}
-  //     </Text>
-  //   ) : (
-  //     <TextInputErrorMessage
-  //       style={{ width: '100%', marginVertical: 5 }}
-  //       message={
-  //         count_input_coupon < 5 &&
-  //         `${translate('txtYouHave')} ${count_input_coupon} ${translate(
-  //           'txtInputCode',
-  //         )}`
-  //       }
-  //       color={AppStyles.colors.inputError}
-  //     />
-  //   );
-  // };
+  const renderBlockedApplyCoupon = () => {
+    return timming ? (
+      <Text style={{ width: '100%', marginVertical: 5 }}>
+        {translate('txtTryAgain') + ' (' + second + ') '}
+      </Text>
+    ) : (
+      <TextInputErrorMessage
+        style={{ width: '100%', marginVertical: 5 }}
+        message={
+          count_input_coupon < 5 &&
+          `${translate('txtYouHave')} ${count_input_coupon} ${translate(
+            'txtInputCode',
+          )}`
+        }
+        color={AppStyles.colors.inputError}
+      />
+    );
+  };
 
   const renderPromotion = () => (
     <OrderSection title={translate('txtPromotionApply')} key="OrderPromotion">

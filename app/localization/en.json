@@ -217,5 +217,7 @@
   "txtAddressNotFound": "Address not found",
   "txtAddress": "Address",
   "txtMaxNumOrderPendingTitle": "Reached Max Pending Order!",
-  "txtMaxNumOrderPendingDesc": "Xin vui lòng hoàn thành đơn hàng, hoặc chờ hệ thống xác nhận đơn để tiếp tục!"
+  "txtMaxNumOrderPendingDesc": "Xin vui lòng hoàn thành đơn hàng, hoặc chờ hệ thống xác nhận đơn để tiếp tục!",
+  "txtBlockSpam": "This phone number was blocked, Please try again :",
+  "txtPhoneExisted":"The phone number is ixisted"
 }

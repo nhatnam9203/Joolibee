@@ -10,6 +10,7 @@ import {
   SignUpScreen,
   WelcomeScreen,
   ForgotPasswordScreen,
+  NewSignUpScreen,
 } from '../screens';
 import { useSelector } from 'react-redux';
 
@@ -58,6 +59,18 @@ function AuthStack() {
         options={{
           headerShown: true,
           headerTitle: translate('txtForgotPassword'),
+          headerBackground: () => <View style={styles.container} />,
+        }}
+      />
+
+      <Stack.Screen
+        component={NewSignUpScreen}
+        name={ScreenName.NewSignUp}
+        options={{
+          headerShown: true,
+          headerTitle: translate('txtSignUp'),
+          // headerBackImage: () => <View />,
+          // headerStyle: { backgroundColor: 'transparent' },
           headerBackground: () => <View style={styles.container} />,
         }}
       />

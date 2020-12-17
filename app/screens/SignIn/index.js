@@ -27,7 +27,6 @@ import {
 import ScreenName from '../ScreenName';
 import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
-import { get, save, StorageKey } from '@storage';
 
 const LAYOUT_WIDTH = '90%';
 
@@ -49,34 +48,43 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
-  const [, signIn] = GEX.useGenerateToken();
+  const { signIn, customerToken, otp_confirmed } = GEX.useGenerateToken();
   const { socialSignIn } = GEX.useGenerateTokenBySocial();
+  const signInSubmit = React.useCallback(
+    async ({ username, ...values }) => {
+      //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
+      let submitData = Object.assign({}, values, { email: username });
 
-  const signInSubmit = async ({ username, ...values }) => {
-    //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
-    let submitData = Object.assign({}, values, { email: username });
+      // let submitData = values;
+      // if (validate.phoneNumber(username)) {
+      //   submitData = Object.assign({}, data, { email: username });
+      // }
 
-    // let submitData = values;
-    // if (validate.phoneNumber(username)) {
-    //   submitData = Object.assign({}, data, { email: username });
-    // }
-
-    // if (validate.email(username)) {
-    //   submitData = Object.assign({}, data, { email: username });
-    // }
-    await dispatch(app.showLoading());
-    signIn({ variables: submitData });
-  };
-
+      // if (validate.email(username)) {
+      //   submitData = Object.assign({}, data, { email: username });
+      // }
+      await dispatch(app.showLoading());
+      await dispatch(app.savePhoneVerify(username));
+      await dispatch(account.setPhoneNumber(username));
+      signIn({ variables: submitData });
+    },
+    [dispatch, signIn],
+  );
   // -------social SignIn Submit
   const socialSignInSubmit = React.useCallback(
     async (submitData) => {
       socialSignIn({ variables: submitData })
-        .then((res) => {
-          if (res?.data?.socialSignIn?.token) {
-            navigation.navigate(ScreenName.SignUp, {
-              customerToken: res?.data?.socialSignIn?.token,
-            });
+        .then(({ data }) => {
+          const res_socialSigin = data?.socialSignIn || {};
+          if (res_socialSigin?.token) {
+            if (res_socialSigin?.otp_confirmed) {
+              dispatch(account.signInSucceed(res_socialSigin?.token));
+            } else {
+              navigation.navigate(ScreenName.NewSignUp, {
+                customerToken: res_socialSigin?.token,
+                typeVerify: 'update',
+              });
+            }
           }
           dispatch(app.hideLoading());
         })
@@ -84,11 +92,14 @@ const SignInScreen = () => {
           dispatch(app.hideLoading());
         });
     },
-    [dispatch, socialSignIn],
+    [dispatch, navigation, socialSignIn],
   );
 
   const goSignUpPage = () => {
-    navigation.navigate(ScreenName.SignUp);
+    navigation.navigate(ScreenName.NewSignUp, {
+      customerToken: null,
+      typeVerify: 'create',
+    });
   };
 
   const goForgotPasswordScreen = () => {
@@ -125,6 +136,23 @@ const SignInScreen = () => {
       }
     }
   };
+
+  React.useEffect(() => {
+    if (customerToken) {
+      if (otp_confirmed) {
+        const onSignInSucceed = async (value) => {
+          await dispatch(app.hideLoading());
+          await dispatch(account.signInSucceed(customerToken));
+        };
+        onSignInSucceed();
+      } else {
+        navigation.navigate(ScreenName.NewSignUp, {
+          customerToken,
+          typeVerify: 'update',
+        });
+      }
+    }
+  }, [customerToken, dispatch, navigation, otp_confirmed]);
 
   return (
     <>

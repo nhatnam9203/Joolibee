@@ -43,5 +43,10 @@ export const useGenerateToken = () => {
     });
   };
 
+  return {
+    signIn: signInToken,
+    customerToken: data?.generateCustomerToken?.token,
+    otp_confirmed: data?.generateCustomerToken?.otp_confirmed,
+  };
   return [customerToken, signIn];
 };

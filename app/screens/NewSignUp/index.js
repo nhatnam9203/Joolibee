@@ -1,23 +1,25 @@
-import React from 'react';
-import { InputPhoneNumber, InputNewPassword, VerifyPhoneCode } from './pages';
-import { validate } from '@utils';
-import { app } from '@slices';
-import { useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { getUniqueId } from 'react-native-device-info';
+import { app, account } from '@slices';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { GEX } from '@graphql';
+import { getUniqueId } from 'react-native-device-info';
+import NavigationService from '../../navigation/NavigationService';
+import { translate } from '@localize';
+// const { normalizePhoneNumber } = validate;
+
 const PAGES = {
   InputPhone: 0,
   InputCode: 1,
-  InputNewPassWord: 2,
+  SignUp: 2,
 };
-const TYPE_VERIFY = 'reset';
-const { normalizePhoneNumber } = validate;
 
-const ForgotPasswordScreen = () => {
+const SignUpScreen = ({ route }) => {
+  const { params } = route || {};
+
   // redux
   const dispatch = useDispatch();
-
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
   const [formData, setFormData] = React.useState(null);
 
@@ -25,13 +27,13 @@ const ForgotPasswordScreen = () => {
     setFormData(Object.assign({}, formData, { error: response }));
     dispatch(app.hideLoading());
   };
-
   const AUTH_STATUS = GEX.AUTH_STATUS;
   const {
     confirmCode,
     signInWithPhoneNumber,
     authStatus,
     second_expired,
+    smsCode,
   } = GEX.useOtpAuthentication({
     onVerifyPhoneError: onVerifyPhoneError,
   });
@@ -43,7 +45,7 @@ const ForgotPasswordScreen = () => {
     let input = {
       deviceId: getUniqueId(),
       phoneNumber: phone,
-      type: TYPE_VERIFY,
+      type: params?.typeVerify,
       otpCode: code,
     };
     dispatch(app.showLoading());
@@ -52,18 +54,23 @@ const ForgotPasswordScreen = () => {
 
   const requestAuthCode = async (values) => {
     const { phone } = values;
+    setFormData(values);
+
     if (!phone) {
-      Logger.error('error', 'SignUp -> requestAuthCode -> phone not found!');
+      setFormData(
+        Object.assign({}, formData, { error: { code: 'phone-note-found' } }),
+      );
+      dispatch(app.hideLoading());
       return;
     }
+
     dispatch(app.showLoading());
-    setFormData(values);
     let input = {
       phoneNumber: phone,
       deviceId: getUniqueId(),
-      type: TYPE_VERIFY,
+      type: params?.typeVerify,
     };
-    // call firebase phone auth
+
     await signInWithPhoneNumber(input);
   };
 
@@ -73,18 +80,31 @@ const ForgotPasswordScreen = () => {
   };
 
   React.useEffect(() => {
-    if (authStatus === AUTH_STATUS.sent) {
+    if (authStatus === AUTH_STATUS.verified) {
+      if (params?.customerToken) {
+        dispatch(app.savePhoneVerify(''));
+        dispatch(account.setPhoneNumber(formData?.phone));
+        dispatch(account.signInSucceed(params?.customerToken));
+      } else {
+        dispatch(app.hideLoading());
+        setPage(PAGES.SignUp);
+      }
+    } else if (authStatus === AUTH_STATUS.sent) {
       dispatch(app.hideLoading());
       setPage(PAGES.InputCode);
-    } else if (authStatus === AUTH_STATUS.verified) {
-      dispatch(app.hideLoading());
-      setPage(PAGES.InputNewPassWord);
     } else if (authStatus === AUTH_STATUS.spam) {
       setPage(PAGES.InputCode);
       dispatch(app.toggleBlockSpam(true));
       dispatch(app.hideLoading());
+    } else if (authStatus === AUTH_STATUS.existed) {
+      NavigationService.alertWithError({
+        message: translate('txtPhoneExisted'),
+      });
+    } else {
+      dispatch(app.hideLoading());
     }
-  }, [AUTH_STATUS, authStatus, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authStatus]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -99,7 +119,7 @@ const ForgotPasswordScreen = () => {
   );
 
   switch (showPage) {
-    case 1:
+    case PAGES.InputCode:
       return (
         <VerifyPhoneCode
           infos={formData}
@@ -108,13 +128,12 @@ const ForgotPasswordScreen = () => {
           timeOut={second_expired}
         />
       );
-    case 2:
-      return <InputNewPassword infos={formData} />;
-
-    case 0:
+    case PAGES.SignUp:
+      return <SignUpForm infos={formData} smsCode={smsCode} />;
+    case PAGES.InputPhone:
     default:
       return <InputPhoneNumber next={onSubmitPhoneNumber} />;
   }
 };
 
-export default ForgotPasswordScreen;
+export default SignUpScreen;

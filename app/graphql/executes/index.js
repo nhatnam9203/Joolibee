@@ -22,3 +22,5 @@ export * from './useSearchStoreByAddress';
 export * from './useGetNotifyList';
 export * from './useApplyVoucherToCart';
 export * from './useRemoveVoucherFromCart';
+export * from './useOtpAuthentication';
+export * from './useRegisterCustomer';

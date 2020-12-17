@@ -33,6 +33,7 @@ const ScreenName = {
   Promotion: 'Promotion',
   JollibeeVN: 'JollibeeVN',
   SupportDetail: 'SupportDetail',
+  NewSignUp: 'NewSignUp',
 };
 
 export default ScreenName;

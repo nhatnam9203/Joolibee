@@ -143,6 +143,7 @@ const images = {
   order_guide_2_2: require('../assets/images/order-guide-2.2.png'),
   order_guide_3: require('../assets/images/order-guide-3.png'),
   menu_combo_hot: require('../assets/images/menu-combo-hot.png'),
+  jollibee_call_now: require('../assets/images/jollibee-call-now.png'),
 };
 
 export default images;
