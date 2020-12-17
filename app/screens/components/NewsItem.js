@@ -7,24 +7,11 @@ import FastImage from 'react-native-fast-image';
 import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 
-export const NewsItem = ({
-  item,
-  index,
-  onPress,
-  width = 265,
-  height = 264,
-}) => {
+export const NewsItem = ({ item, index, onPress }) => {
   const { title, short_content, featured_image } = item || {};
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
-      <View
-        style={[
-          styles.containerItem,
-          {
-            width: scaleWidth(width),
-            height: scaleHeight(height),
-          },
-        ]}>
+      <View style={[styles.containerItem]}>
         <View style={styles.topContent}>
           <FastImage
             style={styles.imgProduct}
@@ -65,8 +52,10 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.44,
     shadowRadius: 6,
-    elevation: 10,
+    elevation: 3,
     overflow: 'hidden',
+    width: '100%',
+    height: '100%',
   },
   topContent: {
     height: '62%',

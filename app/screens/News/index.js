@@ -39,7 +39,7 @@ const Index = ({ route }) => {
   const ItemSeperator = () => <View style={{ height: scaleHeight(14) }} />;
 
   const renderItem = ({ item, index }) => {
-    return <NewsItem item={item} onPress={onToggleDetail} width={388} />;
+    return <NewsItem item={item} onPress={onToggleDetail} />;
   };
 
   const renderItemLoading = () => {
