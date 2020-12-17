@@ -1,12 +1,13 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { app, account } from '@slices';
-import { validate } from '@utils';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
 import { GEX } from '@graphql';
 import { getUniqueId } from 'react-native-device-info';
-const { normalizePhoneNumber } = validate;
+import NavigationService from '../../navigation/NavigationService';
+import { translate } from '@localize';
+// const { normalizePhoneNumber } = validate;
 
 const PAGES = {
   InputPhone: 0,
@@ -21,6 +22,7 @@ const SignUpScreen = ({ route }) => {
   const dispatch = useDispatch();
   const [showPage, setPage] = React.useState(PAGES.InputPhone);
   const [formData, setFormData] = React.useState(null);
+
   const onVerifyPhoneError = (response) => {
     setFormData(Object.assign({}, formData, { error: response }));
     dispatch(app.hideLoading());
@@ -31,6 +33,7 @@ const SignUpScreen = ({ route }) => {
     signInWithPhoneNumber,
     authStatus,
     second_expired,
+    smsCode,
   } = GEX.useOtpAuthentication({
     onVerifyPhoneError: onVerifyPhoneError,
   });
@@ -41,7 +44,6 @@ const SignUpScreen = ({ route }) => {
     }
     let input = {
       deviceId: getUniqueId(),
-      // phoneNumber: normalizePhoneNumber('+84', phone),
       phoneNumber: phone,
       type: params?.typeVerify,
       otpCode: code,
@@ -84,6 +86,7 @@ const SignUpScreen = ({ route }) => {
         dispatch(account.setPhoneNumber(formData?.phone));
         dispatch(account.signInSucceed(params?.customerToken));
       } else {
+        dispatch(app.hideLoading());
         setPage(PAGES.SignUp);
       }
     } else if (authStatus === AUTH_STATUS.sent) {
@@ -94,12 +97,14 @@ const SignUpScreen = ({ route }) => {
       dispatch(app.toggleBlockSpam(true));
       dispatch(app.hideLoading());
     } else if (authStatus === AUTH_STATUS.existed) {
-      dispatch(app.hideLoading());
-      alert('phone number is existed');
+      NavigationService.alertWithError({
+        message: translate('txtPhoneExisted'),
+      });
     } else {
       dispatch(app.hideLoading());
     }
-  }, [AUTH_STATUS, authStatus, dispatch, formData?.phone, params]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authStatus]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -124,7 +129,7 @@ const SignUpScreen = ({ route }) => {
         />
       );
     case PAGES.SignUp:
-      return <SignUpForm infos={formData} />;
+      return <SignUpForm infos={formData} smsCode={smsCode} />;
     case PAGES.InputPhone:
     default:
       return <InputPhoneNumber next={onSubmitPhoneNumber} />;

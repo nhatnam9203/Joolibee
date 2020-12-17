@@ -215,5 +215,6 @@
   "txtServerMaintainTitle": "Server is maintenance",
   "txtServerMaintainDesc": "Sorry ! Server is maintenance, please come back later!",
   "txtAddressNotFound": "Address not found",
-	txtBlockSpam": "This phone number was blocked, Please try again :"
+  "txtBlockSpam": "This phone number was blocked, Please try again :",
+  "txtPhoneExisted":"The phone number is ixisted"
 }

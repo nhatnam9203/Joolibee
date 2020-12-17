@@ -20,3 +20,4 @@ export * from './useGetCategoryList';
 export * from './useGenerateTokenBySocial';
 export * from './useSearchStoreByAddress';
 export * from './useOtpAuthentication';
+export * from './useRegisterCustomer';

@@ -15,10 +15,10 @@ export const AUTH_STATUS = {
   existed: 'existed',
 };
 
-var requestCodeTimer = null;
 export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
   const [authStatus, setAuthStatus] = useState(AUTH_STATUS.none);
   const [second_expired, setExprired] = useState(null);
+  const [otpCode, setOtpCode] = React.useState(null);
   const [getOTP] = useMutation(GET_OTP);
   const [verfiyOTP] = useMutation(VERIFY_OTP);
   // Handle the button press
@@ -27,7 +27,8 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
     const confirmation = await getOTP({
       variables: input,
     });
-    console.log('confirmation', confirmation?.data?.getOTP);
+    Logger.debug(input, 'getOTP');
+    Logger.debug(confirmation?.data?.getOTP, 'confirmation');
 
     if (confirmation?.data?.getOTP) {
       setExprired(confirmation?.data?.getOTP?.OTPExpiredAfter);
@@ -44,21 +45,14 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
   }
 
   async function confirmCode(input) {
-    console.log('input');
-    if (requestCodeTimer) {
-      clearTimeout(requestCodeTimer);
-      requestCodeTimer = null;
-    }
     try {
       setAuthStatus(AUTH_STATUS.confirmCode);
       const confirmed = await verfiyOTP({
         variables: input,
       });
       if (confirmed?.data?.verfiyOTP?.result) {
-        console.log(
-          'confirmed?.data?.verfiyOTP?.result',
-          confirmed?.data?.verfiyOTP?.result,
-        );
+        Logger.debug(confirmed?.data?.verfiyOTP?.result, 'confirmed');
+        setOtpCode(input?.otpCode);
         setAuthStatus(AUTH_STATUS.verified);
       } else {
         setAuthStatus(AUTH_STATUS.error);
@@ -82,5 +76,6 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
     signOut,
     authStatus,
     second_expired,
+    smsCode: otpCode,
   };
 };

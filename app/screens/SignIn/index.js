@@ -139,19 +139,18 @@ const SignInScreen = () => {
 
   React.useEffect(() => {
     if (customerToken) {
-      if (!otp_confirmed) {
+      if (otp_confirmed) {
         const onSignInSucceed = async (value) => {
           await dispatch(app.hideLoading());
           await dispatch(account.signInSucceed(customerToken));
         };
         onSignInSucceed();
+      } else {
+        navigation.navigate(ScreenName.NewSignUp, {
+          customerToken,
+          typeVerify: 'update',
+        });
       }
-      // else {
-      //   navigation.navigate(ScreenName.NewSignUp, {
-      //     customerToken,
-      //     typeVerify: 'update',
-      //   });
-      // }
     }
   }, [customerToken, dispatch, navigation, otp_confirmed]);
 

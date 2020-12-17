@@ -611,7 +611,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
               onChangeText={onChangeCouponCode}
             />
           </OrderButtonInput>
-          {renderBlockedApplyCoupon()}
+          {/* {renderBlockedApplyCoupon()} */}
           {applied_coupons && (
             <View
               style={{

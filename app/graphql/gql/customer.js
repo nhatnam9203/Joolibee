@@ -212,6 +212,8 @@ export const REGISTER_CUSTOMER = gql`
     $is_subscribed: Boolean!
     $validateType: String
     $fcmToken: String
+    $smsCode: String
+    $deviceId: String!
   ) {
     registerCustomer(
       input: {
@@ -226,6 +228,8 @@ export const REGISTER_CUSTOMER = gql`
       }
       validateType: $validateType
       fcmToken: $fcmToken
+      smsCode: $smsCode
+      deviceId: $deviceId
     ) {
       customer {
         __typename

@@ -213,6 +213,7 @@
   "txtEarnPoint": "điểm nhận",
   "txtServerMaintainTitle": "Hệ thống bảo trì",
   "txtServerMaintainDesc": "Hệ thông đang tiến hành bảo trì, xin vui lòng quay lại sau! ",
-  "txtAddressNotFound": "Không có địa chỉ giao hàng"
-  "txtBlockSpam": "Số điện thoại này tạm thời bị khoá, Vui lòng thử lại sau :"
+  "txtAddressNotFound": "Không có địa chỉ giao hàng",
+  "txtBlockSpam": "Số điện thoại này tạm thời bị khoá, Vui lòng thử lại sau :",
+  "txtPhoneExisted":"Số điện thoại đã tồn tại!"
 }

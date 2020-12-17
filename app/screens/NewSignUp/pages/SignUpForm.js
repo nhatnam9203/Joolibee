@@ -8,7 +8,7 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
-import { mutation } from '@graphql';
+import { GEX } from '@graphql';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -27,8 +27,8 @@ import {
   TextInputErrorMessage,
 } from '../../components';
 import ScreenName from '../../ScreenName';
-import { useFirebaseCloudMessing } from '@firebase';
 import { format } from '@utils';
+import { getUniqueId } from 'react-native-device-info';
 
 const BUTTON_HEIGHT = 60;
 const LAYOUT_WIDTH = '90%';
@@ -40,7 +40,7 @@ const PROCESS_STATUS = {
   FINISH: 3,
 };
 const REGEX_EMAIL = /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
-export const SignUpForm = ({ infos: { phone = '' } }) => {
+export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
@@ -75,13 +75,8 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   Logger.debug(token, 'SignUpForm');
 
   // state
-  const signUpSucceeded = useSelector(
-    (state) => state.account?.user?.tempCheckSignup,
-  );
 
-  const [registerCustomer, { data, error, loading }] = useMutation(
-    mutation.SIGN_UP,
-  );
+  const { registerCustomer, registerCustomerResp } = GEX.useRegisterCustomer();
 
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(
     PROCESS_STATUS.START,
@@ -96,8 +91,9 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
       gender: formValues.gender !== -1 ?? formValues.gender,
       fcmToken: token ?? '456',
       dob: format.dateTime(dob),
+      smsCode,
+      deviceId: getUniqueId(),
     };
-    Logger.debug(variables, 'variables');
     registerCustomer({
       variables,
     });
@@ -108,9 +104,9 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
   };
 
   React.useEffect(() => {
-    if (data && !error) {
+    if (registerCustomerResp?.data && !registerCustomerResp?.error) {
       const onSignupSucceed = async () => {
-        await dispatch(account.signUpSucceeded(data));
+        await dispatch(account.signUpSucceeded(registerCustomerResp?.data));
         await dispatch(app.hideLoading());
 
         setShowPopupSuccess(PROCESS_STATUS.SUCCESS);
@@ -118,7 +114,7 @@ export const SignUpForm = ({ infos: { phone = '' } }) => {
 
       onSignupSucceed();
     }
-  }, [data, error, dispatch]);
+  }, [dispatch, registerCustomerResp]);
 
   React.useEffect(() => {
     if (showPopupSuccess === PROCESS_STATUS.FINISH) {
