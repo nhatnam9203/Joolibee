@@ -48,7 +48,7 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
-  const { signIn, customerToken, otp_confirmed } = GEX.useGenerateToken();
+  const [{ customerToken, otpConfirmed }, signIn] = GEX.useGenerateToken();
   const { socialSignIn } = GEX.useGenerateTokenBySocial();
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
@@ -139,7 +139,7 @@ const SignInScreen = () => {
 
   React.useEffect(() => {
     if (customerToken) {
-      if (otp_confirmed) {
+      if (otpConfirmed) {
         const onSignInSucceed = async (value) => {
           await dispatch(app.hideLoading());
           await dispatch(account.signInSucceed(customerToken));
@@ -152,7 +152,7 @@ const SignInScreen = () => {
         });
       }
     }
-  }, [customerToken, dispatch, navigation, otp_confirmed]);
+  }, [customerToken, dispatch, navigation, otpConfirmed]);
 
   return (
     <>

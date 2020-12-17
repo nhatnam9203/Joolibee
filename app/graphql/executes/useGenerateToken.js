@@ -7,7 +7,9 @@ import { account } from '@slices';
 export const useGenerateToken = () => {
   const dispatch = useDispatch();
   const fcmToken = useSelector((state) => state.app.fcmToken);
-  const [customerToken, setCustomerToken] = React.useState(null);
+  const [{ customerToken, otpConfirmed }, setCustomerToken] = React.useState(
+    null,
+  );
   const [submitValue, setSubmitValue] = React.useState(null);
 
   const [generateCustomerToken] = useMutation(GENERATE_CUSTOMER_TOKEN, {
@@ -17,9 +19,9 @@ export const useGenerateToken = () => {
         'AAAAA sign in complete',
       );
 
-      const token = data?.generateCustomerToken?.token;
+      const { token, otp_confirmed } = data?.generateCustomerToken || {};
 
-      setCustomerToken(token);
+      setCustomerToken({ customerToken: token, otpConfirmed: otp_confirmed });
       Logger.debug(submitValue, '====> generateCustomerToken');
 
       dispatch(account.signInSucceed({ token, ...submitValue }));
@@ -43,10 +45,5 @@ export const useGenerateToken = () => {
     });
   };
 
-  return {
-    signIn: signInToken,
-    customerToken: data?.generateCustomerToken?.token,
-    otp_confirmed: data?.generateCustomerToken?.otp_confirmed,
-  };
-  return [customerToken, signIn];
+  return [{ customerToken, otpConfirmed }, signIn];
 };
