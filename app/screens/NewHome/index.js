@@ -30,9 +30,9 @@ import { Banners, Bestseller, News, Tabs } from './pages';
 const { width, height } = Dimensions.get('window');
 const { scaleWidth, scaleHeight } = scale;
 
-const BANNER_HEIGHT = height * 0.42;
+const BANNER_HEIGHT = height * 0.46;
 const BANNER_PADDING = height * 0.2;
-const MENU_TOP_MARGIN = height * 0.23;
+const MENU_TOP_MARGIN = height * 0.25;
 
 const HomeScreen = () => {
   const dispatch = useDispatch();

@@ -48,18 +48,20 @@ const index = ({ onOpenDetail, onCHangeScreen, data, loading }) => {
           )
         }
         sliderWidth={width}
-        itemWidth={scaleWidth(265)}
+        sliderHeight={scaleHeight(300)}
+        itemWidth={width * 0.8}
+        itemHeight={scaleHeight(300)}
+        inactiveSlideOpacity={0.75}
+        inactiveSlideScale={0.9}
         hasParallaxImages={true}
         enableSnap={true}
         loop={true}
-        // autoplay={!loading}
-        // autoplayInterval={5000}
-        // autoplayDelay={3000}
-        removeClippedSubviews={false}
+        horizontal
+        inactiveSlideShift={0}
+        removeClippedSubviews={true}
         useScrollView={true}
         lockScrollWhileSnapping={true}
-        horizontal
-        loopClonesPerSide={2}
+        loopClonesPerSide={3}
       />
     </View>
   );
@@ -83,10 +85,10 @@ const renderItemLoading = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: scaleWidth(15),
     marginTop: scaleHeight(22),
+    height: scaleHeight(320),
   },
 
   containerTop: {
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: scaleHeight(15),
+    paddingHorizontal: scaleWidth(10),
   },
   imgLoading: {
     width: '100%',
