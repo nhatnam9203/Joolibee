@@ -7,7 +7,6 @@ export const HOME_SCREEN = gql`
       __typename
       banners {
         image_url
-        product_id
       }
       best_sellers {
         id

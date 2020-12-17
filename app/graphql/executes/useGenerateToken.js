@@ -3,9 +3,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { GENERATE_CUSTOMER_TOKEN } from '../gql';
 import { account } from '@slices';
-
+import ScreenName from '../../screens/ScreenName';
+import { useNavigation } from '@react-navigation/native';
 export const useGenerateToken = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const fcmToken = useSelector((state) => state.app.fcmToken);
   const [{ customerToken, otpConfirmed }, setCustomerToken] = React.useState(
     {},
@@ -24,7 +26,20 @@ export const useGenerateToken = () => {
       setCustomerToken({ customerToken: token, otpConfirmed: otp_confirmed });
       Logger.debug(submitValue, '====> generateCustomerToken');
 
-      dispatch(account.signInSucceed({ token, ...submitValue }));
+      if (otp_confirmed) {
+        dispatch(
+          account.signInSucceed({
+            ...submitValue,
+            token,
+            phone_number: submitValue?.email,
+          }),
+        );
+      } else {
+        navigation.navigate(ScreenName.NewSignUp, {
+          customerToken: token,
+          typeVerify: 'update',
+        });
+      }
     },
   });
 

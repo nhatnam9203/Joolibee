@@ -83,8 +83,12 @@ const SignUpScreen = ({ route }) => {
     if (authStatus === AUTH_STATUS.verified) {
       if (params?.customerToken) {
         dispatch(app.savePhoneVerify(''));
-        dispatch(account.setPhoneNumber(formData?.phone));
-        dispatch(account.signInSucceed(params?.customerToken));
+        dispatch(
+          account.signInSucceed({
+            token: params?.customerToken,
+            phone_number: formData?.phone,
+          }),
+        );
       } else {
         dispatch(app.hideLoading());
         setPage(PAGES.SignUp);

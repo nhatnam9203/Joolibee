@@ -48,8 +48,8 @@ const SignInScreen = () => {
   const signInError = useSelector((state) => state.account?.signInError);
   const showComingSoon = useSelector((state) => state.app.comingSoonShow);
 
-  const [{ customerToken, otpConfirmed }, signIn] = GEX.useGenerateToken();
-  const { socialSignIn } = GEX.useGenerateTokenBySocial();
+  const [, signIn] = GEX.useGenerateToken();
+  const [, signinSocial] = GEX.useGenerateTokenBySocial();
   const signInSubmit = React.useCallback(
     async ({ username, ...values }) => {
       //refactor data, do hệ thống đăng nhập bắng sô đt, trên graphql dùng field email đề đăng kí nên cần format lại
@@ -72,26 +72,9 @@ const SignInScreen = () => {
   // -------social SignIn Submit
   const socialSignInSubmit = React.useCallback(
     async (submitData) => {
-      socialSignIn({ variables: submitData })
-        .then(({ data }) => {
-          const res_socialSigin = data?.socialSignIn || {};
-          if (res_socialSigin?.token) {
-            if (res_socialSigin?.otp_confirmed) {
-              dispatch(account.signInSucceed(res_socialSigin?.token));
-            } else {
-              navigation.navigate(ScreenName.NewSignUp, {
-                customerToken: res_socialSigin?.token,
-                typeVerify: 'update',
-              });
-            }
-          }
-          dispatch(app.hideLoading());
-        })
-        .catch(() => {
-          dispatch(app.hideLoading());
-        });
+      signinSocial({ variables: submitData });
     },
-    [dispatch, navigation, socialSignIn],
+    [signinSocial],
   );
 
   const goSignUpPage = () => {
@@ -136,15 +119,7 @@ const SignInScreen = () => {
     }
   };
 
-  React.useEffect(() => {
-    if (customerToken && !otpConfirmed) {
-      navigation.navigate(ScreenName.NewSignUp, {
-        customerToken,
-        typeVerify: 'update',
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerToken, otpConfirmed]);
+  //Handle Response social signin
 
   return (
     <>
