@@ -6,8 +6,8 @@ import {
 import { translate } from '@localize';
 import { statusCodes } from '@react-native-community/google-signin';
 import { useNavigation } from '@react-navigation/native';
-import { account, app } from '@slices';
-import { loginFb, loginGoogle } from '@social';
+import { app } from '@slices';
+import { loginFb, loginGoogle, logoutFb } from '@social';
 import { AppStyles, images } from '@theme';
 import { regex } from '@utils';
 import { Formik } from 'formik';
@@ -27,7 +27,7 @@ import {
 import ScreenName from '../ScreenName';
 import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
-
+import NavigationService from '../../navigation/NavigationService';
 const LAYOUT_WIDTH = '90%';
 
 const SignInScreen = () => {
@@ -107,14 +107,17 @@ const SignInScreen = () => {
       socialSignInSubmit(submitData);
     } catch (error) {
       await dispatch(app.hideLoading());
-      if (error === statusCodes.SIGN_IN_CANCELLED) {
-        return;
-      } else if (error === statusCodes.IN_PROGRESS) {
-        return;
-      } else if (error === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        alert('play services not available or outdated');
-      } else {
-        alert('something went wrong');
+      if (error === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        NavigationService.alertWithError({
+          message: 'Play services not available or outdated',
+        });
+      } else if (
+        error !== statusCodes.SIGN_IN_CANCELLED &&
+        error !== statusCodes.IN_PROGRESS
+      ) {
+        NavigationService.alertWithError({
+          message: 'Something went wrong',
+        });
       }
     }
   };
@@ -242,7 +245,7 @@ const SignInScreen = () => {
                   />
 
                   {/**FACEBOOK*/}
-                  {/* <ButtonCC.ButtonFacebook /> */}
+                  {/* <ButtonCC.ButtonFacebook onPress={logoutFb} /> */}
                   <ButtonCC.ButtonFacebook onPress={signinFB} />
 
                   {/**GOOGLE*/}
