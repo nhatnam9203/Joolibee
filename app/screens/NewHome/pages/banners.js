@@ -66,14 +66,21 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
 };
 
 const BannerItem = ({ item, height }) => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
+  const { product_sku } = item || {};
   return (
     <TouchableOpacity
       style={styles.content}
       onPress={() => {
-        // navigation.navigate(ScreenName.MenuItemDetail, {
-        //   product_id: item?.product_id,
-        // });
+        if (product_sku) {
+          navigation.navigate(ScreenName.MenuItemDetail, {
+            sku: product_sku,
+          });
+        } else {
+          navigation.navigate(ScreenName.Menu, {
+            product_sku: product_sku,
+          });
+        }
       }}>
       <JollibeeImage
         url={item?.image_url}

@@ -1,16 +1,22 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { AppStyles } from '@theme';
 import { CustomHTML } from '@components';
-import { JollibeeImage } from './JollibeeImage';
-import FastImage from 'react-native-fast-image';
+import { AppStyles } from '@theme';
 import { scale } from '@utils';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 const { scaleWidth, scaleHeight } = scale;
 
 export const NewsItem = ({ item, index, onPress }) => {
   const { title, short_content, featured_image } = item || {};
+
+  const onShowDetail = () => {
+    if (typeof onPress === 'function') {
+      onPress(item);
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+    <TouchableOpacity onPress={onShowDetail} activeOpacity={0.7}>
       <View style={[styles.containerItem]}>
         <View style={styles.topContent}>
           <FastImage

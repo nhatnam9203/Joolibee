@@ -41,7 +41,7 @@ const HomeScreen = () => {
   const [language] = useChangeLanguage();
 
   const [isVisible, setVisiblePopup] = React.useState(false);
-  const [visible_detal, showDetail] = React.useState(false);
+  const [newsItemDetail, showNewsItemDetail] = React.useState(null);
 
   const showOrderList = useSelector((state) => state.app.isShowOrderList);
   const isAllowLocations = useSelector(
@@ -50,8 +50,6 @@ const HomeScreen = () => {
 
   const [homeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen('cache-first');
   const { homeScreen } = homeScreenResp?.data || {};
-
-  // Logger.debug(homeScreen, '========> homeScreen');
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -69,7 +67,7 @@ const HomeScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onCHangeScreen = (screen) => () => {
+  const onChangeScreen = (screen) => () => {
     let params = {
       data: homeScreen?.news ? homeScreen?.news : [],
       loading: homeScreenResp?.loading,
@@ -78,7 +76,7 @@ const HomeScreen = () => {
     navigation.navigate(screen, params);
   };
 
-  const onToggleDetail = () => showDetail(!visible_detal);
+  const onToggleDetail = (newsItem = null) => showNewsItemDetail(newsItem);
 
   return (
     <View style={styles.container}>
@@ -172,7 +170,7 @@ const HomeScreen = () => {
               <News
                 loading={homeScreenResp?.loading}
                 data={homeScreen?.news ?? []}
-                onCHangeScreen={onCHangeScreen(ScreenName.News)}
+                onChangeScreen={onChangeScreen(ScreenName.News)}
                 onOpenDetail={onToggleDetail}
               />
             </CustomImageBackground>
@@ -182,7 +180,11 @@ const HomeScreen = () => {
       </CustomImageBackground>
 
       <PopupSelectAreaComponent visible={isVisible} />
-      <PopupWebView visible={visible_detal} onToggle={onToggleDetail} />
+      <PopupWebView
+        visible={newsItemDetail != null}
+        item={newsItemDetail}
+        onToggle={() => showNewsItemDetail(null)}
+      />
       {/**Popup Order List Items */}
       <ProductCart
         visible={showOrderList}

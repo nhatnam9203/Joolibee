@@ -32,7 +32,7 @@ const Bestseller = React.memo(({ data, loading }) => {
           inactiveSlideOpacity={0.75}
           inactiveSlideScale={0.99}
           loop={true}
-          inactiveSlideShift={0}
+          inactiveSlideShift={1}
           removeClippedSubviews={true}
           useScrollView={true}
           lockScrollWhileSnapping={true}
