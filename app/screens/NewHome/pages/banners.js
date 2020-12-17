@@ -32,29 +32,31 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
           renderItem={({ item }) => <BannerItem item={item} height={height} />}
           sliderWidth={width}
           itemWidth={width}
-          inactiveSlideOpacity={0.5}
-          inactiveSlideScale={0.5}
-          // containerCustomStyle={{ overflow: 'visible' }}
-          // contentContainerCustomStyle={{ overflow: 'visible' }}
+          // inactiveSlideOpacity={0.8}
+          // inactiveSlideScale={1}
+          containerCustomStyle={{ overflow: 'visible' }}
+          contentContainerCustomStyle={{ overflow: 'visible' }}
           enableSnap={true}
           loop={true}
           autoplay={true}
-          autoplayInterval={3500} // Delay in ms until navigating to the next item
+          autoplayInterval={3000} // Delay in ms until navigating to the next item
           autoplayDelay={500}
-          removeClippedSubviews={true}
+          // removeClippedSubviews={true}
           lockScrollWhileSnapping={true}
           horizontal
           loopClonesPerSide={3}
-          // inactiveSlideShift={0}
-          // enableMomentum={true}
-          activeSlideAlignment={'center'}
+          inactiveSlideShift={0}
+          // activeSlideAlignment={'center'}
           // scrollInterpolator={scrollInterpolator}
           // slideInterpolatedStyle={animatedStyles}
           // useScrollView={true}
-          // activeAnimationType="decay"
+          activeAnimationType="timing"
+          // enableMomentum={true}
+          activeSlideAlignment={'center'}
           // activeAnimationOptions={{
-          //   duration: 1500,
+          //   duration: 5000,
           // }}
+          hasParallaxImages={true}
         />
       </View>
     );
@@ -75,10 +77,11 @@ const BannerItem = ({ item, height }) => {
       }}>
       <JollibeeImage
         url={item?.image_url}
-        height={height}
         width={width}
+        height={height}
         // defaultSource={images.test}
         resizeMode="contain"
+        // style={{ backgroundColor: 'green' }}
       />
     </TouchableOpacity>
   );
@@ -102,14 +105,15 @@ const BannerItemLoading = ({ height }) => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    zIndex: 10000,
+    zIndex: 100,
     top: 0,
-    shadowOffset: {
-      width: 6,
-      height: 10,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
+    // shadowOffset: {
+    //   width: 6,
+    //   height: 10,
+    // },
+    // shadowOpacity: 0.4,
+    // shadowRadius: 3,
+    // backgroundColor: 'red',
   },
 
   content: {

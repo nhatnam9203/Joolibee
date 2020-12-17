@@ -19,6 +19,7 @@ export const JollibeeImage = React.memo(
     height,
     defaultSource,
     resizeMode = FastImage.resizeMode.contain,
+    style,
   }) => {
     const [download, setDownload] = React.useState(-1);
 
@@ -43,7 +44,7 @@ export const JollibeeImage = React.memo(
 
     return fullPath || defaultSource ? (
       <Animatable.View
-        style={[styles.container, { width: width, height: height }]}>
+        style={[styles.container, { width: width, height: height }, style]}>
         <FastImage
           style={{ width: width, height: height }}
           source={

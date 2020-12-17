@@ -162,7 +162,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     const optionsMap = [];
     // Logger.debug(productItem ,'======> xxxxxxxx productItem');
 
-    items.forEach((item) => {
+    items?.forEach((item) => {
       const { options = [], option_id } = item;
       const mapArr = options
         .filter((x) => x.is_default === true)
@@ -305,7 +305,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <ProductDetailFlatList
-          data={items.filter((x) => x.position > 1)}
+          data={items?.filter((x) => x.position > 1)}
           renderItem={onRenderItem}
           renderHeader={onRenderHeader}
           renderFooter={onRenderFooter}

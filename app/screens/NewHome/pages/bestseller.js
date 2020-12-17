@@ -29,17 +29,14 @@ const Bestseller = React.memo(({ data, loading }) => {
           renderItem={({ item }) => <BestsellerItem item={item} />}
           enableSnap={true}
           horizontal
-          inactiveSlideOpacity={0.7}
-          inactiveSlideScale={0.98}
+          inactiveSlideOpacity={0.75}
+          inactiveSlideScale={0.99}
           loop={true}
-          autoplay={false}
-          autoplayInterval={3000}
-          autoplayDelay={1500}
-          removeClippedSubviews={false}
-          // useScrollView={true}
+          inactiveSlideShift={0}
+          removeClippedSubviews={true}
+          useScrollView={true}
           lockScrollWhileSnapping={true}
           loopClonesPerSide={3}
-
         />
       </View>
     );
