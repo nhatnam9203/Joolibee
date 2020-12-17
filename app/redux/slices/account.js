@@ -74,7 +74,8 @@ const accountSlice = createSlice({
     },
 
     signInSucceed(state, action) {
-      const { token, phone_number } = action.payload;
+      const { token, email } = action.payload;
+      console.log('action.payload', action.payload);
       if (token) {
         // get token object save in store
         let uStorage = get(StorageKey.User);
@@ -88,7 +89,7 @@ const accountSlice = createSlice({
         );
         // update state
         state.user.isLogin = true;
-        state.user.phone_number = phone_number;
+        state.user.phone_number = email;
       } else {
         state.user.isLogin = false;
         state.user.phone_number = null;

@@ -10,7 +10,11 @@ export const useGenerateTokenBySocial = () => {
     GENERATE_CUSTOMER_TOKEN_BY_SOCIAL,
     {
       // onCompleted: (data) => {
-      //   Logger.debug(data, 'sign in complete');
+      //   Logger.debug(data?.socialSignIn?.token, 'AAAAA sign in complete');
+      //   const { token, otp_confirmed } = data?.generateCustomerToken || {};
+      //   setCustomerToken({ customerToken: token, otpConfirmed: otp_confirmed });
+      //   Logger.debug(submitValue, '====> generateCustomerToken');
+      //   dispatch(account.signInSucceed({ token, ...submitValue }));
       // },
     },
   );

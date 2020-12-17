@@ -65,7 +65,6 @@ const SignInScreen = () => {
       // }
       await dispatch(app.showLoading());
       await dispatch(app.savePhoneVerify(username));
-      // await dispatch(account.setPhoneNumber(username));
       signIn({ variables: submitData });
     },
     [dispatch, signIn],
@@ -138,21 +137,14 @@ const SignInScreen = () => {
   };
 
   React.useEffect(() => {
-    if (customerToken) {
-      if (otpConfirmed) {
-        const onSignInSucceed = async (value) => {
-          await dispatch(app.hideLoading());
-          await dispatch(account.signInSucceed(customerToken));
-        };
-        onSignInSucceed();
-      } else {
-        navigation.navigate(ScreenName.NewSignUp, {
-          customerToken,
-          typeVerify: 'update',
-        });
-      }
+    if (customerToken && !otpConfirmed) {
+      navigation.navigate(ScreenName.NewSignUp, {
+        customerToken,
+        typeVerify: 'update',
+      });
     }
-  }, [customerToken, dispatch, navigation, otpConfirmed]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerToken, otpConfirmed]);
 
   return (
     <>
