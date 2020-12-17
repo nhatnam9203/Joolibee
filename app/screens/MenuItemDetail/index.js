@@ -305,7 +305,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <ProductDetailFlatList
-          data={items}
+          data={items.filter((x) => x.position > 1)}
           renderItem={onRenderItem}
           renderHeader={onRenderHeader}
           renderFooter={onRenderFooter}

@@ -1,12 +1,19 @@
 import { scale } from '@utils';
 import { Loading } from '@components';
 import React from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Easing,
+} from 'react-native';
 import { JollibeeImage } from '../../components';
 import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 import ScreenName from '../../ScreenName';
 import { images } from '@theme';
+import { scrollInterpolator, animatedStyles } from './animations';
 
 const { scaleHeight } = scale;
 const { width } = Dimensions.get('window');
@@ -25,17 +32,29 @@ const Banners = ({ data, loading, height = scaleHeight(336) }) => {
           renderItem={({ item }) => <BannerItem item={item} height={height} />}
           sliderWidth={width}
           itemWidth={width}
-          hasParallaxImages={true}
+          inactiveSlideOpacity={0.5}
+          inactiveSlideScale={0.5}
+          // containerCustomStyle={{ overflow: 'visible' }}
+          // contentContainerCustomStyle={{ overflow: 'visible' }}
           enableSnap={true}
           loop={true}
           autoplay={true}
-          autoplayInterval={2000}
-          autoplayDelay={1000}
-          removeClippedSubviews={false}
-          // useScrollView={true}
+          autoplayInterval={3500} // Delay in ms until navigating to the next item
+          autoplayDelay={500}
+          removeClippedSubviews={true}
           lockScrollWhileSnapping={true}
           horizontal
           loopClonesPerSide={3}
+          // inactiveSlideShift={0}
+          // enableMomentum={true}
+          activeSlideAlignment={'center'}
+          // scrollInterpolator={scrollInterpolator}
+          // slideInterpolatedStyle={animatedStyles}
+          // useScrollView={true}
+          // activeAnimationType="decay"
+          // activeAnimationOptions={{
+          //   duration: 1500,
+          // }}
         />
       </View>
     );
