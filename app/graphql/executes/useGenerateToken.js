@@ -8,7 +8,7 @@ export const useGenerateToken = () => {
   const dispatch = useDispatch();
   const fcmToken = useSelector((state) => state.app.fcmToken);
   const [{ customerToken, otpConfirmed }, setCustomerToken] = React.useState(
-    null,
+    {},
   );
   const [submitValue, setSubmitValue] = React.useState(null);
 

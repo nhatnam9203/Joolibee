@@ -7,7 +7,7 @@ import { translate } from '@localize';
 import { statusCodes } from '@react-native-community/google-signin';
 import { useNavigation } from '@react-navigation/native';
 import { account, app } from '@slices';
-import { loginFb, loginGoogle, logoutFb } from '@social';
+import { loginFb, loginGoogle } from '@social';
 import { AppStyles, images } from '@theme';
 import { regex } from '@utils';
 import { Formik } from 'formik';
@@ -65,7 +65,7 @@ const SignInScreen = () => {
       // }
       await dispatch(app.showLoading());
       await dispatch(app.savePhoneVerify(username));
-      await dispatch(account.setPhoneNumber(username));
+      // await dispatch(account.setPhoneNumber(username));
       signIn({ variables: submitData });
     },
     [dispatch, signIn],
@@ -275,12 +275,12 @@ const SignInScreen = () => {
                   />
 
                   {/**FACEBOOK*/}
-                  <ButtonCC.ButtonFacebook />
-                  {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
+                  {/* <ButtonCC.ButtonFacebook /> */}
+                  <ButtonCC.ButtonFacebook onPress={signinFB} />
 
                   {/**GOOGLE*/}
-                  <ButtonCC.ButtonGoogle />
-                  {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
+                  {/* <ButtonCC.ButtonGoogle /> */}
+                  <ButtonCC.ButtonGoogle onPress={signinGoogle} />
 
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>
