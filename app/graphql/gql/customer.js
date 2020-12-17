@@ -321,8 +321,10 @@ export const UPDATE_CUSTOMER = gql`
     $firstname: String!
     $lastname: String!
     $email: String!
-    $password: String!
     $deviceId: String!
+    $smsCode: String
+    $phoneNumber: String
+    $password: String
   ) {
     updateCustomerInfo(
       input: {
@@ -331,8 +333,10 @@ export const UPDATE_CUSTOMER = gql`
         firstname: $firstname
         lastname: $lastname
         email: $email
+        phoneNumber: $phoneNumber
         password: $password
       }
+      smsCode: $smsCode
       deviceId: $deviceId
     ) {
       customer {

@@ -8,7 +8,7 @@ import {
   CustomPickerSelect,
   CustomTextLink,
 } from '@components';
-import { GEX } from '@graphql';
+import { GEX, GQL } from '@graphql';
 import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
@@ -40,7 +40,7 @@ const PROCESS_STATUS = {
   FINISH: 3,
 };
 const REGEX_EMAIL = /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
-export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
+export const SocialSigninForm = ({ infos: { phone = '', token }, smsCode }) => {
   const navigation = useNavigation();
   // redux
   const dispatch = useDispatch();
@@ -54,33 +54,27 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
-
-    // .email(translate('txtInvalidEmail'))
-    password: Yup.string()
-      .min(6, translate('txtTooShort'))
-      .max(30, translate('txtTooLong'))
-      .required(translate('txtRequired')),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
-      .min(6, translate('txtTooShort'))
-      .max(30, translate('txtTooLong'))
-      .required(translate('txtRequired')),
-    privacyChecked: Yup.bool()
-      .oneOf([true], translate('txtPrivacyRequired'))
-      .required(translate('txtPrivacyRequired')),
-    is_subscribed: Yup.bool(),
+    // password: Yup.string()
+    //   .min(6, translate('txtTooShort'))
+    //   .max(30, translate('txtTooLong'))
+    //   .required(translate('txtRequired')),
+    // confirmPassword: Yup.string()
+    //   .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
+    //   .min(6, translate('txtTooShort'))
+    //   .max(30, translate('txtTooLong'))
+    //   .required(translate('txtRequired')),
   });
 
-  const token = useSelector((state) => state.app.fcmToken);
-  Logger.debug(token, 'SignUpForm');
-
+  React.useEffect(() => {
+    getCustomerInfo();
+  }, [getCustomerInfo, token]);
   // state
+  const [customerInfo, getCustomerInfo] = GEX.useCustomer();
+  const [updateCustomerInfo] = useMutation(GQL.UPDATE_CUSTOMER);
 
-  const { registerCustomer, registerCustomerResp } = GEX.useRegisterCustomer();
-
-  const [showPopupSuccess, setShowPopupSuccess] = React.useState(
-    PROCESS_STATUS.START,
-  );
+  // const [showPopupSuccess, setShowPopupSuccess] = React.useState(
+  //   PROCESS_STATUS.START,
+  // );
 
   // function
   const signUpDataSubmit = async (formValues) => {
@@ -88,57 +82,70 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
     const { dob } = formValues;
     const variables = {
       ...formValues,
+      password: '',
       gender: formValues.gender !== -1 ?? formValues.gender,
-      fcmToken: token ?? '456',
       dob: format.dateTime(dob),
       smsCode,
       deviceId: getUniqueId(),
     };
-    registerCustomer({
+    updateCustomerInfo({
       variables,
-    });
+    })
+      .then((data) => {
+        Logger.debug(data, 'data?.data?.updateCustomerInfo');
+        if (data?.data?.updateCustomerInfo) {
+          dispatch(app.savePhoneVerify(''));
+          dispatch(
+            account.signInSucceed({
+              token,
+              phone_number: phone,
+            }),
+          );
+        }
+        dispatch(app.hideLoading());
+      })
+      .catch(() => {
+        dispatch(app.hideLoading());
+      });
   };
 
-  const goSignInPage = () => {
-    setShowPopupSuccess(PROCESS_STATUS.FINISH);
-  };
+  // const goSignInPage = () => {
+  //   setShowPopupSuccess(PROCESS_STATUS.FINISH);
+  // };
 
-  React.useEffect(() => {
-    if (registerCustomerResp?.data && !registerCustomerResp?.error) {
-      const onSignupSucceed = async () => {
-        await dispatch(account.signUpSucceeded(registerCustomerResp?.data));
-        await dispatch(app.hideLoading());
+  // React.useEffect(() => {
+  //   if (registerCustomerResp?.data && !registerCustomerResp?.error) {
+  //     const onSignupSucceed = async () => {
+  //       await dispatch(account.signUpSucceeded(registerCustomerResp?.data));
+  //       await dispatch(app.hideLoading());
 
-        setShowPopupSuccess(PROCESS_STATUS.SUCCESS);
-      };
+  //       setShowPopupSuccess(PROCESS_STATUS.SUCCESS);
+  //     };
 
-      onSignupSucceed();
-    }
-  }, [dispatch, registerCustomerResp]);
+  //     onSignupSucceed();
+  //   }
+  // }, [dispatch, registerCustomerResp]);
 
-  React.useEffect(() => {
-    if (showPopupSuccess === PROCESS_STATUS.FINISH) {
-      navigation.navigate(ScreenName.SignIn);
-      setShowPopupSuccess(PROCESS_STATUS.START);
-    }
-  }, [showPopupSuccess, navigation]);
+  // React.useEffect(() => {
+  //   if (showPopupSuccess === PROCESS_STATUS.FINISH) {
+  //     navigation.navigate(ScreenName.SignIn);
+  //     setShowPopupSuccess(PROCESS_STATUS.START);
+  //   }
+  // }, [showPopupSuccess, navigation]);
 
   // render
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.background}>
       <Formik
         initialValues={{
-          email: '',
-          firstname: '',
-          lastname: '',
-          phone_number: phone,
-          password: '',
-          confirmPassword: '',
+          email: customerInfo?.email ?? '',
+          firstname: customerInfo?.firstname ?? '',
+          lastname: customerInfo?.lastname ?? '',
+          phoneNumber: phone,
+          // password: '',
+          // confirmPassword: '',
           dob: new Date(),
           gender: 0,
-          is_subscribed: false,
-          validateType: 'sms',
-          fcmToken: token,
         }}
         onSubmit={signUpDataSubmit}
         validationSchema={SignupSchema}
@@ -339,7 +346,7 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
                     />
                   ))} */}
 
-                <View style={styles.checkBoxContent}>
+                {/* <View style={styles.checkBoxContent}>
                   <TextCheckBox
                     label={translate('txtPrivacy')}
                     value={values.privacyChecked}
@@ -353,18 +360,18 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
                     label={translate('txtPrivacyLink')}
                     style={styles.txtStyleLink}
                   />
-                </View>
+                </View> */}
 
                 {/**policy input error */}
-                {errors.privacyChecked && (
+                {/* {errors.privacyChecked && (
                   <TextInputErrorMessage
                     style={{ width: LAYOUT_WIDTH }}
                     message={errors.privacyChecked}
                     color={AppStyles.colors.inputError}
                   />
-                )}
+                )} */}
 
-                <View style={styles.checkBoxContent}>
+                {/* <View style={styles.checkBoxContent}>
                   <TextCheckBox
                     label={translate('txtPrivacyMail')}
                     value={values.is_subscribed}
@@ -373,7 +380,7 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
                     }
                     normalColor="#989898"
                   />
-                </View>
+                </View> */}
               </View>
 
               <View style={styles.bottomContent}>
@@ -390,7 +397,7 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
                 {/* <ButtonCC.ButtonGoogle onPress={handleSubmit} /> */}
 
                 {/**SIGN UP*/}
-                <View style={styles.textContent}>
+                {/* <View style={styles.textContent}>
                   <Text style={styles.txtStyle}>
                     {translate('txtHaveAccount')}
                   </Text>
@@ -400,41 +407,41 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
                     style={styles.txtBoldStyleLink}
                     onPress={goSignInPage}
                   />
-                </View>
+                </View> */}
               </View>
             </View>
           </SafeAreaView>
         )}
       </Formik>
 
-      <PopupSignUpSuccess
+      {/* <PopupSignUpSuccess
         showModal={showPopupSuccess === PROCESS_STATUS.SUCCESS}
         onPress={goSignInPage}
         onToggle={() => setShowPopupSuccess(PROCESS_STATUS.FINISH)}
-      />
+      /> */}
     </SinglePageLayout>
   );
 };
 
-const POPUP_BUTTON_WIDTH = 200;
-const PopupSignUpSuccess = ({ onPress, showModal, onToggle }) => (
-  <CustomModal showModal={showModal} disableBackdrop onToggle={onToggle}>
-    <View style={styles.popup_container}>
-      <Image source={images.icons.ic_succeeded} />
-      <CustomModalTitle>{translate('txtSignupSuccess')}</CustomModalTitle>
-      <CustomButton
-        style={styles.btnStyle}
-        onPress={onPress}
-        width={POPUP_BUTTON_WIDTH}
-        height={BUTTON_HEIGHT}
-        label={translate('txtSignIn')}
-        borderColor={AppStyles.colors.button}
-        textColor={AppStyles.colors.text}
-        bgColor={AppStyles.colors.button}
-      />
-    </View>
-  </CustomModal>
-);
+// const POPUP_BUTTON_WIDTH = 200;
+// const PopupSignUpSuccess = ({ onPress, showModal, onToggle }) => (
+//   <CustomModal showModal={showModal} disableBackdrop onToggle={onToggle}>
+//     <View style={styles.popup_container}>
+//       <Image source={images.icons.ic_succeeded} />
+//       <CustomModalTitle>{translate('txtSignupSuccess')}</CustomModalTitle>
+//       <CustomButton
+//         style={styles.btnStyle}
+//         onPress={onPress}
+//         width={POPUP_BUTTON_WIDTH}
+//         height={BUTTON_HEIGHT}
+//         label={translate('txtSignIn')}
+//         borderColor={AppStyles.colors.button}
+//         textColor={AppStyles.colors.text}
+//         bgColor={AppStyles.colors.button}
+//       />
+//     </View>
+//   </CustomModal>
+// );
 
 const styles = StyleSheet.create({
   container: {

@@ -159,6 +159,21 @@ const accountSlice = createSlice({
         // ];
       }
     },
+    verifiedSucceed(state, action) {
+      const { token } = action.payload;
+      if (token) {
+        // get token object save in store
+        let uStorage = get(StorageKey.User);
+        // store token to local store
+        save(
+          StorageKey.User,
+          Object.assign({}, uStorage, {
+            token,
+            modifyAt: generate.timeInMilliseconds(),
+          }),
+        );
+      }
+    },
   },
   extraReducers: {
     //FeedBack

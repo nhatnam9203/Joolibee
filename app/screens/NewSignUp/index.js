@@ -2,7 +2,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import { app, account } from '@slices';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { InputPhoneNumber, SignUpForm, VerifyPhoneCode } from './pages';
+import {
+  InputPhoneNumber,
+  SignUpForm,
+  VerifyPhoneCode,
+  SocialSigninForm,
+} from './pages';
 import { GEX } from '@graphql';
 import { getUniqueId } from 'react-native-device-info';
 import NavigationService from '../../navigation/NavigationService';
@@ -13,6 +18,7 @@ const PAGES = {
   InputPhone: 0,
   InputCode: 1,
   SignUp: 2,
+  SocialSignin: 3,
 };
 
 const SignUpScreen = ({ route }) => {
@@ -54,7 +60,7 @@ const SignUpScreen = ({ route }) => {
 
   const requestAuthCode = async (values) => {
     const { phone } = values;
-    setFormData(values);
+    setFormData({ ...values, token: params?.customerToken ?? '' });
 
     if (!phone) {
       setFormData(
@@ -82,13 +88,16 @@ const SignUpScreen = ({ route }) => {
   React.useEffect(() => {
     if (authStatus === AUTH_STATUS.verified) {
       if (params?.customerToken) {
-        dispatch(app.savePhoneVerify(''));
-        dispatch(
-          account.signInSucceed({
-            token: params?.customerToken,
-            phone_number: formData?.phone,
-          }),
-        );
+        // dispatch(app.savePhoneVerify(''));
+        // dispatch(
+        //   account.signInSucceed({
+        //     token: params?.customerToken,
+        //     phone_number: formData?.phone,
+        //   }),
+        // );
+        // getCustomerInfo();
+        dispatch(account.verifiedSucceed({ token: params?.customerToken }));
+        setPage(PAGES.SocialSignin);
       } else {
         dispatch(app.hideLoading());
         setPage(PAGES.SignUp);
@@ -134,6 +143,8 @@ const SignUpScreen = ({ route }) => {
       );
     case PAGES.SignUp:
       return <SignUpForm infos={formData} smsCode={smsCode} />;
+    case PAGES.SocialSignin:
+      return <SocialSigninForm infos={formData} smsCode={smsCode} />;
     case PAGES.InputPhone:
     default:
       return <InputPhoneNumber next={onSubmitPhoneNumber} />;
