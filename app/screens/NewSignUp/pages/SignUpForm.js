@@ -137,7 +137,7 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
           dob: new Date(),
           gender: 0,
           is_subscribed: false,
-          validateType: 'fb',
+          validateType: 'sms',
           fcmToken: token,
         }}
         onSubmit={signUpDataSubmit}

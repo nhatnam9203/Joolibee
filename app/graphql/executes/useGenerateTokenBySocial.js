@@ -26,6 +26,7 @@ export const useGenerateTokenBySocial = () => {
             typeVerify: 'update',
           });
         }
+
       }
     },
   });

@@ -26,19 +26,23 @@ export const useGenerateToken = () => {
       setCustomerToken({ customerToken: token, otpConfirmed: otp_confirmed });
       Logger.debug(submitValue, '====> generateCustomerToken');
 
-      if (otp_confirmed) {
-        dispatch(
-          account.signInSucceed({
-            ...submitValue,
-            token,
-            phone_number: submitValue?.email,
-          }),
-        );
-      } else {
-        navigation.navigate(ScreenName.NewSignUp, {
-          customerToken: token,
-          typeVerify: 'update',
-        });
+      // if (otp_confirmed) {
+      //   dispatch(
+      //     account.signInSucceed({
+      //       ...submitValue,
+      //       token,
+      //       phone_number: submitValue?.email,
+      //     }),
+      //   );
+      // } else {
+      //   navigation.navigate(ScreenName.NewSignUp, {
+      //     customerToken: token,
+      //     typeVerify: 'update',
+      //   });
+      // }
+
+      if (token) {
+        dispatch(account.signInSucceed({ token, ...submitValue }));
       }
     },
   });
