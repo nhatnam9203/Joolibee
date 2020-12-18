@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { app } from '@slices';
 import { loginFb, loginGoogle, logoutFb } from '@social';
 import { AppStyles, images } from '@theme';
-import { regex } from '@utils';
+import { regex, scale } from '@utils';
 import { Formik } from 'formik';
 import _ from 'lodash';
 import React from 'react';
@@ -29,6 +29,7 @@ import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
 import NavigationService from '../../navigation/NavigationService';
 const LAYOUT_WIDTH = '90%';
+const { scaleHeight, scaleWidth } = scale;
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -245,12 +246,12 @@ const SignInScreen = () => {
                   />
 
                   {/**FACEBOOK*/}
-                  {/* <ButtonCC.ButtonFacebook onPress={logoutFb} /> */}
-                  <ButtonCC.ButtonFacebook onPress={signinFB} />
+                  <ButtonCC.ButtonFacebook />
+                  {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
                   {/**GOOGLE*/}
-                  {/* <ButtonCC.ButtonGoogle /> */}
-                  <ButtonCC.ButtonGoogle onPress={signinGoogle} />
+                  <ButtonCC.ButtonGoogle />
+                  {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
 
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.colors.accent,
     paddingHorizontal: 10,
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: scaleHeight(25),
     zIndex: 1,
   },
 
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingTop: 50,
+    paddingTop: scaleHeight(35),
     backgroundColor: AppStyles.colors.button,
     zIndex: 0,
   },

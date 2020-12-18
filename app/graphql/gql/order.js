@@ -72,16 +72,7 @@ export const ORDERS_CUSTOMER = gql`
     }
   }
 `;
-/**
- *       shipper_info {
-          id
-          first_name
-          last_name
-          gender
-          phone
-        }
-        voucher_discount_amount
- */
+
 // export const ORDERS_CUSTOMER = gql`
 //   query {
 //     customer {

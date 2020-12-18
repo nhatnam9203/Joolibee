@@ -83,6 +83,13 @@ export const caculatePoint = (data = []) => {
 export const addresses_geocoding = (data = []) => {
   const number = data.length;
   switch (number) {
+    case 5:
+      return {
+        region: data[4],
+        city: data[3],
+        district: data[2],
+        ward: data[1],
+      };
     case 4:
       return {
         region: data[3],
