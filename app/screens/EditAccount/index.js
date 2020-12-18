@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ButtonCC, TextInputErrorMessage, PasswordInput } from '../components';
 import { format } from '@utils';
+import { getUniqueId } from 'react-native-device-info';
 const REGEX_EMAIL = /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
 const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
@@ -47,6 +48,7 @@ const EditAccountScreen = () => {
       updateCustomerInfo({
         variables: {
           ...values,
+          deviceId: getUniqueId(),
           gender: values.gender === -1 ? null : values.gender,
         },
         // awaitRefetchQueries

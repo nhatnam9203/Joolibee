@@ -13,17 +13,19 @@ export const useGenerateTokenBySocial = () => {
   const [socialSinginResp, setCustomerToken] = React.useState({});
   const [socialSignIn] = useMutation(GENERATE_CUSTOMER_TOKEN_BY_SOCIAL, {
     onCompleted: (data) => {
-      Logger.debug(data?.socialSignIn?.token, 'AAAAA sign in complete');
-      const { token, otp_confirmed } = data?.socialSignIn || {};
-      setCustomerToken(data?.socialSignIn);
-      Logger.debug(submitValue, '====> generateCustomerToken');
-      if (otp_confirmed) {
-        dispatch(account.signInSucceed({ token, ...submitValue }));
-      } else {
-        navigation.navigate(ScreenName.NewSignUp, {
-          customerToken: token,
-          typeVerify: 'update',
-        });
+      Logger.debug(data?.socialSignIn, 'AAAAA sign in complete');
+      if (data?.socialSignIn) {
+        const { token, otp_confirmed } = data?.socialSignIn || {};
+        setCustomerToken(data?.socialSignIn);
+        Logger.debug(submitValue, '====> generateCustomerToken');
+        if (otp_confirmed) {
+          dispatch(account.signInSucceed({ token, ...submitValue }));
+        } else {
+          navigation.navigate(ScreenName.NewSignUp, {
+            customerToken: token,
+            typeVerify: 'update',
+          });
+        }
       }
     },
   });
