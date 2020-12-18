@@ -333,11 +333,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
     });
   };
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      setShowNotice(isEatingUtensils);
-    }, 250);
-  }, [isEatingUtensils]);
+  // React.useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowNotice(isEatingUtensils);
+  //   }, 1000);
+  // }, [isEatingUtensils]);
 
   React.useEffect(() => {
     getSubMenu();
