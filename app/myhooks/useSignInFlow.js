@@ -22,11 +22,9 @@ export const useSignInFlow = () => {
   });
 
   const signOut = () => {
-    if (isSignIn) {
-      onSignOut();
-      // clear redux state
-      dispatch(account.signOutComplete());
-    }
+    onSignOut();
+    // clear redux state
+    dispatch(account.signOutComplete());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 

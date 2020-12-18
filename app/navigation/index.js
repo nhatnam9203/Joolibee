@@ -50,27 +50,22 @@ function App() {
   const [, getNotifyList] = GEX.useGetNotifyList();
 
   React.useEffect(() => {
-    if (startApp) {
-      getStoreJsonData();
-      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Splash));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startApp]);
-
-  React.useEffect(() => {
-    if (isSignIn) {
+    if (isSignIn && !startApp) {
       setAllowGotoHomeScreen(true);
       loadHomeScreen();
       getCustomerCart();
       getCategoryList();
       getNotifyList();
+    } else if (startApp) {
+      getStoreJsonData();
+      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Splash));
     } else {
       // navigationRef.current?.navigate(ScreenConst.Auth);
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Auth));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignIn]);
+  }, [isSignIn, startApp]);
 
   React.useEffect(() => {
     if (getHomeScreenResp?.data && allowGotoHomeScreen) {

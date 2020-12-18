@@ -36,6 +36,7 @@ export default function Index({ navigation, route }) {
     voucher_discount_amount,
   } = order || {};
 
+  Logger.debug(voucher_discount_amount, '=====> voucher_discount_amount');
   const findOrder = orderList?.find((x) => x?.id === id);
   status = findOrder?.status;
   const [getOrderDetail, orderDetailResp] = useLazyQuery(
@@ -171,7 +172,7 @@ export default function Index({ navigation, route }) {
           title={translate('txtOrderStattus')}
           style={{ marginVertical: scaleHeight(5) }}
         />
-        <OrderStatus status={status_order} />
+        <OrderStatus status={status_order} shipper={shipper_info} />
       </View>
     );
   };

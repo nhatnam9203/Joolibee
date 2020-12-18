@@ -63,6 +63,8 @@ export const QueryOrderList = ({
     return <View />;
   }
 
+  Logger.debug(orderList, '====> orderList');
+
   return (
     <CustomFlatList
       data={orderList}

@@ -75,7 +75,6 @@ const accountSlice = createSlice({
 
     signInSucceed(state, action) {
       const { token, phone_number } = action.payload;
-      console.log('action.payload', action.payload);
       if (token) {
         // get token object save in store
         let uStorage = get(StorageKey.User);
