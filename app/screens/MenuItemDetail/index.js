@@ -123,7 +123,11 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         const { options } = item;
         const sumOptionPrice = options
           .filter((x) => x.is_default === true && x.price)
-          .reduce((accumulator, current) => accumulator + current.price, 0);
+          .reduce(
+            (accumulator, current) =>
+              accumulator + current.price * current.quantity,
+            0,
+          );
 
         value += sumOptionPrice;
       });
@@ -160,17 +164,19 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const addProductToCart = () => {
     const { sku, items = [] } = productItem;
     const optionsMap = [];
-    // Logger.debug(productItem ,'======> xxxxxxxx productItem');
+    Logger.debug(productItem, '======> xxxxxxxx productItem');
 
     items?.forEach((item) => {
       const { options = [], option_id } = item;
-      const mapArr = options
-        .filter((x) => x.is_default === true)
-        .map((x) => {
-          return x.id + '';
-        });
+      const activeOptionList = options.filter((x) => x.is_default === true);
 
-      optionsMap.push({ id: parseInt(option_id), quantity: 1, value: mapArr });
+      const mapArr = activeOptionList?.map((x) => ({
+        id: parseInt(option_id),
+        quantity: x?.quantity ?? 1,
+        value: [x.id + ''],
+      }));
+
+      optionsMap.push(...mapArr);
     });
 
     // items.forEach((item) => {
@@ -182,6 +188,9 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
     //   optionsMap.push(...mapArr);
     // });
+
+
+
     addProductsToCart({
       variables: {
         cart_items: [
@@ -255,7 +264,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     return (
       <CustomAccordionList
         key={item.option_id.toString()}
-        item={item}
+        input={item}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}

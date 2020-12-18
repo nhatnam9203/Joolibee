@@ -19,7 +19,8 @@ export const MenuDetailItem = ({
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
-  const [radioChecked, setRadioChecked] = React.useState(item.is_default);
+  const [radioChecked, setRadioChecked] = React.useState(item?.is_default);
+  const [qty, setQyt] = React.useState(item?.quantity);
 
   const selectItem = (select) => {
     setRadioChecked(select);
@@ -32,8 +33,15 @@ export const MenuDetailItem = ({
   const onPressItem = () => {
     if (typeof onPress === 'function') {
       onPress(item);
-    } else {
-      selectItem((prev) => !prev);
+      setQyt(item?.quantity);
+    }
+  };
+
+  const onChangeQuantity = (value) => {
+    if (value && typeof onPress === 'function') {
+      const num = parseInt(value);
+      setQyt(num);
+      onPress(Object.assign({}, item, { quantity: num }));
     }
   };
 
@@ -63,8 +71,8 @@ export const MenuDetailItem = ({
                 keyboardType="numeric"
                 allowFontScaling={true}
                 numberOfLines={1}
-                value={item?.quantity}
-                onChangeText={() => {}}
+                value={qty?.toString()}
+                onChangeText={onChangeQuantity}
                 multiline={false}
                 clearTextOnFocus={true}
                 maxLength={3}
@@ -96,6 +104,14 @@ export const MenuDetailItem = ({
     }
   };
 
+  const getQuantityAmount = (amount) => {
+    if (amount > 1 && type !== MenuDetailItemSelectType.Multiline) {
+      return ' x' + amount;
+    }
+
+    return '';
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -109,7 +125,7 @@ export const MenuDetailItem = ({
       />
       <View style={styles.textContentStyle}>
         <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
-          {item.label + (item.quantity > 1 ? ' x' + item.quantity : '')}
+          {item.label + getQuantityAmount(item?.quantity)}
         </Text>
         {!!item?.price && (
           <Text style={styles.itemPriceStyle}>{`+ ${item.price}`}</Text>
