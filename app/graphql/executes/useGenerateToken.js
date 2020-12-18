@@ -42,7 +42,13 @@ export const useGenerateToken = () => {
       // }
 
       if (token) {
-        dispatch(account.signInSucceed({ token, ...submitValue }));
+        dispatch(
+          account.signInSucceed({
+            token,
+            ...submitValue,
+            phone_number: submitValue?.email,
+          }),
+        );
       }
     },
   });

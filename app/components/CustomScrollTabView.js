@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
     alignSelf: 'center',
+    backgroundColor: '#fff',
   },
   text: {
     fontSize: FONT_TEXT_SIZE,

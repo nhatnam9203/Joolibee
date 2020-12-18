@@ -194,7 +194,7 @@ const StorePage = () => {
               <ItemStore
                 item={item}
                 index={index}
-                onPress={onSelectStore(item)}
+                // onPress={onSelectStore(item)}
               />
             )}
             data={localStores()}
