@@ -164,7 +164,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const addProductToCart = () => {
     const { sku, items = [] } = productItem;
     const optionsMap = [];
-    Logger.debug(productItem, '======> xxxxxxxx productItem');
+    // Logger.debug(productItem, '======> xxxxxxxx productItem');
 
     items?.forEach((item) => {
       const { options = [], option_id } = item;
@@ -188,8 +188,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
     //   optionsMap.push(...mapArr);
     // });
-
-
 
     addProductsToCart({
       variables: {
@@ -310,11 +308,12 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   }, []);
 
   const { items } = productItem || {};
+  // Logger.debug(items, '=====> items');
   return (
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <ProductDetailFlatList
-          data={items?.filter((x) => x.position > 1)}
+          data={items?.filter((x) => x.title !== 'Main')}
           renderItem={onRenderItem}
           renderHeader={onRenderHeader}
           renderFooter={onRenderFooter}

@@ -1,16 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const ORDER_LIST = gql`
-  {
-    customerOrders {
-      items {
-        number
-        id
-      }
-    }
-  }
-`;
-
 // MENU
 
 export const MENU_DETAIL = gql`

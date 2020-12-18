@@ -25,8 +25,16 @@ export default function Index({ navigation, route }) {
   const [visible, setVisible] = React.useState(false);
   const [{ orderList }, getOrderList] = GEX.useOrderList();
 
-  let { order_number, created_at, status, address, grand_total, id } =
-    order || {};
+  let {
+    order_number,
+    created_at,
+    status,
+    address,
+    grand_total,
+    id,
+    shipper_info,
+    voucher_discount_amount,
+  } = order || {};
 
   const findOrder = orderList?.find((x) => x?.id === id);
   status = findOrder?.status;

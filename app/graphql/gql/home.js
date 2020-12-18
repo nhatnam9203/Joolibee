@@ -1,13 +1,14 @@
 import { gql } from '@apollo/client';
 
 // HOME_SCREEN
+//        product_sku
+
 export const HOME_SCREEN = gql`
   {
     homeScreen {
       __typename
       banners {
         image_url
-        product_sku
       }
       best_sellers {
         id

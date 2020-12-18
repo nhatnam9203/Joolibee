@@ -114,7 +114,7 @@ const Index = () => {
             {translate('txtOrderNumber')} #{order_number}
           </Text>
           <Text style={styles.txtDate}>{getDateStatus(created_at)}</Text>
-          <Text numberOfLines={1} style={styles.txtAddress}>
+          {/* <Text numberOfLines={1} style={styles.txtAddress}>
             <Text style={{ fontWeight: 'bold' }}>
               {getShippingMethod(shipping_method)}
             </Text>
@@ -122,7 +122,7 @@ const Index = () => {
             {!!address
               ? address
               : store_name ?? translate('txtAddressNotFound')}
-          </Text>
+          </Text> */}
 
           <View style={styles.bottomContainer}>
             <Text numberOfLines={1} style={status_style}>
@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
   txtDate: {
     ...AppStyles.fonts.text,
     fontSize: 14,
+    marginVertical: 6,
   },
   txtPrice: {
     ...AppStyles.fonts.bold,

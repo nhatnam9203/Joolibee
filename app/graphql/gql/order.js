@@ -60,10 +60,28 @@ export const ORDERS_CUSTOMER = gql`
         shipping_method
         store_name
         use_plastic
+        shipper_info {
+          id
+          first_name
+          last_name
+          gender
+          phone
+        }
+        voucher_discount_amount
       }
     }
   }
 `;
+/**
+ *       shipper_info {
+          id
+          first_name
+          last_name
+          gender
+          phone
+        }
+        voucher_discount_amount
+ */
 // export const ORDERS_CUSTOMER = gql`
 //   query {
 //     customer {

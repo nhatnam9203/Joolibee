@@ -318,6 +318,21 @@ const OrderScreen = ({ route = { params: {} } }) => {
     }
   };
 
+  const onRemovePoint = () => {
+    dispatch(app.showLoading());
+    redeemCustomerPoint(0).then((res) => {
+      if (res?.data?.useCustomerPoint) {
+        // getCheckOutCart();
+        getCustomerCart();
+        getCustomerInfo();
+
+        setRewardPoint('');
+        showErrorPoint(false);
+      }
+      dispatch(app.hideLoading());
+    });
+  };
+
   React.useEffect(() => {
     setTimeout(() => {
       setShowNotice(isEatingUtensils);
@@ -745,6 +760,34 @@ const OrderScreen = ({ route = { params: {} } }) => {
               onChangeText={onChangeRewardPoint}
             />
           </OrderButtonInput>
+          {used_point?.point > 0 && (
+            <View
+              style={{
+                height: scale.scaleHeight(40),
+                marginTop: scale.scaleHeight(10),
+                justifyContent: 'center',
+              }}>
+              <OrderButtonInput
+                icon={images.icons.ic_delete}
+                btnWidth={scaleWidth(43)}
+                height={scaleHeight(40)}
+                width={scaleWidth(200)}
+                borderColor={AppStyles.colors.moderate_cyan}
+                bgColor={AppStyles.colors.moderate_cyan}
+                style={{ marginRight: 5 }}
+                onPress={onRemovePoint}>
+                <OrderVoucherItem
+                  content={`${translate('txtRedeemPoint')} ${
+                    used_point?.point
+                  } = ${format.jollibeeCurrency({
+                    value: used_point?.amount,
+                  })} `}
+                  colorText={AppStyles.colors.moderate_cyan}
+                  icon={images.icons.ic_sticked}
+                />
+              </OrderButtonInput>
+            </View>
+          )}
           {error_point && (
             <OrderVoucherItem
               content={translate('txtErrorApplyPoint')}
@@ -763,7 +806,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       ? format.jollibeeCurrency({ value: used_point?.amount })
       : 0;
     return (
-      used_point?.point && (
+      used_point?.point > 0 && (
         <View style={styles.orderSumContent}>
           <OrderVoucherItem
             content={`${translate('txtChange')} ${
