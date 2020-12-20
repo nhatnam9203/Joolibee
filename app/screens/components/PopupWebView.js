@@ -34,25 +34,38 @@ const Index = ({ visible, item, onToggle, url = null }) => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.scrollView}>
-        {item?.featured_image && (
-          <FastImage
-            style={styles.imgProduct}
-            source={{ uri: item?.featured_image }}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        )}
-
-        {item?.title && <Text style={styles.txtTitle}>{item?.title}</Text>}
-
+      {url ? (
         <WebView
           style={styles.web}
           renderLoading={() => <Loading isLoading={true} transparent={true} />}
           startInLoadingState={true}
           source={source}
+          bounces={true}
           automaticallyAdjustContentInsets={false}
         />
-      </ScrollView>
+      ) : (
+        <ScrollView style={styles.scrollView}>
+          {item?.featured_image && (
+            <FastImage
+              style={styles.imgProduct}
+              source={{ uri: item?.featured_image }}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+          )}
+
+          {item?.title && <Text style={styles.txtTitle}>{item?.title}</Text>}
+
+          <WebView
+            style={styles.webItem}
+            renderLoading={() => (
+              <Loading isLoading={true} transparent={true} />
+            )}
+            startInLoadingState={true}
+            source={source}
+            automaticallyAdjustContentInsets={false}
+          />
+        </ScrollView>
+      )}
     </Modal>
   );
 };
@@ -60,7 +73,12 @@ const Index = ({ visible, item, onToggle, url = null }) => {
 const styles = StyleSheet.create({
   web: {
     flex: 1,
-    height: scaleHeight(300),
+    height: '100%',
+  },
+
+  webItem: {
+    flex: 1,
+    height: scaleHeight(350),
   },
 
   scrollView: {

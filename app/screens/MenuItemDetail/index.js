@@ -163,6 +163,37 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
   const addProductToCart = () => {
     const { sku, items = [] } = productItem;
+    requestAddCartProduct(productItem);
+
+    animationOnQuit();
+    // dispatch(app.showOrderList());
+  };
+
+  const removeCartProduct = async (cartItemId) => {
+    const input = {
+      cart_item_id: cartItemId,
+      quantity: 0,
+    };
+
+    await updateCart({
+      variables: input,
+    });
+  };
+
+  const updateCartProduct = async () => {
+    // Remove cart
+    await removeCartProduct(detailItem.id);
+
+    // Then add new product
+    await requestAddCartProduct(productItem);
+
+    // animationOnQuit();
+    navigation.goBack();
+    // addProductToCart();
+  };
+
+  const requestAddCartProduct = (cartItem) => {
+    const { sku, items = [] } = cartItem || {};
     const optionsMap = [];
     // Logger.debug(productItem, '======> xxxxxxxx productItem');
     /**
@@ -206,25 +237,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         ],
       },
     });
-
-    animationOnQuit();
-    // dispatch(app.showOrderList());
-  };
-
-  // !! chuaw update options
-  const updateCartProduct = async () => {
-    let input = {
-      cart_item_id: detailItem.id,
-      quantity: qty,
-    };
-
-    updateCart({
-      variables: input,
-    });
-
-    animationOnQuit();
-
-    // addProductToCart();
   };
 
   const animationOnQuit = () => {

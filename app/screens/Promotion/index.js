@@ -52,8 +52,8 @@ const PromotionPage = () => {
         <JollibeeImage
           url={item?.image}
           width="100%"
-          height={scaleHeight(180)}
-          resizeMode="center"
+          height={scaleHeight(107)}
+          resizeMode="contain"
         />
       )}
       <View style={[AppStyles.styles.horizontalLayout, styles.bottomStyle]}>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: scaleWidth(16),
     marginHorizontal: scaleWidth(10),
     marginVertical: scaleWidth(10),
-    height: scaleHeight(247),
+    height: scaleHeight(183),
     ...AppStyles.styles.shadow,
     overflow: 'hidden',
   },
