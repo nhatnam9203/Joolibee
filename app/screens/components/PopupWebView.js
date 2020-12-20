@@ -8,7 +8,7 @@ import {
   ScrollView,
   Text,
 } from 'react-native';
-import { WebView } from 'react-native-webview';
+import WebView from 'react-native-webview';
 import { AppStyles, images } from '@theme';
 import { Loading } from '@components';
 import { scale } from '@utils';
@@ -16,8 +16,16 @@ import FastImage from 'react-native-fast-image';
 
 const { scaleWidth, scaleHeight } = scale;
 
-const Index = ({ visible, item, onToggle }) => {
+const Index = ({ visible, item, onToggle, url = null }) => {
   const popupRef = React.createRef(null);
+
+  const source = url
+    ? { uri: url }
+    : {
+        html: item?.content,
+      };
+
+  Logger.debug(source, '=====> source');
   return (
     <Modal visible={visible} ref={popupRef}>
       <View style={styles.iconContainer}>
@@ -27,37 +35,32 @@ const Index = ({ visible, item, onToggle }) => {
       </View>
 
       <ScrollView style={styles.scrollView}>
-        <View style={styles.scrollViewContent}>
+        {item?.featured_image && (
           <FastImage
             style={styles.imgProduct}
             source={{ uri: item?.featured_image }}
             resizeMode={FastImage.resizeMode.stretch}
           />
+        )}
 
-          <Text style={styles.txtTitle}>{item?.title}</Text>
+        {item?.title && <Text style={styles.txtTitle}>{item?.title}</Text>}
 
-          <WebView
-            containerStyle={styles.webContainer}
-            // renderLoading={() => (
-            //   <Loading isLoading={true} transparent={true} />
-            // )}
-            // startInLoadingState={true}
-            scrollEnabled={false}
-            bounces={true}
-            source={{
-              html: item?.content,
-            }}
-          />
-        </View>
+        <WebView
+          style={styles.web}
+          renderLoading={() => <Loading isLoading={true} transparent={true} />}
+          startInLoadingState={true}
+          source={source}
+          automaticallyAdjustContentInsets={false}
+        />
       </ScrollView>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  webContainer: {
+  web: {
     flex: 1,
-    height: '100%',
+    height: scaleHeight(300),
   },
 
   scrollView: {
@@ -67,8 +70,8 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     backgroundColor: '#fff',
     flex: 0,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    // justifyContent: 'flex-start',
+    // alignItems: 'center',
   },
 
   iconContainer: {

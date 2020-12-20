@@ -117,3 +117,11 @@ export const READ_CUSTOMER_NOTIFY = gql`
     }
   }
 `;
+
+export const MARK_READ_ALL_NOTIFY = gql`
+  mutation {
+    markReadAllCustomerNotification {
+      result
+    }
+  }
+`;

@@ -9,6 +9,8 @@ import {
   View,
   Text,
   RefreshControl,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SettingItem } from '../components';
@@ -16,19 +18,46 @@ import ScreenName from '../ScreenName';
 import { GEX, GQL } from '@graphql';
 import { useMutation } from '@apollo/client';
 import { NotificationItem } from './wiget';
-import { account } from '@slices';
+import { account, app } from '@slices';
 
 const NotificationScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [markReadCustomerNotification] = useMutation(GQL.READ_CUSTOMER_NOTIFY, {
-    errorPolicy: 'ignore',
-  });
   const [
     { notifyList, loading, refreshing },
     getNotifyList,
   ] = GEX.useGetNotifyList();
+
+  const [markReadCustomerNotification] = useMutation(GQL.READ_CUSTOMER_NOTIFY, {
+    errorPolicy: 'ignore',
+  });
+
+  const [markReadAllCustomerNotification] = useMutation(
+    GQL.MARK_READ_ALL_NOTIFY,
+    {
+      errorPolicy: 'ignore',
+      onCompleted: () => {
+        dispatch(app.hideLoading());
+        getNotifyList();
+      },
+    },
+  );
+
+  const markAllRead = () => {
+    dispatch(app.showLoading());
+    markReadAllCustomerNotification();
+  };
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: (props) => (
+        <TouchableOpacity style={styles.icon} onPress={markAllRead}>
+          <Image source={images.icons.ic_delete_bg} resizeMode="contain" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   React.useEffect(() => {
     getNotifyList();
@@ -85,6 +114,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppStyles.colors.background,
     paddingTop: 10,
+  },
+
+  icon: {
+    backgroundColor: '#FFC522',
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
   },
 });
 export default NotificationScreen;

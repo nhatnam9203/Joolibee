@@ -224,11 +224,6 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtNotification'),
           headerBackground: () => <View style={styles.container} />,
-          // headerRight: (props) => (
-          //   <View style={styles.icon}>
-          //     <Image source={images.icons.ic_delete_bg} resizeMode="contain" />
-          //   </View>
-          // ),
         }}
       />
 

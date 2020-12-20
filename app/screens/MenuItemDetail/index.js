@@ -44,7 +44,7 @@ const CART_ICON_Y = scaleHeight(65);
 const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
-  const { product, detailItem } = route.params;
+  const { product, detailItem, sku } = route.params;
 
   const navigation = useNavigation();
   // animations
@@ -63,7 +63,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const [, updateCart] = GEX.useUpdateCustomerCart();
 
   const [getProductDetail, { loading }] = useLazyQuery(GQL.PRODUCT_DETAIL, {
-    variables: { sku: product?.sku },
+    variables: { sku: product?.sku || sku },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data) {
