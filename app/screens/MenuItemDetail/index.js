@@ -277,7 +277,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     />
   );
 
-  const onRenderItem = ({ item }) => {
+  const onRenderItem = ({ item, index }) => {
     return (
       <CustomAccordionList
         key={item.option_id.toString()}
@@ -288,6 +288,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         renderItem={renderOptionsItem}
         renderSelectItem={onRenderSelectedItem}
         onChangeOptionsItem={onChangeOptionsItem}
+        openFirst={index === 0}
       />
     );
   };

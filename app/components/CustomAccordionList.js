@@ -41,10 +41,11 @@ const CustomAccordionList = ({
   renderSelectItem,
   style,
   onChangeOptionsItem,
+  openFirst = false,
 }) => {
   const { title, options, type, position, required, sku, option_id } = input;
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(openFirst);
   const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
 
@@ -150,9 +151,9 @@ const CustomAccordionList = ({
     );
   };
 
-  React.useEffect(() => {
-    setOpen(required);
-  }, [required]);
+  // React.useEffect(() => {
+  //   setOpen(required);
+  // }, [required]);
 
   React.useEffect(() => {
     if (options?.length > 0) {
