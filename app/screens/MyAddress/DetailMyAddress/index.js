@@ -154,7 +154,7 @@ const Index = (props) => {
   //------------ Update address customer -----------------//
 
   //------------ DELETE address customer -----------------//
-  const [deleteCustomerAddress] = useMutation(mutation.DELETE_ADDRESS);
+  const [deleteCustomerAddress] = useMutation(GQL.DELETE_ADDRESS);
 
   const onHandleDelete = React.useCallback(() => {
     dispatch(app.showLoading());

@@ -60,7 +60,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   );
 
   const { addProductsToCart } = GEX.useAddProductsToCart();
-  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
+  const [, updateCart] = GEX.useUpdateCustomerCart();
 
   const [getProductDetail, { loading }] = useLazyQuery(GQL.PRODUCT_DETAIL, {
     variables: { sku: product?.sku },
@@ -165,29 +165,36 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     const { sku, items = [] } = productItem;
     const optionsMap = [];
     // Logger.debug(productItem, '======> xxxxxxxx productItem');
+    /**
+     * them sl cho option
+     */
+    // items?.forEach((item) => {
+    //   const { options = [], option_id } = item;
+    //   const activeOptionList = options.filter((x) => x.is_default === true);
 
-    items?.forEach((item) => {
-      const { options = [], option_id } = item;
-      const activeOptionList = options.filter((x) => x.is_default === true);
-
-      const mapArr = activeOptionList?.map((x) => ({
-        id: parseInt(option_id),
-        quantity: x?.quantity ?? 1,
-        value: [x.id + ''],
-      }));
-
-      optionsMap.push(...mapArr);
-    });
-
-    // items.forEach((item) => {
-
-    //   const { options = [] } = item;
-    //   const mapArr = options
-    //     .filter((x) => x.is_default === true)
-    //     .map((x) => x.uid);
+    // const mapArr = activeOptionList?.map((x) => ({
+    //   id: parseInt(option_id),
+    //   quantity: x?.quantity ?? 1,
+    //   value: [x.id + ''],
+    // }));
 
     //   optionsMap.push(...mapArr);
     // });
+
+    items.forEach((item) => {
+      const { options = [], option_id } = item;
+      const mapArr = options
+        .filter((x) => x.is_default === true)
+        .map((x) => x.id + '');
+
+      const selectOptions = {
+        id: parseInt(option_id),
+        quantity: 1,
+        value: mapArr,
+      };
+
+      optionsMap.push(selectOptions);
+    });
 
     addProductsToCart({
       variables: {

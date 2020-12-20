@@ -2,7 +2,7 @@ import { SinglePageLayout } from '@layouts';
 import { translate } from '@localize';
 import { AppStyles, images } from '@theme';
 import { useMutation } from '@apollo/client';
-import { mutation } from '@graphql';
+import { GQL } from '@graphql';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { ButtonCC, PasswordInput, TextInputErrorMessage } from '../components';
@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 const LAYOUT_WIDTH = '90%';
 
 const ChangePasswordScreen = () => {
-  const [changeCustomerPassword] = useMutation(mutation.CHANGE_PASSWORD);
+  const [changeCustomerPassword] = useMutation(GQL.CHANGE_PASSWORD);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onHandleSubmit = React.useCallback(

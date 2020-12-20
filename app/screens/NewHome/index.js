@@ -38,6 +38,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const headerHeight = useHeaderHeight();
+
   const [language] = useChangeLanguage();
 
   const [isVisible, setVisiblePopup] = React.useState(false);
@@ -73,6 +74,7 @@ const HomeScreen = () => {
       loading: homeScreenResp?.loading,
       refetch: homeScreenResp?.refetch,
     };
+
     navigation.navigate(screen, params);
   };
 
@@ -180,11 +182,13 @@ const HomeScreen = () => {
       </CustomImageBackground>
 
       <PopupSelectAreaComponent visible={isVisible} />
+
       <PopupWebView
         visible={newsItemDetail != null}
         item={newsItemDetail}
         onToggle={() => showNewsItemDetail(null)}
       />
+
       {/**Popup Order List Items */}
       <ProductCart
         visible={showOrderList}

@@ -1,4 +1,4 @@
-import MainTabScreen from './Main';
+// import MainTabScreen from './Main';
 import ScreenName from './ScreenName';
 import WelcomeScreen from './Welcome';
 import SplashScreen from './Splash';
@@ -38,7 +38,7 @@ import NewSignUpScreen from './NewSignUp';
 module.exports = {
   ScreenName,
   WelcomeScreen,
-  MainTabScreen,
+  // MainTabScreen,
   MyAccountScreen,
   SplashScreen,
   SignUpScreen,

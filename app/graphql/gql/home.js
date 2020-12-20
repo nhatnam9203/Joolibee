@@ -1,13 +1,47 @@
 import { gql } from '@apollo/client';
 
-// HOME_SCREEN
 //        product_sku
+/**
+ *     promotions {
+        id
+        __typename
+        sku
+        name
+        point
+        image {
+          url
+        }
+        price_range {
+          maximum_price {
+            regular_price {
+              value
+              currency
+            }
+            final_price {
+              value
+              currency
+            }
+          }
+          minimum_price {
+            regular_price {
+              value
+              currency
+            }
+            final_price {
+              value
+              currency
+            }
+          }
+        }
+      }
+ */
 
 export const HOME_SCREEN = gql`
   {
     homeScreen {
       __typename
       banners {
+        __typename
         image_url
       }
       best_sellers {
@@ -21,6 +55,7 @@ export const HOME_SCREEN = gql`
         }
         is_hot
         price_range {
+          __typename
           maximum_price {
             regular_price {
               value
@@ -50,38 +85,6 @@ export const HOME_SCREEN = gql`
         post_id
         short_content
         title
-      }
-      promotions {
-        id
-        __typename
-        sku
-        name
-        point
-        image {
-          url
-        }
-        price_range {
-          maximum_price {
-            regular_price {
-              value
-              currency
-            }
-            final_price {
-              value
-              currency
-            }
-          }
-          minimum_price {
-            regular_price {
-              value
-              currency
-            }
-            final_price {
-              value
-              currency
-            }
-          }
-        }
       }
       static_content {
         __typename

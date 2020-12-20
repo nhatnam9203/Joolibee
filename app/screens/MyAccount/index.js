@@ -1,6 +1,4 @@
-import { useQuery } from '@apollo/client';
 import { CustomButton } from '@components';
-import { query } from '@graphql';
 import { useChangeLanguage } from '@hooks';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';

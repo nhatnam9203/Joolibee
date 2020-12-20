@@ -148,7 +148,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // submit checkout
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   // Call get món đi kèm
-  const [getSubMenu, responseMenu] = useLazyQuery(query.MENU_DETAIL_LIST, {
+  const [getSubMenu, responseMenu] = useLazyQuery(GQL.MENU_DETAIL_LIST, {
     variables: { categoryId: SUB_MENU_ID },
     fetchPolicy: 'cache-first',
   });

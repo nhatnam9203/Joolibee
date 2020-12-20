@@ -24,8 +24,6 @@ export const QueryOrderList = ({
     getOrderList,
   ] = useOrderList();
 
-  // Logger.debug(orderList, '====> orderList');
-
   const handleRefresh = () => {
     if (typeof refetch === 'function') {
       refetch();
@@ -62,8 +60,6 @@ export const QueryOrderList = ({
   if (error) {
     return <View />;
   }
-
-  Logger.debug(orderList, '====> orderList');
 
   return (
     <CustomFlatList

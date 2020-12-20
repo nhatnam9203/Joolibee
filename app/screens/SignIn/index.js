@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.colors.accent,
     paddingHorizontal: 10,
     alignItems: 'center',
-    paddingTop: scaleHeight(25),
+    paddingTop: scaleHeight(35),
     zIndex: 1,
   },
 
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
 
   txtSignIn: { ...AppStyles.fonts.bold, color: '#1B1B1B' },
 
-  titleStyle: { marginTop: 15, marginBottom: 10 },
+  titleStyle: { marginTop: scaleHeight(15), marginBottom: 10 },
 });
 
 export default SignInScreen;
