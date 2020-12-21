@@ -34,7 +34,7 @@ const slides = [
       marginTop: height * 0.08,
     },
     title: 'Giao Hàng Tận Nơi',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`,
+    content: 'Tận hưởng dịch vụ giao hàng tận nơi miễn phí với Jollibee! ',
   },
   {
     url: images['jollibee_shop_intro'],
@@ -45,7 +45,8 @@ const slides = [
       marginTop: height * 0.15,
     },
     title: 'Khuyến Mãi Hấp Dẫn',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has bee industry's standard`,
+    content:
+      'Trải nghiệm những chương trình ưu đãi hấp dẫn được cập nhật hàng tháng!',
   },
   {
     url: images['jollibee_gift_intro'],
@@ -56,12 +57,12 @@ const slides = [
       marginTop: height * 0.13,
     },
     title: 'Tích Điểm Đổi Quà',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`,
+    content: 'Tích điểm với mỗi đơn hàng Jollibee để đổi chiết khấu hấp dẫn',
   },
   {
     url: images.icons['Walkthough4'],
     title: 'Hãy là người đầu tiên trải nghiệm!',
-    content: `Lorem Ipsum is simply dummy text of the prin and typesetting industry. Lorem Ipsum has been industry's standard`,
+    content: '',
   },
 ];
 

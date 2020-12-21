@@ -19,7 +19,8 @@ export const productReducer = (state, action) => {
       return Object.assign({}, state, action.payload);
     case PRODUCT_UPDATE_OPTIONS:
       const optionsItem = action.payload;
-      const mapArray = state.items.map((x) => {
+
+      const mapArray = state.items?.map((x) => {
         if (x.option_id === optionsItem.option_id) {
           return optionsItem;
         } else {

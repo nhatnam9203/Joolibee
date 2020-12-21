@@ -38,7 +38,7 @@ const EditAccountScreen = () => {
     lastname: Yup.string()
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
-    password: Yup.string().required(translate('txtRequired')),
+    // password: Yup.string().required(translate('txtRequired')),
     email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
   });
 
@@ -48,7 +48,7 @@ const EditAccountScreen = () => {
       updateCustomerInfo({
         variables: {
           ...values,
-          deviceId: getUniqueId(),
+          // deviceId: getUniqueId(),
           gender: values.gender === -1 ? null : values.gender,
         },
         // awaitRefetchQueries
@@ -82,7 +82,7 @@ const EditAccountScreen = () => {
       // phone_number,
       gender: gender ? gender : -1,
       date_of_birth: format.dateTime(date_of_birth, DATE_FORMAT),
-      password: '',
+      // password: '',
     },
     validationSchema: EditSchema,
     isValidating: true,
@@ -148,7 +148,7 @@ const EditAccountScreen = () => {
             />
           )}
 
-          <PasswordInput
+          {/* <PasswordInput
             style={{ width: LAYOUT_WIDTH }}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
@@ -162,7 +162,7 @@ const EditAccountScreen = () => {
               message={errors.password}
               color={AppStyles.colors.inputError}
             />
-          )}
+          )} */}
           <View style={styles.pickerContentStyle}>
             <CustomBirthdayPicker
               onChangeDate={handleChange('date_of_birth')}

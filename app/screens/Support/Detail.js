@@ -21,7 +21,7 @@ const Detail = ({ route }) => {
         key: 'key_support',
         step: '1',
         cotent:
-          ' Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          ' Tích điểm: với mỗi 10.000đ đặt hàng thành công, bạn sẽ tích ngay 10 điểm, được lưu vào Điểm tích luỹ ',
         images: [
           { url: images.order_guide_1_1 },
           { url: images.order_guide_1_2 },
@@ -31,19 +31,19 @@ const Detail = ({ route }) => {
         key: 'key_support',
         step: '2',
         cotent:
-          ' Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'khi tích đủ 500 điểm tích luỹ, bạn có thể đổi điểm lấy voucher 25.000đ. Nhớ đổi điểm trong bước thanh toán đơn hàng nha! ',
         images: [
           { url: images.order_guide_2_1 },
           { url: images.order_guide_2_2 },
         ],
       },
-      {
-        key: 'key_support',
-        step: '3',
-        cotent:
-          ' Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        images: [{ url: images.order_guide_3 }],
-      },
+      // {
+      //   key: 'key_support',
+      //   step: '3',
+      //   cotent:
+      //     ' Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      //   images: [{ url: images.order_guide_3 }],
+      // },
     ]);
   }, [navigation, title]);
   const renderItem = ({ item }) => {

@@ -21,8 +21,8 @@
   "txtSignUpFacebook": "Sign up with Facebook",
   "txtSignUpGoogle": "Sign up with Google",
   "txtSignIn": "Log in",
-  "txtSignInFacebook": "Login with Facebook",
-  "txtSignInGoogle": "Sign in with Google",
+  "txtSignInFacebook": "Facebook",
+  "txtSignInGoogle": "Google",
   "txtInputName": "Full Name *",
   "txtInputPhone": "Phone number *",
   "txtInputEmail": "Email",
@@ -221,5 +221,6 @@
   "txtBlockSpam": "This phone number was blocked, Please try again :",
   "txtPhoneExisted": "The phone number is ixisted",
   "txtVoucher": "Voucher  ",
-  "txtRedeemPoint": "Redeem point "
+  "txtRedeemPoint": "Redeem point ",
+  "txtSocialSignin": "Or "
 }

@@ -214,7 +214,7 @@ const SignInScreen = () => {
 
                   {/**REMEMBER*/}
                   <View style={styles.rememberStyle}>
-                    <TextCheckBox
+                    {/* <TextCheckBox
                       label={translate('txtRemember')}
                       // label={translate('txtRemember')}
                       value={values.remember}
@@ -229,7 +229,7 @@ const SignInScreen = () => {
                       label={translate('txtForgetPassWord')}
                       style={styles.txtForgotPass}
                       onPress={goForgotPasswordScreen}
-                    />
+                    /> */}
                   </View>
 
                   <View style={styles.polygonStyle}>
@@ -244,15 +244,26 @@ const SignInScreen = () => {
                     onPress={handleSubmit}
                     label={translate('txtSignIn')}
                   />
+                  <View style={styles.textContent}>
+                    <Text style={styles.txtStyle}>
+                      {translate('txtSocialSignin')}
+                    </Text>
+                  </View>
+                  <View style={styles.social}>
+                    {/**FACEBOOK*/}
+                    <ButtonCC.ButtonFacebook
+                      width="50%"
+                      style={{ marginRight: 8 }}
+                    />
+                    {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
-                  {/**FACEBOOK*/}
-                  <ButtonCC.ButtonFacebook />
-                  {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
-
-                  {/**GOOGLE*/}
-                  <ButtonCC.ButtonGoogle />
-                  {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
-
+                    {/**GOOGLE*/}
+                    <ButtonCC.ButtonGoogle
+                      width="50%"
+                      style={{ marginLeft: 8 }}
+                    />
+                    {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
+                  </View>
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>
                     <Text style={styles.txtStyle}>
@@ -307,7 +318,7 @@ const styles = StyleSheet.create({
     height: 30,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginVertical: 10,
+    marginVertical: 5,
   },
 
   txtStyle: {
@@ -344,6 +355,8 @@ const styles = StyleSheet.create({
   txtSignIn: { ...AppStyles.fonts.bold, color: '#1B1B1B' },
 
   titleStyle: { marginTop: scaleHeight(15), marginBottom: 10 },
+
+  social: { ...AppStyles.styles.horizontalLayout, width: LAYOUT_WIDTH },
 });
 
 export default SignInScreen;

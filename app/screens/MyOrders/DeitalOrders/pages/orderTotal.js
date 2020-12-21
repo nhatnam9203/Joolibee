@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { AppStyles, metrics, images } from '@theme';
-import { format } from '@utils';
+import { format, scale } from '@utils';
 import { translate } from '@localize';
-export default function orderTotal({ total }) {
+
+const { scaleWidth, scaleHeight } = scale;
+
+export default function orderTotal({ total, voucher_discount_amount }) {
   const { grand_total, subtotal } = total || {};
   const discount_total = '0.000đ';
   // Logger.debug(total, '======> total');
@@ -18,20 +21,31 @@ export default function orderTotal({ total }) {
         </Text>
       </View>
 
-      {/* <View style={styles.content}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Image source={images.icons.ic_sticked} />
-          <Text style={AppStyles.fonts.text}> Khuyến mãi (Ưu đãi 0.000đ)</Text>
+      {voucher_discount_amount && (
+        <View style={styles.content}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image
+              style={styles.voucherIcon}
+              source={images.icons.ic_sticked}
+            />
+            <Text
+              style={
+                AppStyles.fonts.text
+              }>{`Khuyến mãi (Ưu đãi ${voucher_discount_amount} đ)`}</Text>
+          </View>
+          <Text
+            style={
+              AppStyles.fonts.bold
+            }>{`- ${voucher_discount_amount} đ`}</Text>
         </View>
-        <Text style={AppStyles.fonts.bold}>-{discount_total}</Text>
-      </View> */}
-
+      )}
       <View style={styles.seperator} />
 
       <View style={styles.content}>
         <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
           {translate('txtGrandTotal')}:
         </Text>
+
         <Text style={[AppStyles.fonts.bold, styles.txtFontSize]}>
           {grand_total && format.jollibeeCurrency(grand_total)}
         </Text>
@@ -86,5 +100,23 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#484848',
     marginRight: 10,
+  },
+
+  voucherContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    flex: 1,
+  },
+  voucherIcon: {
+    width: scaleWidth(17),
+    height: scaleHeight(17),
+    resizeMode: 'contain',
+  },
+  voucherText: {
+    ...AppStyles.fonts.text,
+    color: AppStyles.colors.moderate_cyan,
+    marginLeft: 3,
+    fontSize: scaleWidth(16),
   },
 });

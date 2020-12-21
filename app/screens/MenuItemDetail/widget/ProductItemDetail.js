@@ -75,7 +75,6 @@ const ProductItemInfoLoading = () => {
 export const ProductItemDetailHeader = React.memo(
   ({ image, name, point, price_range }) => {
     const { sellPrice, showPrice } = destructuring.priceOfRange(price_range);
-    Logger.debug('ProductItemDetailHeader', 'ProductItemDetailHeader');
     return (
       <View style={styles.header}>
         <JollibeeImage

@@ -36,7 +36,6 @@ export default function Index({ navigation, route }) {
     voucher_discount_amount,
   } = order || {};
 
-  Logger.debug(voucher_discount_amount, '=====> voucher_discount_amount');
   const findOrder = orderList?.find((x) => x?.id === id);
   status = findOrder?.status;
   const [getOrderDetail, orderDetailResp] = useLazyQuery(
@@ -48,10 +47,7 @@ export default function Index({ navigation, route }) {
 
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
-    status_order === translate('txtStatusOrderComplete') ||
-    status_order === translate('txtStatusOrderCancel')
-      ? true
-      : false;
+    status_order === translate('txtStatusOrderComplete') ? true : false;
   const getDate = React.useCallback(() => {
     const current_day = moment().format('DD/MM/yyyy');
     let dateOrder = format.dateTime(created_at);
@@ -225,7 +221,10 @@ export default function Index({ navigation, route }) {
             {/* --------------  SAN PHAM DA CHON  -------------- */}
 
             {/* --------------  TOTAL PRICE  -------------- */}
-            <OrderTotal total={total} />
+            <OrderTotal
+              total={total}
+              voucher_discount_amount={voucher_discount_amount}
+            />
 
             {/* --------------  TOTAL PRICE (FEEDBACK) -------------- */}
             {(status?.toLowerCase() === 'pending' ||

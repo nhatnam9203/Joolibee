@@ -81,7 +81,7 @@ const CustomAccordionList = ({
 
           await updateOptionItems([
             item,
-            selectedListItem.filter((x) => x.id !== item.id),
+            ...selectedListItem.filter((x) => x.id !== item.id),
           ]);
         }
         break;
@@ -95,16 +95,18 @@ const CustomAccordionList = ({
   };
 
   const unSelectedItem = async (item) => {
-    const index = selectedListItem?.indexOf(item);
+    const index = selectedListItem?.indexOf((x) => x.id === item.id);
+
     selectedListItem?.splice(index, 1);
     await updateOptionItems([...selectedListItem]);
   };
 
   const onPress = (item) => {
-    const selected = selectedListItem?.indexOf(item) > -1;
+    const selected = selectedListItem?.find((x) => x.id === item.id);
+
     switch (type) {
       case CustomAccordionListItemType.Multiline:
-        if ((selected && item?.quantity > 1) || !selected) {
+        if (selected === null || selected === undefined) {
           selectedItem(item);
         } else {
           unSelectedItem(item);
@@ -118,16 +120,14 @@ const CustomAccordionList = ({
   };
 
   const onRenderItem = ({ item }, index) => {
-    return typeof renderItem === 'function' ? (
-      renderItem({
+    if (typeof renderItem === 'function') {
+      return renderItem({
         item,
         index,
         type,
         onPress: onPress,
-      })
-    ) : (
-      <View />
-    );
+      });
+    } else return <View />;
   };
 
   const onRenderSelectedItem = () => {

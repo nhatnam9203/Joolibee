@@ -60,8 +60,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
     overflow: 'hidden',
-    width: '100%',
-    height: '100%',
+    flex: 0,
   },
   topContent: {
     height: '62%',

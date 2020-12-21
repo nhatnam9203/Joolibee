@@ -20,26 +20,22 @@ export const MenuDetailItem = ({
   selected = false,
 }) => {
   const [radioChecked, setRadioChecked] = React.useState(item?.is_default);
-  const [qty, setQyt] = React.useState(item?.quantity);
-
-  const selectItem = (select) => {
-    setRadioChecked(select);
-  };
+  const [qty, setQyt] = React.useState(item?.quantity ?? 1);
 
   React.useEffect(() => {
-    setRadioChecked(item.is_default);
+    setRadioChecked(item?.is_default);
   }, [item]);
 
   const onPressItem = () => {
     if (typeof onPress === 'function') {
-      onPress(item);
-      setQyt(item?.quantity);
+      setQyt(1);
+      onPress(Object.assign({}, item, { quantity: 1 }));
     }
   };
 
   const onChangeQuantity = (value) => {
     if (value && typeof onPress === 'function') {
-      const num = parseInt(value);
+      const num = parseInt(value) ?? 1;
       setQyt(num);
       onPress(Object.assign({}, item, { quantity: num }));
     }
@@ -83,7 +79,7 @@ export const MenuDetailItem = ({
               normalColor={AppStyles.colors.accent}
               selectedColor={AppStyles.colors.accent}
               value={radioChecked}
-              onValueChange={setRadioChecked}
+              disabled={true}
             />
           </View>
         );

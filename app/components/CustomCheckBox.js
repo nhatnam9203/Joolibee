@@ -6,6 +6,7 @@ const CustomCheckBox = ({
   normalColor = '#989898',
   selectedColor = '#3FB4C3',
   fillColor,
+  disabled = false,
   ...props
 }) => {
   return (
@@ -22,6 +23,7 @@ const CustomCheckBox = ({
       onCheckColor={selectedColor}
       onTintColor={normalColor}
       animationDuration={0.25}
+      disabled={disabled}
       {...props}
     />
   );

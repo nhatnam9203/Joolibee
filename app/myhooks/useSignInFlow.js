@@ -30,10 +30,10 @@ export const useSignInFlow = () => {
 
   const onSignOut = async () => {
     // call server revoke token
-    const { token } = await get(StorageKey.User);
-    if (token) {
-      await revokeCustomerToken();
-    }
+    // const { token } = await get(StorageKey.User);
+    // if (token) {
+    //   await revokeCustomerToken();
+    // }
 
     // Evict and garbage-collect the cached user object
     graphQlClient.cache.evict({ fieldName: 'customer' });

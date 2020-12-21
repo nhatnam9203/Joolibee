@@ -46,7 +46,7 @@ const ShippingType = {
 
 const COUNTDOWN_SECONDS = 30;
 const CONFIRM_HEIGHT = 150;
-const MINIUM_POINT = 25;
+const MINIUM_POINT = 250;
 const SUB_MENU_ID = 4;
 
 const OrderScreen = ({ route = { params: {} } }) => {
@@ -395,10 +395,10 @@ const OrderScreen = ({ route = { params: {} } }) => {
       //   }
       // }
 
-      const listStore = ['33', '3', '33', '2', '33'];
+      const listStore = ['33', '3', '2'];
       // !! hard code 3 store_id
       const hard_code = listStore.sort(() => Math.random() - 0.5);
-      let store_id = pickStore?.store_id;
+      let store_id = hard_code?.find(Boolean);
 
       const findStoreId = hard_code.find((storeId) => {
         const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
@@ -406,7 +406,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         if (findIdex >= 0) return storeId;
       });
 
-      if (findStoreId) {
+      if (findStoreId !== null) {
         store_id = findStoreId;
       }
 
@@ -751,7 +751,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
             bgColor={AppStyles.colors.accent}
             disabled={!reward_point}>
             <TextInput
-              placeholder={'Vd:25, 50, 75.....'}
+              placeholder={'Vd:250, 500, 750, .....'}
               style={{ paddingHorizontal: 10, flex: 1 }}
               keyboardType="numeric"
               value={reward_point}

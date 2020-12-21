@@ -27,7 +27,10 @@ const index = ({ item, onPress, isChecked }) => {
       <View style={styles.rightContainer}>
         <Text style={[AppStyles.fonts.medium_SVN]}>{item.name}</Text>
 
-        <StoreInfo url={images.icons.ic_store_address} content={item.address} />
+        <StoreInfo
+          url={images.icons.ic_store_address}
+          content={item?.vietnamese_address ?? item?.address}
+        />
         <StoreInfo url={images.icons.ic_store_phone} content={item.phone} />
         <StoreInfo url={images.icons.ic_store_clock} content={time_store} />
       </View>

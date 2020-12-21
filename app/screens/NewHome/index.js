@@ -68,14 +68,12 @@ const HomeScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onChangeScreen = (screen) => () => {
+  const onChangeScreen = () => {
     let params = {
-      data: homeScreen?.news ? homeScreen?.news : [],
-      loading: homeScreenResp?.loading,
-      refetch: homeScreenResp?.refetch,
+      data: homeScreen?.news ?? [],
     };
 
-    navigation.navigate(screen, params);
+    navigation.navigate(ScreenName.News, params);
   };
 
   const onToggleDetail = (newsItem = null) => showNewsItemDetail(newsItem);
@@ -172,7 +170,7 @@ const HomeScreen = () => {
               <News
                 loading={homeScreenResp?.loading}
                 data={homeScreen?.news ?? []}
-                onChangeScreen={onChangeScreen(ScreenName.News)}
+                onChangeScreen={onChangeScreen}
                 onOpenDetail={onToggleDetail}
               />
             </CustomImageBackground>

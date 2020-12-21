@@ -58,6 +58,12 @@ export const VerifyPhoneCode = ({
     startTimer(timeOut);
   }, [startTimer, timeOut]);
 
+  // React.useEffect(() => {
+  //   setTimeout(() => {
+  //     confirmCode('1', phone);
+  //   }, 500);
+  // }, []);
+
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Animated.View style={styles.container}>

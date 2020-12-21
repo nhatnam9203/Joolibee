@@ -91,7 +91,7 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
       gender: formValues.gender !== -1 ?? formValues.gender,
       fcmToken: token ?? '456',
       dob: format.dateTime(dob),
-      smsCode,
+      smsCode: smsCode ?? '1',
       deviceId: getUniqueId(),
     };
     registerCustomer({

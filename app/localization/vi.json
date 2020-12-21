@@ -21,8 +21,8 @@
   "txtSignUpFacebook": "Đăng ký bằng Facebook",
   "txtSignUpGoogle": "Đăng ký bằng Google",
   "txtSignIn": "Đăng nhập",
-  "txtSignInFacebook": "Đăng nhập bằng Facebook",
-  "txtSignInGoogle": "Đăng nhập bằng Google",
+  "txtSignInFacebook": "Facebook",
+  "txtSignInGoogle": "Google",
   "txtInputFirstName": "Họ ",
   "txtInputLastName": "Tên ",
   "txtInputPhone": "Số điện thoại *",
@@ -221,4 +221,5 @@
   "txtPhoneExisted": "Số điện thoại đã tồn tại!",
   "txtVoucher": "Voucher ưu đãi ",
   "txtRedeemPoint": "Đổi điểm thưởng",
+  "txtSocialSignin": "Hoặc đăng nhập bằng "
 }
