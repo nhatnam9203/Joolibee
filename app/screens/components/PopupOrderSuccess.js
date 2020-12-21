@@ -25,7 +25,7 @@ export const PopupOrderSuccess = ({
   };
   return (
     <PopupLayout
-      // disableBackdrop={true}
+      disableBackdrop={true}
       visible={visible}
       onToggle={onToggle}
       ref={popupRef}>

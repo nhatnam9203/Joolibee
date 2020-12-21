@@ -27,7 +27,7 @@ const NotificationScreen = () => {
   const [
     { notifyList, loading, refreshing },
     getNotifyList,
-  ] = GEX.useGetNotifyList();
+  ] = GEX.useGetNotifyList('cache-first');
 
   const [markReadCustomerNotification] = useMutation(GQL.READ_CUSTOMER_NOTIFY, {
     errorPolicy: 'ignore',

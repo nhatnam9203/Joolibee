@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { account } from '@slices';
 import React from 'react';
 
-export const useGetNotifyList = () => {
+export const useGetNotifyList = (fetchPolicy) => {
   const dispatch = useDispatch();
   const notifyList = useSelector((state) => state.account?.notificationList);
 
   const [getNotifyList, notifyResp] = useLazyQuery(GET_NOTIFY_LIST, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: fetchPolicy ?? 'network-only',
     onCompleted: (res) => {},
     onError: (error) => {},
   });

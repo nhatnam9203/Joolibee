@@ -38,6 +38,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const headerHeight = useHeaderHeight();
+  Logger.debug('call HomeScreen 12237628736287');
 
   const [language] = useChangeLanguage();
 

@@ -584,7 +584,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
                 style={[styles.txtStyle, { flex: 1 }]}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                {pickStore?.name + ' - ' + pickStore?.address}
+                {pickStore?.name + ' - ' + pickStore?.vietnamese_address}
               </Text>
             </View>
           </OrderSectionItem>
@@ -751,7 +751,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
             bgColor={AppStyles.colors.accent}
             disabled={!reward_point}>
             <TextInput
-              placeholder={'Vd:250, 500, 750, .....'}
+              placeholder={'500, 1000, 1500.....'}
               style={{ paddingHorizontal: 10, flex: 1 }}
               keyboardType="numeric"
               value={reward_point}

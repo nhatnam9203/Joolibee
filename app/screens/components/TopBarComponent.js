@@ -70,7 +70,7 @@ export const TopBarRight = React.memo(() => {
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
   // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
 
-  const [{ notifyList }] = GEX.useGetNotifyList();
+  const [{ notifyList }] = GEX.useGetNotifyList('cache-first');
   const notifyCount = notifyList?.filter((notify) => !notify?.is_read)?.length;
 
   return (

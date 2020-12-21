@@ -25,7 +25,6 @@ const Index = ({ visible, item, onToggle, url = null }) => {
         html: item?.content,
       };
 
-  Logger.debug(source, '=====> source');
   return (
     <Modal visible={visible} ref={popupRef}>
       <View style={styles.iconContainer}>

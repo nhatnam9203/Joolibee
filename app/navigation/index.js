@@ -41,15 +41,16 @@ function App() {
   const [{ startApp, isSignIn }] = useSignInFlow();
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
-  const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
+  const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen(
+    'cache-first',
+  );
   const [, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
-  const [, getCategoryList] = GEX.useGetCategoryList();
+  const [, getCategoryList] = GEX.useGetCategoryList('cache-first');
   const getStoreJsonData = GEX.useGetStoreInfo();
-  const [, getNotifyList] = GEX.useGetNotifyList();
+  const [, getNotifyList] = GEX.useGetNotifyList('cache-first');
 
   React.useEffect(() => {
     if (isSignIn && !startApp) {
-      Logger.debug('App hahaha');
       setAllowGotoHomeScreen(true);
       loadHomeScreen();
       getCustomerCart();

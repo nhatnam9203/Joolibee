@@ -194,8 +194,8 @@
   "txtDesOrderComplete": "Đơn hàng của bạn đã giao hoàn tất,chúc bạn ngon miệng",
   "txtGrandTotal": "Tổng cộng",
   "txtSubmit": "Gửi",
-  "txtDownloadPackage": "Đang tải dữ liệu ",
-  "txtInstallingPackage": "Đang cài đặt ...",
+  "txtDownloadPackage": "Tải bảng cập nhật mới ",
+  "txtInstallingPackage": "Đang cài đặt bản cấp nhật mới!",
   "txtEmptyPromotionList": "Hiện tại không có khuyến mãi nào",
   "txtEmptyOrderList": "Hiện tại không có đơn hàng nào",
   "txtHome": "Nhà riêng",
@@ -221,5 +221,7 @@
   "txtPhoneExisted": "Số điện thoại đã tồn tại!",
   "txtVoucher": "Voucher ưu đãi ",
   "txtRedeemPoint": "Đổi điểm thưởng",
-  "txtSocialSignin": "Hoặc đăng nhập bằng "
+  "txtSocialSignin": "Hoặc đăng nhập bằng ",
+  "txtCheckUpdate": "Kiểm tra cập nhật ...",
+  "txtLoadingApp": "Đang tải dữ liệu"
 }

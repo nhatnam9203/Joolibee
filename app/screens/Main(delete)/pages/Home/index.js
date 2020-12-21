@@ -39,7 +39,7 @@ const HomePage = () => {
   const tokenKey = useSelector((state) => state.account.user.tokenKey);
 
   const [{ data, loading, refetch }, loadHomeScreen] = GEX.useLoadHomeScreen(
-    'cache-first',
+    'cache-only',
   );
 
   const _data = data ? data?.homeScreen : {};

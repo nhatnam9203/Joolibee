@@ -222,5 +222,7 @@
   "txtPhoneExisted": "The phone number is ixisted",
   "txtVoucher": "Voucher  ",
   "txtRedeemPoint": "Redeem point ",
-  "txtSocialSignin": "Or "
+  "txtSocialSignin": "Or ",
+  "txtCheckUpdate": "Checking for update ...",
+  "txtLoadingApp": "Loading data ..."
 }

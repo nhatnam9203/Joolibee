@@ -1,4 +1,4 @@
-import { CodePushStatus, useCodePushUpdate } from '@hooks';
+import { useCodePushUpdate } from '@hooks';
 import { translate } from '@localize';
 import { app } from '@slices';
 import { AppStyles, images } from '@theme';
@@ -12,12 +12,25 @@ import { CustomImageBackground } from '@components';
 
 const { scaleWidth, scaleHeight } = scale;
 
+export const CodePushStatus = {
+  INIT: 0,
+  FINISH: 1,
+  PROCESSING: 2,
+  CHECK_UPDATE: 3,
+  DOWNLOAD_PACKAGE: 4,
+  INSTALL_UPDATE: 5,
+  ERROR: -1,
+  FAILED: -2,
+  INSTALL_FAILED: -3,
+};
+
 const Splash: () => React$Node = () => {
   const dispatch = useDispatch();
 
   const [processing, setProcessing] = React.useState({
-    code: CodePushStatus.PROCESSING,
+    code: CodePushStatus.INIT,
     message: 'init',
+    progress: 0,
   });
 
   const codePushDownloadProgress = (
@@ -29,6 +42,7 @@ const Splash: () => React$Node = () => {
         {},
         processing,
         {
+          code: CodePushStatus.DOWNLOAD_PACKAGE,
           progress: Math.round((receivedBytes / totalBytes).toFixed(2) * 100),
         },
         isMounted,
@@ -49,7 +63,7 @@ const Splash: () => React$Node = () => {
         // self.setState({ modalVisible: true });
         codePushProcessComplete(
           {
-            code: CodePushStatus.SUCCESS,
+            code: CodePushStatus.FINISH,
             message: 'update-installed',
           },
           isMounted,
@@ -68,7 +82,7 @@ const Splash: () => React$Node = () => {
       case codePush.SyncStatus.CHECKING_FOR_UPDATE:
         codePushProcessComplete(
           {
-            code: CodePushStatus.PROCESSING,
+            code: CodePushStatus.CHECK_UPDATE,
             message: 'check-for-update',
           },
           isMounted,
@@ -77,7 +91,7 @@ const Splash: () => React$Node = () => {
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
         codePushProcessComplete(
           {
-            code: CodePushStatus.PROCESSING,
+            code: CodePushStatus.DOWNLOAD_PACKAGE,
             message: 'download-package',
           },
           isMounted,
@@ -86,7 +100,7 @@ const Splash: () => React$Node = () => {
       case codePush.SyncStatus.INSTALLING_UPDATE:
         codePushProcessComplete(
           {
-            code: CodePushStatus.PROCESSING,
+            code: CodePushStatus.INSTALL_UPDATE,
             message: 'installing-update',
           },
           isMounted,
@@ -104,7 +118,7 @@ const Splash: () => React$Node = () => {
       case codePush.SyncStatus.UPDATE_IGNORED:
         codePushProcessComplete(
           {
-            code: CodePushStatus.SUCCESS,
+            code: CodePushStatus.FINISH,
             message: 'update-ignored',
           },
           isMounted,
@@ -113,7 +127,7 @@ const Splash: () => React$Node = () => {
       case codePush.SyncStatus.UP_TO_DATE:
         codePushProcessComplete(
           {
-            code: CodePushStatus.SUCCESS,
+            code: CodePushStatus.FINISH,
             message: 'update-to-date',
           },
           isMounted,
@@ -123,7 +137,7 @@ const Splash: () => React$Node = () => {
       default:
         codePushProcessComplete(
           {
-            code: CodePushStatus.SUCCESS,
+            code: CodePushStatus.FINISH,
             message: status + '',
           },
           isMounted,
@@ -134,7 +148,7 @@ const Splash: () => React$Node = () => {
 
   React.useEffect(() => {
     // update code push success
-    if (processing?.code !== CodePushStatus.PROCESSING) {
+    if (processing?.code === CodePushStatus.FINISH) {
       dispatch(app.loadingSuccess());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -143,6 +157,14 @@ const Splash: () => React$Node = () => {
   React.useEffect(() => {
     let isMounted = true; // note this flag denote mount status
     try {
+      codePushProcessComplete(
+        {
+          code: CodePushStatus.CHECK_UPDATE,
+          message: 'check-update',
+        },
+        isMounted,
+      );
+
       codePush
         .checkForUpdate()
         .then((update) => {
@@ -160,7 +182,7 @@ const Splash: () => React$Node = () => {
               /* đã update */
               codePushProcessComplete(
                 {
-                  code: CodePushStatus.SUCCESS,
+                  code: CodePushStatus.FINISH,
                   message: 'update-rollbacks',
                 },
                 isMounted,
@@ -181,7 +203,7 @@ const Splash: () => React$Node = () => {
           } else {
             codePushProcessComplete(
               {
-                code: CodePushStatus.SUCCESS,
+                code: CodePushStatus.FINISH,
                 message: 'no-updated',
               },
               isMounted,
@@ -228,18 +250,29 @@ const Splash: () => React$Node = () => {
       />
       <View style={styles.container_footer}>
         {/* Download package progress */}
-        {processing?.progress > 0 && (
-          <Text style={styles.textDownloadProgress}>
-            {translate('txtDownloadPackage') +
-              Math.min(processing?.progress, 100) +
-              '%'}
-          </Text>
-        )}
+        {processing?.code === CodePushStatus.DOWNLOAD_PACKAGE &&
+          processing?.progress > 0 && (
+            <Text style={styles.textDownloadProgress}>
+              {translate('txtDownloadPackage') +
+                Math.min(processing?.progress, 100) +
+                '%'}
+            </Text>
+          )}
 
         {/* Installing package */}
-        {processing?.message === 'installing-update' && (
+        {processing?.code === CodePushStatus.INSTALL_UPDATE && (
           <Text style={styles.textDownloadProgress}>
             {translate('txtInstallingPackage')}
+          </Text>
+        )}
+        {processing?.code === CodePushStatus.CHECK_UPDATE && (
+          <Text style={styles.textDownloadProgress}>
+            {translate('txtCheckUpdate')}
+          </Text>
+        )}
+        {processing?.code === CodePushStatus.FINISH && (
+          <Text style={styles.textDownloadProgress}>
+            {translate('txtLoadingApp')}
           </Text>
         )}
 
@@ -281,9 +314,9 @@ const styles = StyleSheet.create({
   },
 
   textDownloadProgress: {
-    fontSize: scaleWidth(21),
+    fontSize: scaleWidth(18),
     fontFamily: 'Roboto-Regular',
-    color: AppStyles.colors.background,
+    color: AppStyles.colors.text,
     marginTop: scaleHeight(5),
     fontStyle: 'italic',
   },
