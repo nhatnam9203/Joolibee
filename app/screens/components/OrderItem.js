@@ -12,7 +12,7 @@ const { scaleHeight, scaleWidth } = scale;
 const IMAGE_SIZE = scaleWidth(69);
 
 export const OrderItem = ({ item, onPress, shadow, updateQty }) => {
-  const { product = {}, quantity, prices = {} } = item;
+  const { product = {}, quantity, prices = {} } = item || {};
 
   const [qty, setQuantity] = React.useState(quantity);
 

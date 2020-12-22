@@ -13,8 +13,8 @@ import { ButtonRed } from './ButtonCC';
 import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
 import { LabelTitle } from './LabelTitle';
 
-const { scaleHeight } = scale;
-const IMAGE_SIZE = scaleHeight(160);
+const { scaleHeight, scaleWidth } = scale;
+const IMAGE_SIZE = scaleHeight(165);
 
 export const OrderNewItemLoading = React.memo(() => (
   <FlatListItemWithImgHorizontal

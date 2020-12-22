@@ -150,7 +150,7 @@ const ProductCart = ({ visible, onToggle }) => {
 
   const updateMyCart = async (item) => {
     let input = {
-      cart_item_id: item.id,
+      cart_item_id: item?.id,
       quantity: item.quantity,
     };
 
@@ -168,18 +168,23 @@ const ProductCart = ({ visible, onToggle }) => {
     });
   };
 
-  const onRenderItem = ({ item }) => {
-    return (
-      <OrderItem
-        item={item}
-        key={item.id + ''}
-        shadow={false}
-        updateQty={updateMyCart}
-        onPress={() => {
-          onShowCartItem(item);
-        }}
-      />
-    );
+  const onRenderItem = (obj) => {
+    const { item, index } = obj || {};
+    if (item) {
+      return (
+        <OrderItem
+          item={item}
+          key={item?.id ?? index + ''}
+          shadow={false}
+          updateQty={updateMyCart}
+          onPress={() => {
+            onShowCartItem(item);
+          }}
+        />
+      );
+    }
+
+    return <View />;
   };
 
   React.useEffect(() => {

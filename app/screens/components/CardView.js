@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   cardContent: {
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingHorizontal: scaleWidth(25),
+    paddingHorizontal: scaleWidth(5),
   },
 
   txtTitle: {
@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
     color: AppStyles.colors.primary,
     ...AppStyles.fonts.SVN_Merge_Bold,
     paddingTop: scaleHeight(5),
+    width: '100%',
+    height: scaleHeight(30),
+    textAlign: 'center',
   },
 
   img: {

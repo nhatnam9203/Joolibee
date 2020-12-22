@@ -8,7 +8,7 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app, order } from '@slices';
 import { AppStyles, images } from '@theme';
-import { format, scale } from '@utils';
+import { format, scale, appUtil } from '@utils';
 import React from 'react';
 import {
   Image,
@@ -36,6 +36,7 @@ import {
   OrderVoucherItem,
 } from './widget';
 // import { removeVoucherFromCart } from './controllers';
+import { distanceMatrix } from '@location';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -373,55 +374,60 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     const selectTheStore = async () => {
-      let pickStore = pickupStores.find(Boolean);
+      let pickStoreId = pickupStores.find(Boolean);
+      Logger.debug(pickupStores, '=======> pickupStores');
 
       //!! Find store follow distance, tam thoi ko dung
-      // if (pickupStores?.length > 1 && shippingLocation) {
-      //   const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
-      //   let destinations = '';
-      //   pickupStores?.forEach((x) => {
-      //     const findStore = storeList?.find((findX) => x.store_id === findX.id);
-      //     if (findStore) {
-      //       destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
-      //     }
-      //   });
-      //   let { status, data } = await distanceMatrix({ origins, destinations });
-      //   if (status === 'OK') {
-      //     const listDistances = data?.rows[0]?.elements;
-      //     const getStore = format.getNearStore(listDistances);
-      //     if (getStore) {
-      //       pickStore = getStore;
-      //     }
-      //   }
-      // }
+      if (pickupStores?.length > 1 && shippingLocation) {
+        const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
+        let destinations = '';
+        pickupStores?.forEach((x) => {
+          const findStore = storeList?.find((findX) => x.store_id === findX.id);
+          if (findStore) {
+            destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
+          }
+        });
+        let { status, data } = await distanceMatrix({ origins, destinations });
+        Logger.debug(status, '=======> status');
 
-      const listStore = ['33', '3', '2'];
-      // !! hard code 3 store_id
-      const hard_code = listStore.sort(() => Math.random() - 0.5);
-      let store_id = hard_code?.find(Boolean);
+        if (data?.length > 0) {
+          const getStoreIndex = appUtil.getNearStore(data);
+          Logger.debug(getStoreIndex, '=======> getStoreIndex');
 
-      const findStoreId = hard_code.find((storeId) => {
-        const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
-
-        if (findIdex >= 0) return storeId;
-      });
-
-      if (findStoreId !== null) {
-        store_id = findStoreId;
+          if (getStoreIndex >= 0 && pickupStores.length > getStoreIndex) {
+            pickStoreId = pickupStores[getStoreIndex]?.store_id;
+            Logger.debug(pickStoreId, '=======> pickStoreId');
+          }
+        }
       }
+
+      // const listStore = ['33', '3', '2'];
+      // !! hard code 3 store_id
+      // const hard_code = listStore.sort(() => Math.random() - 0.5);
+      // let store_id = hard_code?.find(Boolean);
+
+      // const findStoreId = hard_code.find((storeId) => {
+      //   const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
+
+      //   if (findIdex >= 0) return storeId;
+      // });
+
+      // if (findStoreId !== null) {
+      //   store_id = findStoreId;
+      // }
 
       // store_id = '33';
 
-      setAssignStoreId(store_id);
+      setAssignStoreId(pickStoreId);
 
-      setShippingMethods(ShippingType.InPlace, store_id);
+      setShippingMethods(ShippingType.InPlace, pickStoreId);
     };
 
     if (shippingType === ShippingType.InPlace && pickupStores) {
       selectTheStore();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickupStores, shippingType]);
+  }, [pickupStores, shippingType, shippingLocation]);
 
   // React.useEffect(() => {}, []);
 
