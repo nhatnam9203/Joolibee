@@ -76,7 +76,7 @@ const MenuScreen = () => {
   };
 
   const renderItem = (object) => {
-    const { item } = object;
+    const { item } = object  || {};
 
     return (
       <MenuItem

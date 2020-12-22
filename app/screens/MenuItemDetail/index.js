@@ -44,7 +44,7 @@ const CART_ICON_Y = scaleHeight(65);
 const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
-  const { product, detailItem, sku } = route.params;
+  const { product, detailItem, sku } = route.params  || {};
 
   const navigation = useNavigation();
   // animations
@@ -69,7 +69,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
       if (data) {
         const item = data.products?.items[0];
         if (detailItem?.bundle_options?.length > 0) {
-          const { items } = item;
+          const { items } = item || {};
           const list = items.map((x) => {
             const { option_id, options } = x;
 
@@ -114,13 +114,13 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderSummaryPrice = () => {
     let priceString = DEFAULT_CURRENCY_VALUE;
     if (productItem) {
-      const { price_range, items } = productItem;
+      const { price_range, items } = productItem || {};
       const { sellPrice } = destructuring.priceOfRange(price_range);
 
       let { value = 0 } = sellPrice || {};
 
       items?.forEach((item) => {
-        const { options } = item;
+        const { options } = item || {};
         const sumOptionPrice = options
           .filter((x) => x.is_default === true && x.price)
           .reduce(
@@ -213,7 +213,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     // });
 
     items.forEach((item) => {
-      const { options = [], option_id } = item;
+      const { options = [], option_id } = item || {};
       const mapArr = options
         .filter((x) => x.is_default === true)
         .map((x) => x.id + '');

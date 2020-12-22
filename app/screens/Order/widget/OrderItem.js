@@ -8,7 +8,7 @@ import NavigationService from '../../../navigation/NavigationService';
 import { translate } from '@localize';
 
 export const OrderItem = ({ item, updateMyCart, onPress }) => {
-  const { product = {}, quantity, prices } = item;
+  const { product = {}, quantity, prices } = item || {};
   const _price = format.jollibeeCurrency(prices.price);
 
   const [qty, setQuantity] = React.useState(quantity);

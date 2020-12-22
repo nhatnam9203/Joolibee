@@ -40,7 +40,8 @@ const Index = (props) => {
   ];
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { val_address, titleHeader, cartId, action_type } = props.route.params;
+  const { val_address, titleHeader, cartId, action_type } =
+    props.route.params || {};
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );

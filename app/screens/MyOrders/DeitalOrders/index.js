@@ -21,7 +21,7 @@ const MARGIN_VERTICAL = scaleHeight(20);
 
 export default function Index({ navigation, route }) {
   const dispatch = useDispatch();
-  const { order } = route.params;
+  const { order } = route.params || {};
   const [visible, setVisible] = React.useState(false);
   const [{ orderList }, getOrderList] = GEX.useOrderList();
 

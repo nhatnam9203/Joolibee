@@ -17,7 +17,7 @@ import { PopupWebView, NewsItem, TopBarRight } from '../components';
 const { scaleWidth, scaleHeight } = scale;
 
 const Index = ({ route }) => {
-  const { data } = route.params;
+  const { data } = route.params || {};
   const [visible_detal, showDetail] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
   const navigation = useNavigation();

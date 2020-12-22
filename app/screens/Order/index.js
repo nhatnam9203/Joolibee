@@ -51,7 +51,7 @@ const MINIUM_POINT = 250;
 const SUB_MENU_ID = 4;
 
 const OrderScreen = ({ route = { params: {} } }) => {
-  const { shippingMethod, addressParams } = route.params;
+  const { shippingMethod, addressParams } = route.params || {};
 
   const dispatch = useDispatch();
   const navigation = useNavigation();

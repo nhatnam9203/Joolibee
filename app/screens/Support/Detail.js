@@ -10,7 +10,7 @@ const { scaleHeight, scaleWidth } = scale;
 const Detail = ({ route }) => {
   const navigation = useNavigation();
   const [guides, setGuides] = React.useState([]);
-  const { title } = route.params;
+  const { title } = route.params || {};
   React.useEffect(() => {
     navigation.setOptions({
       headerTitle: title?.toUpperCase(),

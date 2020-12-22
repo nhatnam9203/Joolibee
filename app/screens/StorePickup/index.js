@@ -97,7 +97,7 @@ const StorePage = ({ route = { params: {} } }) => {
   const dispatch = useDispatch();
 
   const storesList = useStorePickup();
-  const { stores } = route.params;
+  const { stores } = route.params || {};
 
   const selectedStores = stores?.map((x, idx) => {
     const index = storesList?.findIndex((st) => st.id === x.id);

@@ -69,7 +69,7 @@ const index = ({ openMenu, data, loading }) => {
 };
 
 const renderItem = ({ item, index }) => {
-  const { price_range, point, image, name } = item;
+  const { price_range, point, image, name } = item  || {};
   const { maximum_price } = price_range || {};
   const _price = format.jollibeeCurrency(maximum_price?.final_price);
   return (

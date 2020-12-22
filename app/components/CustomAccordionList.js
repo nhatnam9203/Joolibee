@@ -43,7 +43,7 @@ const CustomAccordionList = ({
   onChangeOptionsItem,
   openFirst = false,
 }) => {
-  const { title, options, type, position, required, sku, option_id } = input;
+  const { title, options, type, position, required, sku, option_id } = input  || {};
 
   const [open, setOpen] = React.useState(openFirst);
   const [selectedListItem, setSelectedListItem] = React.useState([]);

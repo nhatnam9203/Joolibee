@@ -16,7 +16,7 @@ const MenuDetailScreen = ({ route = { params: {} } }) => {
   const {
     menuItem: { products = { items: [] }, id, name },
     product_id,
-  } = route.params;
+  } = route.params  || {};
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
