@@ -58,6 +58,7 @@ export const ORDERS_CUSTOMER = gql`
         address
         shipping_method
         use_plastic
+        store_name
         shipper_info {
           id
           first_name

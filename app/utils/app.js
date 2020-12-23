@@ -90,3 +90,7 @@ export const getNearStore = (distances) => {
   }
   return null;
 };
+
+export const getSoreByName = (stores, name = '') => {
+  return stores?.find((st) => st.name === name);
+};

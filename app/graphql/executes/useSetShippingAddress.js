@@ -14,6 +14,7 @@ export const useSetShippingAddress = (callBack = () => {}) => {
 
   const [searchStore] = useMutation(SEARCH_STORE_BY_ADDRESS, {
     onCompleted: (data) => {
+      Logger.debug(data, '=========searchStore data');
       if (data?.searchStore) {
         dispatch(store.setPickupStore(data?.searchStore?.area_data));
       }
@@ -86,10 +87,14 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     if (!customerCart) {
       return;
     }
+
     let { variables } = params;
     variables = Object.assign({}, variables, { cart_id: customerCart.id });
+    Logger.debug(params, '=====> params');
+
+    Logger.debug(variables, '=====> variables');
+
     return setShippingAddressesOnCart({
-      ...params,
       variables,
     });
   };

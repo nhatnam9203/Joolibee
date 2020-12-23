@@ -36,9 +36,11 @@ export default function Index({ navigation, route }) {
     voucher_discount_amount,
   } = order || {};
 
-  Logger.debug(created_at, '========> created_at');
+  Logger.debug(order_number, '========> order_number');
 
   const findOrder = orderList?.find((x) => x?.id === id);
+  Logger.debug(findOrder, '========> findOrder');
+
   status = findOrder?.status;
   const [getOrderDetail, orderDetailResp] = useLazyQuery(
     GQL.ORDER_DETAIL_CUSTOMER,
@@ -141,8 +143,6 @@ export default function Index({ navigation, route }) {
   );
 
   const renderStatusComponent = () => {
-    Logger.debug(status, '=====> status');
-
     if (
       order_complete ||
       status?.toLowerCase() === 'pending' ||

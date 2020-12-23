@@ -151,6 +151,7 @@ const StorePage = ({ route = { params: {} } }) => {
 
   const setPickupStore = () => {
     // cho nay chưa xet truogn hop back lai ma ko pickup
+    Logger.debug(store_pickuped, '=======> store_pickuped');
     dispatch(order.pickupStore(store_pickuped?.id));
     goBack();
   };
@@ -227,7 +228,7 @@ const StorePage = ({ route = { params: {} } }) => {
           <ItemStore
             item={item}
             onPress={onChangeStore(item)}
-            isChecked={item == store_pickuped}
+            isChecked={item === store_pickuped}
           />
         )}
         data={selectedStores}

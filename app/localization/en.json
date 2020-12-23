@@ -224,5 +224,8 @@
   "txtRedeemPoint": "Redeem point ",
   "txtSocialSignin": "Or ",
   "txtCheckUpdate": "Checking for update ...",
-  "txtLoadingApp": "Loading data ..."
+  "txtLoadingApp": "Loading data ...",
+  "txtNotFoundStoreAddress": "The address not support to shipping ",
+  "txtAlert": "Alert"
+
 }
