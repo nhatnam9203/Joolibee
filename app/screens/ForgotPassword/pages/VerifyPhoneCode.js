@@ -5,32 +5,31 @@ import { AppStyles } from '@theme';
 import { format, validate } from '@utils';
 import React from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ButtonCC, LabelTitle, TextInputErrorMessage } from '../../components';
 import { app } from '@slices';
 import { useCountDown } from '@hooks';
-import { useDispatch, useSelector } from 'react-redux';
 const LAYOUT_WIDTH = '90%';
+
 export const VerifyPhoneCode = ({
   infos,
   resendCode,
   confirmCode,
   timeOut,
 }) => {
-  const { phone = 'undefine', error } = infos;
+  const { phone = undefined, error } = infos;
   const dispatch = useDispatch();
   const isSpam = useSelector((state) => state.app?.isSpam);
-  // count number get code call
+  const [timing, setTiming] = React.useState(false);
+  const [codeInput, setCodeInput] = React.useState(null);
   // time count down
-  const second = useCountDown({
-    time: timeOut,
+  const { second, startTimer } = useCountDown({
     callBackEnd: () => {
       dispatch(app.toggleBlockSpam(false));
       setTiming(false);
     },
   });
-  // start count down
-  const [timing, setTiming] = React.useState(false);
-  const [codeInput, setCodeInput] = React.useState(null);
+
   const verifyCode = () => {
     if (validate.isEmptyString(codeInput)) {
       return;
@@ -41,14 +40,22 @@ export const VerifyPhoneCode = ({
 
   // Request firebase send code to phone,
   const resendCodeRequest = () => {
-    if (resendCode) {
-      resendCode();
+    if (typeof resendCode === 'function') {
+      resendCode({ phone });
+      setTiming(true);
     }
+  };
+
+  const convertMaskPhoneNumber = () => {
+    let start_phone = phone?.substring(0, 4);
+    let end_phone = phone?.substring(phone?.length, phone?.length - 2);
+    return start_phone + '****' + end_phone;
   };
 
   React.useEffect(() => {
     setTiming(true);
-  }, []);
+    startTimer(timeOut);
+  }, [startTimer, timeOut]);
 
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
@@ -57,7 +64,7 @@ export const VerifyPhoneCode = ({
         <Text style={styles.textStyle}>
           {translate('txtInputPhoneDesc1') +
             ' ' +
-            phone +
+            convertMaskPhoneNumber() +
             translate('txtInputPhoneDesc2')}
         </Text>
 
@@ -70,6 +77,7 @@ export const VerifyPhoneCode = ({
           onChangeText={(txt) => setCodeInput(txt)}
           value={codeInput}
         />
+
         {error && (
           <TextInputErrorMessage
             style={{ width: LAYOUT_WIDTH }}
@@ -78,9 +86,9 @@ export const VerifyPhoneCode = ({
           />
         )}
 
-        {timing && (
+        {timing && second && (
           <Text style={styles.textHighlightStyle}>
-            {translate('txtVerifyCodeTime') +
+            {translate(isSpam ? 'txtBlockSpam' : 'txtVerifyCodeTime') +
               '\n (' +
               format.pad_(second, 2) +
               ') ' +
@@ -157,6 +165,7 @@ const styles = StyleSheet.create({
     color: AppStyles.colors.button,
     textAlign: 'center',
     marginVertical: 10,
+    paddingHorizontal: 15,
   },
 
   resendCodeStyle: {

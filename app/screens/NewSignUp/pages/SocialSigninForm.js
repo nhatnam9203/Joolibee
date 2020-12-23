@@ -81,10 +81,10 @@ export const SocialSigninForm = ({ infos: { phone = '', token }, smsCode }) => {
     await dispatch(app.showLoading());
     const { dob } = formValues;
     const variables = {
-      ...formValues,
-      password: '',
-      gender: formValues.gender !== -1 ?? formValues.gender,
-      dob: format.dateTime(dob),
+      // ...formValues,
+      // password: '',
+      // gender: formValues.gender !== -1 ?? formValues.gender,
+      // dob: format.dateTime(dob),
       smsCode,
       deviceId: getUniqueId(),
     };

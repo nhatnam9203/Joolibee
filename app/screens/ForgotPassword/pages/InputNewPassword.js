@@ -12,12 +12,15 @@ import { SinglePageLayout } from '@layouts';
 import { Formik } from 'formik';
 import _ from 'lodash';
 import * as Yup from 'yup';
+import { GEX } from '@graphql';
 
 const LAYOUT_WIDTH = '90%';
 
-export const InputNewPassword = ({ next }) => {
+export const InputNewPassword = ({ phone = '' }, smsCode) => {
+  const [, resetPasswordCustomer] = GEX.useResetPasswordCustomer();
+
   const NewPasswordSchema = Yup.object().shape({
-    password: Yup.string()
+    newPassword: Yup.string()
       .min(6, translate('txtTooShort'))
       .max(30, translate('txtTooLong'))
       .required(translate('txtRequired')),
@@ -28,12 +31,18 @@ export const InputNewPassword = ({ next }) => {
       .required(translate('txtRequired')),
   });
 
-  const forgotPasswordSubmit = () => {};
+  const forgotPasswordSubmit = (values) => {
+    resetPasswordCustomer({ ...values, smsCode });
+  };
 
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Formik
-        initialValues={{ password: '', confirmPassword: '' }}
+        initialValues={{
+          newPassword: '',
+          confirmPassword: '',
+          phoneNumber: phone,
+        }}
         onSubmit={forgotPasswordSubmit}
         validationSchema={NewPasswordSchema}
         isValidating={true}>
@@ -44,7 +53,6 @@ export const InputNewPassword = ({ next }) => {
           values,
           errors,
           touched,
-          setFieldValue,
         }) => (
           <View style={styles.container}>
             <LabelTitle label={translate('txtNewPassword')} color="#fff" />
@@ -53,7 +61,7 @@ export const InputNewPassword = ({ next }) => {
               style={{ width: LAYOUT_WIDTH }}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
-              value={values.password}
+              value={values.newPassword}
               placeholder={translate('txtInputPassword')}
               textContentType="password"
             />
@@ -83,7 +91,7 @@ export const InputNewPassword = ({ next }) => {
               />
             )}
             <ButtonCC.ButtonYellow
-              // onPress={next}
+              onPress={handleSubmit}
               label={translate('txtSave')}
               style={styles.btnStyle}
             />

@@ -93,6 +93,7 @@ const SignInScreen = () => {
     try {
       const data = await loginFb();
       let submitData = { type: 'Facebook', token: data?.accessToken };
+      console.log(data?.accessToken);
       socialSignInSubmit(submitData);
     } catch (error) {
       await dispatch(app.hideLoading());
