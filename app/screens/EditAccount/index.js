@@ -23,6 +23,7 @@ const LAYOUT_WIDTH = '90%';
 const FULL_WIDTH = '100%';
 const HALF_LAYOUT_WIDTH = '42.5%';
 const DATE_FORMAT = 'YYYY/MM/DD';
+
 const EditAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -81,7 +82,7 @@ const EditAccountScreen = () => {
       lastname,
       // phone_number,
       gender: gender ? gender : -1,
-      date_of_birth: format.dateTime(date_of_birth, DATE_FORMAT),
+      date_of_birth: date_of_birth,
       // password: '',
     },
     validationSchema: EditSchema,
@@ -167,7 +168,7 @@ const EditAccountScreen = () => {
             <CustomBirthdayPicker
               onChangeDate={handleChange('date_of_birth')}
               // defaultValue={values.date_of_birth}
-              fmDate={DATE_FORMAT}
+              // fmDate={DATE_FORMAT}
               renderBase={() => (
                 <CustomInput
                   style={{ width: FULL_WIDTH }}

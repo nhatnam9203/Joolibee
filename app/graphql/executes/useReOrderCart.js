@@ -8,6 +8,7 @@ export const useReOrderCart = (onSuccess = () => {}) => {
   const dispatch = useDispatch();
 
   const [reorderItems, reOrderCartResp] = useMutation(RE_ORDER_CART, {
+    awaitRefetchQueries: true,
     refetchQueries: [{ query: CUSTOMER_CART_QUERY }],
 
     onCompleted: (res) => {

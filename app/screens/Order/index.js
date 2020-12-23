@@ -147,8 +147,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [, removeVoucher] = GEX.useRemoveVoucherFromCart();
   const [, addVoucherToCart] = GEX.useApplyVoucherToCart();
 
-  // submit checkout
-  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   // Call get món đi kèm
   const [getSubMenu, responseMenu] = useLazyQuery(GQL.MENU_DETAIL_LIST, {
     variables: { categoryId: SUB_MENU_ID },
@@ -250,6 +248,25 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setVoucherCode(null);
   };
 
+  const onPlaceOrderComplete = (placeOrderResult) => {
+    const { reachedMaxPendingOrder } = placeOrderResult;
+    if (reachedMaxPendingOrder) {
+      NavigationService.alert({
+        title: translate('txtMaxNumOrderPendingTitle'),
+        message: translate('txtMaxNumOrderPendingDesc'),
+      });
+    } else {
+      setShowPopupSuccess(true);
+      showErrorPoint(false);
+      setOrderNumber(placeOrderResult?.order?.order_number);
+
+      getCustomerCart();
+    }
+  };
+
+  // submit checkout
+  const [, orderSubmit] = GEX.usePlaceOrder(onPlaceOrderComplete);
+
   const removeVoucherItem = (code) => {
     removeVoucher({
       variables: {
@@ -260,43 +277,13 @@ const OrderScreen = ({ route = { params: {} } }) => {
   };
 
   const onSubmit = () => {
-    dispatch(app.showLoading());
     dispatch(order.pickupStore(null));
-
-    placeOrder({
+    orderSubmit({
       variables: {
         cart_id: customerCart?.id,
         // restaurant_id: assignStoreId,
       },
-    })
-      .then((res) => {
-        if (res?.data?.placeOrder) {
-          const { reachedMaxPendingOrder } = res?.data?.placeOrder;
-          if (reachedMaxPendingOrder) {
-            NavigationService.alert({
-              title: translate('txtMaxNumOrderPendingTitle'),
-              message: translate('txtMaxNumOrderPendingDesc'),
-            });
-          } else {
-            graphQlClient.cache.evict({ fieldName: 'cart' });
-            graphQlClient.cache.evict({ fieldName: 'customerCart' });
-            graphQlClient.cache.gc();
-            setOrderNumber(res?.data?.placeOrder?.order?.order_number);
-            setShowPopupSuccess(true);
-            showErrorPoint(false);
-
-            // getCheckOutCart(true);
-            getCustomerCart();
-
-            /// chua get lai list order
-            getOrderList();
-          }
-        }
-        dispatch(app.hideLoading());
-      })
-      .catch(() => {
-        dispatch(app.hideLoading());
-      });
+    });
   };
 
   const onRedeemPoint = () => {
