@@ -382,7 +382,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
         const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
         let destinations = '';
         pickupStores?.forEach((x) => {
-          const findStore = storeList?.find((findX) => x.store_id === findX.id);
+          const findStore = storeList?.find(
+            (findX) => x?.store_id === findX?.id,
+          );
           if (findStore) {
             destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
           }
@@ -423,11 +425,11 @@ const OrderScreen = ({ route = { params: {} } }) => {
       setShippingMethods(ShippingType.InPlace, pickStoreId);
     };
 
-    if (shippingType === ShippingType.InPlace && pickupStores) {
+    if (shippingType === ShippingType.InPlace && pickupStores && storeList) {
       selectTheStore();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickupStores, shippingType, shippingLocation]);
+  }, [pickupStores, shippingType, shippingLocation, storeList]);
 
   // React.useEffect(() => {}, []);
 

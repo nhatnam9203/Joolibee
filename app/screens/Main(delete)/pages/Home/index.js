@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import { CustomButton } from '@components';
 import { QGL, GEX } from '@graphql';
 import {
