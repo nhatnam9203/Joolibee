@@ -13,10 +13,12 @@ import { Formik } from 'formik';
 import _ from 'lodash';
 import * as Yup from 'yup';
 import { GEX } from '@graphql';
+import { useNavigation } from '@react-navigation/native';
 
 const LAYOUT_WIDTH = '90%';
 
-export const InputNewPassword = ({ phone = '' }, smsCode) => {
+export const InputNewPassword = ({ infos, smsCode }) => {
+  const navigation = useNavigation();
   const [, resetPasswordCustomer] = GEX.useResetPasswordCustomer();
 
   const NewPasswordSchema = Yup.object().shape({
@@ -25,14 +27,23 @@ export const InputNewPassword = ({ phone = '' }, smsCode) => {
       .max(30, translate('txtTooLong'))
       .required(translate('txtRequired')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
+      .oneOf([Yup.ref('newPassword')], translate('txtPasswordMatch'))
       .min(6, translate('txtTooShort'))
       .max(30, translate('txtTooLong'))
       .required(translate('txtRequired')),
   });
 
   const forgotPasswordSubmit = (values) => {
-    resetPasswordCustomer({ ...values, smsCode });
+    let variables = {
+      newPassword: values.newPassword,
+      phoneNumber: infos?.phone,
+      smsCode,
+    };
+    resetPasswordCustomer({ variables }).then(({ data }) => {
+      if (data?.resetPassword) {
+        navigation.goBack();
+      }
+    });
   };
 
   return (
@@ -41,7 +52,6 @@ export const InputNewPassword = ({ phone = '' }, smsCode) => {
         initialValues={{
           newPassword: '',
           confirmPassword: '',
-          phoneNumber: phone,
         }}
         onSubmit={forgotPasswordSubmit}
         validationSchema={NewPasswordSchema}
@@ -59,17 +69,17 @@ export const InputNewPassword = ({ phone = '' }, smsCode) => {
 
             <PasswordInput
               style={{ width: LAYOUT_WIDTH }}
-              onChangeText={handleChange('password')}
+              onChangeText={handleChange('newPassword')}
               onBlur={handleBlur('password')}
               value={values.newPassword}
               placeholder={translate('txtInputPassword')}
               textContentType="password"
             />
             {/**Password input error */}
-            {errors.password && touched.password && (
+            {errors.newPassword && touched.newPassword && (
               <TextInputErrorMessage
                 style={{ width: LAYOUT_WIDTH }}
-                message={errors.password}
+                message={errors.newPassword}
                 color={AppStyles.colors.inputError}
               />
             )}

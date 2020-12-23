@@ -52,7 +52,7 @@ const ForgotPasswordScreen = () => {
   };
 
   const requestAuthCode = async (values) => {
-    const { phone } = values  || {} ;
+    const { phone } = values || {};
     if (!phone) {
       Logger.error('error', 'SignUp -> requestAuthCode -> phone not found!');
       return;
@@ -75,6 +75,7 @@ const ForgotPasswordScreen = () => {
 
   React.useEffect(() => {
     if (authStatus === AUTH_STATUS.verified) {
+      console.log('smsCode', smsCode);
       dispatch(app.hideLoading());
       setPage(PAGES.InputNewPassWord);
     } else if (authStatus === AUTH_STATUS.sent) {

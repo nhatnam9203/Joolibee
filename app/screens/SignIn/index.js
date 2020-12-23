@@ -215,7 +215,7 @@ const SignInScreen = () => {
 
                   {/**REMEMBER*/}
                   <View style={styles.rememberStyle}>
-                    {/* <TextCheckBox
+                    <TextCheckBox
                       label={translate('txtRemember')}
                       // label={translate('txtRemember')}
                       value={values.remember}
@@ -230,7 +230,7 @@ const SignInScreen = () => {
                       label={translate('txtForgetPassWord')}
                       style={styles.txtForgotPass}
                       onPress={goForgotPasswordScreen}
-                    /> */}
+                    />
                   </View>
 
                   <View style={styles.polygonStyle}>
@@ -252,18 +252,26 @@ const SignInScreen = () => {
                   </View>
                   <View style={styles.social}>
                     {/**FACEBOOK*/}
+                    {/* <ButtonCC.ButtonFacebook
+                      width="50%"
+                      style={{ marginRight: 8 }}
+                    /> */}
                     <ButtonCC.ButtonFacebook
                       width="50%"
                       style={{ marginRight: 8 }}
+                      onPress={signinFB}
                     />
-                    {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
                     {/**GOOGLE*/}
+                    {/* <ButtonCC.ButtonGoogle
+                      width="50%"
+                      style={{ marginLeft: 8 }}
+                    /> */}
                     <ButtonCC.ButtonGoogle
                       width="50%"
                       style={{ marginLeft: 8 }}
+                      onPress={signinGoogle}
                     />
-                    {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
                   </View>
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>

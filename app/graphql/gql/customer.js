@@ -328,7 +328,6 @@ export const UPDATE_CUSTOMER = gql`
     $deviceId: String!
     $smsCode: String
     $phoneNumber: String
-    $password: String
   ) {
     updateCustomerInfo(
       input: {
@@ -338,7 +337,6 @@ export const UPDATE_CUSTOMER = gql`
         lastname: $lastname
         email: $email
         phoneNumber: $phoneNumber
-        password: $password
       }
       smsCode: $smsCode
       deviceId: $deviceId
@@ -557,7 +555,7 @@ export const RESET_PASSWORD_CUSTOMER = gql`
   mutation(
     $phoneNumber: String!
     $newPassword: String!
-    $smsCode: String
+    $smsCode: String!
     $deviceId: String!
   ) {
     resetPassword(

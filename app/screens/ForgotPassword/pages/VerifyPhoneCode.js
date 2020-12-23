@@ -17,7 +17,7 @@ export const VerifyPhoneCode = ({
   confirmCode,
   timeOut,
 }) => {
-  const { phone = 'undefine', error } = infos  || {};
+  const { phone = 'undefine', error } = infos || {};
   const dispatch = useDispatch();
   const isSpam = useSelector((state) => state.app?.isSpam);
   const [timing, setTiming] = React.useState(false);

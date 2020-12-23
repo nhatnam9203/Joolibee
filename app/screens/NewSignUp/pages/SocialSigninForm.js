@@ -54,15 +54,6 @@ export const SocialSigninForm = ({ infos: { phone = '', token }, smsCode }) => {
       .min(2, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
-    // password: Yup.string()
-    //   .min(6, translate('txtTooShort'))
-    //   .max(30, translate('txtTooLong'))
-    //   .required(translate('txtRequired')),
-    // confirmPassword: Yup.string()
-    //   .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
-    //   .min(6, translate('txtTooShort'))
-    //   .max(30, translate('txtTooLong'))
-    //   .required(translate('txtRequired')),
   });
 
   React.useEffect(() => {
@@ -79,12 +70,8 @@ export const SocialSigninForm = ({ infos: { phone = '', token }, smsCode }) => {
   // function
   const signUpDataSubmit = async (formValues) => {
     await dispatch(app.showLoading());
-    const { dob } = formValues;
     const variables = {
-      // ...formValues,
-      // password: '',
-      // gender: formValues.gender !== -1 ?? formValues.gender,
-      // dob: format.dateTime(dob),
+      ...formValues,
       smsCode,
       deviceId: getUniqueId(),
     };
@@ -142,8 +129,6 @@ export const SocialSigninForm = ({ infos: { phone = '', token }, smsCode }) => {
           firstname: customerInfo?.firstname ?? '',
           lastname: customerInfo?.lastname ?? '',
           phoneNumber: phone,
-          // password: '',
-          // confirmPassword: '',
           dob: new Date(),
           gender: 0,
         }}
