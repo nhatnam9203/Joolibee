@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { RE_ORDER_CART } from '../gql';
+import { RE_ORDER_CART, CUSTOMER_CART_QUERY } from '../gql';
 import { app, account } from '@slices';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -7,20 +7,32 @@ import { useDispatch } from 'react-redux';
 export const useReOrderCart = (onSuccess = () => {}) => {
   const dispatch = useDispatch();
 
-  const [reorderItems, response] = useMutation(RE_ORDER_CART, {
+  const [reorderItems, reOrderCartResp] = useMutation(RE_ORDER_CART, {
+    refetchQueries: [{ query: CUSTOMER_CART_QUERY }],
+
     onCompleted: (res) => {
       if (res?.reorderItems?.cart) {
-        dispatch(account.resetCustomerCart(res?.reorderItems?.cart));
+        // dispatch(account.resetCustomerCart(res?.reorderItems?.cart));
         dispatch(app.hideLoading());
         onSuccess();
       }
     },
     onError: (error) => {
-      Logger.debug(error, 'useReOrderCart error');
+      dispatch(app.hideLoading());
     },
   });
 
-  const onReOrderCart = (orderNumber) => {
+  React.useEffect(() => {
+    if (reOrderCartResp.data?.reorderItems?.cart) {
+      dispatch(
+        account.updateCustomerCart(reOrderCartResp.data?.reorderItems?.cart),
+      );
+    }
+  }, [dispatch, reOrderCartResp]);
+
+  const reOrderCart = (orderNumber) => {
+    dispatch(app.showLoading());
+
     reorderItems({
       variables: {
         orderNumber,
@@ -28,8 +40,5 @@ export const useReOrderCart = (onSuccess = () => {}) => {
     });
   };
 
-  return {
-    reorderItems: onReOrderCart,
-    reOrderCartResp: response,
-  };
+  return [reOrderCart, reOrderCartResp];
 };

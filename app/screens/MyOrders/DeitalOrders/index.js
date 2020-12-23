@@ -68,11 +68,10 @@ export default function Index({ navigation, route }) {
       dispatch(app.showOrderList());
     }, 1000);
   };
-  const { reorderItems } = GEX.useReOrderCart(onReOderSuccess);
+  const [reOrderCart] = GEX.useReOrderCart(onReOderSuccess);
 
   const onHandleReOrder = () => {
-    dispatch(app.showLoading());
-    reorderItems(order_number);
+    reOrderCart(order_number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 

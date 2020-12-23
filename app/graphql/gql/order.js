@@ -138,8 +138,8 @@ export const RE_ORDER_CART = gql`
             name
             sku
             point
-            options_container
             meta_description
+            options_container
             price_range {
               maximum_price {
                 final_price {
@@ -170,6 +170,13 @@ export const RE_ORDER_CART = gql`
                 quantity
               }
             }
+            customizable_options {
+              id
+              values {
+                id
+                label
+              }
+            }
           }
           prices {
             price {
@@ -180,6 +187,7 @@ export const RE_ORDER_CART = gql`
           quantity
         }
         total_quantity
+        bonus_point
         prices {
           __typename
           grand_total {

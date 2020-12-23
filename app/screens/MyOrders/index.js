@@ -27,11 +27,10 @@ const Index = () => {
       dispatch(app.showOrderList());
     }, 1000);
   };
-  const { reorderItems } = GEX.useReOrderCart(onReOderSuccess);
+  const [reOrderCart] = GEX.useReOrderCart(onReOderSuccess);
 
   const onHandleReOrder = (number) => () => {
-    dispatch(app.showLoading());
-    reorderItems(number);
+    reOrderCart(number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
