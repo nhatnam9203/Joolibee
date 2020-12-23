@@ -40,7 +40,8 @@ const Index = (props) => {
   ];
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { val_address, titleHeader, cartId, action_type } = props.route.params;
+  const { val_address, titleHeader, cartId, action_type } =
+    props.route.params || {};
   const location_selected = useSelector(
     (state) => state.address.location_selected,
   );
@@ -154,7 +155,7 @@ const Index = (props) => {
   //------------ Update address customer -----------------//
 
   //------------ DELETE address customer -----------------//
-  const [deleteCustomerAddress] = useMutation(mutation.DELETE_ADDRESS);
+  const [deleteCustomerAddress] = useMutation(GQL.DELETE_ADDRESS);
 
   const onHandleDelete = React.useCallback(() => {
     dispatch(app.showLoading());

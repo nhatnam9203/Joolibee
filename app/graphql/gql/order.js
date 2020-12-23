@@ -47,23 +47,35 @@ export const ORDER_DETAIL_CUSTOMER = gql`
 `;
 
 export const ORDERS_CUSTOMER = gql`
-  query {
-    customerOrders {
-      items {
-        id
-        __typename
+  query($currentPage: Int, $pageSize: Int) {
+    customerOrders(currentPage: $currentPage, pageSize: $pageSize) {
+      orders {
         order_number
+        id
         created_at
         grand_total
         status
         address
         shipping_method
-        store_name
         use_plastic
+        shipper_info {
+          id
+          first_name
+          last_name
+          gender
+          phone
+        }
+        voucher_discount_amount
+      }
+      page_info {
+        page_size
+        current_page
+        total_pages
       }
     }
   }
 `;
+
 // export const ORDERS_CUSTOMER = gql`
 //   query {
 //     customer {

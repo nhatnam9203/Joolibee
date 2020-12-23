@@ -15,9 +15,14 @@ export const distanceMatrix = (params) =>
       const response = await fetch(url);
       const resJson = await response.json();
       Logger.debug(resJson, '======> resJson');
+      const data = resJson?.rows
+        ?.find(Boolean)
+        ?.elements?.map((x) => x.distance?.value);
+      Logger.debug(data, '======> data value');
+
       let newResponse = {
         status: resJson.status,
-        data: resJson.candidates,
+        data: data,
       };
       resolve(newResponse);
     } catch (err) {

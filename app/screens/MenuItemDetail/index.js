@@ -44,7 +44,7 @@ const CART_ICON_Y = scaleHeight(65);
 const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
-  const { product, detailItem } = route.params;
+  const { product, detailItem, sku } = route.params  || {};
 
   const navigation = useNavigation();
   // animations
@@ -60,16 +60,16 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   );
 
   const { addProductsToCart } = GEX.useAddProductsToCart();
-  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
+  const [, updateCart] = GEX.useUpdateCustomerCart();
 
   const [getProductDetail, { loading }] = useLazyQuery(GQL.PRODUCT_DETAIL, {
-    variables: { sku: product?.sku },
+    variables: { sku: product?.sku || sku },
     fetchPolicy: 'no-cache',
     onCompleted: (data) => {
       if (data) {
         const item = data.products?.items[0];
         if (detailItem?.bundle_options?.length > 0) {
-          const { items } = item;
+          const { items } = item || {};
           const list = items.map((x) => {
             const { option_id, options } = x;
 
@@ -114,16 +114,20 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderSummaryPrice = () => {
     let priceString = DEFAULT_CURRENCY_VALUE;
     if (productItem) {
-      const { price_range, items } = productItem;
+      const { price_range, items } = productItem || {};
       const { sellPrice } = destructuring.priceOfRange(price_range);
 
       let { value = 0 } = sellPrice || {};
 
       items?.forEach((item) => {
-        const { options } = item;
+        const { options } = item || {};
         const sumOptionPrice = options
           .filter((x) => x.is_default === true && x.price)
-          .reduce((accumulator, current) => accumulator + current.price, 0);
+          .reduce(
+            (accumulator, current) =>
+              accumulator + current.price * current.quantity,
+            0,
+          );
 
         value += sumOptionPrice;
       });
@@ -159,29 +163,70 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
   const addProductToCart = () => {
     const { sku, items = [] } = productItem;
-    const optionsMap = [];
-    // Logger.debug(productItem ,'======> xxxxxxxx productItem');
+    requestAddCartProduct(productItem);
 
-    items?.forEach((item) => {
-      const { options = [], option_id } = item;
-      const mapArr = options
-        .filter((x) => x.is_default === true)
-        .map((x) => {
-          return x.id + '';
-        });
+    animationOnQuit();
+    // dispatch(app.showOrderList());
+  };
 
-      optionsMap.push({ id: parseInt(option_id), quantity: 1, value: mapArr });
+  const removeCartProduct = async (cartItemId) => {
+    const input = {
+      cart_item_id: cartItemId,
+      quantity: 0,
+    };
+
+    await updateCart({
+      variables: input,
     });
+  };
 
-    // items.forEach((item) => {
+  const updateCartProduct = async () => {
+    // Remove cart
+    await removeCartProduct(detailItem.id);
 
-    //   const { options = [] } = item;
-    //   const mapArr = options
-    //     .filter((x) => x.is_default === true)
-    //     .map((x) => x.uid);
+    // Then add new product
+    await requestAddCartProduct(productItem);
+
+    // animationOnQuit();
+    navigation.goBack();
+    // addProductToCart();
+  };
+
+  const requestAddCartProduct = (cartItem) => {
+    const { sku, items = [] } = cartItem || {};
+    const optionsMap = [];
+    // Logger.debug(productItem, '======> xxxxxxxx productItem');
+    /**
+     * them sl cho option
+     */
+    // items?.forEach((item) => {
+    //   const { options = [], option_id } = item;
+    //   const activeOptionList = options.filter((x) => x.is_default === true);
+
+    // const mapArr = activeOptionList?.map((x) => ({
+    //   id: parseInt(option_id),
+    //   quantity: x?.quantity ?? 1,
+    //   value: [x.id + ''],
+    // }));
 
     //   optionsMap.push(...mapArr);
     // });
+
+    items.forEach((item) => {
+      const { options = [], option_id } = item || {};
+      const mapArr = options
+        .filter((x) => x.is_default === true)
+        .map((x) => x.id + '');
+
+      const selectOptions = {
+        id: parseInt(option_id),
+        quantity: 1,
+        value: mapArr,
+      };
+
+      optionsMap.push(selectOptions);
+    });
+
     addProductsToCart({
       variables: {
         cart_items: [
@@ -192,25 +237,6 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
         ],
       },
     });
-
-    animationOnQuit();
-    // dispatch(app.showOrderList());
-  };
-
-  // !! chuaw update options
-  const updateCartProduct = async () => {
-    let input = {
-      cart_item_id: detailItem.id,
-      quantity: qty,
-    };
-
-    updateCart({
-      variables: input,
-    });
-
-    animationOnQuit();
-
-    // addProductToCart();
   };
 
   const animationOnQuit = () => {
@@ -245,23 +271,24 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   const renderOptionsItem = ({ item, index, type, onPress }) => (
     <MenuDetailItem
       item={item}
-      key={`${index}`}
+      key={index + ''}
       type={type}
       onPress={onPress}
     />
   );
 
-  const onRenderItem = ({ item }) => {
+  const onRenderItem = ({ item, index }) => {
     return (
       <CustomAccordionList
         key={item.option_id.toString()}
-        item={item}
+        input={item}
         headerTextStyle={styles.listHeaderTextStyle}
         headerStyle={styles.listHeaderStyle}
         style={styles.listStyle}
         renderItem={renderOptionsItem}
         renderSelectItem={onRenderSelectedItem}
         onChangeOptionsItem={onChangeOptionsItem}
+        openFirst={index === 0}
       />
     );
   };
@@ -301,11 +328,12 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   }, []);
 
   const { items } = productItem || {};
+  // Logger.debug(items, '=====> items');
   return (
     <Animated.View style={[styles.container, customSpringStyles]} ref={aref}>
       <View style={styles.content}>
         <ProductDetailFlatList
-          data={items?.filter((x) => x.position > 1)}
+          data={items?.filter((x) => x.title !== 'Main')}
           renderItem={onRenderItem}
           renderHeader={onRenderHeader}
           renderFooter={onRenderFooter}
@@ -400,7 +428,7 @@ const styles = StyleSheet.create({
 
   listHeaderStyle: {
     backgroundColor: '#FFC522',
-    height: 46,
+    height: scaleHeight(72),
   },
 
   closeButtonStyle: {

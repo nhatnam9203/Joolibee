@@ -8,7 +8,7 @@ import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { account, app, order } from '@slices';
 import { AppStyles, images } from '@theme';
-import { format, scale } from '@utils';
+import { format, scale, appUtil } from '@utils';
 import React from 'react';
 import {
   Image,
@@ -36,6 +36,7 @@ import {
   OrderVoucherItem,
 } from './widget';
 // import { removeVoucherFromCart } from './controllers';
+import { distanceMatrix } from '@location';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -46,11 +47,11 @@ const ShippingType = {
 
 const COUNTDOWN_SECONDS = 30;
 const CONFIRM_HEIGHT = 150;
-const MINIUM_POINT = 25;
+const MINIUM_POINT = 250;
 const SUB_MENU_ID = 4;
 
 const OrderScreen = ({ route = { params: {} } }) => {
-  const { shippingMethod, addressParams } = route.params;
+  const { shippingMethod, addressParams } = route.params || {};
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -99,6 +100,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   // --------- CUSTOMER CART -----------
   const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const [, getCustomerInfo] = GEX.useCustomer();
 
   const {
     items,
@@ -147,7 +149,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // submit checkout
   const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   // Call get món đi kèm
-  const [getSubMenu, responseMenu] = useLazyQuery(query.MENU_DETAIL_LIST, {
+  const [getSubMenu, responseMenu] = useLazyQuery(GQL.MENU_DETAIL_LIST, {
     variables: { categoryId: SUB_MENU_ID },
     fetchPolicy: 'cache-first',
   });
@@ -305,6 +307,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         if (res?.data?.useCustomerPoint) {
           // getCheckOutCart();
           getCustomerCart();
+          getCustomerInfo();
 
           setRewardPoint('');
           showErrorPoint(false);
@@ -316,11 +319,26 @@ const OrderScreen = ({ route = { params: {} } }) => {
     }
   };
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      setShowNotice(isEatingUtensils);
-    }, 250);
-  }, [isEatingUtensils]);
+  const onRemovePoint = () => {
+    dispatch(app.showLoading());
+    redeemCustomerPoint(0).then((res) => {
+      if (res?.data?.useCustomerPoint) {
+        // getCheckOutCart();
+        getCustomerCart();
+        getCustomerInfo();
+
+        setRewardPoint('');
+        showErrorPoint(false);
+      }
+      dispatch(app.hideLoading());
+    });
+  };
+
+  // React.useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowNotice(isEatingUtensils);
+  //   }, 1000);
+  // }, [isEatingUtensils]);
 
   React.useEffect(() => {
     getSubMenu();
@@ -356,57 +374,60 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     const selectTheStore = async () => {
-      let pickStore = pickupStores.find(Boolean);
+      let pickStoreId = pickupStores.find(Boolean);
+      Logger.debug(pickupStores, '=======> pickupStores');
 
       //!! Find store follow distance, tam thoi ko dung
-      // if (pickupStores?.length > 1 && shippingLocation) {
-      //   const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
-      //   let destinations = '';
-      //   pickupStores?.forEach((x) => {
-      //     const findStore = storeList?.find((findX) => x.store_id === findX.id);
-      //     if (findStore) {
-      //       destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
-      //     }
-      //   });
-      //   let { status, data } = await distanceMatrix({ origins, destinations });
-      //   if (status === 'OK') {
-      //     const listDistances = data?.rows[0]?.elements;
-      //     const getStore = format.getNearStore(listDistances);
-      //     if (getStore) {
-      //       pickStore = getStore;
-      //     }
-      //   }
-      // }
+      if (pickupStores?.length > 1 && shippingLocation) {
+        const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
+        let destinations = '';
+        pickupStores?.forEach((x) => {
+          const findStore = storeList?.find((findX) => x.store_id === findX.id);
+          if (findStore) {
+            destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
+          }
+        });
+        let { status, data } = await distanceMatrix({ origins, destinations });
+        Logger.debug(status, '=======> status');
 
-      // !! hard code 3 store_id
-      const hard_code = ['33', '3', '33', '2', '33'].sort(
-        () => Math.random() - 0.5,
-      );
-      Logger.debug(hard_code, '=====> hard_code');
-      let store_id = pickStore?.store_id;
+        if (data?.length > 0) {
+          const getStoreIndex = appUtil.getNearStore(data);
+          Logger.debug(getStoreIndex, '=======> getStoreIndex');
 
-      const findStoreId = hard_code.find((storeId) => {
-        const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
-
-        if (findIdex >= 0) return storeId;
-      });
-
-      if (findStoreId) {
-        store_id = findStoreId;
+          if (getStoreIndex >= 0 && pickupStores.length > getStoreIndex) {
+            pickStoreId = pickupStores[getStoreIndex]?.store_id;
+            Logger.debug(pickStoreId, '=======> pickStoreId');
+          }
+        }
       }
 
-      store_id = '33';
+      // const listStore = ['33', '3', '2'];
+      // !! hard code 3 store_id
+      // const hard_code = listStore.sort(() => Math.random() - 0.5);
+      // let store_id = hard_code?.find(Boolean);
 
-      setAssignStoreId(store_id);
+      // const findStoreId = hard_code.find((storeId) => {
+      //   const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
 
-      setShippingMethods(ShippingType.InPlace, store_id);
+      //   if (findIdex >= 0) return storeId;
+      // });
+
+      // if (findStoreId !== null) {
+      //   store_id = findStoreId;
+      // }
+
+      // store_id = '33';
+
+      setAssignStoreId(pickStoreId);
+
+      setShippingMethods(ShippingType.InPlace, pickStoreId);
     };
 
     if (shippingType === ShippingType.InPlace && pickupStores) {
       selectTheStore();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickupStores, shippingType]);
+  }, [pickupStores, shippingType, shippingLocation]);
 
   // React.useEffect(() => {}, []);
 
@@ -443,7 +464,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
           removeVoucherItem(item.code);
         }}>
         <OrderVoucherItem
-          content={`Voucher giảm ${Math.round(item.discount_amount / 1000)}k `}
+          content={`${translate('txtVoucher')} ${Math.round(
+            item.discount_amount / 1000,
+          )}k `}
           colorText={color}
           icon={icon}
         />
@@ -567,7 +590,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
                 style={[styles.txtStyle, { flex: 1 }]}
                 ellipsizeMode="tail"
                 numberOfLines={1}>
-                {pickStore?.name + ' - ' + pickStore?.address}
+                {pickStore?.name + ' - ' + pickStore?.vietnamese_address}
               </Text>
             </View>
           </OrderSectionItem>
@@ -654,7 +677,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // const renderBlockedApplyCoupon = () => {
   //   return timming ? (
   //     <Text style={{ width: '100%', marginVertical: 5 }}>
-  //       {translate('txtTryAgain') + ' (' + '' + ') '}
+  //       {translate('txtTryAgain') + ' (' + second + ') '}
   //     </Text>
   //   ) : (
   //     <TextInputErrorMessage
@@ -734,13 +757,41 @@ const OrderScreen = ({ route = { params: {} } }) => {
             bgColor={AppStyles.colors.accent}
             disabled={!reward_point}>
             <TextInput
-              placeholder={'Vd:25, 50, 75.....'}
+              placeholder={'500, 1000, 1500.....'}
               style={{ paddingHorizontal: 10, flex: 1 }}
               keyboardType="numeric"
               value={reward_point}
               onChangeText={onChangeRewardPoint}
             />
           </OrderButtonInput>
+          {used_point?.point > 0 && (
+            <View
+              style={{
+                height: scale.scaleHeight(40),
+                marginTop: scale.scaleHeight(10),
+                justifyContent: 'center',
+              }}>
+              <OrderButtonInput
+                icon={images.icons.ic_delete}
+                btnWidth={scaleWidth(43)}
+                height={scaleHeight(40)}
+                width={scaleWidth(200)}
+                borderColor={AppStyles.colors.moderate_cyan}
+                bgColor={AppStyles.colors.moderate_cyan}
+                style={{ marginRight: 5 }}
+                onPress={onRemovePoint}>
+                <OrderVoucherItem
+                  content={`${translate('txtRedeemPoint')} ${
+                    used_point?.point
+                  } = ${format.jollibeeCurrency({
+                    value: used_point?.amount,
+                  })} `}
+                  colorText={AppStyles.colors.moderate_cyan}
+                  icon={images.icons.ic_sticked}
+                />
+              </OrderButtonInput>
+            </View>
+          )}
           {error_point && (
             <OrderVoucherItem
               content={translate('txtErrorApplyPoint')}
@@ -759,7 +810,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
       ? format.jollibeeCurrency({ value: used_point?.amount })
       : 0;
     return (
-      used_point?.point && (
+      used_point?.point > 0 && (
         <View style={styles.orderSumContent}>
           <OrderVoucherItem
             content={`${translate('txtChange')} ${
@@ -818,18 +869,30 @@ const OrderScreen = ({ route = { params: {} } }) => {
           </Text>
           <Text style={styles.txtSubPriceStyle}>{subTotal}</Text>
         </View>
-        {applied_coupons && (
+        {applied_vouchers && (
           <View style={styles.orderSumContent}>
             <Text style={styles.txtStyle}>{translate('tabPromotion')} : </Text>
-            {applied_coupons && (
-              <OrderVoucherItem
-                content="Voucher ưu đãi 30K"
-                style={{
-                  paddingHorizontal: 0,
-                }}
-              />
+            {applied_vouchers && (
+              <View>
+                {applied_vouchers?.list?.map((x) => (
+                  <OrderVoucherItem
+                    content={`${translate(
+                      'txtVoucher',
+                    )} ${format.jollibeeCurrency({
+                      value: x?.discount_amount,
+                    })}`}
+                    style={{
+                      paddingHorizontal: 0,
+                    }}
+                  />
+                ))}
+              </View>
             )}
-            <Text style={styles.txtSubPriceStyle}>{_discount}</Text>
+            <Text style={styles.txtSubPriceStyle}>
+              {`-${format.jollibeeCurrency({
+                value: applied_vouchers?.total_discount_amount,
+              })}`}
+            </Text>
           </View>
         )}
         {renderUsePoint()}

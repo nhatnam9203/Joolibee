@@ -142,6 +142,16 @@ const AppStyles = {
       marginBottom: 10,
       flex: 1,
     },
+
+    navigationIcon: {
+      backgroundColor: '#FFC522',
+      height: 30,
+      width: 30,
+      borderRadius: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: 10,
+    },
   },
   navigation: {
     default: {

@@ -3,7 +3,6 @@ import { CustomFlatList } from '@components';
 import { AppStyles } from '@theme';
 import React from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
-import { ORDER_LIST } from '../queries';
 import { translate } from '@localize';
 import {
   Fade,

@@ -1,8 +1,6 @@
-// import { mutation } from '@graphql';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { get, save, StorageKey } from '@storage';
 import { generate } from '@utils';
-// import { useApolloClient } from '@apollo/client';
 
 const KEY_CONSTANT = 'account';
 
@@ -75,7 +73,6 @@ const accountSlice = createSlice({
 
     signInSucceed(state, action) {
       const { token, phone_number } = action.payload;
-      console.log('action.payload', action.payload);
       if (token) {
         // get token object save in store
         let uStorage = get(StorageKey.User);

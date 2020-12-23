@@ -1,9 +1,9 @@
-import { CustomFlatList } from '@components';
+import { CustomFlatList, CustomImageBackground } from '@components';
 import { translate } from '@localize';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images } from '@theme';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { FlatListItemWithImgHorizontal } from '../../components';
 
 const defaultData = [
@@ -99,17 +99,33 @@ export const MyRewardPage = () => {
     setData(defaultData);
   }, []);
 
+  const renderEmptyList = () => (
+    <Text style={[AppStyles.fonts.mini, { textAlign: 'center' }]}>
+      {translate('txtEmptyPromotionList')}
+    </Text>
+  );
+
   return (
-    <View style={styles.container}>
-      <CustomFlatList
-        data={data}
-        renderItem={renderItem}
-        horizontal={false}
-        keyExtractor={(item, index) => item.id.toString()}
-        contentContainerStyle={styles.contentContainerStyle}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+    <CustomImageBackground
+      style={styles.container}
+      source={images.watermark_background_2}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+          {/**List Item Setting */}
+          <View style={styles.container}>
+            <CustomFlatList
+              data={[]}
+              renderItem={renderItem}
+              horizontal={false}
+              keyExtractor={(item, index) => item.id + ''}
+              contentContainerStyle={styles.contentContainerStyle}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={renderEmptyList}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
+    </CustomImageBackground>
   );
 };
 

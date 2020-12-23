@@ -1,44 +1,42 @@
-import * as React from 'react';
-// import { createNativeStackNavigator } from 'react-native-screens/native-stack'; // use api native
+import { HeaderImage } from '@components';
+import { translate } from '@localize';
 import { createStackNavigator } from '@react-navigation/stack';
-import { GEX } from '@graphql';
+import { AppStyles, images } from '@theme';
+import { scale } from '@utils';
+import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
 import {
-  MainTabScreen,
-  MyAccountScreen,
-  ScreenName,
-  MenuDetailScreen,
-  PromotionListScreen,
-  SettingAccountScreen,
-  EditAccountScreen,
-  RewardScreen,
-  PointHistoryScreen,
-  MySavedPointScreen,
-  SupportScreen,
   ChangeLanguageScreen,
   ChangePasswordScreen,
-  NotificationScreen,
-  MenuItemDetailScreen,
-  MyAddressScreen,
-  DetailMyAddressScreen,
-  SearchAddressScreen,
-  MyOrdersScreen,
   DeitalOrdersScreen,
-  OrderScreen,
-  MyRewardScreen,
-  StorePickupScreen,
-  NewsScreen,
-  MenuScreen,
+  DetailMyAddressScreen,
+  EditAccountScreen,
   HomeScreen,
-  StoreScreen,
-  PromotionScreen,
   JollibeeVNScreen,
+  MenuDetailScreen,
+  MenuItemDetailScreen,
+  MenuScreen,
+  // MainTabScreen,
+  MyAccountScreen,
+  MyAddressScreen,
+  MyOrdersScreen,
+  MyRewardScreen,
+  MySavedPointScreen,
+  NewsScreen,
+  NotificationScreen,
+  OrderScreen,
+  PointHistoryScreen,
+  PromotionListScreen,
+  PromotionScreen,
+  RewardScreen,
+  ScreenName,
+  SearchAddressScreen,
+  SettingAccountScreen,
+  StorePickupScreen,
+  StoreScreen,
   SupportDetailScreen,
+  SupportScreen,
 } from '../screens';
-import { StyleSheet, View, Image } from 'react-native';
-import { AppStyles, images } from '@theme';
-import { translate } from '@localize';
-import { HeaderImage } from '@components';
-import { scale } from '@utils';
 
 const { scaleHeight } = scale;
 
@@ -226,11 +224,6 @@ function MainStack() {
           headerShown: true,
           headerTitle: translate('txtNotification'),
           headerBackground: () => <View style={styles.container} />,
-          // headerRight: (props) => (
-          //   <View style={styles.icon}>
-          //     <Image source={images.icons.ic_delete_bg} resizeMode="contain" />
-          //   </View>
-          // ),
         }}
       />
 

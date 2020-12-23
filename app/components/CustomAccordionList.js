@@ -1,8 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
-import CustomFlatList from './CustomFlatList';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, { Transition, Transitioning } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Feather';
+import CustomFlatList from './CustomFlatList';
+import _ from 'lodash';
 
 const Icon_Size = 30;
 
@@ -33,17 +34,18 @@ export const CustomAccordionListItemType = {
 };
 
 const CustomAccordionList = ({
-  item,
+  input,
   headerTextStyle,
   headerStyle,
   renderItem,
   renderSelectItem,
   style,
   onChangeOptionsItem,
+  openFirst = false,
 }) => {
-  const { title, options, type, position, required, sku, option_id } = item;
+  const { title, options, type, position, required, sku, option_id } = input  || {};
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(openFirst);
   const [selectedListItem, setSelectedListItem] = React.useState([]);
   const ref = React.useRef();
 
@@ -52,24 +54,35 @@ const CustomAccordionList = ({
 
     if (typeof onChangeOptionsItem === 'function') {
       const mapArray = options.map((x) => {
-        if (arr.indexOf(x) > -1) {
-          return Object.assign({}, x, { is_default: true });
+        const findItem = arr?.find((item) => item.id === x.id);
+        if (findItem) {
+          return Object.assign({}, x, {
+            is_default: true,
+            quantity: findItem.quantity,
+          });
         } else {
-          return Object.assign({}, x, { is_default: false });
+          return Object.assign({}, x, { is_default: false, quantity: 1 });
         }
       });
 
-      onChangeOptionsItem(Object.assign({}, item, { options: mapArray }));
+      onChangeOptionsItem(Object.assign({}, input, { options: mapArray }));
     }
   };
 
   const selectedItem = async (item) => {
-    const index = selectedListItem?.indexOf(item);
+    const index = selectedListItem?.indexOf((x) => x.id === item.id);
 
     switch (type) {
       case CustomAccordionListItemType.Multiline:
         if (index < 0) {
           await updateOptionItems([item, ...selectedListItem]);
+        } else {
+          selectedListItem?.splice(index, 1);
+
+          await updateOptionItems([
+            item,
+            ...selectedListItem.filter((x) => x.id !== item.id),
+          ]);
         }
         break;
       case CustomAccordionListItemType.Radio:
@@ -82,18 +95,22 @@ const CustomAccordionList = ({
   };
 
   const unSelectedItem = async (item) => {
-    const index = selectedListItem?.indexOf(item);
+    const index = selectedListItem?.indexOf((x) => x.id === item.id);
+
     selectedListItem?.splice(index, 1);
     await updateOptionItems([...selectedListItem]);
   };
 
   const onPress = (item) => {
-    const selected = selectedListItem?.indexOf(item) > -1;
+    const selected = selectedListItem?.find((x) => x.id === item.id);
 
     switch (type) {
       case CustomAccordionListItemType.Multiline:
-        selected ? unSelectedItem(item) : selectedItem(item);
-
+        if (selected === null || selected === undefined) {
+          selectedItem(item);
+        } else {
+          unSelectedItem(item);
+        }
         break;
       case CustomAccordionListItemType.Radio:
       default:
@@ -103,16 +120,14 @@ const CustomAccordionList = ({
   };
 
   const onRenderItem = ({ item }, index) => {
-    return typeof renderItem === 'function' ? (
-      renderItem({
+    if (typeof renderItem === 'function') {
+      return renderItem({
         item,
         index,
         type,
         onPress: onPress,
-      })
-    ) : (
-      <View />
-    );
+      });
+    } else return <View />;
   };
 
   const onRenderSelectedItem = () => {
@@ -136,9 +151,9 @@ const CustomAccordionList = ({
     );
   };
 
-  React.useEffect(() => {
-    setOpen(required);
-  }, [required]);
+  // React.useEffect(() => {
+  //   setOpen(required);
+  // }, [required]);
 
   React.useEffect(() => {
     if (options?.length > 0) {
@@ -149,7 +164,7 @@ const CustomAccordionList = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item]);
+  }, [input]);
 
   return (
     <Transitioning.View

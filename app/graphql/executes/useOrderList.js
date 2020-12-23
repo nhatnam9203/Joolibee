@@ -8,16 +8,21 @@ export const useOrderList = (onSuccess = () => {}) => {
 
   const orderList = useSelector((state) => state.order.orderList);
 
-  const [getOrderList, orderListResp] = useLazyQuery(ORDERS_CUSTOMER, {
+  const [getOrders, orderListResp] = useLazyQuery(ORDERS_CUSTOMER, {
     fetchPolicy: 'no-cache',
     onCompleted: (res) => {
       if (res) {
-        dispatch(order.setOrderItemList(res?.customerOrders?.items));
-        Logger.debug(res, '=======> getOrderList');
+        dispatch(order.setOrderItemList(res?.customerOrders?.orders));
       }
     },
     onError: (error) => {},
   });
+
+  const getOrderList = (pageInfo) => {
+    const { currentPage = 1, pageSize = 20 } = pageInfo || {};
+
+    getOrders({ variables: { currentPage, pageSize } });
+  };
 
   return [{ ...orderListResp, orderList }, getOrderList];
 };

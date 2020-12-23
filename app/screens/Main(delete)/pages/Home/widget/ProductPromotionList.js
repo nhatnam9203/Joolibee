@@ -17,7 +17,7 @@ const { width } = Dimensions.get('window');
 
 const index = ({ data, loading }) => {
   const renderItem = ({ item, index }) => {
-    const { price_range, image } = item;
+    const { price_range, image } = item  || {};
     const { minimum_price } = price_range || {};
     const _price = format.jollibeeCurrency(minimum_price?.final_price);
     return (

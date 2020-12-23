@@ -1,8 +1,4 @@
-// import { mutation } from '@graphql';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { get, save, StorageKey } from '@storage';
-import { generate } from '@utils';
-// import { useApolloClient } from '@apollo/client';
+import { createSlice } from '@reduxjs/toolkit';
 
 const KEY_CONSTANT = 'cart';
 

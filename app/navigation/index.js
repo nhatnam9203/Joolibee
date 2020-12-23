@@ -1,16 +1,15 @@
 import { GEX } from '@graphql';
-import { useStorePickup } from '@hooks';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { app } from '@slices';
 import { scale } from '@utils';
 import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSignInFlow } from '../myhooks/useSignInFlow';
 import { ScreenName, SplashScreen } from '../screens';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import { navigationRef } from './NavigationService';
-import { useSignInFlow } from '../myhooks/useSignInFlow';
-import { app } from '@slices';
 
 const { scaleHeight, scaleWidth } = scale;
 
@@ -42,35 +41,31 @@ function App() {
   const [{ startApp, isSignIn }] = useSignInFlow();
 
   const [allowGotoHomeScreen, setAllowGotoHomeScreen] = React.useState(false);
-  const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen();
+  const [getHomeScreenResp, loadHomeScreen] = GEX.useLoadHomeScreen(
+    'cache-first',
+  );
   const [, getCustomerCart] = GEX.useGetCustomerCart(); // load customer cart
-  // const [customerCart, getCheckOutCart] = GEX.useGetCheckOutCart();
-  const [, getCategoryList] = GEX.useGetCategoryList();
+  const [, getCategoryList] = GEX.useGetCategoryList('cache-first');
   const getStoreJsonData = GEX.useGetStoreInfo();
-  const [, getNotifyList] = GEX.useGetNotifyList();
+  const [, getNotifyList] = GEX.useGetNotifyList('cache-first');
 
   React.useEffect(() => {
-    if (startApp) {
-      getStoreJsonData();
-      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Splash));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startApp]);
-
-  React.useEffect(() => {
-    if (isSignIn) {
+    if (isSignIn && !startApp) {
       setAllowGotoHomeScreen(true);
       loadHomeScreen();
       getCustomerCart();
       getCategoryList();
       getNotifyList();
+    } else if (startApp) {
+      getStoreJsonData();
+      navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Splash));
     } else {
       // navigationRef.current?.navigate(ScreenConst.Auth);
       navigationRef.current?.dispatch(StackActions.replace(ScreenConst.Auth));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignIn]);
+  }, [isSignIn, startApp]);
 
   React.useEffect(() => {
     if (getHomeScreenResp?.data && allowGotoHomeScreen) {

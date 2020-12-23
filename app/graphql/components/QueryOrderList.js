@@ -24,8 +24,6 @@ export const QueryOrderList = ({
     getOrderList,
   ] = useOrderList();
 
-  // Logger.debug(orderList, '====> orderList');
-
   const handleRefresh = () => {
     if (typeof refetch === 'function') {
       refetch();

@@ -21,7 +21,14 @@ import { scale } from '@utils';
 const { scaleWidth, scaleHeight } = scale;
 const { width } = Dimensions.get('window');
 
-const index = ({ onOpenDetail, onCHangeScreen, data, loading }) => {
+const index = ({ onOpenDetail, onChangeScreen, data, loading }) => {
+  const renderItem = (item) => {
+    if (loading) {
+      return renderItemLoading();
+    }
+    return <NewsItem item={item?.item} onPress={onOpenDetail} />;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.containerTop}>
@@ -29,7 +36,7 @@ const index = ({ onOpenDetail, onCHangeScreen, data, loading }) => {
 
         <TouchableOpacity
           style={{ flexDirection: 'row' }}
-          onPress={onCHangeScreen}>
+          onPress={onChangeScreen}>
           <Text style={styles.txtSeeAll}>
             {translate('txtViewAll').toUpperCase()}
           </Text>
@@ -40,13 +47,6 @@ const index = ({ onOpenDetail, onCHangeScreen, data, loading }) => {
       <Carousel
         keyExtractor={(item, index) => index + ''}
         data={loading ? [1, 2, 3] : data}
-        renderItem={(item) =>
-          loading ? (
-            renderItemLoading()
-          ) : (
-            <NewsItem item={item?.item} onPress={onOpenDetail} />
-          )
-        }
         sliderWidth={width}
         sliderHeight={scaleHeight(300)}
         itemWidth={width * 0.8}
@@ -56,12 +56,14 @@ const index = ({ onOpenDetail, onCHangeScreen, data, loading }) => {
         hasParallaxImages={true}
         enableSnap={true}
         loop={true}
+        autoplay={false}
         horizontal
-        inactiveSlideShift={0}
+        inactiveSlideShift={1}
         removeClippedSubviews={true}
         useScrollView={true}
         lockScrollWhileSnapping={true}
-        loopClonesPerSide={3}
+        loopClonesPerSide={2}
+        renderItem={renderItem}
       />
     </View>
   );

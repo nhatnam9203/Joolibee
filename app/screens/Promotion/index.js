@@ -1,60 +1,80 @@
-import React from 'react';
-import {
-  FlatListItemWithImgHorizontal,
-  ButtonCC,
-  TopBarRight,
-} from '../components';
 import { CustomFlatList, CustomImageBackground } from '@components';
-
-import { images, AppStyles } from '@theme';
-import { StyleSheet, Text } from 'react-native';
-import ScreenName from '../ScreenName';
-import { useNavigation } from '@react-navigation/native';
+import { GEX } from '@graphql';
 import { translate } from '@localize';
-import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { app } from '@slices';
+import { AppStyles, images } from '@theme';
+import { scale } from '@utils';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import {
+  ButtonCC,
+  JollibeeImage,
+  TopBarRight,
+  PopupWebView,
+} from '../components';
+import ScreenName from '../ScreenName';
 
+const { scaleHeight, scaleWidth } = scale;
 const defaultData = [];
 
 const PromotionPage = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [data, setData] = React.useState([]);
+
+  const [promotionList, getPromotionList] = GEX.usePromotionList();
+  const [showWebview, setShowWebview] = React.useState(null);
 
   const goToPromotionList = () => {
     navigation.navigate(ScreenName.PromotionList);
   };
 
   React.useEffect(() => {
-    setData(defaultData);
     navigation.setOptions({
       headerTitle: translate('tabPromotion').toUpperCase(),
       headerRight: () => <TopBarRight />,
     });
   }, [navigation]);
 
-  const renderItem = ({ item }) => (
-    <FlatListItemWithImgHorizontal
-      image={item.image}
-      item={item}
-      onPress={goToPromotionList}
-      contentStyle={styles.itemContentStyle}
-      imgHeight="100%">
-      <Text style={styles.itemTitle} numberOfLines={2} ellipsizeMode="tail">
-        {item.title}
-      </Text>
-      <Text style={styles.itemDesc} numberOfLines={2} ellipsizeMode="tail">
-        {item.description}
-      </Text>
-      <ButtonCC.ButtonYellow
-        label={translate('txtBuyNow')}
-        width={110}
-        height={33}
-        onPress={() => {
-          dispatch(app.showComingSoon());
-        }}
-      />
-    </FlatListItemWithImgHorizontal>
+  React.useEffect(() => {
+    getPromotionList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity
+      style={styles.itemContentStyle}
+      onPress={() => {
+        setShowWebview(item?.url);
+      }}>
+      {!!item?.image && (
+        <JollibeeImage
+          url={item?.image}
+          width="100%"
+          height={scaleHeight(107)}
+          resizeMode="contain"
+        />
+      )}
+      <View style={[AppStyles.styles.horizontalLayout, styles.bottomStyle]}>
+        <Text style={styles.itemTitle} numberOfLines={3} ellipsizeMode="tail">
+          {item.title}
+        </Text>
+
+        <ButtonCC.ButtonRed
+          label={translate('txtBuyNow')}
+          width={scaleWidth(129)}
+          height={scaleHeight(50)}
+          onPress={() => {
+            if (item?.product_sku) {
+              navigation.navigate(ScreenName.MenuItemDetail, {
+                sku: item?.product_sku,
+              });
+            }
+          }}
+        />
+      </View>
+    </TouchableOpacity>
   );
 
   const renderEmptyList = () => (
@@ -68,13 +88,21 @@ const PromotionPage = () => {
       style={styles.container}
       source={images.watermark_background_2}>
       <CustomFlatList
-        data={data}
+        data={promotionList}
         renderItem={renderItem}
         horizontal={false}
-        keyExtractor={(item, index) => item.id.toString()}
+        keyExtractor={(item, index) => index + ''}
         contentContainerStyle={styles.contentContainerStyle}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmptyList}
+      />
+
+      <PopupWebView
+        visible={showWebview !== null}
+        onToggle={() => {
+          setShowWebview(null);
+        }}
+        url={showWebview}
       />
     </CustomImageBackground>
   );
@@ -85,13 +113,24 @@ const styles = StyleSheet.create({
   contentContainerStyle: { paddingVertical: 15, paddingHorizontal: 5 },
   itemTitle: {
     ...AppStyles.fonts.header,
-    color: AppStyles.colors.accent,
-    marginBottom: 5,
+    color: AppStyles.colors.text,
     fontSize: 18,
+    marginRight: scaleWidth(10),
+    flex: 1,
   },
-  itemDesc: { ...AppStyles.fonts.text, fontSize: 14 },
+
   itemContentStyle: {
-    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: scaleWidth(16),
+    marginHorizontal: scaleWidth(10),
+    marginVertical: scaleWidth(10),
+    height: scaleHeight(183),
+    ...AppStyles.styles.shadow,
+    overflow: 'hidden',
+  },
+
+  bottomStyle: {
+    paddingHorizontal: scaleWidth(10),
   },
 });
 

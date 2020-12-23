@@ -3,7 +3,7 @@ import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { images, metrics } from '@theme';
 
 export const SettingItem = ({ item, onPress = () => {}, buttonComponent }) => {
-  const { icon, title, isArrow } = item;
+  const { icon, title, isArrow } = item  || {};
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       {icon && (

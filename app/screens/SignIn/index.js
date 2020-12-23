@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { app } from '@slices';
 import { loginFb, loginGoogle, logoutFb } from '@social';
 import { AppStyles, images } from '@theme';
-import { regex } from '@utils';
+import { regex, scale } from '@utils';
 import { Formik } from 'formik';
 import _ from 'lodash';
 import React from 'react';
@@ -29,6 +29,7 @@ import { GEX } from '@graphql';
 import { PopupComingSoon } from '../components';
 import NavigationService from '../../navigation/NavigationService';
 const LAYOUT_WIDTH = '90%';
+const { scaleHeight, scaleWidth } = scale;
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -214,7 +215,7 @@ const SignInScreen = () => {
 
                   {/**REMEMBER*/}
                   <View style={styles.rememberStyle}>
-                    <TextCheckBox
+                    {/* <TextCheckBox
                       label={translate('txtRemember')}
                       // label={translate('txtRemember')}
                       value={values.remember}
@@ -229,7 +230,7 @@ const SignInScreen = () => {
                       label={translate('txtForgetPassWord')}
                       style={styles.txtForgotPass}
                       onPress={goForgotPasswordScreen}
-                    />
+                    /> */}
                   </View>
 
                   <View style={styles.polygonStyle}>
@@ -244,15 +245,26 @@ const SignInScreen = () => {
                     onPress={handleSubmit}
                     label={translate('txtSignIn')}
                   />
+                  <View style={styles.textContent}>
+                    <Text style={styles.txtStyle}>
+                      {translate('txtSocialSignin')}
+                    </Text>
+                  </View>
+                  <View style={styles.social}>
+                    {/**FACEBOOK*/}
+                    <ButtonCC.ButtonFacebook
+                      width="50%"
+                      style={{ marginRight: 8 }}
+                    />
+                    {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
-                  {/**FACEBOOK*/}
-                  {/* <ButtonCC.ButtonFacebook onPress={logoutFb} /> */}
-                  <ButtonCC.ButtonFacebook onPress={signinFB} />
-
-                  {/**GOOGLE*/}
-                  {/* <ButtonCC.ButtonGoogle /> */}
-                  <ButtonCC.ButtonGoogle onPress={signinGoogle} />
-
+                    {/**GOOGLE*/}
+                    <ButtonCC.ButtonGoogle
+                      width="50%"
+                      style={{ marginLeft: 8 }}
+                    />
+                    {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
+                  </View>
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>
                     <Text style={styles.txtStyle}>
@@ -288,7 +300,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.colors.accent,
     paddingHorizontal: 10,
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: scaleHeight(35),
     zIndex: 1,
   },
 
@@ -297,7 +309,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
     paddingHorizontal: 10,
-    paddingTop: 50,
+    paddingTop: scaleHeight(35),
     backgroundColor: AppStyles.colors.button,
     zIndex: 0,
   },
@@ -307,7 +319,7 @@ const styles = StyleSheet.create({
     height: 30,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginVertical: 10,
+    marginVertical: 5,
   },
 
   txtStyle: {
@@ -343,7 +355,9 @@ const styles = StyleSheet.create({
 
   txtSignIn: { ...AppStyles.fonts.bold, color: '#1B1B1B' },
 
-  titleStyle: { marginTop: 15, marginBottom: 10 },
+  titleStyle: { marginTop: scaleHeight(15), marginBottom: 10 },
+
+  social: { ...AppStyles.styles.horizontalLayout, width: LAYOUT_WIDTH },
 });
 
 export default SignInScreen;

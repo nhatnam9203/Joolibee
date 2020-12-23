@@ -314,6 +314,10 @@ export const REVOKE_CUSTOMER_TOKEN = gql`
 `;
 
 // UPDATE CUSTOMER INFO
+//      deviceId: $deviceId
+//    $deviceId: String!
+// $password: String! ,         password: $password
+
 export const UPDATE_CUSTOMER = gql`
   mutation(
     $date_of_birth: String

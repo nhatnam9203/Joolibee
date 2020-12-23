@@ -16,29 +16,33 @@ export const useGenerateToken = () => {
 
   const [generateCustomerToken] = useMutation(GENERATE_CUSTOMER_TOKEN, {
     onCompleted: (data) => {
-      Logger.debug(
-        data?.generateCustomerToken?.token,
-        'AAAAA sign in complete',
-      );
-
       const { token, otp_confirmed } = data?.generateCustomerToken || {};
 
       setCustomerToken({ customerToken: token, otpConfirmed: otp_confirmed });
-      Logger.debug(submitValue, '====> generateCustomerToken');
 
-      if (otp_confirmed) {
+      // if (otp_confirmed) {
+      //   dispatch(
+      //     account.signInSucceed({
+      //       ...submitValue,
+      //       token,
+      //       phone_number: submitValue?.email,
+      //     }),
+      //   );
+      // } else {
+      //   navigation.navigate(ScreenName.NewSignUp, {
+      //     customerToken: token,
+      //     typeVerify: 'update',
+      //   });
+      // }
+
+      if (token) {
         dispatch(
           account.signInSucceed({
-            ...submitValue,
             token,
+            ...submitValue,
             phone_number: submitValue?.email,
           }),
         );
-      } else {
-        navigation.navigate(ScreenName.NewSignUp, {
-          customerToken: token,
-          typeVerify: 'update',
-        });
       }
     },
   });

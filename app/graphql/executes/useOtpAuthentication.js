@@ -42,6 +42,8 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
         setAuthStatus(AUTH_STATUS.sent);
       }
     }
+
+    // setAuthStatus(AUTH_STATUS.sent);
   }
 
   async function confirmCode(input) {
@@ -62,6 +64,8 @@ export const useOtpAuthentication = ({ onVerifyPhoneError }) => {
       setAuthStatus(AUTH_STATUS.error);
       onVerifyPhoneError({ code: 'Xảy ra lỗi không xác định' });
     }
+
+    // setAuthStatus(AUTH_STATUS.verified);
   }
 
   // Handle android auto change

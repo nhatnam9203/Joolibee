@@ -30,9 +30,11 @@ const stepIndicatorStyles = {
   stepIndicatorLabelUnFinishedColor: AppStyles.colors.inactive,
   labelAlign: 'flex-start',
 };
-export default function OrderStatus({ status }) {
+export default function OrderStatus({ status, shipper }) {
   const scale = React.useRef(new Animated.Value(15)).current;
   const [visible, showPopup] = React.useState(false);
+  const shipperInfo = shipper?.find(Boolean);
+  Logger.debug(shipperInfo, '===> shipperInfo');
   const data = [
     {
       title: translate('txtStatusOrderPending'),
@@ -47,7 +49,9 @@ export default function OrderStatus({ status }) {
 
     {
       title: translate('txtStatusOrderShipping'),
-      description: 'Trần văn C (0778010203)',
+      description: shipper
+        ? `${shipperInfo?.first_name} ${shipperInfo?.last_name}`
+        : '',
       type: 'shipping',
     },
     {

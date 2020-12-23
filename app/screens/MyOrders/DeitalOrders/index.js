@@ -21,12 +21,20 @@ const MARGIN_VERTICAL = scaleHeight(20);
 
 export default function Index({ navigation, route }) {
   const dispatch = useDispatch();
-  const { order } = route.params;
+  const { order } = route.params || {};
   const [visible, setVisible] = React.useState(false);
   const [{ orderList }, getOrderList] = GEX.useOrderList();
 
-  let { order_number, created_at, status, address, grand_total, id } =
-    order || {};
+  let {
+    order_number,
+    created_at,
+    status,
+    address,
+    grand_total,
+    id,
+    shipper_info,
+    voucher_discount_amount,
+  } = order || {};
 
   const findOrder = orderList?.find((x) => x?.id === id);
   status = findOrder?.status;
@@ -39,10 +47,7 @@ export default function Index({ navigation, route }) {
 
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
-    status_order === translate('txtStatusOrderComplete') ||
-    status_order === translate('txtStatusOrderCancel')
-      ? true
-      : false;
+    status_order === translate('txtStatusOrderComplete') ? true : false;
   const getDate = React.useCallback(() => {
     const current_day = moment().format('DD/MM/yyyy');
     let dateOrder = format.dateTime(created_at);
@@ -163,10 +168,11 @@ export default function Index({ navigation, route }) {
           title={translate('txtOrderStattus')}
           style={{ marginVertical: scaleHeight(5) }}
         />
-        <OrderStatus status={status_order} />
+        <OrderStatus status={status_order} shipper={shipper_info} />
       </View>
     );
   };
+
   const renderBottomComponent = () => {
     return (
       <View style={styles.bottomContainer}>
@@ -186,6 +192,9 @@ export default function Index({ navigation, route }) {
     );
   };
 
+  const { items, total, shipping_address } =
+    orderDetailResp?.data?.customer?.orders?.items?.find(Boolean) || {};
+
   return (
     <>
       <CustomImageBackground
@@ -202,30 +211,25 @@ export default function Index({ navigation, route }) {
           <View style={styles.statusContainer}>
             {/* -------------- THONG TIN DON HANG  -------------- */}
             <OrderTitle title={translate('txtInfoShipping')} />
-            <OrderInfo
-              info={
-                orderDetailResp?.data?.customer?.orders?.items[0]
-                  ?.shipping_address
-              }
-            />
+            {shipping_address && <OrderInfo info={shipping_address} />}
             {/* -------------- THONG TIN DON HANG  -------------- */}
 
             {/* -------------- SAN PHAM DA CHON  -------------- */}
 
             <OrderTitle title={translate('txtItemSelect')} />
-            <OrderProductList
-              data={orderDetailResp?.data?.customer?.orders?.items[0]?.items}
-            />
+            {items && <OrderProductList data={items} />}
             {/* --------------  SAN PHAM DA CHON  -------------- */}
 
             {/* --------------  TOTAL PRICE  -------------- */}
             <OrderTotal
-              total={orderDetailResp?.data?.customer?.orders?.items[0]?.total}
+              total={total}
+              voucher_discount_amount={voucher_discount_amount}
             />
-            {/* --------------  TOTAL PRICE -------------- */}
+
+            {/* --------------  TOTAL PRICE (FEEDBACK) -------------- */}
             {(status?.toLowerCase() === 'pending' ||
               status?.toLowerCase() === 'processing') && (
-              <View style={styles.btnRemmoveOrder}>
+              <View style={styles.btnRemoveOrder}>
                 <ButtonCC.ButtonBorderRed
                   onPress={onHandleCancel}
                   label={translate('txtCancel')}
@@ -312,7 +316,7 @@ const styles = StyleSheet.create({
   statusContainer: {
     flex: 1,
   },
-  btnRemmoveOrder: {
+  btnRemoveOrder: {
     flex: 1,
     alignItems: 'center',
     paddingVertical: scaleHeight(26),

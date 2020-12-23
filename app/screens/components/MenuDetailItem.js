@@ -3,7 +3,9 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AppStyles, images } from '@theme';
 import { CustomCheckBox, CustomInput } from '@components';
 import { JollibeeImage } from './JollibeeImage';
-import { destructuring } from '@utils';
+import { destructuring, scale } from '@utils';
+
+const { scaleWidth, scaleHeight } = scale;
 
 export const MenuDetailItemSelectType = {
   Radio: 'radio',
@@ -17,21 +19,25 @@ export const MenuDetailItem = ({
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
-  const [radioChecked, setRadioChecked] = React.useState(item.is_default);
-
-  const selectItem = (select) => {
-    setRadioChecked(select);
-  };
+  const [radioChecked, setRadioChecked] = React.useState(item?.is_default);
+  const [qty, setQyt] = React.useState(item?.quantity ?? 1);
 
   React.useEffect(() => {
-    setRadioChecked(item.is_default);
+    setRadioChecked(item?.is_default);
   }, [item]);
 
   const onPressItem = () => {
     if (typeof onPress === 'function') {
-      onPress(item);
-    } else {
-      selectItem((prev) => !prev);
+      setQyt(1);
+      onPress(Object.assign({}, item, { quantity: 1 }));
+    }
+  };
+
+  const onChangeQuantity = (value) => {
+    if (value && typeof onPress === 'function') {
+      const num = parseInt(value) ?? 1;
+      setQyt(num);
+      onPress(Object.assign({}, item, { quantity: num }));
     }
   };
 
@@ -40,7 +46,7 @@ export const MenuDetailItem = ({
       case MenuDetailItemSelectType.Multiline:
         return (
           <View style={styles.multilineSelectContent}>
-            {item.can_change_quantity && (
+            {/* {item.can_change_quantity && (
               <CustomInput
                 style={styles.mulInputStyle}
                 inputStyle={styles.inputStyle}
@@ -52,13 +58,28 @@ export const MenuDetailItem = ({
                 clearTextOnFocus={true}
                 maxLength={3}
               />
+            )} */}
+
+            {radioChecked && (
+              <CustomInput
+                style={styles.mulInputStyle}
+                inputStyle={styles.inputStyle}
+                keyboardType="numeric"
+                allowFontScaling={true}
+                numberOfLines={1}
+                value={qty?.toString()}
+                onChangeText={onChangeQuantity}
+                multiline={false}
+                clearTextOnFocus={true}
+                maxLength={3}
+              />
             )}
 
             <CustomCheckBox
               normalColor={AppStyles.colors.accent}
               selectedColor={AppStyles.colors.accent}
               value={radioChecked}
-              onValueChange={setRadioChecked}
+              disabled={true}
             />
           </View>
         );
@@ -79,6 +100,14 @@ export const MenuDetailItem = ({
     }
   };
 
+  const getQuantityAmount = (amount) => {
+    if (amount > 1 && type !== MenuDetailItemSelectType.Multiline) {
+      return ' x' + amount;
+    }
+
+    return '';
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -86,14 +115,13 @@ export const MenuDetailItem = ({
       activeOpacity={0.8}
       key={item.id}>
       <JollibeeImage
-        style={styles.imageStyle}
         url={destructuring.imageURLOfItem(item)}
-        width={50}
+        width={scaleWidth(50)}
         height="100%"
       />
       <View style={styles.textContentStyle}>
         <Text style={styles.textStyle} numberOfLines={2} ellipsizeMode="tail">
-          {item.label + (item.quantity > 1 ? ' x' + item.quantity : '')}
+          {item.label + getQuantityAmount(item?.quantity)}
         </Text>
         {!!item?.price && (
           <Text style={styles.itemPriceStyle}>{`+ ${item.price}`}</Text>
@@ -112,7 +140,6 @@ export const MenuOptionSelectedItem = React.memo(({ item, list }) => {
       {list.slice(0, MAX_ITEMS_SHOW).map((x, index) => (
         <JollibeeImage
           key={x.id?.toString()}
-          style={styles.imageSelectedStyle}
           url={destructuring.imageURLOfItem(x)}
           height="100%"
           width={30}
@@ -148,11 +175,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: 10,
-  },
-
-  imageStyle: {
-    resizeMode: 'center',
-    flex: 1,
   },
 
   imageSelectedStyle: {
@@ -201,8 +223,10 @@ const styles = StyleSheet.create({
   },
 
   mulInputStyle: {
-    height: 30,
-    width: 55,
+    height: scaleHeight(35),
+    width: scaleWidth(50),
+    borderWidth: 1,
+    borderRadius: 8,
     borderColor: AppStyles.colors.accent,
     justifyContent: 'center',
     paddingHorizontal: 2,

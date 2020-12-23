@@ -194,6 +194,7 @@ const NotificationProvider = ({ children }) => {
      *
      *
      */
+    getOrderList();
   };
 
   const onOpenedApp = (data) => {

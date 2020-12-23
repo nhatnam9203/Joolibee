@@ -22,20 +22,18 @@ export const useSignInFlow = () => {
   });
 
   const signOut = () => {
-    if (isSignIn) {
-      onSignOut();
-      // clear redux state
-      dispatch(account.signOutComplete());
-    }
+    onSignOut();
+    // clear redux state
+    dispatch(account.signOutComplete());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   const onSignOut = async () => {
     // call server revoke token
-    const { token } = await get(StorageKey.User);
-    if (token) {
-      await revokeCustomerToken();
-    }
+    // const { token } = await get(StorageKey.User);
+    // if (token) {
+    //   await revokeCustomerToken();
+    // }
 
     // Evict and garbage-collect the cached user object
     graphQlClient.cache.evict({ fieldName: 'customer' });

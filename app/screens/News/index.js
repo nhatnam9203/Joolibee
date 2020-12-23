@@ -17,16 +17,15 @@ import { PopupWebView, NewsItem, TopBarRight } from '../components';
 const { scaleWidth, scaleHeight } = scale;
 
 const Index = ({ route }) => {
-  const { data, loading, refetch } = route.params;
-  const [visible_detal, showDetail] = React.useState(false);
+  const { data } = route.params || {};
+  const [visible_detal, showDetail] = React.useState(null);
   const [refreshing, setRefreshing] = React.useState(false);
   const navigation = useNavigation();
   const [language] = useChangeLanguage();
-  const onToggleDetail = () => showDetail(!visible_detal);
+  const onToggleDetail = (newsItem = null) => showDetail(newsItem);
 
   const handleRefresh = () => {
     setRefreshing(true);
-    refetch();
     setRefreshing(false);
   };
 
@@ -36,10 +35,13 @@ const Index = ({ route }) => {
       headerRight: () => <TopBarRight />,
     });
   }, [language, navigation]);
-  const ItemSeperator = () => <View style={{ height: scaleHeight(14) }} />;
+
+  const ItemSeperator = () => (
+    <View style={{ height: scaleHeight(20), width: '100%' }} />
+  );
 
   const renderItem = ({ item, index }) => {
-    return <NewsItem item={item} onPress={onToggleDetail} />;
+    return <NewsItem item={item} onPress={() => onToggleDetail(item)} />;
   };
 
   const renderItemLoading = () => {
@@ -63,8 +65,8 @@ const Index = ({ route }) => {
       source={images.watermark_background_2}
       style={styles.container}>
       <CustomFlatList
-        data={loading ? [1, 2, 3, 4, 5] : data}
-        renderItem={loading ? renderItemLoading : renderItem}
+        data={data}
+        renderItem={renderItem}
         keyExtractor={(item, index) => index + ''}
         contentContainerStyle={styles.contentContainerStyle}
         ItemSeparatorComponent={ItemSeperator}
@@ -74,7 +76,11 @@ const Index = ({ route }) => {
         }
       />
 
-      <PopupWebView visible={visible_detal} onToggle={onToggleDetail} />
+      <PopupWebView
+        visible={visible_detal !== null}
+        onToggle={() => onToggleDetail()}
+        item={visible_detal}
+      />
     </CustomImageBackground>
   );
 };
@@ -85,8 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   contentContainerStyle: {
-    paddingVertical: scaleHeight(20),
-    alignItems: 'center',
+    padding: scaleHeight(10),
   },
 
   containerLoading: {

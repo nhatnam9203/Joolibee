@@ -18,7 +18,6 @@ const HOT_COLOR_PALLETS = ['#F0810D', '#E31837'];
 const getLayoutColor = ({ item, index = 0 }) => {
   let backgroundColor;
   let txtColor = 'white';
-
   switch (index) {
     case 0:
       backgroundColor = HOT_COLOR_PALLETS[index];
@@ -29,7 +28,7 @@ const getLayoutColor = ({ item, index = 0 }) => {
       break;
 
     default:
-      if (item?.id === 9) {
+      if (item?.id === 9 || item?.id === 11) {
         backgroundColor = COLD_COLOR_PALLETS[1];
         break;
       }
@@ -77,7 +76,7 @@ const MenuScreen = () => {
   };
 
   const renderItem = (object) => {
-    const { item } = object;
+    const { item } = object  || {};
 
     return (
       <MenuItem

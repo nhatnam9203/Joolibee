@@ -1,4 +1,6 @@
+import { useQuery } from '@apollo/client';
 import { CustomButton } from '@components';
+import { QGL, GEX } from '@graphql';
 import {
   AppScrollViewIOSBounceColorsWrapper,
   SinglePageLayout,
@@ -10,9 +12,6 @@ import { scale } from '@utils';
 import React from 'react';
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQuery } from '@apollo/client';
-import { mutation, query } from '@graphql';
-import { cart, account } from '@slices';
 import {
   MenuPageName,
   PopupSelectAreaComponent,
@@ -39,9 +38,9 @@ const HomePage = () => {
   const [visible_detail, showDetail] = React.useState(false);
   const tokenKey = useSelector((state) => state.account.user.tokenKey);
 
-  const { data, loading, refetch } = useQuery(query.HOME_SCREEN, {
-    fetchPolicy: 'cache-first',
-  });
+  const [{ data, loading, refetch }, loadHomeScreen] = GEX.useLoadHomeScreen(
+    'cache-only',
+  );
 
   const _data = data ? data?.homeScreen : {};
 
@@ -54,9 +53,12 @@ const HomePage = () => {
   };
 
   React.useEffect(() => {
+    loadHomeScreen();
     setTimeout(() => {
       setVisiblePopup(true);
-    }, 1000);
+    }, 1500);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

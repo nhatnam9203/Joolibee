@@ -21,8 +21,8 @@
   "txtSignUpFacebook": "Sign up with Facebook",
   "txtSignUpGoogle": "Sign up with Google",
   "txtSignIn": "Log in",
-  "txtSignInFacebook": "Login with Facebook",
-  "txtSignInGoogle": "Sign in with Google",
+  "txtSignInFacebook": "Facebook",
+  "txtSignInGoogle": "Google",
   "txtInputName": "Full Name *",
   "txtInputPhone": "Phone number *",
   "txtInputEmail": "Email",
@@ -219,5 +219,10 @@
   "txtMaxNumOrderPendingTitle": "Reached Max Pending Order!",
   "txtMaxNumOrderPendingDesc": "Xin vui lòng hoàn thành đơn hàng, hoặc chờ hệ thống xác nhận đơn để tiếp tục!",
   "txtBlockSpam": "This phone number was blocked, Please try again :",
-  "txtPhoneExisted":"The phone number is ixisted"
+  "txtPhoneExisted": "The phone number is ixisted",
+  "txtVoucher": "Voucher  ",
+  "txtRedeemPoint": "Redeem point ",
+  "txtSocialSignin": "Or ",
+  "txtCheckUpdate": "Checking for update ...",
+  "txtLoadingApp": "Loading data ..."
 }

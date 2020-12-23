@@ -72,8 +72,8 @@ export const useSetShippingAddress = (callBack = () => {}) => {
         const { location } = geometry;
         dispatch(
           store.setShippingLocation({
-            latitude: location.lat,
-            longitude: location.lng,
+            latitude: location?.lat,
+            longitude: location?.lng,
           }),
         );
 
@@ -88,7 +88,6 @@ export const useSetShippingAddress = (callBack = () => {}) => {
     }
     let { variables } = params;
     variables = Object.assign({}, variables, { cart_id: customerCart.id });
-    Logger.debug(variables, '========> variables variables variables');
     return setShippingAddressesOnCart({
       ...params,
       variables,
