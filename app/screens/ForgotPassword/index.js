@@ -1,18 +1,18 @@
 import React from 'react';
 import { InputPhoneNumber, InputNewPassword, VerifyPhoneCode } from './pages';
-import { validate } from '@utils';
 import { app } from '@slices';
 import { useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import { getUniqueId } from 'react-native-device-info';
 import { GEX } from '@graphql';
+import NavigationService from '../../navigation/NavigationService';
+import { translate } from '@localize';
 const PAGES = {
   InputPhone: 0,
   InputCode: 1,
   InputNewPassWord: 2,
 };
 const TYPE_VERIFY = 'reset';
-const { normalizePhoneNumber } = validate;
 
 const ForgotPasswordScreen = () => {
   // redux
@@ -32,6 +32,7 @@ const ForgotPasswordScreen = () => {
     signInWithPhoneNumber,
     authStatus,
     second_expired,
+    smsCode,
   } = GEX.useOtpAuthentication({
     onVerifyPhoneError: onVerifyPhoneError,
   });
@@ -51,7 +52,7 @@ const ForgotPasswordScreen = () => {
   };
 
   const requestAuthCode = async (values) => {
-    const { phone } = values  || {} ;
+    const { phone } = values || {};
     if (!phone) {
       Logger.error('error', 'SignUp -> requestAuthCode -> phone not found!');
       return;
@@ -73,15 +74,22 @@ const ForgotPasswordScreen = () => {
   };
 
   React.useEffect(() => {
-    if (authStatus === AUTH_STATUS.sent) {
-      dispatch(app.hideLoading());
-      setPage(PAGES.InputCode);
-    } else if (authStatus === AUTH_STATUS.verified) {
+    if (authStatus === AUTH_STATUS.verified) {
+      console.log('smsCode', smsCode);
       dispatch(app.hideLoading());
       setPage(PAGES.InputNewPassWord);
+    } else if (authStatus === AUTH_STATUS.sent) {
+      dispatch(app.hideLoading());
+      setPage(PAGES.InputCode);
     } else if (authStatus === AUTH_STATUS.spam) {
       setPage(PAGES.InputCode);
       dispatch(app.toggleBlockSpam(true));
+      dispatch(app.hideLoading());
+    } else if (authStatus === AUTH_STATUS.existed) {
+      NavigationService.alertWithError({
+        message: translate('txtPhoneExisted'),
+      });
+    } else {
       dispatch(app.hideLoading());
     }
   }, [AUTH_STATUS, authStatus, dispatch]);
@@ -109,7 +117,7 @@ const ForgotPasswordScreen = () => {
         />
       );
     case 2:
-      return <InputNewPassword infos={formData} />;
+      return <InputNewPassword infos={formData} smsCode={smsCode} />;
 
     case 0:
     default:

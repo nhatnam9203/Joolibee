@@ -94,6 +94,7 @@ const SignInScreen = () => {
     try {
       const data = await loginFb();
       let submitData = { type: 'Facebook', token: data?.accessToken };
+      console.log(data?.accessToken);
       socialSignInSubmit(submitData);
     } catch (error) {
       await dispatch(app.hideLoading());
@@ -136,6 +137,7 @@ const SignInScreen = () => {
             initialValues={{
               username: null,
               password: null,
+              remember: false,
             }}
             onSubmit={signInSubmit}
             validationSchema={SignInSchema}
@@ -223,13 +225,13 @@ const SignInScreen = () => {
                       }
                       normalColor="#fff"
                       fillColor={true}
-                    />
+                    /> */}
 
                     <CustomTextLink
                       label={translate('txtForgetPassWord')}
                       style={styles.txtForgotPass}
                       onPress={goForgotPasswordScreen}
-                    /> */}
+                    />
                   </View>
 
                   <View style={styles.polygonStyle}>
@@ -251,18 +253,26 @@ const SignInScreen = () => {
                   </View>
                   <View style={styles.social}>
                     {/**FACEBOOK*/}
+                    {/* <ButtonCC.ButtonFacebook
+                      width="50%"
+                      style={{ marginRight: 8 }}
+                    /> */}
                     <ButtonCC.ButtonFacebook
                       width="50%"
                       style={{ marginRight: 8 }}
+                      onPress={signinFB}
                     />
-                    {/* <ButtonCC.ButtonFacebook onPress={signinFB} /> */}
 
                     {/**GOOGLE*/}
+                    {/* <ButtonCC.ButtonGoogle
+                      width="50%"
+                      style={{ marginLeft: 8 }}
+                    /> */}
                     <ButtonCC.ButtonGoogle
                       width="50%"
                       style={{ marginLeft: 8 }}
+                      onPress={signinGoogle}
                     />
-                    {/* <ButtonCC.ButtonGoogle onPress={signinGoogle} /> */}
                   </View>
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>
@@ -338,7 +348,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 
   polygonStyle: {

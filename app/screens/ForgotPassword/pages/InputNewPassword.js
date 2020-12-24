@@ -12,28 +12,47 @@ import { SinglePageLayout } from '@layouts';
 import { Formik } from 'formik';
 import _ from 'lodash';
 import * as Yup from 'yup';
+import { GEX } from '@graphql';
+import { useNavigation } from '@react-navigation/native';
 
 const LAYOUT_WIDTH = '90%';
 
-export const InputNewPassword = ({ next }) => {
+export const InputNewPassword = ({ infos, smsCode }) => {
+  const navigation = useNavigation();
+  const [, resetPasswordCustomer] = GEX.useResetPasswordCustomer();
+
   const NewPasswordSchema = Yup.object().shape({
-    password: Yup.string()
+    newPassword: Yup.string()
       .min(6, translate('txtTooShort'))
       .max(30, translate('txtTooLong'))
       .required(translate('txtRequired')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password')], translate('txtPasswordMatch'))
+      .oneOf([Yup.ref('newPassword')], translate('txtPasswordMatch'))
       .min(6, translate('txtTooShort'))
       .max(30, translate('txtTooLong'))
       .required(translate('txtRequired')),
   });
 
-  const forgotPasswordSubmit = () => {};
+  const forgotPasswordSubmit = (values) => {
+    let variables = {
+      newPassword: values.newPassword,
+      phoneNumber: infos?.phone,
+      smsCode,
+    };
+    resetPasswordCustomer({ variables }).then(({ data }) => {
+      if (data?.resetPassword) {
+        navigation.goBack();
+      }
+    });
+  };
 
   return (
     <SinglePageLayout backgroundColor={AppStyles.colors.accent}>
       <Formik
-        initialValues={{ password: '', confirmPassword: '' }}
+        initialValues={{
+          newPassword: '',
+          confirmPassword: '',
+        }}
         onSubmit={forgotPasswordSubmit}
         validationSchema={NewPasswordSchema}
         isValidating={true}>
@@ -44,24 +63,23 @@ export const InputNewPassword = ({ next }) => {
           values,
           errors,
           touched,
-          setFieldValue,
         }) => (
           <View style={styles.container}>
             <LabelTitle label={translate('txtNewPassword')} color="#fff" />
 
             <PasswordInput
               style={{ width: LAYOUT_WIDTH }}
-              onChangeText={handleChange('password')}
+              onChangeText={handleChange('newPassword')}
               onBlur={handleBlur('password')}
-              value={values.password}
+              value={values.newPassword}
               placeholder={translate('txtInputPassword')}
               textContentType="password"
             />
             {/**Password input error */}
-            {errors.password && touched.password && (
+            {errors.newPassword && touched.newPassword && (
               <TextInputErrorMessage
                 style={{ width: LAYOUT_WIDTH }}
-                message={errors.password}
+                message={errors.newPassword}
                 color={AppStyles.colors.inputError}
               />
             )}
@@ -83,7 +101,7 @@ export const InputNewPassword = ({ next }) => {
               />
             )}
             <ButtonCC.ButtonYellow
-              // onPress={next}
+              onPress={handleSubmit}
               label={translate('txtSave')}
               style={styles.btnStyle}
             />

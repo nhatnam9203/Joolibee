@@ -57,10 +57,8 @@ const Index = () => {
 
   const pickupLocation = (item) => () => {
     const { description, structured_formatting } = item;
-
     const { main_text, secondary_text } = structured_formatting;
     let addresses = format.addresses_geocoding(secondary_text?.split(','));
-
     let street = main_text + ' ' + addresses?.ward + ' ' + addresses?.district;
     dispatch(
       address.selectedLocation({

@@ -543,3 +543,35 @@ export const VERIFY_OTP = gql`
     }
   }
 `;
+
+// RESET PASSWORD CUSTOMER
+export const RESET_PASSWORD_CUSTOMER = gql`
+  mutation(
+    $phoneNumber: String!
+    $newPassword: String!
+    $smsCode: String!
+    $deviceId: String!
+  ) {
+    resetPassword(
+      phoneNumber: $phoneNumber
+      newPassword: $newPassword
+      smsCode: $smsCode
+      deviceId: $deviceId
+    )
+  }
+`;
+
+// VERIFY OTP
+export const VERIFY_ACCOUNT_OTP = gql`
+  mutation($deviceId: String!, $phoneNumber: String!, $smsCode: String!) {
+    verifyAccountOtp(
+      input: {
+        deviceId: $deviceId
+        phoneNumber: $phoneNumber
+        smsCode: $smsCode
+      }
+    ) {
+      result
+    }
+  }
+`;
