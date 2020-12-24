@@ -9,7 +9,7 @@ export const useSetShippingMethodsOnCart = () => {
     SET_ORDER_SHIPPING_METHOD,
   );
 
-  const setShippingMethods = (code, storeId) => {
+  const setShippingMethods = (code, storeId, notes) => {
     if (!customerCart) {
       return;
     }
@@ -24,6 +24,7 @@ export const useSetShippingMethodsOnCart = () => {
             ...(storeId && { restaurant_id: parseInt(storeId) }),
           },
         ],
+        ...notes,
       },
     });
   };

@@ -44,7 +44,7 @@ const CART_ICON_Y = scaleHeight(65);
 const DEFAULT_CURRENCY_VALUE = '0.0 đ';
 
 const MenuItemDetailScreen = ({ route = { params: {} } }) => {
-  const { product, detailItem, sku } = route.params  || {};
+  const { product, detailItem, sku } = route.params || {};
 
   const navigation = useNavigation();
   // animations
@@ -193,6 +193,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
   };
 
   const requestAddCartProduct = (cartItem) => {
+    Logger.debug(cartItem, '======> cartItem');
     const { sku, items = [] } = cartItem || {};
     const optionsMap = [];
     // Logger.debug(productItem, '======> xxxxxxxx productItem');
@@ -214,14 +215,24 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
 
     items.forEach((item) => {
       const { options = [], option_id } = item || {};
-      const mapArr = options
+      const valuesArr = options
         .filter((x) => x.is_default === true)
         .map((x) => x.id + '');
 
+      const quantityArr = options
+        .filter((x) => x.is_default === true)
+        .map((x) => {
+          return {
+            option_value: x.id,
+            selection_id: x.product?.id,
+            qty: x.quantity,
+          };
+        });
+
       const selectOptions = {
         id: parseInt(option_id),
-        quantity: 1,
-        value: mapArr,
+        quantity: quantityArr,
+        value: valuesArr,
       };
 
       optionsMap.push(selectOptions);
@@ -268,12 +279,19 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     <MenuOptionSelectedItem item={item?.first} list={item} />
   );
 
-  const renderOptionsItem = ({ item, index, type, onPress }) => (
+  const renderOptionsItem = ({
+    item,
+    index,
+    type,
+    onPress,
+    onChangeQuantity,
+  }) => (
     <MenuDetailItem
       item={item}
       key={index + ''}
       type={type}
       onPress={onPress}
+      onChangeQuantity={onChangeQuantity}
     />
   );
 

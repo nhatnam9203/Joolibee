@@ -78,7 +78,7 @@ const CustomAccordionList = ({
         if (index < 0) {
           await updateOptionItems([item, ...selectedListItem]);
         } else {
-          selectedListItem?.splice(index, 1);
+          // selectedListItem?.splice(index, 1);
 
           await updateOptionItems([
             item,
@@ -120,6 +120,13 @@ const CustomAccordionList = ({
     }
   };
 
+  const onChangeQuantity = (item) => {
+    const selected = selectedListItem?.find((x) => x.id === item.id);
+    if (type === CustomAccordionListItemType.Multiline && selected) {
+      selectedItem(item);
+    }
+  };
+
   const onRenderItem = ({ item }, index) => {
     if (typeof renderItem === 'function') {
       return renderItem({
@@ -127,6 +134,7 @@ const CustomAccordionList = ({
         index,
         type,
         onPress: onPress,
+        onChangeQuantity: onChangeQuantity,
       });
     } else return <View />;
   };

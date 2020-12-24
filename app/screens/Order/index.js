@@ -79,6 +79,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [order_number, setOrderNumber] = React.useState('');
   const [error_point, showErrorPoint] = React.useState(null);
   const [availableStores, setAvailableStores] = React.useState(null);
+  const [addressNote, setAddressNote] = React.useState(null);
+  const [orderNote, setOrderNote] = React.useState(null);
 
   // ----------------- Timming apply coupon ------------------------ //
   const onCallBackEndCountDown = () => {
@@ -340,7 +342,10 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
       await dispatch(app.showLoading());
       await setShippingAddress({ variables });
-      await setShippingMethods(ShippingType.InShop, parseInt(store_pickup_id));
+      await setShippingMethods(ShippingType.InShop, parseInt(store_pickup_id), {
+        note: orderNote ?? ' ',
+        address_note: addressNote ?? ' ',
+      });
       setAssignStoreId(store_pickup_id);
       await dispatch(app.hideLoading());
     };
@@ -402,7 +407,13 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
       setAssignStoreId(pickStoreId);
 
-      setShippingMethods(ShippingType.InPlace, pickStoreId);
+      setShippingMethods(ShippingType.InPlace, pickStoreId, {
+        note: orderNote ?? ' ',
+        address_note: addressNote ?? ' ',
+      });
+
+      setOrderNote(null);
+      setAddressNote(null);
     };
 
     if (shippingType === ShippingType.InPlace && storeList) {
@@ -591,6 +602,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
             placeholder={translate('txtNoteShipping')}
             multiline={true}
             style={styles.txtNoteStyle}
+            value={addressNote}
+            onChangeText={(value) => setAddressNote(value)}
           />
         </OrderSectionItem>
       </OrderSection>
@@ -646,6 +659,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
           placeholder={'Thêm ghi chú (vd: không cay...)'}
           multiline={true}
           style={styles.txtNoteStyle}
+          value={orderNote}
+          onChangeText={(value) => setOrderNote(value)}
         />
       </OrderSectionItem>
       <OrderSectionItem>

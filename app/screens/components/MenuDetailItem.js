@@ -16,14 +16,17 @@ export const MenuDetailItemSelectType = {
 export const MenuDetailItem = ({
   item,
   onPress,
+  onChangeQuantity,
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
+  Logger.debug(item, '--------> item');
   const [radioChecked, setRadioChecked] = React.useState(item?.is_default);
-  const [qty, setQyt] = React.useState(item?.quantity ?? 1);
+  const [qty, setQyt] = React.useState(item?.quantity);
 
   React.useEffect(() => {
     setRadioChecked(item?.is_default);
+    // setQyt(item?.quantity);
   }, [item]);
 
   const onPressItem = () => {
@@ -33,11 +36,14 @@ export const MenuDetailItem = ({
     }
   };
 
-  const onChangeQuantity = (value) => {
-    if (value && typeof onPress === 'function') {
+  const proceedChangeQuantity = (value) => {
+    if (value && value.trim() > 0 && typeof onPress === 'function') {
       const num = parseInt(value) ?? 1;
       setQyt(num);
-      onPress(Object.assign({}, item, { quantity: num }));
+      onChangeQuantity(Object.assign({}, item, { quantity: num }));
+    } else {
+      setQyt('');
+      onChangeQuantity(Object.assign({}, item, { quantity: 1 }));
     }
   };
 
@@ -68,7 +74,7 @@ export const MenuDetailItem = ({
                 allowFontScaling={true}
                 numberOfLines={1}
                 value={qty?.toString()}
-                onChangeText={onChangeQuantity}
+                onChangeText={proceedChangeQuantity}
                 multiline={false}
                 clearTextOnFocus={true}
                 maxLength={3}
