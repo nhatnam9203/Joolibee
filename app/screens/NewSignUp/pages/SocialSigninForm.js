@@ -225,51 +225,6 @@ export const SocialSigninForm = ({ infos: { phone = '', token }, smsCode }) => {
                   />
                 )}
 
-                <PasswordInput
-                  style={{
-                    width: LAYOUT_WIDTH,
-                    borderRadius: metrics.borderRadius,
-                  }}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  placeholder={translate('txtInputPassword')}
-                  textContentType="password"
-                  border
-                />
-                {/**Password input error */}
-                {errors.password && touched.password && (
-                  <TextInputErrorMessage
-                    style={{ width: LAYOUT_WIDTH }}
-                    message={errors.password}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
-
-                <PasswordInput
-                  style={{
-                    width: LAYOUT_WIDTH,
-                    borderRadius: metrics.borderRadius,
-                  }}
-                  onChangeText={handleChange('confirmPassword')}
-                  onBlur={handleBlur('confirmPassword')}
-                  value={values.confirmPassword}
-                  placeholder={translate('txtInputConfirmPassword')}
-                  textContentType="password"
-                  border
-                />
-                {/**Confirm password input error */}
-                {errors.confirmPassword && (
-                  <TextInputErrorMessage
-                    style={{
-                      width: LAYOUT_WIDTH,
-                      borderRadius: metrics.borderRadius,
-                    }}
-                    message={errors.confirmPassword}
-                    color={AppStyles.colors.inputError}
-                  />
-                )}
-
                 <View style={styles.pickerContentStyle}>
                   <CustomBirthdayPicker
                     onChangeDate={(d) => {

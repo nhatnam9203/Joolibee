@@ -44,6 +44,8 @@ const SignUpScreen = ({ route }) => {
     onVerifyPhoneError: onVerifyPhoneError,
   });
 
+  const [onVerifyAccountOtp] = GEX.useVerifyAccountOtp();
+
   const onConfirmCode = async (code, phone) => {
     if (!code) {
       return;
@@ -88,16 +90,13 @@ const SignUpScreen = ({ route }) => {
   React.useEffect(() => {
     if (authStatus === AUTH_STATUS.verified) {
       if (params?.customerToken) {
-        // dispatch(app.savePhoneVerify(''));
-        // dispatch(
-        //   account.signInSucceed({
-        //     token: params?.customerToken,
-        //     phone_number: formData?.phone,
-        //   }),
-        // );
-        // getCustomerInfo();
         dispatch(account.verifiedSucceed({ token: params?.customerToken }));
-        setPage(PAGES.SocialSignin);
+        let variables = {
+          // token: params?.customerToken,
+          phoneNumber: formData?.phone,
+          smsCode,
+        };
+        onVerifyAccountOtp({ variables });
       } else {
         dispatch(app.hideLoading());
         setPage(PAGES.SignUp);
