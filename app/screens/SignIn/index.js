@@ -253,26 +253,26 @@ const SignInScreen = () => {
                   </View>
                   <View style={styles.social}>
                     {/**FACEBOOK*/}
-                    {/* <ButtonCC.ButtonFacebook
-                      width="50%"
-                      style={{ marginRight: 8 }}
-                    /> */}
                     <ButtonCC.ButtonFacebook
                       width="50%"
                       style={{ marginRight: 8 }}
-                      onPress={signinFB}
                     />
+                    {/* <ButtonCC.ButtonFacebook
+                      width="50%"
+                      style={{ marginRight: 8 }}
+                      onPress={signinFB}
+                    /> */}
 
                     {/**GOOGLE*/}
-                    {/* <ButtonCC.ButtonGoogle
-                      width="50%"
-                      style={{ marginLeft: 8 }}
-                    /> */}
                     <ButtonCC.ButtonGoogle
                       width="50%"
                       style={{ marginLeft: 8 }}
-                      onPress={signinGoogle}
                     />
+                    {/* <ButtonCC.ButtonGoogle
+                      width="50%"
+                      style={{ marginLeft: 8 }}
+                      onPress={signinGoogle}
+                    /> */}
                   </View>
                   {/**SIGN UP*/}
                   <View style={styles.textContent}>
