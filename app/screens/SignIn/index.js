@@ -65,7 +65,7 @@ const SignInScreen = () => {
       //   submitData = Object.assign({}, data, { email: username });
       // }
       await dispatch(app.showLoading());
-      await dispatch(app.savePhoneVerify(username));
+      // await dispatch(app.savePhoneVerify(username));
       signIn({ variables: submitData });
     },
     [dispatch, signIn],
