@@ -26,3 +26,4 @@ export * from './useOtpAuthentication';
 export * from './useRegisterCustomer';
 export * from './useResetPasswordCustomer';
 export * from './usePromotionList';
+export * from './useVerifyAccountOtp';

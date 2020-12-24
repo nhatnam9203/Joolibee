@@ -137,6 +137,7 @@ const SignInScreen = () => {
             initialValues={{
               username: null,
               password: null,
+              remember: false,
             }}
             onSubmit={signInSubmit}
             validationSchema={SignInSchema}
@@ -215,7 +216,7 @@ const SignInScreen = () => {
 
                   {/**REMEMBER*/}
                   <View style={styles.rememberStyle}>
-                    <TextCheckBox
+                    {/* <TextCheckBox
                       label={translate('txtRemember')}
                       // label={translate('txtRemember')}
                       value={values.remember}
@@ -224,7 +225,7 @@ const SignInScreen = () => {
                       }
                       normalColor="#fff"
                       fillColor={true}
-                    />
+                    /> */}
 
                     <CustomTextLink
                       label={translate('txtForgetPassWord')}
@@ -347,7 +348,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
 
   polygonStyle: {

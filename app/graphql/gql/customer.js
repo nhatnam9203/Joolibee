@@ -325,9 +325,6 @@ export const UPDATE_CUSTOMER = gql`
     $firstname: String!
     $lastname: String!
     $email: String!
-    $deviceId: String!
-    $smsCode: String
-    $phoneNumber: String
   ) {
     updateCustomerInfo(
       input: {
@@ -336,10 +333,7 @@ export const UPDATE_CUSTOMER = gql`
         firstname: $firstname
         lastname: $lastname
         email: $email
-        phoneNumber: $phoneNumber
       }
-      smsCode: $smsCode
-      deviceId: $deviceId
     ) {
       customer {
         __typename
@@ -564,5 +558,20 @@ export const RESET_PASSWORD_CUSTOMER = gql`
       smsCode: $smsCode
       deviceId: $deviceId
     )
+  }
+`;
+
+// VERIFY OTP
+export const VERIFY_ACCOUNT_OTP = gql`
+  mutation($deviceId: String!, $phoneNumber: String!, $smsCode: String!) {
+    verifyAccountOtp(
+      input: {
+        deviceId: $deviceId
+        phoneNumber: $phoneNumber
+        smsCode: $smsCode
+      }
+    ) {
+      result
+    }
   }
 `;
