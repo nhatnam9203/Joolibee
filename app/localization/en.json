@@ -136,7 +136,7 @@
   "txtAddCart": "Add to card",
   "txtProductCart": "Cart Product Order",
   "txtNotFoundProduct": "No products",
-  "txtBirthDayOrder": "Birthday party order",
+  "txtBirthDayOrder": "Birthday Party",
   "txtBigOrder": "Big service order",
   "txtOrderMenu": "Select Order",
   "txtJollibeeVN": "Jollibee Việt Nam",
@@ -224,5 +224,7 @@
   "txtRedeemPoint": "Redeem point ",
   "txtSocialSignin": "Or ",
   "txtCheckUpdate": "Checking for update ...",
-  "txtLoadingApp": "Loading data ..."
+  "txtLoadingApp": "Loading data ...",
+  "txtNotFoundStoreAddress": "The address not support to shipping ",
+  "txtAlert": "Alert"
 }

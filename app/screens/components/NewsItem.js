@@ -17,7 +17,7 @@ export const NewsItem = ({ item, index, onPress }) => {
 
   return (
     <TouchableOpacity onPress={onShowDetail} activeOpacity={0.7}>
-      <View style={[styles.containerItem]}>
+      <View style={styles.containerItem}>
         <View style={styles.topContent}>
           <FastImage
             style={styles.imgProduct}
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3,
     overflow: 'hidden',
-    flex: 0,
+    height: scaleHeight(220),
   },
   topContent: {
     height: '62%',

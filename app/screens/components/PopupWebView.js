@@ -7,6 +7,7 @@ import {
   Modal,
   ScrollView,
   Text,
+  Platform,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import { AppStyles, images } from '@theme';
@@ -40,7 +41,7 @@ const Index = ({ visible, item, onToggle, url = null }) => {
           startInLoadingState={true}
           source={source}
           bounces={true}
-          automaticallyAdjustContentInsets={false}
+          automaticallyAdjustContentInsets={true}
         />
       ) : (
         <ScrollView style={styles.scrollView}>

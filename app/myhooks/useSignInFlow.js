@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { GQL, GEX } from '@graphql';
 import { account } from '@slices';
 import { remove, StorageKey, get } from '@storage';
@@ -10,6 +10,7 @@ import { useGraphQLClient } from '@graphql';
 // thực hiện chức năng cần khi signin - signout
 export const useSignInFlow = () => {
   const dispatch = useDispatch();
+  const client = useApolloClient();
 
   // bắt sự kiện khi app signin | sigout
   const isSignIn = useSelector((state) => state.account?.user?.isLogin);
@@ -21,29 +22,32 @@ export const useSignInFlow = () => {
     errorPolicy: 'ignore',
   });
 
-  const signOut = () => {
-    onSignOut();
+  const signOut = async () => {
     // clear redux state
-    dispatch(account.signOutComplete());
+    await client.clearStore();
+    await remove(StorageKey.User);
+
+    await dispatch(account.signOutComplete());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
-  const onSignOut = async () => {
-    // call server revoke token
-    // const { token } = await get(StorageKey.User);
-    // if (token) {
-    //   await revokeCustomerToken();
-    // }
+  // const onSignOut = async () => {
+  //   // call server revoke token
+  //   const { token } = await get(StorageKey.User);
+  //   if (token) {
+  //     await revokeCustomerToken();
+  //   }
 
-    // Evict and garbage-collect the cached user object
-    graphQlClient.cache.evict({ fieldName: 'customer' });
-    graphQlClient.cache.evict({ fieldName: 'customerCart' });
-    graphQlClient.cache.evict({ fieldName: 'customerOrders' });
-    graphQlClient.cache.gc();
+  //   // Evict and garbage-collect the cached user object
+  //   graphQlClient.cache.evict({ fieldName: 'customer' });
+  //   graphQlClient.cache.evict({ fieldName: 'customerCart' });
+  //   graphQlClient.cache.evict({ fieldName: 'customerOrders' });
+  //   graphQlClient.cache.gc();
 
-    // remove token
-    await remove(StorageKey.User);
-  };
+  //   // remove token
+  //   await remove(StorageKey.User);
+  // };
 
   return [{ startApp, isSignIn }, signOut];
 };

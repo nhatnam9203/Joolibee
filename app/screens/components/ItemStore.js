@@ -2,6 +2,9 @@ import { AppStyles, images, metrics } from '@theme';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 import moment from 'moment';
+import { scale } from '@utils';
+
+const { scaleHeight, scaleWidth } = scale;
 
 const checkWeekDay = () => {
   let curr_day = moment().weekday();
@@ -21,7 +24,7 @@ const index = ({ item, onPress, isChecked }) => {
       <View style={styles.leftContainer}>
         <Image source={images.icons.ic_location} />
 
-        <Text style={[AppStyles.fonts.mini, { marginTop: 10 }]}>2,5 km</Text>
+        {/* <Text style={[AppStyles.fonts.mini, { marginTop: 10 }]}>2,5 km</Text> */}
       </View>
 
       <View style={styles.rightContainer}>
@@ -62,8 +65,7 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     backgroundColor: '#fff',
-    height: 122,
-    flex: 0,
+    height: scaleHeight(146),
     justifyContent: 'space-around',
     flexDirection: 'row',
     padding: metrics.padding,

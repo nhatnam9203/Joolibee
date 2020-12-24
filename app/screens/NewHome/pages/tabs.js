@@ -8,7 +8,7 @@ import { CardView, StorePageName } from '../../components';
 import ScreenName from '../../ScreenName';
 const { scaleWidth, scaleHeight } = scale;
 
-const Tabs = React.memo(() => {
+const Tabs = () => {
   const navigation = useNavigation();
   const TABS = [
     {
@@ -60,7 +60,7 @@ const Tabs = React.memo(() => {
       />
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

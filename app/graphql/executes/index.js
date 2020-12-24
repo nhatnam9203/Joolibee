@@ -27,3 +27,4 @@ export * from './useRegisterCustomer';
 export * from './useResetPasswordCustomer';
 export * from './usePromotionList';
 export * from './useVerifyAccountOtp';
+export * from './usePlaceOrder';

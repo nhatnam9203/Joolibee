@@ -189,7 +189,7 @@ const defaultOptions = {
    * We can subscribe to this ObservableQuery and receive updated results through a GraphQL observer when the cache store changes.
    */
   watchQuery: {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
     errorPolicy: 'ignore',
   },
   query: {
@@ -231,4 +231,5 @@ export const setupGraphQlClient = () =>
     link,
     defaultOptions,
     cache: apolloCache,
+    queryDeduplication: false,
   });

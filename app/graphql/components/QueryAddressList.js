@@ -1,4 +1,3 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
 import { CustomFlatList } from '@components';
 import { translate } from '@localize';
 import { AppStyles } from '@theme';

@@ -37,6 +37,7 @@ import {
 } from './widget';
 // import { removeVoucherFromCart } from './controllers';
 import { distanceMatrix } from '@location';
+import _ from 'lodash';
 
 const { scaleWidth, scaleHeight } = scale;
 
@@ -108,8 +109,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
     applied_vouchers,
     prices,
     shipping_addresses,
-    bonus_point,
-    used_point,
+    bonus_point = 0,
+    used_point = 0,
   } = customerCart || {};
 
   const { grand_total, discounts, subtotal_excluding_tax } = prices || {};
@@ -133,7 +134,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const full_address = format.addressFull(shippingAddress) ?? '';
 
   const [customerInfo] = GEX.useCustomer();
-  const [shippingType, setShippingType] = React.useState(method_code);
+  const [shippingType, setShippingType] = React.useState(null);
   // const [appliedVouchers, setAppliedVouchers] = React.useState(
   //   applied_vouchers,
   // );
@@ -146,8 +147,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [, removeVoucher] = GEX.useRemoveVoucherFromCart();
   const [, addVoucherToCart] = GEX.useApplyVoucherToCart();
 
-  // submit checkout
-  const [placeOrder] = useMutation(GQL.PLACE_ORDER);
   // Call get món đi kèm
   const [getSubMenu, responseMenu] = useLazyQuery(GQL.MENU_DETAIL_LIST, {
     variables: { categoryId: SUB_MENU_ID },
@@ -232,7 +231,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         break;
       default:
         dispatch(order.pickupStore(null));
-        setShippingType(code);
+        setShippingType(ShippingType.InPlace);
 
         break;
     }
@@ -249,6 +248,25 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setVoucherCode(null);
   };
 
+  const onPlaceOrderComplete = (placeOrderResult) => {
+    const { reachedMaxPendingOrder } = placeOrderResult;
+    if (reachedMaxPendingOrder) {
+      NavigationService.alert({
+        title: translate('txtMaxNumOrderPendingTitle'),
+        message: translate('txtMaxNumOrderPendingDesc'),
+      });
+    } else {
+      setShowPopupSuccess(true);
+      showErrorPoint(false);
+      setOrderNumber(placeOrderResult?.order?.order_number);
+
+      getCustomerCart();
+    }
+  };
+
+  // submit checkout
+  const [, orderSubmit] = GEX.usePlaceOrder(onPlaceOrderComplete);
+
   const removeVoucherItem = (code) => {
     removeVoucher({
       variables: {
@@ -259,43 +277,13 @@ const OrderScreen = ({ route = { params: {} } }) => {
   };
 
   const onSubmit = () => {
-    dispatch(app.showLoading());
     dispatch(order.pickupStore(null));
-
-    placeOrder({
+    orderSubmit({
       variables: {
         cart_id: customerCart?.id,
         // restaurant_id: assignStoreId,
       },
-    })
-      .then((res) => {
-        if (res?.data?.placeOrder) {
-          const { reachedMaxPendingOrder } = res?.data?.placeOrder;
-          if (reachedMaxPendingOrder) {
-            NavigationService.alert({
-              title: translate('txtMaxNumOrderPendingTitle'),
-              message: translate('txtMaxNumOrderPendingDesc'),
-            });
-          } else {
-            graphQlClient.cache.evict({ fieldName: 'cart' });
-            graphQlClient.cache.evict({ fieldName: 'customerCart' });
-            graphQlClient.cache.gc();
-            setOrderNumber(res?.data?.placeOrder?.order?.order_number);
-            setShowPopupSuccess(true);
-            showErrorPoint(false);
-
-            // getCheckOutCart(true);
-            getCustomerCart();
-
-            /// chua get lai list order
-            getOrderList();
-          }
-        }
-        dispatch(app.hideLoading());
-      })
-      .catch(() => {
-        dispatch(app.hideLoading());
-      });
+    });
   };
 
   const onRedeemPoint = () => {
@@ -346,31 +334,23 @@ const OrderScreen = ({ route = { params: {} } }) => {
   }, []);
 
   React.useEffect(() => {
-    if (addressParams && store_pickup_id) {
+    const callSetShippingMethod = async () => {
+      const { variables } = addressParams;
+      Logger.debug(addressParams, '========> addressParams');
+
+      await dispatch(app.showLoading());
+      await setShippingAddress({ variables });
+      await setShippingMethods(ShippingType.InShop, parseInt(store_pickup_id));
+      setAssignStoreId(store_pickup_id);
+      await dispatch(app.hideLoading());
+    };
+
+    if (!_.isEmpty(addressParams) && store_pickup_id) {
       setShippingType(ShippingType.InShop);
-
-      const setShippingMethod = async () => {
-        const { variables } = addressParams;
-        let pickupAddress = variables.shipping_addresses[0];
-        // const pickupStoreAddress = Object.assign({}, pickupAddress, {
-        //   pickup_location_code: store_pickup_id,
-        // });
-        const params = Object.assign({}, addressParams, {
-          variables: pickupAddress,
-        });
-
-        await dispatch(app.showLoading());
-        await setShippingAddress(params);
-
-        await setShippingMethods(ShippingType.InShop, store_pickup_id);
-        setAssignStoreId(store_pickup_id);
-        await dispatch(app.hideLoading());
-      };
-
-      setShippingMethod();
+      callSetShippingMethod();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store_pickup_id]);
+  }, [store_pickup_id, addressParams]);
 
   React.useEffect(() => {
     const selectTheStore = async () => {
@@ -382,7 +362,9 @@ const OrderScreen = ({ route = { params: {} } }) => {
         const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
         let destinations = '';
         pickupStores?.forEach((x) => {
-          const findStore = storeList?.find((findX) => x.store_id === findX.id);
+          const findStore = storeList?.find(
+            (findX) => x?.store_id === findX?.id,
+          );
           if (findStore) {
             destinations = `${findStore.latitude},${findStore.longitude}|${destinations}`;
           }
@@ -423,11 +405,20 @@ const OrderScreen = ({ route = { params: {} } }) => {
       setShippingMethods(ShippingType.InPlace, pickStoreId);
     };
 
-    if (shippingType === ShippingType.InPlace && pickupStores) {
-      selectTheStore();
+    if (shippingType === ShippingType.InPlace && storeList) {
+      if (pickupStores?.length > 0 && !_.isEmpty(shippingLocation)) {
+        selectTheStore();
+      } else {
+        NavigationService.alert({
+          title: translate('txtAlert'),
+          message: translate('txtNotFoundStoreAddress'),
+        });
+
+        setShippingType(null);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pickupStores, shippingType, shippingLocation]);
+  }, [pickupStores, shippingType, shippingLocation, storeList]);
 
   // React.useEffect(() => {}, []);
 

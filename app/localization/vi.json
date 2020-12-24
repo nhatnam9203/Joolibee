@@ -138,7 +138,7 @@
   "txtAddCart": "Thêm vào giỏ",
   "txtProductCart": "Phần ăn đã chọn",
   "txtNotFoundProduct": "Không có sản phẩm",
-  "txtBirthDayOrder": "Đặt tiệc sinh nhật",
+  "txtBirthDayOrder": "Tiệc sinh nhật",
   "txtBigOrder": "Đơn hàng lớn",
   "txtOrderMenu": "Chọn Món",
   "txtJollibeeVN": "Jollibee Việt Nam",
@@ -223,5 +223,7 @@
   "txtRedeemPoint": "Đổi điểm thưởng",
   "txtSocialSignin": "Hoặc đăng nhập bằng ",
   "txtCheckUpdate": "Kiểm tra cập nhật ...",
-  "txtLoadingApp": "Đang tải dữ liệu"
+  "txtLoadingApp": "Đang tải dữ liệu",
+  "txtNotFoundStoreAddress": "Chưa hỗ trợ giao hàng đến khu vực này, xin vui lòng đến cửa hàng lấy giúp e nhé",
+  "txtAlert": "Thông báo"
 }

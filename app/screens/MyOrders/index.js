@@ -1,7 +1,7 @@
 import { GCC, GEX } from '@graphql';
 import { useNavigation } from '@react-navigation/native';
 import { AppStyles, images, metrics } from '@theme';
-import { format, statusOrder, scale } from '@utils';
+import { format, statusOrder, scale, appUtil } from '@utils';
 import moment from 'moment';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -12,11 +12,13 @@ import { translate } from '@localize';
 import { ButtonCC } from '../components';
 import { useDispatch } from 'react-redux';
 import { app } from '@slices';
+import { useStorePickup } from '@hooks';
 
 const { scaleWidth, scaleHeight } = scale;
 const Index = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const storeList = useStorePickup();
 
   // --------------- Re Order Items Cart ----------------- //
   const onReOderSuccess = () => {
@@ -25,11 +27,10 @@ const Index = () => {
       dispatch(app.showOrderList());
     }, 1000);
   };
-  const { reorderItems } = GEX.useReOrderCart(onReOderSuccess);
+  const [reOrderCart] = GEX.useReOrderCart(onReOderSuccess);
 
   const onHandleReOrder = (number) => () => {
-    dispatch(app.showLoading());
-    reorderItems(number);
+    reOrderCart(number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -39,12 +40,35 @@ const Index = () => {
     });
   };
 
-  const getShippingMethod = (txt = '') => {
-    switch (txt) {
+  const renderAddressShipper = ({ shipping_method, address, store_name }) => {
+    switch (shipping_method) {
       case 'freeshipping_freeshipping':
-        return translate('txtDeliveredTo');
+      case 'Giao hàng tận nơi':
+        if (!address) return <View />;
+        return (
+          <Text numberOfLines={1} style={styles.txtAddress}>
+            <Text style={{ fontWeight: 'bold' }}>
+              {translate('txtDeliveredTo')}
+            </Text>
+            : {address}
+          </Text>
+        );
       default:
-        return translate('txtToReceive');
+        if (store_name && storeList) {
+          return (
+            <Text numberOfLines={1} style={styles.txtAddress}>
+              <Text style={{ fontWeight: 'bold' }}>
+                {translate('txtToReceive')}
+              </Text>
+              :
+              {store_name +
+                '-' +
+                appUtil.getSoreByName(storeList, store_name)
+                  ?.vietnamese_address}
+            </Text>
+          );
+        }
+        return <View />;
     }
   };
 
@@ -114,15 +138,7 @@ const Index = () => {
             {translate('txtOrderNumber')} #{order_number}
           </Text>
           <Text style={styles.txtDate}>{getDateStatus(created_at)}</Text>
-          {/* <Text numberOfLines={1} style={styles.txtAddress}>
-            <Text style={{ fontWeight: 'bold' }}>
-              {getShippingMethod(shipping_method)}
-            </Text>
-            :{' '}
-            {!!address
-              ? address
-              : store_name ?? translate('txtAddressNotFound')}
-          </Text> */}
+          {renderAddressShipper(item)}
 
           <View style={styles.bottomContainer}>
             <Text numberOfLines={1} style={status_style}>

@@ -52,7 +52,7 @@ const PromotionPage = () => {
         <JollibeeImage
           url={item?.image}
           width="100%"
-          height={scaleHeight(107)}
+          height={scaleHeight(116)}
           resizeMode="contain"
         />
       )}

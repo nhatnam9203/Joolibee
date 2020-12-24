@@ -50,7 +50,7 @@ export default function OrderStatus({ status, shipper }) {
     {
       title: translate('txtStatusOrderShipping'),
       description: shipper
-        ? `${shipperInfo?.first_name} ${shipperInfo?.last_name}`
+        ? `${shipperInfo?.first_name ?? ' '} ${shipperInfo?.last_name ?? ' '}`
         : '',
       type: 'shipping',
     },

@@ -91,11 +91,11 @@ export const ProductItemDetailHeader = React.memo(
             {name}
           </Text>
           <View style={styles.priceContent}>
-            {showPrice && (
+            {/* {showPrice && (
               <Text style={styles.txtFrontDiscountStyle}>
                 {format.jollibeeCurrency(showPrice)}
               </Text>
-            )}
+            )} */}
             {sellPrice && (
               <Text style={styles.txtPriceStyle}>
                 {format.jollibeeCurrency(sellPrice)}

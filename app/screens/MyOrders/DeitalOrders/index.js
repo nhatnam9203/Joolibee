@@ -36,7 +36,11 @@ export default function Index({ navigation, route }) {
     voucher_discount_amount,
   } = order || {};
 
+  Logger.debug(order_number, '========> order_number');
+
   const findOrder = orderList?.find((x) => x?.id === id);
+  Logger.debug(findOrder, '========> findOrder');
+
   status = findOrder?.status;
   const [getOrderDetail, orderDetailResp] = useLazyQuery(
     GQL.ORDER_DETAIL_CUSTOMER,
@@ -49,7 +53,7 @@ export default function Index({ navigation, route }) {
   let order_complete =
     status_order === translate('txtStatusOrderComplete') ? true : false;
   const getDate = React.useCallback(() => {
-    const current_day = moment().format('DD/MM/yyyy');
+    const current_day = moment().format('MM/DD/YYYY');
     let dateOrder = format.dateTime(created_at);
     return dateOrder === current_day ? translate('txtToday') : dateOrder;
   }, [created_at]);
@@ -64,11 +68,10 @@ export default function Index({ navigation, route }) {
       dispatch(app.showOrderList());
     }, 1000);
   };
-  const { reorderItems } = GEX.useReOrderCart(onReOderSuccess);
+  const [reOrderCart] = GEX.useReOrderCart(onReOderSuccess);
 
   const onHandleReOrder = () => {
-    dispatch(app.showLoading());
-    reorderItems(order_number);
+    reOrderCart(order_number);
   };
   // --------------- Re Order Items Cart End ----------------- //
 
@@ -141,8 +144,9 @@ export default function Index({ navigation, route }) {
   const renderStatusComponent = () => {
     if (
       order_complete ||
-      status === 'pending' ||
-      status?.toLowerCase() === 'processing'
+      status?.toLowerCase() === 'pending' ||
+      status?.toLowerCase() === 'processing' ||
+      status?.toLowerCase() === 'canceled'
     ) {
       return (
         <>
