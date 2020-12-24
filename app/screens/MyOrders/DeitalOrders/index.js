@@ -13,7 +13,6 @@ import { GEX, GQL } from '@graphql';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 import NavigationService from '../../../navigation/NavigationService';
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { stat } from 'react-native-fs';
 
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
@@ -29,14 +28,13 @@ export default function Index({ navigation, route }) {
     order_number,
     created_at,
     status,
-    address,
-    grand_total,
     id,
     shipper_info,
+    shipping_method,
     voucher_discount_amount,
   } = order || {};
 
-  Logger.debug(order_number, '========> order_number');
+  Logger.debug(order, '========> order_number');
 
   const findOrder = orderList?.find((x) => x?.id === id);
   Logger.debug(findOrder, '========> findOrder');
@@ -48,7 +46,7 @@ export default function Index({ navigation, route }) {
       fetchPolicy: 'network-only',
     },
   );
-
+  Logger.debug(orderDetailResp?.data, '========> orderDetailResp');
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
     status_order === translate('txtStatusOrderComplete') ? true : false;
@@ -215,7 +213,9 @@ export default function Index({ navigation, route }) {
           <View style={styles.statusContainer}>
             {/* -------------- THONG TIN DON HANG  -------------- */}
             <OrderTitle title={translate('txtInfoShipping')} />
-            {shipping_address && <OrderInfo info={shipping_address} />}
+            {shipping_address && (
+              <OrderInfo info={{ ...shipping_address, shipping_method }} />
+            )}
             {/* -------------- THONG TIN DON HANG  -------------- */}
 
             {/* -------------- SAN PHAM DA CHON  -------------- */}

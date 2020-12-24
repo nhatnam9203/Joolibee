@@ -575,3 +575,15 @@ export const VERIFY_ACCOUNT_OTP = gql`
     }
   }
 `;
+
+export const FEEDBACK_CUSTOMER = gql`
+  mutation($orderId: String!, $customerRating: Int!, $customerComment: String) {
+    feedBackCustomer(
+      orderId: $orderId
+      customerRating: $customerRating
+      customerComment: $customerComment
+    ) {
+      result
+    }
+  }
+`;

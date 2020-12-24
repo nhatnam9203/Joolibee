@@ -9,8 +9,14 @@ export const useVerifyAccountOtp = () => {
   const [submitValue, setSubmitValue] = React.useState(null);
   const [verifyAccountOtp] = useMutation(VERIFY_ACCOUNT_OTP, {
     onCompleted: (data) => {
-      if (data?.verifyAccountOtp) {
-        dispatch(account.signInSucceed(submitValue));
+      Logger.debug(data, '========> data data data');
+      if (data?.verifyAccountOtp?.result) {
+        dispatch(
+          account.signInSucceed({
+            ...submitValue,
+            phone_number: submitValue?.phoneNumber,
+          }),
+        );
       }
     },
   });
