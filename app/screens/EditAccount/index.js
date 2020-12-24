@@ -34,10 +34,10 @@ const EditAccountScreen = () => {
 
   const EditSchema = Yup.object().shape({
     firstname: Yup.string()
-      .min(2, translate('txtTooShort'))
+      .min(1, translate('txtTooShort'))
       .max(10, translate('txtTooLong')),
     lastname: Yup.string()
-      .min(2, translate('txtTooShort'))
+      .min(1, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     // password: Yup.string().required(translate('txtRequired')),
     email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
@@ -49,7 +49,7 @@ const EditAccountScreen = () => {
       updateCustomerInfo({
         variables: {
           ...values,
-          // deviceId: getUniqueId(),
+          date_of_birth: format.dateTime(values?.date_of_birth) ?? '',
           gender: values.gender === -1 ? null : values.gender,
         },
         // awaitRefetchQueries
