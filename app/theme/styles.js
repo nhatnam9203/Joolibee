@@ -136,7 +136,7 @@ const AppStyles = {
     },
 
     itemTitle: {
-      fontFamily: 'SVN-Merge',
+      fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
       fontSize: 20,
       color: '#1B1B1B',
       marginBottom: 10,
@@ -161,7 +161,7 @@ const AppStyles = {
         backgroundColor: secondaryColor,
       },
       headerTitleStyle: {
-        fontFamily: 'SVN-Merge',
+        fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
         fontSize: 18,
         color: primaryColor,
       },

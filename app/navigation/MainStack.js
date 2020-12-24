@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import {
   ChangeLanguageScreen,
   ChangePasswordScreen,
@@ -76,7 +76,7 @@ function MainStack() {
           height: scaleHeight(100),
         },
         headerTitleStyle: {
-          fontFamily: 'SVN-Merge',
+          fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
           fontSize: scaleHeight(18),
           color: AppStyles.colors.primary,
         },

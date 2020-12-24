@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-  Pressable,
-} from 'react-native';
+import { StyleSheet, Platform, Text, View, Pressable } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -131,7 +125,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   btnAbsoluteStyle: { position: 'absolute', top: 10, left: 10 },
-  txtStyle: { fontFamily: 'SVN-Merge', fontSize: 16, marginLeft: 5 },
+  txtStyle: {
+    fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
+    fontSize: 16,
+    marginLeft: 5,
+  },
   absolute: {
     position: 'absolute',
     top: 0,

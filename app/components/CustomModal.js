@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 
 const ANIMATION_TIME = 350;
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
 
   txtTitleStyle: {
-    fontFamily: 'SVN-Merge',
+    fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
     fontSize: 24,
     color: '#E31837',
     textAlign: 'center',

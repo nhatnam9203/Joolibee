@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   nameStyle: {
     padding: metrics.padding,
     fontSize: 24,
-    fontFamily: 'SVN-Merge',
+    ...AppStyles.fonts.medium_SVN,
     fontWeight: 'bold',
     color: '#fff',
   },

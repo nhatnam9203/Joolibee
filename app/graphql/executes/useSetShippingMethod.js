@@ -9,11 +9,12 @@ export const useSetShippingMethodsOnCart = () => {
     SET_ORDER_SHIPPING_METHOD,
   );
 
-  const setShippingMethods = (code, storeId, notes) => {
+  const setShippingMethods = async (code, storeId, notes) => {
     if (!customerCart) {
       return;
     }
-    setShippingMethodsOnCart({
+
+    await setShippingMethodsOnCart({
       variables: {
         cart_id: customerCart.id,
         shipping_methods: [
