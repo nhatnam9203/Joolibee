@@ -68,6 +68,7 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
     onCompleted: (data) => {
       if (data) {
         const item = data.products?.items[0];
+        Logger.debug(detailItem, '=========> getProductDetail XXX');
         if (detailItem?.bundle_options?.length > 0) {
           const { items } = item || {};
           const list = items.map((x) => {
@@ -85,7 +86,10 @@ const MenuItemDetailScreen = ({ route = { params: {} } }) => {
                 );
 
                 if (needUpdateOptItem) {
-                  return Object.assign({}, opt, { is_default: true });
+                  return Object.assign({}, opt, {
+                    is_default: true,
+                    quantity: needUpdateOptItem.quantity,
+                  });
                 } else {
                   return Object.assign({}, opt, { is_default: false });
                 }

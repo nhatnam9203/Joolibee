@@ -56,20 +56,23 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const graphQlClient = useGraphQLClient();
 
-  /** AUTO LOAD VALUE */
+  // ===================REDUX STATE ==============
   const isEatingUtensils = useSelector(
     (state) => state.account?.isEatingUtensils,
   );
   const count_input_coupon = useSelector(
     (state) => state.account?.count_input_coupon,
   );
-
+  // id dung cho store pickup
+  const store_pickup_id = useSelector(
+    (state) => state.order?.pickup_location_code,
+  );
   const timming = useSelector((state) => state.account?.timming);
   const pickupStores = useSelector((state) => state.store?.pickupStores);
   const shippingLocation = useSelector((state) => state.store.shippingLocation);
 
+  // ===================STATE ==============
   // show dialog notice
   const [showNotice, setShowNotice] = React.useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = React.useState(false);
@@ -81,6 +84,53 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const [availableStores, setAvailableStores] = React.useState(null);
   const [addressNote, setAddressNote] = React.useState(null);
   const [orderNote, setOrderNote] = React.useState(null);
+  const [assignStoreId, setAssignStoreId] = React.useState(null);
+
+  // ===================GRAPHQL ==============
+  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
+  const [, getCustomerInfo] = GEX.useCustomer();
+  const [customerInfo] = GEX.useCustomer();
+  const [shippingType, setShippingType] = React.useState(null);
+  // const [appliedVouchers, setAppliedVouchers] = React.useState(
+  //   applied_vouchers,
+  // );
+  const [, getOrderList] = GEX.useOrderList();
+  // update cart product
+  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
+  // add voucher
+  const [, removeVoucher] = GEX.useRemoveVoucherFromCart();
+  const [, addVoucherToCart] = GEX.useApplyVoucherToCart();
+  // Call get món đi kèm
+  const [getSubMenu, responseMenu] = useLazyQuery(GQL.MENU_DETAIL_LIST, {
+    variables: { categoryId: SUB_MENU_ID },
+    fetchPolicy: 'cache-first',
+  });
+  // Redeem points
+  const { redeemCustomerPoint } = GEX.useRedeemPoint();
+  /**
+   * SET SIPPING
+   */
+  const [, setShippingMethods] = GEX.useSetShippingMethodsOnCart();
+  const [, setShippingAddress] = GEX.useSetShippingAddress();
+
+  const onPlaceOrderComplete = (placeOrderResult) => {
+    const { reachedMaxPendingOrder } = placeOrderResult;
+    if (reachedMaxPendingOrder) {
+      NavigationService.alert({
+        title: translate('txtMaxNumOrderPendingTitle'),
+        message: translate('txtMaxNumOrderPendingDesc'),
+      });
+    } else {
+      setShowPopupSuccess(true);
+      showErrorPoint(false);
+      setOrderNumber(placeOrderResult?.order?.order_number);
+
+      getCustomerCart();
+    }
+  };
+
+  // submit checkout
+  const [, orderSubmit] = GEX.usePlaceOrder(onPlaceOrderComplete);
 
   // ----------------- Timming apply coupon ------------------------ //
   const onCallBackEndCountDown = () => {
@@ -93,17 +143,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // ----------------- Timming apply coupon ------------------------ //
 
   const storeList = useStorePickup();
-
   // =================================
-  // id dung cho store pickup
-  const store_pickup_id = useSelector(
-    (state) => state.order?.pickup_location_code,
-  );
-  const [assignStoreId, setAssignStoreId] = React.useState(null);
-
-  // --------- CUSTOMER CART -----------
-  const [customerCart, getCustomerCart] = GEX.useGetCustomerCart();
-  const [, getCustomerInfo] = GEX.useCustomer();
 
   const {
     items,
@@ -124,7 +164,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const subTotal = format.jollibeeCurrency(
     subtotal_excluding_tax ? subtotal_excluding_tax : {},
   );
-
   const shippingAddress = shipping_addresses?.find(Boolean);
   const {
     firstname = '',
@@ -134,41 +173,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   } = shippingAddress || {};
   const { method_code } = selected_shipping_method || {};
   const full_address = format.addressFull(shippingAddress) ?? '';
-
-  const [customerInfo] = GEX.useCustomer();
-  const [shippingType, setShippingType] = React.useState(null);
-  // const [appliedVouchers, setAppliedVouchers] = React.useState(
-  //   applied_vouchers,
-  // );
-  const [, getOrderList] = GEX.useOrderList();
-
-  // update cart product
-  const [updateCartResp, updateCart] = GEX.useUpdateCustomerCart();
-  // add voucher
-
-  const [, removeVoucher] = GEX.useRemoveVoucherFromCart();
-  const [, addVoucherToCart] = GEX.useApplyVoucherToCart();
-
-  // Call get món đi kèm
-  const [getSubMenu, responseMenu] = useLazyQuery(GQL.MENU_DETAIL_LIST, {
-    variables: { categoryId: SUB_MENU_ID },
-    fetchPolicy: 'cache-first',
-  });
-  // Redeem points
-  const { redeemCustomerPoint, redeemCustomerPointResp } = GEX.useRedeemPoint();
-  /**
-   * SET SIPPING
-   */
-  const [
-    shippingMethodResp,
-    setShippingMethods,
-  ] = GEX.useSetShippingMethodsOnCart();
-
-  // const {
-  //   setShippingAddresses,
-  //   setShippingAddressesOnCartResp,
-  // } = GEX.useSetShippingAddress();
-  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress();
 
   const updateMyCart = (item) => {
     let input = {
@@ -189,7 +193,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   const onTogglePopupSuccess = () => {
     setShowPopupSuccess(false);
   };
-
   const ontoggleSwitch = () => {
     dispatch(account.setEatingUtensils());
   };
@@ -250,25 +253,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     setVoucherCode(null);
   };
 
-  const onPlaceOrderComplete = (placeOrderResult) => {
-    const { reachedMaxPendingOrder } = placeOrderResult;
-    if (reachedMaxPendingOrder) {
-      NavigationService.alert({
-        title: translate('txtMaxNumOrderPendingTitle'),
-        message: translate('txtMaxNumOrderPendingDesc'),
-      });
-    } else {
-      setShowPopupSuccess(true);
-      showErrorPoint(false);
-      setOrderNumber(placeOrderResult?.order?.order_number);
-
-      getCustomerCart();
-    }
-  };
-
-  // submit checkout
-  const [, orderSubmit] = GEX.usePlaceOrder(onPlaceOrderComplete);
-
   const removeVoucherItem = (code) => {
     removeVoucher({
       variables: {
@@ -278,8 +262,16 @@ const OrderScreen = ({ route = { params: {} } }) => {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     dispatch(order.pickupStore(null));
+
+    if (orderNote || addressNote) {
+      await setShippingMethods(shippingType, assignStoreId, {
+        note: orderNote ?? ' ',
+        address_note: addressNote ?? ' ',
+      });
+    }
+
     orderSubmit({
       variables: {
         cart_id: customerCart?.id,
@@ -332,6 +324,8 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     getSubMenu();
+    dispatch(order.pickupStore(null));
+    setShippingType(ShippingType.InPlace);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -362,7 +356,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
       let pickStoreId = pickupStores.find(Boolean);
       Logger.debug(pickupStores, '=======> pickupStores');
 
-      //!! Find store follow distance, tam thoi ko dung
       if (pickupStores?.length > 1 && shippingLocation) {
         const origins = `${shippingLocation?.latitude},${shippingLocation?.longitude}`;
         let destinations = '';
@@ -388,32 +381,12 @@ const OrderScreen = ({ route = { params: {} } }) => {
         }
       }
 
-      // const listStore = ['33', '3', '2'];
-      // !! hard code 3 store_id
-      // const hard_code = listStore.sort(() => Math.random() - 0.5);
-      // let store_id = hard_code?.find(Boolean);
-
-      // const findStoreId = hard_code.find((storeId) => {
-      //   const findIdex = pickupStores?.findIndex((x) => x.store_id === storeId);
-
-      //   if (findIdex >= 0) return storeId;
-      // });
-
-      // if (findStoreId !== null) {
-      //   store_id = findStoreId;
-      // }
-
-      // store_id = '33';
-
       setAssignStoreId(pickStoreId);
 
       setShippingMethods(ShippingType.InPlace, pickStoreId, {
         note: orderNote ?? ' ',
         address_note: addressNote ?? ' ',
       });
-
-      setOrderNote(null);
-      setAddressNote(null);
     };
 
     if (shippingType === ShippingType.InPlace && storeList) {
@@ -430,8 +403,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickupStores, shippingType, shippingLocation, storeList]);
-
-  // React.useEffect(() => {}, []);
 
   const renderItemExtra = (item, index) => (
     <View key={index + ''} style={{ flex: 1 }}>

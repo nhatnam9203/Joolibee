@@ -20,7 +20,7 @@ export const MenuDetailItem = ({
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
-  Logger.debug(item, '--------> item');
+  Logger.debug(item?.quantity, '--------> item');
   const [radioChecked, setRadioChecked] = React.useState(item?.is_default);
   const [qty, setQyt] = React.useState(item?.quantity);
 
