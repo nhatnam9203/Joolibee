@@ -60,6 +60,9 @@
 		3683B0CF25341AC9006BF952 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3683B05025340886006BF952 /* AppCenter-Config.plist */; };
 		3683B0D025341ACA006BF952 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3683B05025340886006BF952 /* AppCenter-Config.plist */; };
 		369B26BB252F0BA000042CCD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 369B26B9252F0BA000042CCD /* GoogleService-Info.plist */; };
+		36BDA0F5259461F600F85F0D /* jollibeesound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 36BDA0F4259461F600F85F0D /* jollibeesound.wav */; };
+		36BDA0F6259461F600F85F0D /* jollibeesound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 36BDA0F4259461F600F85F0D /* jollibeesound.wav */; };
+		36BDA0F7259461F600F85F0D /* jollibeesound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 36BDA0F4259461F600F85F0D /* jollibeesound.wav */; };
 		36F31F002575FD8000E23A56 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36F31EFF2575FD8000E23A56 /* GoogleService-Info.plist */; };
 		4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365B4DAA0751458495036028 /* Roboto-Light.ttf */; };
 		58DA1CC8234E5BAF33660D79 /* libPods-loyalty-loyalty-staging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F81B174E1FED1B65D0A53170 /* libPods-loyalty-loyalty-staging.a */; };
@@ -129,6 +132,7 @@
 		369B26B9252F0BA000042CCD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		369B26BA252F0BA000042CCD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		369B26C4252F0BAA00042CCD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36BDA0F4259461F600F85F0D /* jollibeesound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = jollibeesound.wav; path = ../../../../../../../../Users/nhatran/Downloads/jollibeesound.wav; sourceTree = "<group>"; };
 		36F31EFF2575FD8000E23A56 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4433C1FD0E2834A8EF0D7EA5 /* libPods-loyalty-loyalty-develop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-loyalty-loyalty-develop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4610D41D79134DD1A4799EC9 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
@@ -235,6 +239,7 @@
 		13B07FAE1A68108700A75B9A /* loyalty */ = {
 			isa = PBXGroup;
 			children = (
+				36BDA0F4259461F600F85F0D /* jollibeesound.wav */,
 				366B3C402574E30B00EBAF93 /* loyalty.entitlements */,
 				369B26C3252F0BAA00042CCD /* staging */,
 				369B26B8252F0BA000042CCD /* dev */,
@@ -581,6 +586,7 @@
 				9736CDC1D97942FA97D40059 /* Roboto-Italic.ttf in Resources */,
 				4BC285DAC2434F1E9411B195 /* Roboto-Light.ttf in Resources */,
 				3683B05125340886006BF952 /* AppCenter-Config.plist in Resources */,
+				36BDA0F5259461F600F85F0D /* jollibeesound.wav in Resources */,
 				069CBEDA4A25449E8EC4E11A /* Roboto-LightItalic.ttf in Resources */,
 				1C335018A6384F68B41A00C3 /* Roboto-Medium.ttf in Resources */,
 				36F31F002575FD8000E23A56 /* GoogleService-Info.plist in Resources */,
@@ -619,6 +625,7 @@
 				36228126250A98AB0013AF4C /* Roboto-BoldItalic.ttf in Resources */,
 				36228127250A98AB0013AF4C /* Roboto-Italic.ttf in Resources */,
 				36228128250A98AB0013AF4C /* Roboto-Light.ttf in Resources */,
+				36BDA0F6259461F600F85F0D /* jollibeesound.wav in Resources */,
 				36228129250A98AB0013AF4C /* Roboto-LightItalic.ttf in Resources */,
 				3622812A250A98AB0013AF4C /* Roboto-Medium.ttf in Resources */,
 				366B3B212574AD7600EBAF93 /* GoogleService-Info.plist in Resources */,
@@ -643,6 +650,7 @@
 				36828EDB252D75910011133E /* Roboto-Italic.ttf in Resources */,
 				36828EDC252D75910011133E /* Roboto-Light.ttf in Resources */,
 				369B26BB252F0BA000042CCD /* GoogleService-Info.plist in Resources */,
+				36BDA0F7259461F600F85F0D /* jollibeesound.wav in Resources */,
 				36828EDD252D75910011133E /* Roboto-LightItalic.ttf in Resources */,
 				36828EDE252D75910011133E /* Roboto-Medium.ttf in Resources */,
 				36828EDF252D75910011133E /* Roboto-MediumItalic.ttf in Resources */,
@@ -1250,7 +1258,7 @@
 				CODE_SIGN_ENTITLEMENTS = loyalty/loyaltyDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = AP95TBLGP3;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1285,7 +1293,7 @@
 				CODE_SIGN_ENTITLEMENTS = loyalty/loyalty.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = AP95TBLGP3;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

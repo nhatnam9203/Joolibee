@@ -99,6 +99,7 @@ const images = {
     ic_hot: require('../assets/icons/ic_hot.png'),
     ic_notification: require('../assets/icons/ic_notification.png'),
     ic_notification_new: require('../assets/icons/ic_notification_new.png'),
+    ic_push_notification: require('../assets/icons/notification_icon.png'),
   },
   animations: {
     fade: require('../assets/animations/animation_fade.json'),

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { app } from '@slices';
+import { app, account } from '@slices';
 import { useDispatch, useSelector } from 'react-redux';
 import { PLACE_ORDER, CUSTOMER_CART_QUERY, ORDERS_CUSTOMER } from '../gql';
 import React from 'react';
@@ -9,8 +9,20 @@ export const usePlaceOrder = (onCompleted) => {
 
   const [placeOrder, placeOrderResp] = useMutation(PLACE_ORDER, {
     fetchPolicy: 'no-cache',
-    // refetchQueries: [{ query: CUSTOMER_CART_QUERY }],
     // awaitRefetchQueries: true,
+    // refetchQueries: [
+    //   {
+    //     query: CUSTOMER_CART_QUERY,
+    //     fetchPolicy: 'network-only',
+    //     onCompleted: (data) => {
+    //       dispatch(app.hideLoading());
+    //       dispatch(account.updateCustomerCart(data?.customerCart));
+    //     },
+    //     onError: (data) => {
+    //       dispatch(app.hideLoading());
+    //     },
+    //   },
+    // ],
     onCompleted: (res) => {
       dispatch(app.hideLoading());
       if (typeof onCompleted === 'function') {

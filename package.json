@@ -11,6 +11,7 @@
     "android-staging": "ENVFILE=.env.staging react-native run-android",
     "build:android-staging": "cd android && ENVFILE=.env.staging ./gradlew assembleRelease",
     "push:android-production": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production -t 1.0 --description test",
+    "push-clean:android-production": "appcenter codepush deployment clear -a levinci/Jollibee-Comsumer-Android Production",
     "ios": "react-native run-ios --scheme='loyalty-develop' --simulator='iPhone 12 Pro Max' ",
     "ios-staging": "react-native run-ios --scheme='loyalty-staging' --simulator='iPhone 12 Pro Max' ",
     "ios-real-staging": "react-native run-ios --scheme='loyalty-staging'  --device 'iPhone' ",

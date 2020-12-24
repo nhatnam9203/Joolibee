@@ -7,7 +7,7 @@ import { Loading, RootPermission, CustomPopupConfirm } from '@components';
 import { useChangeLanguage } from '@hooks';
 import { setI18nConfig } from '@localize';
 import { app } from '@slices';
-import { AppStyles } from '@theme';
+import { AppStyles, images } from '@theme';
 import Navigator from 'app/navigation';
 import { persistor, store } from 'app/redux/store';
 import React from 'react';
@@ -174,16 +174,31 @@ const NotificationProvider = ({ children }) => {
      * - cập nhật lại notify của app
      */
     if (data?.data?.order) {
-      const { status, order_number, title, content } = JSON.parse(
-        data?.data?.order,
-      );
+      const notifyData = JSON.parse(data?.data?.order);
+
+      const { status, order_number, title, content } = notifyData;
       dispatch(order.updateOrderStatus({ status, order_number }));
 
       PushNotification.localNotification({
-        smallIcon: 'consumer',
-        largeIcon: 'consumer',
-        title: title ?? '',
+        ...notifyData,
+        playSound: true, // (optional) default: true
+        soundName: 'jollibeesound.wav',
         message: content ?? '',
+        messageId: order_number,
+
+        android: {
+          // Reference the name created (Optional, defaults to 'ic_launcher')
+          smallIcon: 'notification_icon',
+          largeIcon: 'consumer',
+          sound: 'jollibeesound.wav',
+          // Set color of icon (Optional, defaults to white)
+          color: '#E31837',
+        },
+
+        ios: {
+          // iOS resource (.wav, aiff, .caf)
+          sound: 'jollibeesound.wav',
+        },
       });
     }
   };

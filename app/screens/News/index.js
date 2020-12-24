@@ -64,17 +64,19 @@ const Index = ({ route }) => {
     <CustomImageBackground
       source={images.watermark_background_2}
       style={styles.container}>
-      <CustomFlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index + ''}
-        contentContainerStyle={styles.contentContainerStyle}
-        ItemSeparatorComponent={ItemSeperator}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }
-      />
+      <View style={styles.listContainer}>
+        <CustomFlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index + ''}
+          contentContainerStyle={styles.contentContainerStyle}
+          ItemSeparatorComponent={ItemSeperator}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }
+        />
+      </View>
 
       <PopupWebView
         visible={visible_detal !== null}
@@ -90,6 +92,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
+
+  listContainer: { flex: 1 },
   contentContainerStyle: {
     padding: scaleHeight(10),
   },
