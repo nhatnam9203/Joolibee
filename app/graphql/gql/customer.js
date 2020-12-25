@@ -52,6 +52,7 @@ export const CUSTOMER_INFO = gql`
       customer_point
       gender
       date_of_birth
+      dob
       addresses {
         id
         city

@@ -8,12 +8,12 @@ import ScreenName from '../../ScreenName';
 import { translate } from '@localize';
 import { app } from '@slices';
 import { useDispatch } from 'react-redux';
-import { statusOrder, scale, format } from '@utils';
+import { statusOrder, scale, format, appUtil } from '@utils';
 import { GEX, GQL } from '@graphql';
 import { OrderInfo, OrderProductList, OrderTotal, OrderStatus } from './pages';
 import NavigationService from '../../../navigation/NavigationService';
 import { useLazyQuery, useQuery } from '@apollo/client';
-
+import { useStorePickup } from '@hooks';
 const { scaleHeight, scaleWidth } = scale;
 const MARGIN_LEFT = scaleWidth(15);
 const MARGIN_VERTICAL = scaleHeight(20);
@@ -23,7 +23,7 @@ export default function Index({ navigation, route }) {
   const { order } = route.params || {};
   const [visible, setVisible] = React.useState(false);
   const [{ orderList }, getOrderList] = GEX.useOrderList();
-
+  const storeList = useStorePickup();
   let {
     order_number,
     created_at,
@@ -32,12 +32,17 @@ export default function Index({ navigation, route }) {
     shipper_info,
     shipping_method,
     voucher_discount_amount,
+    store_name,
   } = order || {};
 
   Logger.debug(order, '========> order_number');
 
   const findOrder = orderList?.find((x) => x?.id === id);
   Logger.debug(findOrder, '========> findOrder');
+
+  const findStore = () => {
+    return appUtil.getSoreByName(storeList, store_name);
+  };
 
   status = findOrder?.status;
   const [getOrderDetail, orderDetailResp] = useLazyQuery(
@@ -46,6 +51,7 @@ export default function Index({ navigation, route }) {
       fetchPolicy: 'network-only',
     },
   );
+
   Logger.debug(orderDetailResp?.data, '========> orderDetailResp');
   let status_order = statusOrder.convertStatusOrder(status);
   let order_complete =
@@ -214,7 +220,13 @@ export default function Index({ navigation, route }) {
             {/* -------------- THONG TIN DON HANG  -------------- */}
             <OrderTitle title={translate('txtInfoShipping')} />
             {shipping_address && (
-              <OrderInfo info={{ ...shipping_address, shipping_method }} />
+              <OrderInfo
+                info={{
+                  ...shipping_address,
+                  shipping_method,
+                  store: findStore(),
+                }}
+              />
             )}
             {/* -------------- THONG TIN DON HANG  -------------- */}
 

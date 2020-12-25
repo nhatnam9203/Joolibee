@@ -4,11 +4,23 @@ import { AppStyles, metrics } from '@theme';
 import { format } from '@utils';
 import { translate } from '@localize';
 export default function orderInfo({ info }) {
-  const { firstname, lastname, telephone, region, shipping_method = '' } =
-    info || {};
+  const {
+    firstname,
+    lastname,
+    telephone,
+    region,
+    shipping_method = '',
+    store,
+  } = info || {};
+  const store_address = store
+    ? store?.name + '-' + store?.vietnamese_address
+    : '';
   const method_shipping = shipping_method?.includes('Nhận tại cửa hàng')
     ? translate('txtToReceive')
     : translate('txtDeliveredTo');
+  const address = shipping_method?.includes('Nhận tại cửa hàng')
+    ? store_address
+    : format.addressFull({ ...info, region: { label: region } });
   return (
     <View style={styles.container}>
       <Text style={AppStyles.fonts.text}>{firstname + ' ' + lastname}</Text>
@@ -18,7 +30,7 @@ export default function orderInfo({ info }) {
         <Text
           numberOfLines={2}
           style={[AppStyles.fonts.text, { fontWeight: 'normal' }]}>
-          {format.addressFull({ ...info, region: { label: region } })}
+          {address}
         </Text>
       </Text>
     </View>

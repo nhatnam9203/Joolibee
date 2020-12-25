@@ -31,7 +31,15 @@ const EditAccountScreen = () => {
   const { email, firstname, lastname, gender, date_of_birth } = profile || {};
 
   const [updateCustomerInfo] = useMutation(GQL.UPDATE_CUSTOMER);
-
+  // --------- format date to submit at dev and staging --------------- //
+  const formatDobSubmited = (dob = '') => {
+    if (dob.includes('/')) {
+      let dobs = dob?.split('/');
+      return dobs[2] + '-' + dobs[1] + '-' + dobs[0];
+    }
+    return dob;
+  };
+  // --------- format date to submit at dev and staging --------------- //
   const EditSchema = Yup.object().shape({
     firstname: Yup.string()
       .min(1, translate('txtTooShort'))
@@ -49,7 +57,7 @@ const EditAccountScreen = () => {
       updateCustomerInfo({
         variables: {
           ...values,
-          date_of_birth: format.dateTime(values?.date_of_birth) ?? '',
+          date_of_birth: formatDobSubmited(values.date_of_birth),
           gender: values.gender === -1 ? null : values.gender,
         },
         // awaitRefetchQueries
