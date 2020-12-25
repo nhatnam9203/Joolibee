@@ -335,7 +335,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     getSubMenu();
-    // dispatch(order.pickupStore(null));
+    dispatch(order.pickupStore(null));
     setShippingType(ShippingType.InPlace);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -382,7 +382,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
         Logger.debug(status, '=======> status');
 
         if (data?.length > 0) {
-          const getStoreIndex = appUtil.getNearStore(data);
+          const getStoreIndex = appUtil.getNearStore(data?.reverse());
           Logger.debug(getStoreIndex, '=======> getStoreIndex');
 
           if (getStoreIndex >= 0 && pickupStores.length > getStoreIndex) {

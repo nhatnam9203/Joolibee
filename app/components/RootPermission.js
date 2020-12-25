@@ -57,6 +57,8 @@ const RootPermission = () => {
 
   const checkPermissionNotify = async () => {
     checkNotifications().then(({ status, settings }) => {
+      Logger.debug(status, '=======> checkPermissionNotify status');
+
       if (status === 'blocked') {
         requestNotifications(['alert', 'sound']).then((notify) => {
           Logger.debug(notify, '=======> checkPermissionNotify notify');
