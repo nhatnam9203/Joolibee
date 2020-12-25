@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: scaleWidth(16),
     marginHorizontal: scaleWidth(10),
     marginVertical: scaleWidth(10),
-    height: scaleHeight(183),
+    minHeight: scaleHeight(200),
     ...AppStyles.styles.shadow,
     overflow: 'hidden',
   },

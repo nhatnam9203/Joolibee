@@ -180,11 +180,13 @@ const NotificationProvider = ({ children }) => {
       dispatch(order.updateOrderStatus({ status, order_number }));
 
       PushNotification.localNotification({
-        ...notifyData,
+        // ...notifyData,
         playSound: true, // (optional) default: true
         soundName: 'jollibeesound.wav',
         message: content ?? '',
+        title: title ?? '',
         messageId: order_number,
+        color: '#E31837',
 
         android: {
           // Reference the name created (Optional, defaults to 'ic_launcher')
@@ -192,7 +194,6 @@ const NotificationProvider = ({ children }) => {
           largeIcon: 'consumer',
           sound: 'jollibeesound.wav',
           // Set color of icon (Optional, defaults to white)
-          color: '#E31837',
         },
 
         ios: {

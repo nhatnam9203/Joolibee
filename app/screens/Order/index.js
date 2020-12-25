@@ -219,19 +219,30 @@ const OrderScreen = ({ route = { params: {} } }) => {
           (x) => x.method === ShippingType.InShop,
         );
 
-        let arr = storeList;
+        let arr = null;
         if (methodInShop?.stores) {
           arr = methodInShop?.stores?.map((st) => {
             const findStore = storeList?.find((x) => x.id === st.id.toString());
             return findStore;
           });
         }
+
+        var filtered = arr?.filter(Boolean);
+
+        Logger.debug(filtered, '======> arr');
         dispatch(order.pickupStore(null));
 
-        navigation.navigate(ScreenName.StorePickup, {
-          stores: arr,
-        });
-        setAvailableStores(arr);
+        if (filtered?.length > 0) {
+          navigation.navigate(ScreenName.StorePickup, {
+            stores: filtered,
+          });
+          setAvailableStores(filtered);
+        } else {
+          NavigationService.alert({
+            title: translate('txtAlert'),
+            message: translate('txtStoreClosed'),
+          });
+        }
 
         break;
       default:
@@ -324,7 +335,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   React.useEffect(() => {
     getSubMenu();
-    dispatch(order.pickupStore(null));
+    // dispatch(order.pickupStore(null));
     setShippingType(ShippingType.InPlace);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

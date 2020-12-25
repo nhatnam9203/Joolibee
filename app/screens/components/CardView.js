@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
   },
 
   txtTitle: {
+    ...AppStyles.fonts.SVN_Merge_Bold,
     fontSize: scaleHeight(14),
     color: AppStyles.colors.primary,
-    ...AppStyles.fonts.SVN_Merge_Bold,
     paddingTop: scaleHeight(5),
     width: '100%',
-    height: scaleHeight(30),
+    height: scaleHeight(35),
     textAlign: 'center',
   },
 
