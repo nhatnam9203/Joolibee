@@ -30,9 +30,7 @@ const Index = ({ route }) => {
   const [customerInfo, getCustomerInfo] = GEX.useCustomer();
 
   const { firstname, lastname, phone_number } = customerInfo;
-  const [shippingAddressResp, setShippingAddress] = GEX.useSetShippingAddress(
-    onCompleted,
-  );
+  const [, setShippingAddress] = GEX.useSetShippingAddress(onCompleted);
 
   const onHandleSetShippingAddress = (id) => {
     const params = {

@@ -1,4 +1,4 @@
-import { CustomInput, CustomButton } from '@components';
+import { CustomInput, CustomButton, Loading } from '@components';
 import { PopupLayout, AppScrollViewIOSBounceColorsWrapper } from '@layouts';
 import { AppStyles, images } from '@theme';
 import { scale } from '@utils';
@@ -14,8 +14,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/stack';
-import { account, app } from '@slices';
-import { useDispatch } from 'react-redux';
+import { GEX } from '@graphql';
 import { JollibeeLogo } from './JollibeeLogo';
 import { LabelTitle } from './LabelTitle';
 import { CustomRaiting } from './CustomRaiting';
@@ -25,11 +24,15 @@ const { scaleWidth, scaleHeight } = scale;
 const BANNER_PADDING = height * 0.12;
 
 export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
-  const dispatch = useDispatch();
   const popupRef = React.createRef(null);
   const [content, setContent] = React.useState('');
   const [rating, setRating] = React.useState(0);
   const headerHeight = useHeaderHeight();
+
+  const onClose = () => {
+    popupRef.current.forceQuit();
+  };
+  const { feedBackCustomer, feedBackResp } = GEX.useFeebackCustomer();
   const onChangeText = (content) => {
     setContent(content);
   };
@@ -37,21 +40,20 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
   const ratingCompleted = (number) => {
     setRating(number);
   };
+  React.useEffect(() => {
+    if (feedBackResp?.data?.feedBackCustomer?.result) {
+      onClose();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedBackResp]);
 
-  const onClose = () => {
-    popupRef.current.forceQuit();
-  };
-
-  const onHandleSubmit = async () => {
+  const onHandleSubmit = () => {
     let submitData = {
       orderId,
-      rating,
-      comment: content,
+      customerRating: rating,
+      customerComment: content,
     };
-    await dispatch(app.showLoading());
-    await dispatch(account.feedBack(submitData, { dispatch }));
-    await dispatch(app.hideLoading());
-    await onClose();
+    feedBackCustomer(submitData);
   };
 
   return (
@@ -116,6 +118,7 @@ export const PopupRating = ({ visible, onToggle, orderId = 0 }) => {
           </View>
         </SafeAreaView>
       </AppScrollViewIOSBounceColorsWrapper>
+      <Loading isLoading={feedBackResp?.loading} />
     </PopupLayout>
   );
 };

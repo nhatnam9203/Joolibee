@@ -92,7 +92,7 @@ const SignUpScreen = ({ route }) => {
       if (params?.customerToken) {
         dispatch(account.verifiedSucceed({ token: params?.customerToken }));
         let variables = {
-          // token: params?.customerToken,
+          token: params?.customerToken,
           phoneNumber: formData?.phone,
           smsCode,
         };

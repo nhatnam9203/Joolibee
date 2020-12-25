@@ -48,10 +48,10 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
   // validate form
   const SignupSchema = Yup.object().shape({
     firstname: Yup.string()
-      .min(2, translate('txtTooShort'))
+      .min(1, translate('txtTooShort'))
       .max(10, translate('txtTooLong')),
     lastname: Yup.string()
-      .min(2, translate('txtTooShort'))
+      .min(1, translate('txtTooShort'))
       .max(30, translate('txtTooLong')),
     email: Yup.string().matches(REGEX_EMAIL, translate('txtInvalidEmail')),
 
@@ -88,12 +88,13 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
     const { dob } = formValues;
     const variables = {
       ...formValues,
-      gender: formValues.gender !== -1 ?? formValues.gender,
+      gender: formValues.gender !== -1 ? formValues.gender : null,
       fcmToken: token ?? '456',
       dob: format.dateTime(dob),
       smsCode: smsCode ?? '1',
       deviceId: getUniqueId(),
     };
+    Logger.debug(variables, 'variablesSignUp');
     registerCustomer({
       variables,
     });
@@ -105,6 +106,7 @@ export const SignUpForm = ({ infos: { phone = '' }, smsCode }) => {
 
   React.useEffect(() => {
     if (registerCustomerResp?.data && !registerCustomerResp?.error) {
+      console.log('registerCustomerResp', registerCustomerResp);
       const onSignupSucceed = async () => {
         await dispatch(account.signUpSucceeded(registerCustomerResp?.data));
         await dispatch(app.hideLoading());

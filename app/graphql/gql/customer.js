@@ -52,6 +52,7 @@ export const CUSTOMER_INFO = gql`
       customer_point
       gender
       date_of_birth
+      dob
       addresses {
         id
         city
@@ -570,6 +571,18 @@ export const VERIFY_ACCOUNT_OTP = gql`
         phoneNumber: $phoneNumber
         smsCode: $smsCode
       }
+    ) {
+      result
+    }
+  }
+`;
+
+export const FEEDBACK_CUSTOMER = gql`
+  mutation($orderId: String!, $customerRating: Int!, $customerComment: String) {
+    feedBackCustomer(
+      orderId: $orderId
+      customerRating: $customerRating
+      customerComment: $customerComment
     ) {
       result
     }
