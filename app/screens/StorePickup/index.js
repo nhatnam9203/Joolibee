@@ -100,7 +100,7 @@ const StorePage = ({ route = { params: {} } }) => {
   const { stores } = route.params || {};
 
   const selectedStores = stores?.map((x, idx) => {
-    const index = storesList?.findIndex((st) => st.id === x.id);
+    const index = storesList?.findIndex((st) => st.id === x?.id);
     if (index >= 0) {
       return storesList[index];
     } else {

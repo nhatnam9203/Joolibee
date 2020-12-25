@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
 
   nameStyle: {
     padding: metrics.padding,
-    fontSize: 24,
     ...AppStyles.fonts.medium_SVN,
+    fontSize: 24,
     color: '#fff',
   },
 

@@ -54,8 +54,8 @@ const CustomAccordionList = ({
     setSelectedListItem(arr);
 
     if (typeof onChangeOptionsItem === 'function') {
-      const mapArray = options.map((x) => {
-        const findItem = arr?.find((item) => item.id === x.id);
+      const mapArray = options?.map((x) => {
+        const findItem = arr?.find((item) => item.id === x?.id);
         if (findItem) {
           return Object.assign({}, x, {
             is_default: true,
@@ -82,7 +82,7 @@ const CustomAccordionList = ({
 
           await updateOptionItems([
             item,
-            ...selectedListItem.filter((x) => x.id !== item.id),
+            ...selectedListItem?.filter((x) => x.id !== item.id),
           ]);
         }
         break;

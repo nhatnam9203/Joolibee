@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 
   itemContainer: {
     backgroundColor: '#fff',
-    height: scaleHeight(146),
+    height: scaleHeight(200),
     justifyContent: 'space-around',
     flexDirection: 'row',
     padding: metrics.padding,

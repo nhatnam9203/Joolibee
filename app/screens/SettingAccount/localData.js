@@ -5,12 +5,12 @@ import React from 'react';
 import { LanguageFlag } from '../components';
 
 export const localData = (navigation) => [
-  {
-    key: 'key_notify',
-    title: translate('txtReceiveNotify'),
-    isArrow: false,
-    buttonComponent: () => <CustomSwitch />,
-  },
+  // {
+  //   key: 'key_notify',
+  //   title: translate('txtReceiveNotify'),
+  //   isArrow: false,
+  //   buttonComponent: () => <CustomSwitch />,
+  // },
   {
     key: 'key_change_password',
     title: translate('txtChangePassword'),

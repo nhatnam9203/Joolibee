@@ -56,6 +56,7 @@ const OrderScreen = ({ route = { params: {} } }) => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const storeList = useStorePickup();
 
   // ===================REDUX STATE ==============
   const isEatingUtensils = useSelector(
@@ -142,7 +143,6 @@ const OrderScreen = ({ route = { params: {} } }) => {
   // });
   // ----------------- Timming apply coupon ------------------------ //
 
-  const storeList = useStorePickup();
   // =================================
 
   const {

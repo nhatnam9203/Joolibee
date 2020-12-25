@@ -20,7 +20,6 @@ export const MenuDetailItem = ({
   type = MenuDetailItemSelectType.Multiline,
   selected = false,
 }) => {
-  Logger.debug(item?.quantity, '--------> item');
   const [radioChecked, setRadioChecked] = React.useState(item?.is_default);
   const [qty, setQyt] = React.useState(item?.quantity);
 
@@ -145,7 +144,7 @@ export const MenuOptionSelectedItem = React.memo(({ item, list }) => {
     <View style={styles.selectedContainer}>
       {list.slice(0, MAX_ITEMS_SHOW).map((x, index) => (
         <JollibeeImage
-          key={x.id?.toString()}
+          key={x?.id?.toString()}
           url={destructuring.imageURLOfItem(x)}
           height="100%"
           width={30}

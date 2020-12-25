@@ -22,10 +22,10 @@ export const useGetCustomerCart = (onCompleted = () => {}) => {
 
   React.useEffect(() => {
     if (getCustomerCartResp.data?.customerCart) {
-      Logger.debug(
-        getCustomerCartResp.data,
-        'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx customer cart update and dispatch redux',
-      );
+      // Logger.debug(
+      //   getCustomerCartResp.data,
+      //   'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx customer cart update and dispatch redux',
+      // );
 
       dispatch(
         account.updateCustomerCart(getCustomerCartResp.data?.customerCart),

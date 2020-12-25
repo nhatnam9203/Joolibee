@@ -11,7 +11,7 @@ export const useCustomer = () => {
   });
 
   const customerInfo = useSelector((state) => state.account.user?.profile);
-  console.log('customerInfo', customerInfo);
+  // console.log('customerInfo', customerInfo);
   React.useEffect(() => {
     if (getCustomerResp.data?.customer) {
       dispatch(account?.saveUserInfo(getCustomerResp.data));

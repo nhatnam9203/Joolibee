@@ -3,7 +3,14 @@ import { View, Platform } from 'react-native';
 import { getCurrentPosition, reverseGeocoding } from '@location';
 import { setting, app } from '@slices';
 import { useDispatch } from 'react-redux';
-import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import {
+  request,
+  check,
+  PERMISSIONS,
+  RESULTS,
+  checkNotifications,
+  requestNotifications,
+} from 'react-native-permissions';
 
 const RootPermission = () => {
   const dispatch = useDispatch();
@@ -48,6 +55,16 @@ const RootPermission = () => {
       });
   };
 
+  const checkPermissionNotify = async () => {
+    checkNotifications().then(({ status, settings }) => {
+      if (status === 'blocked') {
+        requestNotifications(['alert', 'sound']).then((notify) => {
+          Logger.debug(notify, '=======> checkPermissionNotify notify');
+        });
+      }
+    });
+  };
+
   const requestCurrentLocation = async () => {
     try {
       let result = await getCurrentPosition();
@@ -64,6 +81,7 @@ const RootPermission = () => {
 
   React.useEffect(() => {
     checcPermissionLocation();
+    // checkPermissionNotify();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
