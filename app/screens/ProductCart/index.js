@@ -19,11 +19,13 @@ import {
 import { ButtonCC, OrderItem } from '../components';
 import ScreenName from '../ScreenName';
 import * as Widget from './widget';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { address } from '@slices';
 const { scaleWidth } = scale;
 
 const ProductCart = ({ visible, onToggle }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const popupRef = React.useRef(null);
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -100,6 +102,7 @@ const ProductCart = ({ visible, onToggle }) => {
       id: '',
       default_shipping: true,
     };
+    dispatch(address.selectedLocation(null));
     popupRef.current.forceQuit();
     navigation.navigate(ScreenName.DetailMyAddress, {
       titleHeader: translate('txtMyAddressDetail'),
