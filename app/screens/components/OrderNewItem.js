@@ -1,13 +1,13 @@
 import { translate } from '@localize';
-import { AppStyles, images } from '@theme';
+import { AppStyles } from '@theme';
 import { destructuring, format, scale } from '@utils';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {
+  Fade,
   Placeholder,
   PlaceholderLine,
   PlaceholderMedia,
-  Fade,
 } from 'rn-placeholder';
 import { ButtonRed } from './ButtonCC';
 import { FlatListItemWithImgHorizontal } from './FlatListItemWithImgHorizontal';
@@ -16,7 +16,7 @@ import { LabelTitle } from './LabelTitle';
 const { scaleHeight, scaleWidth } = scale;
 const IMAGE_SIZE = scaleHeight(165);
 
-export const OrderNewItemLoading = React.memo(() => (
+export const OrderNewItemLoading = () => (
   <FlatListItemWithImgHorizontal
     style={styles.container}
     imgStyle={styles.imageStyle}
@@ -32,7 +32,7 @@ export const OrderNewItemLoading = React.memo(() => (
       <PlaceholderMedia style={styles.mediaPlaceholder} />
     </Placeholder>
   </FlatListItemWithImgHorizontal>
-));
+);
 
 export const OrderNewItem = ({
   item,
@@ -51,7 +51,9 @@ export const OrderNewItem = ({
             {format.jollibeeCurrency(sellPrice)}
           </Text>
         )}
-        <Text style={styles.pointStyle}>(+ {`${point} điểm`} )</Text>
+        <Text style={styles.pointStyle}>
+          (+ {`${point} ${translate('txtPoint')}`} )
+        </Text>
       </View>
     );
   };

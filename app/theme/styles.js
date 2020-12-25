@@ -67,7 +67,6 @@ const AppStyles = {
 
     SVN_Merge_Bold: {
       fontFamily: Platform.OS === 'android' ? 'MergeBlack' : 'SVN-Merge',
-      fontWeight: 'bold',
     },
 
     title: {

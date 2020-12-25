@@ -14,7 +14,7 @@ export const LabelTitle = ({ label, style, color, fontSize = 30, ...props }) =>
 const styles = StyleSheet.create({
   txtStyle: {
     ...AppStyles.fonts.title,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginVertical: 5,
     // lineHeight: 21,
   },

@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     padding: metrics.padding,
     fontSize: 24,
     ...AppStyles.fonts.medium_SVN,
-    fontWeight: 'bold',
     color: '#fff',
   },
 

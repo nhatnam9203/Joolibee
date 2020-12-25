@@ -7,7 +7,7 @@
     "test": "jest",
     "lint": "eslint .",
     "pod": "cd ios && pod install --repo-update && cd ..",
-    "android-development": "react-native run-android",
+    "android-development": "ENVFILE=.env.development  react-native run-android",
     "android-staging": "ENVFILE=.env.staging react-native run-android",
     "build:android-staging": "cd android && ENVFILE=.env.staging ./gradlew assembleRelease",
     "push:android-production": "appcenter codepush release-react -a levinci/Jollibee-Comsumer-Android -d Production -t 1.0 --description test",

@@ -7,5 +7,7 @@ product LEiq0VgHNNx-C925Zggojq9ViA5RFTRvvPDr6 -->
     <string name="facebook_app_id">1050288668736378</string>
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
-    <string moduleConfig="true" name="CodePushDeploymentKey">dF9kHdG0UVr86s6GelYuJYurotA0SCRw8_Rly</string>
+    <!-- <string moduleConfig="true" name="CodePushDeploymentKey">LEiq0VgHNNx-C925Zggojq9ViA5RFTRvvPDr6</string>  -->
+    <!-- <string moduleConfig="true" name="CodePushDeploymentKey">dF9kHdG0UVr86s6GelYuJYurotA0SCRw8_Rly</string> -->
+    <string moduleConfig="true" name="CodePushDeploymentKey">O8BTewK9yUetB_INRwAsD3axe349nNQhZTgvF</string>
 </resources>
